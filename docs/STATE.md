@@ -12,7 +12,7 @@
 
 ## Qadamlar (vazifa ichida)
 - [x] 1. flutter create apps/pos (windows, android, ios), workspace'ga qo'shish
-- [ ] 2. Bog'liqliklar: flutter_riverpod, go_router, drift, drift_flutter, flutter_localizations, intl; very_good_analysis
+- [x] 2. Bog'liqliklar: flutter_riverpod, go_router, drift, drift_flutter, flutter_localizations, intl; very_good_analysis
 - [ ] 3. ARB (uz, uz_Cyrl, ru) + gen-l10n, l10n.yaml
 - [ ] 4. Ilova: main.dart, App (MaterialApp.router), router, bo'sh kassa ekrani
 - [ ] 5. Drift: bo'sh AppDatabase (keyin T-032), provider
@@ -21,10 +21,10 @@
 - [ ] 8. flutter build windows tekshiruvi; PR, merge
 
 ## Oxirgi bajarilgan ish
-apps/pos va packages/ui/widgetbook yaratildi, workspace'ga qo'shildi.
+Bog'liqliklar: flutter_riverpod 3.3.2, go_router 17.5, drift 2.31 + drift_flutter 0.2.8, widgetbook 3.23 (Flutter 3.41.7 / Dart 3.11 ga mos; eng yangilari Dart 3.12 talab qiladi). Umumiy analysis_options.yaml (very_good_analysis) ildizda.
 
 ## Keyingi aniq harakat
-2-qadam yakunlanmoqda
+3-qadam: apps/pos/l10n.yaml va lib/l10n/app_uz.arb, app_uz_Cyrl.arb, app_ru.arb
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
