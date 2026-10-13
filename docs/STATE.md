@@ -12,9 +12,9 @@
 
 ## Qadamlar (vazifa ichida)
 - [x] 1. backend/Dockerfile (+ .dockerignore)
-- [ ] 2. apps/admin/Dockerfile.dev (+ .dockerignore)
-- [ ] 3. docker-compose.yml: postgres 16, redis 7, backend, admin; volume, healthcheck, sozlanadigan portlar
-- [ ] 4. .env.example portlari, README/Makefile
+- [x] 2. apps/admin/Dockerfile.dev (+ .dockerignore)
+- [x] 3. docker-compose.yml: postgres 16, redis 7, backend, admin; volume, healthcheck, sozlanadigan portlar
+- [x] 4. .env.example portlari, README/Makefile
 - [ ] 5. Tekshiruv: docker compose up -d → /api/health/ ok, admin ochiladi
 - [ ] 6. PR, merge
 
