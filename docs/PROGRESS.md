@@ -29,3 +29,9 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-005 (squash merge)
 - Qoldi / keyingi qadam: T-006 Flutter skeleti; keyin T-002 (compose), T-004 (CI).
 - Muammo yoki qaror: `cacheComponents` o'chirildi (admin to'liq dinamik, cookie'dagi til bilan zid). `@vitejs/plugin-react` babel 8 bilan peer konflikt — kerak emas (oxc JSX). Lokal 3000 band, e2e porti 3100. `backend/openapi.yaml` repoda saqlanadi (klient generatsiyasi uchun manba).
+
+## 2026-10-14 — T-006 Flutter skeleti
+- Qilindi: `apps/pos` (Windows, Android, iOS; org `uz.zellypos`), Riverpod 3, go_router, Drift (`AppDatabase` + `LocalSettings`), gen-l10n ARB (uz, uz_Cyrl, ru), `packages/ui` (rang tokenlari, `PosTheme.light/dark`), Widgetbook (`packages/ui/widgetbook`, 3 viewport, 2 mavzu), ildizda umumiy `analysis_options.yaml` (very_good_analysis). Testlar: pos 5, ui 2, widgetbook 2; analyze toza; `flutter build windows` muvaffaqiyatli, ilova ochildi.
+- PR: T-006 (squash merge)
+- Qoldi / keyingi qadam: T-002 Docker Compose, T-004 CI. `make api-clients` Dart qismi (generator tanlovi) — birinchi haqiqiy API bilan (T-011).
+- Muammo yoki qaror: Lokal Flutter 3.41.7 / Dart 3.11; eng yangi paketlar (riverpod 3.4, drift 2.35, widgetbook 3.25) Dart 3.12 talab qiladi — mos versiyalar tanlandi, Flutter global yangilanmadi (boshqa loyihalarga ta'sir qilmasin). CI ham 3.41.7 ga pin qilinadi. `flutter test` Windows'da SQLite uchun `winsqlite3.dll` ishlatadi (`test/helpers/sqlite.dart`).

@@ -1,0 +1,17 @@
+# Barcha Dart/Flutter paketlari uchun umumiy qat'iy qoidalar.
+include: package:very_good_analysis/analysis_options.yaml
+
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/l10n/gen/**"
+    - "**/build/**"
+  errors:
+    # Kodda qattiq yozilgan matnni topish uchun T-031 da maxsus test bor.
+    todo: ignore
+
+linter:
+  rules:
+    public_member_api_docs: false
+    lines_longer_than_80_chars: false
+    flutter_style_todos: false

@@ -1,2 +1,5 @@
-/// POS dizayn tizimi. Tokenlar va komponentlar T-030 da qo'shiladi.
+/// POS dizayn tizimi: tokenlar, mavzular va komponentlar.
 library;
+
+export 'src/theme/pos_colors.dart';
+export 'src/theme/pos_theme.dart';

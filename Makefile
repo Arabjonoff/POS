@@ -57,6 +57,7 @@ pos-get: ## Dart workspace bog'liqliklari (flutter pub get)
 pos-analyze: ## Kassa ilovasi va paketlar: flutter analyze
 	cd $(POS) && flutter analyze
 	cd $(UI) && flutter analyze
+	cd $(UI)/widgetbook && flutter analyze
 
 pos-test: ## Kassa ilovasi testlari
 	cd $(POS) && flutter test

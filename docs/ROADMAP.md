@@ -33,7 +33,7 @@ Tartib: yuqoridan pastga. Bog'liqligi tayyor bo'lmagan vazifani o'tkazib, keying
 - **Qabul:** `npm run build` muvaffaqiyatli; Playwright smoke testi bosh sahifani ochadi.
 - **Bog'liq:** T-001
 
-### [ ] T-006 Flutter skeleti
+### [x] T-006 Flutter skeleti
 - **Bajarish:** `apps/pos` (platformalar: windows, android, ios), Riverpod, go_router, Drift, `flutter_localizations` + ARB (uz, uz_Cyrl, ru), `packages/ui` bo'sh paket, Widgetbook ilovasi (`packages/ui/widgetbook`). `analysis_options.yaml` qat'iy (very_good_analysis yoki flutter_lints + qo'shimcha).
 - **Qabul:** `flutter analyze` toza; `flutter test` yashil; Windows'da `flutter run -d windows` bo'sh ilovani ochadi.
 - **Bog'liq:** T-001

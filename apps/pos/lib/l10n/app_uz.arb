@@ -1,0 +1,11 @@
+{
+  "@@locale": "uz",
+  "appTitle": "Kassa",
+  "@appTitle": {"description": "Ilova nomi (oyna sarlavhasi)"},
+  "posTitle": "Kassa",
+  "@posTitle": {"description": "Kassa bo'limi nomi"},
+  "posEmptyCart": "Tovarni skanerlang yoki qidiring",
+  "@posEmptyCart": {"description": "Bo'sh savat holati"},
+  "languageName": "O'zbekcha",
+  "@languageName": {"description": "Shu tilning o'z nomi (til tanlashda)"}
+}
