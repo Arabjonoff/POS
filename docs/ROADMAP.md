@@ -8,7 +8,7 @@ Tartib: yuqoridan pastga. Bog'liqligi tayyor bo'lmagan vazifani o'tkazib, keying
 
 ## 0-bosqich. Poydevor
 
-### [ ] T-001 Monorepo tuzilishi
+### [~] T-001 Monorepo tuzilishi
 - **Bajarish:** papkalar (`backend/`, `apps/pos/`, `apps/admin/`, `packages/ui/`, `packages/api_client_dart/`, `docs/`), `.gitignore`, `.editorconfig`, `Makefile` (asosiy buyruqlar), `.env.example`, `README.md` (o'zbekcha, ishga tushirish). Dart pub workspace (`pubspec.yaml` ildizda, `apps/pos` va `packages/*`).
 - **Qabul:** `make help` buyruqlar ro'yxatini chiqaradi; CLAUDE.md'dagi "Buyruqlar" bo'limi haqiqiy buyruqlarga mos.
 - **Bog'liq:** —
