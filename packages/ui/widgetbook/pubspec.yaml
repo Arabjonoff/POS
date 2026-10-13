@@ -1,0 +1,24 @@
+name: pos_ui_widgetbook
+description: pos_ui dizayn tizimi katalogi (Widgetbook). `flutter run -d windows` yoki `-d chrome`.
+publish_to: none
+version: 0.1.0
+
+environment:
+  sdk: ^3.11.0
+  flutter: ">=3.41.0"
+
+resolution: workspace
+
+dependencies:
+  flutter:
+    sdk: flutter
+  pos_ui:
+    path: ..
+  widgetbook: ^3.23.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true

@@ -8,10 +8,10 @@
 - Vazifa: T-006 Flutter skeleti
 - Branch: feat/T-006-flutter-skeleton
 - Boshlangan: 2026-10-14
-- Oxirgi yangilanish: 2026-10-14 02:02
+- Oxirgi yangilanish: 2026-10-14 02:04
 
 ## Qadamlar (vazifa ichida)
-- [ ] 1. flutter create apps/pos (windows, android, ios), workspace'ga qo'shish
+- [x] 1. flutter create apps/pos (windows, android, ios), workspace'ga qo'shish
 - [ ] 2. Bog'liqliklar: flutter_riverpod, go_router, drift, drift_flutter, flutter_localizations, intl; very_good_analysis
 - [ ] 3. ARB (uz, uz_Cyrl, ru) + gen-l10n, l10n.yaml
 - [ ] 4. Ilova: main.dart, App (MaterialApp.router), router, bo'sh kassa ekrani
@@ -21,10 +21,10 @@
 - [ ] 8. flutter build windows tekshiruvi; PR, merge
 
 ## Oxirgi bajarilgan ish
-Vazifa boshlandi.
+apps/pos va packages/ui/widgetbook yaratildi, workspace'ga qo'shildi.
 
 ## Keyingi aniq harakat
-1-qadam: rm apps/pos/README.md; flutter create --org uz.zellypos --platforms windows,android,ios --project-name pos_app apps/pos
+2-qadam yakunlanmoqda
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q

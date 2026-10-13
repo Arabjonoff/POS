@@ -1,3 +1,3 @@
-# apps/pos — kassa ilovasi (Flutter)
+# pos_app
 
-Windows desktop, Android, iOS. Skelet T-006 da yaratiladi.
+A new Flutter project.

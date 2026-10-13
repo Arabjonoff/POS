@@ -1,5 +1,5 @@
 # Dart pub workspace: barcha Dart/Flutter paketlari bitta lock fayl bilan.
-# A'zolar: apps/pos (T-006 da qo'shiladi), packages/*.
+# A'zolar: apps/pos, packages/*.
 name: pos_workspace
 publish_to: none
 
@@ -7,5 +7,10 @@ environment:
   sdk: ^3.11.0
 
 workspace:
+  - apps/pos
   - packages/ui
   - packages/api_client_dart
+  - packages/ui/widgetbook
+
+dev_dependencies:
+  very_good_analysis: ^10.2.0
