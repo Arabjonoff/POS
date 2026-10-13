@@ -5,32 +5,29 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-003 Django skeleti
-- Branch: feat/T-003-django-skeleton
-- Boshlangan: 2026-10-14
-- Oxirgi yangilanish: 2026-10-14
+- Vazifa: — (masalan: T-042 Kassa ekrani — savat)
+- Branch: —
+- Boshlangan: —
+- Oxirgi yangilanish: —
 
 ## Qadamlar (vazifa ichida)
-- [x] 1. backend/pyproject.toml (uv, Python 3.12, Django 5.2, DRF, SimpleJWT, spectacular, cors, psycopg, ruff, pytest) + uv.lock
-- [x] 2. config/ (settings base/dev/test/prod, DATABASE_URL), urls, wsgi/asgi, manage.py
-- [x] 3. apps/core: UUIDv7 id, TimeStampedModel, TenantScopedModel (abstrakt), money yordamchisi (half-up)
-- [ ] 4. apps/core: TenantScopedViewSet, pagination, xato formati (exception handler)
-- [ ] 5. health endpoint, /api/schema/, /api/docs/
-- [ ] 6. Testlar (pytest) + ruff toza
-- [ ] 7. PR, merge
+<!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
+- [ ] 1. ...
+- [ ] 2. ...
 
 ## Oxirgi bajarilgan ish
-Vazifa boshlandi. Lokal test bazasi: `docker run ... --name pos-pg-dev -p 127.0.0.1:55432:5432 postgres:16`.
+—
 
 ## Keyingi aniq harakat
-4–5 qadamlar yozilgan (tenancy.py, exceptions.py, pagination.py, views.py, urls.py); keyingisi: apps/core/tests yozish va `DATABASE_URL=postgres://pos:pos@localhost:55432/pos uv run pytest`.
+<!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
+—
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
 - Ochiq PR: —
-- Ishlab turgan servislar: pos-pg-dev konteyner (postgres:16, 127.0.0.1:55432)
+- Ishlab turgan servislar: — (masalan: docker compose up)
 - Yiqilayotgan testlar: —
 
 ## Eslatmalar
-- Bu kompyuterda 5432, 6379, 8000, 3000 portlari boshqa loyihalar (workers-*, mebel-*) tomonidan band. Ularni to'xtatma! POS uchun lokal portlar: postgres 55432, redis 56379, backend 8100, admin 3100 (env orqali).
-- `python` buyrug'i Windows Store stub — `uv run` yoki `py -3.12` ishlat.
+<!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
+—
