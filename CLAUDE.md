@@ -4,6 +4,7 @@ Mahalla oziq-ovqat do'konlari uchun (keyin boshqa chakana do'konlar) **obuna (ab
 Ilova internet yoki elektr uzilsa ham to'xtamasligi va ma'lumot yo'qotmasligi kerak. UI/UX — mahsulotning eng muhim qismi.
 
 Har sessiya boshida o'qi:
+0. **`docs/STATE.md` — birinchi navbatda.** Unda ish tugallanmagan bo'lsa, `prompts/05-resume.md` bo'yicha davom et.
 1. `docs/ROADMAP.md` — vazifalar ro'yxati va holati. Ishni doim shu yerdan ol.
 2. `docs/specs/` — har funksiya uchun spec. Kod spec'ga mos bo'lishi shart.
 3. `docs/decisions/` — qabul qilingan qarorlar. Ularni qayta bahslashma.
@@ -53,6 +54,7 @@ Fiskal chek, onlayn to'lov, QR to'lov, markirovka — **hozir qilinmaydi** (ROAD
 - Holat qatori doim ko'rinadi: internet, printer, smena, sinxronlanmagan yozuvlar soni.
 
 ## Ish tartibi (har vazifa uchun)
+0. `docs/STATE.md` ni tekshir: tugallanmagan ish bo'lsa — avval o'shani tugat.
 1. `docs/ROADMAP.md` dan birinchi bajarilmagan va bog'liqliklari tayyor vazifani ol.
 2. Tegishli spec'ni o'qi. Spec yo'q yoki noaniq bo'lsa — avval spec'ni yoz/to'ldir (`docs/specs/`), keyin kod.
 3. Yangi branch: `feat/T-XXX-qisqa-nom`.
@@ -62,6 +64,16 @@ Fiskal chek, onlayn to'lov, QR to'lov, markirovka — **hozir qilinmaydi** (ROAD
 7. CI yashil bo'lsa — PR'ni `main`ga merge qil (squash).
 8. `docs/ROADMAP.md` da vazifani `[x]` qil, `docs/PROGRESS.md` oxiriga 3–5 qator yoz (nima qilindi, nima qoldi, muammolar).
 9. Qaror qabul qilinsa — `docs/decisions/NNNN-nom.md`.
+
+## Uzilishlarga chidamli ishlash (elektr va internet tez-tez o'chadi)
+Ish istalgan soniyada to'xtashi mumkin. Shuning uchun:
+1. **Vazifa boshida** `docs/STATE.md` ga vazifa, branch va qadamlar ro'yxatini (5–10 ta kichik qadam) yoz, commit va push qil.
+2. **Har qadamdan keyin** (eng ko'pi 15–20 daqiqa ish): STATE.md dagi qadamni `[x]` qil, "Oxirgi bajarilgan ish" va "Keyingi aniq harakat"ni yangila, `wip: T-XXX <qadam>` commit, `git push`. Push qilinmagan ish — yo'qolgan ish.
+3. **"Keyingi aniq harakat"** shunday yozilsin-ki, xotirasiz yangi sessiya uni o'qib darhol davom eta olsin (fayl nomi, funksiya, buyruq).
+4. Uzoq buyruqdan (build, katta test, migratsiya) **oldin** STATE.md da "Ishlab turgan: <buyruq>" deb yoz.
+5. Sinab ko'rilgan va ishlamagan yechimlarni "Eslatmalar"ga yoz — keyingi sessiya qaytarmasin.
+6. Vazifa tugaganda STATE.md ni bo'sh shablonga qaytar ("Joriy vazifa: —") va PROGRESS.md ga yozuv qo'sh.
+7. PR merge qilishda `wip:` commitlar squash bilan birlashtiriladi, shuning uchun ular tarixni buzmaydi.
 
 ## To'xtash va so'rash kerak bo'lgan holatlar
 Quyidagilarda ishni to'xtatma, lekin `docs/QUESTIONS.md` ga savol yoz va keyingi mustaqil vazifaga o't:
