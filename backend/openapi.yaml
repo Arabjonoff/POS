@@ -1,0 +1,30 @@
+openapi: 3.0.3
+info:
+  title: POS API
+  version: 1.0.0
+  description: Mahalla do'konlari uchun kassa va ombor tizimi API.
+paths:
+  /api/health/:
+    get:
+      operationId: api_health_retrieve
+      description: Servis va baza ishlayaptimi (docker healthcheck, monitoring).
+      tags:
+      - system
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+          description: ''
+components:
+  schemas:
+    Health:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+      - status

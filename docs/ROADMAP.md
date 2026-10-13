@@ -28,7 +28,7 @@ Tartib: yuqoridan pastga. Bog'liqligi tayyor bo'lmagan vazifani o'tkazib, keying
 - **Qabul:** PR ochilganda 3 ta tekshiruv ko'rinadi va yashil.
 - **Bog'liq:** T-003, T-005, T-006
 
-### [~] T-005 Next.js admin skeleti
+### [x] T-005 Next.js admin skeleti
 - **Bajarish:** `create-next-app` (TypeScript, App Router, Tailwind, ESLint), shadcn/ui, TanStack Query, Vitest, Playwright, `src/api/` (OpenAPI'dan generatsiya — `openapi-typescript` + `openapi-fetch`), bo'sh layout (sidebar + header), yorug'/qorong'i mavzu.
 - **Qabul:** `npm run build` muvaffaqiyatli; Playwright smoke testi bosh sahifani ochadi.
 - **Bog'liq:** T-001

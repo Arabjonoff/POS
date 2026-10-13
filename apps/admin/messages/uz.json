@@ -1,0 +1,35 @@
+{
+  "app": {
+    "name": "POS Admin",
+    "description": "Do'konlar, obunalar va qurilmalarni boshqarish paneli"
+  },
+  "nav": {
+    "label": "Asosiy menyu",
+    "dashboard": "Bosh sahifa",
+    "tenants": "Mijozlar",
+    "plans": "Tariflar",
+    "payments": "To'lovlar",
+    "devices": "Qurilmalar",
+    "audit": "Audit jurnali",
+    "settings": "Sozlamalar",
+    "openMenu": "Menyuni ochish"
+  },
+  "header": {
+    "theme": "Mavzu",
+    "themeLight": "Yorug'",
+    "themeDark": "Qorong'i",
+    "themeSystem": "Tizim bo'yicha",
+    "language": "Til"
+  },
+  "home": {
+    "title": "Bosh sahifa",
+    "subtitle": "Bugungi holat bir qarashda",
+    "emptyTitle": "Ko'rsatkichlar tez orada paydo bo'ladi",
+    "emptyText": "Faol mijozlar, tushum va muddati tugayotgan obunalar shu yerda ko'rinadi."
+  },
+  "notFound": {
+    "title": "Sahifa topilmadi",
+    "text": "Bu bo'lim hali tayyor emas yoki manzil noto'g'ri.",
+    "back": "Bosh sahifaga qaytish"
+  }
+}
