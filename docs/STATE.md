@@ -11,9 +11,9 @@
 - Oxirgi yangilanish: 2026-10-14
 
 ## Qadamlar (vazifa ichida)
-- [ ] 1. backend/pyproject.toml (uv, Python 3.12, Django 5.2, DRF, SimpleJWT, spectacular, cors, psycopg, ruff, pytest) + uv.lock
-- [ ] 2. config/ (settings base/dev/test/prod, DATABASE_URL), urls, wsgi/asgi, manage.py
-- [ ] 3. apps/core: UUIDv7 id, TimeStampedModel, TenantScopedModel (abstrakt), money yordamchisi (half-up)
+- [x] 1. backend/pyproject.toml (uv, Python 3.12, Django 5.2, DRF, SimpleJWT, spectacular, cors, psycopg, ruff, pytest) + uv.lock
+- [x] 2. config/ (settings base/dev/test/prod, DATABASE_URL), urls, wsgi/asgi, manage.py
+- [x] 3. apps/core: UUIDv7 id, TimeStampedModel, TenantScopedModel (abstrakt), money yordamchisi (half-up)
 - [ ] 4. apps/core: TenantScopedViewSet, pagination, xato formati (exception handler)
 - [ ] 5. health endpoint, /api/schema/, /api/docs/
 - [ ] 6. Testlar (pytest) + ruff toza
@@ -23,7 +23,7 @@
 Vazifa boshlandi. Lokal test bazasi: `docker run ... --name pos-pg-dev -p 127.0.0.1:55432:5432 postgres:16`.
 
 ## Keyingi aniq harakat
-1-qadam: backend/pyproject.toml yozish va `cd backend && uv sync`.
+4–5 qadamlar yozilgan (tenancy.py, exceptions.py, pagination.py, views.py, urls.py); keyingisi: apps/core/tests yozish va `DATABASE_URL=postgres://pos:pos@localhost:55432/pos uv run pytest`.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
