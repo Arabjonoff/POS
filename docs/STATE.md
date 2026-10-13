@@ -8,10 +8,10 @@
 - Vazifa: T-002 Docker Compose
 - Branch: feat/T-002-docker-compose
 - Boshlangan: 2026-10-14
-- Oxirgi yangilanish: 2026-10-14 02:10
+- Oxirgi yangilanish: 2026-10-14 02:11
 
 ## Qadamlar (vazifa ichida)
-- [ ] 1. backend/Dockerfile (+ .dockerignore)
+- [x] 1. backend/Dockerfile (+ .dockerignore)
 - [ ] 2. apps/admin/Dockerfile.dev (+ .dockerignore)
 - [ ] 3. docker-compose.yml: postgres 16, redis 7, backend, admin; volume, healthcheck, sozlanadigan portlar
 - [ ] 4. .env.example portlari, README/Makefile
@@ -19,10 +19,10 @@
 - [ ] 6. PR, merge
 
 ## Oxirgi bajarilgan ish
-Vazifa boshlandi.
+Dockerfile'lar, docker-compose.yml, .env.example portlari yozildi; pos-pg-dev o'chirildi (endi compose postgres 127.0.0.1:55432).
 
 ## Keyingi aniq harakat
-1-qadam: backend/Dockerfile va backend/.dockerignore yozish
+5-qadam: docker compose up -d --build (Ishlab turgan: compose build)
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
