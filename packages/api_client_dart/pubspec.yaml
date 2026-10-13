@@ -1,0 +1,9 @@
+name: pos_api_client
+description: Django OpenAPI sxemasidan generatsiya qilingan Dart klient. Qo'lda tahrirlanmaydi — `make api-clients`.
+publish_to: none
+version: 0.1.0
+
+environment:
+  sdk: ^3.11.0
+
+resolution: workspace

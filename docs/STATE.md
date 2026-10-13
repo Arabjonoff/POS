@@ -11,18 +11,18 @@
 - Oxirgi yangilanish: 2026-10-14
 
 ## Qadamlar (vazifa ichida)
-- [ ] 1. Papkalar: backend/, apps/pos/, apps/admin/, packages/ui/, packages/api_client_dart/ (README bilan)
-- [ ] 2. .gitignore, .gitattributes, .editorconfig, .env.example
-- [ ] 3. Dart pub workspace: ildiz pubspec.yaml + packages/ui, packages/api_client_dart minimal paketlar
-- [ ] 4. Makefile (help va asosiy buyruqlar)
+- [x] 1. Papkalar: backend/, apps/pos/, apps/admin/, packages/ui/, packages/api_client_dart/ (README bilan)
+- [x] 2. .gitignore, .gitattributes, .editorconfig, .env.example
+- [x] 3. Dart pub workspace: ildiz pubspec.yaml + packages/ui, packages/api_client_dart minimal paketlar
+- [x] 4. Makefile (help va asosiy buyruqlar)
 - [ ] 5. README.md (o'zbekcha, ishga tushirish), CLAUDE.md "Buyruqlar" bo'limini moslash
 - [ ] 6. Tekshiruv: make help, dart pub get; PR, merge
 
 ## Oxirgi bajarilgan ish
-Vazifa boshlandi.
+1–4 qadamlar: papkalar, gitignore/attributes/editorconfig/.env.example, Dart workspace, Makefile.
 
 ## Keyingi aniq harakat
-1-qadam: papkalarni yaratish.
+5-qadam: README.md ni loyiha README siga aylantirish, CLAUDE.md "Buyruqlar" ni Makefile ga moslash.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q

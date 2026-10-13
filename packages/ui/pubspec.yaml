@@ -1,0 +1,18 @@
+name: pos_ui
+description: POS dizayn tizimi — tokenlar, mavzular va komponentlar.
+publish_to: none
+version: 0.1.0
+
+environment:
+  sdk: ^3.11.0
+  flutter: ">=3.41.0"
+
+resolution: workspace
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
