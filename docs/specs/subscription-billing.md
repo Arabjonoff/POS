@@ -1,0 +1,23 @@
+# Obuna (abonent to'lovi)
+
+## Holatlar (har kuni va har so'rovda hisoblanadi)
+| Holat | Shart | Ilovada |
+|---|---|---|
+| trial | now < trial_ends_at va to'lov yo'q | To'liq ishlaydi; "Sinov: N kun qoldi" banneri |
+| active | now ≤ paid_until | To'liq; tugashiga ≤ 3 kun qolganda sariq banner |
+| grace | paid_until < now ≤ paid_until + grace_days | To'liq; qizil banner "To'lov muddati o'tdi, N kun ichida to'lang" |
+| readonly | grace'dan keyin | Savdo/kirim o'chiq; ko'rish, hisobot, sinxron, eksport ishlaydi |
+| blocked | admin qo'lda | readonly bilan bir xil + kirish ekranida sabab |
+
+## To'lov kiritish (admin)
+- Summa, oylar soni (tarif narxi × oy taklif qilinadi), usul, izoh.
+- `period_from = max(paid_until, today)`, `period_to = period_from + oylar`; `paid_until = period_to`.
+- To'lovni bekor qilish — teskari yozuv, audit jurnalida.
+
+## Cheklovlar
+- `max_devices`: yangi qurilma ro'yxatdan o'tmaydi, aniq xabar.
+- `max_users`: yangi xodim qo'shilmaydi.
+- Ma'lumot hech qachon o'chirilmaydi (obuna tugasa ham).
+
+## Testlar
+Sanalar bo'yicha parametrlangan: sinov ichida, sinov tugagan, to'langan, 3 kun qolgan, grace 1-kun, grace oxirgi kun, readonly, bloklangan, to'lovdan keyin qayta active.
