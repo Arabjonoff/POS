@@ -1,3 +1,3 @@
-# pos_ui_widgetbook
+# pos_ui widgetbook
 
-A new Flutter project.
+Dizayn tizimi katalogi: `flutter run -d windows` (yoki `-d chrome`).
