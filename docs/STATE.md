@@ -14,10 +14,10 @@
 - [x] 1. flutter create apps/pos (windows, android, ios), workspace'ga qo'shish
 - [x] 2. Bog'liqliklar: flutter_riverpod, go_router, drift, drift_flutter, flutter_localizations, intl; very_good_analysis
 - [x] 3. ARB (uz, uz_Cyrl, ru) + gen-l10n, l10n.yaml
-- [ ] 4. Ilova: main.dart, App (MaterialApp.router), router, bo'sh kassa ekrani
-- [ ] 5. Drift: bo'sh AppDatabase (keyin T-032), provider
-- [ ] 6. packages/ui widgetbook ilovasi
-- [ ] 7. Testlar: widget test (ilova ochiladi, 3 til); flutter analyze toza
+- [x] 4. Ilova: main.dart, App (MaterialApp.router), router, bo'sh kassa ekrani
+- [x] 5. Drift: bo'sh AppDatabase (keyin T-032), provider
+- [x] 6. packages/ui widgetbook ilovasi
+- [x] 7. Testlar: widget test (ilova ochiladi, 3 til); flutter analyze toza
 - [ ] 8. flutter build windows tekshiruvi; PR, merge
 
 ## Oxirgi bajarilgan ish
