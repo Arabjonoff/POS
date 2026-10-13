@@ -1,0 +1,52 @@
+[project]
+name = "pos-backend"
+version = "0.1.0"
+description = "POS backend — Django REST API"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "django>=5.2,<5.3",
+    "djangorestframework>=3.16",
+    "djangorestframework-simplejwt>=5.5",
+    "drf-spectacular[sidecar]>=0.28",
+    "django-cors-headers>=4.7",
+    "dj-database-url>=3.0",
+    "psycopg[binary]>=3.2",
+    "uuid6>=2025.0",
+    "argon2-cffi>=25.1",
+    "gunicorn>=23.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4",
+    "pytest-django>=4.11",
+    "ruff>=0.13",
+    "time-machine>=2.16",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings.test"
+python_files = ["test_*.py", "tests.py"]
+addopts = "-q --strict-markers"
+testpaths = ["apps", "config"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = ["**/migrations/*"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "UP", "B", "DJ", "SIM", "C4", "PIE", "RUF", "S", "PT"]
+ignore = ["RUF012", "S101"]
+allowed-confusables = ["×", "−", "–"]
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests/**" = ["S105", "S106", "S311"]
+"conftest.py" = ["S105", "S106"]
+"config/settings/*.py" = ["F403", "F405", "S105"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["apps", "config"]

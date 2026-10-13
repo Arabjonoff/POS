@@ -18,7 +18,7 @@ Tartib: yuqoridan pastga. Bog'liqligi tayyor bo'lmagan vazifani o'tkazib, keying
 - **Qabul:** `docker compose up -d` dan keyin `http://localhost:8000/api/health/` → `{"status":"ok"}`, `http://localhost:3000` ochiladi.
 - **Bog'liq:** T-001, T-003, T-005
 
-### [ ] T-003 Django skeleti
+### [x] T-003 Django skeleti
 - **Bajarish:** `config/` (settings: base/dev/test/prod, `DATABASE_URL`), DRF, SimpleJWT, drf-spectacular (`/api/schema/`, `/api/docs/`), CORS, `apps/core` (UUIDv7 primary key, `TimeStampedModel`, `TenantScopedModel`, `TenantScopedViewSet`, umumiy pagination, xato formati), health endpoint, pytest + ruff sozlamalari.
 - **Qabul:** `pytest` yashil; `ruff check` toza; `/api/docs/` ochiladi.
 - **Bog'liq:** T-001
