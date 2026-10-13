@@ -12,7 +12,7 @@
 
 ## Qadamlar (vazifa ichida)
 - [x] 1. create-next-app (TS, App Router, Tailwind, ESLint, src/)
-- [ ] 2. shadcn/ui init + asosiy komponentlar, next-themes (yorug'/qorong'i)
+- [x] 2. shadcn/ui init + asosiy komponentlar, next-themes (yorug'/qorong'i)
 - [ ] 3. TanStack Query provider, src/api (openapi-typescript + openapi-fetch), npm run api:generate
 - [ ] 4. Layout: sidebar + header, bosh sahifa
 - [ ] 5. Vitest (unit) + Playwright smoke testi
@@ -20,10 +20,10 @@
 - [ ] 7. PR, merge
 
 ## Oxirgi bajarilgan ish
-create-next-app 16.4 (apps/admin) va shadcn/ui (base-nova) o'rnatildi; vitest, playwright, openapi-typescript, tanstack query, next-themes qo'shildi.
+shadcn komponentlari qo'shildi (button, card, badge, separator, dropdown-menu, skeleton, tooltip, sheet, input).
 
 ## Keyingi aniq harakat
-2–4 qadamlar: src/app/layout.tsx (Inter fontsource, ThemeProvider, QueryProvider), src/components/app-shell.tsx (sidebar+header), src/api/ (openapi-fetch klient)
+3-qadam: src/api/client.ts va package.json 'api:generate' skripti
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
