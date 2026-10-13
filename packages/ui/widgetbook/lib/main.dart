@@ -46,7 +46,7 @@ class PosWidgetbook extends StatelessWidget {
             platform: TargetPlatform.windows,
           ),
         ]),
-        TextScaleAddon(max: 2, divisions: 4),
+        TextScaleAddon(divisions: 4),
       ],
     );
   }
