@@ -8,10 +8,10 @@
 - Vazifa: T-005 Next.js admin skeleti
 - Branch: feat/T-005-admin-skeleton
 - Boshlangan: 2026-10-14
-- Oxirgi yangilanish: 2026-10-14 01:54
+- Oxirgi yangilanish: 2026-10-14 01:57
 
 ## Qadamlar (vazifa ichida)
-- [ ] 1. create-next-app (TS, App Router, Tailwind, ESLint, src/)
+- [x] 1. create-next-app (TS, App Router, Tailwind, ESLint, src/)
 - [ ] 2. shadcn/ui init + asosiy komponentlar, next-themes (yorug'/qorong'i)
 - [ ] 3. TanStack Query provider, src/api (openapi-typescript + openapi-fetch), npm run api:generate
 - [ ] 4. Layout: sidebar + header, bosh sahifa
@@ -20,10 +20,10 @@
 - [ ] 7. PR, merge
 
 ## Oxirgi bajarilgan ish
-Vazifa boshlandi.
+create-next-app 16.4 (apps/admin) va shadcn/ui (base-nova) o'rnatildi; vitest, playwright, openapi-typescript, tanstack query, next-themes qo'shildi.
 
 ## Keyingi aniq harakat
-1-qadam: apps/admin/README.md ni o'chirib `npx create-next-app@16.4.0 apps/admin --ts --tailwind --eslint --app --src-dir --use-npm --yes`
+2–4 qadamlar: src/app/layout.tsx (Inter fontsource, ThemeProvider, QueryProvider), src/components/app-shell.tsx (sidebar+header), src/api/ (openapi-fetch klient)
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
