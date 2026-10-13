@@ -1,29 +1,52 @@
-# POS loyihasi — AI agent uchun to'plam
+# POS — mahalla do'konlari uchun kassa va ombor tizimi
 
-Bu papkada AI agent loyihani boshidan oxirigacha mustaqil qurishi uchun kerak bo'lgan hamma narsa bor: qoidalar, to'liq vazifalar ro'yxati, har funksiya spec'i va tayyor promptlar. Kod yo'q — kodni agent yozadi.
+Obuna asosidagi kassa (POS) va ombor tizimi: internet yoki elektr uzilsa ham savdo to'xtamaydi, ma'lumot yo'qolmaydi.
 
-## Nima qayerda
+| Qism | Texnologiya | Papka |
+|---|---|---|
+| Backend API | Django 5.2 + DRF + PostgreSQL 16 | `backend/` |
+| Kassa ilovasi | Flutter (Windows, Android, iOS), Drift (SQLite) | `apps/pos/` |
+| Dizayn tizimi | Flutter paket + Widgetbook | `packages/ui/` |
+| Admin dashboard | Next.js + TypeScript + Tailwind | `apps/admin/` |
+| API klientlar | OpenAPI'dan generatsiya | `packages/api_client_dart/`, `apps/admin/src/api/` |
+
+## Kerakli dasturlar
+Git, Docker Desktop, [uv](https://docs.astral.sh/uv/) (Python 3.12 ni o'zi o'rnatadi), Node.js 20+, Flutter (stable), GNU Make.
+Batafsil: `docs/AGENT_SETUP.md`.
+
+## Ishga tushirish
+```sh
+cp .env.example .env      # bir marta
+make up                   # postgres, redis, backend (:8000), admin (:3000)
+make migrate              # baza jadvallari
+make pos-get              # Flutter bog'liqliklari
+cd apps/pos && flutter run -d windows
+```
+- API hujjatlari: http://localhost:8000/api/docs/
+- Admin dashboard: http://localhost:3000
+
+## Buyruqlar
+`make help` — hamma buyruqlar ro'yxati. Asosiylari:
+
+| Buyruq | Nima qiladi |
+|---|---|
+| `make up` / `make down` | Docker servislarini yoqish/o'chirish |
+| `make backend-test`, `make backend-lint` | Backend testlari va lint |
+| `make pos-analyze`, `make pos-test` | Kassa ilovasi tekshiruvi va testlari |
+| `make ui-test` | Dizayn tizimi golden testlari |
+| `make admin-lint`, `make admin-test`, `make admin-e2e` | Admin tekshiruvlari |
+| `make api-clients` | OpenAPI'dan Dart va TS klientlarni yangilash |
+| `make lint`, `make test` | Hammasi birdaniga |
+
+## Hujjatlar
 | Fayl | Nima |
 |---|---|
-| `CLAUDE.md` | Agent konstitutsiyasi: stack, buzilmaydigan qoidalar, UI qoidalari, ish tartibi |
-| `docs/ROADMAP.md` | 48 ta vazifa (T-001 … T-094), har biri qabul mezonlari bilan |
-| `docs/specs/` | 15 ta spec: ma'lumotlar modeli, sinxron, skaner, kassa, kirim, nasiya, admin, dizayn tizimi va b. |
-| `docs/decisions/` | Qabul qilingan qarorlar (stack, pul, oflayn, filiallarsiz) |
-| `docs/AGENT_SETUP.md` | O'rnatish, MCP serverlar, ruxsatlar, avtomatik sikl |
-| `docs/STATE.md` | **Hozirgi holat**: qaysi vazifa, qaysi qadam, keyingi aniq harakat. Elektr o'chsa agent shu yerdan davom etadi |
-| `docs/PROGRESS.md` | Agent har vazifadan keyin yozadi |
-| `docs/QUESTIONS.md` | Agent sizga savollarini shu yerga yozadi |
-| `docs/plan.md` | Umumiy reja va bozor konteksti |
-| `prompts/` | 00 boshlash · 01 keyingi vazifa · 02 o'z-o'zini tekshirish · 03 UI/UX tekshiruv · 04 xato tuzatish · 05 uzilishdan keyin davom ettirish |
-| `.claude/settings.json` | Agent ruxsatlari |
-
-## 5 qadamda boshlash
-1. GitHub'da bo'sh repo yarating (masalan `ZellyPos/pos`) va kompyuteringizga clone qiling.
-2. Shu papkadagi **hamma narsani** (yashirin `.claude/` papkasi bilan) repo ildiziga nusxalang, commit va push qiling.
-3. `docs/AGENT_SETUP.md` 1-bo'limidagi dasturlarni o'rnating (`flutter doctor` yashil bo'lsin), `gh auth login`.
-4. Repo papkasida `claude` ni oching va `prompts/00-bootstrap.md` matnini bering.
-5. 0-bosqich tugagach, `docs/AGENT_SETUP.md` 4-bo'limidagi avtomatik siklni ishga tushiring va keting.
-
-Elektr o'chib-yonganda avtomatik davom etish uchun `docs/AGENT_SETUP.md` → "Elektr o'chib-yonganda" bo'limini bir marta sozlang.
-
-Qaytganingizda: `docs/STATE.md`, `docs/PROGRESS.md` va `docs/QUESTIONS.md` ni o'qing.
+| `CLAUDE.md` | Loyiha qoidalari (AI agent konstitutsiyasi) |
+| `docs/ROADMAP.md` | Vazifalar ro'yxati va holati |
+| `docs/specs/` | Har funksiya spec'i |
+| `docs/decisions/` | Qabul qilingan qarorlar |
+| `docs/STATE.md` | Agent hozir nima ustida ishlayapti (uzilishdan keyin davom etish uchun) |
+| `docs/PROGRESS.md` | Bajarilgan ishlar jurnali |
+| `docs/QUESTIONS.md` | Loyiha egasiga savollar |
+| `docs/AGENT_SETUP.md` | O'rnatish, MCP serverlar, avtomatik sikl |
+| `prompts/` | Agent uchun tayyor promptlar |

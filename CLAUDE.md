@@ -23,13 +23,14 @@ Har sessiya boshida o'qi:
 Filiallar MVP'da yo'q: bitta do'kon, bir nechta kassa. Lekin `Store` modeli bor (kelajak uchun).
 Fiskal chek, onlayn to'lov, QR to'lov, markirovka — **hozir qilinmaydi** (ROADMAP'da "Keyinroq").
 
-## Buyruqlar (T-001 da yaratiladi, keyin shu ro'yxatni yangila)
-- Hammasini ishga tushirish: `docker compose up -d`
-- Backend testlar: `cd backend && pytest` ; lint: `ruff check . && ruff format --check .`
-- Flutter: `cd apps/pos && flutter analyze && flutter test`
-- Dizayn tizimi: `cd packages/ui && flutter test` (golden testlar)
-- Admin: `cd apps/admin && npm run lint && npm run typecheck && npm test && npx playwright test`
+## Buyruqlar (to'liq ro'yxat: `make help`)
+- Hammasini ishga tushirish: `make up` (= `docker compose up -d`)
+- Backend testlar: `make backend-test` (= `cd backend && uv run pytest`) ; lint: `make backend-lint` (= `uv run ruff check . && uv run ruff format --check .`)
+- Flutter: `make pos-analyze && make pos-test` (= `cd apps/pos && flutter analyze && flutter test`)
+- Dizayn tizimi: `make ui-test` (= `cd packages/ui && flutter test`, golden testlar)
+- Admin: `make admin-lint admin-test admin-e2e` (= `cd apps/admin && npm run lint && npm run typecheck && npm test && npx playwright test`)
 - API klientlarni yangilash: `make api-clients`
+- Python bog'liqliklari `uv` bilan boshqariladi (`backend/pyproject.toml`, `uv.lock`); Dart — ildizdagi pub workspace (`flutter pub get` ildizda).
 
 ## Buzilmaydigan qoidalar
 1. **Pul faqat butun son — tiyin.** Python `int`, Dart `int`, TypeScript `number` (butun) yoki `bigint`. `float`/`double` pul va miqdor uchun taqiqlangan. Miqdor — `qty_milli` (1 dona = 1000, 0,250 kg = 250).

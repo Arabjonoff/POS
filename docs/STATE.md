@@ -15,7 +15,7 @@
 - [x] 2. .gitignore, .gitattributes, .editorconfig, .env.example
 - [x] 3. Dart pub workspace: ildiz pubspec.yaml + packages/ui, packages/api_client_dart minimal paketlar
 - [x] 4. Makefile (help va asosiy buyruqlar)
-- [ ] 5. README.md (o'zbekcha, ishga tushirish), CLAUDE.md "Buyruqlar" bo'limini moslash
+- [x] 5. README.md (o'zbekcha, ishga tushirish), CLAUDE.md "Buyruqlar" bo'limini moslash
 - [ ] 6. Tekshiruv: make help, dart pub get; PR, merge
 
 ## Oxirgi bajarilgan ish
