@@ -5,29 +5,31 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: — (masalan: T-042 Kassa ekrani — savat)
-- Branch: —
-- Boshlangan: —
-- Oxirgi yangilanish: —
+- Vazifa: T-002 Docker Compose
+- Branch: feat/T-002-docker-compose
+- Boshlangan: 2026-10-14
+- Oxirgi yangilanish: 2026-10-14 02:10
 
 ## Qadamlar (vazifa ichida)
-<!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [ ] 1. ...
-- [ ] 2. ...
+- [ ] 1. backend/Dockerfile (+ .dockerignore)
+- [ ] 2. apps/admin/Dockerfile.dev (+ .dockerignore)
+- [ ] 3. docker-compose.yml: postgres 16, redis 7, backend, admin; volume, healthcheck, sozlanadigan portlar
+- [ ] 4. .env.example portlari, README/Makefile
+- [ ] 5. Tekshiruv: docker compose up -d → /api/health/ ok, admin ochiladi
+- [ ] 6. PR, merge
 
 ## Oxirgi bajarilgan ish
-—
+Vazifa boshlandi.
 
 ## Keyingi aniq harakat
-<!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-—
+1-qadam: backend/Dockerfile va backend/.dockerignore yozish
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
 - Ochiq PR: —
-- Ishlab turgan servislar: — (masalan: docker compose up)
+- Ishlab turgan servislar: pos-pg-dev konteyner (postgres:16, 127.0.0.1:55432) — testlar uchun
 - Yiqilayotgan testlar: —
 
 ## Eslatmalar
-<!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
-—
+- Bu kompyuterda 5432, 6379, 8000, 3000 portlari boshqa loyihalar (workers-*, mebel-*) tomonidan band. Ularni to'xtatma! POS lokal portlari: postgres 55432, redis 56379, backend 8100, admin 3100.
+- `python` — Windows Store stub; `uv run` yoki `py -3.12` ishlat. Postgres'ga `localhost` emas, `127.0.0.1` orqali ulan (IPv6 osilib qoladi).
