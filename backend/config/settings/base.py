@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "apps.core",
     "apps.tenants",
+    "apps.accounts",
 ]
 
 MIDDLEWARE = [
@@ -66,6 +67,7 @@ DATABASES = {
     )
 }
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+AUTH_USER_MODEL = "accounts.User"
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
