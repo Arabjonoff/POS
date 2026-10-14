@@ -41,3 +41,9 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-002 (squash merge)
 - Qoldi / keyingi qadam: T-004 CI (GitHub Actions); keyin T-010 Tenant va Store.
 - Muammo yoki qaror: elektr uzilishi initdb vaqtida `pg_hba.conf` oxirini nol baytlar bilan buzgan — fayl qo'lda tuzatildi (volume o'chirilmadi). Bu kompyuterda standart portlar band, POS lokal portlari .env da: 55432/56379/8100/3100.
+
+## 2026-10-14 — T-004 CI (GitHub Actions)
+- Qilindi: `.github/workflows/ci.yml` — `changes` (paths-filter) + `backend` (postgres service, ruff, makemigrations --check, openapi.yaml dolzarbligi, pytest) + `flutter` (windows-latest, 3.41.7, analyze, format, test) + `admin` (schema.d.ts dolzarbligi, lint, typecheck, Vitest, build, Playwright). Qaror `docs/decisions/0005-ci.md`. PR'da 4 tekshiruv yashil.
+- PR: #6 (squash merge)
+- Qoldi / keyingi qadam: T-010 Tenant va Store.
+- Muammo yoki qaror: CI'da `LayoutProps` topilmadi — lokal `.next/types` eski build'dan qolgan edi; `typecheck` endi `next typegen && tsc --noEmit`. Flutter Windows runner'da (golden'lar lokal Windows'da yaratiladi).

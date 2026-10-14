@@ -1,0 +1,174 @@
+# CI: har PR va main'ga push'da. Faqat o'zgargan qism tekshiriladi (paths filter);
+# o'tkazib yuborilgan job "skipped" bo'ladi va PR'ni to'smaydi.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  changes:
+    name: changes
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+      flutter: ${{ steps.filter.outputs.flutter }}
+      admin: ${{ steps.filter.outputs.admin }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            backend:
+              - 'backend/**'
+              - '.github/workflows/ci.yml'
+            flutter:
+              - 'apps/pos/**'
+              - 'packages/ui/**'
+              - 'packages/api_client_dart/**'
+              - 'pubspec.yaml'
+              - 'pubspec.lock'
+              - 'analysis_options.yaml'
+              - '.github/workflows/ci.yml'
+            admin:
+              - 'apps/admin/**'
+              - 'backend/openapi.yaml'
+              - '.github/workflows/ci.yml'
+
+  backend:
+    name: backend
+    needs: changes
+    if: needs.changes.outputs.backend == 'true' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: pos
+          POSTGRES_USER: pos
+          POSTGRES_PASSWORD: pos
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U pos -d pos"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 20
+    env:
+      DJANGO_SETTINGS_MODULE: config.settings.test
+      DATABASE_URL: postgres://pos:pos@127.0.0.1:5432/pos
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.13.0"
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
+      - name: Install
+        run: uv sync --frozen
+      - name: Ruff
+        run: uv run ruff check . && uv run ruff format --check .
+      - name: Migrations up to date
+        run: uv run python manage.py makemigrations --check --dry-run
+      - name: OpenAPI schema up to date
+        run: |
+          uv run python manage.py spectacular --file "$RUNNER_TEMP/openapi.yaml" --validate
+          diff -u openapi.yaml "$RUNNER_TEMP/openapi.yaml"
+      - name: Pytest
+        run: uv run pytest
+
+  flutter:
+    name: flutter
+    needs: changes
+    if: needs.changes.outputs.flutter == 'true' || github.event_name == 'workflow_dispatch'
+    # Windows: golden testlar lokal (Windows) muhitda yaratiladi — piksel mosligi uchun (docs/decisions/0005-ci.md).
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v5
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: "3.41.7"
+          cache: true
+      - name: Pub get (workspace)
+        run: flutter pub get --enforce-lockfile
+      - name: Analyze
+        run: |
+          (cd apps/pos && flutter analyze)
+          (cd packages/ui && flutter analyze)
+          (cd packages/ui/widgetbook && flutter analyze)
+      - name: Format
+        run: dart format --output=none --set-exit-if-changed apps/pos/lib apps/pos/test packages/ui/lib packages/ui/test packages/ui/widgetbook/lib packages/ui/widgetbook/test
+      - name: Test (pos)
+        working-directory: apps/pos
+        run: flutter test
+      - name: Test (ui, golden)
+        working-directory: packages/ui
+        run: flutter test
+      - name: Test (widgetbook)
+        working-directory: packages/ui/widgetbook
+        run: flutter test
+      - name: Golden failures
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: golden-failures
+          path: "**/test/**/failures/**"
+          if-no-files-found: ignore
+
+  admin:
+    name: admin
+    needs: changes
+    if: needs.changes.outputs.admin == 'true' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/admin
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: apps/admin/package-lock.json
+      - name: Install
+        run: npm ci --no-audit --no-fund
+      - name: API types up to date
+        run: |
+          npm run api:generate
+          git diff --exit-code -- src/api/schema.d.ts
+      - name: Lint
+        run: npm run lint
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Unit tests
+        run: npm test
+      - name: Build
+        run: npm run build
+      - name: Playwright browsers
+        run: npx playwright install --with-deps chromium
+      - name: E2E
+        run: npx playwright test
+      - name: Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: apps/admin/playwright-report
+          if-no-files-found: ignore

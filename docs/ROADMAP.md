@@ -23,7 +23,7 @@ Tartib: yuqoridan pastga. Bog'liqligi tayyor bo'lmagan vazifani o'tkazib, keying
 - **Qabul:** `pytest` yashil; `ruff check` toza; `/api/docs/` ochiladi.
 - **Bog'liq:** T-001
 
-### [ ] T-004 CI (GitHub Actions)
+### [x] T-004 CI (GitHub Actions)
 - **Bajarish:** 3 job: backend (postgres service, ruff, pytest), flutter (analyze, test, golden), admin (lint, typecheck, test, build). Faqat o'zgargan qism uchun ishlash (paths filter).
 - **Qabul:** PR ochilganda 3 ta tekshiruv ko'rinadi va yashil.
 - **Bog'liq:** T-003, T-005, T-006
