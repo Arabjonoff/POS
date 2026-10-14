@@ -163,7 +163,7 @@ Spec'lar: `barcode.md`, `pos-screen.md`, `printing.md`, `shifts.md`.
 - **Qabul:** chek matnini generatsiya qiluvchi funksiya uchun snapshot testlar; printersiz savdo ishlaydi.
 - **Bog'liq:** T-043
 
-### [ ] T-045 Qaytarish
+### [x] T-045 Qaytarish
 - **Bajarish:** chek raqami yoki skanerlash orqali savdoni topish, to'liq/qisman qaytarish, sabab, naqd qaytarish yoki qarzdan ayirish. Huquq: menejer yoki ega PIN tasdiqlashi.
 - **Qabul:** qaytarilgan miqdor sotilgandan oshmaydi; qoldiq va qarz to'g'ri.
 - **Bog'liq:** T-043

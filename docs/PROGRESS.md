@@ -190,3 +190,10 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-044 (squash merge)
 - Qoldi / keyingi qadam: T-045 Qaytarish. Android Bluetooth/USB printer — T-047 (qaror 0008). Z hisobot chekini chop etish — `ReceiptBuilder` asosida keyin.
 - Muammo yoki qaror: qaror 0008 — tarmoq + Windows spooler, Bluetooth/USB keyinroq. `win32` 6.x o'rniga winspool'ning 8 funksiyasi o'zimiz bog'landi. Chek xatosi "Savdo yakunlandi · Qaytim" xabarini yopmasligi uchun ular bitta xabarga qo'shildi.
+
+## 2026-10-15 — T-045 Qaytarish
+- Qilindi: qaytarish hisobi (`RefundQuote`) server `record_refund` bilan aynan bir xil: qator ulushi, oxirgi qismda yaxlitlash qoldig'i yopiladi, chek chegirmasidan ulush, to'liq yopishda qoldiq, qarzdan ayirish chegarasi. `SaleLookup`: raqam, oxirgi cheklar, qaytarilgan miqdorlar. `RefundWriter` bitta tranzaksiyada yozadi: Refund, qatorlar, qoldiq +, qarz −, `sales.status`, outbox `refund.created`. Chekda savdo raqamining CODE128 shtrix-kodi. Qaytarish oynasi (F8 / ikon): topish (raqam, skan, ro'yxat), qisman yoki to'liq, sabab, naqd yoki qarzdan ayirish, menejer/ega PIN; menejer o'zi bo'lsa PIN qayta so'ralmaydi. Telefonda "Yangi chek" endi ikon.
+- Testlar: apps/pos 384 (+31): server vektorlari bilan hisob testlari, writer (qisman → to'liq, nasiya, atomarlik, qidiruv), CODE128 baytlari, 7 ta widget testi (ro'yxatdan qisman + PIN, raqam bo'yicha to'liq, skan, tekshiruvlar, nasiya, menejer, telefon). Golden'lar: `refund` find/items × 3 o'lcham × 2 mavzu. Kassa va qobiq golden'lari yangilandi. Skrinshotlar: `docs/screenshots/T-045/`.
+- PR: T-045 (squash merge)
+- Qoldi / keyingi qadam: T-046 Kassaga pul kiritish/chiqarish. Boshqa kassada sotilgan chekni qaytarish — Q-006 (hozircha faqat shu kassa savdolari). Qaytarish chekini chop etish — keyin.
+- Muammo yoki qaror: tarjima testi qattiq yozilgan namuna (`D1-000001`) va tooltip'dagi `(F8)` ni ushladi — tarjimaga o'tkazildi. Skaner bilan chek raqamini o'qish uchun test yordamchisiga `-` qo'shildi.
