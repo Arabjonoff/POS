@@ -1147,6 +1147,109 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get productErrQty => 'Miqdorni to\'g\'ri yozing (masalan, 5 yoki 0,5)';
+
+  @override
+  String get importTitle => 'Excel\'dan yuklash';
+
+  @override
+  String get importIntro =>
+      'Excel (.xlsx) yoki CSV faylni tanlang. Birinchi qator — ustun nomlari. Mavjud tovarlar shtrix-kod bo\'yicha yangilanadi.';
+
+  @override
+  String get importPick => 'Faylni tanlash';
+
+  @override
+  String get importTemplate => 'Shablonni yuklab olish';
+
+  @override
+  String get importTemplateSaved => 'Shablon saqlandi';
+
+  @override
+  String get importOffline => 'Import uchun internet kerak';
+
+  @override
+  String get importFailed =>
+      'Faylni o\'qib bo\'lmadi: .xlsx yoki .csv, 10 MB gacha';
+
+  @override
+  String importRows(String file, int count) {
+    return '$file · $count ta qator';
+  }
+
+  @override
+  String get importMapTitle => 'Ustunlarni moslang';
+
+  @override
+  String get importNoColumn => '— yo\'q —';
+
+  @override
+  String get importChooseColumn => 'Ustunni tanlang';
+
+  @override
+  String get importRequiredMissing => 'Nom va narx ustunlarini tanlang';
+
+  @override
+  String get importCheck => 'Tekshirish';
+
+  @override
+  String importSummary(int creates, int updates, int errors) {
+    return 'Yangi: $creates · Yangilanadi: $updates · Xato: $errors';
+  }
+
+  @override
+  String importErrorRow(int row, String field, String reason) {
+    return '$row-qator · $field: $reason';
+  }
+
+  @override
+  String importMoreErrors(int count) {
+    return 'Yana $count ta xato';
+  }
+
+  @override
+  String get importApply => 'Import qilish';
+
+  @override
+  String get importBack => 'Orqaga';
+
+  @override
+  String get importNeedsApproval =>
+      'Importni menejer yoki ega tasdiqlashi kerak';
+
+  @override
+  String importDone(int created, int updated, int skipped) {
+    return 'Qo\'shildi: $created · Yangilandi: $updated · O\'tkazib yuborildi: $skipped';
+  }
+
+  @override
+  String get importClose => 'Tayyor';
+
+  @override
+  String get importErrRequired => 'to\'ldirilmagan';
+
+  @override
+  String get importErrNumber => 'son emas';
+
+  @override
+  String get importErrPositive => '0 dan katta bo\'lishi kerak';
+
+  @override
+  String get importErrBarcode => 'noto\'g\'ri shtrix-kod';
+
+  @override
+  String get importErrCheckDigit => 'shtrix-kod nazorat raqami xato';
+
+  @override
+  String get importErrDuplicate => 'faylda takrorlangan';
+
+  @override
+  String get importErrUnit => 'noma\'lum birlik';
+
+  @override
+  String get importErrTooLong => 'juda uzun';
+
+  @override
+  String get importErrWeighted => 'vaznli tovar uchun kasrli birlik kerak';
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -2287,4 +2390,105 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get productErrQty => 'Миқдорни тўғри ёзинг (масалан, 5 ёки 0,5)';
+
+  @override
+  String get importTitle => 'Excel\'дан юклаш';
+
+  @override
+  String get importIntro =>
+      'Excel (.xlsx) ёки CSV файлни танланг. Биринчи қатор — устун номлари. Мавжуд товарлар штрих-код бўйича янгиланади.';
+
+  @override
+  String get importPick => 'Файлни танлаш';
+
+  @override
+  String get importTemplate => 'Шаблонни юклаб олиш';
+
+  @override
+  String get importTemplateSaved => 'Шаблон сақланди';
+
+  @override
+  String get importOffline => 'Импорт учун интернет керак';
+
+  @override
+  String get importFailed => 'Файлни ўқиб бўлмади: .xlsx ёки .csv, 10 MB гача';
+
+  @override
+  String importRows(String file, int count) {
+    return '$file · $count та қатор';
+  }
+
+  @override
+  String get importMapTitle => 'Устунларни мосланг';
+
+  @override
+  String get importNoColumn => '— йўқ —';
+
+  @override
+  String get importChooseColumn => 'Устунни танланг';
+
+  @override
+  String get importRequiredMissing => 'Ном ва нарх устунларини танланг';
+
+  @override
+  String get importCheck => 'Текшириш';
+
+  @override
+  String importSummary(int creates, int updates, int errors) {
+    return 'Янги: $creates · Янгиланади: $updates · Хато: $errors';
+  }
+
+  @override
+  String importErrorRow(int row, String field, String reason) {
+    return '$row-қатор · $field: $reason';
+  }
+
+  @override
+  String importMoreErrors(int count) {
+    return 'Яна $count та хато';
+  }
+
+  @override
+  String get importApply => 'Импорт қилиш';
+
+  @override
+  String get importBack => 'Орқага';
+
+  @override
+  String get importNeedsApproval => 'Импортни менежер ёки эга тасдиқлаши керак';
+
+  @override
+  String importDone(int created, int updated, int skipped) {
+    return 'Қўшилди: $created · Янгиланди: $updated · Ўтказиб юборилди: $skipped';
+  }
+
+  @override
+  String get importClose => 'Тайёр';
+
+  @override
+  String get importErrRequired => 'тўлдирилмаган';
+
+  @override
+  String get importErrNumber => 'сон эмас';
+
+  @override
+  String get importErrPositive => '0 дан катта бўлиши керак';
+
+  @override
+  String get importErrBarcode => 'нотўғри штрих-код';
+
+  @override
+  String get importErrCheckDigit => 'штрих-код назорат рақами хато';
+
+  @override
+  String get importErrDuplicate => 'файлда такрорланган';
+
+  @override
+  String get importErrUnit => 'номаълум бирлик';
+
+  @override
+  String get importErrTooLong => 'жуда узун';
+
+  @override
+  String get importErrWeighted => 'вазнли товар учун касрли бирлик керак';
 }

@@ -6,6 +6,7 @@ import 'package:pos_app/core/barcode/scanner_service.dart';
 import 'package:pos_app/core/format/app_format.dart';
 import 'package:pos_app/data/catalog/product_editor.dart';
 import 'package:pos_app/features/common/section_page.dart';
+import 'package:pos_app/features/products/import_dialog.dart';
 import 'package:pos_app/features/products/product_card.dart';
 import 'package:pos_app/features/products/product_list.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
@@ -55,6 +56,25 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
         showPosToast(
           context,
           message: AppLocalizations.of(context).productSaved,
+          tone: PosTone.success,
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _dialogOpen = false);
+    }
+  }
+
+  Future<void> _import() async {
+    if (_dialogOpen) return;
+    setState(() => _dialogOpen = true);
+    try {
+      final result = await showImportDialog(context);
+      if (result != null && mounted) {
+        showPosToast(
+          context,
+          message: AppLocalizations.of(
+            context,
+          ).importDone(result.created, result.updated, result.skipped),
           tone: PosTone.success,
         );
       }
@@ -133,10 +153,24 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
         icon: Icons.inventory_2_outlined,
         title: l10n.productsEmptyTitle,
         message: l10n.productsEmptyMessage,
-        action: PosButton(
-          label: l10n.productsAdd,
-          icon: Icons.add,
-          onPressed: () => unawaited(_open()),
+        action: Wrap(
+          spacing: PosSpacing.s,
+          runSpacing: PosSpacing.s,
+          alignment: WrapAlignment.center,
+          children: [
+            PosButton(
+              label: l10n.productsAdd,
+              icon: Icons.add,
+              onPressed: () => unawaited(_open()),
+            ),
+            PosButton(
+              key: const ValueKey('products-import-empty'),
+              label: l10n.importTitle,
+              icon: Icons.upload_file_outlined,
+              variant: PosButtonVariant.secondary,
+              onPressed: () => unawaited(_import()),
+            ),
+          ],
         ),
       );
     } else if (rows.isEmpty) {
@@ -178,6 +212,23 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
                       onChanged: (_) => setState(() {}),
                     ),
                   ),
+                  const SizedBox(width: PosSpacing.s),
+                  if (compact)
+                    PosIconButton(
+                      key: const ValueKey('products-import'),
+                      icon: Icons.upload_file_outlined,
+                      tooltip: l10n.importTitle,
+                      variant: PosIconButtonVariant.outlined,
+                      onPressed: () => unawaited(_import()),
+                    )
+                  else
+                    PosButton(
+                      key: const ValueKey('products-import'),
+                      label: l10n.importTitle,
+                      icon: Icons.upload_file_outlined,
+                      variant: PosButtonVariant.secondary,
+                      onPressed: () => unawaited(_import()),
+                    ),
                   const SizedBox(width: PosSpacing.s),
                   if (compact)
                     PosIconButton(

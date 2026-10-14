@@ -188,7 +188,7 @@ Spec'lar: `products.md`, `stock-receipt.md`, `barcode.md`.
 - **Qabul:** skaner bilan yangi tovar kartasini ochish → shtrix-kod maydoni avtomatik to'ladi; takroriy shtrix-kod ogohlantiriladi.
 - **Bog'liq:** T-040, T-033
 
-### [ ] T-051 Excel/CSV import
+### [x] T-051 Excel/CSV import
 - **Bajarish:** shablon yuklab olish, fayl tanlash, ustunlarni moslash, oldindan ko'rish, xatolar ro'yxati, import (yangi + yangilash shtrix-kod bo'yicha). Server tomonda katta fayllar uchun.
 - **Qabul:** 5000 qatorli fayl import qilinadi; xato qatorlar aniq ko'rsatiladi.
 - **Bog'liq:** T-050, T-014

@@ -1,10 +1,14 @@
 import 'package:drift/drift.dart' show Value;
+import 'package:flutter/material.dart' show ValueKey;
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pos_app/app/status/app_status.dart';
+import 'package:pos_app/data/catalog/product_import.dart';
 import 'package:pos_app/data/db/app_database.dart';
 
 import '../helpers/catalog_seed.dart';
+import '../helpers/fake_import.dart';
 import '../helpers/pump_app.dart';
 import '../helpers/sqlite.dart';
 import 'golden_helpers.dart';
@@ -46,7 +50,11 @@ Future<AppDatabase> _seed() async {
   return db;
 }
 
-Future<void> _open(WidgetTester tester, Size size) async {
+Future<void> _open(
+  WidgetTester tester,
+  Size size, {
+  List<Override> extra = const [],
+}) async {
   final db = await _seed();
   addTearDown(db.close);
   await pumpPosApp(
@@ -58,6 +66,7 @@ Future<void> _open(WidgetTester tester, Size size) async {
       printerStatusProvider.overrideWithValue(PrinterStatus.ready),
       pendingEventsProvider.overrideWith((ref) => Stream.value(0)),
       clockProvider.overrideWithValue(() => DateTime.utc(2026, 10, 15, 10)),
+      ...extra,
     ],
   );
   await tester.sendKeyDownEvent(LogicalKeyboardKey.controlLeft);
@@ -80,4 +89,29 @@ void main() {
     await tester.tap(find.text('Olma qizil'));
     await tester.pumpAndSettle();
   });
+
+  /// Import: ustunlarni moslash va tekshirish natijasi.
+  for (final stage in ['import_map', 'import_check']) {
+    goldenAcrossDevices('products', stage, (tester, size) async {
+      await _open(
+        tester,
+        size,
+        extra: [
+          productImportApiProvider.overrideWithValue(FakeImportApi()),
+          importFilesProvider.overrideWithValue(FakeFiles()),
+        ],
+      );
+      await tester.tap(find.byKey(const ValueKey('products-import')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('import-pick')));
+      await tester.pumpAndSettle();
+      if (stage == 'import_check') {
+        final check = find.byKey(const ValueKey('import-check'));
+        await tester.ensureVisible(check);
+        await tester.pumpAndSettle();
+        await tester.tap(check);
+        await tester.pumpAndSettle();
+      }
+    });
+  }
 }
