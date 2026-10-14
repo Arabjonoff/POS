@@ -12,9 +12,9 @@
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [ ] 1. `apps/core/phone.py` — `normalize_phone` (+998XXXXXXXXX) + testlar
-- [ ] 2. `apps/tenants`: Tenant (name, owner_phone, address, timezone, default_locale, notes, is_blocked, blocked_reason), Store (TenantScopedModel); migratsiya 0001
-- [ ] 3. post_save signal: Tenant yaratilganda bitta Store; admin (TenantAdmin + StoreInline, StoreAdmin)
+- [x] 1. `apps/core/phone.py` — `normalize_phone` (+998XXXXXXXXX) + testlar
+- [x] 2. `apps/tenants`: Tenant (name, owner_phone, address, timezone, default_locale, notes, is_blocked, blocked_reason), Store (TenantScopedModel); migratsiya 0001
+- [x] 3. post_save signal: Tenant yaratilganda bitta Store; admin (TenantAdmin + StoreInline, StoreAdmin)
 - [ ] 4. `conftest.py`: `make_tenant`, `tenant`, `other_tenant` fixture; model testlari; TenantScopedViewSet izolyatsiya testi Store bilan
 - [ ] 5. ruff, pytest, makemigrations --check, openapi; PR, CI, merge
 
