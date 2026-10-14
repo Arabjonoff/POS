@@ -118,7 +118,7 @@ class _SyncRunnerState extends ConsumerState<SyncRunner> {
     final status = ref.read(syncStatusProvider.notifier)
       ..set(ref.read(syncStatusProvider).copyWith(syncing: true));
     try {
-      final now = DateTime.now();
+      final now = ref.read(clockProvider)();
       final last = _lastPull;
       final pull =
           last == null || now.difference(last) >= SyncRunner.pullInterval;

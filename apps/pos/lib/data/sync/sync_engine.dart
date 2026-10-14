@@ -1,3 +1,4 @@
+import 'package:clock/clock.dart';
 import 'package:pos_api_client/pos_api_client.dart';
 import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/data/remote/api.dart';
@@ -40,7 +41,7 @@ class SyncReport {
 /// Hech qachon tashlamaydi — natija [SyncReport.health] da.
 class SyncEngine {
   SyncEngine(this._db, this._api, {DateTime Function()? now})
-    : _now = now ?? DateTime.now;
+    : _now = now ?? _clockNow;
 
   static const String deviceBlockedKey = 'device_blocked';
 
@@ -102,3 +103,6 @@ class SyncEngine {
     }
   }
 }
+
+/// Joriy vaqt (testlarda flutter_test soxta vaqti).
+DateTime _clockNow() => clock.now();

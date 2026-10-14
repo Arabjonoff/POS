@@ -1,3 +1,4 @@
+import 'package:clock/clock.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pos_app/core/security/pin_hash.dart';
 import 'package:pos_app/data/db/app_database.dart';
@@ -32,7 +33,7 @@ typedef PinVerifier = Future<bool> Function(String pin, String encoded);
 /// lokal bazada — ilovani qayta ochib chetlab o'tib bo'lmaydi.
 class PinGate {
   PinGate(this._db, {DateTime Function()? now, PinVerifier? verify})
-    : _now = now ?? DateTime.now,
+    : _now = now ?? _clockNow,
       _verify = verify ?? PinHash.verify;
 
   static const int maxAttempts = 5;
@@ -85,3 +86,6 @@ class PinGate {
 final pinGateProvider = Provider<PinGate>(
   (ref) => PinGate(ref.watch(appDatabaseProvider)),
 );
+
+/// Joriy vaqt (testlarda flutter_test soxta vaqti).
+DateTime _clockNow() => clock.now();

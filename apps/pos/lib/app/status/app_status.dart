@@ -1,3 +1,4 @@
+import 'package:clock/clock.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pos_app/app/sync/sync_runner.dart';
@@ -43,4 +44,7 @@ final shiftOpenProvider = StreamProvider<bool>((ref) {
 });
 
 /// Hozirgi vaqt manbai (testlarda qat'iy vaqt beriladi).
-final clockProvider = Provider<DateTime Function()>((ref) => DateTime.now);
+final clockProvider = Provider<DateTime Function()>(
+  (ref) =>
+      () => clock.now(),
+);

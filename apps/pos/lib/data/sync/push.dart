@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math' as math;
 
+import 'package:clock/clock.dart';
 import 'package:drift/drift.dart';
 import 'package:pos_api_client/pos_api_client.dart';
 import 'package:pos_app/data/db/app_database.dart';
@@ -37,7 +38,7 @@ class PushBatchResult {
 /// - Tarmoq/server xatosida: eksponensial kutish 5 s → 5 daq.
 class OutboxPusher {
   OutboxPusher(this._db, this._api, {DateTime Function()? now})
-    : _now = now ?? DateTime.now;
+    : _now = now ?? _clockNow;
 
   static const int batchSize = 100;
   static const Duration minBackoff = Duration(seconds: 5);
@@ -197,3 +198,6 @@ class OutboxPusher {
     });
   }
 }
+
+/// Joriy vaqt (testlarda flutter_test soxta vaqti).
+DateTime _clockNow() => clock.now();

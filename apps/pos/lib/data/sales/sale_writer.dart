@@ -1,3 +1,4 @@
+import 'package:clock/clock.dart';
 import 'package:drift/drift.dart';
 import 'package:pos_app/core/money/money.dart';
 import 'package:pos_app/data/db/app_database.dart';
@@ -111,7 +112,7 @@ class SaleWriter {
     IdGenerator? newId,
     DateTime Function()? now,
   }) : _newId = newId ?? _defaultId,
-       _now = now ?? DateTime.now;
+       _now = now ?? _clockNow;
 
   static String _defaultId() => newId();
 
@@ -313,3 +314,6 @@ class SaleWriter {
     }
   }
 }
+
+/// Joriy vaqt (testlarda flutter_test soxta vaqti).
+DateTime _clockNow() => clock.now();
