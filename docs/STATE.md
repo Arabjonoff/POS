@@ -12,7 +12,7 @@
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [ ] 1. `.github/workflows/ci.yml`: changes (dorny/paths-filter) + backend (ubuntu, postgres service, ruff, migrations check, openapi check, pytest) + flutter (windows-latest, 3.41.7, analyze, test) + admin (ubuntu, lint, typecheck, vitest, build, playwright)
+- [x] 1. `.github/workflows/ci.yml`: changes (dorny/paths-filter) + backend (ubuntu, postgres service, ruff, migrations check, openapi check, pytest) + flutter (windows-latest, 3.41.7, analyze, test) + admin (ubuntu, lint, typecheck, vitest, build, playwright)
 - [ ] 2. Lokal tekshiruv: backend job buyruqlari (postgres 127.0.0.1:55432)
 - [ ] 3. Lokal tekshiruv: flutter va admin job buyruqlari
 - [ ] 4. `docs/decisions/0005-ci.md` (flutter CI Windows'da — golden mosligi)
