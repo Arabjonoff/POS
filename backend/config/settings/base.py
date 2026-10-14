@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "apps.sales",
     "apps.sync",
     "apps.reports",
+    "apps.platform_admin",
 ]
 
 MIDDLEWARE = [
