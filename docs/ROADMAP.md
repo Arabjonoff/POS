@@ -63,7 +63,7 @@ Spec'lar: `data-model.md`, `auth-roles.md`, `sync.md`, `subscription-billing.md`
 - **Qabul:** sanalar bo'yicha holat o'tishlari uchun parametrlangan testlar (kamida 8 holat).
 - **Bog'liq:** T-010
 
-### [ ] T-014 Katalog API
+### [~] T-014 Katalog API
 - **Bajarish:** Category, Unit, Product, ProductBarcode CRUD; shtrix-kod bo'yicha qidirish `GET /products/by-barcode/{code}`; bitta tenant ichida shtrix-kod takrorlanmasligi; vaznli tovar maydonlari (`is_weighted`, `plu_code`).
 - **Qabul:** CRUD, takroriy shtrix-kod rad etiladi, izolyatsiya testi.
 - **Bog'liq:** T-011
