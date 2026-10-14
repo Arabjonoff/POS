@@ -1333,6 +1333,84 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get receivingEmptyPost => 'Bo\'sh kirimni tasdiqlab bo\'lmaydi';
+
+  @override
+  String get inventoryTitle => 'Inventarizatsiya';
+
+  @override
+  String get inventoryNew => 'Yangi inventarizatsiya';
+
+  @override
+  String get inventoryEmptyTitle => 'Hali inventarizatsiya yo\'q';
+
+  @override
+  String get inventoryEmptyMessage =>
+      'Tovarlarni skaner bilan sanang — qoldiq haqiqiy songa tenglashadi';
+
+  @override
+  String get inventoryScopeTitle => 'Nimani sanaymiz?';
+
+  @override
+  String get inventoryScopeAll => 'Hamma tovarlar';
+
+  @override
+  String inventoryCount(String date) {
+    return 'Inventarizatsiya · $date';
+  }
+
+  @override
+  String inventorySummary(int counted, int left, int surplus, int shortage) {
+    return 'Sanalgan: $counted · Sanalmagan: $left · Ortiqcha: $surplus · Kam: $shortage';
+  }
+
+  @override
+  String inventorySystem(String qty) {
+    return 'Tizimda: $qty';
+  }
+
+  @override
+  String get inventoryCounted => 'Sanalgan';
+
+  @override
+  String inventoryDiff(String qty) {
+    return 'Farq: $qty';
+  }
+
+  @override
+  String inventoryUncounted(int count) {
+    return 'Sanalmaganlar ($count)';
+  }
+
+  @override
+  String get inventoryUncountedNote =>
+      'Sanalmagan tovarlar qoldig\'i o\'zgarmaydi. Bosib qo\'shish mumkin.';
+
+  @override
+  String get inventoryEmptyLines =>
+      'Tovarni skanerlang: har skan — sanalgan +1';
+
+  @override
+  String get inventoryPost => 'Tasdiqlash';
+
+  @override
+  String get inventoryDelete => 'Qoralamani o\'chirish';
+
+  @override
+  String get inventoryPostedToast =>
+      'Inventarizatsiya tasdiqlandi: qoldiq sanalgan songa tenglashdi';
+
+  @override
+  String get inventoryNeedsApproval =>
+      'Inventarizatsiyani menejer yoki ega tasdiqlashi kerak';
+
+  @override
+  String get inventoryEmptyPost => 'Hech narsa sanalmagan';
+
+  @override
+  String get inventoryBack => 'Inventarizatsiyalar';
+
+  @override
+  String get inventoryNotFound => 'Bu kod bazada yo\'q — avval tovar qo\'shing';
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -2657,4 +2735,82 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get receivingEmptyPost => 'Бўш киримни тасдиқлаб бўлмайди';
+
+  @override
+  String get inventoryTitle => 'Инвентаризация';
+
+  @override
+  String get inventoryNew => 'Янги инвентаризация';
+
+  @override
+  String get inventoryEmptyTitle => 'Ҳали инвентаризация йўқ';
+
+  @override
+  String get inventoryEmptyMessage =>
+      'Товарларни сканер билан санг — қолдиқ ҳақиқий сонга тенглашади';
+
+  @override
+  String get inventoryScopeTitle => 'Нимани санаймиз?';
+
+  @override
+  String get inventoryScopeAll => 'Ҳамма товарлар';
+
+  @override
+  String inventoryCount(String date) {
+    return 'Инвентаризация · $date';
+  }
+
+  @override
+  String inventorySummary(int counted, int left, int surplus, int shortage) {
+    return 'Саналган: $counted · Саналмаган: $left · Ортиқча: $surplus · Кам: $shortage';
+  }
+
+  @override
+  String inventorySystem(String qty) {
+    return 'Тизимда: $qty';
+  }
+
+  @override
+  String get inventoryCounted => 'Саналган';
+
+  @override
+  String inventoryDiff(String qty) {
+    return 'Фарқ: $qty';
+  }
+
+  @override
+  String inventoryUncounted(int count) {
+    return 'Саналмаганлар ($count)';
+  }
+
+  @override
+  String get inventoryUncountedNote =>
+      'Саналмаган товарлар қолдиғи ўзгармайди. Босиб қўшиш мумкин.';
+
+  @override
+  String get inventoryEmptyLines =>
+      'Товарни сканерланг: ҳар скан — саналган +1';
+
+  @override
+  String get inventoryPost => 'Тасдиқлаш';
+
+  @override
+  String get inventoryDelete => 'Қораламани ўчириш';
+
+  @override
+  String get inventoryPostedToast =>
+      'Инвентаризация тасдиқланди: қолдиқ саналган сонга тенглашди';
+
+  @override
+  String get inventoryNeedsApproval =>
+      'Инвентаризацияни менежер ёки эга тасдиқлаши керак';
+
+  @override
+  String get inventoryEmptyPost => 'Ҳеч нарса саналмаган';
+
+  @override
+  String get inventoryBack => 'Инвентаризациялар';
+
+  @override
+  String get inventoryNotFound => 'Бу код базада йўқ — аввал товар қўшинг';
 }

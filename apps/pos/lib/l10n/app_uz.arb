@@ -1800,5 +1800,123 @@
   "receivingEmptyPost": "Bo'sh kirimni tasdiqlab bo'lmaydi",
   "@receivingEmptyPost": {
     "description": "Xato"
+  },
+  "inventoryTitle": "Inventarizatsiya",
+  "@inventoryTitle": {
+    "description": "Sarlavha va tugma"
+  },
+  "inventoryNew": "Yangi inventarizatsiya",
+  "@inventoryNew": {
+    "description": "Tugma"
+  },
+  "inventoryEmptyTitle": "Hali inventarizatsiya yo'q",
+  "@inventoryEmptyTitle": {
+    "description": "Bo'sh"
+  },
+  "inventoryEmptyMessage": "Tovarlarni skaner bilan sanang — qoldiq haqiqiy songa tenglashadi",
+  "@inventoryEmptyMessage": {
+    "description": "Bo'sh izoh"
+  },
+  "inventoryScopeTitle": "Nimani sanaymiz?",
+  "@inventoryScopeTitle": {
+    "description": "Qamrov oynasi"
+  },
+  "inventoryScopeAll": "Hamma tovarlar",
+  "@inventoryScopeAll": {
+    "description": "Qamrov"
+  },
+  "inventoryCount": "Inventarizatsiya · {date}",
+  "@inventoryCount": {
+    "description": "Tahrirlovchi sarlavhasi",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "inventorySummary": "Sanalgan: {counted} · Sanalmagan: {left} · Ortiqcha: {surplus} · Kam: {shortage}",
+  "@inventorySummary": {
+    "description": "Farq hisoboti qatori",
+    "placeholders": {
+      "counted": {
+        "type": "int"
+      },
+      "left": {
+        "type": "int"
+      },
+      "surplus": {
+        "type": "int"
+      },
+      "shortage": {
+        "type": "int"
+      }
+    }
+  },
+  "inventorySystem": "Tizimda: {qty}",
+  "@inventorySystem": {
+    "description": "Kutilgan miqdor",
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "inventoryCounted": "Sanalgan",
+  "@inventoryCounted": {
+    "description": "Maydon"
+  },
+  "inventoryDiff": "Farq: {qty}",
+  "@inventoryDiff": {
+    "description": "Farq",
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "inventoryUncounted": "Sanalmaganlar ({count})",
+  "@inventoryUncounted": {
+    "description": "Ro'yxat sarlavhasi",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "inventoryUncountedNote": "Sanalmagan tovarlar qoldig'i o'zgarmaydi. Bosib qo'shish mumkin.",
+  "@inventoryUncountedNote": {
+    "description": "Izoh"
+  },
+  "inventoryEmptyLines": "Tovarni skanerlang: har skan — sanalgan +1",
+  "@inventoryEmptyLines": {
+    "description": "Bo'sh hujjat"
+  },
+  "inventoryPost": "Tasdiqlash",
+  "@inventoryPost": {
+    "description": "Tugma"
+  },
+  "inventoryDelete": "Qoralamani o'chirish",
+  "@inventoryDelete": {
+    "description": "Tugma"
+  },
+  "inventoryPostedToast": "Inventarizatsiya tasdiqlandi: qoldiq sanalgan songa tenglashdi",
+  "@inventoryPostedToast": {
+    "description": "Xabar"
+  },
+  "inventoryNeedsApproval": "Inventarizatsiyani menejer yoki ega tasdiqlashi kerak",
+  "@inventoryNeedsApproval": {
+    "description": "Huquq"
+  },
+  "inventoryEmptyPost": "Hech narsa sanalmagan",
+  "@inventoryEmptyPost": {
+    "description": "Xato"
+  },
+  "inventoryBack": "Inventarizatsiyalar",
+  "@inventoryBack": {
+    "description": "Orqaga"
+  },
+  "inventoryNotFound": "Bu kod bazada yo'q — avval tovar qo'shing",
+  "@inventoryNotFound": {
+    "description": "Skan: topilmadi"
   }
 }
