@@ -2370,12 +2370,6 @@ abstract class AppLocalizations {
   /// Ustun
   ///
   /// In uz, this message translates to:
-  /// **'Miqdor'**
-  String get receivingQty;
-
-  /// Ustun
-  ///
-  /// In uz, this message translates to:
   /// **'Tannarx'**
   String get receivingCost;
 
@@ -2432,6 +2426,138 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Bo\'sh kirimni tasdiqlab bo\'lmaydi'**
   String get receivingEmptyPost;
+
+  /// Sarlavha va tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Inventarizatsiya'**
+  String get inventoryTitle;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Yangi inventarizatsiya'**
+  String get inventoryNew;
+
+  /// Bo'sh
+  ///
+  /// In uz, this message translates to:
+  /// **'Hali inventarizatsiya yo\'q'**
+  String get inventoryEmptyTitle;
+
+  /// Bo'sh izoh
+  ///
+  /// In uz, this message translates to:
+  /// **'Tovarlarni skaner bilan sanang — qoldiq haqiqiy songa tenglashadi'**
+  String get inventoryEmptyMessage;
+
+  /// Qamrov oynasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Nimani sanaymiz?'**
+  String get inventoryScopeTitle;
+
+  /// Qamrov
+  ///
+  /// In uz, this message translates to:
+  /// **'Hamma tovarlar'**
+  String get inventoryScopeAll;
+
+  /// Tahrirlovchi sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Inventarizatsiya · {date}'**
+  String inventoryCount(String date);
+
+  /// Farq hisoboti qatori
+  ///
+  /// In uz, this message translates to:
+  /// **'Sanalgan: {counted} · Sanalmagan: {left} · Ortiqcha: {surplus} · Kam: {shortage}'**
+  String inventorySummary(int counted, int left, int surplus, int shortage);
+
+  /// Kutilgan miqdor
+  ///
+  /// In uz, this message translates to:
+  /// **'Tizimda: {qty}'**
+  String inventorySystem(String qty);
+
+  /// Farq
+  ///
+  /// In uz, this message translates to:
+  /// **'Farq: {qty}'**
+  String inventoryDiff(String qty);
+
+  /// Ro'yxat sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Sanalmaganlar ({count})'**
+  String inventoryUncounted(int count);
+
+  /// Izoh
+  ///
+  /// In uz, this message translates to:
+  /// **'Sanalmagan tovarlar qoldig\'i o\'zgarmaydi. Bosib qo\'shish mumkin.'**
+  String get inventoryUncountedNote;
+
+  /// Bo'sh hujjat
+  ///
+  /// In uz, this message translates to:
+  /// **'Tovarni skanerlang: har skan — sanalgan +1'**
+  String get inventoryEmptyLines;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Tasdiqlash'**
+  String get inventoryPost;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Qoralamani o\'chirish'**
+  String get inventoryDelete;
+
+  /// Xabar
+  ///
+  /// In uz, this message translates to:
+  /// **'Inventarizatsiya tasdiqlandi: qoldiq sanalgan songa tenglashdi'**
+  String get inventoryPostedToast;
+
+  /// Huquq
+  ///
+  /// In uz, this message translates to:
+  /// **'Inventarizatsiyani menejer yoki ega tasdiqlashi kerak'**
+  String get inventoryNeedsApproval;
+
+  /// Xato
+  ///
+  /// In uz, this message translates to:
+  /// **'Hech narsa sanalmagan'**
+  String get inventoryEmptyPost;
+
+  /// Orqaga
+  ///
+  /// In uz, this message translates to:
+  /// **'Inventarizatsiyalar'**
+  String get inventoryBack;
+
+  /// Skan: topilmadi
+  ///
+  /// In uz, this message translates to:
+  /// **'Bu kod bazada yo\'q — avval tovar qo\'shing'**
+  String get inventoryNotFound;
+
+  /// Sanalgan miqdor maydoni (birlik bilan)
+  ///
+  /// In uz, this message translates to:
+  /// **'Sanalgan, {unit}'**
+  String inventoryCountedUnit(String unit);
+
+  /// Kirim miqdori maydoni (birlik bilan)
+  ///
+  /// In uz, this message translates to:
+  /// **'Miqdor, {unit}'**
+  String receivingQtyUnit(String unit);
 }
 
 class _AppLocalizationsDelegate

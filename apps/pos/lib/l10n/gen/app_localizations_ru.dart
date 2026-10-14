@@ -1316,9 +1316,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get receivingEmptyLines => 'Отсканируйте или найдите товар';
 
   @override
-  String get receivingQty => 'Кол-во';
-
-  @override
   String get receivingCost => 'Себестоимость';
 
   @override
@@ -1350,4 +1347,88 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get receivingEmptyPost => 'Нельзя провести пустой приход';
+
+  @override
+  String get inventoryTitle => 'Инвентаризация';
+
+  @override
+  String get inventoryNew => 'Новая инвентаризация';
+
+  @override
+  String get inventoryEmptyTitle => 'Инвентаризаций пока нет';
+
+  @override
+  String get inventoryEmptyMessage =>
+      'Пересчитайте товар сканером — остатки станут равны фактическим';
+
+  @override
+  String get inventoryScopeTitle => 'Что считаем?';
+
+  @override
+  String get inventoryScopeAll => 'Все товары';
+
+  @override
+  String inventoryCount(String date) {
+    return 'Инвентаризация · $date';
+  }
+
+  @override
+  String inventorySummary(int counted, int left, int surplus, int shortage) {
+    return 'Посчитано: $counted · Не посчитано: $left · Излишек: $surplus · Недостача: $shortage';
+  }
+
+  @override
+  String inventorySystem(String qty) {
+    return 'В системе: $qty';
+  }
+
+  @override
+  String inventoryDiff(String qty) {
+    return 'Разница: $qty';
+  }
+
+  @override
+  String inventoryUncounted(int count) {
+    return 'Не посчитаны ($count)';
+  }
+
+  @override
+  String get inventoryUncountedNote =>
+      'Остатки непосчитанных товаров не меняются. Нажмите, чтобы добавить.';
+
+  @override
+  String get inventoryEmptyLines => 'Сканируйте товар: каждый скан — +1';
+
+  @override
+  String get inventoryPost => 'Провести';
+
+  @override
+  String get inventoryDelete => 'Удалить черновик';
+
+  @override
+  String get inventoryPostedToast =>
+      'Инвентаризация проведена: остатки равны посчитанным';
+
+  @override
+  String get inventoryNeedsApproval =>
+      'Инвентаризацию должен подтвердить менеджер или владелец';
+
+  @override
+  String get inventoryEmptyPost => 'Ничего не посчитано';
+
+  @override
+  String get inventoryBack => 'Инвентаризации';
+
+  @override
+  String get inventoryNotFound => 'Код не найден — сначала добавьте товар';
+
+  @override
+  String inventoryCountedUnit(String unit) {
+    return 'Посчитано, $unit';
+  }
+
+  @override
+  String receivingQtyUnit(String unit) {
+    return 'Кол-во, $unit';
+  }
 }

@@ -7,6 +7,7 @@ import 'package:pos_app/app/shell/app_shell.dart';
 import 'package:pos_app/features/auth/lock_screen.dart';
 import 'package:pos_app/features/auth/setup_screen.dart';
 import 'package:pos_app/features/common/section_page.dart';
+import 'package:pos_app/features/inventory/inventory_screen.dart';
 import 'package:pos_app/features/pos/pos_screen.dart';
 import 'package:pos_app/features/products/products_screen.dart';
 import 'package:pos_app/features/receiving/receiving_screen.dart';
@@ -83,6 +84,11 @@ final routerProvider = Provider<GoRouter>((ref) {
                       GoRoute(
                         path: 'shift',
                         builder: (context, state) => const ShiftScreen(),
+                      ),
+                    if (section == AppSection.products)
+                      GoRoute(
+                        path: 'inventory',
+                        builder: (context, state) => const InventoryScreen(),
                       ),
                   ],
                 ),
