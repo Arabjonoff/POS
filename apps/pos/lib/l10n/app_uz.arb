@@ -1004,5 +1004,153 @@
         "type": "String"
       }
     }
+  },
+  "refundTitle": "Qaytarish",
+  "@refundTitle": {
+    "description": "Qaytarish oynasi sarlavhasi"
+  },
+  "refundFindHint": "Chek raqamini yozing yoki chekdagi shtrix-kodni skanerlang",
+  "@refundFindHint": {
+    "description": "Qaytarish: savdoni topish izohi"
+  },
+  "refundNumber": "Chek raqami",
+  "@refundNumber": {
+    "description": "Chek raqami maydoni"
+  },
+  "refundFind": "Topish",
+  "@refundFind": {
+    "description": "Chekni topish tugmasi"
+  },
+  "refundRecent": "Oxirgi cheklar",
+  "@refundRecent": {
+    "description": "Oxirgi savdolar ro'yxati"
+  },
+  "refundNotFound": "Bunday chek topilmadi",
+  "@refundNotFound": {
+    "description": "Chek topilmadi"
+  },
+  "refundNoSales": "Hali savdo yo'q",
+  "@refundNoSales": {
+    "description": "Savdolar ro'yxati bo'sh"
+  },
+  "refundStatusPartial": "Qisman qaytarilgan",
+  "@refundStatusPartial": {
+    "description": "Savdo holati"
+  },
+  "refundStatusFull": "Qaytarilgan",
+  "@refundStatusFull": {
+    "description": "Savdo holati"
+  },
+  "refundOtherCheck": "Boshqa chek",
+  "@refundOtherCheck": {
+    "description": "Boshqa chekni tanlash"
+  },
+  "refundSold": "Sotilgan: {qty}",
+  "@refundSold": {
+    "description": "Qatorda sotilgan miqdor",
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "refundLeft": "Qaytarish mumkin: {qty}",
+  "@refundLeft": {
+    "description": "Qatorda qolgan miqdor",
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "refundAll": "Hammasini",
+  "@refundAll": {
+    "description": "Hamma qatorlarni to'liq qaytarish"
+  },
+  "refundFullyRefunded": "Bu chek to'liq qaytarilgan",
+  "@refundFullyRefunded": {
+    "description": "Chek to'liq qaytarilgan"
+  },
+  "refundReason": "Sabab",
+  "@refundReason": {
+    "description": "Qaytarish sababi"
+  },
+  "refundReasonDefective": "Sifatsiz",
+  "@refundReasonDefective": {
+    "description": "Sabab"
+  },
+  "refundReasonExpired": "Muddati o'tgan",
+  "@refundReasonExpired": {
+    "description": "Sabab"
+  },
+  "refundReasonChangedMind": "Mijoz fikridan qaytdi",
+  "@refundReasonChangedMind": {
+    "description": "Sabab"
+  },
+  "refundReasonMistake": "Xato urilgan",
+  "@refundReasonMistake": {
+    "description": "Sabab"
+  },
+  "refundReasonOther": "Boshqa sabab",
+  "@refundReasonOther": {
+    "description": "Sabab matni maydoni"
+  },
+  "refundMethod": "Pulni qaytarish",
+  "@refundMethod": {
+    "description": "Qaytarish usuli"
+  },
+  "refundMethodCash": "Naqd berish",
+  "@refundMethodCash": {
+    "description": "Naqd qaytarish"
+  },
+  "refundMethodDebt": "Qarzdan ayirish",
+  "@refundMethodDebt": {
+    "description": "Mijoz qarzidan ayirish"
+  },
+  "refundTotal": "Qaytariladi",
+  "@refundTotal": {
+    "description": "Qaytariladigan summa"
+  },
+  "refundConfirm": "Qaytarish",
+  "@refundConfirm": {
+    "description": "Qaytarishni tasdiqlash tugmasi"
+  },
+  "refundNeedsApproval": "Qaytarishni menejer yoki ega tasdiqlashi kerak",
+  "@refundNeedsApproval": {
+    "description": "Qaytarish huquqi"
+  },
+  "refundChooseItems": "Qaytariladigan tovarni tanlang",
+  "@refundChooseItems": {
+    "description": "Hech narsa tanlanmagan"
+  },
+  "refundChooseReason": "Sababni tanlang",
+  "@refundChooseReason": {
+    "description": "Sabab tanlanmagan"
+  },
+  "refundDoneCash": "Qaytarildi · Mijozga {amount} bering",
+  "@refundDoneCash": {
+    "description": "Naqd qaytarish yakunlandi",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "refundDoneDebt": "Qaytarildi · Qarzdan {amount} ayirildi",
+  "@refundDoneDebt": {
+    "description": "Qarzdan ayirish yakunlandi",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "refundFailed": "Qaytarishni saqlab bo'lmadi. Qayta urinib ko'ring",
+  "@refundFailed": {
+    "description": "Qaytarish yozilmadi"
+  },
+  "refundNumberHint": "Masalan: D1-000123",
+  "@refundNumberHint": {
+    "description": "Chek raqami namunasi"
   }
 }

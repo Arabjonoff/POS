@@ -1466,6 +1466,198 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'{done}. Chek chiqmadi'**
   String posSaleDoneReceiptFailed(String done);
+
+  /// Qaytarish oynasi sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Qaytarish'**
+  String get refundTitle;
+
+  /// Qaytarish: savdoni topish izohi
+  ///
+  /// In uz, this message translates to:
+  /// **'Chek raqamini yozing yoki chekdagi shtrix-kodni skanerlang'**
+  String get refundFindHint;
+
+  /// Chek raqami maydoni
+  ///
+  /// In uz, this message translates to:
+  /// **'Chek raqami'**
+  String get refundNumber;
+
+  /// Chekni topish tugmasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Topish'**
+  String get refundFind;
+
+  /// Oxirgi savdolar ro'yxati
+  ///
+  /// In uz, this message translates to:
+  /// **'Oxirgi cheklar'**
+  String get refundRecent;
+
+  /// Chek topilmadi
+  ///
+  /// In uz, this message translates to:
+  /// **'Bunday chek topilmadi'**
+  String get refundNotFound;
+
+  /// Savdolar ro'yxati bo'sh
+  ///
+  /// In uz, this message translates to:
+  /// **'Hali savdo yo\'q'**
+  String get refundNoSales;
+
+  /// Savdo holati
+  ///
+  /// In uz, this message translates to:
+  /// **'Qisman qaytarilgan'**
+  String get refundStatusPartial;
+
+  /// Savdo holati
+  ///
+  /// In uz, this message translates to:
+  /// **'Qaytarilgan'**
+  String get refundStatusFull;
+
+  /// Boshqa chekni tanlash
+  ///
+  /// In uz, this message translates to:
+  /// **'Boshqa chek'**
+  String get refundOtherCheck;
+
+  /// Qatorda sotilgan miqdor
+  ///
+  /// In uz, this message translates to:
+  /// **'Sotilgan: {qty}'**
+  String refundSold(String qty);
+
+  /// Qatorda qolgan miqdor
+  ///
+  /// In uz, this message translates to:
+  /// **'Qaytarish mumkin: {qty}'**
+  String refundLeft(String qty);
+
+  /// Hamma qatorlarni to'liq qaytarish
+  ///
+  /// In uz, this message translates to:
+  /// **'Hammasini'**
+  String get refundAll;
+
+  /// Chek to'liq qaytarilgan
+  ///
+  /// In uz, this message translates to:
+  /// **'Bu chek to\'liq qaytarilgan'**
+  String get refundFullyRefunded;
+
+  /// Qaytarish sababi
+  ///
+  /// In uz, this message translates to:
+  /// **'Sabab'**
+  String get refundReason;
+
+  /// Sabab
+  ///
+  /// In uz, this message translates to:
+  /// **'Sifatsiz'**
+  String get refundReasonDefective;
+
+  /// Sabab
+  ///
+  /// In uz, this message translates to:
+  /// **'Muddati o\'tgan'**
+  String get refundReasonExpired;
+
+  /// Sabab
+  ///
+  /// In uz, this message translates to:
+  /// **'Mijoz fikridan qaytdi'**
+  String get refundReasonChangedMind;
+
+  /// Sabab
+  ///
+  /// In uz, this message translates to:
+  /// **'Xato urilgan'**
+  String get refundReasonMistake;
+
+  /// Sabab matni maydoni
+  ///
+  /// In uz, this message translates to:
+  /// **'Boshqa sabab'**
+  String get refundReasonOther;
+
+  /// Qaytarish usuli
+  ///
+  /// In uz, this message translates to:
+  /// **'Pulni qaytarish'**
+  String get refundMethod;
+
+  /// Naqd qaytarish
+  ///
+  /// In uz, this message translates to:
+  /// **'Naqd berish'**
+  String get refundMethodCash;
+
+  /// Mijoz qarzidan ayirish
+  ///
+  /// In uz, this message translates to:
+  /// **'Qarzdan ayirish'**
+  String get refundMethodDebt;
+
+  /// Qaytariladigan summa
+  ///
+  /// In uz, this message translates to:
+  /// **'Qaytariladi'**
+  String get refundTotal;
+
+  /// Qaytarishni tasdiqlash tugmasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Qaytarish'**
+  String get refundConfirm;
+
+  /// Qaytarish huquqi
+  ///
+  /// In uz, this message translates to:
+  /// **'Qaytarishni menejer yoki ega tasdiqlashi kerak'**
+  String get refundNeedsApproval;
+
+  /// Hech narsa tanlanmagan
+  ///
+  /// In uz, this message translates to:
+  /// **'Qaytariladigan tovarni tanlang'**
+  String get refundChooseItems;
+
+  /// Sabab tanlanmagan
+  ///
+  /// In uz, this message translates to:
+  /// **'Sababni tanlang'**
+  String get refundChooseReason;
+
+  /// Naqd qaytarish yakunlandi
+  ///
+  /// In uz, this message translates to:
+  /// **'Qaytarildi · Mijozga {amount} bering'**
+  String refundDoneCash(String amount);
+
+  /// Qarzdan ayirish yakunlandi
+  ///
+  /// In uz, this message translates to:
+  /// **'Qaytarildi · Qarzdan {amount} ayirildi'**
+  String refundDoneDebt(String amount);
+
+  /// Qaytarish yozilmadi
+  ///
+  /// In uz, this message translates to:
+  /// **'Qaytarishni saqlab bo\'lmadi. Qayta urinib ko\'ring'**
+  String get refundFailed;
+
+  /// Chek raqami namunasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Masalan: D1-000123'**
+  String get refundNumberHint;
 }
 
 class _AppLocalizationsDelegate

@@ -808,4 +808,110 @@ class AppLocalizationsRu extends AppLocalizations {
   String posSaleDoneReceiptFailed(String done) {
     return '$done. Чек не напечатан';
   }
+
+  @override
+  String get refundTitle => 'Возврат';
+
+  @override
+  String get refundFindHint =>
+      'Введите номер чека или отсканируйте штрихкод на чеке';
+
+  @override
+  String get refundNumber => 'Номер чека';
+
+  @override
+  String get refundFind => 'Найти';
+
+  @override
+  String get refundRecent => 'Последние чеки';
+
+  @override
+  String get refundNotFound => 'Чек не найден';
+
+  @override
+  String get refundNoSales => 'Продаж пока нет';
+
+  @override
+  String get refundStatusPartial => 'Частично возвращён';
+
+  @override
+  String get refundStatusFull => 'Возвращён';
+
+  @override
+  String get refundOtherCheck => 'Другой чек';
+
+  @override
+  String refundSold(String qty) {
+    return 'Продано: $qty';
+  }
+
+  @override
+  String refundLeft(String qty) {
+    return 'Можно вернуть: $qty';
+  }
+
+  @override
+  String get refundAll => 'Всё';
+
+  @override
+  String get refundFullyRefunded => 'Этот чек уже полностью возвращён';
+
+  @override
+  String get refundReason => 'Причина';
+
+  @override
+  String get refundReasonDefective => 'Брак';
+
+  @override
+  String get refundReasonExpired => 'Просрочен';
+
+  @override
+  String get refundReasonChangedMind => 'Клиент передумал';
+
+  @override
+  String get refundReasonMistake => 'Ошибка кассира';
+
+  @override
+  String get refundReasonOther => 'Другая причина';
+
+  @override
+  String get refundMethod => 'Как вернуть деньги';
+
+  @override
+  String get refundMethodCash => 'Наличными';
+
+  @override
+  String get refundMethodDebt => 'Списать с долга';
+
+  @override
+  String get refundTotal => 'К возврату';
+
+  @override
+  String get refundConfirm => 'Вернуть';
+
+  @override
+  String get refundNeedsApproval =>
+      'Возврат должен подтвердить менеджер или владелец';
+
+  @override
+  String get refundChooseItems => 'Выберите товар для возврата';
+
+  @override
+  String get refundChooseReason => 'Укажите причину';
+
+  @override
+  String refundDoneCash(String amount) {
+    return 'Возврат оформлен · Выдайте клиенту $amount';
+  }
+
+  @override
+  String refundDoneDebt(String amount) {
+    return 'Возврат оформлен · Долг уменьшен на $amount';
+  }
+
+  @override
+  String get refundFailed => 'Не удалось сохранить возврат. Попробуйте ещё раз';
+
+  @override
+  String get refundNumberHint => 'Например: D1-000123';
 }

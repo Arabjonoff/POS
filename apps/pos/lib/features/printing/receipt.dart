@@ -97,21 +97,34 @@ enum PaperWidth {
 /// Chek qatori va uning ko'rinishi (ESC/POS kodlovchi uchun).
 @immutable
 class ReceiptRow {
-  const ReceiptRow(this.text, {this.bold = false, this.center = false});
+  const ReceiptRow(
+    this.text, {
+    this.bold = false,
+    this.center = false,
+    this.barcode = false,
+  });
+
+  /// Chek raqami shtrix-kodi (CODE128): qaytarishda skanerlanadi.
+  const ReceiptRow.barcode(this.text)
+    : bold = false,
+      center = true,
+      barcode = true;
 
   final String text;
   final bool bold;
   final bool center;
+  final bool barcode;
 
   @override
   bool operator ==(Object other) =>
       other is ReceiptRow &&
       other.text == text &&
       other.bold == bold &&
-      other.center == center;
+      other.center == center &&
+      other.barcode == barcode;
 
   @override
-  int get hashCode => Object.hash(text, bold, center);
+  int get hashCode => Object.hash(text, bold, center, barcode);
 
   @override
   String toString() => text;
@@ -199,6 +212,7 @@ class ReceiptBuilder {
     }
     divider();
 
+    rows.add(ReceiptRow.barcode(data.number));
     final footer = data.footer.trim().isEmpty
         ? l10n.receiptThanks
         : data.footer.trim();
@@ -210,9 +224,12 @@ class ReceiptBuilder {
   /// Ekranda/testda ko'rinishi: markazdagi qatorlar bo'shliq bilan surilgan.
   static String render(List<ReceiptRow> rows, PaperWidth width) => rows
       .map(
-        (r) => r.center
-            ? '${' ' * ((width.chars - r.text.length) ~/ 2)}${r.text}'
-            : r.text,
+        (r) {
+          final text = r.barcode ? '||||| ${r.text} |||||' : r.text;
+          return r.center
+              ? '${' ' * ((width.chars - text.length) ~/ 2)}$text'
+              : text;
+        },
       )
       .join('\n');
 

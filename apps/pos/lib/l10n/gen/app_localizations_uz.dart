@@ -788,6 +788,113 @@ class AppLocalizationsUz extends AppLocalizations {
   String posSaleDoneReceiptFailed(String done) {
     return '$done. Chek chiqmadi';
   }
+
+  @override
+  String get refundTitle => 'Qaytarish';
+
+  @override
+  String get refundFindHint =>
+      'Chek raqamini yozing yoki chekdagi shtrix-kodni skanerlang';
+
+  @override
+  String get refundNumber => 'Chek raqami';
+
+  @override
+  String get refundFind => 'Topish';
+
+  @override
+  String get refundRecent => 'Oxirgi cheklar';
+
+  @override
+  String get refundNotFound => 'Bunday chek topilmadi';
+
+  @override
+  String get refundNoSales => 'Hali savdo yo\'q';
+
+  @override
+  String get refundStatusPartial => 'Qisman qaytarilgan';
+
+  @override
+  String get refundStatusFull => 'Qaytarilgan';
+
+  @override
+  String get refundOtherCheck => 'Boshqa chek';
+
+  @override
+  String refundSold(String qty) {
+    return 'Sotilgan: $qty';
+  }
+
+  @override
+  String refundLeft(String qty) {
+    return 'Qaytarish mumkin: $qty';
+  }
+
+  @override
+  String get refundAll => 'Hammasini';
+
+  @override
+  String get refundFullyRefunded => 'Bu chek to\'liq qaytarilgan';
+
+  @override
+  String get refundReason => 'Sabab';
+
+  @override
+  String get refundReasonDefective => 'Sifatsiz';
+
+  @override
+  String get refundReasonExpired => 'Muddati o\'tgan';
+
+  @override
+  String get refundReasonChangedMind => 'Mijoz fikridan qaytdi';
+
+  @override
+  String get refundReasonMistake => 'Xato urilgan';
+
+  @override
+  String get refundReasonOther => 'Boshqa sabab';
+
+  @override
+  String get refundMethod => 'Pulni qaytarish';
+
+  @override
+  String get refundMethodCash => 'Naqd berish';
+
+  @override
+  String get refundMethodDebt => 'Qarzdan ayirish';
+
+  @override
+  String get refundTotal => 'Qaytariladi';
+
+  @override
+  String get refundConfirm => 'Qaytarish';
+
+  @override
+  String get refundNeedsApproval =>
+      'Qaytarishni menejer yoki ega tasdiqlashi kerak';
+
+  @override
+  String get refundChooseItems => 'Qaytariladigan tovarni tanlang';
+
+  @override
+  String get refundChooseReason => 'Sababni tanlang';
+
+  @override
+  String refundDoneCash(String amount) {
+    return 'Qaytarildi · Mijozga $amount bering';
+  }
+
+  @override
+  String refundDoneDebt(String amount) {
+    return 'Qaytarildi · Qarzdan $amount ayirildi';
+  }
+
+  @override
+  String get refundFailed =>
+      'Qaytarishni saqlab bo\'lmadi. Qayta urinib ko\'ring';
+
+  @override
+  String get refundNumberHint => 'Masalan: D1-000123';
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -1571,4 +1678,110 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
   String posSaleDoneReceiptFailed(String done) {
     return '$done. Чек чиқмади';
   }
+
+  @override
+  String get refundTitle => 'Қайтариш';
+
+  @override
+  String get refundFindHint =>
+      'Чек рақамини ёзинг ёки чекдаги штрих-кодни сканерланг';
+
+  @override
+  String get refundNumber => 'Чек рақами';
+
+  @override
+  String get refundFind => 'Топиш';
+
+  @override
+  String get refundRecent => 'Охирги чеклар';
+
+  @override
+  String get refundNotFound => 'Бундай чек топилмади';
+
+  @override
+  String get refundNoSales => 'Ҳали савдо йўқ';
+
+  @override
+  String get refundStatusPartial => 'Қисман қайтарилган';
+
+  @override
+  String get refundStatusFull => 'Қайтарилган';
+
+  @override
+  String get refundOtherCheck => 'Бошқа чек';
+
+  @override
+  String refundSold(String qty) {
+    return 'Сотилган: $qty';
+  }
+
+  @override
+  String refundLeft(String qty) {
+    return 'Қайтариш мумкин: $qty';
+  }
+
+  @override
+  String get refundAll => 'Ҳаммасини';
+
+  @override
+  String get refundFullyRefunded => 'Бу чек тўлиқ қайтарилган';
+
+  @override
+  String get refundReason => 'Сабаб';
+
+  @override
+  String get refundReasonDefective => 'Сифатсиз';
+
+  @override
+  String get refundReasonExpired => 'Муддати ўтган';
+
+  @override
+  String get refundReasonChangedMind => 'Мижоз фикридан қайтди';
+
+  @override
+  String get refundReasonMistake => 'Хато урилган';
+
+  @override
+  String get refundReasonOther => 'Бошқа сабаб';
+
+  @override
+  String get refundMethod => 'Пулни қайтариш';
+
+  @override
+  String get refundMethodCash => 'Нақд бериш';
+
+  @override
+  String get refundMethodDebt => 'Қарздан айириш';
+
+  @override
+  String get refundTotal => 'Қайтарилади';
+
+  @override
+  String get refundConfirm => 'Қайтариш';
+
+  @override
+  String get refundNeedsApproval =>
+      'Қайтаришни менежер ёки эга тасдиқлаши керак';
+
+  @override
+  String get refundChooseItems => 'Қайтариладиган товарни танланг';
+
+  @override
+  String get refundChooseReason => 'Сабабни танланг';
+
+  @override
+  String refundDoneCash(String amount) {
+    return 'Қайтарилди · Мижозга $amount беринг';
+  }
+
+  @override
+  String refundDoneDebt(String amount) {
+    return 'Қайтарилди · Қарздан $amount айирилди';
+  }
+
+  @override
+  String get refundFailed => 'Қайтаришни сақлаб бўлмади. Қайта уриниб кўринг';
+
+  @override
+  String get refundNumberHint => 'Масалан: D1-000123';
 }

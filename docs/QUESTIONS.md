@@ -49,3 +49,10 @@ Format:
 - Agentning tavsiyasi: A — yaxlitlash ("125 300 → 125 000") va kichik chegirmalar savdoni to'xtatmaydi, kattasi nazoratda.
 - Hozircha tanlangan: A (vaqtincha; lokal sozlama `discount_cashier_max_bp`, standart 500 = 5%; `features/pos/cart/discount_policy.dart`). Menejer va ega — cheklovsiz. Tasdiqlagan xodim savdoning `approved_by` iga yoziladi. Sozlamani o'zgartirish ekrani — keyin (ega sozlamalari).
 - Javob:
+
+### Q-006 (T-045) Boshqa kassada sotilgan chekni qaytarish mumkinmi?
+- Kontekst: T-045 da qaytarish faqat shu kassaning lokal bazasidagi savdolar uchun ishlaydi (oflayn-birinchi). Bir do'konda bir nechta kassa bo'lsa, mijoz chekni boshqa kassaga olib kelishi mumkin. Server bunday qaytarishni qabul qiladi (`record_refund` savdoni tenant bo'yicha topadi), lekin kassada boshqa kassalarning savdolari yo'q.
+- Variantlar: A) internet bo'lsa, chek raqami bo'yicha serverdan savdoni olib (`GET /api/v1/sales/?number=`) qaytarish; oflaynda — faqat o'z savdolari. B) hamma kassaga oxirgi N kunlik savdolarni pull qilish (oflaynda ham ishlaydi, lekin baza kattalashadi). C) faqat sotgan kassada qaytarish.
+- Agentning tavsiyasi: A — oddiy, ma'lumotni ko'paytirmaydi, mahalla do'konida kassalar odatda bir xonada va internet ko'pincha bor.
+- Hozircha tanlangan: C (T-045 ning hozirgi holati). A uchun backend'ga `?number=` filtri va kassada onlayn qidiruv kerak bo'ladi.
+- Javob:

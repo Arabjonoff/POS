@@ -38,6 +38,18 @@ abstract final class EscPos {
 
   static const int _lf = 0x0a;
 
+  /// CODE128 (B to'plami): balandlik 60 nuqta, kenglik 2, raqam ostida.
+  static List<int> code128(String data) {
+    final bytes = ascii.encode(data);
+    return [
+      0x1d, 0x68, 60, // GS h — balandlik
+      0x1d, 0x77, 2, // GS w — chiziq kengligi
+      0x1d, 0x48, 2, // GS H — matn ostida
+      0x1d, 0x6b, 73, bytes.length + 2, 0x7b, 0x42, // GS k 73 n {B
+      ...bytes,
+    ];
+  }
+
   /// Chek: boshlash, kodlash jadvali, qatorlar (markaz/qalin), kesish;
   /// [drawer] — boshida pul qutisini ochish.
   static Uint8List receipt(
@@ -61,7 +73,7 @@ abstract final class EscPos {
         out.add(bold ? boldOn : boldOff);
       }
       out
-        ..add(encode(row.text, encoding))
+        ..add(row.barcode ? code128(row.text) : encode(row.text, encoding))
         ..addByte(_lf);
     }
     if (center) out.add(alignLeft);
