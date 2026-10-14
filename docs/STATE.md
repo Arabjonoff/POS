@@ -14,18 +14,18 @@
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 - [x] 1. Spec `docs/specs/platform-api.md` (endpointlar, onboarding, audit qoidasi, statistika formulalari)
 - [x] 2. `apps/platform_admin`: AdminAuditLog (o'zgarmas) + `audit()` yordamchisi; migratsiya; admin
-- [ ] 3. Tenantlar: ro'yxat/karta, onboarding (tenant + ega + obuna, vaqtinchalik parol), tahrir, bloklash, obuna sozlamalari, xodimlar va parol tiklash, sinxron hodisalari
-- [ ] 4. Tariflar CRUD (o'chirish = nofaol), to'lovlar (kiritish, bekor qilish, ro'yxat), qurilmalar (ro'yxat, bloklash)
-- [ ] 5. Statistika (faol, sinov, MRR, shu oy tushum, 7 kunda tugaydiganlar, sinxronlanmagan qurilmalar) + audit jurnali ro'yxati
+- [x] 3. Tenantlar: ro'yxat/karta, onboarding (tenant + ega + obuna, vaqtinchalik parol), tahrir, bloklash, obuna sozlamalari, xodimlar va parol tiklash, sinxron hodisalari
+- [x] 4. Tariflar CRUD (o'chirish = nofaol), to'lovlar (kiritish, bekor qilish, ro'yxat), qurilmalar (ro'yxat, bloklash)
+- [x] 5. Statistika (faol, sinov, MRR, shu oy tushum, 7 kunda tugaydiganlar, sinxronlanmagan qurilmalar) + audit jurnali ro'yxati
 - [ ] 6. Testlar: tenant foydalanuvchisi 403, har o'zgarish auditda (oldin/keyin), onboarding, to'lov/bekor, statistika qiymatlari
 - [ ] 7. openapi + schema.d.ts; lint/test; PROGRESS/ROADMAP; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-2-qadam: `apps/platform_admin` — AdminAuditLog (AppendOnly), `audit.py` (audit(), snapshot() — sirlarsiz), migratsiya 0001, admin.
+3–5-qadamlar: `apps/platform_admin` services (onboarding, tahrir, bloklash, obuna, parol, tarif, to'lov/bekor, qurilma bloklash — har biri audit bilan), serializers, views (TenantViewSet + actions, Plan, Payment + total, Device, Stats, AuditLog, reset-password), stats.py, urls. Schema toza. Testlar hali yo'q.
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-3-qadam: `backend/apps/platform_admin/services.py` (onboard_tenant, temp_password, block/unblock, update_subscription, reset_password) + serializers + TenantViewSet/UserResetView + urls `platform/`.
+6-qadam: `backend/apps/platform_admin/tests/` — conftest (platform_admin user, plan), test_access.py (har endpoint: tenant xodimi 403, anonim 401), test_tenants.py, test_billing.py (to'lov/bekor/tarif), test_devices_stats.py, har o'zgarishda audit tekshiruvi.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
