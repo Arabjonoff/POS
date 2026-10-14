@@ -213,6 +213,53 @@ void main() {
   });
 
   group('PosPinPad', () {
+    testWidgets('variable length: submit by ✓ and Enter, dots grow', (
+      tester,
+    ) async {
+      var submits = 0;
+      await pumpPos(
+        tester,
+        PosPinPad(
+          filled: 5,
+          onDigit: (_) {},
+          onBackspace: () {},
+          onSubmit: () => submits++,
+          backspaceTooltip: 'Erase',
+          submitTooltip: 'Enter PIN',
+        ),
+      );
+      await tester.pump();
+      await tester.tap(find.bySemanticsLabel('Enter PIN'));
+      await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+      expect(submits, 2);
+      // 5 ta kiritilgan — 5 ta nuqta (standart 4 dan ko'p).
+      expect(
+        find.descendant(
+          of: find.bySemanticsLabel('5'),
+          matching: find.byType(AnimatedContainer),
+        ),
+        findsNWidgets(5),
+      );
+    });
+
+    testWidgets('submit key is disabled with the pad', (tester) async {
+      var submits = 0;
+      await pumpPos(
+        tester,
+        PosPinPad(
+          filled: 4,
+          onDigit: (_) {},
+          onBackspace: () {},
+          onSubmit: () => submits++,
+          backspaceTooltip: 'Erase',
+          submitTooltip: 'Enter PIN',
+          enabled: false,
+        ),
+      );
+      await tester.tap(find.bySemanticsLabel('Enter PIN'));
+      expect(submits, 0);
+    });
+
     testWidgets('on-screen and physical keyboard input', (tester) async {
       final digits = <String>[];
       var back = 0;

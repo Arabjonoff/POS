@@ -81,6 +81,8 @@ class PinPadGallery extends StatelessWidget {
                 filled: 2,
                 onDigit: noopValue,
                 onBackspace: noop,
+                onSubmit: noop,
+                submitTooltip: 'Kirish',
                 backspaceTooltip: "O'chirish",
                 autofocus: false,
               ),

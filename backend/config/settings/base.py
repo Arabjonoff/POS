@@ -107,6 +107,9 @@ REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "EXCEPTION_HANDLER": "apps.core.exceptions.api_exception_handler",
     "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
+    # Faqat JSON: kassa va admin JSON yuboradi, OpenAPI klientlari ham JSON
+    # bilan generatsiya bo'ladi. Fayl yuklash kerak bo'lsa — o'sha view'da.
+    "DEFAULT_PARSER_CLASSES": ["rest_framework.parsers.JSONParser"],
     "TEST_REQUEST_DEFAULT_FORMAT": "json",
     "DEFAULT_THROTTLE_RATES": {"auth": "20/min"},
 }

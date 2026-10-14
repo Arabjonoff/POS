@@ -31,3 +31,10 @@ Bloklangan qurilma chegaraga kirmaydi (yo'qolgan qurilma o'rniga yangisini ulash
 - `GET /api/v1/devices/me/` (qurilma tokeni) → `{device, subscription: {status, paid_until, days_left, offline_days}, server_time}`. `last_seen_at` va `last_ip` yangilanadi.
 - `GET /api/v1/devices/`, `/devices/{id}/` (owner, manager) — o'z tenanti qurilmalari. Token/hash ko'rinmaydi.
 - Bloklash — hozircha platforma admini (Django admin); admin dashboard API — T-020.
+
+## Kassa tomoni (T-034)
+- **Birinchi ishga tushirish** (`/setup`): ega telefon + parol → kassa nomi (standart "Kassa 1") → `devices/register` → **birinchi sinxron** (pull, progress — yuklangan yozuvlar soni) → xodim tanlash. Ro'yxatdan o'tish `id` si javobdan oldin `LocalSettings.pending_device_id` ga yoziladi — javob kelmay qolsa, qayta urinish yangi qurilma yaratmaydi.
+- Token — `flutter_secure_storage` (`pos_device_token`); qurilma (`id`, `number` — chek prefiksi, `name`, `store`) — `LocalSettings`. Birinchi sinxron tugaganini `initial_sync_done` belgilaydi: ilova sinxron o'rtasida yopilsa, keyingi ochilishda sinxrondan davom etadi.
+- Xatolar ekranda: noto'g'ri telefon/parol, ega emas (menejer/kassir ulay olmaydi), qurilmalar chegarasi, obuna yo'q, qurilma bloklangan, internet yo'q.
+- Server manzili build paytida: `--dart-define=POS_API_URL=...` (standart — lokal `http://127.0.0.1:8100`).
+- API klient: `packages/api_client_dart` (`make api-clients` — swagger_parser + retrofit, faqat kassa endpoint'lari: auth, devices, sync). API faqat JSON qabul qiladi (`DEFAULT_PARSER_CLASSES = JSONParser`).

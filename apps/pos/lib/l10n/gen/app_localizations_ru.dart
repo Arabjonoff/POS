@@ -159,4 +159,170 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get sectionComingSoonMessage =>
       'Раздел появится в следующем обновлении';
+
+  @override
+  String get setupTitle => 'Подключение кассы';
+
+  @override
+  String get setupSubtitle => 'Войдите по телефону и паролю владельца магазина';
+
+  @override
+  String get setupPhoneLabel => 'Номер телефона';
+
+  @override
+  String get setupPhoneHint => '90 123 45 67';
+
+  @override
+  String get setupPasswordLabel => 'Пароль';
+
+  @override
+  String get setupNext => 'Продолжить';
+
+  @override
+  String get setupDeviceNameTitle => 'Назовите эту кассу';
+
+  @override
+  String get setupDeviceNameLabel => 'Название кассы';
+
+  @override
+  String get setupDeviceNameHelper => 'Например: Касса 1, Прилавок';
+
+  @override
+  String get setupDeviceNameDefault => 'Касса 1';
+
+  @override
+  String get setupConnect => 'Подключить';
+
+  @override
+  String get setupSyncTitle => 'Загрузка данных';
+
+  @override
+  String setupSyncProgress(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Загружено $count записи',
+      many: 'Загружено $count записей',
+      few: 'Загружено $count записи',
+      one: 'Загружена $count запись',
+      zero: 'Подготовка…',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get setupSyncFailed =>
+      'Не удалось загрузить данные. Проверьте интернет.';
+
+  @override
+  String get setupErrorInvalidCredentials => 'Неверный телефон или пароль';
+
+  @override
+  String get setupErrorNotOwner => 'Подключить кассу может только владелец';
+
+  @override
+  String get setupErrorDeviceLimit =>
+      'Лимит касс по тарифу исчерпан. Обратитесь к администратору.';
+
+  @override
+  String get setupErrorNoSubscription =>
+      'Подписка не найдена. Обратитесь к администратору.';
+
+  @override
+  String get setupErrorDeviceBlocked =>
+      'Эта касса заблокирована. Обратитесь к администратору.';
+
+  @override
+  String get setupErrorNetwork =>
+      'Нет интернета или сервер не отвечает. Попробуйте ещё раз.';
+
+  @override
+  String get setupErrorUnknown => 'Что-то пошло не так. Попробуйте ещё раз.';
+
+  @override
+  String get fieldRequired => 'Заполните поле';
+
+  @override
+  String get lockTitle => 'Кто работает?';
+
+  @override
+  String get lockEnterPin => 'Введите PIN-код';
+
+  @override
+  String get lockSubmit => 'Войти';
+
+  @override
+  String get lockBack => 'Другой сотрудник';
+
+  @override
+  String lockWrongPin(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Неверный PIN. Осталось $count попытки',
+      many: 'Неверный PIN. Осталось $count попыток',
+      few: 'Неверный PIN. Осталось $count попытки',
+      one: 'Неверный PIN. Осталась $count попытка',
+      zero: 'Неверный PIN',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String lockLockedOut(int seconds) {
+    String _temp0 = intl.Intl.pluralLogic(
+      seconds,
+      locale: localeName,
+      other: 'Слишком много ошибок. Повторите через $seconds секунды',
+      many: 'Слишком много ошибок. Повторите через $seconds секунд',
+      few: 'Слишком много ошибок. Повторите через $seconds секунды',
+      one: 'Слишком много ошибок. Повторите через $seconds секунду',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get lockNoPin => 'PIN не задан';
+
+  @override
+  String get lockNoStaffTitle => 'Сотрудники не найдены';
+
+  @override
+  String get lockNoStaffMessage =>
+      'Данные ещё не загружены. Проверьте интернет и повторите.';
+
+  @override
+  String get roleOwner => 'Владелец';
+
+  @override
+  String get roleManager => 'Менеджер';
+
+  @override
+  String get roleCashier => 'Кассир';
+
+  @override
+  String get actionLock => 'Заблокировать';
+
+  @override
+  String get settingsAutoLock => 'Автоблокировка';
+
+  @override
+  String get settingsAutoLockHelper =>
+      'Экран блокируется, если касса не используется';
+
+  @override
+  String get settingsAutoLockOff => 'Выключена';
+
+  @override
+  String settingsAutoLockMinutes(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: 'Через $minutes минуты',
+      many: 'Через $minutes минут',
+      few: 'Через $minutes минуты',
+      one: 'Через $minutes минуту',
+    );
+    return '$_temp0';
+  }
 }
