@@ -164,6 +164,74 @@ class _ReceiptEditorState extends ConsumerState<ReceiptEditor> {
     widget.onClose();
   }
 
+  Widget _totals(ReceiptDoc doc) {
+    final l10n = AppLocalizations.of(context);
+    return Text(
+      '${l10n.receivingLines(doc.lines.length)} · '
+      '${l10n.receivingTotal(context.fmt.money(doc.totalCostTiyin))}',
+      key: const ValueKey('receipt-total'),
+      style: PosTypography.bodyStrong.copyWith(
+        color: PosPalette.of(context).text,
+      ),
+    );
+  }
+
+  PosButton _postButton(ReceiptDoc doc, {bool expand = false}) => PosButton(
+    key: const ValueKey('receipt-post'),
+    label: AppLocalizations.of(context).receivingPost,
+    icon: Icons.check,
+    loading: _busy,
+    expand: expand,
+    onPressed: _busy ? null : () => unawaited(_post(doc)),
+  );
+
+  Widget _wideFooter(ReceiptDoc doc) {
+    final l10n = AppLocalizations.of(context);
+    return Row(
+      children: [
+        Expanded(child: _totals(doc)),
+        if (doc.isDraft) ...[
+          PosButton(
+            key: const ValueKey('receipt-delete'),
+            label: l10n.receivingDelete,
+            variant: PosButtonVariant.ghost,
+            onPressed: _busy ? null : () => unawaited(_deleteDraft()),
+          ),
+          const SizedBox(width: PosSpacing.s),
+          _postButton(doc),
+        ],
+      ],
+    );
+  }
+
+  /// Telefon: jami, ostida — o'chirish ikoni va to'liq kenglikdagi tasdiqlash.
+  Widget _compactFooter(ReceiptDoc doc) {
+    final l10n = AppLocalizations.of(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _totals(doc),
+        if (doc.isDraft) ...[
+          const SizedBox(height: PosSpacing.s),
+          Row(
+            children: [
+              PosIconButton(
+                key: const ValueKey('receipt-delete'),
+                icon: Icons.delete_outline,
+                tooltip: l10n.receivingDelete,
+                variant: PosIconButtonVariant.outlined,
+                onPressed: _busy ? null : () => unawaited(_deleteDraft()),
+              ),
+              const SizedBox(width: PosSpacing.s),
+              Expanded(child: _postButton(doc, expand: true)),
+            ],
+          ),
+        ],
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -307,43 +375,7 @@ class _ReceiptEditorState extends ConsumerState<ReceiptEditor> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: PosSpacing.m),
-                  child: Wrap(
-                    alignment: WrapAlignment.spaceBetween,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    spacing: PosSpacing.m,
-                    runSpacing: PosSpacing.s,
-                    children: [
-                      Text(
-                        '${l10n.receivingLines(doc.lines.length)} · '
-                        '${l10n.receivingTotal(fmt.money(doc.totalCostTiyin))}',
-                        key: const ValueKey('receipt-total'),
-                        style: PosTypography.bodyStrong.copyWith(color: p.text),
-                      ),
-                      if (draft)
-                        Wrap(
-                          spacing: PosSpacing.s,
-                          children: [
-                            PosButton(
-                              key: const ValueKey('receipt-delete'),
-                              label: l10n.receivingDelete,
-                              variant: PosButtonVariant.ghost,
-                              onPressed: _busy
-                                  ? null
-                                  : () => unawaited(_deleteDraft()),
-                            ),
-                            PosButton(
-                              key: const ValueKey('receipt-post'),
-                              label: l10n.receivingPost,
-                              icon: Icons.check,
-                              loading: _busy,
-                              onPressed: _busy
-                                  ? null
-                                  : () => unawaited(_post(doc)),
-                            ),
-                          ],
-                        ),
-                    ],
-                  ),
+                  child: compact ? _compactFooter(doc) : _wideFooter(doc),
                 ),
               ),
             ],

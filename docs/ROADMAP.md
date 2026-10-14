@@ -193,7 +193,7 @@ Spec'lar: `products.md`, `stock-receipt.md`, `barcode.md`.
 - **Qabul:** 5000 qatorli fayl import qilinadi; xato qatorlar aniq ko'rsatiladi.
 - **Bog'liq:** T-050, T-014
 
-### [ ] T-052 Kirim (tovar qabul qilish) skaner bilan
+### [x] T-052 Kirim (tovar qabul qilish) skaner bilan
 - **Bajarish:** `stock-receipt.md` bo'yicha: yetkazib beruvchi (ixtiyoriy), skanerlash → qatorga qo'shiladi yoki miqdor +1, miqdor/tannarx/sotish narxini tahrirlash, noma'lum shtrix-kod → tez tovar yaratish oynasi (shtrix-kod to'ldirilgan), qoralama saqlanadi, tasdiqlash → qoldiq oshadi (oflayn ham).
 - **Qabul:** widget testlari; 100 ta skanerlash ketma-ket to'g'ri qo'shiladi; noma'lum kod oqimi testi.
 - **Bog'liq:** T-050, T-035
