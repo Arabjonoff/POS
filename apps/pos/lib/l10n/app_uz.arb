@@ -1148,5 +1148,9 @@
   "refundFailed": "Qaytarishni saqlab bo'lmadi. Qayta urinib ko'ring",
   "@refundFailed": {
     "description": "Qaytarish yozilmadi"
+  },
+  "refundNumberHint": "Masalan: D1-000123",
+  "@refundNumberHint": {
+    "description": "Chek raqami namunasi"
   }
 }

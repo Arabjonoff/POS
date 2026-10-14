@@ -595,7 +595,7 @@ class _CashierViewState extends ConsumerState<CashierView> {
           PosIconButton(
             key: const ValueKey('pos-refund'),
             icon: Icons.assignment_return_outlined,
-            tooltip: '${l10n.refundTitle} (F8)',
+            tooltip: l10n.refundTitle,
             variant: PosIconButtonVariant.outlined,
             onPressed: () => unawaited(_openRefund()),
           ),

@@ -911,4 +911,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get refundFailed => 'Не удалось сохранить возврат. Попробуйте ещё раз';
+
+  @override
+  String get refundNumberHint => 'Например: D1-000123';
 }

@@ -338,7 +338,7 @@ class _RefundDialogState extends ConsumerState<RefundDialog> {
               key: const ValueKey('refund-number'),
               controller: _number,
               label: l10n.refundNumber,
-              hint: 'D1-000001',
+              hint: l10n.refundNumberHint,
               textInputAction: TextInputAction.search,
               onSubmitted: (v) => unawaited(_openNumber(v)),
             ),

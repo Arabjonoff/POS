@@ -258,5 +258,6 @@
   "refundChooseReason": "Сабабни танланг",
   "refundDoneCash": "Қайтарилди · Мижозга {amount} беринг",
   "refundDoneDebt": "Қайтарилди · Қарздан {amount} айирилди",
-  "refundFailed": "Қайтаришни сақлаб бўлмади. Қайта уриниб кўринг"
+  "refundFailed": "Қайтаришни сақлаб бўлмади. Қайта уриниб кўринг",
+  "refundNumberHint": "Масалан: D1-000123"
 }

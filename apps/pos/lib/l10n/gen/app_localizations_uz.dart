@@ -892,6 +892,9 @@ class AppLocalizationsUz extends AppLocalizations {
   @override
   String get refundFailed =>
       'Qaytarishni saqlab bo\'lmadi. Qayta urinib ko\'ring';
+
+  @override
+  String get refundNumberHint => 'Masalan: D1-000123';
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -1778,4 +1781,7 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get refundFailed => 'Қайтаришни сақлаб бўлмади. Қайта уриниб кўринг';
+
+  @override
+  String get refundNumberHint => 'Масалан: D1-000123';
 }

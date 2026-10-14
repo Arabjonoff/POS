@@ -13,6 +13,7 @@ const Map<String, LogicalKeyboardKey> _keys = {
   '8': LogicalKeyboardKey.digit8,
   '9': LogicalKeyboardKey.digit9,
   ',': LogicalKeyboardKey.comma,
+  '-': LogicalKeyboardKey.minus,
   ' ': LogicalKeyboardKey.space,
   'a': LogicalKeyboardKey.keyA,
   'b': LogicalKeyboardKey.keyB,

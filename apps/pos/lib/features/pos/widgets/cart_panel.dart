@@ -47,14 +47,22 @@ class CartTabs extends StatelessWidget {
             ),
             const SizedBox(width: PosSpacing.xs),
           ],
-          PosButton(
-            label: l10n.posNewCart,
-            icon: Icons.add,
-            size: PosButtonSize.s,
-            variant: PosButtonVariant.ghost,
-            shortcut: compact ? null : 'F6',
-            onPressed: state.canAddCart ? onNew : null,
-          ),
+          // Telefonda — faqat ikon: yonidagi tugmalarga joy qolsin.
+          if (compact)
+            PosIconButton(
+              icon: Icons.add,
+              tooltip: l10n.posNewCart,
+              onPressed: state.canAddCart ? onNew : null,
+            )
+          else
+            PosButton(
+              label: l10n.posNewCart,
+              icon: Icons.add,
+              size: PosButtonSize.s,
+              variant: PosButtonVariant.ghost,
+              shortcut: 'F6',
+              onPressed: state.canAddCart ? onNew : null,
+            ),
         ],
       ),
     );

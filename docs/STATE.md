@@ -16,14 +16,14 @@
 - [x] 2. `refund_writer.dart` (bitta tranzaksiya: Refund + RefundItem + StockMovement(+qty) + DebtEntry(−) + Sale.status + outbox `refund.created`) va `sale_lookup.dart` (raqam bo'yicha, smena savdolari, qaytarilgan miqdorlar bilan) + testlar
 - [x] 3. Chekda savdo raqami shtrix-kodi (CODE128, `GS k`) — qaytarishda skanerlash uchun; snapshotlar yangilanadi
 - [x] 4. Qaytarish oynasi (F8): savdoni topish (raqam/skan/oxirgi savdolar), qatorlar va miqdor, sabab, naqd yoki qarzdan ayirish, menejer/ega PIN; tarjimalar
-- [ ] 5. Widget testlari + golden + skrinshotlar `docs/screenshots/T-045/`
+- [x] 5. Widget testlari + golden + skrinshotlar `docs/screenshots/T-045/`
 - [ ] 6. Spec, PR, CI → merge; ROADMAP, PROGRESS, STATE
 
 ## Oxirgi bajarilgan ish
-- 4-qadam: `features/refunds/refund_dialog.dart` (`showRefundDialog` → `RefundResult`), kassa ekranida F8 + "Qaytarish" ikoni (desktop qidiruv qatorida, telefonda chek tablari qatorida), toast `refundDoneCash`/`refundDoneDebt`, tarjimalar `refund*` (31 ta).
+- 5-qadam: `test/features/refund_test.dart` (7 widget testi), golden `refund` (find/items), telefonda "Yangi chek" — ikon; pos/app_shell goldenlari yangilandi; skrinshotlar `docs/screenshots/T-045/`. apps/pos: 384 test yashil.
 
 ## Keyingi aniq harakat
-- 5-qadam: `apps/pos/test/features/refund_test.dart` (savdo → F8 → ro'yxatdan tanlash/raqam/skan → qisman → sabab → PIN → bazada refund, qoldiq; to'liq; qarzdan ayirish; tanlanmagan/sababsiz; menejer o'zi — PIN so'ralmaydi), golden `refund` (topish va qatorlar), keyin `flutter test --update-goldens test/goldens/pos_golden_test.dart test/goldens/app_shell_golden_test.dart` (yangi tugma), skrinshotlar `docs/screenshots/T-045/`.
+- 6-qadam: `docs/specs/sales-api.md` yoki `pos-screen.md` ga "Kassada qaytarish (T-045)" bo'limi; CI tekshiruvlari (analyze ×3, format, ui/widgetbook test); PR → CI → merge; ROADMAP [x], PROGRESS, STATE shablon.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

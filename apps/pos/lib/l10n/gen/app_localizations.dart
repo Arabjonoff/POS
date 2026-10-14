@@ -1652,6 +1652,12 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Qaytarishni saqlab bo\'lmadi. Qayta urinib ko\'ring'**
   String get refundFailed;
+
+  /// Chek raqami namunasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Masalan: D1-000123'**
+  String get refundNumberHint;
 }
 
 class _AppLocalizationsDelegate
