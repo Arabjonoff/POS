@@ -12,7 +12,7 @@
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [ ] 1. Spec `docs/specs/platform-api.md` (endpointlar, onboarding, audit qoidasi, statistika formulalari)
+- [x] 1. Spec `docs/specs/platform-api.md` (endpointlar, onboarding, audit qoidasi, statistika formulalari)
 - [ ] 2. `apps/platform_admin`: AdminAuditLog (o'zgarmas) + `audit()` yordamchisi; migratsiya; admin
 - [ ] 3. Tenantlar: ro'yxat/karta, onboarding (tenant + ega + obuna, vaqtinchalik parol), tahrir, bloklash, obuna sozlamalari, xodimlar va parol tiklash, sinxron hodisalari
 - [ ] 4. Tariflar CRUD (o'chirish = nofaol), to'lovlar (kiritish, bekor qilish, ro'yxat), qurilmalar (ro'yxat, bloklash)
@@ -21,11 +21,11 @@
 - [ ] 7. openapi + schema.d.ts; lint/test; PROGRESS/ROADMAP; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-T-019 merge qilindi (#16). T-020 branch ochildi.
+1-qadam: spec `docs/specs/platform-api.md` (audit qoidasi, onboarding, to'lovlar, qurilmalar, statistika).
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-1-qadam: `docs/specs/platform-api.md` (`admin-dashboard.md`, `subscription-billing.md`, `devices.md` asosida).
+2-qadam: `backend/apps/platform_admin/` (apps.py label=platform_admin, models.py AdminAuditLog, audit.py: audit(actor, action, target, before, after, tenant, reason) + snapshot()), INSTALLED_APPS, makemigrations.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
