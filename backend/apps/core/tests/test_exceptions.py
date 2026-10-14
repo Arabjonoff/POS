@@ -44,3 +44,8 @@ def test_domain_error_with_custom_code_and_status():
 
 def test_unhandled_exception_passes_through():
     assert api_exception_handler(RuntimeError("boom"), {}) is None
+
+
+def test_domain_error_details():
+    response = _handle(DomainError("device_limit_reached", status_code=409, details={"max": 2}))
+    assert response.data["error"]["details"] == {"max": 2}

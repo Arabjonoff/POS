@@ -25,7 +25,7 @@ Bloklangan qurilma chegaraga kirmaydi (yo'qolgan qurilma o'rniga yangisini ulash
 - Format: `dev_` + 43 belgili tasodifiy satr (`secrets.token_urlsafe(32)`). Serverda faqat **sha256 hash** saqlanadi.
 - Sarlavha: `Authorization: Device <token>`.
 - Noto'g'ri yoki eskirgan token — `401`. Bloklangan qurilma — `403 device_blocked` (sinxron ham).
-- Qurilma tokeni bilan faqat qurilma endpoint'lari (`/devices/me/`, keyin `/sync/*`); foydalanuvchi endpoint'lari (`/users/` va h.k.) — `403`. Foydalanuvchi JWT'si bilan qurilma endpoint'lari — `403`.
+- Token turlari aralashmaydi: qurilma tokeni faqat qurilma endpoint'larida (`/devices/me/`, keyin `/sync/*`) qabul qilinadi; foydalanuvchi endpoint'lariga (`/users/`, `/auth/me/` va h.k.) qurilma tokeni bilan — `401`. Qurilma endpoint'lariga foydalanuvchi JWT'si bilan — `401`.
 
 ## Boshqa endpoint'lar
 - `GET /api/v1/devices/me/` (qurilma tokeni) → `{device, subscription: {status, paid_until, days_left, offline_days}, server_time}`. `last_seen_at` va `last_ip` yangilanadi.

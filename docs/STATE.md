@@ -13,9 +13,9 @@
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 - [x] 1. Spec: `docs/specs/devices.md` (token formati, idempotent ro'yxatdan o'tish, chegara, bloklash, xato kodlari)
-- [ ] 2. `apps/devices`: Device (TenantScopedModel: store, number, name, platform, app_version, last_sync_at, last_seen_at, last_ip, is_blocked, token_hash, registered_by), migratsiya, admin
-- [ ] 3. `tokens.py` + `authentication.py` (DeviceTokenAuthentication, `Device <token>`, spectacular extension) + `services.register_device`
-- [ ] 4. API: `POST /api/v1/devices/register/` (owner), `GET /api/v1/devices/` (manager+), `GET /api/v1/devices/me/` (qurilma tokeni)
+- [x] 2. `apps/devices`: Device (TenantScopedModel: store, number, name, platform, app_version, last_sync_at, last_seen_at, last_ip, is_blocked, token_hash, registered_by), migratsiya, admin
+- [x] 3. `tokens.py` + `authentication.py` (DeviceTokenAuthentication, `Device <token>`, spectacular extension) + `services.register_device`
+- [x] 4. API: `POST /api/v1/devices/register/` (owner), `GET /api/v1/devices/` (manager+), `GET /api/v1/devices/me/` (qurilma tokeni)
 - [ ] 5. Testlar: chegara, idempotentlik, bloklangan 403, tenant izolyatsiyasi, token turlari aralashmasligi
 - [ ] 6. openapi + schema.d.ts; lint/test; PR, CI, merge
 
@@ -24,7 +24,7 @@ T-013 merge qilindi (#9). T-012 branch ochildi.
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-2-qadam: `backend/apps/devices/models.py`, admin.py, apps.py; INSTALLED_APPS; makemigrations.
+5-qadam: `backend/apps/devices/tests/test_register.py`, `test_auth.py`.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
