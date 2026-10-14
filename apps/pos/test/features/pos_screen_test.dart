@@ -9,6 +9,7 @@ import 'package:pos_app/app/sync/sales_gate.dart';
 import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/features/pos/cart/cart.dart';
 import 'package:pos_app/features/pos/cart/cart_controller.dart';
+import 'package:pos_app/features/pos/payment/payment_dialog.dart';
 import 'package:pos_ui/pos_ui.dart';
 
 import '../helpers/catalog_seed.dart';
@@ -223,10 +224,7 @@ void main() {
         findsWidgets,
       );
       await press(tester, LogicalKeyboardKey.f12);
-      expect(
-        find.text("To'lov oynasi keyingi yangilanishda qo'shiladi"),
-        findsNothing,
-      );
+      expect(find.byType(PaymentDialog), findsNothing);
     });
   });
 

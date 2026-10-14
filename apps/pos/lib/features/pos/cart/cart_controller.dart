@@ -201,6 +201,16 @@ class CartController extends AsyncNotifier<CartState> {
     );
   }
 
+  /// F4: chek mijozi (nasiyada oldindan tanlangan bo'ladi).
+  void setCustomer(String? customerId) {
+    _replaceCart(
+      _s.cart.copyWith(
+        customerId: customerId,
+        clearCustomer: customerId == null,
+      ),
+    );
+  }
+
   // ---- Tanlov -----------------------------------------------------------
 
   void select(String? lineId) {

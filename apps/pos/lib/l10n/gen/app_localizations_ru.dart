@@ -537,9 +537,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get posDiscount => 'Скидка';
 
   @override
-  String get posPayComingSoon => 'Окно оплаты появится в следующем обновлении';
-
-  @override
   String posLineRemoved(String name) {
     return '$name: удалено';
   }
@@ -591,4 +588,101 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get approvalConfirm => 'Подтвердить';
+
+  @override
+  String get payTitle => 'Оплата';
+
+  @override
+  String get payMixed => 'Смешанная';
+
+  @override
+  String get payExact => 'Без сдачи';
+
+  @override
+  String get payReceived => 'Получено';
+
+  @override
+  String get payShort => 'Не хватает';
+
+  @override
+  String get payCardHint => 'Проведите оплату на терминале и подтвердите';
+
+  @override
+  String get payComplete => 'Завершить';
+
+  @override
+  String get payCashRest => 'Наличные (остаток)';
+
+  @override
+  String get payPartsExceed => 'Карта и долг больше суммы чека';
+
+  @override
+  String get payScanBlocked => 'Сначала завершите оплату';
+
+  @override
+  String get payChooseCustomer => 'Выберите клиента';
+
+  @override
+  String get payCustomerSearch => 'Имя или телефон';
+
+  @override
+  String get payNewCustomer => 'Новый клиент';
+
+  @override
+  String get payCustomerName => 'Имя';
+
+  @override
+  String get payCustomerPhone => 'Телефон';
+
+  @override
+  String payCustomerDebt(String amount) {
+    return 'Долг: $amount';
+  }
+
+  @override
+  String payCustomerLimit(String amount) {
+    return 'Лимит: $amount';
+  }
+
+  @override
+  String get payLimitExceeded =>
+      'Долг превысит лимит — нужно подтверждение менеджера или владельца';
+
+  @override
+  String get payNoCustomers => 'Клиенты не найдены';
+
+  @override
+  String get paySaleDone => 'Продажа завершена';
+
+  @override
+  String paySaleDoneChange(String amount) {
+    return 'Продажа завершена · Сдача $amount';
+  }
+
+  @override
+  String get payFailed => 'Не удалось сохранить продажу. Попробуйте ещё раз';
+
+  @override
+  String get posCustomer => 'Клиент';
+
+  @override
+  String get posCustomerRemove => 'Убрать клиента';
+
+  @override
+  String get payCash => 'Наличные';
+
+  @override
+  String get payCard => 'Карта';
+
+  @override
+  String get payDebt => 'В долг';
+
+  @override
+  String get payChangeCustomer => 'Другой клиент';
+
+  @override
+  String get posCustomerTitle => 'Клиент чека';
+
+  @override
+  String get posCustomerNone => 'Клиент не выбран';
 }

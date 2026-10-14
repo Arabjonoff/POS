@@ -9,12 +9,16 @@ import 'package:pos_app/app/shell/app_status_bar.dart';
 import 'package:pos_app/app/sync/sales_gate.dart';
 import 'package:pos_app/core/barcode/barcode.dart';
 import 'package:pos_app/core/barcode/scanner_service.dart';
+import 'package:pos_app/core/format/app_format.dart';
 import 'package:pos_app/core/format/unit_code.dart';
 import 'package:pos_app/data/catalog/product_catalog.dart';
+import 'package:pos_app/data/customers/customer_directory.dart';
 import 'package:pos_app/features/common/manager_approval.dart';
 import 'package:pos_app/features/pos/cart/cart.dart';
 import 'package:pos_app/features/pos/cart/cart_controller.dart';
 import 'package:pos_app/features/pos/cart/discount_policy.dart';
+import 'package:pos_app/features/pos/payment/customer_picker.dart';
+import 'package:pos_app/features/pos/payment/payment_dialog.dart';
 import 'package:pos_app/features/pos/widgets/cart_panel.dart';
 import 'package:pos_app/features/pos/widgets/discount_dialog.dart';
 import 'package:pos_app/features/pos/widgets/product_panel.dart';
@@ -296,14 +300,34 @@ class _CashierViewState extends ConsumerState<CashierView> {
     _focusScreen();
   }
 
-  void _pay() {
-    final allowed = ref.read(salesAllowedProvider);
-    if (!allowed || _state.cart.isEmpty) return;
-    // To'lov oynasi — T-043.
+  /// F12: to'lov oynasi. Yakunlansa — savat bo'shaydi, 3 s xabar (qaytim
+  /// bilan), fokus yana skanerga.
+  Future<void> _pay() async {
+    final cart = _state.cart;
+    if (!ref.read(salesAllowedProvider) || cart.isEmpty || _dialogOpen) return;
+    final result = await _dialog(() => showPaymentDialog(context, cart: cart));
+    if (result == null || !mounted) return _focusScreen();
+    _cart.clearActive();
+    final l10n = AppLocalizations.of(context);
+    final change = result.changeTiyin;
     showPosToast(
       context,
-      message: AppLocalizations.of(context).posPayComingSoon,
+      message: change > 0
+          ? l10n.paySaleDoneChange(context.fmt.money(change))
+          : l10n.paySaleDone,
+      tone: PosTone.success,
+      duration: const Duration(seconds: 3),
     );
+    _focusScreen();
+  }
+
+  /// F4: chek mijozi.
+  Future<void> _chooseCustomer() async {
+    final choice = await _dialog(
+      () => showCustomerDialog(context, selectedId: _state.cart.customerId),
+    );
+    if (choice != null) _cart.setCustomer(choice.customer?.id);
+    _focusScreen();
   }
 
   /// Oyna ochiq paytda skaner ro'yxati o'chadi — raqamlar oynaga tushadi.
@@ -357,12 +381,16 @@ class _CashierViewState extends ConsumerState<CashierView> {
       unawaited(_discount());
       return true;
     }
+    if (key == LogicalKeyboardKey.f4) {
+      unawaited(_chooseCustomer());
+      return true;
+    }
     if (key == LogicalKeyboardKey.f6) {
       _newCart();
       return true;
     }
     if (key == LogicalKeyboardKey.f12) {
-      _pay();
+      unawaited(_pay());
       return true;
     }
     if (key == LogicalKeyboardKey.escape) {
@@ -405,6 +433,16 @@ class _CashierViewState extends ConsumerState<CashierView> {
       return true;
     }
     return false;
+  }
+
+  String? _customerName(Cart cart) {
+    final id = cart.customerId;
+    if (id == null) return null;
+    for (final c
+        in ref.watch(customersProvider).value ?? const <CustomerEntry>[]) {
+      if (c.id == id) return c.name;
+    }
+    return null;
   }
 
   CartLine? get _lastLine {
@@ -588,9 +626,12 @@ class _CashierViewState extends ConsumerState<CashierView> {
                     const SizedBox(height: PosSpacing.m),
                     CartSummary(
                       cart: state.cart,
+                      customerName: _customerName(state.cart),
                       payEnabled: block == SalesBlock.none,
                       onDiscount: () => unawaited(_discount()),
-                      onPay: _pay,
+                      onCustomer: () => unawaited(_chooseCustomer()),
+                      onRemoveCustomer: () => _cart.setCustomer(null),
+                      onPay: () => unawaited(_pay()),
                     ),
                   ],
                 ),
@@ -675,7 +716,7 @@ class _CashierViewState extends ConsumerState<CashierView> {
               compact: true,
               payEnabled: block == SalesBlock.none,
               onDiscount: () => unawaited(_discount()),
-              onPay: _pay,
+              onPay: () => unawaited(_pay()),
             ),
           ),
         ),

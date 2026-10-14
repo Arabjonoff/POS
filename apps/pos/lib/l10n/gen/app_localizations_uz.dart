@@ -517,10 +517,6 @@ class AppLocalizationsUz extends AppLocalizations {
   String get posDiscount => 'Chegirma';
 
   @override
-  String get posPayComingSoon =>
-      'To\'lov oynasi keyingi yangilanishda qo\'shiladi';
-
-  @override
   String posLineRemoved(String name) {
     return '$name o\'chirildi';
   }
@@ -572,6 +568,103 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get approvalConfirm => 'Tasdiqlash';
+
+  @override
+  String get payTitle => 'To\'lov';
+
+  @override
+  String get payMixed => 'Aralash';
+
+  @override
+  String get payExact => 'Aniq';
+
+  @override
+  String get payReceived => 'Olindi';
+
+  @override
+  String get payShort => 'Yetmaydi';
+
+  @override
+  String get payCardHint => 'Terminalda to\'lovni o\'tkazing, keyin tasdiqlang';
+
+  @override
+  String get payComplete => 'Yakunlash';
+
+  @override
+  String get payCashRest => 'Naqd (qolgani)';
+
+  @override
+  String get payPartsExceed => 'Karta va nasiya jamidan oshib ketdi';
+
+  @override
+  String get payScanBlocked => 'Avval to\'lovni yakunlang';
+
+  @override
+  String get payChooseCustomer => 'Mijozni tanlang';
+
+  @override
+  String get payCustomerSearch => 'Ism yoki telefon';
+
+  @override
+  String get payNewCustomer => 'Yangi mijoz';
+
+  @override
+  String get payCustomerName => 'Ism';
+
+  @override
+  String get payCustomerPhone => 'Telefon';
+
+  @override
+  String payCustomerDebt(String amount) {
+    return 'Qarzi: $amount';
+  }
+
+  @override
+  String payCustomerLimit(String amount) {
+    return 'Limit: $amount';
+  }
+
+  @override
+  String get payLimitExceeded =>
+      'Qarz limitdan oshadi — menejer yoki ega tasdiqlashi kerak';
+
+  @override
+  String get payNoCustomers => 'Mijozlar topilmadi';
+
+  @override
+  String get paySaleDone => 'Savdo yakunlandi';
+
+  @override
+  String paySaleDoneChange(String amount) {
+    return 'Savdo yakunlandi · Qaytim $amount';
+  }
+
+  @override
+  String get payFailed => 'Savdoni saqlab bo\'lmadi. Qayta urinib ko\'ring';
+
+  @override
+  String get posCustomer => 'Mijoz';
+
+  @override
+  String get posCustomerRemove => 'Mijozni olib tashlash';
+
+  @override
+  String get payCash => 'Naqd';
+
+  @override
+  String get payCard => 'Karta';
+
+  @override
+  String get payDebt => 'Nasiya';
+
+  @override
+  String get payChangeCustomer => 'Boshqa mijoz';
+
+  @override
+  String get posCustomerTitle => 'Chek mijozi';
+
+  @override
+  String get posCustomerNone => 'Mijoz tanlanmagan';
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -1084,9 +1177,6 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
   String get posDiscount => 'Чегирма';
 
   @override
-  String get posPayComingSoon => 'Тўлов ойнаси кейинги янгиланишда қўшилади';
-
-  @override
   String posLineRemoved(String name) {
     return '$name ўчирилди';
   }
@@ -1138,4 +1228,101 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get approvalConfirm => 'Тасдиқлаш';
+
+  @override
+  String get payTitle => 'Тўлов';
+
+  @override
+  String get payMixed => 'Аралаш';
+
+  @override
+  String get payExact => 'Аниқ';
+
+  @override
+  String get payReceived => 'Олинди';
+
+  @override
+  String get payShort => 'Етмайди';
+
+  @override
+  String get payCardHint => 'Терминалда тўловни ўтказинг, кейин тасдиқланг';
+
+  @override
+  String get payComplete => 'Якунлаш';
+
+  @override
+  String get payCashRest => 'Нақд (қолгани)';
+
+  @override
+  String get payPartsExceed => 'Карта ва насия жамидан ошиб кетди';
+
+  @override
+  String get payScanBlocked => 'Аввал тўловни якунланг';
+
+  @override
+  String get payChooseCustomer => 'Мижозни танланг';
+
+  @override
+  String get payCustomerSearch => 'Исм ёки телефон';
+
+  @override
+  String get payNewCustomer => 'Янги мижоз';
+
+  @override
+  String get payCustomerName => 'Исм';
+
+  @override
+  String get payCustomerPhone => 'Телефон';
+
+  @override
+  String payCustomerDebt(String amount) {
+    return 'Қарзи: $amount';
+  }
+
+  @override
+  String payCustomerLimit(String amount) {
+    return 'Лимит: $amount';
+  }
+
+  @override
+  String get payLimitExceeded =>
+      'Қарз лимитдан ошади — менежер ёки эга тасдиқлаши керак';
+
+  @override
+  String get payNoCustomers => 'Мижозлар топилмади';
+
+  @override
+  String get paySaleDone => 'Савдо якунланди';
+
+  @override
+  String paySaleDoneChange(String amount) {
+    return 'Савдо якунланди · Қайтим $amount';
+  }
+
+  @override
+  String get payFailed => 'Савдони сақлаб бўлмади. Қайта уриниб кўринг';
+
+  @override
+  String get posCustomer => 'Мижоз';
+
+  @override
+  String get posCustomerRemove => 'Мижозни олиб ташлаш';
+
+  @override
+  String get payCash => 'Нақд';
+
+  @override
+  String get payCard => 'Карта';
+
+  @override
+  String get payDebt => 'Насия';
+
+  @override
+  String get payChangeCustomer => 'Бошқа мижоз';
+
+  @override
+  String get posCustomerTitle => 'Чек мижози';
+
+  @override
+  String get posCustomerNone => 'Мижоз танланмаган';
 }
