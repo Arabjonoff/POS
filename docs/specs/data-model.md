@@ -48,3 +48,13 @@ Pul: `*_tiyin` (bigint). Miqdor: `qty_milli` (bigint; 1 dona = 1000, 0,250 kg = 
 - Qoldiq = `SUM(StockMovement.qty_milli)` (tovar + do'kon). Serverda `ProductStock` kesh jadvali bo'lishi mumkin, lekin manba — harakatlar.
 - Mijoz qarzi = `SUM(DebtEntry.amount_tiyin)`.
 - Foyda = tushum (savdolar − qaytarishlar) − Σ `line_total(cost_tiyin, qty_milli)` sotilgan + qaytarilgan tannarx (half-up; chek chegirmasi va qaytarishlar hisobga olinadi — Q-004, `reports-api.md`).
+
+## Kassa SQLite (Drift, T-032)
+- Kod: `apps/pos/lib/data/db/` — `tables/reference_tables.dart` (pull: stores, staff_users, units, categories, products, product_barcodes, customers, suppliers, product_stock, debt_entries), `tables/document_tables.dart` (shifts, sales, sale_items, sale_payments, refunds, refund_items, cash_movements, stock_receipts(+items), inventory_counts(+items), stock_movements), `tables/sync_tables.dart` (local_settings, outbox_events, sync_state, cart_drafts, doc_counters).
+- Ustun nomlari server bilan bir xil (`snake_case`), pul/miqdor — `INTEGER` (64 bit). Sana — ISO-8601 matn (ms aniqlik, UTC; `store_date_time_values_as_text`).
+- **FK** faqat hujjat ichida (qator → hujjat, hujjat → smena). Ma'lumotnomalar orasida FK yo'q: pull tartibi kafolatlanmagan, yaxlitlik serverda. O'chirish — yumshoq (`deleted_at`).
+- Cheklovlar: qurilmada bitta ochiq smena (qisman unique indeks), chek raqami unique, inventarizatsiyada tovar takrorlanmaydi.
+- Server-only: PriceHistory, ChangeLog, SyncEvent, SaaS jadvallari — kassada yo'q.
+- Ochilishda: `journal_mode=WAL`, `synchronous=FULL`, `foreign_keys=ON`.
+- **Migratsiyalar:** `schemaVersion` oshirilgach `cd apps/pos && dart run drift_dev make-migrations` — `drift_schemas/` ga surat, `app_database.steps.dart`, `test/drift/` testlari; qadam `stepByStep(fromNToM: ...)` da yoziladi. Har versiyadan har keyingisiga o'tish testda tekshiriladi. Generatsiya keshi buzilsa: `rm -rf .dart_tool/build`.
+- Savdo yozish: `SaleWriter.complete` — bitta tranzaksiya (sale + items + payments + stock_movements(−qty) + debt_entries(nasiya) + outbox `sale.completed`), chek raqami `D<qurilma>-<6 raqam>` (`doc_counters`, tranzaksiya bilan birga). Validatsiya serverdagi `invalid_sale` qoidalari bilan bir xil; pul arifmetikasi `core/money/money.dart` (server `money.py` nusxasi, `testdata/money_rounding.json`).

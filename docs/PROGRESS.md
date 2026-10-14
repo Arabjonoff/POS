@@ -127,3 +127,10 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-031 (squash merge)
 - Qoldi / keyingi qadam: T-032 Lokal baza (Drift). Do'kon vaqt zonasi hozircha Toshkent — sinxron (T-034/T-035) `Store`/`Tenant.timezone` ni olib kelgach `context.fmt` ga ulanadi.
 - Muammo yoki qaror: 0007 — kassada IANA bazasi o'rniga qat'iy UTC+5.
+
+## 2026-10-14 — T-032 Lokal baza (Drift)
+- Qilindi: 27 jadval (ma'lumotnomalar, hujjatlar, outbox/sync_state/cart_drafts/doc_counters), sxema v2 + `make-migrations` (surat `drift_schemas/`, `stepByStep` from1To2, generatsiya qilingan migratsiya testlari), WAL + `synchronous=FULL` + `foreign_keys`. `Money` (server `money.py` nusxasi, umumiy vektorlar), `SaleWriter` (savdo bitta tranzaksiyada + outbox `sale.completed`, server payload formati, chek raqami), `OutboxWriter` (navbat, kutayotganlar soni stream'i), UUIDv7 (`uuid`).
+- Testlar: apps/pos 52 (+21): migratsiya v1→v2 (sxema mosligi + til sozlamasi saqlanadi), fayl bazada pragmalar va qayta ochishda saqlanish, bitta ochiq smena, FK, unique chek raqami, 64-bit butun son; savdo: naqd/karta/nasiya, payload, ketma-ket raqam, server qoidalari bo'yicha validatsiya, **atomarlik** (tranzaksiya o'rtasida xato → hech narsa yozilmaydi, raqam band bo'lmaydi), noma'lum smena → FK rad etadi.
+- PR: T-032 (squash merge)
+- Qoldi / keyingi qadam: T-033 Ilova qobig'i va navigatsiya. Pull/push (T-035) va qoldiq hisobi (server + yuborilmagan harakatlar) — keyin.
+- Muammo yoki qaror: build_runner keshi ko'chirilgan `pos_colors.dart` tufayli yiqildi va eski `.g.dart` qoldi → `rm -rf apps/pos/.dart_tool/build`. CI filtriga `testdata/**` qo'shildi (pul vektorlari ikkala tomonda ishlatiladi).
