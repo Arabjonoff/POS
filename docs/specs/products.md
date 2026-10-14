@@ -27,3 +27,13 @@
   - tekshiruv (`ProductEditor.validate`, server qoidalari bilan bir xil): nom va birlik majburiy; narx > 0; shtrix-kod formati, EAN nazorat raqami, takrori va boshqa tovarda bandligi; PLU 5 raqam va faol tovarlar orasida yagona; vaznli tovar — faqat kasrli birlik; IKPU 17 raqam.
 - **Saqlash** — lokal baza (kassa katalogi darhol yangilanadi) + outbox `product.upserted` bitta tranzaksiyada. Server `by` ni faqat ega/menejerdan qabul qiladi: kassir saqlasa menejer/ega PIN so'raladi, menejer/ega o'zi bo'lsa PIN so'ralmaydi.
 - **Narx tarixi** (faqat menejer/ega, mavjud tovar): onlayn `GET /api/v1/sync/price-history/?product=` (qurilma tokeni). Oflaynda — "Narx tarixini ko'rish uchun internet kerak".
+
+## Qoldiq tarixi va buyurtma ro'yxati (T-054)
+- **Harakatlar tarixi** (tovar kartasida, hamma xodimlar uchun):
+  - serverdagi harakatlar (barcha kassalar): `GET /api/v1/sync/stock-movements/?product=` (qurilma tokeni, oxirgi 100 ta, eng yangisi birinchi) — `{id, type, qty_milli, ref_type, at, created_by_name}`;
+  - ustida hali yuborilmagan lokal harakatlar ("Yuborilmagan" belgisi bilan);
+  - oflaynda — faqat lokal yuborilmaganlar va "To'liq tarix uchun internet kerak".
+  - Turlari: kirim, savdo, qaytarish, tuzatish, inventarizatsiya. Miqdor ± birlik bilan.
+- **Kam qolganlar**: Tovarlar → "Kam qolgan" filtri (faol, `min_stock > 0`, qoldiq ≤ min; hech qachon kirim qilinmaganlar ham). Shu filtrda **"Buyurtma ro'yxati"** tugmasi bor — CSV fayl (Excel ochadi: UTF-8 BOM, `;`).
+  - Ustunlar: Nomi; Shtrix-kod; Qoldiq; Minimal qoldiq; Buyurtma; Tannarx; Summa.
+  - **Buyurtma = 2 × minimal qoldiq − qoldiq** (minimal qoldiqning ikki baravariga yetkazish), dona tovarda butun songa yuqoriga yaxlitlanadi. Summa = buyurtma × tannarx (half-up).

@@ -5,13 +5,24 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-054 Qoldiq harakatlari tarixi va kam qolganlar
+- Branch: feat/T-054-stock-history
+- Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
+- [ ] 1. Spec (`products.md`): tarix — server (onlayn) + yuborilmagan lokal; buyurtma ro'yxati — CSV, taklif = 2×min − qoldiq
+- [ ] 2. Backend: `GET /api/v1/sync/stock-movements/?product=` (qurilma tokeni, oxirgi 100, kim) + pytest (tenant izolyatsiyasi) + OpenAPI + klientlar
+- [ ] 3. Kassa: `data/catalog/stock_history.dart` (server + lokal yuborilmagan), tovar kartasida "Harakatlar tarixi"; `data/catalog/order_list.dart` (kam qolganlar → CSV, sof funksiya + test), Tovarlar → "Kam qolgan" filtrida "Buyurtma ro'yxati" eksporti; tarjimalar
+- [ ] 4. Widget testlari + golden + skrinshotlar
+- [ ] 5. PR, CI → merge; ROADMAP, PROGRESS, STATE
+
+## Oxirgi bajarilgan ish
+- T-053 merge qilindi (#34). T-054 boshlandi.
+
+## Keyingi aniq harakat
+- 1-qadam: `docs/specs/products.md` ga "Qoldiq tarixi va buyurtma ro'yxati (T-054)" bo'limi.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
