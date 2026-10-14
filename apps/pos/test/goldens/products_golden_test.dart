@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pos_app/app/status/app_status.dart';
 import 'package:pos_app/data/catalog/product_import.dart';
+import 'package:pos_app/data/catalog/stock_history.dart';
 import 'package:pos_app/data/db/app_database.dart';
 
 import '../helpers/catalog_seed.dart';
@@ -114,4 +115,44 @@ void main() {
       }
     });
   }
+
+  /// Tovar kartasi: harakatlar tarixi ochiq (server tarixi soxta).
+  goldenAcrossDevices('products', 'card_history', (tester, size) async {
+    await _open(
+      tester,
+      size,
+      extra: [
+        stockHistoryFetcherProvider.overrideWithValue(
+          (id) async => [
+            StockMove(
+              type: 'sale',
+              qtyMilli: -3000,
+              at: DateTime.utc(2026, 10, 15, 8, 40),
+            ),
+            StockMove(
+              type: 'receipt',
+              qtyMilli: 30000,
+              at: DateTime.utc(2026, 10, 14, 6),
+              byName: 'Bobur',
+            ),
+            StockMove(
+              type: 'inventory',
+              qtyMilli: -1000,
+              at: DateTime.utc(2026, 10, 10, 12),
+              byName: 'Bobur',
+            ),
+          ],
+        ),
+      ],
+    );
+    await tester.tap(find.text('Non issiq'));
+    await tester.pumpAndSettle();
+    final tile = find.byKey(const ValueKey('product-stock-history'));
+    await tester.ensureVisible(tile);
+    await tester.pumpAndSettle();
+    await tester.tap(tile);
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.textContaining('Inventarizatsiya').last);
+    await tester.pumpAndSettle();
+  });
 }

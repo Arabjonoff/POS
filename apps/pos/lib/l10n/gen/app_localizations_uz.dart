@@ -1415,6 +1415,66 @@ class AppLocalizationsUz extends AppLocalizations {
   String receivingQtyUnit(String unit) {
     return 'Miqdor, $unit';
   }
+
+  @override
+  String get productStockHistory => 'Harakatlar tarixi';
+
+  @override
+  String get stockHistoryOffline => 'To\'liq tarix uchun internet kerak';
+
+  @override
+  String get stockHistoryEmpty => 'Hali harakat yo\'q';
+
+  @override
+  String get stockHistoryPending => 'Yuborilmagan';
+
+  @override
+  String get moveReceipt => 'Kirim';
+
+  @override
+  String get moveSale => 'Savdo';
+
+  @override
+  String get moveRefund => 'Qaytarish';
+
+  @override
+  String get moveAdjustment => 'Tuzatish';
+
+  @override
+  String get moveInventory => 'Inventarizatsiya';
+
+  @override
+  String get productsOrderList => 'Buyurtma ro\'yxati';
+
+  @override
+  String get orderListSaved => 'Buyurtma ro\'yxati saqlandi';
+
+  @override
+  String get orderListEmpty => 'Kam qolgan tovar yo\'q';
+
+  @override
+  String get orderFileName => 'buyurtma';
+
+  @override
+  String get orderColName => 'Nomi';
+
+  @override
+  String get orderColBarcode => 'Shtrix-kod';
+
+  @override
+  String get orderColStock => 'Qoldiq';
+
+  @override
+  String get orderColMin => 'Minimal qoldiq';
+
+  @override
+  String get orderColOrder => 'Buyurtma';
+
+  @override
+  String get orderColCost => 'Tannarx';
+
+  @override
+  String get orderColSum => 'Summa';
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -2821,4 +2881,64 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
   String receivingQtyUnit(String unit) {
     return 'Миқдор, $unit';
   }
+
+  @override
+  String get productStockHistory => 'Ҳаракатлар тарихи';
+
+  @override
+  String get stockHistoryOffline => 'Тўлиқ тарих учун интернет керак';
+
+  @override
+  String get stockHistoryEmpty => 'Ҳали ҳаракат йўқ';
+
+  @override
+  String get stockHistoryPending => 'Юборилмаган';
+
+  @override
+  String get moveReceipt => 'Кирим';
+
+  @override
+  String get moveSale => 'Савдо';
+
+  @override
+  String get moveRefund => 'Қайтариш';
+
+  @override
+  String get moveAdjustment => 'Тузатиш';
+
+  @override
+  String get moveInventory => 'Инвентаризация';
+
+  @override
+  String get productsOrderList => 'Буюртма рўйхати';
+
+  @override
+  String get orderListSaved => 'Буюртма рўйхати сақланди';
+
+  @override
+  String get orderListEmpty => 'Кам қолган товар йўқ';
+
+  @override
+  String get orderFileName => 'буюртма';
+
+  @override
+  String get orderColName => 'Номи';
+
+  @override
+  String get orderColBarcode => 'Штрих-код';
+
+  @override
+  String get orderColStock => 'Қолдиқ';
+
+  @override
+  String get orderColMin => 'Минимал қолдиқ';
+
+  @override
+  String get orderColOrder => 'Буюртма';
+
+  @override
+  String get orderColCost => 'Таннарх';
+
+  @override
+  String get orderColSum => 'Сумма';
 }

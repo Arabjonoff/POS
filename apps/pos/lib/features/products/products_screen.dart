@@ -5,7 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pos_app/core/barcode/scanner_service.dart';
 import 'package:pos_app/core/format/app_format.dart';
+import 'package:pos_app/data/catalog/order_list.dart';
 import 'package:pos_app/data/catalog/product_editor.dart';
+import 'package:pos_app/data/catalog/product_import.dart';
 import 'package:pos_app/features/common/section_page.dart';
 import 'package:pos_app/features/products/import_dialog.dart';
 import 'package:pos_app/features/products/product_card.dart';
@@ -81,6 +83,56 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
       }
     } finally {
       if (mounted) setState(() => _dialogOpen = false);
+    }
+  }
+
+  /// "Kam qolgan" ro'yxatidan buyurtma CSV (`products.md`, T-054).
+  Future<void> _exportOrderList(List<ProductRow> rows) async {
+    final l10n = AppLocalizations.of(context);
+    if (rows.isEmpty) {
+      showPosToast(
+        context,
+        message: l10n.orderListEmpty,
+        tone: PosTone.warning,
+      );
+      return;
+    }
+    final bytes = orderListCsv(
+      [
+        for (final r in rows)
+          OrderLine(
+            name: r.name,
+            barcode: r.barcodes.isEmpty ? '' : r.barcodes.first,
+            stockMilli: r.stockMilli,
+            minMilli: r.minStockMilli,
+            orderMilli: orderQtyMilli(
+              minMilli: r.minStockMilli,
+              stockMilli: r.stockMilli,
+              fractional: r.unit.fractional,
+            ),
+            costTiyin: r.costTiyin,
+            fractional: r.unit.fractional,
+          ),
+      ],
+      OrderListHeaders(
+        name: l10n.orderColName,
+        barcode: l10n.orderColBarcode,
+        stock: l10n.orderColStock,
+        min: l10n.orderColMin,
+        order: l10n.orderColOrder,
+        cost: l10n.orderColCost,
+        sum: l10n.orderColSum,
+      ),
+    );
+    final saved = await ref
+        .read(importFilesProvider)
+        .save('${l10n.orderFileName}.csv', bytes);
+    if (saved && mounted) {
+      showPosToast(
+        context,
+        message: l10n.orderListSaved,
+        tone: PosTone.success,
+      );
     }
   }
 
@@ -281,6 +333,17 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
                         key: ValueKey('products-filter-${f.name}'),
                         selected: _filter == f,
                         onTap: () => setState(() => _filter = f),
+                      ),
+                    if (_filter == ProductFilter.low)
+                      PosButton(
+                        key: const ValueKey('products-order-list'),
+                        label: l10n.productsOrderList,
+                        icon: Icons.download_outlined,
+                        size: PosButtonSize.s,
+                        variant: PosButtonVariant.ghost,
+                        onPressed: rows == null
+                            ? null
+                            : () => unawaited(_exportOrderList(rows)),
                       ),
                   ],
                 ),

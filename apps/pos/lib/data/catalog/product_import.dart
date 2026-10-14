@@ -220,7 +220,8 @@ final productImportApiProvider = Provider<ProductImportApi>((ref) {
   return _DeviceImportApi(tokens.read, ref.watch(dioFactoryProvider));
 });
 
-/// Fayl tanlash va saqlash (testlarda almashtiriladi).
+/// Fayl tanlash va saqlash (import, shablon, buyurtma ro'yxati; testlarda
+/// almashtiriladi).
 abstract interface class ImportFiles {
   Future<PickedFile?> pick();
 
@@ -248,7 +249,8 @@ class _PlatformImportFiles implements ImportFiles {
         fileName: name,
         bytes: bytes,
         type: FileType.custom,
-        allowedExtensions: const ['xlsx'],
+        // Kengaytma fayl nomidan: shablon — xlsx, buyurtma ro'yxati — csv.
+        allowedExtensions: [name.split('.').last],
       ) !=
       null;
 }

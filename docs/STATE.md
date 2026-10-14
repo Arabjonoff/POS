@@ -5,24 +5,13 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-054 Qoldiq harakatlari tarixi va kam qolganlar
-- Branch: feat/T-054-stock-history
-- Boshlangan: 2026-10-15
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [x] 1. Spec (`products.md`): tarix — server (onlayn) + yuborilmagan lokal; buyurtma ro'yxati — CSV, taklif = 2×min − qoldiq
-- [x] 2. Backend: `GET /api/v1/sync/stock-movements/?product=` (qurilma tokeni, oxirgi 100, kim) + pytest (tenant izolyatsiyasi) + OpenAPI + klientlar
-- [ ] 3. Kassa: `data/catalog/stock_history.dart` (server + lokal yuborilmagan), tovar kartasida "Harakatlar tarixi"; `data/catalog/order_list.dart` (kam qolganlar → CSV, sof funksiya + test), Tovarlar → "Kam qolgan" filtrida "Buyurtma ro'yxati" eksporti; tarjimalar
-- [ ] 4. Widget testlari + golden + skrinshotlar
-- [ ] 5. PR, CI → merge; ROADMAP, PROGRESS, STATE
-
-## Oxirgi bajarilgan ish
-- 1–2-qadam: spec (`products.md`), `GET /api/v1/sync/stock-movements/?product=` + pytest, `StockMovementTypeEnum` ENUM_NAME_OVERRIDES da qotirildi; klientlar yangilandi (`syncStockMovementsList`).
-
-## Keyingi aniq harakat
-- 3-qadam: `apps/pos/lib/data/catalog/stock_history.dart`, `order_list.dart`; tovar kartasi va Tovarlar ekraniga ulash.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
@@ -38,5 +27,6 @@
 - Vaqt: ilova kodida `DateTime.now()` emas, `clock.now()` (package:clock) yoki `clockProvider` — widget testlarida soxta vaqt ishlashi uchun.
 - Widget/golden testlarda telefonda (390×844) ekrandan pastdagi tugmani bosishdan oldin `tester.ensureVisible` — aks holda bosish pastki menyuga tushadi (ogohlantirish bilan, xatosiz).
 - Testda `PosFormat.moneyAmount` oddiy probel emas — matnni `PosFormat` bilan yasab izla. `find.byType(TextField).first` orqadagi kassa qidiruvini topadi — `find.descendant(of: dialog, ...)`.
+- OpenAPI: yangi `type` enum qo'shilsa nom to'qnashadi — `backend/config/settings/base.py` ENUM_NAME_OVERRIDES ga qo'sh (aks holda mavjud enum nomi o'zgarib, eski generatsiya fayli qoladi).
 - Widget testi teardown'ida drift yozuvini kutma (`await notifier.flush()` addTearDown ichida) — test osilib qoladi (timeout ham ishlamaydi). Test tanasida kutish mumkin.
 - To'lov oynasida skaner ro'yxatdan o'tgan: Flutter `HardwareKeyboard` ishlovchisi `true` qaytarsa ham hodisa `Focus.onKeyEvent` ga baribir yetadi. Shuning uchun oynada raqamlar faqat `onTyping` orqali (`MoneyInput(hardwareDigits: false)`), skaner Enter'i `_swallowEnter` bilan yutiladi.
