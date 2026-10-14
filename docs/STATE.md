@@ -12,7 +12,7 @@
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [ ] 1. Backend: `GET /api/v1/products/{id}/price-history/` (owner/manager; boshqa tenant — 404) + pytest + OpenAPI + `make api-clients`
+- [x] 1. Backend: `GET /api/v1/products/{id}/price-history/` (owner/manager; boshqa tenant — 404) + pytest + OpenAPI + `make api-clients`
 - [ ] 2. Kassa: `data/catalog/product_editor.dart` — tekshiruv (nom, birlik, narx, shtrix-kod nazorat raqami va takrori, PLU 5 raqam va takrori, vaznli → kasrli birlik), saqlash (products + product_barcodes + outbox `product.upserted` bitta tranzaksiyada, `by` — menejer/ega), nofaol qilish; qoldiq (`product_stock` + yuborilmagan harakatlar) + testlar
 - [ ] 3. Tovarlar ro'yxati (bo'lim "Tovarlar"): qidiruv, kategoriya, filtrlar (kam qolgan, manfiy, nofaol), desktop jadval / telefon kartalar, bo'sh holat; skaner → mavjud bo'lsa karta, yo'q bo'lsa yangi karta (shtrix-kod to'ldirilgan)
 - [ ] 4. Tovar kartasi: maydonlar, shtrix-kodlar (skaner bilan qo'shish, takror ogohlantirish), ustama %, narx tarixi (onlayn), saqlash/nofaol qilish; kassir → menejer PIN; tarjimalar
@@ -20,10 +20,10 @@
 - [ ] 6. Spec, PR, CI → merge; ROADMAP, PROGRESS, STATE
 
 ## Oxirgi bajarilgan ish
-- T-046 merge qilindi (#30). T-047 → Q-007 (qurilma kerak). T-050 boshlandi.
+- 1-qadam: `GET /api/v1/products/{id}/price-history/` (JWT, ega/menejer) va kassa uchun `GET /api/v1/sync/price-history/?product=` (qurilma tokeni) + pytest; OpenAPI, admin TS va Dart klientlari qayta yaratildi (`PosApi.sync.syncPriceHistoryList`).
 
 ## Keyingi aniq harakat
-- 1-qadam: `backend/apps/catalog/views.py` ProductViewSet ga `@action(detail=True) price_history`, serializer, testlar `backend/apps/catalog/tests/`. Docker: `docker info` javob berguncha kut, keyin `make up` (portlar .env da: postgres 55432).
+- 2-qadam: `apps/pos/lib/data/catalog/product_editor.dart` — `ProductDraft`, `ProductEditor.validate/save/deactivate`, `stockOf`; test `apps/pos/test/data/product_editor_test.dart`. Pull qanday yozishini `lib/data/sync/pull.dart` dan ko'r (search_key, barcodes).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

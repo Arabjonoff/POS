@@ -732,6 +732,23 @@ export interface paths {
         patch: operations["products_partial_update"];
         trace?: never;
     };
+    "/api/v1/products/{id}/price-history/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Narx tarixi: eng yangisi birinchi, oxirgi 50 ta (ega va menejer). */
+        get: operations["products_price_history_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/products/by-barcode/{code}/": {
         parameters: {
             query?: never;
@@ -1128,6 +1145,26 @@ export interface paths {
         head?: never;
         /** @description O'qish — tenantning har bir xodimi; yozish — ega va menejer. O'chirish — yumshoq. */
         patch: operations["suppliers_partial_update"];
+        trace?: never;
+    };
+    "/api/v1/sync/price-history/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * @description Kassa uchun tovar narx tarixi (onlayn): qurilma tokeni bilan, faqat
+         *     o'z tenanti. Kim ko'rishi (menejer/ega) — kassada lokal PIN bilan.
+         */
+        get: operations["sync_price_history_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/api/v1/sync/pull/": {
@@ -1845,6 +1882,21 @@ export interface components {
             previous?: string | null;
             results: components["schemas"]["PlatformDevice"][];
         };
+        PaginatedPriceHistoryList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["PriceHistory"][];
+        };
         PaginatedProductList: {
             /** @example 123 */
             count: number;
@@ -2327,6 +2379,26 @@ export interface components {
             revenue_tiyin: number;
             profit_tiyin: number;
             sales_count: number;
+        };
+        /** @description Narx o'zgarishi (faqat o'qish): kim va qachon. */
+        PriceHistory: {
+            /** Format: uuid */
+            readonly id: string;
+            /** Sotish narxi (tiyin) */
+            readonly sell_price_tiyin: number;
+            /** Tannarx (tiyin) */
+            readonly cost_price_tiyin: number;
+            /**
+             * O'zgartirgan
+             * Format: uuid
+             */
+            readonly changed_by: string | null;
+            readonly changed_by_name: string | null;
+            /**
+             * Vaqt
+             * Format: date-time
+             */
+            readonly at: string;
         };
         Product: {
             /** Format: uuid */
@@ -4645,6 +4717,33 @@ export interface operations {
             };
         };
     };
+    products_price_history_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+            };
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this tovar. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedPriceHistoryList"];
+                };
+            };
+        };
+    };
     products_by_barcode_retrieve: {
         parameters: {
             query?: never;
@@ -5369,6 +5468,27 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Supplier"];
+                };
+            };
+        };
+    };
+    sync_price_history_list: {
+        parameters: {
+            query: {
+                product: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PriceHistory"][];
                 };
             };
         };

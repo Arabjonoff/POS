@@ -54,3 +54,7 @@ Umumiy tamoyillar: `sync.md`. Hodisa payloadlari va qo'llash qoidalari: `sales-a
 - `ProductBarcode` o'zgarishi — `product` upsert sifatida.
 - Joriy ma'lumot uchun migratsiya boshlang'ich yozuvlarni yaratadi (yangi qurilma `cursor=0` dan hammasini oladi).
 - **Teshiksiz kursor:** `seq` commit'dan oldin ajratiladi — kichik `seq` li tranzaksiya kattasidan keyin commit bo'lishi mumkin va oddiy `seq > cursor` uni o'tkazib yuboradi. Shuning uchun har yozuvda uni yozgan PostgreSQL tranzaksiya ID'si (`txid`) saqlanadi; pull faqat `txid < pg_snapshot_xmin(...)` (barcha eski tranzaksiyalar tugagan) yozuvlarni `(txid, seq)` tartibida beradi. Bunday yozuvlar orasiga keyin yangisi tushmaydi. Uzoq tranzaksiya tugaguncha keyingi o'zgarishlar biroz kechikadi — bu maqbul.
+
+## Narx tarixi — `GET /api/v1/sync/price-history/?product=<uuid>` (T-050)
+- Faqat qurilma tokeni bilan; tovar qurilma tenantida bo'lishi shart (boshqa tenant yoki noma'lum — `404`, noto'g'ri UUID — `400`).
+- Javob: `catalog-api.md` dagi `price-history` bilan bir xil (oxirgi 50 ta, eng yangisi birinchi). Kassada faqat menejer/ega ko'radi (lokal PIN); oflaynda — "Internet kerak".

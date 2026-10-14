@@ -6,7 +6,7 @@ from apps.core.money import mul_div_half_up
 from apps.core.serializers import TenantPKField
 
 from .barcodes import BarcodeError, normalize_barcode
-from .models import STANDARD_UNITS, Category, Product, ProductBarcode, Unit
+from .models import STANDARD_UNITS, Category, PriceHistory, Product, ProductBarcode, Unit
 
 STANDARD_UNIT_CODES = frozenset(code for code, _ in STANDARD_UNITS)
 
@@ -169,3 +169,23 @@ class ProductSerializer(serializers.ModelSerializer):
         from .services import save_product
 
         return save_product(instance, validated_data, user=self.context["request"].user)
+
+
+class PriceHistorySerializer(serializers.ModelSerializer):
+    """Narx o'zgarishi (faqat o'qish): kim va qachon."""
+
+    changed_by_name = serializers.CharField(
+        source="changed_by.full_name", default=None, read_only=True, allow_null=True
+    )
+
+    class Meta:
+        model = PriceHistory
+        fields = [
+            "id",
+            "sell_price_tiyin",
+            "cost_price_tiyin",
+            "changed_by",
+            "changed_by_name",
+            "at",
+        ]
+        read_only_fields = fields

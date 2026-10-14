@@ -5,6 +5,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
+import '../models/price_history.dart';
 import '../models/pull_response.dart';
 import '../models/push_request_request.dart';
 import '../models/push_response.dart';
@@ -14,6 +15,13 @@ part 'sync_client.g.dart';
 @RestApi()
 abstract class SyncClient {
   factory SyncClient(Dio dio, {String? baseUrl}) = _SyncClient;
+
+  /// Kassa uchun tovar narx tarixi (onlayn): qurilma tokeni bilan, faqat.
+  /// o'z tenanti. Kim ko'rishi (menejer/ega) — kassada lokal PIN bilan.
+  @GET('/api/v1/sync/price-history/')
+  Future<List<PriceHistory>> syncPriceHistoryList({
+    @Query('product') required String product,
+  });
 
   /// Server o'zgarishlari (ChangeLog) kursor bo'yicha + obuna holati.
   @GET('/api/v1/sync/pull/')

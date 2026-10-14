@@ -12,7 +12,12 @@ from apps.core.exceptions import DomainError
 from apps.core.tenancy import TenantScopedViewSet
 
 from .models import Category, Product, ProductBarcode, Unit
-from .serializers import CategorySerializer, ProductSerializer, UnitSerializer
+from .serializers import (
+    CategorySerializer,
+    PriceHistorySerializer,
+    ProductSerializer,
+    UnitSerializer,
+)
 from .services import soft_delete_category
 
 READ_ACTIONS = frozenset({"list", "retrieve", "by_barcode"})
@@ -114,3 +119,17 @@ class ProductViewSet(CatalogViewSet):
         )
         product = get_object_or_404(self.get_queryset(), pk=barcode.product_id)
         return Response(self.get_serializer(product).data, status=status.HTTP_200_OK)
+
+    PRICE_HISTORY_LIMIT = 50
+
+    @extend_schema(
+        description="Narx tarixi: eng yangisi birinchi, oxirgi 50 ta (ega va menejer).",
+        responses=PriceHistorySerializer(many=True),
+    )
+    @action(detail=True, methods=["get"], url_path="price-history")
+    def price_history(self, request, pk=None):
+        product = self.get_object()
+        entries = product.price_history.select_related("changed_by").order_by("-at", "-id")[
+            : self.PRICE_HISTORY_LIMIT
+        ]
+        return Response(PriceHistorySerializer(entries, many=True).data)

@@ -20,6 +20,7 @@ Barcha ro'yxatlar paginatsiyalangan (`?page=`, 50 tadan). Boshqa tenant obyekti 
 - Filtrlar: `?search=` (nom bo'yicha qisman, shtrix-kod va PLU bo'yicha aniq), `?category=`, `?is_active=true|false`, `?quick_button=true`.
 - `DELETE` — **nofaol qilish** (`is_active=false`), tarix va shtrix-kodlar saqlanadi; javob `204`.
 - Narx (`sell_price_tiyin`, `cost_price_tiyin`) yaratishda va har o'zgarganda `PriceHistory` ga yoziladi (kim, qachon).
+- `GET /api/v1/products/{id}/price-history/` — narx tarixi (eng yangisi birinchi, oxirgi 50 ta): `[{id, sell_price_tiyin, cost_price_tiyin, changed_by, changed_by_name, at}]`. Faqat ega va menejer (kassir — `403`), boshqa tenant — `404`. Kassa uchun qurilma tokeni bilan — `GET /api/v1/sync/price-history/?product=` (`sync-api.md`).
 - `GET /api/v1/products/by-barcode/{code}/` — shtrix-kod bo'yicha (bosh/oxirgi bo'shliqlar olib tashlanadi, boshidagi nollar saqlanadi). Nofaol tovar ham qaytadi (`is_active: false` — kassa ogohlantiradi). Topilmasa `404`.
 
 ## Shtrix-kod qoidalari
