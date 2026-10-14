@@ -65,3 +65,9 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-013 (squash merge)
 - Qoldi / keyingi qadam: T-012 Qurilmalar (max_devices, qurilma tokeni). `max_users` tekshiruvi — xodim qo'shish API bilan. To'lov kiritish API va audit jurnali — T-020. Cron (`update_subscriptions`) — deploy (T-090).
 - Muammo yoki qaror: Q-001 (sinovdan keyin ham grace — A) va Q-002 (sinov ichida to'lov sinov oxiridan boshlanadi — B) vaqtincha tanlandi, `QUESTIONS.md` da javob kutilmoqda. Sana semantikasi `subscription-billing.md` "Sanalar" bo'limida.
+
+## 2026-10-14 — T-012 Qurilmalar (Device)
+- Qilindi: `apps/devices` — `Device` (tenant ichida tartib raqami `number` → `D{n}`, store, platform, app_version, last_sync_at/last_seen_at/last_ip, is_blocked, token_hash), qurilma tokeni (`dev_` + token_urlsafe(32), serverda sha256), `DeviceTokenAuthentication` (`Authorization: Device <token>`, spectacular extension), `register_device` (tenant qulfi, max_devices chegarasi, klient `id` bilan idempotent qayta ro'yxat — yangi token, limit sarflanmaydi). API: `POST /devices/register/` (owner), `GET /devices/` (manager+), `GET /devices/me/` (qurilma; obuna holati, server vaqti). `DomainError` ga `details`. Spec `docs/specs/devices.md`. 238 test yashil.
+- PR: T-012 (squash merge)
+- Qoldi / keyingi qadam: T-014 Katalog API. Qurilmani ega o'zi bloklashi — T-020/ilova sozlamalari.
+- Muammo yoki qaror: token turlari aralashmaydi — qurilma tokeni default autentifikatsiyada yo'q, faqat qurilma endpoint'larida (foydalanuvchi endpoint'ida 401). Bloklangan qurilma chegaraga kirmaydi, raqami qayta ishlatilmaydi. Obuna readonly/blocked bo'lsa ham qurilma ulanadi (sinxron ishlashi uchun).
