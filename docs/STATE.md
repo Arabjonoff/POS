@@ -5,20 +5,27 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-020 Platforma admin API
+- Branch: feat/T-020-platform-api
+- Boshlangan: 2026-10-14
 - Oxirgi yangilanish: 2026-10-14
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
+- [ ] 1. Spec `docs/specs/platform-api.md` (endpointlar, onboarding, audit qoidasi, statistika formulalari)
+- [ ] 2. `apps/platform_admin`: AdminAuditLog (o'zgarmas) + `audit()` yordamchisi; migratsiya; admin
+- [ ] 3. Tenantlar: ro'yxat/karta, onboarding (tenant + ega + obuna, vaqtinchalik parol), tahrir, bloklash, obuna sozlamalari, xodimlar va parol tiklash, sinxron hodisalari
+- [ ] 4. Tariflar CRUD (o'chirish = nofaol), to'lovlar (kiritish, bekor qilish, ro'yxat), qurilmalar (ro'yxat, bloklash)
+- [ ] 5. Statistika (faol, sinov, MRR, shu oy tushum, 7 kunda tugaydiganlar, sinxronlanmagan qurilmalar) + audit jurnali ro'yxati
+- [ ] 6. Testlar: tenant foydalanuvchisi 403, har o'zgarish auditda (oldin/keyin), onboarding, to'lov/bekor, statistika qiymatlari
+- [ ] 7. openapi + schema.d.ts; lint/test; PROGRESS/ROADMAP; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-T-019 hisobotlar API tugadi (PR ochildi, CI yashil bo'lsa squash merge).
+T-019 merge qilindi (#16). T-020 branch ochildi.
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-T-019 PR merge qilinganini tekshirish (`gh pr list --state open`); keyin ROADMAP'dan T-020 Platforma admin API.
+1-qadam: `docs/specs/platform-api.md` (`admin-dashboard.md`, `subscription-billing.md`, `devices.md` asosida).
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
