@@ -3,9 +3,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pos_app/app/app.dart';
 import 'package:pos_app/app/locale.dart';
+import 'package:pos_app/data/db/app_database.dart';
+
+import 'helpers/sqlite.dart';
 
 Future<ProviderContainer> pumpApp(WidgetTester tester) async {
-  final container = ProviderContainer();
+  final db = openTestDatabase();
+  addTearDown(db.close);
+  final container = ProviderContainer(
+    overrides: [appDatabaseProvider.overrideWithValue(db)],
+  );
   addTearDown(container.dispose);
   await tester.pumpWidget(
     UncontrolledProviderScope(container: container, child: const PosApp()),
@@ -23,14 +30,14 @@ void main() {
 
   testWidgets('switches to Uzbek Cyrillic', (tester) async {
     final container = await pumpApp(tester);
-    container.read(localeProvider.notifier).select(AppLocales.uzCyrl);
+    await container.read(localeProvider.notifier).select(AppLocales.uzCyrl);
     await tester.pumpAndSettle();
     expect(find.text('Товарни сканерланг ёки қидиринг'), findsOneWidget);
   });
 
   testWidgets('switches to Russian', (tester) async {
     final container = await pumpApp(tester);
-    container.read(localeProvider.notifier).select(AppLocales.ru);
+    await container.read(localeProvider.notifier).select(AppLocales.ru);
     await tester.pumpAndSettle();
     expect(find.text('Отсканируйте товар или найдите его'), findsOneWidget);
   });

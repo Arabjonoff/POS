@@ -13,12 +13,9 @@
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 
-## Oxirgi bajarilgan ish
-T-030 Dizayn tizimi tugadi (PR ochildi, CI yashil bo'lsa squash merge).
-
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-T-030 PR merge qilinganini tekshirish (`gh pr list --state open`); keyin ROADMAP'dan T-031 Tarjimalar va formatlash — `docs/specs/i18n.md`, `apps/pos/lib/l10n/`.
+T-031 PR merge qilinganini tekshirish (`gh pr list --state open`); keyin T-032 Lokal baza (Drift) — `docs/specs/data-model.md` (do'kon qatlami), `sync.md` (OutboxEvent, SyncState, CartDraft), `apps/pos/lib/data/db/app_database.dart`.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q

@@ -3,5 +3,50 @@
   "appTitle": "Касса",
   "posTitle": "Касса",
   "posEmptyCart": "Товарни сканерланг ёки қидиринг",
-  "languageName": "Ўзбекча"
+  "languageName": "Ўзбекча",
+
+  "currencySom": "сўм",
+
+  "unitPcs": "дона",
+  "unitKg": "кг",
+  "unitG": "г",
+  "unitL": "л",
+  "unitM": "м",
+  "unitPack": "қадоқ",
+
+  "navPos": "Касса",
+  "navProducts": "Товарлар",
+  "navReceiving": "Кирим",
+  "navCustomers": "Мижозлар",
+  "navReports": "Ҳисоботлар",
+  "navSettings": "Созламалар",
+
+  "actionSave": "Сақлаш",
+  "actionCancel": "Бекор қилиш",
+  "actionUndo": "Бекор қилиш",
+  "actionClose": "Ёпиш",
+  "actionDelete": "Ўчириш",
+  "actionRetry": "Қайта уриниш",
+  "actionYes": "Ҳа",
+  "actionNo": "Йўқ",
+  "actionClear": "Тозалаш",
+  "actionBackspace": "Охирги рақамни ўчириш",
+  "actionIncrease": "Кўпайтириш",
+  "actionDecrease": "Камайтириш",
+  "actionPay": "Тўлаш",
+
+  "searchProductsHint": "Штрих-код ёки товар номи",
+  "totalLabel": "Жами",
+  "changeLabel": "Қайтим",
+
+  "statusOnline": "Интернет бор",
+  "statusOffline": "Интернет йўқ",
+  "statusQueued": "{count, plural, =0{Ҳаммаси юборилган} other{{count} та ёзув навбатда}}",
+  "statusOfflineSaving": "Интернет йўқ — савдолар сақланяпти ({count})",
+  "statusPrinterReady": "Принтер уланган",
+  "statusPrinterMissing": "Принтер уланмаган",
+  "statusShiftOpen": "Смена очиқ",
+  "statusShiftClosed": "Смена ёпиқ",
+
+  "settingsLanguage": "Тил"
 }

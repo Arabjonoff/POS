@@ -3,5 +3,50 @@
   "appTitle": "Касса",
   "posTitle": "Касса",
   "posEmptyCart": "Отсканируйте товар или найдите его",
-  "languageName": "Русский"
+  "languageName": "Русский",
+
+  "currencySom": "сум",
+
+  "unitPcs": "шт",
+  "unitKg": "кг",
+  "unitG": "г",
+  "unitL": "л",
+  "unitM": "м",
+  "unitPack": "уп.",
+
+  "navPos": "Касса",
+  "navProducts": "Товары",
+  "navReceiving": "Приход",
+  "navCustomers": "Клиенты",
+  "navReports": "Отчёты",
+  "navSettings": "Настройки",
+
+  "actionSave": "Сохранить",
+  "actionCancel": "Отмена",
+  "actionUndo": "Отменить",
+  "actionClose": "Закрыть",
+  "actionDelete": "Удалить",
+  "actionRetry": "Повторить",
+  "actionYes": "Да",
+  "actionNo": "Нет",
+  "actionClear": "Очистить",
+  "actionBackspace": "Стереть последнюю цифру",
+  "actionIncrease": "Увеличить",
+  "actionDecrease": "Уменьшить",
+  "actionPay": "Оплатить",
+
+  "searchProductsHint": "Штрихкод или название товара",
+  "totalLabel": "Итого",
+  "changeLabel": "Сдача",
+
+  "statusOnline": "Интернет есть",
+  "statusOffline": "Нет интернета",
+  "statusQueued": "{count, plural, =0{Всё отправлено} one{{count} запись в очереди} few{{count} записи в очереди} many{{count} записей в очереди} other{{count} записи в очереди}}",
+  "statusOfflineSaving": "Нет интернета — продажи сохраняются ({count})",
+  "statusPrinterReady": "Принтер подключён",
+  "statusPrinterMissing": "Принтер не подключён",
+  "statusShiftOpen": "Смена открыта",
+  "statusShiftClosed": "Смена закрыта",
+
+  "settingsLanguage": "Язык"
 }

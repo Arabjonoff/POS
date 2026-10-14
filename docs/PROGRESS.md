@@ -120,3 +120,10 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-030 (squash merge)
 - Qoldi / keyingi qadam: T-031 Tarjimalar va formatlash (`PosFormat` dan foydalanish mumkin). T-033 karkas uchun `PosResponsiveScaffold` tayyor.
 - Muammo yoki qaror: spec ranglari WCAG AA dan o'tmadi (oq matn success/warning ustida 3,3/3,2; qorong'i primary 3,7) → tuzatildi, spec'da yozildi. Golden'lar widgetbook paketida (galereyalar bilan bitta manba), `make ui-test` ikkalasini ishga tushiradi. flutter_test standartda soyalarni qattiq chizadi — golden testda `debugDisableShadows=false` (test ichida, oxirida qaytariladi). Tor ekranda jadval sarlavhasi toshib ketardi → ustun `minWidth` + gorizontal surish.
+
+## 2026-10-14 — T-031 Tarjimalar va formatlash
+- Qilindi: ARB (uz shablon har kalitda izoh bilan, uz_Cyrl, ru): valyuta, birliklar (pcs/kg/g/l/m/pack), navigatsiya bo'limlari, umumiy amallar, holat qatori (ICU ko'plik; rus `one/few/many`). `AppFormat` (`context.fmt`): summa `125 000 so'm`/`сўм`/`сум`, miqdor birlik bilan (`1,250 kg`, `3 шт`), sana `13.10.2026`, vaqt `20:15` do'kon zonasida. `UnitCode`, `StoreTimeZone` (qaror 0007 — UTC+5 qat'iy, IANA bazasisiz). Til tanlovi lokal bazada saqlanadi va `main` da oldindan o'qiladi; `LanguagePicker`. Kassa ekrani `PosEmptyState` ga o'tdi (qattiq o'lchamlar olib tashlandi).
+- Testlar: apps/pos 31 (+26): formatlash 3 tilda, kun chegarasi (19:00 UTC = 00:00 Toshkent), qurilma zonasidan mustaqillik, ko'plik shakllari; ARB kalitlari/placeholder/izohlar mosligi; `lib/` da qattiq yozilgan matn yo'qligi (Text va label/title/hint/tooltip/... parametrlari; `// i18n-ignore` istisno); til saqlash/tiklash, buzilgan qiymat, `LanguagePicker`.
+- PR: T-031 (squash merge)
+- Qoldi / keyingi qadam: T-032 Lokal baza (Drift). Do'kon vaqt zonasi hozircha Toshkent — sinxron (T-034/T-035) `Store`/`Tenant.timezone` ni olib kelgach `context.fmt` ga ulanadi.
+- Muammo yoki qaror: 0007 — kassada IANA bazasi o'rniga qat'iy UTC+5.
