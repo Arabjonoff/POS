@@ -138,7 +138,7 @@ Spec'lar: `design-system.md`, `sync.md`, `i18n.md`.
 ## 3-bosqich. Kassa
 Spec'lar: `barcode.md`, `pos-screen.md`, `printing.md`, `shifts.md`.
 
-### [ ] T-040 Skaner xizmati
+### [x] T-040 Skaner xizmati
 - **Bajarish:** `barcode.md` bo'yicha: HID (klaviatura emulyatsiyasi) skanerni tez kiritish oqimidan ajratish, Android'da kamera skaneri (`mobile_scanner`), vaznli shtrix-kodlarni tahlil qilish, ovoz/vibratsiya signali.
 - **Qabul:** unit testlar: tez kiritish → shtrix-kod hodisasi; sekin qo'lda yozish → oddiy matn; vaznli EAN-13 to'g'ri ajratiladi; EAN-13/EAN-8/UPC nazorat raqami tekshiriladi.
 - **Bog'liq:** T-006

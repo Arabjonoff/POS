@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pos_app/app/scanner/scanner_settings.dart';
 import 'package:pos_app/app/session/auto_lock.dart';
 import 'package:pos_app/app/session/session.dart';
 import 'package:pos_app/features/common/section_page.dart';
@@ -33,6 +34,11 @@ class SettingsScreen extends ConsumerWidget {
             title: l10n.settingsAutoLock,
             subtitle: l10n.settingsAutoLockHelper,
             child: const _AutoLockPicker(),
+          ),
+          const SizedBox(height: PosSpacing.l),
+          _SettingsCard(
+            title: l10n.settingsScanner,
+            child: const _ScannerSettingsPicker(),
           ),
           const SizedBox(height: PosSpacing.l),
           Align(
@@ -131,6 +137,61 @@ class _AutoLockPicker extends ConsumerWidget {
             onTap: () => unawaited(
               ref.read(autoLockMinutesProvider.notifier).select(minutes),
             ),
+          ),
+      ],
+    );
+  }
+}
+
+class _ScannerSettingsPicker extends ConsumerWidget {
+  const _ScannerSettingsPicker();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final p = PosPalette.of(context);
+    final settings = ref.watch(scannerSettingsProvider);
+    final controller = ref.read(scannerSettingsProvider.notifier);
+    String speedLabel(int ms) => switch (ms) {
+      35 => l10n.settingsScannerSpeedNormal,
+      60 => l10n.settingsScannerSpeedSlow,
+      _ => l10n.settingsScannerSpeedVerySlow,
+    };
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        PosListTile(
+          leading: const Icon(Icons.volume_up_outlined),
+          title: l10n.settingsScannerSound,
+          trailing: Switch(
+            value: settings.sound,
+            onChanged: (v) => unawaited(controller.setSound(enabled: v)),
+          ),
+          onTap: () => unawaited(controller.setSound(enabled: !settings.sound)),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(
+            PosSpacing.l,
+            PosSpacing.s,
+            PosSpacing.l,
+            0,
+          ),
+          child: Text(
+            l10n.settingsScannerSpeed,
+            style: PosTypography.smallStrong.copyWith(color: p.textSecondary),
+          ),
+        ),
+        for (final ms in ScannerSettings.intervalOptions)
+          PosListTile(
+            leading: Icon(
+              ms == settings.intervalMs
+                  ? Icons.radio_button_checked
+                  : Icons.radio_button_unchecked,
+              color: ms == settings.intervalMs ? p.primaryText : null,
+            ),
+            title: speedLabel(ms),
+            selected: ms == settings.intervalMs,
+            onTap: () => unawaited(controller.setInterval(ms)),
           ),
       ],
     );

@@ -398,5 +398,45 @@
         "type": "int"
       }
     }
+  },
+  "settingsScanner": "Shtrix-kod skaneri",
+  "@settingsScanner": {
+    "description": "Sozlamalar bo'limi"
+  },
+  "settingsScannerSound": "Skanerlashda ovoz",
+  "@settingsScannerSound": {
+    "description": "Ovoz signali yoqilgan"
+  },
+  "settingsScannerSpeed": "Skaner tezligi",
+  "@settingsScannerSpeed": {
+    "description": "Belgilar orasidagi interval sozlamasi"
+  },
+  "settingsScannerSpeedNormal": "Oddiy skaner",
+  "@settingsScannerSpeedNormal": {
+    "description": "Interval 35 ms"
+  },
+  "settingsScannerSpeedSlow": "Sekin (Bluetooth) skaner",
+  "@settingsScannerSpeedSlow": {
+    "description": "Interval 60 ms"
+  },
+  "settingsScannerSpeedVerySlow": "Juda sekin skaner",
+  "@settingsScannerSpeedVerySlow": {
+    "description": "Interval 100 ms"
+  },
+  "scanCamera": "Kamera bilan skanerlash",
+  "@scanCamera": {
+    "description": "Kamera skaneri tugmasi"
+  },
+  "scanCameraHint": "Shtrix-kodni ramkaga to'g'rilang",
+  "@scanCameraHint": {
+    "description": "Kamera ekrani izohi"
+  },
+  "scanCameraDenied": "Kameraga ruxsat berilmagan. Telefon sozlamalaridan ruxsat bering.",
+  "@scanCameraDenied": {
+    "description": "Kamera ruxsati yo'q"
+  },
+  "scanInvalidCode": "Kod noto'g'ri o'qildi, qayta skanerlang",
+  "@scanInvalidCode": {
+    "description": "Nazorat raqami xato"
   }
 }

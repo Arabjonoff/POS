@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pos_app/app/locale.dart';
 import 'package:pos_app/app/router.dart';
+import 'package:pos_app/app/scanner/scanner_settings.dart';
 import 'package:pos_app/app/session/auto_lock.dart';
 import 'package:pos_app/app/sync/sync_runner.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
@@ -14,6 +15,8 @@ class PosApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
     final locale = ref.watch(localeProvider);
+    // Skaner sozlamalari (interval) ilova ochilishida qo'llanadi.
+    ref.watch(scannerSettingsProvider);
     return MaterialApp.router(
       onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
       debugShowCheckedModeBanner: false,

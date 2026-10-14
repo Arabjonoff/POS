@@ -90,5 +90,15 @@
   "statusSalesOffline": "Узоқ вақт интернет йўқ — савдо тўхтатилган",
   "statusDeviceBlocked": "Касса блокланган",
   "statusClockSkew": "Компьютер соати нотўғри",
-  "statusRejected": "{count, plural, other{{count} та ёзув қабул қилинмади}}"
+  "statusRejected": "{count, plural, other{{count} та ёзув қабул қилинмади}}",
+  "settingsScanner": "Штрих-код сканери",
+  "settingsScannerSound": "Сканерлашда овоз",
+  "settingsScannerSpeed": "Сканер тезлиги",
+  "settingsScannerSpeedNormal": "Оддий сканер",
+  "settingsScannerSpeedSlow": "Секин (Bluetooth) сканер",
+  "settingsScannerSpeedVerySlow": "Жуда секин сканер",
+  "scanCamera": "Камера билан сканерлаш",
+  "scanCameraHint": "Штрих-кодни рамкага тўғриланг",
+  "scanCameraDenied": "Камерага рухсат берилмаган. Телефон созламаларидан рухсат беринг.",
+  "scanInvalidCode": "Код нотўғри ўқилди, қайта сканерланг"
 }

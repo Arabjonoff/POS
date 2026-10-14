@@ -644,6 +644,66 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'{count, plural, other{{count} ta yozuv qabul qilinmadi}}'**
   String statusRejected(int count);
+
+  /// Sozlamalar bo'limi
+  ///
+  /// In uz, this message translates to:
+  /// **'Shtrix-kod skaneri'**
+  String get settingsScanner;
+
+  /// Ovoz signali yoqilgan
+  ///
+  /// In uz, this message translates to:
+  /// **'Skanerlashda ovoz'**
+  String get settingsScannerSound;
+
+  /// Belgilar orasidagi interval sozlamasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Skaner tezligi'**
+  String get settingsScannerSpeed;
+
+  /// Interval 35 ms
+  ///
+  /// In uz, this message translates to:
+  /// **'Oddiy skaner'**
+  String get settingsScannerSpeedNormal;
+
+  /// Interval 60 ms
+  ///
+  /// In uz, this message translates to:
+  /// **'Sekin (Bluetooth) skaner'**
+  String get settingsScannerSpeedSlow;
+
+  /// Interval 100 ms
+  ///
+  /// In uz, this message translates to:
+  /// **'Juda sekin skaner'**
+  String get settingsScannerSpeedVerySlow;
+
+  /// Kamera skaneri tugmasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Kamera bilan skanerlash'**
+  String get scanCamera;
+
+  /// Kamera ekrani izohi
+  ///
+  /// In uz, this message translates to:
+  /// **'Shtrix-kodni ramkaga to\'g\'rilang'**
+  String get scanCameraHint;
+
+  /// Kamera ruxsati yo'q
+  ///
+  /// In uz, this message translates to:
+  /// **'Kameraga ruxsat berilmagan. Telefon sozlamalaridan ruxsat bering.'**
+  String get scanCameraDenied;
+
+  /// Nazorat raqami xato
+  ///
+  /// In uz, this message translates to:
+  /// **'Kod noto\'g\'ri o\'qildi, qayta skanerlang'**
+  String get scanInvalidCode;
 }
 
 class _AppLocalizationsDelegate
