@@ -28,3 +28,10 @@ Format:
 - Agentning tavsiyasi: B — erta to'laganni jazolamaydi.
 - Hozircha tanlangan: B (vaqtincha; `services.record_payment` da bitta joyda o'zgartiriladi)
 - Javob: B [javob berildi]
+
+### Q-003 (T-016) Mijoz qarzidan ko'p to'lasa — avans sifatida qabul qilinadimi?
+- Kontekst: `debts.md` da to'lov faqat qarzni yopish uchun ("To'liq" tugmasi). Ortiqcha to'lov qabul qilinsa balans manfiy bo'ladi (do'kon mijozga qarzdor).
+- Variantlar: A) ruxsat yo'q — `409 payment_exceeds_debt`, kassir summani to'g'rilaydi. B) avans sifatida qabul qilinadi (manfiy balans), keyingi nasiya savdodan ayriladi.
+- Agentning tavsiyasi: A — oddiyroq, kassada xato kiritilgan summa (ortiqcha nol) qarzni buzmaydi. Avans kerak bo'lsa keyin qo'shiladi.
+- Hozircha tanlangan: A (vaqtincha; `services.pay_debt` da bitta joyda). Oflayn kassadan kelgan to'lov (sinxron) baribir qabul qilinadi.
+- Javob:

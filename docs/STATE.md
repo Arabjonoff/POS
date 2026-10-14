@@ -12,7 +12,7 @@
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [ ] 1. Spec `docs/specs/customers-api.md` (mijoz, DebtEntry, balans, limit, to'lov, tuzatish, huquqlar, API); savol bo'lsa `QUESTIONS.md`
+- [x] 1. Spec `docs/specs/customers-api.md` (mijoz, DebtEntry, balans, limit, to'lov, tuzatish, huquqlar, API); savol bo'lsa `QUESTIONS.md`
 - [ ] 2. `apps/customers`: Customer (yumshoq o'chirish), DebtEntry (AppendOnlyModel); migratsiya; admin
 - [ ] 3. `services.py`: balance, record_debt (sale/refund — T-017 uchun), check_limit, pay_debt, adjust_debt (qulf bilan)
 - [ ] 4. API: `/customers/` (balance, search, has_debt, saralash), `/{id}/debt-entries/`, `/{id}/payments/`, `/{id}/adjustments/`
@@ -20,11 +20,11 @@
 - [ ] 6. openapi + schema.d.ts; lint/test; PROGRESS/ROADMAP; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-T-015 merge qilindi (#12). T-016 branch ochildi.
+1-qadam: spec `docs/specs/customers-api.md`; Q-003 (ortiqcha to'lov — vaqtincha A: rad).
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-1-qadam: `docs/specs/customers-api.md` ni yozish (`debts.md`, `data-model.md` Customer/DebtEntry, `auth-roles.md` asosida).
+2-qadam: `backend/apps/customers/` (apps.py, models.py: Customer + DebtEntry, admin.py), `config/settings/base.py` INSTALLED_APPS, `makemigrations customers`.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
