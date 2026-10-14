@@ -94,17 +94,25 @@ class _CashierViewState extends ConsumerState<CashierView> {
     super.dispose();
   }
 
+  /// Fokus kassa ekraniga (tezkor tugmalar va "fokus yana skanerga").
+  /// Boshqa sahifa yoki oynadagi aniq maydon fokusini tortib olmaymiz.
   void _focusScreen() {
-    if (!mounted) return;
+    if (!mounted || _dialogOpen || !TickerMode.valuesOf(context).enabled) {
+      return;
+    }
     final focus = FocusManager.instance.primaryFocus;
-    final inside =
-        _screenFocus.hasFocus || focus == null || focus.context == null;
-    // Boshqa ekran/oyna fokusini tortib olmaymiz.
-    if (inside || !_isTopmost(focus.context!)) _screenFocus.requestFocus();
+    final other = focus?.context;
+    if (focus != null &&
+        focus is! FocusScopeNode &&
+        other != null &&
+        !_screenFocus.hasFocus) {
+      final route = ModalRoute.of(other);
+      if (route != null && route != ModalRoute.of(context) && route.isCurrent) {
+        return;
+      }
+    }
+    _screenFocus.requestFocus();
   }
-
-  bool _isTopmost(BuildContext other) =>
-      ModalRoute.of(other)?.isCurrent ?? true;
 
   // ---- Qidiruv ----------------------------------------------------------
 
@@ -298,12 +306,13 @@ class _CashierViewState extends ConsumerState<CashierView> {
     );
   }
 
+  /// Oyna ochiq paytda skaner ro'yxati o'chadi — raqamlar oynaga tushadi.
   Future<T?> _dialog<T>(Future<T?> Function() open) async {
-    _dialogOpen = true;
+    setState(() => _dialogOpen = true);
     try {
       return await open();
     } finally {
-      _dialogOpen = false;
+      if (mounted) setState(() => _dialogOpen = false);
     }
   }
 
@@ -379,6 +388,15 @@ class _CashierViewState extends ConsumerState<CashierView> {
       }
       return true;
     }
+    // Qidiruvda Enter — tanlangan natija savatga (telefon klaviaturasi —
+    // `onSubmitted`).
+    if ((key == LogicalKeyboardKey.enter ||
+            key == LogicalKeyboardKey.numpadEnter) &&
+        searching &&
+        _hasQuery) {
+      _pickHighlighted();
+      return true;
+    }
     if (key == LogicalKeyboardKey.delete) {
       // Qidiruvda matn bor — Delete matnni o'chiradi.
       if (searching && _hasQuery) return false;
@@ -404,6 +422,7 @@ class _CashierViewState extends ConsumerState<CashierView> {
     final block = ref.watch(salesBlockProvider);
 
     return ScanListener(
+      enabled: !_dialogOpen,
       onScan: _onScan,
       onTyping: _onTyping,
       child: Focus(

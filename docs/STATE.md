@@ -17,16 +17,16 @@
 - [x] 3. Chegirma huquqi: kassir uchun maksimal foiz (lokal sozlama), oshsa — menejer/ega PIN tasdig'i; `docs/QUESTIONS.md` Q-005
 - [x] 4. Kassa ekrani UI (desktop/planshet): qidiruv + natijalar, tez tugmalar (kategoriya tablari), savat paneli (qatorlar, stepper, JAMI, To'lash), chek tablari
 - [x] 5. Telefon maketi: qidiruv + kamera, savat, yopishqoq JAMI + To'lash paneli, tez tugmalar varag'i
-- [ ] 6. Klaviatura va skaner: F1/F2/F3/F6/F12/Delete/↑↓/Esc, `ScanListener` + `onTyping`, chaqnash/signal, "Bu kod bazada yo'q"
-- [ ] 7. Widget testlari (+ ilova qayta ochilganda savat tiklanishi)
+- [x] 6. Klaviatura va skaner: F1/F2/F3/F6/F12/Delete/↑↓/Esc, `ScanListener` + `onTyping`, chaqnash/signal, "Bu kod bazada yo'q"
+- [x] 7. Widget testlari (+ ilova qayta ochilganda savat tiklanishi)
 - [ ] 8. Golden + skrinshotlar `docs/screenshots/T-042/`
 - [ ] 9. To'liq tekshiruv, PR, CI → merge; ROADMAP, PROGRESS, STATE
 
 ## Oxirgi bajarilgan ish
-- 4–5-qadam: `features/pos/pos_screen.dart` (`CashierView`: ikki panel ≥ 720 px, telefon — bir ustun + varaq), `widgets/cart_panel.dart`, `widgets/product_panel.dart`, `widgets/qty_dialog.dart`, `widgets/discount_dialog.dart`. Klaviatura (`_onKey`, HardwareKeyboard) va skaner (`ScanListener`) ham yozilgan — testlari 7-qadamda. `PosScanFeedback` (packages/ui) dispose xatosi tuzatildi. Golden: `test/goldens/pos_golden_test.dart` (+ `test/helpers/catalog_seed.dart`).
+- 6–7-qadam: `test/features/pos_screen_test.dart` (15 test), `test/helpers/keyboard.dart`. Tuzatildi: oyna ochiq paytda skaner raqamlarni yutardi (`ScanListener.enabled`), fokus kassa ekraniga o'tmasdi (`_focusScreen`), qidiruvda Enter. Golden'lar yangilandi.
 
 ## Keyingi aniq harakat
-- 6–7-qadam: `test/features/pos_screen_test.dart` — skaner (tez kiritish 10 ms + Enter → savatga), topilmagan kod, nofaol, vaznli kod, F1/F2/F3/F6/Delete/↑↓/Esc, qidiruv + Enter, undo, chegirma + menejer PIN, ilova qayta ochilganda savat. Keyin barcha golden'larni yangilash (`--update-goldens test/goldens`).
+- 8-qadam: `docs/screenshots/T-042/` ga `test/goldens/pos/*.png` nusxasi, `T-033/pos_*` yangilash; `docs/specs/pos-screen.md` ga "Kassada amalga oshirilishi (T-042)" bo'limi.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

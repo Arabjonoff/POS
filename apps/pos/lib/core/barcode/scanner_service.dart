@@ -192,17 +192,21 @@ final scannerServiceProvider = Provider<BarcodeScannerService>((ref) {
 });
 
 /// Ekran skaner hodisalarini oladi — faqat ko'rinib turganda (yashirin
-/// bo'limlar `TickerMode` o'chiq) va eng yuqori bo'lsa.
+/// bo'limlar `TickerMode` o'chiq), [enabled] bo'lsa va eng yuqori bo'lsa.
+/// Ekran o'z oynasini ochganda [enabled] = false — oyna klaviaturani o'zi
+/// oladi (raqamlar skaner buferiga tushmaydi).
 class ScanListener extends ConsumerStatefulWidget {
   const ScanListener({
     required this.onScan,
     required this.child,
     this.onTyping,
+    this.enabled = true,
     super.key,
   });
 
   final ValueChanged<ScanEvent> onScan;
   final ValueChanged<String>? onTyping;
+  final bool enabled;
   final Widget child;
 
   @override
@@ -215,15 +219,25 @@ class _ScanListenerState extends ConsumerState<ScanListener> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final visible = TickerMode.valuesOf(context).enabled;
-    if (visible && _registration == null) {
+    _sync();
+  }
+
+  @override
+  void didUpdateWidget(ScanListener oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.enabled != widget.enabled) _sync();
+  }
+
+  void _sync() {
+    final active = widget.enabled && TickerMode.valuesOf(context).enabled;
+    if (active && _registration == null) {
       _registration = ref
           .read(scannerServiceProvider)
           .register(
             (e) => widget.onScan(e),
             onTyping: (t) => widget.onTyping?.call(t),
           );
-    } else if (!visible && _registration != null) {
+    } else if (!active && _registration != null) {
       _registration!.dispose();
       _registration = null;
     }
