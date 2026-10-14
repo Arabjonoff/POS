@@ -20,14 +20,14 @@
 - [ ] 6. openapi + schema.d.ts; lint/test; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-5-qadam: inventory testlari (52 ta, yashil): kirim, teskari kirim, inventarizatsiya, qoldiq = yig'indi, rebuild_stock, o'zgarmaslik, izolyatsiya, huquqlar.
+6-qadam (qisman): openapi.yaml + schema.d.ts yangilandi, spec/ROADMAP/PROGRESS yozildi. 376 test, ruff, typecheck yashil. Hammasi lokal commit — hali push qilinmagan.
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-6-qadam: `make schema` (openapi.yaml) + admin `schema.d.ts` (`make api-clients`), to'liq pytest, PROGRESS.md/ROADMAP.md, keyin PR.
+`git push -u origin feat/T-015-inventory`, keyin `gh pr create` (T-015), CI yashil bo'lsa squash merge; STATE.md ni bo'sh shablonga qaytarish.
 
 ## Ochiq holatlar
-- Commit qilinmagan o'zgarishlar: yo'q
+- Commit qilinmagan o'zgarishlar: yo'q (lekin 5 ta wip commit push qilinmagan)
 - Ochiq PR: —
 - Ishlab turgan servislar: docker compose (pos-*) — 8100, 3100
 - Yiqilayotgan testlar: —
