@@ -53,3 +53,12 @@ Tezkor tugmalar ekranda kichik yorliq sifatida ko'rinadi (desktopda).
 - **F4** — chek mijozi (`showCustomerDialog`): savat ostida "Mijoz (F4)" tugmasi va olib tashlash; nasiyada shu mijoz oldindan tanlangan.
 - **Skaner** — oyna ochiq paytda o'z `ScanListener` i: skan → "Avval to'lovni yakunlang" (oyna ichida, 3 s) va ovoz; skaner Enter'i savdoni yakunlamaydi. Flutter'da `HardwareKeyboard` ishlovchisi hodisani olsa ham u fokusdagi `Focus.onKeyEvent` ga baribir yetadi — shuning uchun oynada raqamlar faqat skaner xizmatining `onTyping` i orqali kiradi (`MoneyInput(hardwareDigits: false)`).
 - **Natija** — oyna yopiladi, joriy chek bo'shaydi (`CartController.clearActive`), 3 s "Savdo yakunlandi · Qaytim 3 000 so'm", fokus yana skanerga. Chek chop etish — T-044.
+
+## Kassada amalga oshirilishi (T-045 — qaytarish)
+- **F8** yoki "Qaytarish" ikoni (desktopda qidiruv qatorida, telefonda chek tablari yonida) → `features/refunds/refund_dialog.dart`.
+- **Savdoni topish**: chek raqami (katta-kichik harf farqsiz), chekdagi shtrix-kod (CODE128, T-044 chekining pastida; skaner Enter'i qaytarishni boshlamaydi) yoki "Oxirgi cheklar" ro'yxati (holati bilan: qisman / to'liq qaytarilgan). Faqat **shu kassaning lokal bazasidagi** savdolar topiladi (Q-006).
+- **Qatorlar**: qaytarish mumkin bo'lgan miqdor (sotilgan − oldin qaytarilgan), − / + (dona — 1, vaznli — 0,100 kg), qiymatga bosilsa aniq miqdor kiritiladi, "Hammasini" tugmasi. To'liq qaytarilgan chek — "Bu chek to'liq qaytarilgan".
+- **Summa** — `data/refunds/refund_calculator.dart`, server `record_refund` bilan aynan bir xil: qator — `mulDivHalfUp(qator jami, qty, sotilgan)`, qatorning oxirgi qismi — qoldiq; jami — chek chegirmasidan ulush ayiriladi, savdo to'liq yopilsa — `savdo jami − oldingi qaytarishlar`.
+- **Sabab** (majburiy): Sifatsiz / Muddati o'tgan / Mijoz fikridan qaytdi / Xato urilgan va/yoki matn. **Usul**: naqd berish; savdoda nasiya qismi yetarli bo'lsa — "Qarzdan ayirish".
+- **Huquq**: kassir bo'lsa — menejer/ega PIN (`requestManagerApproval`); menejer yoki ega o'zi bo'lsa, qayta PIN so'ralmaydi (`approved_by` — o'zi).
+- **Yozish** — `refund_writer.dart`, bitta tranzaksiya: Refund + RefundItem + `StockMovement(refund, +qty)` + (qarzdan bo'lsa) `DebtEntry(refund, −summa)` + `sales.status` (`partially_refunded` / `refunded`) + outbox `refund.created`. Natija xabari: "Qaytarildi · Mijozga 4 000 so'm bering" yoki "Qaytarildi · Qarzdan … ayirildi". Smena X/Z hisobotida naqd qaytarishlar kutilgan naqddan ayiriladi (T-041).
