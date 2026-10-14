@@ -35,3 +35,10 @@ Format:
 - Agentning tavsiyasi: A — oddiyroq, kassada xato kiritilgan summa (ortiqcha nol) qarzni buzmaydi. Avans kerak bo'lsa keyin qo'shiladi.
 - Hozircha tanlangan: A (vaqtincha; `services.pay_debt` da bitta joyda). Oflayn kassadan kelgan to'lov (sinxron) baribir qabul qilinadi.
 - Javob:
+
+### Q-004 (T-019) Foyda qanday hisoblanadi — chek chegirmasi va qaytarishlar bilanmi?
+- Kontekst: `data-model.md`: `Foyda = SUM(SaleItem.total − cost × qty / 1000)`. Bu chekka berilgan chegirmani (masalan, 125 300 → 125 000 yaxlitlash) va qaytarilgan tovarlarni hisobga olmaydi — foyda ortiq ko'rinadi.
+- Variantlar: A) foyda = tushum (chek chegirmasi va qaytarishlardan keyin) − sotilgan tannarx + qaytarilgan tannarx. B) `data-model.md` dagi qator formulasi (chegirma va qaytarishsiz).
+- Agentning tavsiyasi: A — egasi ko'radigan foyda kassadagi haqiqiy pulga mos keladi.
+- Hozircha tanlangan: A (vaqtincha; `apps/reports/services.py` da bitta joyda; kassa hisobotlari ham shu formulani oladi).
+- Javob:

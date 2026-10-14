@@ -88,7 +88,7 @@ Spec'lar: `data-model.md`, `auth-roles.md`, `sync.md`, `subscription-billing.md`
 - **Qabul:** `sync.md` dagi barcha server qabul mezonlari testlarda (takroriy push, tartibsiz kelish, 2 qurilma bir tovarni sotishi).
 - **Bog'liq:** T-012, T-017
 
-### [ ] T-019 Do'kon egasi hisobotlari API
+### [x] T-019 Do'kon egasi hisobotlari API
 - **Bajarish:** kunlik/oylik savdo, foyda, top tovarlar, kassir bo'yicha, qarzlar, kam qolgan tovarlar, manfiy qoldiq. `reports.md` bo'yicha.
 - **Qabul:** test ma'lumotlari ustida hisobot raqamlari qo'lda hisoblangan qiymatlarga teng.
 - **Bog'liq:** T-017

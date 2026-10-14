@@ -47,4 +47,4 @@ Pul: `*_tiyin` (bigint). Miqdor: `qty_milli` (bigint; 1 dona = 1000, 0,250 kg = 
 ## Hisoblanadigan qiymatlar
 - Qoldiq = `SUM(StockMovement.qty_milli)` (tovar + do'kon). Serverda `ProductStock` kesh jadvali bo'lishi mumkin, lekin manba — harakatlar.
 - Mijoz qarzi = `SUM(DebtEntry.amount_tiyin)`.
-- Foyda = `SUM(SaleItem.total_tiyin − cost_tiyin × qty_milli / 1000)` (butun sonli bo'lish, yaxlitlash qoidasi: half-up, bitta yordamchi funksiyada).
+- Foyda = tushum (savdolar − qaytarishlar) − Σ `line_total(cost_tiyin, qty_milli)` sotilgan + qaytarilgan tannarx (half-up; chek chegirmasi va qaytarishlar hisobga olinadi — Q-004, `reports-api.md`).
