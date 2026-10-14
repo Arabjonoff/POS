@@ -14,11 +14,11 @@
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 
 ## Oxirgi bajarilgan ish
-T-020 Platforma admin API tugadi (PR ochildi, CI yashil bo'lsa squash merge). 1-bosqich (backend) tugadi.
+T-030 Dizayn tizimi tugadi (PR ochildi, CI yashil bo'lsa squash merge).
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-T-020 PR merge qilinganini tekshirish (`gh pr list --state open`); keyin ROADMAP'dan T-030 Dizayn tizimi (packages/ui) — `docs/specs/design-system.md`.
+T-030 PR merge qilinganini tekshirish (`gh pr list --state open`); keyin ROADMAP'dan T-031 Tarjimalar va formatlash — `docs/specs/i18n.md`, `apps/pos/lib/l10n/`.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
@@ -33,3 +33,4 @@ T-020 PR merge qilinganini tekshirish (`gh pr list --state open`); keyin ROADMAP
 - Testlar `.env` ni o'qimaydi: `cd backend && DATABASE_URL=postgres://pos:pos@127.0.0.1:55432/pos uv run pytest`.
 - 2026-10-14: elektr uzilishi `.git/config` ni nol baytlar bilan buzgan edi; foydalanuvchi qayta tikladi (`[core]` + `origin`).
 - Docker Desktop o'chiq bo'lishi mumkin: `C:\Users\Muhammadi\AppData\Local\Programs\DockerDesktop\Docker Desktop.exe` ni ishga tushir, `docker info` javob berguncha kut.
+- Flutter: golden'lar `packages/ui/widgetbook/test/goldens/` da, qayta yaratish `make ui-goldens` (faqat Windows). Xatolarni ko'rish: `flutter test --no-pub -r failures-only`. Bash'da `sed -i` ba'zan "Device or resource busy" beradi (Windows) — Edit vositasini ishlat.

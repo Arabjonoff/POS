@@ -113,3 +113,10 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-020 (squash merge)
 - Qoldi / keyingi qadam: 1-bosqich (backend yadrosi) tugadi. Keyingi: 2-bosqich — T-030 Dizayn tizimi (packages/ui, Flutter).
 - Muammo yoki qaror: testlar ikkita xatoni topdi — onboarding audit yozuvida `tenant` bo'sh edi; band telefon 500 berardi (model validatsiyasi) → oldindan tekshiruv, `409 phone_taken`.
+
+## 2026-10-14 — T-030 Dizayn tizimi (packages/ui)
+- Qilindi: tokenlar — `PosPalette` (ThemeExtension, semantik ranglar + 2 daraja soya), `PosTone`, `PosTypography` (Inter 4.1 paketga qo'shildi, tabular raqamlar), `PosSpacing/Radius/Sizes/Motion`, `PosWindowSize`; to'liq `PosTheme` (Material komponentlari ham); `PosFormat` (summa NBSP bilan, miqdor). 20 komponent: Button(+Keycap), IconButton, TextField, SearchField, NumericKeypad, MoneyText, QtyStepper, Card, ListTile, Badge, StatusDot, Dialog/Sheet, Toast(undo), EmptyState, Skeleton, DataTable, ResponsiveScaffold, StatusBar, PinPad, ScanFeedback. Widgetbook: 9 galereya + dialog, knob playground. Spec'ga "Amalga oshirilishi" bo'limi.
+- Testlar: ui 131 (kontrast AA har juftlik × 2 mavzu, breakpoint, formatlash, har komponent xatti-harakati: klaviatura, Esc, 5 s toast, fizik PIN klaviatura, tor jadval), widgetbook 62 (60 golden: 10 sahifa × 3 o'lcham × 2 mavzu). Skrinshotlar `docs/screenshots/T-030/`.
+- PR: T-030 (squash merge)
+- Qoldi / keyingi qadam: T-031 Tarjimalar va formatlash (`PosFormat` dan foydalanish mumkin). T-033 karkas uchun `PosResponsiveScaffold` tayyor.
+- Muammo yoki qaror: spec ranglari WCAG AA dan o'tmadi (oq matn success/warning ustida 3,3/3,2; qorong'i primary 3,7) → tuzatildi, spec'da yozildi. Golden'lar widgetbook paketida (galereyalar bilan bitta manba), `make ui-test` ikkalasini ishga tushiradi. flutter_test standartda soyalarni qattiq chizadi — golden testda `debugDisableShadows=false` (test ichida, oxirida qaytariladi). Tor ekranda jadval sarlavhasi toshib ketardi → ustun `minWidth` + gorizontal surish.

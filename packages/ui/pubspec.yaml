@@ -17,3 +17,18 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   very_good_analysis: ^10.2.0
+
+flutter:
+  uses-material-design: true
+  fonts:
+    # Inter 4.1 (SIL OFL 1.1, assets/fonts/OFL.txt) — lotin va kirill.
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Inter-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Inter-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Inter-Bold.ttf
+          weight: 700

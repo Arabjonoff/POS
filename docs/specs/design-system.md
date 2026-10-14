@@ -35,3 +35,23 @@ Button, IconButton, TextField, SearchField, NumericKeypad, MoneyText, QtyStepper
 - [ ] klaviatura bilan to'liq ishlatsa bo'ladi (desktop)
 - [ ] asosiy amal ≤ 3 harakat
 - [ ] kontrast AA
+
+## Amalga oshirilishi (`packages/ui`, T-030)
+Hamma narsa `package:pos_ui/pos_ui.dart` orqali. Ekranlarda rang, o'lcham, shrift qattiq yozilmaydi — faqat quyidagilar.
+
+**Tokenlar**
+- `PosPalette` (`ThemeExtension`, `PosPalette.of(context)`) — semantik ranglar va 2 daraja soya (`cardShadow`, `overlayShadow`). `PosColors` — faqat primitivlar, ekranda ishlatilmaydi.
+- `PosTone` (neutral/primary/success/warning/danger) → `palette.tone(t)`: `fill/onFill`, `text` (sirt ustida), `soft/onSoft`.
+- `PosTypography` (Inter 4.1, OFL; display 48/40/32 `tabular` raqamlar, h1 28, h2 22, h3 18, body 16, small 14, caption 12), `PosSpacing`, `PosRadius`, `PosSizes` (48/56/64), `PosMotion` (120/200 ms), `PosWindowSize` (breakpoint'lar).
+- `PosTheme.light()/dark({platform})` — Material komponentlari ham tokenlar bilan bezatilgan.
+- `PosFormat` — `money(tiyin, currency:)` → `125 000 so'm` (NBSP), `qty(milli, weighted:)` → `1,250`. Valyuta/birlik nomi tarjimadan.
+
+**WCAG AA uchun rang tuzatishlari** (boshlang'ich ro'yxatdan farqi, `test/pos_theme_test.dart` har juftlikni ≥ 4,5:1 tekshiradi):
+- Oq matnli success/warning tugmalari: `#15803D` / `#B45309` (`#16A34A`/`#D97706` oq bilan 3,3/3,2 edi).
+- Qorong'i mavzu: to'ldirilgan primary `#2563EB` (oq matn 5,2), matn/fokus sifatida `#60A5FA`; success/warning/danger matni `#22C55E`/`#F59E0B`/`#F87171`.
+- Ikkinchi darajali izoh (placeholder) `#64748B` (yorug'), `#94A3B8` (qorong'i). `#94A3B8` yorug'da faqat o'chiq holat uchun.
+
+**Komponentlar** (barchasi `Pos` prefiksli): `PosButton` (+`PosKeycap`), `PosIconButton` (tooltip majburiy), `PosTextField`, `PosSearchField`, `PosNumericKeypad`, `PosMoneyText` (`total` — o'lchamga qarab 32/40/48), `PosQtyStepper`, `PosCard`, `PosListTile`, `PosBadge`, `PosStatusDot`, `PosDialog` + `showPosDialog` (telefonda bottom sheet), `PosToast` + `showPosToast` (5 s, undo), `PosEmptyState`, `PosSkeleton`/`PosSkeletonListTile`, `PosDataTable` (tor ekranda gorizontal suriladi), `PosResponsiveScaffold` (+`PosDestination`), `PosStatusBar` (+`PosStatusItem`), `PosPinPad` (fizik klaviatura ham), `PosScanFeedback` (+controller).
+Komponentlar ichida foydalanuvchi matni yo'q: yorliq, tooltip, xato matni parametr sifatida (tarjimadan) beriladi.
+
+**Katalog va golden testlar.** Har komponent guruhi `packages/ui/widgetbook/lib/galleries/` da galereya (barcha holatlar) — Widgetbook'da "All states", golden testlar ham aynan shularni chizadi: `packages/ui/widgetbook/test/goldens/<galereya>/<phone|tablet|desktop>_<light|dark>.png`. Qayta yaratish: `make ui-goldens` (faqat Windows — CI ham Windows'da, 0005).

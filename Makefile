@@ -11,7 +11,7 @@ SCHEMA := $(BACKEND)/openapi.yaml
 
 .PHONY: help up down logs ps \
 	backend-install backend-lint backend-format backend-test migrate makemigrations \
-	pos-get pos-analyze pos-test ui-test widgetbook \
+	pos-get pos-analyze pos-test ui-test ui-goldens widgetbook \
 	admin-install admin-lint admin-test admin-e2e admin-build \
 	schema api-clients lint test
 
@@ -62,8 +62,12 @@ pos-analyze: ## Kassa ilovasi va paketlar: flutter analyze
 pos-test: ## Kassa ilovasi testlari
 	cd $(POS) && flutter test
 
-ui-test: ## Dizayn tizimi testlari (golden)
+ui-test: ## Dizayn tizimi testlari (unit + widget + golden)
 	cd $(UI) && flutter test
+	cd $(UI)/widgetbook && flutter test
+
+ui-goldens: ## Golden PNG larni qayta yaratish (faqat Windows; ataylab o'zgarishdan keyin)
+	cd $(UI)/widgetbook && flutter test --update-goldens
 
 widgetbook: ## Widgetbook (dizayn tizimi katalogi) ni Windows'da ochish
 	cd $(UI)/widgetbook && flutter run -d windows

@@ -103,7 +103,7 @@ Spec'lar: `data-model.md`, `auth-roles.md`, `sync.md`, `subscription-billing.md`
 ## 2-bosqich. Flutter poydevori
 Spec'lar: `design-system.md`, `sync.md`, `i18n.md`.
 
-### [ ] T-030 Dizayn tizimi (packages/ui)
+### [x] T-030 Dizayn tizimi (packages/ui)
 - **Bajarish:** tokenlar (rang, tipografiya, oraliq, radius, soya, harakat), yorug'/qorong'i `ThemeData`, komponentlar: Button (primary/secondary/danger/ghost, s/m/l/xl), IconButton, TextField, SearchField, NumericKeypad, MoneyText, QtyStepper, Card, ListTile, Badge, StatusDot, Dialog/Sheet (telefonda bottom sheet, desktopda dialog), Toast, EmptyState, Skeleton, DataTable (desktop), ResponsiveScaffold (telefon/planshet/desktop breakpoint'lari).
 - **Qabul:** har komponent Widgetbook'da barcha holatlari bilan; golden testlar yorug'/qorong'i va 3 o'lchamda; kontrast WCAG AA.
 - **Bog'liq:** T-006
