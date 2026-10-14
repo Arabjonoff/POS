@@ -5,24 +5,13 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-060 Mijozlar va nasiya daftari
-- Branch: feat/T-060-customers
-- Boshlangan: 2026-10-15
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [x] 1. `CustomerDirectory`: `watchHistory` (debt_entries, yangisi birinchi), `purchases` (lokal savdolar), `payDebt` (DebtEntry(−, payment) + outbox `debt.paid`, ≤ balans), `update` (ism/telefon/izoh; limit — ega/menejer `by`) + testlar (balans = Σ yozuvlar, oflayn)
-- [ ] 2. Bo'lim "Mijozlar" (Ctrl+4): ro'yxat (qarzdorlar tepada, qidiruv, "Qarzi bor" filtri, jami qarz), yangi mijoz
-- [ ] 3. Mijoz kartasi: katta qarz, limit, tarix, xaridlar, "Qarzni to'lash" (summa, "To'liq", naqd/karta), tahrirlash (limit — PIN); tarjimalar
-- [ ] 4. Widget testlari + golden + skrinshotlar `docs/screenshots/T-060/`
-- [ ] 5. Spec, PR, CI → merge; ROADMAP, PROGRESS, STATE
-
-## Oxirgi bajarilgan ish
-- T-054 merge qilindi (#35), 4-bosqich yopildi. T-060 boshlandi.
-
-## Keyingi aniq harakat
-- 2–3-qadam: `apps/pos/lib/features/customers/customers_screen.dart` (ro'yxat) va `customer_card.dart` (karta, to'lov oynasi, tahrirlash), router `AppSection.customers`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
@@ -39,5 +28,6 @@
 - Widget/golden testlarda telefonda (390×844) ekrandan pastdagi tugmani bosishdan oldin `tester.ensureVisible` — aks holda bosish pastki menyuga tushadi (ogohlantirish bilan, xatosiz).
 - Testda `PosFormat.moneyAmount` oddiy probel emas — matnni `PosFormat` bilan yasab izla. `find.byType(TextField).first` orqadagi kassa qidiruvini topadi — `find.descendant(of: dialog, ...)`.
 - OpenAPI: yangi `type` enum qo'shilsa nom to'qnashadi — `backend/config/settings/base.py` ENUM_NAME_OVERRIDES ga qo'sh (aks holda mavjud enum nomi o'zgarib, eski generatsiya fayli qoladi).
+- Dialog ichidagi TextEditingController'larni `showPosDialog` qaytgach darhol dispose qilma (yopilish animatsiyasi hali ishlatadi) — controller'lar dialogning o'z State'ida bo'lsin.
 - Widget testi teardown'ida drift yozuvini kutma (`await notifier.flush()` addTearDown ichida) — test osilib qoladi (timeout ham ishlamaydi). Test tanasida kutish mumkin.
 - To'lov oynasida skaner ro'yxatdan o'tgan: Flutter `HardwareKeyboard` ishlovchisi `true` qaytarsa ham hodisa `Focus.onKeyEvent` ga baribir yetadi. Shuning uchun oynada raqamlar faqat `onTyping` orqali (`MoneyInput(hardwareDigits: false)`), skaner Enter'i `_swallowEnter` bilan yutiladi.

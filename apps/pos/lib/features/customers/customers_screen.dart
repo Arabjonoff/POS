@@ -39,56 +39,16 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
   }
 
   Future<void> _new() async {
-    final l10n = AppLocalizations.of(context);
-    final name = TextEditingController();
-    final phone = TextEditingController();
-    final created = await showPosDialog<bool>(
+    final result = await showPosDialog<(String, String)>(
       context: context,
-      builder: (context) => PosDialog(
-        icon: Icons.person_add_alt_1_outlined,
-        title: l10n.customersAdd,
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            PosTextField(
-              key: const ValueKey('new-customer-name'),
-              controller: name,
-              label: l10n.payCustomerName,
-              autofocus: true,
-            ),
-            const SizedBox(height: PosSpacing.s),
-            PosTextField(
-              controller: phone,
-              label: l10n.payCustomerPhone,
-              keyboardType: TextInputType.phone,
-            ),
-          ],
-        ),
-        actions: [
-          PosButton(
-            label: l10n.actionCancel,
-            variant: PosButtonVariant.secondary,
-            shortcut: 'Esc',
-            onPressed: () => Navigator.of(context).pop(false),
-          ),
-          PosButton(
-            key: const ValueKey('new-customer-save'),
-            label: l10n.actionSave,
-            onPressed: () => Navigator.of(context).pop(true),
-          ),
-        ],
-      ),
+      builder: (context) => const _NewCustomerDialog(),
     );
     final user = ref.read(sessionProvider).user;
-    if (created == true && name.text.trim().isNotEmpty && user != null) {
-      final entry = await ref
-          .read(customerDirectoryProvider)
-          .create(name: name.text, phone: phone.text, createdBy: user.id);
-      if (mounted) setState(() => _openId = entry.id);
-    }
-    name.dispose();
-    phone.dispose();
+    if (result == null || user == null) return;
+    final entry = await ref
+        .read(customerDirectoryProvider)
+        .create(name: result.$1, phone: result.$2, createdBy: user.id);
+    if (mounted) setState(() => _openId = entry.id);
   }
 
   @override
@@ -233,26 +193,31 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
           ),
           Padding(
             padding: EdgeInsets.fromLTRB(padding, 0, padding, PosSpacing.m),
-            child: Row(
+            child: Wrap(
+              spacing: PosSpacing.s,
+              runSpacing: PosSpacing.s,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              alignment: WrapAlignment.spaceBetween,
               children: [
-                chip(
-                  l10n.customersAll,
-                  key: const ValueKey('customers-all'),
-                  selected: !_debtorsOnly,
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    chip(
+                      l10n.customersAll,
+                      key: const ValueKey('customers-all'),
+                      selected: !_debtorsOnly,
+                    ),
+                    chip(
+                      l10n.customersDebtorsOnly,
+                      key: const ValueKey('customers-debtors'),
+                      selected: _debtorsOnly,
+                    ),
+                  ],
                 ),
-                chip(
-                  l10n.customersDebtorsOnly,
-                  key: const ValueKey('customers-debtors'),
-                  selected: _debtorsOnly,
-                ),
-                const Spacer(),
-                Flexible(
-                  child: Text(
-                    l10n.customersTotalDebt(fmt.money(totalDebt)),
-                    key: const ValueKey('customers-total'),
-                    textAlign: TextAlign.right,
-                    style: PosTypography.bodyStrong.copyWith(color: p.text),
-                  ),
+                Text(
+                  l10n.customersTotalDebt(fmt.money(totalDebt)),
+                  key: const ValueKey('customers-total'),
+                  style: PosTypography.bodyStrong.copyWith(color: p.text),
                 ),
               ],
             ),
@@ -260,6 +225,78 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
           Expanded(child: body),
         ],
       ),
+    );
+  }
+}
+
+/// Yangi mijoz: ism (majburiy) va telefon → `(ism, telefon)`.
+class _NewCustomerDialog extends StatefulWidget {
+  const _NewCustomerDialog();
+
+  @override
+  State<_NewCustomerDialog> createState() => _NewCustomerDialogState();
+}
+
+class _NewCustomerDialogState extends State<_NewCustomerDialog> {
+  final _name = TextEditingController();
+  final _phone = TextEditingController();
+  String? _error;
+
+  @override
+  void dispose() {
+    _name.dispose();
+    _phone.dispose();
+    super.dispose();
+  }
+
+  void _save() {
+    if (_name.text.trim().isEmpty) {
+      setState(() => _error = AppLocalizations.of(context).fieldRequired);
+      return;
+    }
+    Navigator.of(context).pop((_name.text, _phone.text));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return PosDialog(
+      icon: Icons.person_add_alt_1_outlined,
+      title: l10n.customersAdd,
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          PosTextField(
+            key: const ValueKey('new-customer-name'),
+            controller: _name,
+            label: l10n.payCustomerName,
+            autofocus: true,
+            errorText: _error,
+            onChanged: (_) => setState(() => _error = null),
+          ),
+          const SizedBox(height: PosSpacing.s),
+          PosTextField(
+            controller: _phone,
+            label: l10n.payCustomerPhone,
+            keyboardType: TextInputType.phone,
+            onSubmitted: (_) => _save(),
+          ),
+        ],
+      ),
+      actions: [
+        PosButton(
+          label: l10n.actionCancel,
+          variant: PosButtonVariant.secondary,
+          shortcut: 'Esc',
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        PosButton(
+          key: const ValueKey('new-customer-save'),
+          label: l10n.actionSave,
+          onPressed: _save,
+        ),
+      ],
     );
   }
 }
