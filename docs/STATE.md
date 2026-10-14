@@ -12,8 +12,8 @@
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [ ] 1. Tokenlar: palitra (ThemeExtension), Inter shrifti, tipografiya, oraliq, radius, soya, harakat, breakpoint + kontrast (WCAG AA) testi
-- [ ] 2. To'liq ThemeData (komponent mavzulari) + summa/miqdor formatlash
+- [x] 1. Tokenlar: palitra (ThemeExtension), Inter shrifti, tipografiya, oraliq, radius, soya, harakat, breakpoint + kontrast (WCAG AA) testi
+- [x] 2. To'liq ThemeData (komponent mavzulari) + summa/miqdor formatlash
 - [ ] 3. Komponentlar 1: Button, IconButton, TextField, SearchField, Card, ListTile, Badge, StatusDot
 - [ ] 4. Komponentlar 2: MoneyText, QtyStepper, NumericKeypad, PinPad
 - [ ] 5. Komponentlar 3: Dialog/Sheet, Toast, EmptyState, Skeleton, ScanFeedback
@@ -23,11 +23,11 @@
 - [ ] 9. analyze/format/test yashil, PR, merge, ROADMAP/PROGRESS
 
 ## Oxirgi bajarilgan ish
-T-030 boshlandi: branch yaratildi, qadamlar yozildi.
+Qadam 1–2: tokenlar (PosColors, PosPalette ThemeExtension, PosTone, PosTypography+Inter, PosSpacing/Radius/Sizes/Motion, PosWindowSize), to‘liq PosTheme, PosFormat (summa/miqdor). 82 test yashil (kontrast AA).
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-Qadam 1: packages/ui/lib/src/tokens/ (pos_palette.dart, pos_typography.dart, ...) va packages/ui/assets/fonts/Inter-*.ttf.
+Qadam 3: packages/ui/lib/src/components/ — pos_button.dart (PosButton, PosKeycap), pos_icon_button.dart, pos_text_field.dart, pos_search_field.dart, pos_card.dart, pos_list_tile.dart, pos_badge.dart, pos_status_dot.dart; widget testlar packages/ui/test/components/.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
