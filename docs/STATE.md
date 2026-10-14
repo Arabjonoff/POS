@@ -14,15 +14,15 @@
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 - [x] 1. `ShiftService.moveCash` (cash_movements + outbox `cash.moved` bitta tranzaksiyada; chiqarish kutilgan naqddan oshmaydi) va `movements(shiftId)` + testlar (X/Z da naqd balansi)
 - [x] 2. Oyna "Kassa puli" (F9 kassada, smena sahifasida tugmalar): kiritish/chiqarish, summa, sabab (Inkassatsiya, Xarajat, Mayda pul, Boshqa + matn); smena sahifasida harakatlar ro'yxati; tarjimalar
-- [ ] 3. X/Z hisobot chekini chop etish (`ShiftReceiptBuilder` + snapshot), smena sahifasida "Chop etish" tugmalari yoqiladi
+- [x] 3. X/Z hisobot chekini chop etish (`ShiftReceiptBuilder` + snapshot), smena sahifasida "Chop etish" tugmalari yoqiladi
 - [ ] 4. Widget testlari + golden + skrinshotlar `docs/screenshots/T-046/`
 - [ ] 5. Spec, PR, CI → merge; ROADMAP, PROGRESS, STATE
 
 ## Oxirgi bajarilgan ish
-- 2-qadam: `features/shift/cash_movement_dialog.dart` (`showCashMovementDialog`, `showCashMovementDone`), kassada F9, smena sahifasida "Pul kiritish"/"Pul chiqarish" va "Kassa puli harakatlari" kartasi (`cashMovementsProvider`); tarjimalar `cash*`. Smena goldenlari hali yangilanmagan (4-qadam).
+- 3-qadam: `ReceiptBuilder.buildShift` (X/Z), `PrinterService.printShiftReport`, snapshot `shift_x_58`/`shift_z_58`; smena sahifasida "Chek chiqarish" (X va Z).
 
 ## Keyingi aniq harakat
-- 3-qadam: `apps/pos/lib/features/printing/shift_receipt.dart` — `ShiftReceiptBuilder(l10n, width).build(report, {storeName, cashierName})` → `ReceiptRow` (X/Z sarlavha, smena vaqti, savdolar, to'lov turlari, qaytarishlar, kassa puli, qarz to'lovlari, naqd hisobi, farq); `PrinterService.printShiftReport`; smena sahifasida "Chop etish" (X va Z). Snapshot `test/printing/receipts/shift_*.txt`.
+- 4-qadam: `apps/pos/test/features/cash_movement_test.dart` (F9 → chiqarish → sabab → toast; kassada yo'q summa → xato; smena sahifasida kiritish va ro'yxat; X hisobot chop etiladi — FakeTransport), goldenlar: `test/goldens/shift_golden_test.dart` yangilash + `cash` oynasi; skrinshotlar `docs/screenshots/T-046/`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

@@ -276,5 +276,8 @@
   "cashDoneOut": "Из кассы изъято {amount}",
   "cashMovementsTitle": "Внесения и изъятия",
   "cashNoMovements": "В этой смене не было внесений и изъятий",
-  "cashFailed": "Не удалось сохранить. Попробуйте ещё раз"
+  "cashFailed": "Не удалось сохранить. Попробуйте ещё раз",
+  "receiptShiftOpened": "Открыта",
+  "receiptShiftClosed": "Закрыта",
+  "receiptPrintedAt": "Напечатано"
 }

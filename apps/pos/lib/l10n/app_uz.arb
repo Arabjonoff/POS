@@ -1240,5 +1240,17 @@
   "cashFailed": "Saqlab bo'lmadi. Qayta urinib ko'ring",
   "@cashFailed": {
     "description": "Kassa puli yozilmadi"
+  },
+  "receiptShiftOpened": "Ochildi",
+  "@receiptShiftOpened": {
+    "description": "Hisobot chekida: smena ochilgan vaqt"
+  },
+  "receiptShiftClosed": "Yopildi",
+  "@receiptShiftClosed": {
+    "description": "Hisobot chekida: smena yopilgan vaqt"
+  },
+  "receiptPrintedAt": "Chop etildi",
+  "@receiptPrintedAt": {
+    "description": "Hisobot chekida: chop etilgan vaqt"
   }
 }

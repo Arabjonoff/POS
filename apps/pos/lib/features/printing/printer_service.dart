@@ -7,6 +7,7 @@ import 'package:pos_app/app/locale.dart';
 import 'package:pos_app/app/status/app_status.dart';
 import 'package:pos_app/core/format/app_format.dart';
 import 'package:pos_app/data/db/app_database.dart';
+import 'package:pos_app/data/shifts/shift_service.dart';
 import 'package:pos_app/features/printing/escpos.dart';
 import 'package:pos_app/features/printing/printer_settings.dart';
 import 'package:pos_app/features/printing/printer_transport.dart';
@@ -93,6 +94,24 @@ class PrinterService {
         for (final part in ReceiptBuilder.wrap(ReceiptBuilder.plain(text), w))
           center(part),
     ];
+    return _send([EscPos.receipt(rows, encoding: settings.encoding)]);
+  }
+
+  /// X/Z hisobot cheki (do'kon nomi va kassir — bazadan).
+  Future<PrintOutcome> printShiftReport(ShiftReport report) async {
+    final store = await (_db.select(
+      _db.stores,
+    )..where((s) => s.id.equals(report.shift.storeId))).getSingleOrNull();
+    final cashierId = report.shift.closedBy ?? report.shift.openedBy;
+    final cashier = await (_db.select(
+      _db.staffUsers,
+    )..where((u) => u.id.equals(cashierId))).getSingleOrNull();
+    final rows = _builder.buildShift(
+      report,
+      storeName: store?.name ?? '',
+      cashierName: cashier?.fullName ?? '',
+      printedAt: clock.now(),
+    );
     return _send([EscPos.receipt(rows, encoding: settings.encoding)]);
   }
 

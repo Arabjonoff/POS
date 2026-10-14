@@ -973,4 +973,13 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get cashFailed => 'Не удалось сохранить. Попробуйте ещё раз';
+
+  @override
+  String get receiptShiftOpened => 'Открыта';
+
+  @override
+  String get receiptShiftClosed => 'Закрыта';
+
+  @override
+  String get receiptPrintedAt => 'Напечатано';
 }

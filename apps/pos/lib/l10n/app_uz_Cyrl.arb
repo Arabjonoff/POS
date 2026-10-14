@@ -276,5 +276,8 @@
   "cashDoneOut": "Кассадан {amount} чиқарилди",
   "cashMovementsTitle": "Касса пули ҳаракатлари",
   "cashNoMovements": "Бу сменада пул киритилмаган ва чиқарилмаган",
-  "cashFailed": "Сақлаб бўлмади. Қайта уриниб кўринг"
+  "cashFailed": "Сақлаб бўлмади. Қайта уриниб кўринг",
+  "receiptShiftOpened": "Очилди",
+  "receiptShiftClosed": "Ёпилди",
+  "receiptPrintedAt": "Чоп этилди"
 }

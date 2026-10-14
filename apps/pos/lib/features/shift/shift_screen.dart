@@ -9,6 +9,7 @@ import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/data/shifts/shift_service.dart';
 import 'package:pos_app/features/common/money_input.dart';
 import 'package:pos_app/features/common/section_page.dart';
+import 'package:pos_app/features/printing/printer_service.dart';
 import 'package:pos_app/features/shift/cash_movement_dialog.dart';
 import 'package:pos_app/features/shift/shift_providers.dart';
 import 'package:pos_app/features/shift/shift_report_view.dart';
@@ -44,6 +45,24 @@ class _ShiftScreenState extends ConsumerState<ShiftScreen> {
     if (mounted) setState(() => _closed = z);
   }
 
+  /// X yoki Z hisobot cheki.
+  Future<void> _print(ShiftReport report) async {
+    final l10n = AppLocalizations.of(context);
+    final outcome = await ref
+        .read(printerServiceProvider)
+        .printShiftReport(report);
+    if (!mounted) return;
+    showPosToast(
+      context,
+      message: switch (outcome) {
+        PrintOutcome.printed => l10n.printerSent,
+        PrintOutcome.failed => l10n.printerFailed,
+        PrintOutcome.notConfigured => l10n.printerNotConfigured,
+      },
+      tone: outcome == PrintOutcome.printed ? PosTone.success : PosTone.warning,
+    );
+  }
+
   Future<void> _moveCash(CashMovementType type) async {
     final result = await showCashMovementDialog(context, type: type);
     if (result != null && mounted) showCashMovementDone(context, result);
@@ -60,11 +79,11 @@ class _ShiftScreenState extends ConsumerState<ShiftScreen> {
         report: closed,
         actions: [
           PosButton(
+            key: const ValueKey('shift-print'),
             label: l10n.shiftPrintReport,
             icon: Icons.print_outlined,
             variant: PosButtonVariant.secondary,
-            // Chek printeri — T-044.
-            onPressed: null,
+            onPressed: () => unawaited(_print(closed)),
           ),
           PosButton(
             label: l10n.shiftBackToPos,
@@ -119,6 +138,13 @@ class _ShiftScreenState extends ConsumerState<ShiftScreen> {
           icon: Icons.remove_circle_outline,
           variant: PosButtonVariant.secondary,
           onPressed: () => unawaited(_moveCash(CashMovementType.cashOut)),
+        ),
+        PosButton(
+          key: const ValueKey('shift-print'),
+          label: l10n.shiftPrintReport,
+          icon: Icons.print_outlined,
+          variant: PosButtonVariant.secondary,
+          onPressed: () => unawaited(_print(report)),
         ),
         PosButton(
           label: l10n.shiftCloseAction,

@@ -1760,6 +1760,24 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Saqlab bo\'lmadi. Qayta urinib ko\'ring'**
   String get cashFailed;
+
+  /// Hisobot chekida: smena ochilgan vaqt
+  ///
+  /// In uz, this message translates to:
+  /// **'Ochildi'**
+  String get receiptShiftOpened;
+
+  /// Hisobot chekida: smena yopilgan vaqt
+  ///
+  /// In uz, this message translates to:
+  /// **'Yopildi'**
+  String get receiptShiftClosed;
+
+  /// Hisobot chekida: chop etilgan vaqt
+  ///
+  /// In uz, this message translates to:
+  /// **'Chop etildi'**
+  String get receiptPrintedAt;
 }
 
 class _AppLocalizationsDelegate
