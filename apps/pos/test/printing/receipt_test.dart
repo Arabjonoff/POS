@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pos_app/app/locale.dart';
 import 'package:pos_app/core/format/unit_code.dart';
+import 'package:pos_app/data/db/app_database.dart';
+import 'package:pos_app/data/shifts/shift_service.dart';
 import 'package:pos_app/features/printing/receipt.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
 
@@ -168,5 +170,54 @@ void main() {
 
   test('plain() keeps receipts ASCII-friendly', () {
     expect(ReceiptBuilder.plain('1 250 so’m −1'), "1 250 so'm -1");
+  });
+
+  group('shift report', () {
+    ShiftReport report({bool closed = false}) => ShiftReport(
+      shift: Shift(
+        id: 'shift-1',
+        storeId: 'store-1',
+        deviceId: 'device-1',
+        openedBy: 'cashier-1',
+        openedAt: DateTime.utc(2026, 10, 15, 3),
+        openingCashTiyin: 10000000,
+        closedBy: closed ? 'cashier-1' : null,
+        closedAt: closed ? DateTime.utc(2026, 10, 15, 16) : null,
+        countedCashTiyin: closed ? 25950000 : null,
+        expectedCashTiyin: closed ? 26000000 : null,
+      ),
+      salesCount: 42,
+      salesTotal: 31250000,
+      paymentsCash: 20500000,
+      paymentsCard: 8750000,
+      paymentsDebt: 2000000,
+      refundsCount: 1,
+      refundsCash: 400000,
+      refundsDebt: 0,
+      cashIn: 2000000,
+      cashOut: 6000000,
+      debtPaymentsCash: 900000,
+      debtPaymentsCard: 0,
+      // 100 000 + 205 000 − 4 000 + 20 000 − 60 000 + 9 000.
+      expectedCash: 26000000,
+    );
+
+    String renderShift(ShiftReport r) => ReceiptBuilder.render(
+      ReceiptBuilder(uz).buildShift(
+        r,
+        storeName: 'Baraka market',
+        cashierName: 'Aziza',
+        printedAt: DateTime.utc(2026, 10, 15, 12, 30),
+      ),
+      PaperWidth.mm58,
+    );
+
+    test('X report, 58 mm', () {
+      expectSnapshot('shift_x_58', renderShift(report()));
+    });
+
+    test('Z report with the shortage', () {
+      expectSnapshot('shift_z_58', renderShift(report(closed: true)));
+    });
   });
 }

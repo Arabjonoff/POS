@@ -14,6 +14,24 @@ class ShiftNotOpenException implements Exception {
   const ShiftNotOpenException();
 }
 
+/// Kassa puli harakati: kiritish yoki chiqarish (`cash_movements.type`).
+enum CashMovementType {
+  cashIn('in'),
+  cashOut('out')
+  ;
+
+  const CashMovementType(this.code);
+
+  final String code;
+}
+
+/// Chiqariladigan summa kassadagi (kutilgan) naqddan ko'p.
+class CashOutExceedsCashException implements Exception {
+  const CashOutExceedsCashException(this.availableTiyin);
+
+  final int availableTiyin;
+}
+
 /// X hisobot (ochiq smena) yoki Z hisobot (yopilgan). Formula serverdagi
 /// `apps/sales/services/shifts.py` `shift_report` / `expected_cash` bilan
 /// bir xil (`docs/specs/sales-api.md`).
@@ -184,6 +202,70 @@ class ShiftService {
       return report(shiftId);
     });
   }
+
+  /// Kassaga pul kiritish yoki chiqarish (sabab bilan): yozuv + outbox
+  /// `cash.moved` bitta tranzaksiyada (`sales-api.md`). Chiqarish kutilgan
+  /// naqddan oshmaydi — ortiqcha nol bilan xato kiritilgan summa kassani
+  /// minusga tushirmasin.
+  Future<void> moveCash({
+    required String shiftId,
+    required CashMovementType type,
+    required int amountTiyin,
+    required String by,
+    String reason = '',
+  }) {
+    if (amountTiyin <= 0) throw ArgumentError.value(amountTiyin);
+    return _db.transaction(() async {
+      final shift = await (_db.select(
+        _db.shifts,
+      )..where((s) => s.id.equals(shiftId))).getSingleOrNull();
+      if (shift == null || shift.closedAt != null) {
+        throw const ShiftNotOpenException();
+      }
+      if (type == CashMovementType.cashOut) {
+        final available = (await report(shiftId)).expectedCash;
+        if (amountTiyin > available) {
+          throw CashOutExceedsCashException(available);
+        }
+      }
+      final id = _newId();
+      final now = _now();
+      await _db
+          .into(_db.cashMovements)
+          .insert(
+            CashMovementsCompanion.insert(
+              id: id,
+              shiftId: shiftId,
+              type: type.code,
+              amountTiyin: amountTiyin,
+              reason: Value(reason.trim()),
+              byUserId: by,
+              at: now,
+            ),
+          );
+      await _db.enqueueEvent(
+        id: _newId(),
+        type: OutboxEventType.cashMoved,
+        createdAt: now,
+        payload: {
+          'id': id,
+          'shift': shiftId,
+          'type': type.code,
+          'amount_tiyin': amountTiyin,
+          'reason': reason.trim(),
+          'by': by,
+          'at': isoUtc(now),
+        },
+      );
+    });
+  }
+
+  /// Smenadagi kassa puli harakatlari (yangisi birinchi).
+  Stream<List<CashMovement>> watchMovements(String shiftId) =>
+      (_db.select(_db.cashMovements)
+            ..where((m) => m.shiftId.equals(shiftId))
+            ..orderBy([(m) => OrderingTerm.desc(m.at)]))
+          .watch();
 
   Future<ShiftReport> report(String shiftId) async {
     final shift = await (_db.select(

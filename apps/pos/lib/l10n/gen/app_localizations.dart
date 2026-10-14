@@ -1658,6 +1658,126 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Masalan: D1-000123'**
   String get refundNumberHint;
+
+  /// Kassa puli oynasi sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Kassa puli'**
+  String get cashTitle;
+
+  /// Kassaga pul kiritish
+  ///
+  /// In uz, this message translates to:
+  /// **'Pul kiritish'**
+  String get cashIn;
+
+  /// Kassadan pul chiqarish
+  ///
+  /// In uz, this message translates to:
+  /// **'Pul chiqarish'**
+  String get cashOut;
+
+  /// Kassa puli sababi
+  ///
+  /// In uz, this message translates to:
+  /// **'Sabab'**
+  String get cashReason;
+
+  /// Sabab: pulni egasiga topshirish
+  ///
+  /// In uz, this message translates to:
+  /// **'Inkassatsiya'**
+  String get cashReasonCollection;
+
+  /// Sabab: xarajat
+  ///
+  /// In uz, this message translates to:
+  /// **'Xarajat'**
+  String get cashReasonExpense;
+
+  /// Sabab: qaytim uchun mayda pul
+  ///
+  /// In uz, this message translates to:
+  /// **'Mayda pul'**
+  String get cashReasonChange;
+
+  /// Sabab matni
+  ///
+  /// In uz, this message translates to:
+  /// **'Boshqa sabab'**
+  String get cashReasonOther;
+
+  /// Kutilgan naqd
+  ///
+  /// In uz, this message translates to:
+  /// **'Kassada: {amount}'**
+  String cashAvailable(String amount);
+
+  /// Chiqarish naqddan ko'p
+  ///
+  /// In uz, this message translates to:
+  /// **'Kassada faqat {amount} bor'**
+  String cashExceeds(String amount);
+
+  /// Summa kiritilmagan
+  ///
+  /// In uz, this message translates to:
+  /// **'Summani kiriting'**
+  String get cashEnterAmount;
+
+  /// Sabab tanlanmagan
+  ///
+  /// In uz, this message translates to:
+  /// **'Sababni tanlang'**
+  String get cashChooseReason;
+
+  /// Kiritish yakunlandi
+  ///
+  /// In uz, this message translates to:
+  /// **'Kassaga {amount} kiritildi'**
+  String cashDoneIn(String amount);
+
+  /// Chiqarish yakunlandi
+  ///
+  /// In uz, this message translates to:
+  /// **'Kassadan {amount} chiqarildi'**
+  String cashDoneOut(String amount);
+
+  /// Smena sahifasidagi ro'yxat
+  ///
+  /// In uz, this message translates to:
+  /// **'Kassa puli harakatlari'**
+  String get cashMovementsTitle;
+
+  /// Ro'yxat bo'sh
+  ///
+  /// In uz, this message translates to:
+  /// **'Bu smenada pul kiritilmagan va chiqarilmagan'**
+  String get cashNoMovements;
+
+  /// Kassa puli yozilmadi
+  ///
+  /// In uz, this message translates to:
+  /// **'Saqlab bo\'lmadi. Qayta urinib ko\'ring'**
+  String get cashFailed;
+
+  /// Hisobot chekida: smena ochilgan vaqt
+  ///
+  /// In uz, this message translates to:
+  /// **'Ochildi'**
+  String get receiptShiftOpened;
+
+  /// Hisobot chekida: smena yopilgan vaqt
+  ///
+  /// In uz, this message translates to:
+  /// **'Yopildi'**
+  String get receiptShiftClosed;
+
+  /// Hisobot chekida: chop etilgan vaqt
+  ///
+  /// In uz, this message translates to:
+  /// **'Chop etildi'**
+  String get receiptPrintedAt;
 }
 
 class _AppLocalizationsDelegate

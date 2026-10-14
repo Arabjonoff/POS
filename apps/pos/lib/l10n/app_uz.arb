@@ -1152,5 +1152,105 @@
   "refundNumberHint": "Masalan: D1-000123",
   "@refundNumberHint": {
     "description": "Chek raqami namunasi"
+  },
+  "cashTitle": "Kassa puli",
+  "@cashTitle": {
+    "description": "Kassa puli oynasi sarlavhasi"
+  },
+  "cashIn": "Pul kiritish",
+  "@cashIn": {
+    "description": "Kassaga pul kiritish"
+  },
+  "cashOut": "Pul chiqarish",
+  "@cashOut": {
+    "description": "Kassadan pul chiqarish"
+  },
+  "cashReason": "Sabab",
+  "@cashReason": {
+    "description": "Kassa puli sababi"
+  },
+  "cashReasonCollection": "Inkassatsiya",
+  "@cashReasonCollection": {
+    "description": "Sabab: pulni egasiga topshirish"
+  },
+  "cashReasonExpense": "Xarajat",
+  "@cashReasonExpense": {
+    "description": "Sabab: xarajat"
+  },
+  "cashReasonChange": "Mayda pul",
+  "@cashReasonChange": {
+    "description": "Sabab: qaytim uchun mayda pul"
+  },
+  "cashReasonOther": "Boshqa sabab",
+  "@cashReasonOther": {
+    "description": "Sabab matni"
+  },
+  "cashAvailable": "Kassada: {amount}",
+  "@cashAvailable": {
+    "description": "Kutilgan naqd",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "cashExceeds": "Kassada faqat {amount} bor",
+  "@cashExceeds": {
+    "description": "Chiqarish naqddan ko'p",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "cashEnterAmount": "Summani kiriting",
+  "@cashEnterAmount": {
+    "description": "Summa kiritilmagan"
+  },
+  "cashChooseReason": "Sababni tanlang",
+  "@cashChooseReason": {
+    "description": "Sabab tanlanmagan"
+  },
+  "cashDoneIn": "Kassaga {amount} kiritildi",
+  "@cashDoneIn": {
+    "description": "Kiritish yakunlandi",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "cashDoneOut": "Kassadan {amount} chiqarildi",
+  "@cashDoneOut": {
+    "description": "Chiqarish yakunlandi",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "cashMovementsTitle": "Kassa puli harakatlari",
+  "@cashMovementsTitle": {
+    "description": "Smena sahifasidagi ro'yxat"
+  },
+  "cashNoMovements": "Bu smenada pul kiritilmagan va chiqarilmagan",
+  "@cashNoMovements": {
+    "description": "Ro'yxat bo'sh"
+  },
+  "cashFailed": "Saqlab bo'lmadi. Qayta urinib ko'ring",
+  "@cashFailed": {
+    "description": "Kassa puli yozilmadi"
+  },
+  "receiptShiftOpened": "Ochildi",
+  "@receiptShiftOpened": {
+    "description": "Hisobot chekida: smena ochilgan vaqt"
+  },
+  "receiptShiftClosed": "Yopildi",
+  "@receiptShiftClosed": {
+    "description": "Hisobot chekida: smena yopilgan vaqt"
+  },
+  "receiptPrintedAt": "Chop etildi",
+  "@receiptPrintedAt": {
+    "description": "Hisobot chekida: chop etilgan vaqt"
   }
 }

@@ -895,6 +895,74 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get refundNumberHint => 'Masalan: D1-000123';
+
+  @override
+  String get cashTitle => 'Kassa puli';
+
+  @override
+  String get cashIn => 'Pul kiritish';
+
+  @override
+  String get cashOut => 'Pul chiqarish';
+
+  @override
+  String get cashReason => 'Sabab';
+
+  @override
+  String get cashReasonCollection => 'Inkassatsiya';
+
+  @override
+  String get cashReasonExpense => 'Xarajat';
+
+  @override
+  String get cashReasonChange => 'Mayda pul';
+
+  @override
+  String get cashReasonOther => 'Boshqa sabab';
+
+  @override
+  String cashAvailable(String amount) {
+    return 'Kassada: $amount';
+  }
+
+  @override
+  String cashExceeds(String amount) {
+    return 'Kassada faqat $amount bor';
+  }
+
+  @override
+  String get cashEnterAmount => 'Summani kiriting';
+
+  @override
+  String get cashChooseReason => 'Sababni tanlang';
+
+  @override
+  String cashDoneIn(String amount) {
+    return 'Kassaga $amount kiritildi';
+  }
+
+  @override
+  String cashDoneOut(String amount) {
+    return 'Kassadan $amount chiqarildi';
+  }
+
+  @override
+  String get cashMovementsTitle => 'Kassa puli harakatlari';
+
+  @override
+  String get cashNoMovements => 'Bu smenada pul kiritilmagan va chiqarilmagan';
+
+  @override
+  String get cashFailed => 'Saqlab bo\'lmadi. Qayta urinib ko\'ring';
+
+  @override
+  String get receiptShiftOpened => 'Ochildi';
+
+  @override
+  String get receiptShiftClosed => 'Yopildi';
+
+  @override
+  String get receiptPrintedAt => 'Chop etildi';
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -1784,4 +1852,72 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get refundNumberHint => 'Масалан: D1-000123';
+
+  @override
+  String get cashTitle => 'Касса пули';
+
+  @override
+  String get cashIn => 'Пул киритиш';
+
+  @override
+  String get cashOut => 'Пул чиқариш';
+
+  @override
+  String get cashReason => 'Сабаб';
+
+  @override
+  String get cashReasonCollection => 'Инкассация';
+
+  @override
+  String get cashReasonExpense => 'Харажат';
+
+  @override
+  String get cashReasonChange => 'Майда пул';
+
+  @override
+  String get cashReasonOther => 'Бошқа сабаб';
+
+  @override
+  String cashAvailable(String amount) {
+    return 'Кассада: $amount';
+  }
+
+  @override
+  String cashExceeds(String amount) {
+    return 'Кассада фақат $amount бор';
+  }
+
+  @override
+  String get cashEnterAmount => 'Суммани киритинг';
+
+  @override
+  String get cashChooseReason => 'Сабабни танланг';
+
+  @override
+  String cashDoneIn(String amount) {
+    return 'Кассага $amount киритилди';
+  }
+
+  @override
+  String cashDoneOut(String amount) {
+    return 'Кассадан $amount чиқарилди';
+  }
+
+  @override
+  String get cashMovementsTitle => 'Касса пули ҳаракатлари';
+
+  @override
+  String get cashNoMovements => 'Бу сменада пул киритилмаган ва чиқарилмаган';
+
+  @override
+  String get cashFailed => 'Сақлаб бўлмади. Қайта уриниб кўринг';
+
+  @override
+  String get receiptShiftOpened => 'Очилди';
+
+  @override
+  String get receiptShiftClosed => 'Ёпилди';
+
+  @override
+  String get receiptPrintedAt => 'Чоп этилди';
 }

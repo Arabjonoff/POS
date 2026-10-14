@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:pos_app/core/format/app_format.dart';
 import 'package:pos_app/core/format/unit_code.dart';
+import 'package:pos_app/data/shifts/shift_service.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
 
 /// Chek qatori (savdo qatorining surati).
@@ -217,6 +218,87 @@ class ReceiptBuilder {
         ? l10n.receiptThanks
         : data.footer.trim();
     footer.split('\n').forEach(center);
+    center(l10n.receiptNotFiscal);
+    return rows;
+  }
+
+  /// X/Z hisobot cheki (smena sahifasidagi hisobot bilan bir xil raqamlar).
+  List<ReceiptRow> buildShift(
+    ShiftReport report, {
+    required String storeName,
+    required String cashierName,
+    required DateTime printedAt,
+  }) {
+    final rows = <ReceiptRow>[];
+    void center(String text, {bool bold = false}) {
+      for (final part in wrap(plain(text), _w)) {
+        rows.add(ReceiptRow(part, bold: bold, center: true));
+      }
+    }
+
+    void divider() => rows.add(ReceiptRow('-' * _w));
+    void pair(String left, String right, {bool bold = false}) {
+      for (final text in _pair(plain(left), plain(right))) {
+        rows.add(ReceiptRow(text, bold: bold));
+      }
+    }
+
+    void money(String label, int tiyin, {bool bold = false}) =>
+        pair(label, _amount(tiyin), bold: bold);
+    void title(String text) => rows.add(ReceiptRow(plain(text), bold: true));
+
+    final shift = report.shift;
+    if (storeName.trim().isNotEmpty) center(storeName, bold: true);
+    center(report.isOpen ? l10n.shiftXReport : l10n.shiftZReport, bold: true);
+    divider();
+    pair(l10n.receiptShiftOpened, _fmt.dateTime(shift.openedAt));
+    final closedAt = shift.closedAt;
+    if (closedAt != null) {
+      pair(l10n.receiptShiftClosed, _fmt.dateTime(closedAt));
+    } else {
+      pair(l10n.receiptPrintedAt, _fmt.dateTime(printedAt));
+    }
+    if (cashierName.trim().isNotEmpty) {
+      pair('${l10n.receiptCashier}: $cashierName', '');
+    }
+    divider();
+
+    title('${l10n.reportSales} · ${l10n.reportChecks(report.salesCount)}');
+    money(l10n.receiptTotal, report.salesTotal, bold: true);
+    money(l10n.reportCash, report.paymentsCash);
+    money(l10n.reportCard, report.paymentsCard);
+    money(l10n.reportDebt, report.paymentsDebt);
+    divider();
+    title(
+      '${l10n.reportRefunds} · ${l10n.reportChecks(report.refundsCount)}',
+    );
+    money(l10n.reportCash, report.refundsCash);
+    money(l10n.reportDebt, report.refundsDebt);
+    divider();
+    title(l10n.reportCashMovements);
+    money(l10n.reportCashIn, report.cashIn);
+    money(l10n.reportCashOut, report.cashOut);
+    divider();
+    title(l10n.reportDebtPayments);
+    money(l10n.reportCash, report.debtPaymentsCash);
+    money(l10n.reportCard, report.debtPaymentsCard);
+    divider();
+    title(l10n.reportCashBalance);
+    money(l10n.reportOpeningCash, report.openingCash);
+    money(l10n.reportExpectedCash, report.expectedCash, bold: true);
+    final counted = report.countedCash;
+    final difference = report.difference;
+    if (counted != null) money(l10n.reportCountedCash, counted);
+    if (difference != null) {
+      money(
+        difference == 0
+            ? l10n.reportNoDifference
+            : (difference > 0 ? l10n.reportSurplus : l10n.reportShortage),
+        difference,
+        bold: true,
+      );
+    }
+    divider();
     center(l10n.receiptNotFiscal);
     return rows;
   }

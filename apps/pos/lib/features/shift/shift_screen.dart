@@ -5,9 +5,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pos_app/app/session/session.dart';
 import 'package:pos_app/core/format/app_format.dart';
+import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/data/shifts/shift_service.dart';
 import 'package:pos_app/features/common/money_input.dart';
 import 'package:pos_app/features/common/section_page.dart';
+import 'package:pos_app/features/printing/printer_service.dart';
+import 'package:pos_app/features/shift/cash_movement_dialog.dart';
 import 'package:pos_app/features/shift/shift_providers.dart';
 import 'package:pos_app/features/shift/shift_report_view.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
@@ -42,6 +45,29 @@ class _ShiftScreenState extends ConsumerState<ShiftScreen> {
     if (mounted) setState(() => _closed = z);
   }
 
+  /// X yoki Z hisobot cheki.
+  Future<void> _print(ShiftReport report) async {
+    final l10n = AppLocalizations.of(context);
+    final outcome = await ref
+        .read(printerServiceProvider)
+        .printShiftReport(report);
+    if (!mounted) return;
+    showPosToast(
+      context,
+      message: switch (outcome) {
+        PrintOutcome.printed => l10n.printerSent,
+        PrintOutcome.failed => l10n.printerFailed,
+        PrintOutcome.notConfigured => l10n.printerNotConfigured,
+      },
+      tone: outcome == PrintOutcome.printed ? PosTone.success : PosTone.warning,
+    );
+  }
+
+  Future<void> _moveCash(CashMovementType type) async {
+    final result = await showCashMovementDialog(context, type: type);
+    if (result != null && mounted) showCashMovementDone(context, result);
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -53,11 +79,11 @@ class _ShiftScreenState extends ConsumerState<ShiftScreen> {
         report: closed,
         actions: [
           PosButton(
+            key: const ValueKey('shift-print'),
             label: l10n.shiftPrintReport,
             icon: Icons.print_outlined,
             variant: PosButtonVariant.secondary,
-            // Chek printeri — T-044.
-            onPressed: null,
+            onPressed: () => unawaited(_print(closed)),
           ),
           PosButton(
             label: l10n.shiftBackToPos,
@@ -97,7 +123,18 @@ class _ShiftScreenState extends ConsumerState<ShiftScreen> {
         ref.watch(sessionProvider).user?.fullName ?? '',
       ),
       report: report,
+      footer: _CashMovementsCard(
+        shiftId: shift.id,
+        onMove: (type) => unawaited(_moveCash(type)),
+      ),
       actions: [
+        PosButton(
+          key: const ValueKey('shift-print'),
+          label: l10n.shiftPrintReport,
+          icon: Icons.print_outlined,
+          variant: PosButtonVariant.secondary,
+          onPressed: () => unawaited(_print(report)),
+        ),
         PosButton(
           label: l10n.shiftCloseAction,
           icon: Icons.lock_outline,
@@ -116,6 +153,7 @@ class _ReportPage extends StatelessWidget {
     required this.report,
     required this.actions,
     this.info,
+    this.footer,
   });
 
   final String title;
@@ -123,6 +161,9 @@ class _ReportPage extends StatelessWidget {
   final String? info;
   final ShiftReport report;
   final List<Widget> actions;
+
+  /// Hisobotdan keyingi qo'shimcha karta (kassa puli harakatlari).
+  final Widget? footer;
 
   @override
   Widget build(BuildContext context) {
@@ -172,6 +213,10 @@ class _ReportPage extends StatelessWidget {
                     runSpacing: PosSpacing.s,
                     children: actions,
                   ),
+                  if (footer != null) ...[
+                    const SizedBox(height: PosSpacing.l),
+                    footer!,
+                  ],
                 ],
               ),
             ),
@@ -269,6 +314,98 @@ class _CloseShiftDialogState extends State<_CloseShiftDialog> {
           onPressed: () => Navigator.of(context).pop(_counted),
         ),
       ],
+    );
+  }
+}
+
+/// Smenadagi kassa puli harakatlari: vaqt, sabab, summa (+ / −).
+class _CashMovementsCard extends ConsumerWidget {
+  const _CashMovementsCard({required this.shiftId, required this.onMove});
+
+  final String shiftId;
+  final ValueChanged<CashMovementType> onMove;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final fmt = context.fmt;
+    final p = PosPalette.of(context);
+    final movements =
+        ref.watch(cashMovementsProvider(shiftId)).value ??
+        const <CashMovement>[];
+    return PosCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            l10n.cashMovementsTitle,
+            style: PosTypography.h3.copyWith(color: p.text),
+          ),
+          const SizedBox(height: PosSpacing.s),
+          Wrap(
+            spacing: PosSpacing.s,
+            runSpacing: PosSpacing.s,
+            children: [
+              PosButton(
+                key: const ValueKey('shift-cash-in'),
+                label: l10n.cashIn,
+                icon: Icons.add_circle_outline,
+                size: PosButtonSize.s,
+                variant: PosButtonVariant.secondary,
+                onPressed: () => onMove(CashMovementType.cashIn),
+              ),
+              PosButton(
+                key: const ValueKey('shift-cash-out'),
+                label: l10n.cashOut,
+                icon: Icons.remove_circle_outline,
+                size: PosButtonSize.s,
+                variant: PosButtonVariant.secondary,
+                onPressed: () => onMove(CashMovementType.cashOut),
+              ),
+            ],
+          ),
+          const SizedBox(height: PosSpacing.m),
+          if (movements.isEmpty)
+            Text(
+              l10n.cashNoMovements,
+              style: PosTypography.body.copyWith(color: p.textSecondary),
+            )
+          else
+            for (final m in movements)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: PosSpacing.xs),
+                child: Row(
+                  children: [
+                    Icon(
+                      m.type == CashMovementType.cashIn.code
+                          ? Icons.add_circle_outline
+                          : Icons.remove_circle_outline,
+                      size: PosSizes.iconM,
+                      color: p.textSecondary,
+                    ),
+                    const SizedBox(width: PosSpacing.s),
+                    Expanded(
+                      child: Text(
+                        '${fmt.time(m.at)} · ${m.reason}',
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: PosTypography.body.copyWith(color: p.text),
+                      ),
+                    ),
+                    PosMoneyText(
+                      amount: m.type == CashMovementType.cashIn.code
+                          ? m.amountTiyin
+                          : -m.amountTiyin,
+                      currency: fmt.currency,
+                      tone: m.type == CashMovementType.cashIn.code
+                          ? PosTone.success
+                          : PosTone.danger,
+                    ),
+                  ],
+                ),
+              ),
+        ],
+      ),
     );
   }
 }

@@ -914,4 +914,72 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get refundNumberHint => 'Например: D1-000123';
+
+  @override
+  String get cashTitle => 'Деньги в кассе';
+
+  @override
+  String get cashIn => 'Внести';
+
+  @override
+  String get cashOut => 'Изъять';
+
+  @override
+  String get cashReason => 'Причина';
+
+  @override
+  String get cashReasonCollection => 'Инкассация';
+
+  @override
+  String get cashReasonExpense => 'Расход';
+
+  @override
+  String get cashReasonChange => 'Размен';
+
+  @override
+  String get cashReasonOther => 'Другая причина';
+
+  @override
+  String cashAvailable(String amount) {
+    return 'В кассе: $amount';
+  }
+
+  @override
+  String cashExceeds(String amount) {
+    return 'В кассе только $amount';
+  }
+
+  @override
+  String get cashEnterAmount => 'Введите сумму';
+
+  @override
+  String get cashChooseReason => 'Укажите причину';
+
+  @override
+  String cashDoneIn(String amount) {
+    return 'В кассу внесено $amount';
+  }
+
+  @override
+  String cashDoneOut(String amount) {
+    return 'Из кассы изъято $amount';
+  }
+
+  @override
+  String get cashMovementsTitle => 'Внесения и изъятия';
+
+  @override
+  String get cashNoMovements => 'В этой смене не было внесений и изъятий';
+
+  @override
+  String get cashFailed => 'Не удалось сохранить. Попробуйте ещё раз';
+
+  @override
+  String get receiptShiftOpened => 'Открыта';
+
+  @override
+  String get receiptShiftClosed => 'Закрыта';
+
+  @override
+  String get receiptPrintedAt => 'Напечатано';
 }
