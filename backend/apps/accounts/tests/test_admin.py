@@ -22,6 +22,11 @@ def admin_client(make_user):
         "/admin/tenants/tenant/",
         "/admin/tenants/tenant/add/",
         "/admin/tenants/store/",
+        "/admin/billing/plan/",
+        "/admin/billing/plan/add/",
+        "/admin/billing/subscription/",
+        "/admin/billing/subscription/add/",
+        "/admin/billing/subscriptionpayment/",
     ],
 )
 def test_admin_pages_open(admin_client, url):

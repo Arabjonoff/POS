@@ -5,26 +5,22 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-013 Tariflar va obuna
-- Branch: feat/T-013-billing
-- Boshlangan: 2026-10-14
-- Oxirgi yangilanish: 2026-10-14
+- Vazifa: — (masalan: T-042 Kassa ekrani — savat)
+- Branch: —
+- Boshlangan: —
+- Oxirgi yangilanish: —
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [x] 1. `QUESTIONS.md` Q-001/Q-002 (sinovdan keyin grace; sinov ichida to'lov) + `subscription-billing.md` sana semantikasi
-- [x] 2. `apps/billing`: Plan, Subscription (cached status), SubscriptionPayment (o'zgarmas, teskari yozuv), migratsiya, admin
-- [x] 3. `status.py` (sof funksiya `compute_status`, `add_months`) + `services.py` (start_subscription, record_payment, reverse_payment, refresh_status)
-- [x] 4. `manage.py update_subscriptions`
-- [ ] 5. Testlar (≥ 8 holat parametrlangan, to'lov matematikasi, bekor qilish, buyruq)
-- [ ] 6. lint/test/schema; PR, CI, merge
+- [ ] 1. ...
+- [ ] 2. ...
 
 ## Oxirgi bajarilgan ish
-T-011 merge qilindi (#8); dev baza qayta yaratildi (foydalanuvchi ruxsati bilan), migratsiyalar qo'llandi. T-013 branch ochildi.
+—
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-5-qadam: `backend/apps/billing/tests/` — test_status.py (parametrlangan holatlar), test_services.py, test_command.py.
+—
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q

@@ -91,3 +91,21 @@ def client_as():
         return client
 
     return factory
+
+
+@pytest.fixture
+def make_plan(db):
+    """Tarif yaratuvchi: `make_plan(max_devices=2)`."""
+    from apps.billing.models import Plan
+
+    def factory(**kwargs):
+        kwargs.setdefault("name", f"Tarif {next(_seq)}")
+        kwargs.setdefault("price_tiyin_per_month", 15_000_000)  # 150 000 so'm
+        return Plan.objects.create(**kwargs)
+
+    return factory
+
+
+@pytest.fixture
+def plan(make_plan):
+    return make_plan(name="Standart", max_devices=2, max_users=5)
