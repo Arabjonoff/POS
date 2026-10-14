@@ -13,7 +13,7 @@
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 - [x] 1. Spec `docs/specs/sales-api.md` (smena, savdo, to'lov, qaytarish, pul harakati; tekshiruvlar; kutilayotgan naqd; REST faqat o'qish)
-- [ ] 2. `apps/sales` modellari: Shift, Sale (+Item, +Payment), Refund (+Item), CashMovement; `DebtEntry.shift` (customers 0002); migratsiya; admin
+- [x] 2. `apps/sales` modellari: Shift, Sale (+Item, +Payment), Refund (+Item), CashMovement; `DebtEntry.shift` (customers 0002); migratsiya; admin
 - [ ] 3. `services/shifts.py`: open_shift, close_shift (expected_cash), record_cash_movement, shift_report (X/Z)
 - [ ] 4. `services/sales.py`: record_sale — tekshiruv (summalar, to'lovlar, tenant), StockMovement(−), DebtEntry (nasiya)
 - [ ] 5. `services/refunds.py`: record_refund — qoldiq miqdor, summa, StockMovement(+), qarz kamayishi, savdo holati
@@ -22,11 +22,11 @@
 - [ ] 8. openapi + schema.d.ts; lint/test; PROGRESS/ROADMAP; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-1-qadam: spec `docs/specs/sales-api.md` (payload shartnomasi T-018 uchun ham).
+2-qadam: `apps/sales` modellari (Shift — qurilmada bitta ochiq; Sale — faqat status o'zgaradi; qolganlari AppendOnly; DB constraint'lar summalar uchun), migratsiya sales 0001 + customers 0002 (`DebtEntry.shift`, servislarga `shift=`), admin (faqat ko'rish).
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-2-qadam: `backend/apps/sales/` (apps.py, models.py, admin.py), INSTALLED_APPS, `customers` ga `DebtEntry.shift` (0002), `makemigrations sales customers`.
+3-qadam: `backend/apps/sales/services/__init__.py` + `common.py` (MissingDependency, tenant tekshiruvlari) + `shifts.py` (open_shift, close_shift, record_cash_movement, expected_cash, shift_report).
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
