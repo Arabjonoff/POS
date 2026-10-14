@@ -3,19 +3,12 @@ from rest_framework import serializers
 from apps.core.exceptions import DomainError
 from apps.core.fields import StrictIntegerField, money_field
 from apps.core.money import mul_div_half_up
+from apps.core.serializers import TenantPKField
 
 from .barcodes import BarcodeError, normalize_barcode
 from .models import STANDARD_UNITS, Category, Product, ProductBarcode, Unit
 
 STANDARD_UNIT_CODES = frozenset(code for code, _ in STANDARD_UNITS)
-
-
-class TenantPKField(serializers.PrimaryKeyRelatedField):
-    """Faqat joriy tenantning o'chirilmagan obyektlari (boshqasi — "topilmadi")."""
-
-    def get_queryset(self):
-        tenant_id = self.context["request"].user.tenant_id
-        return super().get_queryset().filter(tenant_id=tenant_id, deleted_at__isnull=True)
 
 
 class UnitSerializer(serializers.ModelSerializer):
