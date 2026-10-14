@@ -12,7 +12,7 @@
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [ ] 1. To'lov modeli `apps/pos/lib/features/pos/payment/payment_draft.dart` (naqd/karta/nasiya/aralash, olingan, qaytim, qoldiq, `SalePaymentInput` lar) + unit testlar
+- [x] 1. To'lov modeli `apps/pos/lib/features/pos/payment/payment_draft.dart` (naqd/karta/nasiya/aralash, olingan, qaytim, qoldiq, `SalePaymentInput` lar) + unit testlar
 - [ ] 2. Mijozlar: `apps/pos/lib/data/customers/customer_directory.dart` (qidiruv, balans = Σ debt_entries, tez yaratish + `customer.upserted` outbox, limit tekshiruvi) + testlar
 - [ ] 3. `Checkout` (`features/pos/payment/checkout.dart`): savat + to'lov → `SaleWriter.complete` (bitta tranzaksiya) → savat tozalanadi; atomarlik testi
 - [ ] 4. To'lov oynasi UI (`features/pos/payment/payment_dialog.dart`): Naqd (Aniq/50 000/100 000/200 000, klaviatura, katta yashil qaytim, Enter), Karta, Nasiya (mijoz tanlash/yaratish, limit → menejer PIN), Aralash; oyna ochiqda skaner → "Avval to'lovni yakunlang"
@@ -21,10 +21,10 @@
 - [ ] 7. To'liq tekshiruv, PR, CI → merge; ROADMAP, PROGRESS, STATE
 
 ## Oxirgi bajarilgan ish
-- Vazifa boshlandi.
+- 1-qadam: `features/pos/payment/payment_draft.dart` + `test/features/payment_draft_test.dart`.
 
 ## Keyingi aniq harakat
-- 1-qadam: `apps/pos/lib/features/pos/payment/payment_draft.dart`, test `apps/pos/test/features/payment_draft_test.dart`.
+- 2-qadam: `apps/pos/lib/data/customers/customer_directory.dart` (`CustomerEntry` {id, name, phone, limit, balance}, `watchAll`, `search`, `create` + outbox `customer.upserted`, `DebtLimit.allows`), test `test/data/customer_directory_test.dart`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
