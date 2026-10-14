@@ -118,7 +118,7 @@ Spec'lar: `design-system.md`, `sync.md`, `i18n.md`.
 - **Qabul:** sxema testlari; savdo yozish tranzaksiyasi atomarligi testi.
 - **Bog'liq:** T-006
 
-### [ ] T-033 Ilova qobig'i va navigatsiya
+### [x] T-033 Ilova qobig'i va navigatsiya
 - **Bajarish:** go_router, ResponsiveScaffold: desktop/planshet — chapda navigatsiya paneli, telefon — pastki navigatsiya. Bo'limlar: Kassa, Tovarlar, Kirim, Mijozlar/Nasiya, Hisobotlar, Sozlamalar. Holat qatori.
 - **Qabul:** 3 o'lchamda golden testlar; klaviatura bilan navigatsiya ishlaydi.
 - **Bog'liq:** T-030, T-031

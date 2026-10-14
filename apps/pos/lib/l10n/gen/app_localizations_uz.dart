@@ -143,6 +143,19 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get settingsLanguage => 'Til';
+
+  @override
+  String get statusConnectionUnknown => 'Ulanish tekshirilmoqda';
+
+  @override
+  String get statusPrinterUnknown => 'Printer sozlanmagan';
+
+  @override
+  String get sectionComingSoonTitle => 'Bo\'lim tayyorlanmoqda';
+
+  @override
+  String get sectionComingSoonMessage =>
+      'Bu bo\'lim keyingi yangilanishda qo\'shiladi';
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -284,4 +297,17 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get settingsLanguage => 'Тил';
+
+  @override
+  String get statusConnectionUnknown => 'Уланиш текширилмоқда';
+
+  @override
+  String get statusPrinterUnknown => 'Принтер созланмаган';
+
+  @override
+  String get sectionComingSoonTitle => 'Бўлим тайёрланмоқда';
+
+  @override
+  String get sectionComingSoonMessage =>
+      'Бу бўлим кейинги янгиланишда қўшилади';
 }

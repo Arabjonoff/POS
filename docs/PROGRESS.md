@@ -134,3 +134,10 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-032 (squash merge)
 - Qoldi / keyingi qadam: T-033 Ilova qobig'i va navigatsiya. Pull/push (T-035) va qoldiq hisobi (server + yuborilmagan harakatlar) — keyin.
 - Muammo yoki qaror: build_runner keshi ko'chirilgan `pos_colors.dart` tufayli yiqildi va eski `.g.dart` qoldi → `rm -rf apps/pos/.dart_tool/build`. CI filtriga `testdata/**` qo'shildi (pul vektorlari ikkala tomonda ishlatiladi).
+
+## 2026-10-14 — T-033 Ilova qobig'i va navigatsiya
+- Qilindi: go_router `StatefulShellRoute.indexedStack` — 6 bo'lim (`/pos`, `/products`, `/receiving`, `/customers`, `/reports`, `/settings`), ochilganda kassa, bo'lim holati saqlanadi. `AppShell` (`PosResponsiveScaffold`: telefon — pastki panel, planshet/desktop — yon panel), desktop tezkor tugmalari **Ctrl+1…6** (F-tugmalar kassa ekraniga band). `AppStatusBar`: internet, navbatdagi yozuvlar (outbox'dan jonli), printer, smena (bazadan jonli), soat (do'kon vaqti). Sozlamalar — til tanlash; qolgan bo'limlar "tayyorlanmoqda". `PosResponsiveScaffold` telefonda o'z pastki paneliga o'tdi (6 bo'limda yorliq bir qatorda).
+- Testlar: apps/pos 74 (+22): navigatsiya (bosish, Ctrl+N, bo'lim ichida Tab/Enter), joylashuv 3 o'lchamda, til almashtirish, holat qatori (standart, oflayn+navbat, bazadagi smena/outbox o'zgarishi); 12 golden (kassa va sozlamalar × 3 o'lcham × 2 mavzu). Skrinshotlar `docs/screenshots/T-033/`.
+- PR: T-033 (squash merge)
+- Qoldi / keyingi qadam: T-034 Kirish, qurilmani ulash, PIN ekrani. Internet/printer holati — T-035/T-044 da haqiqiy manbaga ulanadi (`connectionStatusProvider`, `printerStatusProvider`).
+- Muammo yoki qaror: go_router bo'lim navigatorlari fokus doirasi `closedLoop` — Tab bo'lim ichida aylanadi, yon panelga chiqmaydi (global `requestFocus: false` dialoglar fokusini buzadi). Shuning uchun bo'limlararo klaviatura — Ctrl+1…6. Telefonda `NavigationBar` "Sozlamalar" ni ikki qatorga bo'lardi → o'z paneli. Testda `runAsync` + drift stream osilib qoldi → bazaga yozish to'g'ridan-to'g'ri test tanasida.

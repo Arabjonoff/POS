@@ -261,7 +261,8 @@ void main() {
     testWidgets('phone: bottom navigation, status bar on top', (tester) async {
       final selected = <int>[];
       await _pumpScaffold(tester, const Size(390, 844), selected.add);
-      expect(find.byType(NavigationBar), findsOneWidget);
+      // Pastki panel ekran pastida.
+      expect(tester.getRect(find.text('Tovarlar')).top, greaterThan(760));
       final status = tester.getRect(find.byType(PosStatusBar));
       final body = tester.getRect(find.text('Body'));
       expect(status.top, lessThan(body.top));
@@ -273,7 +274,7 @@ void main() {
     testWidgets('tablet portrait: rail, status bar at bottom', (tester) async {
       final selected = <int>[];
       await _pumpScaffold(tester, const Size(768, 1024), selected.add);
-      expect(find.byType(NavigationBar), findsNothing);
+      expect(tester.getRect(find.text('Mijozlar')).top, lessThan(400));
       final nav = tester.getRect(find.text('Mijozlar'));
       expect(nav.left, lessThan(PosSizes.railWidth));
       final status = tester.getRect(find.byType(PosStatusBar));

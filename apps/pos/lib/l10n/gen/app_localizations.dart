@@ -350,6 +350,30 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Til'**
   String get settingsLanguage;
+
+  /// Holat qatori: internet holati hali aniqlanmagan
+  ///
+  /// In uz, this message translates to:
+  /// **'Ulanish tekshirilmoqda'**
+  String get statusConnectionUnknown;
+
+  /// Holat qatori: printer tanlanmagan
+  ///
+  /// In uz, this message translates to:
+  /// **'Printer sozlanmagan'**
+  String get statusPrinterUnknown;
+
+  /// Hali qurilmagan bo'lim sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Bo\'lim tayyorlanmoqda'**
+  String get sectionComingSoonTitle;
+
+  /// Hali qurilmagan bo'lim izohi
+  ///
+  /// In uz, this message translates to:
+  /// **'Bu bo\'lim keyingi yangilanishda qo\'shiladi'**
+  String get sectionComingSoonMessage;
 }
 
 class _AppLocalizationsDelegate

@@ -1,100 +1,197 @@
 {
   "@@locale": "uz",
   "appTitle": "Kassa",
-  "@appTitle": {"description": "Ilova nomi (oyna sarlavhasi)"},
+  "@appTitle": {
+    "description": "Ilova nomi (oyna sarlavhasi)"
+  },
   "posTitle": "Kassa",
-  "@posTitle": {"description": "Kassa bo'limi nomi"},
+  "@posTitle": {
+    "description": "Kassa bo'limi nomi"
+  },
   "posEmptyCart": "Tovarni skanerlang yoki qidiring",
-  "@posEmptyCart": {"description": "Bo'sh savat holati"},
+  "@posEmptyCart": {
+    "description": "Bo'sh savat holati"
+  },
   "languageName": "O'zbekcha",
-  "@languageName": {"description": "Shu tilning o'z nomi (til tanlashda)"},
-
+  "@languageName": {
+    "description": "Shu tilning o'z nomi (til tanlashda)"
+  },
   "currencySom": "so'm",
-  "@currencySom": {"description": "Valyuta nomi summadan keyin: 125 000 so'm"},
-
+  "@currencySom": {
+    "description": "Valyuta nomi summadan keyin: 125 000 so'm"
+  },
   "unitPcs": "dona",
-  "@unitPcs": {"description": "Birlik: dona (pcs)"},
+  "@unitPcs": {
+    "description": "Birlik: dona (pcs)"
+  },
   "unitKg": "kg",
-  "@unitKg": {"description": "Birlik: kilogramm"},
+  "@unitKg": {
+    "description": "Birlik: kilogramm"
+  },
   "unitG": "g",
-  "@unitG": {"description": "Birlik: gramm"},
+  "@unitG": {
+    "description": "Birlik: gramm"
+  },
   "unitL": "l",
-  "@unitL": {"description": "Birlik: litr"},
+  "@unitL": {
+    "description": "Birlik: litr"
+  },
   "unitM": "m",
-  "@unitM": {"description": "Birlik: metr"},
+  "@unitM": {
+    "description": "Birlik: metr"
+  },
   "unitPack": "qadoq",
-  "@unitPack": {"description": "Birlik: qadoq (pack)"},
-
+  "@unitPack": {
+    "description": "Birlik: qadoq (pack)"
+  },
   "navPos": "Kassa",
-  "@navPos": {"description": "Navigatsiya: kassa bo'limi"},
+  "@navPos": {
+    "description": "Navigatsiya: kassa bo'limi"
+  },
   "navProducts": "Tovarlar",
-  "@navProducts": {"description": "Navigatsiya: tovarlar bo'limi"},
+  "@navProducts": {
+    "description": "Navigatsiya: tovarlar bo'limi"
+  },
   "navReceiving": "Kirim",
-  "@navReceiving": {"description": "Navigatsiya: tovar qabul qilish (kirim)"},
+  "@navReceiving": {
+    "description": "Navigatsiya: tovar qabul qilish (kirim)"
+  },
   "navCustomers": "Mijozlar",
-  "@navCustomers": {"description": "Navigatsiya: mijozlar va nasiya"},
+  "@navCustomers": {
+    "description": "Navigatsiya: mijozlar va nasiya"
+  },
   "navReports": "Hisobotlar",
-  "@navReports": {"description": "Navigatsiya: hisobotlar"},
+  "@navReports": {
+    "description": "Navigatsiya: hisobotlar"
+  },
   "navSettings": "Sozlamalar",
-  "@navSettings": {"description": "Navigatsiya: sozlamalar"},
-
+  "@navSettings": {
+    "description": "Navigatsiya: sozlamalar"
+  },
   "actionSave": "Saqlash",
-  "@actionSave": {"description": "Tugma: saqlash"},
+  "@actionSave": {
+    "description": "Tugma: saqlash"
+  },
   "actionCancel": "Bekor qilish",
-  "@actionCancel": {"description": "Tugma: oynani/amalni bekor qilish"},
+  "@actionCancel": {
+    "description": "Tugma: oynani/amalni bekor qilish"
+  },
   "actionUndo": "Bekor qilish",
-  "@actionUndo": {"description": "Toast tugmasi: oxirgi amalni qaytarish (undo)"},
+  "@actionUndo": {
+    "description": "Toast tugmasi: oxirgi amalni qaytarish (undo)"
+  },
   "actionClose": "Yopish",
-  "@actionClose": {"description": "Tugma: yopish"},
+  "@actionClose": {
+    "description": "Tugma: yopish"
+  },
   "actionDelete": "O'chirish",
-  "@actionDelete": {"description": "Tugma: o'chirish"},
+  "@actionDelete": {
+    "description": "Tugma: o'chirish"
+  },
   "actionRetry": "Qayta urinish",
-  "@actionRetry": {"description": "Tugma: qayta urinish"},
+  "@actionRetry": {
+    "description": "Tugma: qayta urinish"
+  },
   "actionYes": "Ha",
-  "@actionYes": {"description": "Tasdiq: ha"},
+  "@actionYes": {
+    "description": "Tasdiq: ha"
+  },
   "actionNo": "Yo'q",
-  "@actionNo": {"description": "Tasdiq: yo'q"},
+  "@actionNo": {
+    "description": "Tasdiq: yo'q"
+  },
   "actionClear": "Tozalash",
-  "@actionClear": {"description": "Qidiruv maydonini tozalash"},
+  "@actionClear": {
+    "description": "Qidiruv maydonini tozalash"
+  },
   "actionBackspace": "Oxirgi raqamni o'chirish",
-  "@actionBackspace": {"description": "Raqamli klaviaturada o'chirish tugmasi nomi"},
+  "@actionBackspace": {
+    "description": "Raqamli klaviaturada o'chirish tugmasi nomi"
+  },
   "actionIncrease": "Ko'paytirish",
-  "@actionIncrease": {"description": "Miqdorni bittaga oshirish"},
+  "@actionIncrease": {
+    "description": "Miqdorni bittaga oshirish"
+  },
   "actionDecrease": "Kamaytirish",
-  "@actionDecrease": {"description": "Miqdorni bittaga kamaytirish"},
+  "@actionDecrease": {
+    "description": "Miqdorni bittaga kamaytirish"
+  },
   "actionPay": "To'lash",
-  "@actionPay": {"description": "Kassa: to'lov oynasini ochish"},
-
+  "@actionPay": {
+    "description": "Kassa: to'lov oynasini ochish"
+  },
   "searchProductsHint": "Shtrix-kod yoki tovar nomi",
-  "@searchProductsHint": {"description": "Tovar qidiruv maydoni ichidagi izoh"},
+  "@searchProductsHint": {
+    "description": "Tovar qidiruv maydoni ichidagi izoh"
+  },
   "totalLabel": "Jami",
-  "@totalLabel": {"description": "Chek jami summasi yorlig'i"},
+  "@totalLabel": {
+    "description": "Chek jami summasi yorlig'i"
+  },
   "changeLabel": "Qaytim",
-  "@changeLabel": {"description": "Xaridorga qaytariladigan pul"},
-
+  "@changeLabel": {
+    "description": "Xaridorga qaytariladigan pul"
+  },
   "statusOnline": "Internet bor",
-  "@statusOnline": {"description": "Holat qatori: internet bor"},
+  "@statusOnline": {
+    "description": "Holat qatori: internet bor"
+  },
   "statusOffline": "Internet yo'q",
-  "@statusOffline": {"description": "Holat qatori: internet yo'q"},
+  "@statusOffline": {
+    "description": "Holat qatori: internet yo'q"
+  },
   "statusQueued": "{count, plural, =0{Hammasi yuborilgan} other{{count} ta yozuv navbatda}}",
   "@statusQueued": {
     "description": "Holat qatori: serverga yuborilmagan yozuvlar soni",
-    "placeholders": {"count": {"type": "int"}}
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "statusOfflineSaving": "Internet yo'q — savdolar saqlanyapti ({count})",
   "@statusOfflineSaving": {
     "description": "Internet yo'qligida tushuntirish: savdolar lokal saqlanmoqda",
-    "placeholders": {"count": {"type": "int"}}
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "statusPrinterReady": "Printer ulangan",
-  "@statusPrinterReady": {"description": "Holat qatori: printer ishlayapti"},
+  "@statusPrinterReady": {
+    "description": "Holat qatori: printer ishlayapti"
+  },
   "statusPrinterMissing": "Printer ulanmagan",
-  "@statusPrinterMissing": {"description": "Holat qatori: printer topilmadi"},
+  "@statusPrinterMissing": {
+    "description": "Holat qatori: printer topilmadi"
+  },
   "statusShiftOpen": "Smena ochiq",
-  "@statusShiftOpen": {"description": "Holat qatori: smena ochiq"},
+  "@statusShiftOpen": {
+    "description": "Holat qatori: smena ochiq"
+  },
   "statusShiftClosed": "Smena yopiq",
-  "@statusShiftClosed": {"description": "Holat qatori: smena yopiq"},
-
+  "@statusShiftClosed": {
+    "description": "Holat qatori: smena yopiq"
+  },
   "settingsLanguage": "Til",
-  "@settingsLanguage": {"description": "Sozlamalar: ilova tili"}
+  "@settingsLanguage": {
+    "description": "Sozlamalar: ilova tili"
+  },
+  "statusConnectionUnknown": "Ulanish tekshirilmoqda",
+  "@statusConnectionUnknown": {
+    "description": "Holat qatori: internet holati hali aniqlanmagan"
+  },
+  "statusPrinterUnknown": "Printer sozlanmagan",
+  "@statusPrinterUnknown": {
+    "description": "Holat qatori: printer tanlanmagan"
+  },
+  "sectionComingSoonTitle": "Bo'lim tayyorlanmoqda",
+  "@sectionComingSoonTitle": {
+    "description": "Hali qurilmagan bo'lim sarlavhasi"
+  },
+  "sectionComingSoonMessage": "Bu bo'lim keyingi yangilanishda qo'shiladi",
+  "@sectionComingSoonMessage": {
+    "description": "Hali qurilmagan bo'lim izohi"
+  }
 }

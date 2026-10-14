@@ -4,23 +4,19 @@
   "posTitle": "Касса",
   "posEmptyCart": "Товарни сканерланг ёки қидиринг",
   "languageName": "Ўзбекча",
-
   "currencySom": "сўм",
-
   "unitPcs": "дона",
   "unitKg": "кг",
   "unitG": "г",
   "unitL": "л",
   "unitM": "м",
   "unitPack": "қадоқ",
-
   "navPos": "Касса",
   "navProducts": "Товарлар",
   "navReceiving": "Кирим",
   "navCustomers": "Мижозлар",
   "navReports": "Ҳисоботлар",
   "navSettings": "Созламалар",
-
   "actionSave": "Сақлаш",
   "actionCancel": "Бекор қилиш",
   "actionUndo": "Бекор қилиш",
@@ -34,11 +30,9 @@
   "actionIncrease": "Кўпайтириш",
   "actionDecrease": "Камайтириш",
   "actionPay": "Тўлаш",
-
   "searchProductsHint": "Штрих-код ёки товар номи",
   "totalLabel": "Жами",
   "changeLabel": "Қайтим",
-
   "statusOnline": "Интернет бор",
   "statusOffline": "Интернет йўқ",
   "statusQueued": "{count, plural, =0{Ҳаммаси юборилган} other{{count} та ёзув навбатда}}",
@@ -47,6 +41,9 @@
   "statusPrinterMissing": "Принтер уланмаган",
   "statusShiftOpen": "Смена очиқ",
   "statusShiftClosed": "Смена ёпиқ",
-
-  "settingsLanguage": "Тил"
+  "settingsLanguage": "Тил",
+  "statusConnectionUnknown": "Уланиш текширилмоқда",
+  "statusPrinterUnknown": "Принтер созланмаган",
+  "sectionComingSoonTitle": "Бўлим тайёрланмоқда",
+  "sectionComingSoonMessage": "Бу бўлим кейинги янгиланишда қўшилади"
 }

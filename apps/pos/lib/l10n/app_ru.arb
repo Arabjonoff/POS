@@ -4,23 +4,19 @@
   "posTitle": "Касса",
   "posEmptyCart": "Отсканируйте товар или найдите его",
   "languageName": "Русский",
-
   "currencySom": "сум",
-
   "unitPcs": "шт",
   "unitKg": "кг",
   "unitG": "г",
   "unitL": "л",
   "unitM": "м",
   "unitPack": "уп.",
-
   "navPos": "Касса",
   "navProducts": "Товары",
   "navReceiving": "Приход",
   "navCustomers": "Клиенты",
   "navReports": "Отчёты",
   "navSettings": "Настройки",
-
   "actionSave": "Сохранить",
   "actionCancel": "Отмена",
   "actionUndo": "Отменить",
@@ -34,11 +30,9 @@
   "actionIncrease": "Увеличить",
   "actionDecrease": "Уменьшить",
   "actionPay": "Оплатить",
-
   "searchProductsHint": "Штрихкод или название товара",
   "totalLabel": "Итого",
   "changeLabel": "Сдача",
-
   "statusOnline": "Интернет есть",
   "statusOffline": "Нет интернета",
   "statusQueued": "{count, plural, =0{Всё отправлено} one{{count} запись в очереди} few{{count} записи в очереди} many{{count} записей в очереди} other{{count} записи в очереди}}",
@@ -47,6 +41,9 @@
   "statusPrinterMissing": "Принтер не подключён",
   "statusShiftOpen": "Смена открыта",
   "statusShiftClosed": "Смена закрыта",
-
-  "settingsLanguage": "Язык"
+  "settingsLanguage": "Язык",
+  "statusConnectionUnknown": "Проверка соединения",
+  "statusPrinterUnknown": "Принтер не настроен",
+  "sectionComingSoonTitle": "Раздел в разработке",
+  "sectionComingSoonMessage": "Раздел появится в следующем обновлении"
 }
