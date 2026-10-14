@@ -42,3 +42,10 @@ Format:
 - Agentning tavsiyasi: A — egasi ko'radigan foyda kassadagi haqiqiy pulga mos keladi.
 - Hozircha tanlangan: A (vaqtincha; `apps/reports/services.py` da bitta joyda; kassa hisobotlari ham shu formulani oladi).
 - Javob:
+
+### Q-005 (T-042) Kassir qancha chegirmani o'zi bera oladi?
+- Kontekst: `auth-roles.md` — "katta chegirma" menejer/ega PIN tasdig'ini talab qiladi; `pos-screen.md` — "huquq va maksimal foiz sozlamada". Chegara qiymati va sozlama joyi aniqlanmagan.
+- Variantlar: A) kassir 5% gacha o'zi, undan katta — menejer/ega PIN. B) kassir umuman chegirma bera olmaydi (har chegirma — PIN). C) chegara 10%.
+- Agentning tavsiyasi: A — yaxlitlash ("125 300 → 125 000") va kichik chegirmalar savdoni to'xtatmaydi, kattasi nazoratda.
+- Hozircha tanlangan: A (vaqtincha; lokal sozlama `discount_cashier_max_bp`, standart 500 = 5%; `features/pos/cart/discount_policy.dart`). Menejer va ega — cheklovsiz. Tasdiqlagan xodim savdoning `approved_by` iga yoziladi. Sozlamani o'zgartirish ekrani — keyin (ega sozlamalari).
+- Javob:

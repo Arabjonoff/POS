@@ -890,6 +890,174 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Chek chiqarish'**
   String get shiftPrintReport;
+
+  /// Kassa qidiruv maydoni
+  ///
+  /// In uz, this message translates to:
+  /// **'Nom, shtrix-kod yoki PLU'**
+  String get posSearchHint;
+
+  /// Tez tugmalar: barcha kategoriyalar
+  ///
+  /// In uz, this message translates to:
+  /// **'Hammasi'**
+  String get posQuickAll;
+
+  /// Tez tugmalar paneli/varag'i
+  ///
+  /// In uz, this message translates to:
+  /// **'Tez tugmalar'**
+  String get posQuickButtons;
+
+  /// Tez tugmali tovar yo'q
+  ///
+  /// In uz, this message translates to:
+  /// **'Tez tugmalar hali sozlanmagan'**
+  String get posQuickEmpty;
+
+  /// Qidiruv natijasi bo'sh
+  ///
+  /// In uz, this message translates to:
+  /// **'Hech narsa topilmadi'**
+  String get posNoResults;
+
+  /// Savat tabi
+  ///
+  /// In uz, this message translates to:
+  /// **'Chek {number}'**
+  String posCartTab(int number);
+
+  /// Kechiktirib, yangi chek ochish (F6)
+  ///
+  /// In uz, this message translates to:
+  /// **'Yangi chek'**
+  String get posNewCart;
+
+  /// Kechiktirilgan cheklar chegarasi
+  ///
+  /// In uz, this message translates to:
+  /// **'5 tadan ortiq chek ochib bo\'lmaydi'**
+  String get posCartLimit;
+
+  /// Savatdagi tovarlar soni
+  ///
+  /// In uz, this message translates to:
+  /// **'{count, plural, other{{count} ta tovar}}'**
+  String posItemsCount(int count);
+
+  /// Chegirmadan oldingi summa
+  ///
+  /// In uz, this message translates to:
+  /// **'Tovarlar'**
+  String get posSubtotal;
+
+  /// Chegirma (F3)
+  ///
+  /// In uz, this message translates to:
+  /// **'Chegirma'**
+  String get posDiscount;
+
+  /// T-043 gacha vaqtinchalik
+  ///
+  /// In uz, this message translates to:
+  /// **'To\'lov oynasi keyingi yangilanishda qo\'shiladi'**
+  String get posPayComingSoon;
+
+  /// Qator o'chirildi (undo bilan)
+  ///
+  /// In uz, this message translates to:
+  /// **'{name} o\'chirildi'**
+  String posLineRemoved(String name);
+
+  /// Miqdor oynasi (F2)
+  ///
+  /// In uz, this message translates to:
+  /// **'Miqdor'**
+  String get posQtyTitle;
+
+  /// Vaznli tovar miqdori
+  ///
+  /// In uz, this message translates to:
+  /// **'Vazn, kg'**
+  String get posWeightTitle;
+
+  /// Miqdorni tasdiqlash
+  ///
+  /// In uz, this message translates to:
+  /// **'Tayyor'**
+  String get posQtyApply;
+
+  /// Skanerlangan kod topilmadi
+  ///
+  /// In uz, this message translates to:
+  /// **'Bu kod bazada yo\'q'**
+  String get posCodeNotFound;
+
+  /// Nofaol yoki narxi 0
+  ///
+  /// In uz, this message translates to:
+  /// **'Bu tovarni sotib bo\'lmaydi: nofaol yoki narxi yo\'q'**
+  String get posNotSellable;
+
+  /// Chegirma turi
+  ///
+  /// In uz, this message translates to:
+  /// **'Qatorga'**
+  String get posDiscountLine;
+
+  /// Chegirma turi
+  ///
+  /// In uz, this message translates to:
+  /// **'Butun chekka'**
+  String get posDiscountCheck;
+
+  /// Chegirma: foiz
+  ///
+  /// In uz, this message translates to:
+  /// **'Foiz'**
+  String get posDiscountPercent;
+
+  /// Chegirma: summa
+  ///
+  /// In uz, this message translates to:
+  /// **'Summa'**
+  String get posDiscountAmount;
+
+  /// Chegirmani qo'llash
+  ///
+  /// In uz, this message translates to:
+  /// **'Qo\'llash'**
+  String get posDiscountApply;
+
+  /// Chegirmani olib tashlash
+  ///
+  /// In uz, this message translates to:
+  /// **'Olib tashlash'**
+  String get posDiscountRemove;
+
+  /// Katta chegirma
+  ///
+  /// In uz, this message translates to:
+  /// **'{percent}% dan katta chegirma uchun menejer yoki ega tasdiqlashi kerak'**
+  String posDiscountNeedsApproval(String percent);
+
+  /// Menejer/ega PIN oynasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Tasdiqlash kerak'**
+  String get approvalTitle;
+
+  /// Tasdiqlovchi yo'q
+  ///
+  /// In uz, this message translates to:
+  /// **'Menejer yoki ega uchun PIN o\'rnatilmagan'**
+  String get approvalNoManagers;
+
+  /// PIN bilan tasdiqlash
+  ///
+  /// In uz, this message translates to:
+  /// **'Tasdiqlash'**
+  String get approvalConfirm;
 }
 
 class _AppLocalizationsDelegate

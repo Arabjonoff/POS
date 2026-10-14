@@ -3,14 +3,16 @@ import 'package:pos_app/core/money/money.dart';
 import 'package:pos_app/data/sales/sale_writer.dart';
 
 /// Chegirma: foiz (bazis punktda, 1% = 100) yoki summa (tiyin).
+/// Katta chegirmani menejer/ega tasdiqlasa — [approvedBy] (`auth-roles.md`).
 @immutable
 class Discount {
-  const Discount.percent(this.percentBp) : amountTiyin = 0;
+  const Discount.percent(this.percentBp, {this.approvedBy}) : amountTiyin = 0;
 
-  const Discount.amount(this.amountTiyin) : percentBp = 0;
+  const Discount.amount(this.amountTiyin, {this.approvedBy}) : percentBp = 0;
 
   final int percentBp;
   final int amountTiyin;
+  final String? approvedBy;
 
   bool get isPercent => percentBp > 0;
 
@@ -20,19 +22,24 @@ class Discount {
     return value.clamp(0, base < 0 ? 0 : base);
   }
 
-  /// [base] ga nisbatan foiz (bp) — huquq chegarasini tekshirish uchun.
-  int percentOfBase(int base) =>
-      base <= 0 ? 0 : Money.mulDivHalfUp(of(base), 10000, base);
+  Discount approved(String userId) => isPercent
+      ? Discount.percent(percentBp, approvedBy: userId)
+      : Discount.amount(amountTiyin, approvedBy: userId);
 
-  Map<String, Object> toJson() =>
-      isPercent ? {'percent_bp': percentBp} : {'amount_tiyin': amountTiyin};
+  Map<String, Object> toJson() => {
+    if (isPercent) 'percent_bp': percentBp else 'amount_tiyin': amountTiyin,
+    'approved_by': ?approvedBy,
+  };
 
   static Discount? fromJson(Object? json) {
     if (json is! Map) return null;
+    final by = json['approved_by'] as String?;
     final bp = json['percent_bp'];
-    if (bp is int && bp > 0) return Discount.percent(bp);
+    if (bp is int && bp > 0) return Discount.percent(bp, approvedBy: by);
     final amount = json['amount_tiyin'];
-    if (amount is int && amount > 0) return Discount.amount(amount);
+    if (amount is int && amount > 0) {
+      return Discount.amount(amount, approvedBy: by);
+    }
     return null;
   }
 
@@ -40,10 +47,11 @@ class Discount {
   bool operator ==(Object other) =>
       other is Discount &&
       other.percentBp == percentBp &&
-      other.amountTiyin == amountTiyin;
+      other.amountTiyin == amountTiyin &&
+      other.approvedBy == approvedBy;
 
   @override
-  int get hashCode => Object.hash(percentBp, amountTiyin);
+  int get hashCode => Object.hash(percentBp, amountTiyin, approvedBy);
 }
 
 /// Savat qatori. Narx va nom — qo'shilgan paytdagi surat (chekda shu chiqadi).
@@ -193,6 +201,15 @@ class Cart {
     customerId: customerId,
     discount: clearDiscount ? null : (discount ?? this.discount),
   );
+
+  /// Chegirmani tasdiqlagan menejer/ega (savdoning `approved_by`).
+  String? get approvedBy {
+    if (discount?.approvedBy != null) return discount!.approvedBy;
+    for (final l in lines) {
+      if (l.discount?.approvedBy != null) return l.discount!.approvedBy;
+    }
+    return null;
+  }
 
   List<SaleLineInput> toSaleLines() => [for (final l in lines) l.toSaleLine()];
 }

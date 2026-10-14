@@ -88,7 +88,6 @@ void main() {
     test('discount never exceeds the base', () {
       expect(const Discount.amount(500).of(300), 300);
       expect(const Discount.percent(15000).of(300), 300);
-      expect(const Discount.amount(100).percentOfBase(1000), 1000);
     });
   });
 

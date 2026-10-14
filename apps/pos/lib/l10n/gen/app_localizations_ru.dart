@@ -490,4 +490,105 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get shiftPrintReport => 'Печать отчёта';
+
+  @override
+  String get posSearchHint => 'Название, штрихкод или PLU';
+
+  @override
+  String get posQuickAll => 'Все';
+
+  @override
+  String get posQuickButtons => 'Быстрые кнопки';
+
+  @override
+  String get posQuickEmpty => 'Быстрые кнопки ещё не настроены';
+
+  @override
+  String get posNoResults => 'Ничего не найдено';
+
+  @override
+  String posCartTab(int number) {
+    return 'Чек $number';
+  }
+
+  @override
+  String get posNewCart => 'Новый чек';
+
+  @override
+  String get posCartLimit => 'Нельзя открыть больше 5 чеков';
+
+  @override
+  String posItemsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count товара',
+      many: '$count товаров',
+      few: '$count товара',
+      one: '$count товар',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get posSubtotal => 'Товары';
+
+  @override
+  String get posDiscount => 'Скидка';
+
+  @override
+  String get posPayComingSoon => 'Окно оплаты появится в следующем обновлении';
+
+  @override
+  String posLineRemoved(String name) {
+    return '$name: удалено';
+  }
+
+  @override
+  String get posQtyTitle => 'Количество';
+
+  @override
+  String get posWeightTitle => 'Вес, кг';
+
+  @override
+  String get posQtyApply => 'Готово';
+
+  @override
+  String get posCodeNotFound => 'Этого кода нет в базе';
+
+  @override
+  String get posNotSellable =>
+      'Этот товар нельзя продать: неактивен или без цены';
+
+  @override
+  String get posDiscountLine => 'На строку';
+
+  @override
+  String get posDiscountCheck => 'На весь чек';
+
+  @override
+  String get posDiscountPercent => 'Процент';
+
+  @override
+  String get posDiscountAmount => 'Сумма';
+
+  @override
+  String get posDiscountApply => 'Применить';
+
+  @override
+  String get posDiscountRemove => 'Убрать';
+
+  @override
+  String posDiscountNeedsApproval(String percent) {
+    return 'Скидку больше $percent% подтверждает менеджер или владелец';
+  }
+
+  @override
+  String get approvalTitle => 'Нужно подтверждение';
+
+  @override
+  String get approvalNoManagers => 'У менеджера и владельца не задан PIN';
+
+  @override
+  String get approvalConfirm => 'Подтвердить';
 }
