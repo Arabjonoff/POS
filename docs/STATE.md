@@ -8,7 +8,7 @@
 - Vazifa: T-002 Docker Compose
 - Branch: feat/T-002-docker-compose
 - Boshlangan: 2026-10-14
-- Oxirgi yangilanish: 2026-10-14 02:11
+- Oxirgi yangilanish: 2026-10-14 (sessiya 2)
 
 ## Qadamlar (vazifa ichida)
 - [x] 1. backend/Dockerfile (+ .dockerignore)
@@ -27,9 +27,11 @@ Dockerfile'lar, docker-compose.yml, .env.example portlari yozildi; pos-pg-dev o'
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
 - Ochiq PR: —
-- Ishlab turgan servislar: pos-pg-dev konteyner (postgres:16, 127.0.0.1:55432) — testlar uchun
+- Ishlab turgan servislar: — (pos-pg-dev o'chirilgan; compose ko'tarilganda postgres 127.0.0.1:55432)
 - Yiqilayotgan testlar: —
 
 ## Eslatmalar
 - Bu kompyuterda 5432, 6379, 8000, 3000 portlari boshqa loyihalar (workers-*, mebel-*) tomonidan band. Ularni to'xtatma! POS lokal portlari: postgres 55432, redis 56379, backend 8100, admin 3100.
 - `python` — Windows Store stub; `uv run` yoki `py -3.12` ishlat. Postgres'ga `localhost` emas, `127.0.0.1` orqali ulan (IPv6 osilib qoladi).
+- `py -3.12` bu kompyuterda yo'q — Python skriptlar uchun `cd backend && uv run python` ishlat.
+- Docker Desktop o'chiq bo'lishi mumkin: `C:\Users\Muhammadi\AppData\Local\Programs\DockerDesktop\Docker Desktop.exe` ni ishga tushir, `docker info` javob berguncha kut.
