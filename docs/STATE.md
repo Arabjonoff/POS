@@ -14,7 +14,7 @@
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 - [x] 1. Tokenlar: palitra (ThemeExtension), Inter shrifti, tipografiya, oraliq, radius, soya, harakat, breakpoint + kontrast (WCAG AA) testi
 - [x] 2. To'liq ThemeData (komponent mavzulari) + summa/miqdor formatlash
-- [ ] 3. Komponentlar 1: Button, IconButton, TextField, SearchField, Card, ListTile, Badge, StatusDot
+- [x] 3. Komponentlar 1: Button, IconButton, TextField, SearchField, Card, ListTile, Badge, StatusDot
 - [ ] 4. Komponentlar 2: MoneyText, QtyStepper, NumericKeypad, PinPad
 - [ ] 5. Komponentlar 3: Dialog/Sheet, Toast, EmptyState, Skeleton, ScanFeedback
 - [ ] 6. Komponentlar 4: DataTable, StatusBar, ResponsiveScaffold
@@ -23,11 +23,11 @@
 - [ ] 9. analyze/format/test yashil, PR, merge, ROADMAP/PROGRESS
 
 ## Oxirgi bajarilgan ish
-Qadam 1–2: tokenlar (PosColors, PosPalette ThemeExtension, PosTone, PosTypography+Inter, PosSpacing/Radius/Sizes/Motion, PosWindowSize), to‘liq PosTheme, PosFormat (summa/miqdor). 82 test yashil (kontrast AA).
+Qadam 1–3: tokenlar (PosColors, PosPalette ThemeExtension, PosTone, PosTypography+Inter, PosSpacing/Radius/Sizes/Motion, PosWindowSize), to‘liq PosTheme, PosFormat (summa/miqdor). 82 test yashil (kontrast AA). Komponentlar 1 (Button+Keycap, IconButton, TextField, SearchField, Card, ListTile, Badge, StatusDot) + widget testlar; 97 test yashil.
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-Qadam 3: packages/ui/lib/src/components/ — pos_button.dart (PosButton, PosKeycap), pos_icon_button.dart, pos_text_field.dart, pos_search_field.dart, pos_card.dart, pos_list_tile.dart, pos_badge.dart, pos_status_dot.dart; widget testlar packages/ui/test/components/.
+Qadam 4: packages/ui/lib/src/components/ — pos_money_text.dart, pos_qty_stepper.dart, pos_numeric_keypad.dart, pos_pin_pad.dart + test/components/input_components_test.dart.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
