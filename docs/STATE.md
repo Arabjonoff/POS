@@ -5,13 +5,25 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-045 Qaytarish
+- Branch: feat/T-045-refund
+- Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
+- [ ] 1. `apps/pos/lib/data/refunds/refund_calculator.dart`: sof hisob — server `record_refund` bilan bir xil (qator: `mulDivHalfUp(total, qty, sold)`, oxirgi qism — qoldiq; jami: chek chegirmasidan ulush yoki to'liq yopilsa `sale.total − oldingi`; nasiyadan ayirish chegarasi) + unit testlar
+- [ ] 2. `refund_writer.dart` (bitta tranzaksiya: Refund + RefundItem + StockMovement(+qty) + DebtEntry(−) + Sale.status + outbox `refund.created`) va `sale_lookup.dart` (raqam bo'yicha, smena savdolari, qaytarilgan miqdorlar bilan) + testlar
+- [ ] 3. Chekda savdo raqami shtrix-kodi (CODE128, `GS k`) — qaytarishda skanerlash uchun; snapshotlar yangilanadi
+- [ ] 4. Qaytarish oynasi (F8): savdoni topish (raqam/skan/oxirgi savdolar), qatorlar va miqdor, sabab, naqd yoki qarzdan ayirish, menejer/ega PIN; tarjimalar
+- [ ] 5. Widget testlari + golden + skrinshotlar `docs/screenshots/T-045/`
+- [ ] 6. Spec, PR, CI → merge; ROADMAP, PROGRESS, STATE
+
+## Oxirgi bajarilgan ish
+- T-044 merge qilindi (#28). T-045 boshlandi: branch va reja.
+
+## Keyingi aniq harakat
+- 1-qadam: `apps/pos/lib/data/refunds/refund_calculator.dart` (`backend/apps/sales/services/refunds.py` dagi `_items`, `_expected_total`, `_debt_left` ni takrorla), test `apps/pos/test/data/refund_calculator_test.dart`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
