@@ -378,7 +378,6 @@
   "receivingNote": "Комментарий",
   "receivingSearchHint": "Название или штрихкод (сканируйте)",
   "receivingEmptyLines": "Отсканируйте или найдите товар",
-  "receivingQty": "Кол-во",
   "receivingCost": "Себестоимость",
   "receivingSell": "Цена продажи",
   "receivingTotal": "Итого себестоимость: {amount}",
@@ -398,7 +397,6 @@
   "inventoryCount": "Инвентаризация · {date}",
   "inventorySummary": "Посчитано: {counted} · Не посчитано: {left} · Излишек: {surplus} · Недостача: {shortage}",
   "inventorySystem": "В системе: {qty}",
-  "inventoryCounted": "Посчитано",
   "inventoryDiff": "Разница: {qty}",
   "inventoryUncounted": "Не посчитаны ({count})",
   "inventoryUncountedNote": "Остатки непосчитанных товаров не меняются. Нажмите, чтобы добавить.",
@@ -409,5 +407,7 @@
   "inventoryNeedsApproval": "Инвентаризацию должен подтвердить менеджер или владелец",
   "inventoryEmptyPost": "Ничего не посчитано",
   "inventoryBack": "Инвентаризации",
-  "inventoryNotFound": "Код не найден — сначала добавьте товар"
+  "inventoryNotFound": "Код не найден — сначала добавьте товар",
+  "inventoryCountedUnit": "Посчитано, {unit}",
+  "receivingQtyUnit": "Кол-во, {unit}"
 }

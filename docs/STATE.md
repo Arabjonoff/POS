@@ -5,23 +5,13 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-053 Inventarizatsiya skaner bilan
-- Branch: feat/T-053-inventory
-- Boshlangan: 2026-10-15
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [x] 1. `apps/pos/lib/data/inventory/count_store.dart`: qoralama (scope all/category), skan → sanalgan +1, miqdorni yozish, qamrovdagi sanalmaganlar, farq (sanalgan − lokal qoldiq); tasdiqlash — bitta tranzaksiya (expected yoziladi, farq ≠ 0 → `stock_movements` `inventory`, outbox `inventory.posted` `{id, scope, category, note, items: [{product, counted_milli}], by}`) + testlar
-- [ ] 2. UI: `/products/inventory` (Tovarlar → "Inventarizatsiya"): ro'yxat, yangi (qamrov tanlash), tahrirlovchi (skaner, qidiruv, sanalgan qatorlar, sanalmaganlar, farq hisoboti, tasdiqlash + PIN), tasdiqlangan — faqat o'qish; tarjimalar
-- [ ] 3. Widget testlari + golden + skrinshotlar `docs/screenshots/T-053/`
-- [ ] 4. Spec, PR, CI → merge; ROADMAP, PROGRESS, STATE
-
-## Oxirgi bajarilgan ish
-- 1-qadam: `data/inventory/count_store.dart` (`CountStore`; tartib — `rowid`, jadvalda position yo'q), test `test/data/count_store_test.dart` (4).
-
-## Keyingi aniq harakat
-- 2-qadam: `apps/pos/lib/features/inventory/inventory_screen.dart` + `count_editor.dart`, router: products ostida `inventory` yo'li, Tovarlar ekranida "Inventarizatsiya" tugmasi; tarjimalar `inventory*`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

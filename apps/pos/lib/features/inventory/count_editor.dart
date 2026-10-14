@@ -431,7 +431,7 @@ class _CountRowState extends ConsumerState<_CountRow> {
               child: PosTextField(
                 key: ValueKey('counted-${line.productId}'),
                 controller: _counted,
-                label: '${l10n.inventoryCounted}, ${line.unit.label(l10n)}',
+                label: l10n.inventoryCountedUnit(line.unit.label(l10n)),
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
                 ),

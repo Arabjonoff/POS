@@ -1316,9 +1316,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get receivingEmptyLines => 'Отсканируйте или найдите товар';
 
   @override
-  String get receivingQty => 'Кол-во';
-
-  @override
   String get receivingCost => 'Себестоимость';
 
   @override
@@ -1386,9 +1383,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get inventoryCounted => 'Посчитано';
-
-  @override
   String inventoryDiff(String qty) {
     return 'Разница: $qty';
   }
@@ -1427,4 +1421,14 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get inventoryNotFound => 'Код не найден — сначала добавьте товар';
+
+  @override
+  String inventoryCountedUnit(String unit) {
+    return 'Посчитано, $unit';
+  }
+
+  @override
+  String receivingQtyUnit(String unit) {
+    return 'Кол-во, $unit';
+  }
 }

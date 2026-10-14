@@ -378,7 +378,6 @@
   "receivingNote": "Изоҳ",
   "receivingSearchHint": "Товар номи ёки штрих-код (сканерланг)",
   "receivingEmptyLines": "Товарни сканерланг ёки қидиринг",
-  "receivingQty": "Миқдор",
   "receivingCost": "Таннарх",
   "receivingSell": "Сотиш нархи",
   "receivingTotal": "Жами таннарх: {amount}",
@@ -398,7 +397,6 @@
   "inventoryCount": "Инвентаризация · {date}",
   "inventorySummary": "Саналган: {counted} · Саналмаган: {left} · Ортиқча: {surplus} · Кам: {shortage}",
   "inventorySystem": "Тизимда: {qty}",
-  "inventoryCounted": "Саналган",
   "inventoryDiff": "Фарқ: {qty}",
   "inventoryUncounted": "Саналмаганлар ({count})",
   "inventoryUncountedNote": "Саналмаган товарлар қолдиғи ўзгармайди. Босиб қўшиш мумкин.",
@@ -409,5 +407,7 @@
   "inventoryNeedsApproval": "Инвентаризацияни менежер ёки эга тасдиқлаши керак",
   "inventoryEmptyPost": "Ҳеч нарса саналмаган",
   "inventoryBack": "Инвентаризациялар",
-  "inventoryNotFound": "Бу код базада йўқ — аввал товар қўшинг"
+  "inventoryNotFound": "Бу код базада йўқ — аввал товар қўшинг",
+  "inventoryCountedUnit": "Саналган, {unit}",
+  "receivingQtyUnit": "Миқдор, {unit}"
 }

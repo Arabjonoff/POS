@@ -2370,12 +2370,6 @@ abstract class AppLocalizations {
   /// Ustun
   ///
   /// In uz, this message translates to:
-  /// **'Miqdor'**
-  String get receivingQty;
-
-  /// Ustun
-  ///
-  /// In uz, this message translates to:
   /// **'Tannarx'**
   String get receivingCost;
 
@@ -2487,12 +2481,6 @@ abstract class AppLocalizations {
   /// **'Tizimda: {qty}'**
   String inventorySystem(String qty);
 
-  /// Maydon
-  ///
-  /// In uz, this message translates to:
-  /// **'Sanalgan'**
-  String get inventoryCounted;
-
   /// Farq
   ///
   /// In uz, this message translates to:
@@ -2558,6 +2546,18 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Bu kod bazada yo\'q — avval tovar qo\'shing'**
   String get inventoryNotFound;
+
+  /// Sanalgan miqdor maydoni (birlik bilan)
+  ///
+  /// In uz, this message translates to:
+  /// **'Sanalgan, {unit}'**
+  String inventoryCountedUnit(String unit);
+
+  /// Kirim miqdori maydoni (birlik bilan)
+  ///
+  /// In uz, this message translates to:
+  /// **'Miqdor, {unit}'**
+  String receivingQtyUnit(String unit);
 }
 
 class _AppLocalizationsDelegate

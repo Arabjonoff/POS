@@ -514,7 +514,7 @@ class _LineRowState extends ConsumerState<_LineRow> {
         field(
           'qty',
           _qty,
-          '${l10n.receivingQty}, ${line.unit.label(l10n)}',
+          l10n.receivingQtyUnit(line.unit.label(l10n)),
           _onQty,
           error: _badQty ? l10n.productErrQty : null,
         ),

@@ -1752,10 +1752,6 @@
   "@receivingEmptyLines": {
     "description": "Bo'sh kirim"
   },
-  "receivingQty": "Miqdor",
-  "@receivingQty": {
-    "description": "Ustun"
-  },
   "receivingCost": "Tannarx",
   "@receivingCost": {
     "description": "Ustun"
@@ -1861,10 +1857,6 @@
       }
     }
   },
-  "inventoryCounted": "Sanalgan",
-  "@inventoryCounted": {
-    "description": "Maydon"
-  },
   "inventoryDiff": "Farq: {qty}",
   "@inventoryDiff": {
     "description": "Farq",
@@ -1918,5 +1910,23 @@
   "inventoryNotFound": "Bu kod bazada yo'q — avval tovar qo'shing",
   "@inventoryNotFound": {
     "description": "Skan: topilmadi"
+  },
+  "inventoryCountedUnit": "Sanalgan, {unit}",
+  "@inventoryCountedUnit": {
+    "description": "Sanalgan miqdor maydoni (birlik bilan)",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "receivingQtyUnit": "Miqdor, {unit}",
+  "@receivingQtyUnit": {
+    "description": "Kirim miqdori maydoni (birlik bilan)",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
   }
 }

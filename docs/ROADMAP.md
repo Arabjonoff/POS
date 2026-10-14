@@ -198,7 +198,7 @@ Spec'lar: `products.md`, `stock-receipt.md`, `barcode.md`.
 - **Qabul:** widget testlari; 100 ta skanerlash ketma-ket to'g'ri qo'shiladi; noma'lum kod oqimi testi.
 - **Bog'liq:** T-050, T-035
 
-### [ ] T-053 Inventarizatsiya skaner bilan
+### [x] T-053 Inventarizatsiya skaner bilan
 - **Bajarish:** to'liq yoki kategoriya bo'yicha; skanerlash bilan sanash; tizimdagi va haqiqiy farqi; tasdiqlash → tuzatish harakatlari.
 - **Qabul:** farq hisoboti to'g'ri; tasdiqlangandan keyin qoldiq = sanalgan.
 - **Bog'liq:** T-052

@@ -253,3 +253,18 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-052 (squash merge)
 - Qoldi / keyingi qadam: T-053 Inventarizatsiya. Teskari kirim (qaytarish yetkazib beruvchiga) kassada — keyin. Kassirga kirim huquqi "sozlamaga qarab" — hozircha har doim menejer PIN.
 - Muammo yoki qaror: telefonda tahrirlovchining pastki paneli ixchamlashtirildi (o'chirish — ikon, tasdiqlash — to'liq kenglikda).
+
+## 2026-10-15 — T-053 Inventarizatsiya skaner bilan
+- Qilindi:
+  - `CountStore`: qamrov — hamma yoki kategoriya; skan → sanalgan +1; farq = sanalgan − lokal qoldiq; sanalmaganlar ro'yxati.
+  - Tasdiqlash bitta tranzaksiyada: `expected` yoziladi, farq bo'lsa `inventory` harakati, outbox `inventory.posted`.
+  - Tovarlar → "Inventarizatsiya" (`/products/inventory`): ro'yxat, qamrov tanlash, tahrirlovchi (skaner, qidiruv, farq belgilari, hisobot satri, sanalmaganlar, PIN), tasdiqlangani — faqat o'qish.
+- Testlar: apps/pos 490 (+13):
+  - `CountStore`: farq, qamrov, tasdiqlash → qoldiq = sanalgan, sanalmagan o'zgarmaydi, payload;
+  - 3 ta widget testi: farq hisoboti va tasdiqlash, noma'lum kod va kassir PIN, bo'sh inventarizatsiya va o'chirish.
+  - Golden: `inventory/editor` × 3 o'lcham × 2 mavzu (tovarlar ro'yxati golden'i yangi tugma bilan yangilandi). Skrinshotlar: `docs/screenshots/T-053/`.
+- PR: T-053 (squash merge)
+- Qoldi / keyingi qadam: T-054 Qoldiq harakatlari tarixi va kam qolganlar.
+- Muammo yoki qaror:
+  - `inventory_count_items` da tartib ustuni yo'q — sxemani o'zgartirmasdan `rowid` (qo'shilish tartibi) ishlatildi.
+  - Tarjima testi birlik bilan qo'shib yasalgan yorliqni ushladi: `inventoryCountedUnit` / `receivingQtyUnit` kalitlariga o'tkazildi (kirim tahrirlovchisi ham tuzatildi).

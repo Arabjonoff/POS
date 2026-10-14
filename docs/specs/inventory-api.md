@@ -28,3 +28,16 @@ Foydalanuvchi JWT'si bilan. **Yozish** (kirim, inventarizatsiya, yetkazib beruvc
 - Bir tovar qatorlarda takrorlansa — `400`.
 - Tasdiqlangan inventarizatsiya o'zgarmaydi: `post`, `PATCH`, `DELETE` — `409 count_not_draft`. Bo'sh — `400 count_empty`. Qoralamani o'chirish mumkin.
 - `scope=category` uchun `category` majburiy; `scope=all` da `category` tozalanadi. Javobda har qatorda `diff_milli` (`counted − expected`, qoralamada `null`).
+
+## Kassada inventarizatsiya (T-053)
+- **Tovarlar → "Inventarizatsiya"** (`/products/inventory`): ro'yxat (qoralamalar birinchi) va "Yangi inventarizatsiya" — qamrov: hamma tovarlar yoki bitta kategoriya.
+- **Qoralama** — `apps/pos/lib/data/inventory/count_store.dart` (`CountStore`), lokal `inventory_counts`/`inventory_count_items`, har o'zgarishda saqlanadi.
+- **Skaner**: har skan — sanalgan +1 (tarozi kodi — vazni bilan). Noma'lum kod → "avval tovar qo'shing". Qidiruv bilan qo'shish ham mumkin.
+- **Qatorda**: tizimda (hozirgi lokal qoldiq), sanalgan (tahrirlanadi), farq (ortiqcha — sariq, kam — qizil).
+- **Hisobot**: sanalgan / sanalmagan (qamrovdagi faol tovarlar) / ortiqcha / kam. Sanalmaganlarni bosib qo'shish mumkin. Ular tasdiqlashda **o'zgarmaydi**.
+- **Tasdiqlash** — bitta tranzaksiya:
+  - har qatorga `expected_milli` (shu paytdagi lokal qoldiq) yoziladi;
+  - farq ≠ 0 bo'lsa — `stock_movements` (`inventory`, ±farq), natijada qoldiq = sanalgan;
+  - outbox `inventory.posted` `{id, scope, category, note, items: [{product, counted_milli}], by}`;
+  - server o'z `expected` ini qo'llash paytida hisoblaydi — natija bir xil (qoldiq = sanalgan).
+  - Kassir bo'lsa menejer/ega PIN so'raladi. Bo'sh inventarizatsiyani tasdiqlab bo'lmaydi. Tasdiqlangani faqat o'qish uchun (farq hisoboti saqlanadi).

@@ -1299,9 +1299,6 @@ class AppLocalizationsUz extends AppLocalizations {
   String get receivingEmptyLines => 'Tovarni skanerlang yoki qidiring';
 
   @override
-  String get receivingQty => 'Miqdor';
-
-  @override
   String get receivingCost => 'Tannarx';
 
   @override
@@ -1369,9 +1366,6 @@ class AppLocalizationsUz extends AppLocalizations {
   }
 
   @override
-  String get inventoryCounted => 'Sanalgan';
-
-  @override
   String inventoryDiff(String qty) {
     return 'Farq: $qty';
   }
@@ -1411,6 +1405,16 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get inventoryNotFound => 'Bu kod bazada yo\'q — avval tovar qo\'shing';
+
+  @override
+  String inventoryCountedUnit(String unit) {
+    return 'Sanalgan, $unit';
+  }
+
+  @override
+  String receivingQtyUnit(String unit) {
+    return 'Miqdor, $unit';
+  }
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -2701,9 +2705,6 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
   String get receivingEmptyLines => 'Товарни сканерланг ёки қидиринг';
 
   @override
-  String get receivingQty => 'Миқдор';
-
-  @override
   String get receivingCost => 'Таннарх';
 
   @override
@@ -2771,9 +2772,6 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
   }
 
   @override
-  String get inventoryCounted => 'Саналган';
-
-  @override
   String inventoryDiff(String qty) {
     return 'Фарқ: $qty';
   }
@@ -2813,4 +2811,14 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get inventoryNotFound => 'Бу код базада йўқ — аввал товар қўшинг';
+
+  @override
+  String inventoryCountedUnit(String unit) {
+    return 'Саналган, $unit';
+  }
+
+  @override
+  String receivingQtyUnit(String unit) {
+    return 'Миқдор, $unit';
+  }
 }
