@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/features/printing/escpos.dart';
 import 'package:pos_app/features/printing/receipt.dart';
+import 'package:pos_app/features/printing/winspool.dart';
 
 /// Printer ulanishi. Android Bluetooth/USB — keyinroq (qaror 0008).
 enum PrinterConnection {
@@ -122,3 +123,11 @@ final printerSettingsProvider =
     AsyncNotifierProvider<PrinterSettingsController, PrinterSettings>(
       PrinterSettingsController.new,
     );
+
+/// Windows printeri tanlovi faqat Windows'da (testlarda almashtiriladi).
+final windowsPrintingProvider = Provider<bool>((ref) => Winspool.supported);
+
+/// Tizimga o'rnatilgan printerlar (Windows).
+final systemPrintersProvider = Provider<List<String>>(
+  (ref) => ref.watch(windowsPrintingProvider) ? Winspool.printers() : const [],
+);

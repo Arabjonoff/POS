@@ -725,4 +725,82 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get printerTestOk => 'Если текст читается, принтер готов';
+
+  @override
+  String get settingsPrinter => 'Принтер чеков';
+
+  @override
+  String get settingsPrinterHelper => 'Термопринтер (ESC/POS), 58 или 80 мм';
+
+  @override
+  String get printerConnection => 'Подключение';
+
+  @override
+  String get printerNone => 'Без принтера';
+
+  @override
+  String get printerNetwork => 'Сеть (IP)';
+
+  @override
+  String get printerWindows => 'Принтер компьютера';
+
+  @override
+  String get printerAddress => 'Адрес принтера';
+
+  @override
+  String get printerAddressHint => 'Например: 192.168.1.50';
+
+  @override
+  String get printerNoSystemPrinters => 'Принтеры не найдены';
+
+  @override
+  String get printerWidth => 'Ширина бумаги';
+
+  @override
+  String printerWidthMm(int mm) {
+    return '$mm мм';
+  }
+
+  @override
+  String get printerEncoding => 'Кодировка';
+
+  @override
+  String get printerEncodingCp866 => 'Кириллица (CP866)';
+
+  @override
+  String get printerEncodingUtf8 => 'UTF-8';
+
+  @override
+  String get printerAutoPrint => 'Печатать чек после продажи';
+
+  @override
+  String get printerCopies => 'Количество копий';
+
+  @override
+  String get printerDrawer => 'Открывать денежный ящик при оплате наличными';
+
+  @override
+  String get printerTest => 'Тестовый чек';
+
+  @override
+  String get printerOpenDrawer => 'Открыть денежный ящик';
+
+  @override
+  String get printerSent => 'Отправлено на принтер';
+
+  @override
+  String get printerFailed =>
+      'Не удалось подключиться к принтеру. Проверьте кабель или адрес';
+
+  @override
+  String get printerNotConfigured => 'Сначала настройте принтер';
+
+  @override
+  String get posReceiptFailed => 'Чек не напечатан';
+
+  @override
+  String get posReprint => 'Напечатать снова';
+
+  @override
+  String get posLastReceipt => 'Последний чек';
 }

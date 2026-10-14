@@ -705,6 +705,84 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get printerTestOk => 'Bu matn to\'g\'ri o\'qilsa, printer tayyor';
+
+  @override
+  String get settingsPrinter => 'Chek printeri';
+
+  @override
+  String get settingsPrinterHelper => 'Termal printer (ESC/POS), 58 yoki 80 mm';
+
+  @override
+  String get printerConnection => 'Ulanish';
+
+  @override
+  String get printerNone => 'Printersiz';
+
+  @override
+  String get printerNetwork => 'Tarmoq (IP)';
+
+  @override
+  String get printerWindows => 'Kompyuter printeri';
+
+  @override
+  String get printerAddress => 'Printer manzili';
+
+  @override
+  String get printerAddressHint => 'Masalan: 192.168.1.50';
+
+  @override
+  String get printerNoSystemPrinters => 'Kompyuterda printer topilmadi';
+
+  @override
+  String get printerWidth => 'Qog\'oz kengligi';
+
+  @override
+  String printerWidthMm(int mm) {
+    return '$mm mm';
+  }
+
+  @override
+  String get printerEncoding => 'Harflar jadvali';
+
+  @override
+  String get printerEncodingCp866 => 'Kirill (CP866)';
+
+  @override
+  String get printerEncodingUtf8 => 'UTF-8';
+
+  @override
+  String get printerAutoPrint => 'Savdodan keyin chekni chiqarish';
+
+  @override
+  String get printerCopies => 'Nusxalar soni';
+
+  @override
+  String get printerDrawer => 'Naqd to\'lovda pul qutisini ochish';
+
+  @override
+  String get printerTest => 'Test chek';
+
+  @override
+  String get printerOpenDrawer => 'Pul qutisini ochish';
+
+  @override
+  String get printerSent => 'Printerga yuborildi';
+
+  @override
+  String get printerFailed =>
+      'Printerga ulanib bo\'lmadi. Kabel yoki manzilni tekshiring';
+
+  @override
+  String get printerNotConfigured => 'Avval printerni sozlang';
+
+  @override
+  String get posReceiptFailed => 'Chek chiqmadi';
+
+  @override
+  String get posReprint => 'Qayta chop etish';
+
+  @override
+  String get posLastReceipt => 'Oxirgi chek';
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -1405,4 +1483,82 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get printerTestOk => 'Бу матн тўғри ўқилса, принтер тайёр';
+
+  @override
+  String get settingsPrinter => 'Чек принтери';
+
+  @override
+  String get settingsPrinterHelper => 'Термал принтер (ESC/POS), 58 ёки 80 мм';
+
+  @override
+  String get printerConnection => 'Уланиш';
+
+  @override
+  String get printerNone => 'Принтерсиз';
+
+  @override
+  String get printerNetwork => 'Тармоқ (IP)';
+
+  @override
+  String get printerWindows => 'Компьютер принтери';
+
+  @override
+  String get printerAddress => 'Принтер манзили';
+
+  @override
+  String get printerAddressHint => 'Масалан: 192.168.1.50';
+
+  @override
+  String get printerNoSystemPrinters => 'Компьютерда принтер топилмади';
+
+  @override
+  String get printerWidth => 'Қоғоз кенглиги';
+
+  @override
+  String printerWidthMm(int mm) {
+    return '$mm мм';
+  }
+
+  @override
+  String get printerEncoding => 'Ҳарфлар жадвали';
+
+  @override
+  String get printerEncodingCp866 => 'Кирилл (CP866)';
+
+  @override
+  String get printerEncodingUtf8 => 'UTF-8';
+
+  @override
+  String get printerAutoPrint => 'Савдодан кейин чекни чиқариш';
+
+  @override
+  String get printerCopies => 'Нусхалар сони';
+
+  @override
+  String get printerDrawer => 'Нақд тўловда пул қутисини очиш';
+
+  @override
+  String get printerTest => 'Тест чек';
+
+  @override
+  String get printerOpenDrawer => 'Пул қутисини очиш';
+
+  @override
+  String get printerSent => 'Принтерга юборилди';
+
+  @override
+  String get printerFailed =>
+      'Принтерга уланиб бўлмади. Кабель ёки манзилни текширинг';
+
+  @override
+  String get printerNotConfigured => 'Аввал принтерни созланг';
+
+  @override
+  String get posReceiptFailed => 'Чек чиқмади';
+
+  @override
+  String get posReprint => 'Қайта чоп этиш';
+
+  @override
+  String get posLastReceipt => 'Охирги чек';
 }

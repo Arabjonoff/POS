@@ -15,16 +15,16 @@
 - [x] 1. `apps/pos/lib/features/printing/receipt.dart`: `ReceiptData` (do'kon, chek raqami, vaqt, kassir, qatorlar, chegirma, jami, to'lovlar, qaytim, nasiya mijozi + qarz) va `ReceiptBuilder` (sof: 32/48 belgi → qatorlar) + `ReceiptLoader` (bazadan savdo bo'yicha) + snapshot testlar `test/printing/receipts/*.txt`
 - [x] 2. `escpos.dart`: ESC/POS kodlovchi (init, markaz, qalin, CP866 / UTF-8, kesish, pul qutisi impulsi) + testlar
 - [x] 3. Uzatish qatlami: `PrinterTransport` (tarmoq IP:9100 — dart:io Socket; Windows RAW — win32 winspool; soxta — test), `PrinterService` (savdo cheki, test chek, pul qutisi, oxirgi chek, holat) + testlar
-- [ ] 4. Printer sozlamalari (`local_settings`: turi, manzil/printer nomi, kenglik, kodlash, avtomatik, nusxa, pul qutisi) + Sozlamalar ekranida "Printer" bo'limi (test chek) + tarjimalar
+- [x] 4. Printer sozlamalari (`local_settings`: turi, manzil/printer nomi, kenglik, kodlash, avtomatik, nusxa, pul qutisi) + Sozlamalar ekranida "Printer" bo'limi (test chek) + tarjimalar
 - [ ] 5. Kassaga ulash: yakunlashda avtomatik chek (xato savdoni to'xtatmaydi → "Chek chiqmadi" + "Qayta chop etish"), "Oxirgi chek" tugmasi, holat qatorida haqiqiy printer holati
 - [ ] 6. Widget testlari + golden + skrinshotlar `docs/screenshots/T-044/`
 - [ ] 7. Qaror `docs/decisions/` (Android Bluetooth/USB — alohida vazifa), spec, PR, CI → merge; ROADMAP, PROGRESS, STATE
 
 ## Oxirgi bajarilgan ish
-- 3-qadam: `printer_transport.dart` (tarmoq IP:9100, Windows spooler), `winspool.dart` (o'z FFI bog'lamalari, `ffi` bog'liqligi), `printer_settings.dart` (`PrinterSettings` JSON → local_settings `printer`, `printerSettingsProvider`), `printer_service.dart` (`printSale`, `reprintLast`, `printTest`, `openDrawer`, `printerHealthProvider`; `PrinterStatus.checking` qo'shildi). Testlar `test/printing/printer_service_test.dart`.
+- 4-qadam: `features/printing/printer_settings_panel.dart` (`PrinterSettingsPanel`) Sozlamalar ekranida "Chek printeri" kartasi; `windowsPrintingProvider`, `systemPrintersProvider` (testlarda almashtiriladi); tarjimalar printer*/pos* (25 ta).
 
 ## Keyingi aniq harakat
-- 4-qadam: Sozlamalar ekrani (`apps/pos/lib/features/settings/settings_screen.dart`) ga "Printer" bo'limi: `features/printing/printer_settings_page.dart` — ulanish (yo'q/tarmoq/Windows), manzil yoki printer ro'yxati (`Winspool.printers()`), kenglik 58/80, kodlash, avtomatik, nusxa 1–3, pul qutisi; tugmalar "Test chek", "Pul qutisini ochish"; tarjimalar.
+- 5-qadam: `features/pos/pos_screen.dart` `_pay()`: natijadan keyin `settings.autoPrint` bo'lsa `printerServiceProvider.printSale(result.sale.id)` (await qilmasdan, savdo xabari darhol); xato → toast `posReceiptFailed` + amal `posReprint` (`printSale(id, copy: true)`). Qidiruv qatoridagi "Smena" yonida "Oxirgi chek" (`reprintLast`) tugmasi; telefonda — chek tablari qatorida ikon.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
