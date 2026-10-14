@@ -226,5 +226,6 @@
   "printerNotConfigured": "Аввал принтерни созланг",
   "posReceiptFailed": "Чек чиқмади",
   "posReprint": "Қайта чоп этиш",
-  "posLastReceipt": "Охирги чек"
+  "posLastReceipt": "Охирги чек",
+  "posSaleDoneReceiptFailed": "{done}. Чек чиқмади"
 }

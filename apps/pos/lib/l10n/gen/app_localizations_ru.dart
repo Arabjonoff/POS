@@ -803,4 +803,9 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get posLastReceipt => 'Последний чек';
+
+  @override
+  String posSaleDoneReceiptFailed(String done) {
+    return '$done. Чек не напечатан';
+  }
 }

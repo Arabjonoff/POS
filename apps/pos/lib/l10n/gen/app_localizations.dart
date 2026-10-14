@@ -1460,6 +1460,12 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Oxirgi chek'**
   String get posLastReceipt;
+
+  /// Savdo yakunlandi, lekin chek chop etilmadi
+  ///
+  /// In uz, this message translates to:
+  /// **'{done}. Chek chiqmadi'**
+  String posSaleDoneReceiptFailed(String done);
 }
 
 class _AppLocalizationsDelegate

@@ -995,5 +995,14 @@
   "posLastReceipt": "Oxirgi chek",
   "@posLastReceipt": {
     "description": "Kassa: oxirgi chekni qayta chop etish tugmasi"
+  },
+  "posSaleDoneReceiptFailed": "{done}. Chek chiqmadi",
+  "@posSaleDoneReceiptFailed": {
+    "description": "Savdo yakunlandi, lekin chek chop etilmadi",
+    "placeholders": {
+      "done": {
+        "type": "String"
+      }
+    }
   }
 }

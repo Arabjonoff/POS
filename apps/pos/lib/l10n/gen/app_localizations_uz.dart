@@ -783,6 +783,11 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get posLastReceipt => 'Oxirgi chek';
+
+  @override
+  String posSaleDoneReceiptFailed(String done) {
+    return '$done. Chek chiqmadi';
+  }
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -1561,4 +1566,9 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get posLastReceipt => 'Охирги чек';
+
+  @override
+  String posSaleDoneReceiptFailed(String done) {
+    return '$done. Чек чиқмади';
+  }
 }

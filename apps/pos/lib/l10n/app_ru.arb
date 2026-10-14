@@ -226,5 +226,6 @@
   "printerNotConfigured": "Сначала настройте принтер",
   "posReceiptFailed": "Чек не напечатан",
   "posReprint": "Напечатать снова",
-  "posLastReceipt": "Последний чек"
+  "posLastReceipt": "Последний чек",
+  "posSaleDoneReceiptFailed": "{done}. Чек не напечатан"
 }

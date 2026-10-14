@@ -16,15 +16,15 @@
 - [x] 2. `escpos.dart`: ESC/POS kodlovchi (init, markaz, qalin, CP866 / UTF-8, kesish, pul qutisi impulsi) + testlar
 - [x] 3. Uzatish qatlami: `PrinterTransport` (tarmoq IP:9100 — dart:io Socket; Windows RAW — win32 winspool; soxta — test), `PrinterService` (savdo cheki, test chek, pul qutisi, oxirgi chek, holat) + testlar
 - [x] 4. Printer sozlamalari (`local_settings`: turi, manzil/printer nomi, kenglik, kodlash, avtomatik, nusxa, pul qutisi) + Sozlamalar ekranida "Printer" bo'limi (test chek) + tarjimalar
-- [ ] 5. Kassaga ulash: yakunlashda avtomatik chek (xato savdoni to'xtatmaydi → "Chek chiqmadi" + "Qayta chop etish"), "Oxirgi chek" tugmasi, holat qatorida haqiqiy printer holati
+- [x] 5. Kassaga ulash: yakunlashda avtomatik chek (xato savdoni to'xtatmaydi → "Chek chiqmadi" + "Qayta chop etish"), "Oxirgi chek" tugmasi, holat qatorida haqiqiy printer holati
 - [ ] 6. Widget testlari + golden + skrinshotlar `docs/screenshots/T-044/`
 - [ ] 7. Qaror `docs/decisions/` (Android Bluetooth/USB — alohida vazifa), spec, PR, CI → merge; ROADMAP, PROGRESS, STATE
 
 ## Oxirgi bajarilgan ish
-- 4-qadam: `features/printing/printer_settings_panel.dart` (`PrinterSettingsPanel`) Sozlamalar ekranida "Chek printeri" kartasi; `windowsPrintingProvider`, `systemPrintersProvider` (testlarda almashtiriladi); tarjimalar printer*/pos* (25 ta).
+- 5-qadam: `pos_screen.dart`: yakunlashdan keyin fonda `_printReceipt` (autoPrint), xato → toast "<savdo xabari>. Chek chiqmadi" + "Qayta chop etish"; qidiruv qatorida "Oxirgi chek" (`pos-last-receipt`, printer sozlangan bo'lsa).
 
 ## Keyingi aniq harakat
-- 5-qadam: `features/pos/pos_screen.dart` `_pay()`: natijadan keyin `settings.autoPrint` bo'lsa `printerServiceProvider.printSale(result.sale.id)` (await qilmasdan, savdo xabari darhol); xato → toast `posReceiptFailed` + amal `posReprint` (`printSale(id, copy: true)`). Qidiruv qatoridagi "Smena" yonida "Oxirgi chek" (`reprintLast`) tugmasi; telefonda — chek tablari qatorida ikon.
+- 6-qadam: widget testlari `apps/pos/test/features/printing_test.dart`: `printerTransportFactoryProvider` ni soxta transport bilan almashtirib — savdo → chek yuborildi; printer o'chiq → savdo yozilgan + "Chek chiqmadi" + qayta chop etish; autoPrint o'chiq → chek yo'q; "Oxirgi chek"; Sozlamalar: tarmoq manzili saqlanadi, test chek. Golden: sozlamalar printer kartasi (3 o'lcham).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
