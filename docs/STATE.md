@@ -5,20 +5,22 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-031 Tarjimalar va formatlash
+- Branch: feat/T-031-i18n-format
+- Boshlangan: 2026-10-14
 - Oxirgi yangilanish: 2026-10-14
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-
-## Oxirgi bajarilgan ish
-T-030 Dizayn tizimi tugadi (PR ochildi, CI yashil bo'lsa squash merge).
+- [x] 1. ARB: valyuta, birliklar, navigatsiya, umumiy amallar, holat qatori (ko'plik bilan) — 3 til
+- [x] 2. AppFormat (money/qty/date/time), UnitCode, StoreTimeZone (qaror 0007)
+- [x] 3. Til tanlash: saqlash (LocalSettings), main'da oldindan o'qish, LanguagePicker
+- [x] 4. Testlar: formatlash, ARB mosligi, qattiq matn yo'qligi, locale saqlash/tiklash
+- [ ] 5. To'liq tekshiruv, PR, merge, ROADMAP/PROGRESS
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-T-030 PR merge qilinganini tekshirish (`gh pr list --state open`); keyin ROADMAP'dan T-031 Tarjimalar va formatlash — `docs/specs/i18n.md`, `apps/pos/lib/l10n/`.
+Qadam 5: make pos-analyze pos-test, PR ochish (feat(pos): T-031 ...), CI yashil bo'lsa merge; keyin T-032 Lokal baza (Drift) — docs/specs/data-model.md, sync.md.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q

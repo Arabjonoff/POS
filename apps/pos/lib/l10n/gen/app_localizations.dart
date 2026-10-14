@@ -122,6 +122,234 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'O\'zbekcha'**
   String get languageName;
+
+  /// Valyuta nomi summadan keyin: 125 000 so'm
+  ///
+  /// In uz, this message translates to:
+  /// **'so\'m'**
+  String get currencySom;
+
+  /// Birlik: dona (pcs)
+  ///
+  /// In uz, this message translates to:
+  /// **'dona'**
+  String get unitPcs;
+
+  /// Birlik: kilogramm
+  ///
+  /// In uz, this message translates to:
+  /// **'kg'**
+  String get unitKg;
+
+  /// Birlik: gramm
+  ///
+  /// In uz, this message translates to:
+  /// **'g'**
+  String get unitG;
+
+  /// Birlik: litr
+  ///
+  /// In uz, this message translates to:
+  /// **'l'**
+  String get unitL;
+
+  /// Birlik: metr
+  ///
+  /// In uz, this message translates to:
+  /// **'m'**
+  String get unitM;
+
+  /// Birlik: qadoq (pack)
+  ///
+  /// In uz, this message translates to:
+  /// **'qadoq'**
+  String get unitPack;
+
+  /// Navigatsiya: kassa bo'limi
+  ///
+  /// In uz, this message translates to:
+  /// **'Kassa'**
+  String get navPos;
+
+  /// Navigatsiya: tovarlar bo'limi
+  ///
+  /// In uz, this message translates to:
+  /// **'Tovarlar'**
+  String get navProducts;
+
+  /// Navigatsiya: tovar qabul qilish (kirim)
+  ///
+  /// In uz, this message translates to:
+  /// **'Kirim'**
+  String get navReceiving;
+
+  /// Navigatsiya: mijozlar va nasiya
+  ///
+  /// In uz, this message translates to:
+  /// **'Mijozlar'**
+  String get navCustomers;
+
+  /// Navigatsiya: hisobotlar
+  ///
+  /// In uz, this message translates to:
+  /// **'Hisobotlar'**
+  String get navReports;
+
+  /// Navigatsiya: sozlamalar
+  ///
+  /// In uz, this message translates to:
+  /// **'Sozlamalar'**
+  String get navSettings;
+
+  /// Tugma: saqlash
+  ///
+  /// In uz, this message translates to:
+  /// **'Saqlash'**
+  String get actionSave;
+
+  /// Tugma: oynani/amalni bekor qilish
+  ///
+  /// In uz, this message translates to:
+  /// **'Bekor qilish'**
+  String get actionCancel;
+
+  /// Toast tugmasi: oxirgi amalni qaytarish (undo)
+  ///
+  /// In uz, this message translates to:
+  /// **'Bekor qilish'**
+  String get actionUndo;
+
+  /// Tugma: yopish
+  ///
+  /// In uz, this message translates to:
+  /// **'Yopish'**
+  String get actionClose;
+
+  /// Tugma: o'chirish
+  ///
+  /// In uz, this message translates to:
+  /// **'O\'chirish'**
+  String get actionDelete;
+
+  /// Tugma: qayta urinish
+  ///
+  /// In uz, this message translates to:
+  /// **'Qayta urinish'**
+  String get actionRetry;
+
+  /// Tasdiq: ha
+  ///
+  /// In uz, this message translates to:
+  /// **'Ha'**
+  String get actionYes;
+
+  /// Tasdiq: yo'q
+  ///
+  /// In uz, this message translates to:
+  /// **'Yo\'q'**
+  String get actionNo;
+
+  /// Qidiruv maydonini tozalash
+  ///
+  /// In uz, this message translates to:
+  /// **'Tozalash'**
+  String get actionClear;
+
+  /// Raqamli klaviaturada o'chirish tugmasi nomi
+  ///
+  /// In uz, this message translates to:
+  /// **'Oxirgi raqamni o\'chirish'**
+  String get actionBackspace;
+
+  /// Miqdorni bittaga oshirish
+  ///
+  /// In uz, this message translates to:
+  /// **'Ko\'paytirish'**
+  String get actionIncrease;
+
+  /// Miqdorni bittaga kamaytirish
+  ///
+  /// In uz, this message translates to:
+  /// **'Kamaytirish'**
+  String get actionDecrease;
+
+  /// Kassa: to'lov oynasini ochish
+  ///
+  /// In uz, this message translates to:
+  /// **'To\'lash'**
+  String get actionPay;
+
+  /// Tovar qidiruv maydoni ichidagi izoh
+  ///
+  /// In uz, this message translates to:
+  /// **'Shtrix-kod yoki tovar nomi'**
+  String get searchProductsHint;
+
+  /// Chek jami summasi yorlig'i
+  ///
+  /// In uz, this message translates to:
+  /// **'Jami'**
+  String get totalLabel;
+
+  /// Xaridorga qaytariladigan pul
+  ///
+  /// In uz, this message translates to:
+  /// **'Qaytim'**
+  String get changeLabel;
+
+  /// Holat qatori: internet bor
+  ///
+  /// In uz, this message translates to:
+  /// **'Internet bor'**
+  String get statusOnline;
+
+  /// Holat qatori: internet yo'q
+  ///
+  /// In uz, this message translates to:
+  /// **'Internet yo\'q'**
+  String get statusOffline;
+
+  /// Holat qatori: serverga yuborilmagan yozuvlar soni
+  ///
+  /// In uz, this message translates to:
+  /// **'{count, plural, =0{Hammasi yuborilgan} other{{count} ta yozuv navbatda}}'**
+  String statusQueued(int count);
+
+  /// Internet yo'qligida tushuntirish: savdolar lokal saqlanmoqda
+  ///
+  /// In uz, this message translates to:
+  /// **'Internet yo\'q — savdolar saqlanyapti ({count})'**
+  String statusOfflineSaving(int count);
+
+  /// Holat qatori: printer ishlayapti
+  ///
+  /// In uz, this message translates to:
+  /// **'Printer ulangan'**
+  String get statusPrinterReady;
+
+  /// Holat qatori: printer topilmadi
+  ///
+  /// In uz, this message translates to:
+  /// **'Printer ulanmagan'**
+  String get statusPrinterMissing;
+
+  /// Holat qatori: smena ochiq
+  ///
+  /// In uz, this message translates to:
+  /// **'Smena ochiq'**
+  String get statusShiftOpen;
+
+  /// Holat qatori: smena yopiq
+  ///
+  /// In uz, this message translates to:
+  /// **'Smena yopiq'**
+  String get statusShiftClosed;
+
+  /// Sozlamalar: ilova tili
+  ///
+  /// In uz, this message translates to:
+  /// **'Til'**
+  String get settingsLanguage;
 }
 
 class _AppLocalizationsDelegate
