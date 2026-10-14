@@ -89,3 +89,9 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-016 (squash merge)
 - Qoldi / keyingi qadam: T-017 Savdo, smena, qaytarish (qarzga savdo `record_sale_debt` ni chaqiradi; naqd qarz to'lovini smenaga bog'lash — T-017).
 - Muammo yoki qaror: Q-003 — qarzdan ko'p to'lov vaqtincha rad etiladi (A), javob kutilmoqda. Limitdan oshgan qarzga savdo serverda rad etilmaydi (kassada menejer ruxsati).
+
+## 2026-10-14 — T-017 Savdo, smena, qaytarish
+- Qilindi: `apps/sales` — `Shift` (qurilmada bitta ochiq — DB constraint; yopishda `expected_cash` saqlanadi), `Sale` (o'zgarmas, faqat `status` qaytarishda), `SaleItem`, `SalePayment`, `Refund`, `RefundItem`, `CashMovement` (AppendOnly; summalar DB constraint bilan). Servislar (`apps/sales/services/`, T-018 sinxron chaqiradi): `open_shift`, `close_shift`, `record_cash_movement`, `shift_report` (X/Z), `record_sale` (qator/summa/to'lov tekshiruvi, `StockMovement(sale, −)`, nasiya → `DebtEntry`), `record_refund` (qoldiq miqdor, proporsional summa, oxirgi qismda yaxlitlash qoldig'i, chek chegirmasi ulushi, nasiyadan ayirish cheklovi, `StockMovement(refund, +)`, `Sale.status`). Bog'liq obyekt yo'q → `MissingDependency` (sinxronda `pending`). `DebtEntry.shift` (naqd qarz to'lovi kutilgan naqdga kiradi). REST faqat o'qish: `/shifts/` (+`report`), `/sales/` (sana filtri do'kon vaqt zonasida), `/refunds/`, `/cash-movements/`; kassir faqat o'zinikini ko'radi. `ENUM_NAME_OVERRIDES` (method/status). Spec `sales-api.md` (sinxron payload shartnomasi). 505 test yashil (+80).
+- PR: T-017 (squash merge)
+- Qoldi / keyingi qadam: T-018 Sinxronlash API (`sync/push` hodisalarni shu servislarga yo'naltiradi, `MissingDependency` → pending; `sync/pull` ChangeLog).
+- Muammo yoki qaror: limitdan oshgan nasiya va manfiy qoldiq savdoni rad etmaydi (oflayn-birinchi). Qaytarish tasdig'i kassada; server `approved_by` ega/menejer ekanini tekshiradi, lekin talab qilmaydi.

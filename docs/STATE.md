@@ -5,28 +5,20 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-017 Savdo, smena, qaytarish
-- Branch: feat/T-017-sales-shifts
-- Boshlangan: 2026-10-14
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-14
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [x] 1. Spec `docs/specs/sales-api.md` (smena, savdo, to'lov, qaytarish, pul harakati; tekshiruvlar; kutilayotgan naqd; REST faqat o'qish)
-- [x] 2. `apps/sales` modellari: Shift, Sale (+Item, +Payment), Refund (+Item), CashMovement; `DebtEntry.shift` (customers 0002); migratsiya; admin
-- [x] 3. `services/shifts.py`: open_shift, close_shift (expected_cash), record_cash_movement, shift_report (X/Z)
-- [x] 4. `services/sales.py`: record_sale — tekshiruv (summalar, to'lovlar, tenant), StockMovement(−), DebtEntry (nasiya)
-- [x] 5. `services/refunds.py`: record_refund — qoldiq miqdor, summa, StockMovement(+), qarz kamayishi, savdo holati
-- [x] 6. REST (faqat o'qish): `/shifts/` (+report), `/sales/`, `/refunds/`, `/cash-movements/`; kassir faqat o'zinikini ko'radi
-- [x] 7. Testlar: savdo → qoldiq va qarz, qaytarish → teskari harakat, summalar xatosi, smena hisob-kitobi, izolyatsiya, huquqlar
-- [ ] 8. openapi + schema.d.ts; lint/test; PROGRESS/ROADMAP; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-7-qadam: sales testlari (80 ta): savdo → qoldiq va qarz, qaytarish (qisman/to'liq, yaxlitlash qoldig'i, chek chegirmasi ulushi, nasiya), smena hisob-kitobi va X/Z, REST (kassir faqat o'zinikini, sana filtri), izolyatsiya. Jami 505 test yashil.
+T-017 Savdo, smena, qaytarish tugadi (PR ochildi, CI yashil bo'lsa squash merge).
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-8-qadam: push (internet bo'lsa), PROGRESS/ROADMAP, PR (T-017), CI, squash merge; STATE shablonga.
+T-017 PR merge qilinganini tekshirish (`gh pr list --state open`); keyin ROADMAP'dan T-018 Sinxronlash API.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q

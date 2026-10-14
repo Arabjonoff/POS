@@ -78,7 +78,7 @@ Spec'lar: `data-model.md`, `auth-roles.md`, `sync.md`, `subscription-billing.md`
 - **Qabul:** qarzga sotish va qisman to'lash balansni to'g'ri o'zgartiradi.
 - **Bog'liq:** T-011
 
-### [ ] T-017 Savdo, smena, qaytarish
+### [x] T-017 Savdo, smena, qaytarish
 - **Bajarish:** Shift, Sale, SaleItem, SalePayment, Refund, CashMovement. Savdolar faqat sinxron push orqali keladi (kassadan), REST faqat o'qish uchun.
 - **Qabul:** savdo yozilganda qoldiq harakati va (nasiya bo'lsa) qarz yozuvi yaratiladi; qaytarish teskari harakat yaratadi.
 - **Bog'liq:** T-015, T-016
