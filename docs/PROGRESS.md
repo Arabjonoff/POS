@@ -47,3 +47,9 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: #6 (squash merge)
 - Qoldi / keyingi qadam: T-010 Tenant va Store.
 - Muammo yoki qaror: CI'da `LayoutProps` topilmadi — lokal `.next/types` eski build'dan qolgan edi; `typecheck` endi `next typegen && tsc --noEmit`. Flutter Windows runner'da (golden'lar lokal Windows'da yaratiladi).
+
+## 2026-10-14 — T-010 Tenant va Store
+- Qilindi: `apps/tenants` — `Tenant` (name, owner_phone `+998XXXXXXXXX`, address, timezone, default_locale, notes, is_blocked, blocked_reason) va `Store` (TenantScopedModel); yangi tenantga bitta Store (post_save signal, `raw` da emas); Django admin (Tenant + Store inline). `apps/core/phone.py` — `normalize_phone`/`validate_phone`. Umumiy fixture'lar `make_tenant`, `tenant`, `other_tenant` (`backend/conftest.py`). TenantScopedViewSet Store bilan izolyatsiya testi (list/retrieve/update/create). 72 test yashil.
+- PR: T-010 (squash merge)
+- Qoldi / keyingi qadam: T-011 Foydalanuvchilar va autentifikatsiya (telefon normalizatsiyasi tayyor).
+- Muammo yoki qaror: Tenant `status` saqlanmaydi — Subscription (T-013) va `is_blocked` dan hisoblanadi; `data-model.md` shunga moslandi. Tenant o'chirilmaydi (Store PROTECT).

@@ -5,25 +5,22 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-010 Tenant va Store
-- Branch: feat/T-010-tenant-store
-- Boshlangan: 2026-10-14
-- Oxirgi yangilanish: 2026-10-14
+- Vazifa: — (masalan: T-042 Kassa ekrani — savat)
+- Branch: —
+- Boshlangan: —
+- Oxirgi yangilanish: —
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [x] 1. `apps/core/phone.py` — `normalize_phone` (+998XXXXXXXXX) + testlar
-- [x] 2. `apps/tenants`: Tenant (name, owner_phone, address, timezone, default_locale, notes, is_blocked, blocked_reason), Store (TenantScopedModel); migratsiya 0001
-- [x] 3. post_save signal: Tenant yaratilganda bitta Store; admin (TenantAdmin + StoreInline, StoreAdmin)
-- [x] 4. `conftest.py`: `make_tenant`, `tenant`, `other_tenant` fixture; model testlari; TenantScopedViewSet izolyatsiya testi Store bilan
-- [ ] 5. ruff, pytest, makemigrations --check, openapi; PR, CI, merge
+- [ ] 1. ...
+- [ ] 2. ...
 
 ## Oxirgi bajarilgan ish
-T-004 merge qilindi (#6). T-010 branch ochildi.
+—
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-1-qadam: `backend/apps/core/phone.py` va `backend/apps/core/tests/test_phone.py`.
+—
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
