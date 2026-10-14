@@ -7,10 +7,12 @@ from django.utils import timezone
 from apps.catalog.models import PriceHistory, Product
 from apps.core.exceptions import DomainError
 from apps.core.money import line_total
+from apps.tenants.models import Store, Tenant
 
 from .models import (
     DocumentStatus,
     InventoryCount,
+    InventoryCountItem,
     MovementType,
     ProductStock,
     StockMovement,
@@ -119,8 +121,53 @@ def rebuild_stock(tenant_id=None) -> int:
 
 
 def next_receipt_number(tenant_id) -> int:
+    """Tranzaksiya ichida chaqiriladi: tenant qatori qulflanadi, raqamlar takrorlanmaydi."""
+    Tenant.objects.select_for_update().filter(pk=tenant_id).first()
     last = StockReceipt.objects.filter(tenant_id=tenant_id).aggregate(n=Max("number"))["n"]
     return (last or 0) + 1
+
+
+def default_store(tenant_id) -> Store:
+    return Store.objects.filter(tenant_id=tenant_id).order_by("created_at").first()
+
+
+@transaction.atomic
+def create_receipt(*, tenant_id, user, data: dict) -> StockReceipt:
+    items = data.pop("items", [])
+    receipt = StockReceipt.objects.create(
+        tenant_id=tenant_id,
+        store=data.pop("store", None) or default_store(tenant_id),
+        number=next_receipt_number(tenant_id),
+        created_by=user,
+        **data,
+    )
+    replace_receipt_items(receipt, items)
+    return receipt
+
+
+@transaction.atomic
+def update_receipt(receipt: StockReceipt, data: dict) -> StockReceipt:
+    receipt = _lock(StockReceipt, receipt.pk)
+    _ensure_draft(receipt)
+    items = data.pop("items", None)
+    for field, value in data.items():
+        setattr(receipt, field, value)
+    receipt.save()
+    if items is not None:
+        replace_receipt_items(receipt, items)
+    return receipt
+
+
+@transaction.atomic
+def delete_receipt(receipt: StockReceipt) -> None:
+    receipt = _lock(StockReceipt, receipt.pk)
+    _ensure_draft(receipt)
+    receipt.delete()
+
+
+def _ensure_draft(receipt: StockReceipt) -> None:
+    if receipt.status != DocumentStatus.DRAFT:
+        raise DomainError("receipt_not_draft", "Receipt is already posted.", status_code=409)
 
 
 def replace_receipt_items(receipt: StockReceipt, items: list[dict]) -> None:
@@ -149,8 +196,7 @@ def _lock(model, pk):
 @transaction.atomic
 def post_receipt(receipt: StockReceipt, *, user) -> StockReceipt:
     receipt = _lock(StockReceipt, receipt.pk)
-    if receipt.status != DocumentStatus.DRAFT:
-        raise DomainError("receipt_not_draft", "Receipt is already posted.", status_code=409)
+    _ensure_draft(receipt)
     items = list(receipt.items.select_related("product"))
     if not items:
         raise DomainError("receipt_empty", "Receipt has no items.")
@@ -234,11 +280,61 @@ def reverse_receipt(receipt: StockReceipt, *, user, note: str = "") -> StockRece
 # --- Inventarizatsiya ---
 
 
+def _ensure_count_draft(count: InventoryCount) -> None:
+    if count.status != DocumentStatus.DRAFT:
+        raise DomainError("count_not_draft", "Inventory count is already posted.", 409)
+
+
+def replace_count_items(count: InventoryCount, items: list[dict]) -> None:
+    count.items.all().delete()
+    InventoryCountItem.objects.bulk_create(
+        InventoryCountItem(
+            tenant_id=count.tenant_id,
+            count=count,
+            product=item["product"],
+            counted_milli=item["counted_milli"],
+        )
+        for item in items
+    )
+
+
+@transaction.atomic
+def create_count(*, tenant_id, user, data: dict) -> InventoryCount:
+    items = data.pop("items", [])
+    count = InventoryCount.objects.create(
+        tenant_id=tenant_id,
+        store=data.pop("store", None) or default_store(tenant_id),
+        created_by=user,
+        **data,
+    )
+    replace_count_items(count, items)
+    return count
+
+
+@transaction.atomic
+def update_count(count: InventoryCount, data: dict) -> InventoryCount:
+    count = _lock(InventoryCount, count.pk)
+    _ensure_count_draft(count)
+    items = data.pop("items", None)
+    for field, value in data.items():
+        setattr(count, field, value)
+    count.save()
+    if items is not None:
+        replace_count_items(count, items)
+    return count
+
+
+@transaction.atomic
+def delete_count(count: InventoryCount) -> None:
+    count = _lock(InventoryCount, count.pk)
+    _ensure_count_draft(count)
+    count.delete()
+
+
 @transaction.atomic
 def post_inventory(count: InventoryCount, *, user) -> InventoryCount:
     count = _lock(InventoryCount, count.pk)
-    if count.status != DocumentStatus.DRAFT:
-        raise DomainError("count_not_draft", "Inventory count is already posted.", 409)
+    _ensure_count_draft(count)
     items = list(count.items.select_related("product"))
     if not items:
         raise DomainError("count_empty", "Inventory count has no items.")
