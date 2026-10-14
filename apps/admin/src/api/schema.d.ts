@@ -74,6 +74,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/cash-movements/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Faqat o'qish. Kassir faqat o'zinikini ko'radi (`own_field`). */
+        get: operations["cash_movements_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/cash-movements/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Faqat o'qish. Kassir faqat o'zinikini ko'radi (`own_field`). */
+        get: operations["cash_movements_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/categories/": {
         parameters: {
             query?: never;
@@ -378,6 +412,125 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/refunds/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Faqat o'qish. Kassir faqat o'zinikini ko'radi (`own_field`). */
+        get: operations["refunds_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/refunds/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Faqat o'qish. Kassir faqat o'zinikini ko'radi (`own_field`). */
+        get: operations["refunds_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/sales/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Faqat o'qish. Kassir faqat o'zinikini ko'radi (`own_field`). */
+        get: operations["sales_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/sales/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Faqat o'qish. Kassir faqat o'zinikini ko'radi (`own_field`). */
+        get: operations["sales_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/shifts/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Faqat o'qish. Kassir faqat o'zinikini ko'radi (`own_field`). */
+        get: operations["shifts_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/shifts/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Faqat o'qish. Kassir faqat o'zinikini ko'radi (`own_field`). */
+        get: operations["shifts_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/shifts/{id}/report/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Faqat o'qish. Kassir faqat o'zinikini ko'radi (`own_field`). */
+        get: operations["shifts_report_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/stock/": {
         parameters: {
             query?: never;
@@ -605,6 +758,53 @@ export interface components {
         };
         /** @enum {unknown} */
         BlankEnum: "";
+        ByCashCard: {
+            cash: number;
+            card: number;
+        };
+        ByCashCardDebt: {
+            cash: number;
+            card: number;
+            debt: number;
+        };
+        ByCashDebt: {
+            cash: number;
+            debt: number;
+        };
+        CashMovement: {
+            /** Format: uuid */
+            id?: string;
+            /**
+             * Smena
+             * Format: uuid
+             */
+            shift: string;
+            /** Turi */
+            type: components["schemas"]["CashMovementTypeEnum"];
+            /**
+             * Summa (tiyin)
+             * Format: int64
+             */
+            amount_tiyin: number;
+            /** Sabab */
+            reason?: string;
+            /**
+             * Kim
+             * Format: uuid
+             */
+            created_by: string;
+            /**
+             * Vaqt
+             * Format: date-time
+             */
+            at: string;
+        };
+        /**
+         * @description * `in` - kiritish
+         *     * `out` - chiqarish
+         * @enum {string}
+         */
+        CashMovementTypeEnum: "in" | "out";
         Category: {
             /** Format: uuid */
             readonly id: string;
@@ -836,6 +1036,21 @@ export interface components {
          * @enum {string}
          */
         MethodEnum: "cash" | "card";
+        PaginatedCashMovementList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["CashMovement"][];
+        };
         PaginatedCategoryList: {
             /** @example 123 */
             count: number;
@@ -925,6 +1140,51 @@ export interface components {
              */
             previous?: string | null;
             results: components["schemas"]["Product"][];
+        };
+        PaginatedRefundList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["Refund"][];
+        };
+        PaginatedSaleList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["Sale"][];
+        };
+        PaginatedShiftList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["Shift"][];
         };
         PaginatedStockList: {
             /** @example 123 */
@@ -1172,6 +1432,75 @@ export interface components {
             is_active?: boolean;
             barcodes?: string[];
         };
+        Refund: {
+            /** Format: uuid */
+            id?: string;
+            /**
+             * Savdo
+             * Format: uuid
+             */
+            sale: string;
+            /**
+             * Smena
+             * Format: uuid
+             */
+            shift: string;
+            /**
+             * Qurilma
+             * Format: uuid
+             */
+            device: string;
+            /**
+             * Kassir
+             * Format: uuid
+             */
+            cashier: string;
+            /**
+             * Tasdiqlagan
+             * Format: uuid
+             */
+            approved_by?: string | null;
+            /** Sabab */
+            reason?: string;
+            /** Usul */
+            method: components["schemas"]["RefundMethodEnum"];
+            /**
+             * Jami (tiyin)
+             * Format: int64
+             */
+            total_tiyin: number;
+            /**
+             * Vaqt
+             * Format: date-time
+             */
+            at: string;
+            readonly items: components["schemas"]["RefundItem"][];
+        };
+        RefundItem: {
+            /** Format: uuid */
+            id?: string;
+            /**
+             * Qator
+             * Format: uuid
+             */
+            sale_item: string;
+            /**
+             * Miqdor (milli)
+             * Format: int64
+             */
+            qty_milli: number;
+            /**
+             * Jami (tiyin)
+             * Format: int64
+             */
+            total_tiyin: number;
+        };
+        /**
+         * @description * `cash` - naqd
+         *     * `debt` - nasiyadan ayirish
+         * @enum {string}
+         */
+        RefundMethodEnum: "cash" | "debt";
         ReverseReceiptRequest: {
             /** @default  */
             note: string;
@@ -1184,12 +1513,212 @@ export interface components {
          * @enum {string}
          */
         RoleEnum: "platform_admin" | "owner" | "manager" | "cashier";
+        Sale: {
+            /** Format: uuid */
+            id?: string;
+            /** Raqam */
+            number: string;
+            /**
+             * Do'kon
+             * Format: uuid
+             */
+            store: string;
+            /**
+             * Smena
+             * Format: uuid
+             */
+            shift: string;
+            /**
+             * Qurilma
+             * Format: uuid
+             */
+            device: string;
+            /**
+             * Kassir
+             * Format: uuid
+             */
+            cashier: string;
+            /**
+             * Tasdiqlagan
+             * Format: uuid
+             */
+            approved_by?: string | null;
+            /**
+             * Mijoz
+             * Format: uuid
+             */
+            customer?: string | null;
+            /**
+             * Oraliq jami (tiyin)
+             * Format: int64
+             */
+            subtotal_tiyin: number;
+            /**
+             * Chek chegirmasi (tiyin)
+             * Format: int64
+             */
+            discount_tiyin?: number;
+            /**
+             * Jami (tiyin)
+             * Format: int64
+             */
+            total_tiyin: number;
+            /** Holat */
+            status?: components["schemas"]["SaleStatusEnum"];
+            /**
+             * Sotilgan vaqt
+             * Format: date-time
+             */
+            sold_at: string;
+            readonly items: components["schemas"]["SaleItem"][];
+            readonly payments: components["schemas"]["SalePayment"][];
+        };
+        SaleItem: {
+            /** Format: uuid */
+            id?: string;
+            /**
+             * Tovar
+             * Format: uuid
+             */
+            product: string;
+            /** Nomi (savdo paytida) */
+            name_snapshot: string;
+            /** Shtrix-kod (savdo paytida) */
+            barcode_snapshot?: string;
+            /**
+             * Miqdor (milli)
+             * Format: int64
+             */
+            qty_milli: number;
+            /**
+             * Narx (tiyin)
+             * Format: int64
+             */
+            price_tiyin: number;
+            /**
+             * Tannarx (tiyin)
+             * Format: int64
+             */
+            cost_tiyin: number;
+            /**
+             * Chegirma (tiyin)
+             * Format: int64
+             */
+            discount_tiyin?: number;
+            /**
+             * Jami (tiyin)
+             * Format: int64
+             */
+            total_tiyin: number;
+        };
+        SalePayment: {
+            /** Format: uuid */
+            id?: string;
+            /** Usul */
+            method: components["schemas"]["SalePaymentMethodEnum"];
+            /**
+             * Summa (tiyin)
+             * Format: int64
+             */
+            amount_tiyin: number;
+            /**
+             * Olingan (tiyin)
+             * Format: int64
+             */
+            received_tiyin?: number | null;
+            /**
+             * Qaytim (tiyin)
+             * Format: int64
+             */
+            change_tiyin?: number;
+        };
+        /**
+         * @description * `cash` - naqd
+         *     * `card` - karta
+         *     * `debt` - nasiya
+         * @enum {string}
+         */
+        SalePaymentMethodEnum: "cash" | "card" | "debt";
+        /**
+         * @description * `completed` - yakunlangan
+         *     * `partially_refunded` - qisman qaytarilgan
+         *     * `refunded` - qaytarilgan
+         * @enum {string}
+         */
+        SaleStatusEnum: "completed" | "partially_refunded" | "refunded";
         /**
          * @description * `all` - hammasi
          *     * `category` - kategoriya
          * @enum {string}
          */
         ScopeEnum: "all" | "category";
+        Shift: {
+            /** Format: uuid */
+            id?: string;
+            /**
+             * Do'kon
+             * Format: uuid
+             */
+            store: string;
+            /**
+             * Qurilma
+             * Format: uuid
+             */
+            device: string;
+            /**
+             * Ochgan
+             * Format: uuid
+             */
+            opened_by: string;
+            /**
+             * Ochilgan vaqt
+             * Format: date-time
+             */
+            opened_at: string;
+            /**
+             * Boshlang'ich naqd (tiyin)
+             * Format: int64
+             */
+            opening_cash_tiyin: number;
+            /**
+             * Yopgan
+             * Format: uuid
+             */
+            closed_by?: string | null;
+            /**
+             * Yopilgan vaqt
+             * Format: date-time
+             */
+            closed_at?: string | null;
+            /**
+             * Sanalgan naqd (tiyin)
+             * Format: int64
+             */
+            counted_cash_tiyin?: number | null;
+            /**
+             * Kutilgan naqd (tiyin)
+             * Format: int64
+             */
+            expected_cash_tiyin?: number | null;
+            readonly is_open: boolean;
+        };
+        ShiftReport: {
+            /** Format: uuid */
+            shift: string;
+            is_open: boolean;
+            opening_cash_tiyin: number;
+            sales_count: number;
+            sales_total_tiyin: number;
+            payments_tiyin: components["schemas"]["ByCashCardDebt"];
+            refunds_count: number;
+            refunds_tiyin: components["schemas"]["ByCashDebt"];
+            cash_in_tiyin: number;
+            cash_out_tiyin: number;
+            debt_payments_tiyin: components["schemas"]["ByCashCard"];
+            expected_cash_tiyin: number;
+            counted_cash_tiyin: number | null;
+            difference_tiyin: number | null;
+        };
         /**
          * @description * `draft` - qoralama
          *     * `posted` - tasdiqlangan
@@ -1487,6 +2016,53 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["TokenRefresh"];
+                };
+            };
+        };
+    };
+    cash_movements_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                shift?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedCashMovementList"];
+                };
+            };
+        };
+    };
+    cash_movements_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this kassa puli harakati. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CashMovement"];
                 };
             };
         };
@@ -2286,6 +2862,177 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Product"];
+                };
+            };
+        };
+    };
+    refunds_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                sale?: string;
+                shift?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedRefundList"];
+                };
+            };
+        };
+    };
+    refunds_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this qaytarish. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Refund"];
+                };
+            };
+        };
+    };
+    sales_list: {
+        parameters: {
+            query?: {
+                customer?: string;
+                /** @description Do'kon vaqt zonasida */
+                date_from?: string;
+                /** @description Shu kun ham kiradi */
+                date_to?: string;
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                shift?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedSaleList"];
+                };
+            };
+        };
+    };
+    sales_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this savdo. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Sale"];
+                };
+            };
+        };
+    };
+    shifts_list: {
+        parameters: {
+            query?: {
+                device?: string;
+                /** @description Faqat ochiq smenalar */
+                open?: boolean;
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedShiftList"];
+                };
+            };
+        };
+    };
+    shifts_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this smena. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Shift"];
+                };
+            };
+        };
+    };
+    shifts_report_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this smena. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ShiftReport"];
                 };
             };
         };

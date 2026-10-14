@@ -68,6 +68,15 @@ class DebtEntry(AppendOnlyModel, TenantScopedModel):
     )
     # Savdo T-017 da; sinxronda savdo keyinroq kelishi mumkin, shuning uchun FK emas.
     sale_id = models.UUIDField(_("savdo id"), null=True, blank=True, db_index=True)
+    # Kassada qabul qilingan to'lov qaysi smenada — naqd bo'lsa kutilgan naqdga qo'shiladi.
+    shift = models.ForeignKey(
+        "sales.Shift",
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="debt_entries",
+        verbose_name=_("smena"),
+    )
     note = models.TextField(_("izoh"), blank=True)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,

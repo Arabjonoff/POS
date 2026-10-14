@@ -43,7 +43,9 @@ def _create(customer, **fields) -> DebtEntry:
 
 
 @transaction.atomic
-def record_sale_debt(customer, *, amount_tiyin: int, sale_id, user=None, at=None, id=None):
+def record_sale_debt(
+    customer, *, amount_tiyin: int, sale_id, user=None, at=None, id=None, shift=None
+):
     """Qarzga savdo (T-017). Limit bu yerda tekshirilmaydi — savdo allaqachon bo'lgan."""
     _positive(amount_tiyin)
     customer = _lock(customer)
@@ -53,13 +55,16 @@ def record_sale_debt(customer, *, amount_tiyin: int, sale_id, user=None, at=None
         amount_tiyin=amount_tiyin,
         type=DebtType.SALE,
         sale_id=sale_id,
+        shift=shift,
         created_by=user,
         at=at,
     )
 
 
 @transaction.atomic
-def record_refund_debt(customer, *, amount_tiyin: int, sale_id, user=None, at=None, id=None):
+def record_refund_debt(
+    customer, *, amount_tiyin: int, sale_id, user=None, at=None, id=None, shift=None
+):
     """Qarzga sotilgan savdo qaytarildi (T-017): qarz kamayadi."""
     _positive(amount_tiyin)
     customer = _lock(customer)
@@ -69,6 +74,7 @@ def record_refund_debt(customer, *, amount_tiyin: int, sale_id, user=None, at=No
         amount_tiyin=-amount_tiyin,
         type=DebtType.REFUND,
         sale_id=sale_id,
+        shift=shift,
         created_by=user,
         at=at,
     )
@@ -84,6 +90,7 @@ def pay_debt(
     note: str = "",
     at=None,
     id=None,
+    shift=None,
     enforce_balance: bool = True,
 ) -> DebtEntry:
     """To'lov. `enforce_balance=False` — oflayn kassadan kelgan to'lov (rad etilmaydi)."""
@@ -105,6 +112,7 @@ def pay_debt(
         amount_tiyin=-amount_tiyin,
         type=DebtType.PAYMENT,
         method=method,
+        shift=shift,
         note=note,
         created_by=user,
         at=at,

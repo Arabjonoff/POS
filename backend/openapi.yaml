@@ -87,6 +87,62 @@ paths:
               schema:
                 $ref: '#/components/schemas/TokenRefresh'
           description: ''
+  /api/v1/cash-movements/:
+    get:
+      operationId: cash_movements_list
+      description: Faqat o'qish. Kassir faqat o'zinikini ko'radi (`own_field`).
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: shift
+        schema:
+          type: string
+          format: uuid
+      tags:
+      - sales
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCashMovementList'
+          description: ''
+  /api/v1/cash-movements/{id}/:
+    get:
+      operationId: cash_movements_retrieve
+      description: Faqat o'qish. Kassir faqat o'zinikini ko'radi (`own_field`).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this kassa puli harakati.
+        required: true
+      tags:
+      - sales
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CashMovement'
+          description: ''
   /api/v1/categories/:
     get:
       operationId: categories_list
@@ -995,6 +1051,224 @@ paths:
               schema:
                 $ref: '#/components/schemas/Product'
           description: ''
+  /api/v1/refunds/:
+    get:
+      operationId: refunds_list
+      description: Faqat o'qish. Kassir faqat o'zinikini ko'radi (`own_field`).
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: sale
+        schema:
+          type: string
+          format: uuid
+      - in: query
+        name: shift
+        schema:
+          type: string
+          format: uuid
+      tags:
+      - sales
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRefundList'
+          description: ''
+  /api/v1/refunds/{id}/:
+    get:
+      operationId: refunds_retrieve
+      description: Faqat o'qish. Kassir faqat o'zinikini ko'radi (`own_field`).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this qaytarish.
+        required: true
+      tags:
+      - sales
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refund'
+          description: ''
+  /api/v1/sales/:
+    get:
+      operationId: sales_list
+      description: Faqat o'qish. Kassir faqat o'zinikini ko'radi (`own_field`).
+      parameters:
+      - in: query
+        name: customer
+        schema:
+          type: string
+          format: uuid
+      - in: query
+        name: date_from
+        schema:
+          type: string
+          format: date
+        description: Do'kon vaqt zonasida
+      - in: query
+        name: date_to
+        schema:
+          type: string
+          format: date
+        description: Shu kun ham kiradi
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: shift
+        schema:
+          type: string
+          format: uuid
+      tags:
+      - sales
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedSaleList'
+          description: ''
+  /api/v1/sales/{id}/:
+    get:
+      operationId: sales_retrieve
+      description: Faqat o'qish. Kassir faqat o'zinikini ko'radi (`own_field`).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this savdo.
+        required: true
+      tags:
+      - sales
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sale'
+          description: ''
+  /api/v1/shifts/:
+    get:
+      operationId: shifts_list
+      description: Faqat o'qish. Kassir faqat o'zinikini ko'radi (`own_field`).
+      parameters:
+      - in: query
+        name: device
+        schema:
+          type: string
+          format: uuid
+      - in: query
+        name: open
+        schema:
+          type: boolean
+        description: Faqat ochiq smenalar
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - sales
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedShiftList'
+          description: ''
+  /api/v1/shifts/{id}/:
+    get:
+      operationId: shifts_retrieve
+      description: Faqat o'qish. Kassir faqat o'zinikini ko'radi (`own_field`).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this smena.
+        required: true
+      tags:
+      - sales
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shift'
+          description: ''
+  /api/v1/shifts/{id}/report/:
+    get:
+      operationId: shifts_report_retrieve
+      description: Faqat o'qish. Kassir faqat o'zinikini ko'radi (`own_field`).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this smena.
+        required: true
+      tags:
+      - sales
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShiftReport'
+          description: ''
   /api/v1/stock/:
     get:
       operationId: stock_list
@@ -1688,6 +1962,84 @@ components:
     BlankEnum:
       enum:
       - ''
+    ByCashCard:
+      type: object
+      properties:
+        cash:
+          type: integer
+        card:
+          type: integer
+      required:
+      - card
+      - cash
+    ByCashCardDebt:
+      type: object
+      properties:
+        cash:
+          type: integer
+        card:
+          type: integer
+        debt:
+          type: integer
+      required:
+      - card
+      - cash
+      - debt
+    ByCashDebt:
+      type: object
+      properties:
+        cash:
+          type: integer
+        debt:
+          type: integer
+      required:
+      - cash
+      - debt
+    CashMovement:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        shift:
+          type: string
+          format: uuid
+          title: Smena
+        type:
+          allOf:
+          - $ref: '#/components/schemas/CashMovementTypeEnum'
+          title: Turi
+        amount_tiyin:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          title: Summa (tiyin)
+        reason:
+          type: string
+          title: Sabab
+        created_by:
+          type: string
+          format: uuid
+          title: Kim
+        at:
+          type: string
+          format: date-time
+          title: Vaqt
+      required:
+      - amount_tiyin
+      - at
+      - created_by
+      - shift
+      - type
+    CashMovementTypeEnum:
+      enum:
+      - in
+      - out
+      type: string
+      description: |-
+        * `in` - kiritish
+        * `out` - chiqarish
     Category:
       type: object
       properties:
@@ -2161,6 +2513,29 @@ components:
       description: |-
         * `cash` - naqd
         * `card` - karta
+    PaginatedCashMovementList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/CashMovement'
     PaginatedCategoryList:
       type: object
       required:
@@ -2299,6 +2674,75 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Product'
+    PaginatedRefundList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Refund'
+    PaginatedSaleList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sale'
+    PaginatedShiftList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Shift'
     PaginatedStockList:
       type: object
       required:
@@ -2782,6 +3226,98 @@ components:
       - name
       - sell_price_tiyin
       - unit
+    Refund:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        sale:
+          type: string
+          format: uuid
+          title: Savdo
+        shift:
+          type: string
+          format: uuid
+          title: Smena
+        device:
+          type: string
+          format: uuid
+          title: Qurilma
+        cashier:
+          type: string
+          format: uuid
+          title: Kassir
+        approved_by:
+          type: string
+          format: uuid
+          nullable: true
+          title: Tasdiqlagan
+        reason:
+          type: string
+          title: Sabab
+        method:
+          allOf:
+          - $ref: '#/components/schemas/RefundMethodEnum'
+          title: Usul
+        total_tiyin:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          title: Jami (tiyin)
+        at:
+          type: string
+          format: date-time
+          title: Vaqt
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/RefundItem'
+          readOnly: true
+      required:
+      - at
+      - cashier
+      - device
+      - items
+      - method
+      - sale
+      - shift
+      - total_tiyin
+    RefundItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        sale_item:
+          type: string
+          format: uuid
+          title: Qator
+        qty_milli:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          title: Miqdor (milli)
+        total_tiyin:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          title: Jami (tiyin)
+      required:
+      - qty_milli
+      - sale_item
+      - total_tiyin
+    RefundMethodEnum:
+      enum:
+      - cash
+      - debt
+      type: string
+      description: |-
+        * `cash` - naqd
+        * `debt` - nasiyadan ayirish
     ReverseReceiptRequest:
       type: object
       properties:
@@ -2800,6 +3336,196 @@ components:
         * `owner` - ega
         * `manager` - menejer
         * `cashier` - kassir
+    Sale:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        number:
+          type: string
+          title: Raqam
+          maxLength: 32
+        store:
+          type: string
+          format: uuid
+          title: Do'kon
+        shift:
+          type: string
+          format: uuid
+          title: Smena
+        device:
+          type: string
+          format: uuid
+          title: Qurilma
+        cashier:
+          type: string
+          format: uuid
+          title: Kassir
+        approved_by:
+          type: string
+          format: uuid
+          nullable: true
+          title: Tasdiqlagan
+        customer:
+          type: string
+          format: uuid
+          nullable: true
+          title: Mijoz
+        subtotal_tiyin:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          title: Oraliq jami (tiyin)
+        discount_tiyin:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          title: Chek chegirmasi (tiyin)
+        total_tiyin:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          title: Jami (tiyin)
+        status:
+          allOf:
+          - $ref: '#/components/schemas/SaleStatusEnum'
+          title: Holat
+        sold_at:
+          type: string
+          format: date-time
+          title: Sotilgan vaqt
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SaleItem'
+          readOnly: true
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/SalePayment'
+          readOnly: true
+      required:
+      - cashier
+      - device
+      - items
+      - number
+      - payments
+      - shift
+      - sold_at
+      - store
+      - subtotal_tiyin
+      - total_tiyin
+    SaleItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        product:
+          type: string
+          format: uuid
+          title: Tovar
+        name_snapshot:
+          type: string
+          title: Nomi (savdo paytida)
+          maxLength: 200
+        barcode_snapshot:
+          type: string
+          title: Shtrix-kod (savdo paytida)
+          maxLength: 32
+        qty_milli:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          title: Miqdor (milli)
+        price_tiyin:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          title: Narx (tiyin)
+        cost_tiyin:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          title: Tannarx (tiyin)
+        discount_tiyin:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          title: Chegirma (tiyin)
+        total_tiyin:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          title: Jami (tiyin)
+      required:
+      - cost_tiyin
+      - name_snapshot
+      - price_tiyin
+      - product
+      - qty_milli
+      - total_tiyin
+    SalePayment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        method:
+          allOf:
+          - $ref: '#/components/schemas/SalePaymentMethodEnum'
+          title: Usul
+        amount_tiyin:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          title: Summa (tiyin)
+        received_tiyin:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          nullable: true
+          title: Olingan (tiyin)
+        change_tiyin:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          title: Qaytim (tiyin)
+      required:
+      - amount_tiyin
+      - method
+    SalePaymentMethodEnum:
+      enum:
+      - cash
+      - card
+      - debt
+      type: string
+      description: |-
+        * `cash` - naqd
+        * `card` - karta
+        * `debt` - nasiya
+    SaleStatusEnum:
+      enum:
+      - completed
+      - partially_refunded
+      - refunded
+      type: string
+      description: |-
+        * `completed` - yakunlangan
+        * `partially_refunded` - qisman qaytarilgan
+        * `refunded` - qaytarilgan
     ScopeEnum:
       enum:
       - all
@@ -2808,6 +3534,117 @@ components:
       description: |-
         * `all` - hammasi
         * `category` - kategoriya
+    Shift:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        store:
+          type: string
+          format: uuid
+          title: Do'kon
+        device:
+          type: string
+          format: uuid
+          title: Qurilma
+        opened_by:
+          type: string
+          format: uuid
+          title: Ochgan
+        opened_at:
+          type: string
+          format: date-time
+          title: Ochilgan vaqt
+        opening_cash_tiyin:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          title: Boshlang'ich naqd (tiyin)
+        closed_by:
+          type: string
+          format: uuid
+          nullable: true
+          title: Yopgan
+        closed_at:
+          type: string
+          format: date-time
+          nullable: true
+          title: Yopilgan vaqt
+        counted_cash_tiyin:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          nullable: true
+          title: Sanalgan naqd (tiyin)
+        expected_cash_tiyin:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          nullable: true
+          title: Kutilgan naqd (tiyin)
+        is_open:
+          type: boolean
+          readOnly: true
+      required:
+      - device
+      - is_open
+      - opened_at
+      - opened_by
+      - opening_cash_tiyin
+      - store
+    ShiftReport:
+      type: object
+      properties:
+        shift:
+          type: string
+          format: uuid
+        is_open:
+          type: boolean
+        opening_cash_tiyin:
+          type: integer
+        sales_count:
+          type: integer
+        sales_total_tiyin:
+          type: integer
+        payments_tiyin:
+          $ref: '#/components/schemas/ByCashCardDebt'
+        refunds_count:
+          type: integer
+        refunds_tiyin:
+          $ref: '#/components/schemas/ByCashDebt'
+        cash_in_tiyin:
+          type: integer
+        cash_out_tiyin:
+          type: integer
+        debt_payments_tiyin:
+          $ref: '#/components/schemas/ByCashCard'
+        expected_cash_tiyin:
+          type: integer
+        counted_cash_tiyin:
+          type: integer
+          nullable: true
+        difference_tiyin:
+          type: integer
+          nullable: true
+      required:
+      - cash_in_tiyin
+      - cash_out_tiyin
+      - counted_cash_tiyin
+      - debt_payments_tiyin
+      - difference_tiyin
+      - expected_cash_tiyin
+      - is_open
+      - opening_cash_tiyin
+      - payments_tiyin
+      - refunds_count
+      - refunds_tiyin
+      - sales_count
+      - sales_total_tiyin
+      - shift
     StatusEnum:
       enum:
       - draft

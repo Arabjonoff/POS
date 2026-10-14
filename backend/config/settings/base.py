@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "apps.catalog",
     "apps.inventory",
     "apps.customers",
+    "apps.sales",
 ]
 
 MIDDLEWARE = [
@@ -124,6 +125,14 @@ SPECTACULAR_SETTINGS = {
     "SWAGGER_UI_DIST": "SIDECAR",
     "SWAGGER_UI_FAVICON_HREF": "SIDECAR",
     "REDOC_DIST": "SIDECAR",
+    # Bir xil nomli maydonlar (method, status) uchun barqaror enum nomlari.
+    "ENUM_NAME_OVERRIDES": {
+        "MethodEnum": "apps.customers.models.PaymentMethod",
+        "SalePaymentMethodEnum": "apps.sales.models.PaymentMethod",
+        "RefundMethodEnum": "apps.sales.models.RefundMethod",
+        "StatusEnum": "apps.inventory.models.DocumentStatus",
+        "SaleStatusEnum": "apps.sales.models.SaleStatus",
+    },
 }
 
 LOGGING = {
