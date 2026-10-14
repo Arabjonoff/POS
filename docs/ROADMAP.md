@@ -53,7 +53,7 @@ Spec'lar: `data-model.md`, `auth-roles.md`, `sync.md`, `subscription-billing.md`
 - **Qabul:** kirish/refresh testlari; kassir menejer endpointiga kira olmaydi; boshqa tenant foydalanuvchisini ko'ra olmaydi.
 - **Bog'liq:** T-010
 
-### [ ] T-012 Qurilmalar (Device)
+### [x] T-012 Qurilmalar (Device)
 - **Bajarish:** ega login bilan kassa qurilmasini ro'yxatdan o'tkazadi (`POST /api/v1/devices/register`), qurilma uzoq muddatli token oladi. Tarifdagi `max_devices` chegarasi. Bloklangan qurilma 403.
 - **Qabul:** chegara oshganda aniq xato; bloklangan qurilma sinxronlay olmaydi.
 - **Bog'liq:** T-011, T-013

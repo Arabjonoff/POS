@@ -15,9 +15,16 @@ class DomainError(APIException):
     default_code = "domain_error"
     default_detail = "Request violates a business rule."
 
-    def __init__(self, code: str, message: str | None = None, status_code: int | None = None):
+    def __init__(
+        self,
+        code: str,
+        message: str | None = None,
+        status_code: int | None = None,
+        details: dict | None = None,
+    ):
         super().__init__(detail=message or self.default_detail, code=code)
         self.code = code
+        self.details = details or {}
         if status_code is not None:
             self.status_code = status_code
 
@@ -44,7 +51,7 @@ def api_exception_handler(exc, context):
     elif isinstance(exc, DomainError):
         code = exc.code
         message = str(exc.detail)
-        details = {}
+        details = exc.details
     else:
         detail = getattr(exc, "detail", None)
         code = _first_code(exc.get_codes()) if hasattr(exc, "get_codes") else None

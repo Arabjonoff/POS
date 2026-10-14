@@ -87,6 +87,106 @@ paths:
               schema:
                 $ref: '#/components/schemas/TokenRefresh'
           description: ''
+  /api/v1/devices/:
+    get:
+      operationId: devices_list
+      description: O'z tenanti qurilmalari (ega va menejer).
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - devices
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedDeviceList'
+          description: ''
+  /api/v1/devices/{id}/:
+    get:
+      operationId: devices_retrieve
+      description: O'z tenanti qurilmalari (ega va menejer).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this qurilma.
+        required: true
+      tags:
+      - devices
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Device'
+          description: ''
+  /api/v1/devices/me/:
+    get:
+      operationId: devices_me_retrieve
+      description: Qurilma o'zi haqida va obuna holati (kassa ulanganda tekshiradi).
+      tags:
+      - devices
+      security:
+      - deviceToken: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceMe'
+          description: ''
+  /api/v1/devices/register/:
+    post:
+      operationId: devices_register_create
+      description: Ega kassa qurilmasini ulaydi; javobda qurilma tokeni (faqat bir
+        marta).
+      tags:
+      - devices
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceRegisterRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DeviceRegisterRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DeviceRegisterRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceRegisterResponse'
+          description: ''
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceRegisterResponse'
+          description: Qayta ro'yxatdan o'tish
   /api/v1/users/:
     get:
       operationId: users_list
@@ -140,6 +240,116 @@ paths:
           description: ''
 components:
   schemas:
+    Device:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        number:
+          type: integer
+          readOnly: true
+          title: Raqam
+        code:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+          title: Nomi
+        platform:
+          allOf:
+          - $ref: '#/components/schemas/PlatformEnum'
+          readOnly: true
+          title: Platforma
+        app_version:
+          type: string
+          readOnly: true
+          title: Ilova versiyasi
+        store:
+          type: string
+          format: uuid
+          readOnly: true
+          title: Do'kon
+        is_blocked:
+          type: boolean
+          readOnly: true
+          title: Bloklangan
+        last_sync_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          title: Oxirgi sinxron
+        last_seen_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          title: Oxirgi ulanish
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - app_version
+      - code
+      - created_at
+      - id
+      - is_blocked
+      - last_seen_at
+      - last_sync_at
+      - name
+      - number
+      - platform
+      - store
+    DeviceMe:
+      type: object
+      properties:
+        device:
+          $ref: '#/components/schemas/Device'
+        subscription:
+          $ref: '#/components/schemas/SubscriptionSnapshot'
+        server_time:
+          type: string
+          format: date-time
+      required:
+      - device
+      - server_time
+      - subscription
+    DeviceRegisterRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        platform:
+          $ref: '#/components/schemas/PlatformEnum'
+        app_version:
+          type: string
+          default: ''
+          maxLength: 32
+        store:
+          type: string
+          format: uuid
+      required:
+      - name
+      - platform
+    DeviceRegisterResponse:
+      type: object
+      properties:
+        device:
+          $ref: '#/components/schemas/Device'
+        token:
+          type: string
+      required:
+      - device
+      - token
     Health:
       type: object
       properties:
@@ -205,6 +415,29 @@ components:
       - phone
       - role
       - tenant
+    PaginatedDeviceList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Device'
     PaginatedUserList:
       type: object
       required:
@@ -228,6 +461,16 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/User'
+    PlatformEnum:
+      enum:
+      - windows
+      - android
+      - ios
+      type: string
+      description: |-
+        * `windows` - Windows
+        * `android` - Android
+        * `ios` - iOS
     RoleEnum:
       enum:
       - platform_admin
@@ -240,6 +483,25 @@ components:
         * `owner` - ega
         * `manager` - menejer
         * `cashier` - kassir
+    SubscriptionSnapshot:
+      type: object
+      properties:
+        status:
+          type: string
+        paid_until:
+          type: string
+          format: date
+          nullable: true
+        days_left:
+          type: integer
+          nullable: true
+        offline_days:
+          type: integer
+      required:
+      - days_left
+      - offline_days
+      - paid_until
+      - status
     TenantBrief:
       type: object
       properties:
@@ -307,6 +569,11 @@ components:
       - phone
       - role
   securitySchemes:
+    deviceToken:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: '`Device <token>` — qurilma tokeni (`/devices/register/` javobidan).'
     jwtAuth:
       type: http
       scheme: bearer

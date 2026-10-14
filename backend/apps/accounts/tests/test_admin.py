@@ -27,6 +27,7 @@ def admin_client(make_user):
         "/admin/billing/subscription/",
         "/admin/billing/subscription/add/",
         "/admin/billing/subscriptionpayment/",
+        "/admin/devices/device/",
     ],
 )
 def test_admin_pages_open(admin_client, url):
