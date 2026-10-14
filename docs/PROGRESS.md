@@ -221,3 +221,22 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - Muammo yoki qaror:
   - Kassada xodim JWT'si yo'q, faqat qurilma tokeni bor. Shuning uchun narx tarixi uchun sync nomlar maydonida qurilma endpoint'i qo'shildi; kim ko'rishi kassada lokal rol bilan cheklanadi (product.upserted `by` bilan bir xil ishonch modeli).
   - Testlar ikki xatoni ushladi: kasrsiz birlikda `parseQtyMilli` regex guruhi xatosi va planshetda jadvaldagi qoldiq ustunining sig'masligi.
+
+## 2026-10-15 — T-051 Excel/CSV import
+- Qilindi:
+  - Spec `product-import.md` va qaror 0009 — import serverda bajariladi.
+  - Backend (`apps/catalog/importing.py`):
+    - o'qish: xlsx (`openpyxl`) va CSV (UTF-8/CP1251, `,`/`;`/tab);
+    - ustunlarni sarlavhadan taklif qilish (uz/ru sinonimlar);
+    - qator tahlili: pul → tiyin, birlik sinonimlari, shtrix-kod qoidalari, fayldagi takror;
+    - qo'llash bitta tranzaksiyada, bulk: yangi kategoriyalar, yangi va shtrix-kod bo'yicha yangilangan tovarlar, narx tarixi, yangi tovarlarning boshlang'ich qoldig'i — bitta tasdiqlangan kirim;
+    - bulk signal bermagani uchun `ChangeLog` qo'lda yoziladi.
+  - API (qurilma tokeni): template / upload / check / apply; `ProductImport` 24 soat saqlanadi.
+  - Kassa: "Excel'dan yuklash" oynasi (fayl → ustunlarni moslash → tekshirish → import → natija), shablonni saqlash, kassir uchun menejer PIN, importdan keyin darhol pull; oflaynda "internet kerak".
+- Testlar:
+  - backend +12: 5000 qator (30 s chegarasi), xatolar, CSV cp1251, qurilma/tenant izolyatsiyasi, muddat tugashi, takroriy apply 409, kassir `by` 400;
+  - apps/pos 454 (+17): 5 ta import widget testi; golden'lar `products/import_map`, `import_check` × 3 o'lcham × 2 mavzu.
+  - Skrinshotlar: `docs/screenshots/T-051/`.
+- PR: T-051 (squash merge)
+- Qoldi / keyingi qadam: T-052 Kirim skaner bilan. T-047 — Q-007.
+- Muammo yoki qaror: Excel'da son ko'rinishidagi shtrix-kod kasrsiz matnga aylantiriladi; boshidagi nollar faqat matn katakda saqlanadi, shuning uchun shablonda ustunlar matn formatida. Mavjud tovar qoldig'i import bilan o'zgarmaydi (kirim yoki inventarizatsiya orqali).

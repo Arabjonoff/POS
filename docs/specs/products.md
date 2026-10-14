@@ -11,6 +11,7 @@
 - Saqlash → `product.upserted` outbox. O'chirish = nofaol qilish (tarix saqlanadi).
 
 ## Import
+- To'liq tavsif, API va qoidalar: `product-import.md` (qaror 0009 — serverda).
 - Shablon (xlsx): nom, shtrix-kod, kategoriya, birlik, narx, tannarx, qoldiq (ixtiyoriy — boshlang'ich kirim sifatida).
 - Ustunlarni moslash, 20 qator oldindan ko'rish, xatolar (qator raqami + sabab), shtrix-kod bo'yicha mavjudlarini yangilash.
 

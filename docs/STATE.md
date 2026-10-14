@@ -5,25 +5,13 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-051 Excel/CSV import
-- Branch: feat/T-051-import
-- Boshlangan: 2026-10-15
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [x] 0. Spec `docs/specs/product-import.md` va qaror 0009 (server tomonda import)
-- [x] 1. Backend: `openpyxl` (uv add), `apps/catalog/importing.py` — o'qish (xlsx/csv), sarlavhadan moslash taklifi, qator tahlili (pul, birlik, kategoriya, shtrix-kod), tekshirish va qo'llash (bitta tranzaksiya, bulk); `ProductImport` modeli + migratsiya
-- [x] 2. Backend API (qurilma tokeni): template / upload / check / apply + pytest (5000 qator, xatolar, tenant/qurilma izolyatsiyasi, takroriy apply), OpenAPI + `make api-clients`
-- [x] 3. Kassa: `file_picker` bog'liqligi, `data/catalog/product_import.dart` (API o'rami, soxta bilan almashtiriladi), import oynasi (fayl → moslash → tekshirish → import → natija), shablonni saqlash, oflayn xabar, PIN; tarjimalar
-- [ ] 4. Widget testlari + golden + skrinshotlar `docs/screenshots/T-051/`
-- [ ] 5. PR, CI → merge; ROADMAP, PROGRESS, STATE
-
-## Oxirgi bajarilgan ish
-- 3-qadam: `file_picker ^13.1.0`, `data/catalog/product_import.dart` (`ProductImportApi`, `ImportFiles`, `refreshCatalogProvider` — testlarda almashtiriladi), `features/products/import_dialog.dart` (fayl → moslash → tekshirish → import → natija), Tovarlar ekranida "Excel'dan yuklash"; tarjimalar `import*`.
-
-## Keyingi aniq harakat
-- 4-qadam: `apps/pos/test/features/import_test.dart` (soxta API/fayllar: to'liq oqim, ustun almashtirish, majburiy ustun yo'q, xatolar ro'yxati, kassir → PIN, oflayn, shablon saqlash), golden `products/import_*` (moslash, tekshirish natijasi), skrinshotlar.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
