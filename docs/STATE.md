@@ -14,17 +14,17 @@
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 - [x] 1. To'lov modeli `apps/pos/lib/features/pos/payment/payment_draft.dart` (naqd/karta/nasiya/aralash, olingan, qaytim, qoldiq, `SalePaymentInput` lar) + unit testlar
 - [x] 2. Mijozlar: `apps/pos/lib/data/customers/customer_directory.dart` (qidiruv, balans = Σ debt_entries, tez yaratish + `customer.upserted` outbox, limit tekshiruvi) + testlar
-- [ ] 3. `Checkout` (`features/pos/payment/checkout.dart`): savat + to'lov → `SaleWriter.complete` (bitta tranzaksiya) → savat tozalanadi; atomarlik testi
+- [x] 3. `Checkout` (`features/pos/payment/checkout.dart`): savat + to'lov → `SaleWriter.complete` (bitta tranzaksiya) → savat tozalanadi; atomarlik testi
 - [ ] 4. To'lov oynasi UI (`features/pos/payment/payment_dialog.dart`): Naqd (Aniq/50 000/100 000/200 000, klaviatura, katta yashil qaytim, Enter), Karta, Nasiya (mijoz tanlash/yaratish, limit → menejer PIN), Aralash; oyna ochiqda skaner → "Avval to'lovni yakunlang"
 - [ ] 5. Kassa ekraniga ulash: F12, F4 mijoz (savatga), yakunlash xabari 3 s "Savdo yakunlandi · Qaytim …", fokus skanerga
 - [ ] 6. Widget testlari (3 harakat: skan → F12 → Enter; qaytim; karta; nasiya + limit; aralash; skaner bloklangan) + golden + skrinshotlar `docs/screenshots/T-043/`
 - [ ] 7. To'liq tekshiruv, PR, CI → merge; ROADMAP, PROGRESS, STATE
 
 ## Oxirgi bajarilgan ish
-- 2-qadam: `data/customers/customer_directory.dart` (`customersProvider`, `CustomerDirectory.filter/create`, `CustomerEntry.allowsDebt`) + `test/data/customer_directory_test.dart`.
+- 3-qadam: `features/pos/payment/checkout.dart` (`checkoutProvider`), `CartController.setCustomer`, test `test/features/checkout_test.dart` (atomarlik).
 
 ## Keyingi aniq harakat
-- 3-qadam: `features/pos/payment/checkout.dart` — `Checkout.complete(cart, draft, approvedBy)` → `SaleWriter` (deviceNumber/storeId — `sessionProvider.device`, cashier — `session.user`, shift — `currentShiftProvider`), keyin `CartController.clearActive()`; test `test/features/checkout_test.dart` (atomarlik).
+- 4-qadam: `features/pos/payment/payment_dialog.dart` — `showPaymentDialog(context, cart)` → natija; tablar Naqd/Karta/Nasiya/Aralash, `ScanListener` (skan → "Avval to'lovni yakunlang"), mijoz tanlash `features/pos/payment/customer_picker.dart`; tarjimalar node skript bilan (scratchpad `addkeys.mjs`).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

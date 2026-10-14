@@ -194,11 +194,13 @@ class Cart {
     List<CartLine>? lines,
     Discount? discount,
     bool clearDiscount = false,
+    String? customerId,
+    bool clearCustomer = false,
   }) => Cart(
     id: id,
     slot: slot,
     lines: lines ?? this.lines,
-    customerId: customerId,
+    customerId: clearCustomer ? null : (customerId ?? this.customerId),
     discount: clearDiscount ? null : (discount ?? this.discount),
   );
 
