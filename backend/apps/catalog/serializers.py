@@ -58,6 +58,13 @@ class CategorySerializer(serializers.ModelSerializer):
         return parent
 
 
+class BarcodeListField(serializers.ListField):
+    """Yozish — satrlar ro'yxati; o'qish — tovarning o'chirilmagan kodlari (asosiysi birinchi)."""
+
+    def to_representation(self, manager):
+        return [b.barcode for b in manager.all() if b.deleted_at is None]
+
+
 def _barcode_taken(barcode, product):
     return DomainError(
         "barcode_taken",
@@ -74,7 +81,7 @@ class ProductSerializer(serializers.ModelSerializer):
     sell_price_tiyin = money_field()
     cost_price_tiyin = money_field(required=False)
     min_stock_milli = StrictIntegerField(min_value=0, required=False)
-    barcodes = serializers.ListField(
+    barcodes = BarcodeListField(
         child=serializers.CharField(trim_whitespace=False), required=False, max_length=20
     )
     markup_bp = serializers.SerializerMethodField()
@@ -107,11 +114,6 @@ class ProductSerializer(serializers.ModelSerializer):
         return mul_div_half_up(
             product.sell_price_tiyin - product.cost_price_tiyin, 10_000, product.cost_price_tiyin
         )
-
-    def to_representation(self, product):
-        data = super().to_representation(product)
-        data["barcodes"] = [b.barcode for b in product.barcodes.all() if b.deleted_at is None]
-        return data
 
     def validate_id(self, value):
         if self.instance is not None and value != self.instance.pk:

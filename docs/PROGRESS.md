@@ -71,3 +71,9 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-012 (squash merge)
 - Qoldi / keyingi qadam: T-014 Katalog API. Qurilmani ega o'zi bloklashi — T-020/ilova sozlamalari.
 - Muammo yoki qaror: token turlari aralashmaydi — qurilma tokeni default autentifikatsiyada yo'q, faqat qurilma endpoint'larida (foydalanuvchi endpoint'ida 401). Bloklangan qurilma chegaraga kirmaydi, raqami qayta ishlatilmaydi. Obuna readonly/blocked bo'lsa ham qurilma ulanadi (sinxron ishlashi uchun).
+
+## 2026-10-14 — T-014 Katalog API
+- Qilindi: `apps/catalog` — Unit (yangi tenantga standart birliklar: signal + data migratsiya; nomi klient tarjimasida), Category (yumshoq o'chirish, ichkilari bilan; tovarlar kategoriyasiz qoladi), Product (pul/miqdor bigint, vaznli + PLU 5 raqam, IKPU, tez tugma; DELETE = nofaol), ProductBarcode (tenant ichida unique, yumshoq o'chirish, asosiysi birinchi), PriceHistory (yaratish va narx o'zgarishida). API: `/units/`, `/categories/`, `/products/` (search/category/is_active/quick_button filtrlari, `markup_bp`), `/products/by-barcode/{code}/`. `apps/core/fields.py` — `StrictIntegerField`/`money_field` (150.0, "150", true rad). `barcodes.py` — normalizatsiya, EAN-8/UPC-A/EAN-13 nazorat raqami. Spec `catalog-api.md`. 324 test yashil.
+- PR: T-014 (squash merge)
+- Qoldi / keyingi qadam: T-015 Ombor (StockMovement, kirim, inventarizatsiya). Excel import — T-051.
+- Muammo yoki qaror: `barcode.md` dagi tarozi misoli `2012345012503` nazorat raqami noto'g'ri edi — `2012345012509` ga tuzatildi (T-040 Dart testlari shundan foydalanadi). Q-001/Q-002 egasi tomonidan tasdiqlandi (A, B).

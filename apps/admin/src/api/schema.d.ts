@@ -74,6 +74,44 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/categories/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description O'qish — tenantning har bir xodimi; yozish — ega va menejer. */
+        get: operations["categories_list"];
+        put?: never;
+        /** @description O'qish — tenantning har bir xodimi; yozish — ega va menejer. */
+        post: operations["categories_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/categories/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description O'qish — tenantning har bir xodimi; yozish — ega va menejer. */
+        get: operations["categories_retrieve"];
+        /** @description O'qish — tenantning har bir xodimi; yozish — ega va menejer. */
+        put: operations["categories_update"];
+        post?: never;
+        /** @description O'qish — tenantning har bir xodimi; yozish — ega va menejer. */
+        delete: operations["categories_destroy"];
+        options?: never;
+        head?: never;
+        /** @description O'qish — tenantning har bir xodimi; yozish — ega va menejer. */
+        patch: operations["categories_partial_update"];
+        trace?: never;
+    };
     "/api/v1/devices/": {
         parameters: {
             query?: never;
@@ -142,6 +180,99 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/products/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description O'qish — tenantning har bir xodimi; yozish — ega va menejer. */
+        get: operations["products_list"];
+        put?: never;
+        /** @description O'qish — tenantning har bir xodimi; yozish — ega va menejer. */
+        post: operations["products_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/products/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description O'qish — tenantning har bir xodimi; yozish — ega va menejer. */
+        get: operations["products_retrieve"];
+        /** @description O'qish — tenantning har bir xodimi; yozish — ega va menejer. */
+        put: operations["products_update"];
+        post?: never;
+        /** @description Nofaol qilish (`is_active=false`); tarix saqlanadi. */
+        delete: operations["products_destroy"];
+        options?: never;
+        head?: never;
+        /** @description O'qish — tenantning har bir xodimi; yozish — ega va menejer. */
+        patch: operations["products_partial_update"];
+        trace?: never;
+    };
+    "/api/v1/products/by-barcode/{code}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description O'qish — tenantning har bir xodimi; yozish — ega va menejer. */
+        get: operations["products_by_barcode_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/units/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description O'qish — tenantning har bir xodimi; yozish — ega va menejer. */
+        get: operations["units_list"];
+        put?: never;
+        /** @description O'qish — tenantning har bir xodimi; yozish — ega va menejer. */
+        post: operations["units_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/units/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description O'qish — tenantning har bir xodimi; yozish — ega va menejer. */
+        get: operations["units_retrieve"];
+        /** @description O'qish — tenantning har bir xodimi; yozish — ega va menejer. */
+        put: operations["units_update"];
+        post?: never;
+        /** @description O'qish — tenantning har bir xodimi; yozish — ega va menejer. */
+        delete: operations["units_destroy"];
+        options?: never;
+        head?: never;
+        /** @description O'qish — tenantning har bir xodimi; yozish — ega va menejer. */
+        patch: operations["units_partial_update"];
+        trace?: never;
+    };
     "/api/v1/users/": {
         parameters: {
             query?: never;
@@ -180,6 +311,28 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        Category: {
+            /** Format: uuid */
+            readonly id: string;
+            /** Nomi */
+            name: string;
+            /** Format: uuid */
+            parent?: string | null;
+            /** Tartib */
+            sort?: number;
+            /** Rang (palitra kaliti) */
+            color?: string;
+        };
+        CategoryRequest: {
+            /** Nomi */
+            name: string;
+            /** Format: uuid */
+            parent?: string | null;
+            /** Tartib */
+            sort?: number;
+            /** Rang (palitra kaliti) */
+            color?: string;
+        };
         Device: {
             /** Format: uuid */
             readonly id: string;
@@ -255,6 +408,21 @@ export interface components {
             readonly role: components["schemas"]["RoleEnum"];
             tenant: components["schemas"]["TenantBrief"] | null;
         };
+        PaginatedCategoryList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["Category"][];
+        };
         PaginatedDeviceList: {
             /** @example 123 */
             count: number;
@@ -269,6 +437,36 @@ export interface components {
              */
             previous?: string | null;
             results: components["schemas"]["Device"][];
+        };
+        PaginatedProductList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["Product"][];
+        };
+        PaginatedUnitList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["Unit"][];
         };
         PaginatedUserList: {
             /** @example 123 */
@@ -285,6 +483,48 @@ export interface components {
             previous?: string | null;
             results: components["schemas"]["User"][];
         };
+        PatchedCategoryRequest: {
+            /** Nomi */
+            name?: string;
+            /** Format: uuid */
+            parent?: string | null;
+            /** Tartib */
+            sort?: number;
+            /** Rang (palitra kaliti) */
+            color?: string;
+        };
+        PatchedProductRequest: {
+            /** Format: uuid */
+            id?: string;
+            /** Nomi */
+            name?: string;
+            /** Format: uuid */
+            category?: string | null;
+            /** Format: uuid */
+            unit?: string;
+            sell_price_tiyin?: number;
+            cost_price_tiyin?: number;
+            /** Vaznli */
+            is_weighted?: boolean;
+            /** PLU */
+            plu_code?: (string) | null;
+            min_stock_milli?: number;
+            /** IKPU */
+            ikpu_code?: string;
+            /** Tez tugma */
+            quick_button?: boolean;
+            /** Faol */
+            is_active?: boolean;
+            barcodes?: string[];
+        };
+        PatchedUnitRequest: {
+            /** Kod */
+            code?: string;
+            /** Nomi */
+            name?: string;
+            /** Kasrli */
+            is_fractional?: boolean;
+        };
         /**
          * @description * `windows` - Windows
          *     * `android` - Android
@@ -292,6 +532,59 @@ export interface components {
          * @enum {string}
          */
         PlatformEnum: "windows" | "android" | "ios";
+        Product: {
+            /** Format: uuid */
+            id?: string;
+            /** Nomi */
+            name: string;
+            /** Format: uuid */
+            category?: string | null;
+            /** Format: uuid */
+            unit: string;
+            sell_price_tiyin: number;
+            cost_price_tiyin?: number;
+            /** Vaznli */
+            is_weighted?: boolean;
+            /** PLU */
+            plu_code?: (string) | null;
+            min_stock_milli?: number;
+            /** IKPU */
+            ikpu_code?: string;
+            /** Tez tugma */
+            quick_button?: boolean;
+            /** Faol */
+            is_active?: boolean;
+            barcodes?: string[];
+            readonly markup_bp: number | null;
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly updated_at: string;
+        };
+        ProductRequest: {
+            /** Format: uuid */
+            id?: string;
+            /** Nomi */
+            name: string;
+            /** Format: uuid */
+            category?: string | null;
+            /** Format: uuid */
+            unit: string;
+            sell_price_tiyin: number;
+            cost_price_tiyin?: number;
+            /** Vaznli */
+            is_weighted?: boolean;
+            /** PLU */
+            plu_code?: (string) | null;
+            min_stock_milli?: number;
+            /** IKPU */
+            ikpu_code?: string;
+            /** Tez tugma */
+            quick_button?: boolean;
+            /** Faol */
+            is_active?: boolean;
+            barcodes?: string[];
+        };
         /**
          * @description * `platform_admin` - platforma admini
          *     * `owner` - ega
@@ -318,6 +611,24 @@ export interface components {
         };
         TokenRefreshRequest: {
             refresh: string;
+        };
+        Unit: {
+            /** Format: uuid */
+            readonly id: string;
+            /** Kod */
+            code: string;
+            /** Nomi */
+            name?: string;
+            /** Kasrli */
+            is_fractional?: boolean;
+        };
+        UnitRequest: {
+            /** Kod */
+            code: string;
+            /** Nomi */
+            name?: string;
+            /** Kasrli */
+            is_fractional?: boolean;
         };
         User: {
             /** Format: uuid */
@@ -430,6 +741,154 @@ export interface operations {
             };
         };
     };
+    categories_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedCategoryList"];
+                };
+            };
+        };
+    };
+    categories_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CategoryRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["CategoryRequest"];
+                "multipart/form-data": components["schemas"]["CategoryRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Category"];
+                };
+            };
+        };
+    };
+    categories_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this kategoriya. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Category"];
+                };
+            };
+        };
+    };
+    categories_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this kategoriya. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CategoryRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["CategoryRequest"];
+                "multipart/form-data": components["schemas"]["CategoryRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Category"];
+                };
+            };
+        };
+    };
+    categories_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this kategoriya. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    categories_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this kategoriya. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedCategoryRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedCategoryRequest"];
+                "multipart/form-data": components["schemas"]["PatchedCategoryRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Category"];
+                };
+            };
+        };
+    };
     devices_list: {
         parameters: {
             query?: {
@@ -525,6 +984,328 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["DeviceRegisterResponse"];
+                };
+            };
+        };
+    };
+    products_list: {
+        parameters: {
+            query?: {
+                category?: string;
+                is_active?: boolean;
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                quick_button?: boolean;
+                /** @description Nom (qisman), shtrix-kod yoki PLU */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedProductList"];
+                };
+            };
+        };
+    };
+    products_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProductRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["ProductRequest"];
+                "multipart/form-data": components["schemas"]["ProductRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Product"];
+                };
+            };
+        };
+    };
+    products_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this tovar. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Product"];
+                };
+            };
+        };
+    };
+    products_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this tovar. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProductRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["ProductRequest"];
+                "multipart/form-data": components["schemas"]["ProductRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Product"];
+                };
+            };
+        };
+    };
+    products_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this tovar. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    products_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this tovar. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedProductRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedProductRequest"];
+                "multipart/form-data": components["schemas"]["PatchedProductRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Product"];
+                };
+            };
+        };
+    };
+    products_by_barcode_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                code: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Product"];
+                };
+            };
+        };
+    };
+    units_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedUnitList"];
+                };
+            };
+        };
+    };
+    units_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UnitRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["UnitRequest"];
+                "multipart/form-data": components["schemas"]["UnitRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Unit"];
+                };
+            };
+        };
+    };
+    units_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this birlik. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Unit"];
+                };
+            };
+        };
+    };
+    units_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this birlik. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UnitRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["UnitRequest"];
+                "multipart/form-data": components["schemas"]["UnitRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Unit"];
+                };
+            };
+        };
+    };
+    units_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this birlik. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    units_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this birlik. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedUnitRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedUnitRequest"];
+                "multipart/form-data": components["schemas"]["PatchedUnitRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Unit"];
                 };
             };
         };
