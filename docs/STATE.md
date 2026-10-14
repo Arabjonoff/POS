@@ -14,16 +14,16 @@
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 - [x] 1. `apps/pos/lib/data/refunds/refund_calculator.dart`: sof hisob — server `record_refund` bilan bir xil (qator: `mulDivHalfUp(total, qty, sold)`, oxirgi qism — qoldiq; jami: chek chegirmasidan ulush yoki to'liq yopilsa `sale.total − oldingi`; nasiyadan ayirish chegarasi) + unit testlar
 - [x] 2. `refund_writer.dart` (bitta tranzaksiya: Refund + RefundItem + StockMovement(+qty) + DebtEntry(−) + Sale.status + outbox `refund.created`) va `sale_lookup.dart` (raqam bo'yicha, smena savdolari, qaytarilgan miqdorlar bilan) + testlar
-- [ ] 3. Chekda savdo raqami shtrix-kodi (CODE128, `GS k`) — qaytarishda skanerlash uchun; snapshotlar yangilanadi
+- [x] 3. Chekda savdo raqami shtrix-kodi (CODE128, `GS k`) — qaytarishda skanerlash uchun; snapshotlar yangilanadi
 - [ ] 4. Qaytarish oynasi (F8): savdoni topish (raqam/skan/oxirgi savdolar), qatorlar va miqdor, sabab, naqd yoki qarzdan ayirish, menejer/ega PIN; tarjimalar
 - [ ] 5. Widget testlari + golden + skrinshotlar `docs/screenshots/T-045/`
 - [ ] 6. Spec, PR, CI → merge; ROADMAP, PROGRESS, STATE
 
 ## Oxirgi bajarilgan ish
-- 2-qadam: `data/refunds/sale_lookup.dart` (`idByNumber`, `recent`, `refundable`), `refund_writer.dart` (`RefundWriter.record`, `RefundMethod`), testlar `test/data/refund_writer_test.dart` (qisman → to'liq, nasiya, atomarlik, qidiruv).
+- 3-qadam: `ReceiptRow.barcode`, `EscPos.code128`, chek snapshotlari yangilandi (`||||| D3-000123 |||||`).
 
 ## Keyingi aniq harakat
-- 3-qadam: chek oxirida savdo raqami shtrix-kodi: `ReceiptRow` ga `barcode` turi (`ReceiptRow.barcode(number)`), `EscPos` da CODE128 (`GS h 60`, `GS w 2`, `GS H 0`, `GS k 73 n {B data`), `render` da `|||| D3-000123 ||||`; `receipt_test.dart` snapshotlarini `UPDATE_RECEIPTS=1` bilan yangilash.
+- 4-qadam: `apps/pos/lib/features/refunds/refund_dialog.dart` — `showRefundDialog(context)`: 1) savdoni topish: raqam maydoni + skaner (`ScanListener` → `SaleLookup.idByNumber`) + oxirgi savdolar ro'yxati; 2) qatorlar: qolgan miqdor, stepper/kg kiritish, "Hammasini"; sabab (tez tugmalar + matn); usul Naqd / Qarzdan ayirish (`quote.debtAllowed`); jami katta; 3) "Qaytarish" → menejer/ega PIN (`requestManagerApproval`; foydalanuvchi o'zi menejer/ega bo'lsa — o'zi) → `RefundWriter.record`. `pos_screen.dart` da F8. Tarjimalar `refund*`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

@@ -70,4 +70,33 @@ void main() {
     }
     expect(PrinterEncoding.fromCode(null), PrinterEncoding.cp866);
   });
+
+  test('sale number barcode: CODE128 set B, centered', () {
+    final bytes = EscPos.receipt(const [
+      ReceiptRow.barcode('D3-000123'),
+    ], cut: false);
+    expect(bytes, [
+      ...EscPos.init,
+      ...EscPos.codePage866,
+      ...EscPos.alignCenter,
+      0x1d,
+      0x68,
+      60,
+      0x1d,
+      0x77,
+      2,
+      0x1d,
+      0x48,
+      2,
+      0x1d,
+      0x6b,
+      73,
+      11,
+      0x7b,
+      0x42,
+      ...ascii.encode('D3-000123'),
+      0x0a,
+      ...EscPos.alignLeft,
+    ]);
+  });
 }
