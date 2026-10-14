@@ -13,7 +13,7 @@ Tartib: yuqoridan pastga. Bog'liqligi tayyor bo'lmagan vazifani o'tkazib, keying
 - **Qabul:** `make help` buyruqlar ro'yxatini chiqaradi; CLAUDE.md'dagi "Buyruqlar" bo'limi haqiqiy buyruqlarga mos.
 - **Bog'liq:** —
 
-### [~] T-002 Docker Compose
+### [x] T-002 Docker Compose
 - **Bajarish:** `postgres:16`, `redis:7`, `backend` (Django dev server), `admin` (Next.js dev). Volume'lar, healthcheck'lar. `docker-compose.prod.yml` keyinroq (T-090).
 - **Qabul:** `docker compose up -d` dan keyin `http://localhost:8000/api/health/` → `{"status":"ok"}`, `http://localhost:3000` ochiladi.
 - **Bog'liq:** T-001, T-003, T-005

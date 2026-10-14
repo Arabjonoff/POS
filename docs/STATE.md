@@ -5,34 +5,31 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-002 Docker Compose
-- Branch: feat/T-002-docker-compose
-- Boshlangan: 2026-10-14
-- Oxirgi yangilanish: 2026-10-14 (sessiya 2)
+- Vazifa: — (masalan: T-042 Kassa ekrani — savat)
+- Branch: —
+- Boshlangan: —
+- Oxirgi yangilanish: —
 
 ## Qadamlar (vazifa ichida)
-- [x] 1. backend/Dockerfile (+ .dockerignore)
-- [x] 2. apps/admin/Dockerfile.dev (+ .dockerignore)
-- [x] 3. docker-compose.yml: postgres 16, redis 7, backend, admin; volume, healthcheck, sozlanadigan portlar
-- [x] 4. .env.example portlari, README/Makefile
-- [x] 5. Tekshiruv: docker compose up -d → /api/health/ ok, admin ochiladi
-- [ ] 6. PR, merge
+<!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
+- [ ] 1. ...
+- [ ] 2. ...
 
 ## Oxirgi bajarilgan ish
-Dockerfile'lar, docker-compose.yml, .env.example portlari yozildi; pos-pg-dev o'chirildi (endi compose postgres 127.0.0.1:55432).
+—
 
 ## Keyingi aniq harakat
-6-qadam: `gh pr create` (feat/T-002-docker-compose → main), CI bo'lmasa lokal tekshiruv yetarli, squash merge; ROADMAP T-002 [x], PROGRESS yozuvi, STATE bo'sh shablon.
+<!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
+—
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
 - Ochiq PR: —
-- Ishlab turgan servislar: — (pos-pg-dev o'chirilgan; compose ko'tarilganda postgres 127.0.0.1:55432)
+- Ishlab turgan servislar: docker compose (pos-*) — 8100, 3100
 - Yiqilayotgan testlar: —
 
 ## Eslatmalar
-- Bu kompyuterda 5432, 6379, 8000, 3000 portlari boshqa loyihalar (workers-*, mebel-*) tomonidan band. Ularni to'xtatma! POS lokal portlari: postgres 55432, redis 56379, backend 8100, admin 3100.
-- `python` — Windows Store stub; `uv run` yoki `py -3.12` ishlat. Postgres'ga `localhost` emas, `127.0.0.1` orqali ulan (IPv6 osilib qoladi).
-- Elektr uzilishi initdb vaqtida pos_pgdata ichidagi pg_hba.conf oxirini nol baytlar bilan buzgan edi ("no pg_hba.conf entry for host 172.x"). Tuzatildi: nol baytlar olib tashlandi, `host all all all scram-sha-256` qo'shildi, `pg_reload_conf()`.
-- `py -3.12` bu kompyuterda yo'q — Python skriptlar uchun `cd backend && uv run python` ishlat.
+<!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
+- Bu kompyuterda 5432, 6379, 8000, 3000 portlari boshqa loyihalar (workers-*, mebel-*, twf-local-*) tomonidan band. Ularni to'xtatma! POS lokal portlari (.env): postgres 55432, redis 56379, backend 8100, admin 3100.
+- `python` — Windows Store stub, `py -3.12` yo'q; `cd backend && uv run python` ishlat. Postgres'ga `localhost` emas, `127.0.0.1` orqali ulan (IPv6 osilib qoladi).
 - Docker Desktop o'chiq bo'lishi mumkin: `C:\Users\Muhammadi\AppData\Local\Programs\DockerDesktop\Docker Desktop.exe` ni ishga tushir, `docker info` javob berguncha kut.
