@@ -5,13 +5,25 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-051 Excel/CSV import
+- Branch: feat/T-051-import
+- Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
+- [x] 0. Spec `docs/specs/product-import.md` va qaror 0009 (server tomonda import)
+- [ ] 1. Backend: `openpyxl` (uv add), `apps/catalog/importing.py` — o'qish (xlsx/csv), sarlavhadan moslash taklifi, qator tahlili (pul, birlik, kategoriya, shtrix-kod), tekshirish va qo'llash (bitta tranzaksiya, bulk); `ProductImport` modeli + migratsiya
+- [ ] 2. Backend API (qurilma tokeni): template / upload / check / apply + pytest (5000 qator, xatolar, tenant/qurilma izolyatsiyasi, takroriy apply), OpenAPI + `make api-clients`
+- [ ] 3. Kassa: `file_picker` bog'liqligi, `data/catalog/product_import.dart` (API o'rami, soxta bilan almashtiriladi), import oynasi (fayl → moslash → tekshirish → import → natija), shablonni saqlash, oflayn xabar, PIN; tarjimalar
+- [ ] 4. Widget testlari + golden + skrinshotlar `docs/screenshots/T-051/`
+- [ ] 5. PR, CI → merge; ROADMAP, PROGRESS, STATE
+
+## Oxirgi bajarilgan ish
+- T-050 merge qilindi (#31). T-051: spec va qaror 0009 yozildi.
+
+## Keyingi aniq harakat
+- 1-qadam: `cd backend && uv add openpyxl`; `backend/apps/catalog/importing.py`; model `ProductImport` (`apps/catalog/models.py`) + `uv run python manage.py makemigrations catalog`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
