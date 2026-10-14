@@ -16,17 +16,17 @@
 - [x] 2. `apps/sales` modellari: Shift, Sale (+Item, +Payment), Refund (+Item), CashMovement; `DebtEntry.shift` (customers 0002); migratsiya; admin
 - [x] 3. `services/shifts.py`: open_shift, close_shift (expected_cash), record_cash_movement, shift_report (X/Z)
 - [x] 4. `services/sales.py`: record_sale — tekshiruv (summalar, to'lovlar, tenant), StockMovement(−), DebtEntry (nasiya)
-- [ ] 5. `services/refunds.py`: record_refund — qoldiq miqdor, summa, StockMovement(+), qarz kamayishi, savdo holati
+- [x] 5. `services/refunds.py`: record_refund — qoldiq miqdor, summa, StockMovement(+), qarz kamayishi, savdo holati
 - [ ] 6. REST (faqat o'qish): `/shifts/` (+report), `/sales/`, `/refunds/`, `/cash-movements/`; kassir faqat o'zinikini ko'radi
 - [ ] 7. Testlar: savdo → qoldiq va qarz, qaytarish → teskari harakat, summalar xatosi, smena hisob-kitobi, izolyatsiya, huquqlar
 - [ ] 8. openapi + schema.d.ts; lint/test; PROGRESS/ROADMAP; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-4-qadam: `services/sales.py` — record_sale (qator/summa/to'lov tekshiruvlari, duplicate_sale/duplicate_number, StockMovement(−), nasiya → record_sale_debt(shift=)). Testlar hali yo'q.
+5-qadam: `services/refunds.py` — record_refund (qator qoldig'i, proporsional summa + oxirgi qismda qoldiq, chek chegirmasi ulushi, to'liq qaytarishda sale.total − oldingilar, debt cheklovi, StockMovement(+), record_refund_debt, Sale.status).
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-5-qadam: `backend/apps/sales/services/refunds.py` — record_refund(device, payload): qoldiq miqdor, proporsional summa, chek chegirmasi ulushi, to'liq qaytarishda qoldiq, debt cheklovi, StockMovement(+), record_refund_debt, Sale.status.
+6-qadam: `backend/apps/sales/serializers.py`, `views.py` (ShiftViewSet + report, SaleViewSet, RefundViewSet, CashMovementViewSet — ReadOnly, kassir faqat o'zinikini), `urls.py`, `config/urls.py`.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
