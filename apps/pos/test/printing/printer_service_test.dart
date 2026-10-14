@@ -18,36 +18,8 @@ import 'package:pos_app/features/printing/receipt_loader.dart';
 import 'package:pos_app/features/printing/winspool.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
 
+import '../helpers/fake_printer.dart';
 import '../helpers/sqlite.dart';
-
-/// Yuborilgan ishlarni yozib oladi; [fail] — printer o'chiq.
-class FakeTransport implements PrinterTransport {
-  final List<Uint8List> jobs = [];
-  bool fail = false;
-
-  @override
-  Future<void> send(Uint8List bytes) async {
-    if (fail) throw const SocketException('offline');
-    jobs.add(bytes);
-  }
-
-  @override
-  Future<bool> isReachable() async => !fail;
-}
-
-bool contains(List<int> bytes, List<int> part) {
-  for (var i = 0; i + part.length <= bytes.length; i++) {
-    var match = true;
-    for (var j = 0; j < part.length; j++) {
-      if (bytes[i + j] != part[j]) {
-        match = false;
-        break;
-      }
-    }
-    if (match) return true;
-  }
-  return false;
-}
 
 void main() {
   final uz = lookupAppLocalizations(AppLocales.uzLatn);
@@ -118,16 +90,16 @@ void main() {
     ).printSale(id);
     expect(result, PrintOutcome.printed);
     expect(transport.jobs, hasLength(2));
-    expect(contains(transport.jobs[0], EscPos.openDrawer), isTrue);
-    expect(contains(transport.jobs[1], EscPos.openDrawer), isFalse);
-    expect(contains(transport.jobs[0], EscPos.feedAndCut), isTrue);
+    expect(containsBytes(transport.jobs[0], EscPos.openDrawer), isTrue);
+    expect(containsBytes(transport.jobs[1], EscPos.openDrawer), isFalse);
+    expect(containsBytes(transport.jobs[0], EscPos.feedAndCut), isTrue);
     expect(outcomes, [PrintOutcome.printed]);
   });
 
   test('card sale does not open the drawer', () async {
     final id = await sell(mode: PayMode.card);
     await service(const PrinterSettings(openDrawer: true)).printSale(id);
-    expect(contains(transport.jobs.single, EscPos.openDrawer), isFalse);
+    expect(containsBytes(transport.jobs.single, EscPos.openDrawer), isFalse);
   });
 
   test('reprint: last sale, marked as a copy, one job', () async {
@@ -138,10 +110,10 @@ void main() {
     expect(await s.reprintLast(), PrintOutcome.printed);
     final job = transport.jobs.single;
     expect(
-      contains(job, EscPos.encode(uz.receiptCopy, PrinterEncoding.cp866)),
+      containsBytes(job, EscPos.encode(uz.receiptCopy, PrinterEncoding.cp866)),
       isTrue,
     );
-    expect(contains(job, EscPos.openDrawer), isFalse);
+    expect(containsBytes(job, EscPos.openDrawer), isFalse);
   });
 
   test('printer off → failed, nothing thrown; not configured', () async {
@@ -162,7 +134,7 @@ void main() {
     final s = service(const PrinterSettings(width: PaperWidth.mm80));
     expect(await s.printTest(), PrintOutcome.printed);
     expect(
-      contains(
+      containsBytes(
         transport.jobs.single,
         EscPos.encode(uz.printerTestTitle, PrinterEncoding.cp866),
       ),

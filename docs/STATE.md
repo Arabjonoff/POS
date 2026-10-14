@@ -17,14 +17,14 @@
 - [x] 3. Uzatish qatlami: `PrinterTransport` (tarmoq IP:9100 — dart:io Socket; Windows RAW — win32 winspool; soxta — test), `PrinterService` (savdo cheki, test chek, pul qutisi, oxirgi chek, holat) + testlar
 - [x] 4. Printer sozlamalari (`local_settings`: turi, manzil/printer nomi, kenglik, kodlash, avtomatik, nusxa, pul qutisi) + Sozlamalar ekranida "Printer" bo'limi (test chek) + tarjimalar
 - [x] 5. Kassaga ulash: yakunlashda avtomatik chek (xato savdoni to'xtatmaydi → "Chek chiqmadi" + "Qayta chop etish"), "Oxirgi chek" tugmasi, holat qatorida haqiqiy printer holati
-- [ ] 6. Widget testlari + golden + skrinshotlar `docs/screenshots/T-044/`
+- [x] 6. Widget testlari + golden + skrinshotlar `docs/screenshots/T-044/`
 - [ ] 7. Qaror `docs/decisions/` (Android Bluetooth/USB — alohida vazifa), spec, PR, CI → merge; ROADMAP, PROGRESS, STATE
 
 ## Oxirgi bajarilgan ish
-- 5-qadam: `pos_screen.dart`: yakunlashdan keyin fonda `_printReceipt` (autoPrint), xato → toast "<savdo xabari>. Chek chiqmadi" + "Qayta chop etish"; qidiruv qatorida "Oxirgi chek" (`pos-last-receipt`, printer sozlangan bo'lsa).
+- 6-qadam: `test/features/printing_test.dart` (6 widget testi), `test/helpers/fake_printer.dart`, golden `test/goldens/printing_golden_test.dart` (sozlamalar × 3 o'lcham × 2 mavzu), skrinshotlar va chek namunalari `docs/screenshots/T-044/`. apps/pos: 353 test yashil.
 
 ## Keyingi aniq harakat
-- 6-qadam: widget testlari `apps/pos/test/features/printing_test.dart`: `printerTransportFactoryProvider` ni soxta transport bilan almashtirib — savdo → chek yuborildi; printer o'chiq → savdo yozilgan + "Chek chiqmadi" + qayta chop etish; autoPrint o'chiq → chek yo'q; "Oxirgi chek"; Sozlamalar: tarmoq manzili saqlanadi, test chek. Golden: sozlamalar printer kartasi (3 o'lcham).
+- 7-qadam: `docs/decisions/0008-printer-transports.md` (tarmoq + Windows spooler; Android Bluetooth/USB — alohida vazifa T-047), ROADMAP ga T-047 qo'shish, `docs/specs/printing.md` ga "Kassada amalga oshirilishi (T-044)", `make ui-test`, format, PR → CI → merge, ROADMAP [x], PROGRESS, STATE shablon.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
