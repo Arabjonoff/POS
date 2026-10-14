@@ -45,7 +45,7 @@ void main() {
       for (var i = 1; i <= 6; i++) {
         expect(find.text('Ctrl+$i'), findsOneWidget);
       }
-      expect(find.byType(NavigationBar), findsNothing);
+      expect(tester.getRect(find.text('Mijozlar')).top, lessThan(400));
 
       await tester.tap(find.text('Sozlamalar'));
       await tester.pumpAndSettle();
@@ -82,7 +82,8 @@ void main() {
 
     testWidgets('phone: bottom navigation', (tester) async {
       await pumpPosApp(tester, size: phone);
-      expect(find.byType(NavigationBar), findsOneWidget);
+      // Pastki panel ekran pastida.
+      expect(tester.getRect(find.text('Tovarlar')).top, greaterThan(760));
       await tester.tap(find.byIcon(Icons.settings_outlined));
       await tester.pumpAndSettle();
       expect(find.text('Til'), findsOneWidget);
@@ -95,7 +96,7 @@ void main() {
       tester,
     ) async {
       await pumpPosApp(tester, size: tablet);
-      expect(find.byType(NavigationBar), findsNothing);
+      expect(tester.getRect(find.text('Mijozlar')).top, lessThan(400));
       expect(tester.getRect(find.byType(PosStatusBar)).bottom, tablet.height);
     });
 

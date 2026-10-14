@@ -33,7 +33,8 @@ class AppStatusBar extends ConsumerWidget {
       ),
       ConnectionStatus.offline => PosStatusItem(
         icon: Icons.wifi_off,
-        label: queued > 0
+        // Telefonda qisqa: joy tor, navbat soni alohida yozuvda.
+        label: queued > 0 && !compact
             ? l10n.statusOfflineSaving(queued)
             : l10n.statusOffline,
         tone: PosTone.warning,

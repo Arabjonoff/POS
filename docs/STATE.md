@@ -5,18 +5,13 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-033 Ilova qobig'i va navigatsiya
-- Branch: feat/T-033-app-shell
-- Boshlangan: 2026-10-14
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-14
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [x] 1. Router: StatefulShellRoute (6 bo'lim: /pos, /products, /receiving, /customers, /reports, /settings)
-- [x] 2. AppShell: PosResponsiveScaffold + Ctrl+1..6 tezkor tugmalar; bo'lim sahifalari (tayyorlanmoqda holati), Sozlamalar — til
-- [x] 3. Holat qatori: internet, printer, smena, navbat (provayderlar; navbat va smena — bazadan)
-- [ ] 4. Testlar: navigatsiya (bosish, klaviatura), holat qatori; golden 3 o'lcham × 2 mavzu; skrinshotlar
-- [ ] 5. Tekshiruv, PR, merge, hujjatlar
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
@@ -27,3 +22,4 @@
 - Docker Desktop o'chiq bo'lishi mumkin: `C:\Users\Muhammadi\AppData\Local\Programs\DockerDesktop\Docker Desktop.exe` ni ishga tushir, `docker info` javob berguncha kut.
 - Flutter: golden'lar `packages/ui/widgetbook/test/goldens/` da, qayta yaratish `make ui-goldens` (faqat Windows). Xatolarni ko'rish: `flutter test --no-pub -r failures-only`. Bash'da `sed -i` ba'zan "Device or resource busy" beradi (Windows) — Edit vositasini ishlat.
 - Drift: build_runner "Tried to delete from package not in the build" bersa — `rm -rf apps/pos/.dart_tool/build` va qayta `dart run build_runner build`. Sxema o'zgarsa: `schemaVersion++`, `dart run drift_dev make-migrations`, `stepByStep` qadami.
+- Flutter widget testida `tester.runAsync` + drift stream osilib qoladi — bazaga yozishni test tanasida to'g'ridan-to'g'ri `await` qil. Osilgan test: `flutter test --timeout 30s -r expanded`.

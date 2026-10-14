@@ -72,30 +72,10 @@ class PosResponsiveScaffold extends StatelessWidget {
             ],
           ),
         ),
-        bottomNavigationBar: DecoratedBox(
-          decoration: BoxDecoration(
-            border: Border(top: BorderSide(color: p.border)),
-          ),
-          child: NavigationBar(
-            selectedIndex: selectedIndex,
-            onDestinationSelected: onDestinationSelected,
-            labelBehavior: destinations.length > 5
-                ? NavigationDestinationLabelBehavior.onlyShowSelected
-                : NavigationDestinationLabelBehavior.alwaysShow,
-            destinations: [
-              for (final d in destinations)
-                NavigationDestination(
-                  icon: _withBadge(context, Icon(d.icon), d.badgeCount),
-                  selectedIcon: _withBadge(
-                    context,
-                    Icon(d.selectedIcon ?? d.icon),
-                    d.badgeCount,
-                  ),
-                  label: d.label,
-                  tooltip: d.label,
-                ),
-            ],
-          ),
+        bottomNavigationBar: _BottomNav(
+          destinations: destinations,
+          selectedIndex: selectedIndex,
+          onSelected: onDestinationSelected,
         ),
       );
     }
@@ -321,7 +301,6 @@ class _Rail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final p = PosPalette.of(context);
     return SizedBox(
       width: PosSizes.railWidth,
       child: FocusTraversalGroup(
@@ -329,66 +308,132 @@ class _Rail extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: PosSpacing.m),
           children: [
             for (final (i, d) in destinations.indexed)
-              Semantics(
-                selected: i == selectedIndex,
-                child: InkWell(
+              SizedBox(
+                height: 72,
+                child: _NavTile(
+                  destination: d,
+                  selected: i == selectedIndex,
                   onTap: () => onSelected(i),
-                  hoverColor: p.text.withValues(alpha: 0.04),
-                  focusColor: p.primary.withValues(alpha: 0.12),
-                  child: SizedBox(
-                    height: 72,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        AnimatedContainer(
-                          duration: PosMotion.press,
-                          width: 56,
-                          height: 32,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: i == selectedIndex
-                                ? p.primarySoft
-                                : Colors.transparent,
-                            borderRadius: PosRadius.pillAll,
-                          ),
-                          child: _withBadge(
-                            context,
-                            Icon(
-                              i == selectedIndex
-                                  ? d.selectedIcon ?? d.icon
-                                  : d.icon,
-                              color: i == selectedIndex
-                                  ? p.onPrimarySoft
-                                  : p.textSecondary,
-                            ),
-                            d.badgeCount,
-                          ),
-                        ),
-                        const SizedBox(height: PosSpacing.xs),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: PosSpacing.xs,
-                          ),
-                          child: Text(
-                            d.label,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: PosTypography.caption.copyWith(
-                              color: i == selectedIndex
-                                  ? p.onPrimarySoft
-                                  : p.textSecondary,
-                              fontWeight: i == selectedIndex
-                                  ? FontWeight.w600
-                                  : FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ],
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Telefon: pastki navigatsiya paneli. Yorliqlar doim ko'rinadi va bir
+/// qatorda (6 bo'limda ham — joy yetmasa shrift kichrayadi).
+class _BottomNav extends StatelessWidget {
+  const _BottomNav({
+    required this.destinations,
+    required this.selectedIndex,
+    required this.onSelected,
+  });
+
+  final List<PosDestination> destinations;
+  final int selectedIndex;
+  final ValueChanged<int> onSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = PosPalette.of(context);
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: p.surface,
+        border: Border(top: BorderSide(color: p.border)),
+      ),
+      child: SafeArea(
+        top: false,
+        child: SizedBox(
+          height: 68,
+          child: Row(
+            children: [
+              for (final (i, d) in destinations.indexed)
+                Expanded(
+                  child: _NavTile(
+                    destination: d,
+                    selected: i == selectedIndex,
+                    onTap: () => onSelected(i),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Rels va pastki panel elementi: ikon (tanlanganda yumshoq fon) + yorliq.
+class _NavTile extends StatelessWidget {
+  const _NavTile({
+    required this.destination,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final PosDestination destination;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = PosPalette.of(context);
+    final fg = selected ? p.onPrimarySoft : p.textSecondary;
+    return Semantics(
+      selected: selected,
+      button: true,
+      label: destination.label,
+      excludeSemantics: true,
+      child: Tooltip(
+        message: destination.label,
+        excludeFromSemantics: true,
+        child: InkWell(
+          onTap: onTap,
+          hoverColor: p.text.withValues(alpha: 0.04),
+          focusColor: p.primary.withValues(alpha: 0.12),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AnimatedContainer(
+                duration: PosMotion.press,
+                width: 56,
+                height: 32,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: selected ? p.primarySoft : Colors.transparent,
+                  borderRadius: PosRadius.pillAll,
+                ),
+                child: _withBadge(
+                  context,
+                  Icon(
+                    selected
+                        ? destination.selectedIcon ?? destination.icon
+                        : destination.icon,
+                    color: fg,
+                  ),
+                  destination.badgeCount,
+                ),
+              ),
+              const SizedBox(height: PosSpacing.xs),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    destination.label,
+                    maxLines: 1,
+                    style: PosTypography.caption.copyWith(
+                      color: fg,
+                      fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
                     ),
                   ),
                 ),
               ),
-          ],
+            ],
+          ),
         ),
       ),
     );
