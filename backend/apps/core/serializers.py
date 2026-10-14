@@ -11,3 +11,15 @@ class TenantPKField(serializers.PrimaryKeyRelatedField):
         if "deleted_at" in model_fields:
             queryset = queryset.filter(deleted_at__isnull=True)
         return queryset
+
+
+class ClientIdMixin:
+    """`id` klientda yaratilishi mumkin (UUIDv7); keyin o'zgarmaydi."""
+
+    def validate_id(self, value):
+        model = self.Meta.model
+        if self.instance is not None and value != self.instance.pk:
+            raise serializers.ValidationError("Id cannot be changed.")
+        if self.instance is None and model.objects.filter(pk=value).exists():
+            raise serializers.ValidationError("Object with this id already exists.", code="unique")
+        return value

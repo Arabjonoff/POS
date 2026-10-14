@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from apps.catalog.models import Category, Product
 from apps.core.fields import StrictIntegerField, money_field
-from apps.core.serializers import TenantPKField
+from apps.core.serializers import ClientIdMixin, TenantPKField
 from apps.tenants.models import Store
 
 from . import services
@@ -23,18 +23,6 @@ class SupplierSerializer(serializers.ModelSerializer):
         model = Supplier
         fields = ["id", "name", "phone", "note"]
         read_only_fields = ["id"]
-
-
-class ClientIdMixin:
-    """`id` klientda yaratilishi mumkin (UUIDv7); keyin o'zgarmaydi."""
-
-    def validate_id(self, value):
-        model = self.Meta.model
-        if self.instance is not None and value != self.instance.pk:
-            raise serializers.ValidationError("Id cannot be changed.")
-        if self.instance is None and model.objects.filter(pk=value).exists():
-            raise serializers.ValidationError("Object with this id already exists.", code="unique")
-        return value
 
 
 class StockReceiptItemSerializer(serializers.ModelSerializer):
