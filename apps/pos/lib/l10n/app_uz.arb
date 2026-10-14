@@ -369,5 +369,34 @@
         "type": "int"
       }
     }
+  },
+  "statusSalesReadonly": "Obuna muddati tugagan — savdo to'xtatilgan",
+  "@statusSalesReadonly": {
+    "description": "Holat qatori: obuna readonly"
+  },
+  "statusSalesBlocked": "Do'kon bloklangan — savdo to'xtatilgan",
+  "@statusSalesBlocked": {
+    "description": "Holat qatori: tenant bloklangan"
+  },
+  "statusSalesOffline": "Uzoq vaqt internet yo'q — savdo to'xtatilgan",
+  "@statusSalesOffline": {
+    "description": "Holat qatori: oflayn muddati o'tdi"
+  },
+  "statusDeviceBlocked": "Kassa bloklangan",
+  "@statusDeviceBlocked": {
+    "description": "Holat qatori: qurilma bloklangan"
+  },
+  "statusClockSkew": "Kompyuter soati noto'g'ri",
+  "@statusClockSkew": {
+    "description": "Holat qatori: qurilma soati serverdan farq qiladi"
+  },
+  "statusRejected": "{count, plural, other{{count} ta yozuv qabul qilinmadi}}",
+  "@statusRejected": {
+    "description": "Holat qatori: server rad etgan yozuvlar",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

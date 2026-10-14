@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pos_app/app/locale.dart';
 import 'package:pos_app/app/router.dart';
 import 'package:pos_app/app/session/auto_lock.dart';
+import 'package:pos_app/app/sync/sync_runner.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
 import 'package:pos_ui/pos_ui.dart';
 
@@ -22,7 +23,8 @@ class PosApp extends ConsumerWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       routerConfig: router,
-      builder: (context, child) => AutoLock(child: child ?? const SizedBox()),
+      builder: (context, child) =>
+          SyncRunner(child: AutoLock(child: child ?? const SizedBox())),
     );
   }
 }

@@ -128,7 +128,7 @@ Spec'lar: `design-system.md`, `sync.md`, `i18n.md`.
 - **Qabul:** oflaynda PIN bilan kirish ishlaydi; noto'g'ri PIN 5 marta — 1 daqiqa kutish.
 - **Bog'liq:** T-032, T-033, T-011
 
-### [ ] T-035 Sinxronlash dvigateli
+### [x] T-035 Sinxronlash dvigateli
 - **Bajarish:** outbox push (fon, eksponensial kutish), pull (cursor), ulanish holatini kuzatish, holat qatorida "N ta yozuv navbatda". Obuna holatini saqlash va `readonly` rejim.
 - **Qabul:** `sync.md` klient qabul mezonlari integration testlarda (soxta server bilan).
 - **Bog'liq:** T-032, T-018

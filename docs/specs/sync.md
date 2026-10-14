@@ -46,3 +46,11 @@ Klient:
 6. Push o'rtasida tarmoq uziladi → qayta yuborishda dublikat yo'q.
 7. Savdo yopish o'rtasida jarayon o'ldiriladi → savdo yoki to'liq bor, yoki umuman yo'q.
 8. `readonly` holatida savdo tugmasi o'chiq, sinxronlash ishlaydi.
+
+## Kassa tomoni (T-034, T-035)
+- Kod: `apps/pos/lib/data/sync/` — `push.dart` (`OutboxPusher`), `pull.dart` (`PullApplier`, `SyncPuller`), `sync_engine.dart` (`SyncEngine.syncOnce`: avval hamma navbat, keyin pull; hech qachon tashlamaydi — natija `SyncHealth`); `apps/pos/lib/app/sync/` — `sync_runner.dart` (fon tsikli), `sales_gate.dart` (savdo ruxsati).
+- **Push**: navbat `created_at` (teng bo'lsa `id`) tartibida, 100 tadan. Natija: `applied`/`duplicate`/`pending` → `sent` (+`sent_at`), `rejected` → `rejected` + `last_error` (qayta yuborilmaydi, holat qatorida "N ta yozuv qabul qilinmadi"), javobda yo'q — keyinroq. Tarmoq/server xatosida paketdagi hodisalarga `next_attempt_at = now + 5 s × 2^(urinish−1)` (≤ 5 daq). **Navbat boshi kutayotgan bo'lsa, hech narsa yuborilmaydi** — yangi hodisa eskisidan oldin ketmaydi. Javob yo'qolsa — o'sha `id` lar qayta yuboriladi (server `duplicate`).
+- **Fon tsikli** (`SyncRunner`): qurilma ulangandan keyin (PIN ekranida ham) har 10 s push; yangi outbox hodisasi paydo bo'lsa 1 s ichida; pull — har 60 s (push bilan bir siklda). Ulanish holati (`connectionStatusProvider`) — oxirgi siklning natijasi (haqiqiy server bilan aloqa, Wi-Fi emas).
+- **Savdo ruxsati** (`salesBlockProvider`): obuna `readonly`/`blocked`, `offline_grace_until` o'tgan (qurilma soati server farqi bilan tuzatiladi) yoki qurilma bloklangan (403 `device_blocked`, keyingi muvaffaqiyatli sinxrongacha eslab qolinadi) → savdo va kirim tugmalari o'chadi (T-042/T-052 shu provayderni ishlatadi), sababi holat qatorida. Sinxron, ko'rish, hisobotlar ishlayveradi.
+- **Soat**: `|server_time − qurilma vaqti| > 5 daq` → holat qatorida "Kompyuter soati noto'g'ri".
+- Hali qilinmagan: hodisada tuzatilgan vaqtni ham yuborish (server maydoni yo'q), qoldiqni "server + yuborilmagan harakatlar" bo'yicha ko'rsatish — T-042/T-054.

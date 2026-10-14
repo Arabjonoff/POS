@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:clock/clock.dart';
 import 'package:drift/drift.dart';
 import 'package:pos_api_client/pos_api_client.dart';
 import 'package:pos_app/data/db/app_database.dart';
@@ -8,8 +9,7 @@ import 'package:pos_app/data/db/app_database.dart';
 /// Bitta sahifa — bitta tranzaksiya: o'zgarishlar + kursor + obuna holati
 /// birga yoziladi (yarim qo'llangan sahifa bo'lmaydi). Konflikt: server g'olib.
 class PullApplier {
-  PullApplier(this._db, {DateTime Function()? now})
-    : _now = now ?? DateTime.now;
+  PullApplier(this._db, {DateTime Function()? now}) : _now = now ?? _clockNow;
 
   final AppDatabase _db;
   final DateTime Function() _now;
@@ -278,3 +278,6 @@ class SyncPuller {
     }
   }
 }
+
+/// Joriy vaqt (testlarda flutter_test soxta vaqti).
+DateTime _clockNow() => clock.now();

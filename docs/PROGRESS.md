@@ -148,3 +148,10 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-034 (squash merge)
 - Qoldi / keyingi qadam: T-035 Sinxronlash dvigateli — push (outbox), fon tsikli (10 s / 60 s), ulanish kuzatuvi, eksponensial kutish, `readonly` rejim. Pull qismi shu vazifada qilindi (birinchi sinxron uchun kerak edi).
 - Muammo yoki qaror: swagger_parser bir nechta content-type bo'lsa multipart'ni tanlaydi → server JSON-only. PIN uzunligi xeshdan noma'lum → ✓/Enter bilan tasdiqlash. Widget testlarda PIN tekshiruvi soxta (`PinGate(verify:)`), haqiqiy PBKDF2 — unit testda.
+
+## 2026-10-14 — T-035 Sinxronlash dvigateli
+- Qilindi: `OutboxPusher` (tartib, 100 tadan, natijalar, eksponensial kutish 5 s → 5 daq, navbat boshi kutsa — hech narsa), `SyncEngine.syncOnce` (push → pull, `SyncHealth`: online/offline/unauthorized/deviceBlocked), `SyncRunner` (10 s push, yangi hodisada 1 s, 60 s pull; ulanmagan qurilmada ishlamaydi), ulanish holati sinxrondan, `salesBlockProvider` (readonly/blocked/oflayn muddati — server soati bilan tuzatilgan/qurilma bloklangan), soat farqi va rad etilgan yozuvlar — holat qatorida. Vaqt manbai `package:clock` (testlarda soxta vaqt).
+- Testlar: apps/pos 152 (+22): push tartibi va natijalari, 100 lik paketlar, kutish o'sishi va tartib saqlanishi; **sync.md mezonlari**: 5 — 500 oflayn savdo → serverda aynan 500; 6 — javob yo'qolganda qayta yuborishda dublikat yo'q; 8 — readonly'da savdo o'chiq, sinxron ishlaydi; qurilma bloki, 401, tokensiz; oflayn muddati (chegara ±1 daq), orqada qolgan qurilma soati, bloklangan tenant; fon tsikli widget testlari (birinchi sikl, yangi hodisa, 10 s/60 s, oflayn → qayta tiklanish, PIN ekranida ham, ulanmaguncha yo'q).
+- PR: T-035 (squash merge)
+- Qoldi / keyingi qadam: 3-bosqich — T-040 Skaner xizmati. Savdo tugmasi `salesAllowedProvider` ga ulanadi (T-042/T-043).
+- Muammo yoki qaror: kutish butun navbatga (eng eski hodisa bo'yicha) — tartib buzilmasin. Widget testlarida `DateTime.now()` soxta vaqtni bilmaydi → `clock.now()`.
