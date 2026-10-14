@@ -43,7 +43,7 @@ Tartib: yuqoridan pastga. Bog'liqligi tayyor bo'lmagan vazifani o'tkazib, keying
 ## 1-bosqich. Backend yadrosi
 Spec'lar: `data-model.md`, `auth-roles.md`, `sync.md`, `subscription-billing.md`.
 
-### [ ] T-010 Tenant va Store
+### [~] T-010 Tenant va Store
 - **Bajarish:** `apps/tenants`: Tenant, Store modellari, admin ro'yxati. Tenant yaratilganda bitta Store avtomatik.
 - **Qabul:** model testlari; tenant izolyatsiyasi testi uchun umumiy fixture.
 - **Bog'liq:** T-003
