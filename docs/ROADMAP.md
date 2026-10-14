@@ -93,7 +93,7 @@ Spec'lar: `data-model.md`, `auth-roles.md`, `sync.md`, `subscription-billing.md`
 - **Qabul:** test ma'lumotlari ustida hisobot raqamlari qo'lda hisoblangan qiymatlarga teng.
 - **Bog'liq:** T-017
 
-### [ ] T-020 Platforma admin API
+### [x] T-020 Platforma admin API
 - **Bajarish:** `/api/v1/platform/...` (faqat platform_admin): tenantlar, tariflar, obunalar, to'lovlar, qurilmalar, statistika (faol mijozlar, MRR, muddati tugayotganlar), AdminAuditLog (har o'zgarish yoziladi).
 - **Qabul:** tenant foydalanuvchisi 403 oladi; har o'zgarish audit jurnalida.
 - **Bog'liq:** T-013, T-012

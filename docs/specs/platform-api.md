@@ -24,7 +24,7 @@ SaaS egasi (platform_admin) uchun — admin dashboard (`admin-dashboard.md`) shu
 ## To'lovlar
 - `POST /platform/tenants/{id}/payments/` `{amount_tiyin, months, method, note?}` → `record_payment` (`subscription-billing.md`).
 - `GET /platform/payments/` — barcha to'lovlar (`?tenant=`, `?date_from=`, `?date_to=` — `paid_at` sanasi, Asia/Tashkent), javobda sahifa + `total_tiyin` (filtrlangan, bekor qilinganlar bilan netto).
-- `POST /platform/payments/{id}/reverse/` `{note}` (majburiy) → `reverse_payment`; faqat oxirgi to'lov (`409`).
+- `POST /platform/payments/{id}/reverse/` `{note}` (majburiy) → `reverse_payment`; faqat oxirgi to'lov (`400 only_latest_payment`).
 
 ## Qurilmalar — `/platform/devices/`
 - `{id, tenant, tenant_name, code, name, platform, app_version, last_sync_at, last_seen_at, is_blocked, created_at}`; `?tenant=`, `?blocked=true`, `?stale_days=N` (oxirgi sinxron N kundan oldin yoki umuman yo'q).

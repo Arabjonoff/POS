@@ -38,6 +38,8 @@ def onboard_tenant(*, actor, data: dict) -> tuple[Tenant, User, str | None]:
     plan, trial_days = data.pop("plan"), data.pop("trial_days")
     password = owner_data.get("password") or None
     generated = None if password else temporary_password()
+    if User.objects.filter(phone=owner_data["phone"]).exists():
+        raise DomainError("phone_taken", "This phone is already registered.", 409)
     tenant = Tenant.objects.create(owner_phone=owner_data["phone"], **data)
     try:
         with transaction.atomic():
@@ -51,7 +53,7 @@ def onboard_tenant(*, actor, data: dict) -> tuple[Tenant, User, str | None]:
     except IntegrityError:
         raise DomainError("phone_taken", "This phone is already registered.", 409) from None
     subscription = start_subscription(tenant, plan, trial_days=trial_days)
-    audit(actor, "tenant.create", tenant, after=snapshot(tenant))
+    audit(actor, "tenant.create", tenant, after=snapshot(tenant), tenant_id=tenant.pk)
     audit(actor, "user.create", owner, after=snapshot(owner))
     audit(
         actor,

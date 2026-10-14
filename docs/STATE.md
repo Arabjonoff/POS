@@ -5,27 +5,20 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-020 Platforma admin API
-- Branch: feat/T-020-platform-api
-- Boshlangan: 2026-10-14
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-14
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [x] 1. Spec `docs/specs/platform-api.md` (endpointlar, onboarding, audit qoidasi, statistika formulalari)
-- [x] 2. `apps/platform_admin`: AdminAuditLog (o'zgarmas) + `audit()` yordamchisi; migratsiya; admin
-- [x] 3. Tenantlar: ro'yxat/karta, onboarding (tenant + ega + obuna, vaqtinchalik parol), tahrir, bloklash, obuna sozlamalari, xodimlar va parol tiklash, sinxron hodisalari
-- [x] 4. Tariflar CRUD (o'chirish = nofaol), to'lovlar (kiritish, bekor qilish, ro'yxat), qurilmalar (ro'yxat, bloklash)
-- [x] 5. Statistika (faol, sinov, MRR, shu oy tushum, 7 kunda tugaydiganlar, sinxronlanmagan qurilmalar) + audit jurnali ro'yxati
-- [ ] 6. Testlar: tenant foydalanuvchisi 403, har o'zgarish auditda (oldin/keyin), onboarding, to'lov/bekor, statistika qiymatlari
-- [ ] 7. openapi + schema.d.ts; lint/test; PROGRESS/ROADMAP; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-3–5-qadamlar: `apps/platform_admin` services (onboarding, tahrir, bloklash, obuna, parol, tarif, to'lov/bekor, qurilma bloklash — har biri audit bilan), serializers, views (TenantViewSet + actions, Plan, Payment + total, Device, Stats, AuditLog, reset-password), stats.py, urls. Schema toza. Testlar hali yo'q.
+T-020 Platforma admin API tugadi (PR ochildi, CI yashil bo'lsa squash merge). 1-bosqich (backend) tugadi.
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-6-qadam: `backend/apps/platform_admin/tests/` — conftest (platform_admin user, plan), test_access.py (har endpoint: tenant xodimi 403, anonim 401), test_tenants.py, test_billing.py (to'lov/bekor/tarif), test_devices_stats.py, har o'zgarishda audit tekshiruvi.
+T-020 PR merge qilinganini tekshirish (`gh pr list --state open`); keyin ROADMAP'dan T-030 Dizayn tizimi (packages/ui) — `docs/specs/design-system.md`.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
