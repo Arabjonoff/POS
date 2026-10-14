@@ -4,6 +4,7 @@ import 'package:drift/drift.dart' hide isNull;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pos_app/data/customers/customer_directory.dart';
 import 'package:pos_app/data/db/app_database.dart';
+import 'package:pos_app/data/sync/outbox.dart';
 
 import '../helpers/sqlite.dart';
 
@@ -107,6 +108,123 @@ void main() {
       'phone': '901112233',
       'note': '',
       'by': 'cashier-1',
+    });
+  });
+
+  group('customer card (T-060)', () {
+    test('pay debt: ledger entry, outbox, balance = sum of entries', () async {
+      // c1: 300 000 − 100 000 = 200 000.
+      await customers.payDebt(
+        customerId: 'c1',
+        amountTiyin: 5000000,
+        method: 'cash',
+        by: 'cashier-1',
+        shiftId: 'shift-1',
+      );
+      final entries = await (db.select(
+        db.debtEntries,
+      )..where((d) => d.customerId.equals('c1'))).get();
+      final sum = entries.fold<int>(0, (s, e) => s + e.amountTiyin);
+      expect((await customers.byId('c1'))!.balanceTiyin, sum);
+      expect(sum, 15000000);
+      final payment = entries.firstWhere((e) => e.amountTiyin == -5000000);
+      expect(
+        (payment.type, payment.method, payment.shiftId),
+        (
+          'payment',
+          'cash',
+          'shift-1',
+        ),
+      );
+      final event = await (db.select(
+        db.outboxEvents,
+      )..where((e) => e.type.equals(OutboxEventType.debtPaid))).getSingle();
+      final payload = jsonDecode(event.payload) as Map<String, Object?>;
+      expect(payload['id'], payment.id);
+      expect(payload['customer'], 'c1');
+      expect(payload['amount_tiyin'], 5000000);
+      expect(payload['method'], 'cash');
+      expect(payload['shift'], 'shift-1');
+      expect(payload['by'], 'cashier-1');
+    });
+
+    test('paying more than the debt is refused; nothing written', () async {
+      await expectLater(
+        customers.payDebt(
+          customerId: 'c1',
+          amountTiyin: 20000001,
+          method: 'card',
+          by: 'c',
+        ),
+        throwsA(
+          isA<PaymentExceedsDebtException>().having(
+            (e) => e.balanceTiyin,
+            'balance',
+            20000000,
+          ),
+        ),
+      );
+      expect(await db.select(db.outboxEvents).get(), isEmpty);
+      expect(
+        () => customers.payDebt(
+          customerId: 'c1',
+          amountTiyin: 100,
+          method: 'bonus',
+          by: 'c',
+        ),
+        throwsArgumentError,
+      );
+    });
+
+    test('history newest first; details', () async {
+      await customers.payDebt(
+        customerId: 'c1',
+        amountTiyin: 100,
+        method: 'card',
+        by: 'c',
+      );
+      final history = await customers.watchHistory('c1').first;
+      expect(history.first.type, 'payment');
+      expect(history.first.method, 'card');
+      expect(history.map((h) => h.id), containsAll(['d1', 'd2']));
+      final d = (await customers.details('c1'))!;
+      expect(
+        (d.name, d.limitTiyin, d.balanceTiyin),
+        (
+          "Karimova O'g'iloy",
+          50000000,
+          19999900,
+        ),
+      );
+      expect(await customers.details('c3'), isNull);
+    });
+
+    test('update: limit only in the payload when changed', () async {
+      await customers.update(
+        id: 'c2',
+        name: 'Aziz',
+        phone: '+998901112233',
+        by: 'c',
+      );
+      await customers.update(
+        id: 'c2',
+        name: 'Aziz',
+        by: 'manager-1',
+        changeLimit: true,
+        limitTiyin: 10000000,
+      );
+      final events = await (db.select(
+        db.outboxEvents,
+      )..where((e) => e.type.equals(OutboxEventType.customerUpserted))).get();
+      final payloads = [
+        for (final e in events) jsonDecode(e.payload) as Map<String, Object?>,
+      ];
+      expect(payloads.first.containsKey('debt_limit_tiyin'), isFalse);
+      expect(payloads.first['phone'], '+998901112233');
+      expect(payloads.last['debt_limit_tiyin'], 10000000);
+      expect(payloads.last['by'], 'manager-1');
+      final d = (await customers.details('c2'))!;
+      expect((d.name, d.limitTiyin), ('Aziz', 10000000));
     });
   });
 }

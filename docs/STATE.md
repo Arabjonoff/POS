@@ -12,7 +12,7 @@
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [ ] 1. `CustomerDirectory`: `watchHistory` (debt_entries, yangisi birinchi), `purchases` (lokal savdolar), `payDebt` (DebtEntry(−, payment) + outbox `debt.paid`, ≤ balans), `update` (ism/telefon/izoh; limit — ega/menejer `by`) + testlar (balans = Σ yozuvlar, oflayn)
+- [x] 1. `CustomerDirectory`: `watchHistory` (debt_entries, yangisi birinchi), `purchases` (lokal savdolar), `payDebt` (DebtEntry(−, payment) + outbox `debt.paid`, ≤ balans), `update` (ism/telefon/izoh; limit — ega/menejer `by`) + testlar (balans = Σ yozuvlar, oflayn)
 - [ ] 2. Bo'lim "Mijozlar" (Ctrl+4): ro'yxat (qarzdorlar tepada, qidiruv, "Qarzi bor" filtri, jami qarz), yangi mijoz
 - [ ] 3. Mijoz kartasi: katta qarz, limit, tarix, xaridlar, "Qarzni to'lash" (summa, "To'liq", naqd/karta), tahrirlash (limit — PIN); tarjimalar
 - [ ] 4. Widget testlari + golden + skrinshotlar `docs/screenshots/T-060/`
@@ -22,7 +22,7 @@
 - T-054 merge qilindi (#35), 4-bosqich yopildi. T-060 boshlandi.
 
 ## Keyingi aniq harakat
-- 1-qadam: `apps/pos/lib/data/customers/customer_directory.dart` ga metodlar, test `apps/pos/test/data/customer_directory_test.dart` ga.
+- 2–3-qadam: `apps/pos/lib/features/customers/customers_screen.dart` (ro'yxat) va `customer_card.dart` (karta, to'lov oynasi, tahrirlash), router `AppSection.customers`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
