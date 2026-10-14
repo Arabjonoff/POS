@@ -5,19 +5,18 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-033 Ilova qobig'i va navigatsiya
+- Branch: feat/T-033-app-shell
+- Boshlangan: 2026-10-14
 - Oxirgi yangilanish: 2026-10-14
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-
-## Ochiq holatlar
-- Commit qilinmagan o'zgarishlar: yo'q
-- Ochiq PR: —
-- Ishlab turgan servislar: docker compose (pos-*) — 8100, 3100
-- Yiqilayotgan testlar: —
+- [ ] 1. Router: StatefulShellRoute (6 bo'lim: /pos, /products, /receiving, /customers, /reports, /settings)
+- [ ] 2. AppShell: PosResponsiveScaffold + Ctrl+1..6 tezkor tugmalar; bo'lim sahifalari (tayyorlanmoqda holati), Sozlamalar — til
+- [ ] 3. Holat qatori: internet, printer, smena, navbat (provayderlar; navbat va smena — bazadan)
+- [ ] 4. Testlar: navigatsiya (bosish, klaviatura), holat qatori; golden 3 o'lcham × 2 mavzu; skrinshotlar
+- [ ] 5. Tekshiruv, PR, merge, hujjatlar
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
