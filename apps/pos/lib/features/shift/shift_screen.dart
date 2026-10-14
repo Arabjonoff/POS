@@ -123,22 +123,11 @@ class _ShiftScreenState extends ConsumerState<ShiftScreen> {
         ref.watch(sessionProvider).user?.fullName ?? '',
       ),
       report: report,
-      footer: _CashMovementsCard(shiftId: shift.id),
+      footer: _CashMovementsCard(
+        shiftId: shift.id,
+        onMove: (type) => unawaited(_moveCash(type)),
+      ),
       actions: [
-        PosButton(
-          key: const ValueKey('shift-cash-in'),
-          label: l10n.cashIn,
-          icon: Icons.add_circle_outline,
-          variant: PosButtonVariant.secondary,
-          onPressed: () => unawaited(_moveCash(CashMovementType.cashIn)),
-        ),
-        PosButton(
-          key: const ValueKey('shift-cash-out'),
-          label: l10n.cashOut,
-          icon: Icons.remove_circle_outline,
-          variant: PosButtonVariant.secondary,
-          onPressed: () => unawaited(_moveCash(CashMovementType.cashOut)),
-        ),
         PosButton(
           key: const ValueKey('shift-print'),
           label: l10n.shiftPrintReport,
@@ -331,9 +320,10 @@ class _CloseShiftDialogState extends State<_CloseShiftDialog> {
 
 /// Smenadagi kassa puli harakatlari: vaqt, sabab, summa (+ / −).
 class _CashMovementsCard extends ConsumerWidget {
-  const _CashMovementsCard({required this.shiftId});
+  const _CashMovementsCard({required this.shiftId, required this.onMove});
 
   final String shiftId;
+  final ValueChanged<CashMovementType> onMove;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -352,6 +342,29 @@ class _CashMovementsCard extends ConsumerWidget {
             style: PosTypography.h3.copyWith(color: p.text),
           ),
           const SizedBox(height: PosSpacing.s),
+          Wrap(
+            spacing: PosSpacing.s,
+            runSpacing: PosSpacing.s,
+            children: [
+              PosButton(
+                key: const ValueKey('shift-cash-in'),
+                label: l10n.cashIn,
+                icon: Icons.add_circle_outline,
+                size: PosButtonSize.s,
+                variant: PosButtonVariant.secondary,
+                onPressed: () => onMove(CashMovementType.cashIn),
+              ),
+              PosButton(
+                key: const ValueKey('shift-cash-out'),
+                label: l10n.cashOut,
+                icon: Icons.remove_circle_outline,
+                size: PosButtonSize.s,
+                variant: PosButtonVariant.secondary,
+                onPressed: () => onMove(CashMovementType.cashOut),
+              ),
+            ],
+          ),
+          const SizedBox(height: PosSpacing.m),
           if (movements.isEmpty)
             Text(
               l10n.cashNoMovements,

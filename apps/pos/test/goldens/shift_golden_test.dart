@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart' show Scrollable, ValueKey;
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pos_app/app/status/app_status.dart';
@@ -11,7 +12,8 @@ import 'golden_helpers.dart';
 
 final DateTime _now = DateTime.utc(2026, 10, 14, 15, 15);
 
-/// Ochiq smena: 100 000 boshlang'ich, uch savdo (naqd, karta, nasiya).
+/// Ochiq smena: 100 000 boshlang'ich, uch savdo (naqd, karta, nasiya),
+/// kassa puli: +20 000 mayda pul, −60 000 inkassatsiya.
 Future<AppDatabase> _shiftWithSales() async {
   final db = openTestDatabase();
   final shift = await ShiftService(db, now: () => _now).open(
@@ -48,6 +50,21 @@ Future<AppDatabase> _shiftWithSales() async {
       ),
     );
   }
+  final shifts = ShiftService(db, now: () => _now);
+  await shifts.moveCash(
+    shiftId: shift.id,
+    type: CashMovementType.cashIn,
+    amountTiyin: 2000000,
+    by: testCashier.id,
+    reason: 'Mayda pul',
+  );
+  await shifts.moveCash(
+    shiftId: shift.id,
+    type: CashMovementType.cashOut,
+    amountTiyin: 6000000,
+    by: testCashier.id,
+    reason: 'Inkassatsiya',
+  );
   return db;
 }
 
@@ -93,6 +110,53 @@ void main() {
     addTearDown(db.close);
     await _pump(tester, size, db);
     await tester.tap(_shiftButton());
+    await tester.pumpAndSettle();
+  });
+
+  /// Smena sahifasi pastida: kassa puli harakatlari ro'yxati.
+  goldenAcrossDevices('shift', 'cash_list', (tester, size) async {
+    final db = await _shiftWithSales();
+    addTearDown(db.close);
+    await _pump(tester, size, db);
+    await tester.tap(_shiftButton());
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('shift-cash-out')),
+      300,
+      scrollable: find.byType(Scrollable).last,
+    );
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.textContaining('Inkassatsiya'));
+    await tester.pumpAndSettle();
+  });
+
+  /// F9: kassadan pul chiqarish — summa va sabab tanlangan.
+  goldenAcrossDevices('shift', 'cash_out', (tester, size) async {
+    final db = await _shiftWithSales();
+    addTearDown(db.close);
+    await _pump(tester, size, db);
+    if (size.width < 600) {
+      await tester.tap(_shiftButton());
+      await tester.pumpAndSettle();
+      final out = find.byKey(const ValueKey('shift-cash-out'));
+      await tester.ensureVisible(out);
+      await tester.pumpAndSettle();
+      await tester.tap(out);
+    } else {
+      await tester.sendKeyEvent(LogicalKeyboardKey.f9);
+    }
+    await tester.pumpAndSettle();
+    await _type(tester, const [
+      LogicalKeyboardKey.digit2,
+      LogicalKeyboardKey.digit5,
+      LogicalKeyboardKey.digit0,
+      LogicalKeyboardKey.digit0,
+      LogicalKeyboardKey.digit0,
+    ]);
+    final reason = find.byKey(const ValueKey('cash-reason-expense'));
+    await tester.ensureVisible(reason);
+    await tester.pumpAndSettle();
+    await tester.tap(reason);
     await tester.pumpAndSettle();
   });
 

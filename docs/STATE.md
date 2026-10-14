@@ -15,14 +15,14 @@
 - [x] 1. `ShiftService.moveCash` (cash_movements + outbox `cash.moved` bitta tranzaksiyada; chiqarish kutilgan naqddan oshmaydi) va `movements(shiftId)` + testlar (X/Z da naqd balansi)
 - [x] 2. Oyna "Kassa puli" (F9 kassada, smena sahifasida tugmalar): kiritish/chiqarish, summa, sabab (Inkassatsiya, Xarajat, Mayda pul, Boshqa + matn); smena sahifasida harakatlar ro'yxati; tarjimalar
 - [x] 3. X/Z hisobot chekini chop etish (`ShiftReceiptBuilder` + snapshot), smena sahifasida "Chop etish" tugmalari yoqiladi
-- [ ] 4. Widget testlari + golden + skrinshotlar `docs/screenshots/T-046/`
+- [x] 4. Widget testlari + golden + skrinshotlar `docs/screenshots/T-046/`
 - [ ] 5. Spec, PR, CI → merge; ROADMAP, PROGRESS, STATE
 
 ## Oxirgi bajarilgan ish
-- 3-qadam: `ReceiptBuilder.buildShift` (X/Z), `PrinterService.printShiftReport`, snapshot `shift_x_58`/`shift_z_58`; smena sahifasida "Chek chiqarish" (X va Z).
+- 4-qadam: `test/features/cash_movement_test.dart` (4 test), smena goldenlari (kassa puli bilan) + `cash_out`, `cash_list`; "Pul kiritish/chiqarish" tugmalari harakatlar kartasiga ko'chirildi; skrinshotlar `docs/screenshots/T-046/`.
 
 ## Keyingi aniq harakat
-- 4-qadam: `apps/pos/test/features/cash_movement_test.dart` (F9 → chiqarish → sabab → toast; kassada yo'q summa → xato; smena sahifasida kiritish va ro'yxat; X hisobot chop etiladi — FakeTransport), goldenlar: `test/goldens/shift_golden_test.dart` yangilash + `cash` oynasi; skrinshotlar `docs/screenshots/T-046/`.
+- 5-qadam: `docs/specs/shifts.md` ga "Kassada amalga oshirilishi (T-046)", CI tekshiruvlari, PR → merge, ROADMAP [x], PROGRESS, STATE shablon.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
