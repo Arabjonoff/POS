@@ -5,29 +5,29 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-015 Ombor (StockMovement, kirim, inventarizatsiya)
-- Branch: feat/T-015-inventory
+- Vazifa: T-016 Mijozlar va nasiya
+- Branch: feat/T-016-customers-debts
 - Boshlangan: 2026-10-14
 - Oxirgi yangilanish: 2026-10-14
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [x] 1. Spec `docs/specs/inventory-api.md` (harakatlar, kesh, kirim oqimi, teskari kirim, inventarizatsiya, API)
-- [x] 2. `apps/inventory` modellari: Supplier, StockMovement (o'zgarmas), ProductStock (kesh), StockReceipt(+Item), InventoryCount(+Item); migratsiya; admin
-- [x] 3. `services.py`: record_movement (+kesh), post_receipt, reverse_receipt, post_inventory; `manage.py rebuild_stock`
-- [x] 4. API: suppliers, stock-receipts (+post, +reverse), inventory-counts (+post), stock, stock-movements
-- [x] 5. Testlar: kirim → qoldiq, teskari kirim, inventarizatsiya farqi, qoldiq = yig'indi, o'zgarmaslik, izolyatsiya, huquqlar
-- [ ] 6. openapi + schema.d.ts; lint/test; PR, CI, merge
+- [ ] 1. Spec `docs/specs/customers-api.md` (mijoz, DebtEntry, balans, limit, to'lov, tuzatish, huquqlar, API); savol bo'lsa `QUESTIONS.md`
+- [ ] 2. `apps/customers`: Customer (yumshoq o'chirish), DebtEntry (AppendOnlyModel); migratsiya; admin
+- [ ] 3. `services.py`: balance, record_debt (sale/refund — T-017 uchun), check_limit, pay_debt, adjust_debt (qulf bilan)
+- [ ] 4. API: `/customers/` (balance, search, has_debt, saralash), `/{id}/debt-entries/`, `/{id}/payments/`, `/{id}/adjustments/`
+- [ ] 5. Testlar: qarzga sotish + qisman to'lov → balans, limit, ortiqcha to'lov, tuzatish (faqat ega), o'zgarmaslik, izolyatsiya, huquqlar
+- [ ] 6. openapi + schema.d.ts; lint/test; PROGRESS/ROADMAP; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-6-qadam (qisman): openapi.yaml + schema.d.ts yangilandi, spec/ROADMAP/PROGRESS yozildi. 376 test, ruff, typecheck yashil. Hammasi lokal commit — hali push qilinmagan.
+T-015 merge qilindi (#12). T-016 branch ochildi.
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-`git push -u origin feat/T-015-inventory`, keyin `gh pr create` (T-015), CI yashil bo'lsa squash merge; STATE.md ni bo'sh shablonga qaytarish.
+1-qadam: `docs/specs/customers-api.md` ni yozish (`debts.md`, `data-model.md` Customer/DebtEntry, `auth-roles.md` asosida).
 
 ## Ochiq holatlar
-- Commit qilinmagan o'zgarishlar: yo'q (lekin 5 ta wip commit push qilinmagan)
+- Commit qilinmagan o'zgarishlar: yo'q
 - Ochiq PR: —
 - Ishlab turgan servislar: docker compose (pos-*) — 8100, 3100
 - Yiqilayotgan testlar: —
