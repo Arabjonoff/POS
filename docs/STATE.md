@@ -18,15 +18,15 @@
 - [x] 4. `services/sales.py`: record_sale — tekshiruv (summalar, to'lovlar, tenant), StockMovement(−), DebtEntry (nasiya)
 - [x] 5. `services/refunds.py`: record_refund — qoldiq miqdor, summa, StockMovement(+), qarz kamayishi, savdo holati
 - [x] 6. REST (faqat o'qish): `/shifts/` (+report), `/sales/`, `/refunds/`, `/cash-movements/`; kassir faqat o'zinikini ko'radi
-- [ ] 7. Testlar: savdo → qoldiq va qarz, qaytarish → teskari harakat, summalar xatosi, smena hisob-kitobi, izolyatsiya, huquqlar
+- [x] 7. Testlar: savdo → qoldiq va qarz, qaytarish → teskari harakat, summalar xatosi, smena hisob-kitobi, izolyatsiya, huquqlar
 - [ ] 8. openapi + schema.d.ts; lint/test; PROGRESS/ROADMAP; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-6-qadam: sales REST (faqat o'qish): shifts (+report), sales (sana filtri tenant TZ), refunds, cash-movements; kassir faqat o'zinikini; ENUM_NAME_OVERRIDES; openapi.yaml toza.
+7-qadam: sales testlari (80 ta): savdo → qoldiq va qarz, qaytarish (qisman/to'liq, yaxlitlash qoldig'i, chek chegirmasi ulushi, nasiya), smena hisob-kitobi va X/Z, REST (kassir faqat o'zinikini, sana filtri), izolyatsiya. Jami 505 test yashil.
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-7-qadam: `backend/apps/sales/tests/` — conftest (device, shift, payload factory), test_shifts.py, test_sales.py, test_refunds.py, test_api.py.
+8-qadam: push (internet bo'lsa), PROGRESS/ROADMAP, PR (T-017), CI, squash merge; STATE shablonga.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
