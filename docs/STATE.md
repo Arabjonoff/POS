@@ -13,17 +13,17 @@
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 - [x] 1. `apps/pos/lib/data/refunds/refund_calculator.dart`: sof hisob — server `record_refund` bilan bir xil (qator: `mulDivHalfUp(total, qty, sold)`, oxirgi qism — qoldiq; jami: chek chegirmasidan ulush yoki to'liq yopilsa `sale.total − oldingi`; nasiyadan ayirish chegarasi) + unit testlar
-- [ ] 2. `refund_writer.dart` (bitta tranzaksiya: Refund + RefundItem + StockMovement(+qty) + DebtEntry(−) + Sale.status + outbox `refund.created`) va `sale_lookup.dart` (raqam bo'yicha, smena savdolari, qaytarilgan miqdorlar bilan) + testlar
+- [x] 2. `refund_writer.dart` (bitta tranzaksiya: Refund + RefundItem + StockMovement(+qty) + DebtEntry(−) + Sale.status + outbox `refund.created`) va `sale_lookup.dart` (raqam bo'yicha, smena savdolari, qaytarilgan miqdorlar bilan) + testlar
 - [ ] 3. Chekda savdo raqami shtrix-kodi (CODE128, `GS k`) — qaytarishda skanerlash uchun; snapshotlar yangilanadi
 - [ ] 4. Qaytarish oynasi (F8): savdoni topish (raqam/skan/oxirgi savdolar), qatorlar va miqdor, sabab, naqd yoki qarzdan ayirish, menejer/ega PIN; tarjimalar
 - [ ] 5. Widget testlari + golden + skrinshotlar `docs/screenshots/T-045/`
 - [ ] 6. Spec, PR, CI → merge; ROADMAP, PROGRESS, STATE
 
 ## Oxirgi bajarilgan ish
-- 1-qadam: `data/refunds/refund_calculator.dart` (`RefundableSale`, `RefundableItem`, `RefundQuote.of(sale, {saleItemId: qty})`, `debtAllowed`), test `test/data/refund_calculator_test.dart` (server vektorlari).
+- 2-qadam: `data/refunds/sale_lookup.dart` (`idByNumber`, `recent`, `refundable`), `refund_writer.dart` (`RefundWriter.record`, `RefundMethod`), testlar `test/data/refund_writer_test.dart` (qisman → to'liq, nasiya, atomarlik, qidiruv).
 
 ## Keyingi aniq harakat
-- 2-qadam: `apps/pos/lib/data/refunds/sale_lookup.dart` (`SaleLookup.byNumber`, `recent(shiftId)`, `refundable(saleId)` — qaytarilgan miqdorlar refund_items dan, nasiya to'lovlari/qaytarishlari) va `refund_writer.dart` (`RefundWriter.record(sale, quote, method, reason, shiftId, cashierId, approvedBy)` — bitta tranzaksiya, outbox `refund.created` payload `sales-api.md` dagidek; `StockMovement(type: refund, +qty)`; nasiya → `DebtEntry(type: refund, −total)`; `sales.status`). Testlar `test/data/refund_writer_test.dart`.
+- 3-qadam: chek oxirida savdo raqami shtrix-kodi: `ReceiptRow` ga `barcode` turi (`ReceiptRow.barcode(number)`), `EscPos` da CODE128 (`GS h 60`, `GS w 2`, `GS H 0`, `GS k 73 n {B data`), `render` da `|||| D3-000123 ||||`; `receipt_test.dart` snapshotlarini `UPDATE_RECEIPTS=1` bilan yangilash.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

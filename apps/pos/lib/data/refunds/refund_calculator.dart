@@ -90,6 +90,9 @@ enum RefundProblem {
 
   /// Bunday qator savdoda yo'q.
   unknownItem,
+
+  /// Qarzdan ayirib bo'lmaydi: savdoda nasiya qismi yo'q yoki yetmaydi.
+  debtNotAllowed,
 }
 
 class InvalidRefundException implements Exception {
