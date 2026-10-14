@@ -15,18 +15,18 @@
 - [x] 1. Spec `docs/specs/sales-api.md` (smena, savdo, to'lov, qaytarish, pul harakati; tekshiruvlar; kutilayotgan naqd; REST faqat o'qish)
 - [x] 2. `apps/sales` modellari: Shift, Sale (+Item, +Payment), Refund (+Item), CashMovement; `DebtEntry.shift` (customers 0002); migratsiya; admin
 - [x] 3. `services/shifts.py`: open_shift, close_shift (expected_cash), record_cash_movement, shift_report (X/Z)
-- [ ] 4. `services/sales.py`: record_sale — tekshiruv (summalar, to'lovlar, tenant), StockMovement(−), DebtEntry (nasiya)
+- [x] 4. `services/sales.py`: record_sale — tekshiruv (summalar, to'lovlar, tenant), StockMovement(−), DebtEntry (nasiya)
 - [ ] 5. `services/refunds.py`: record_refund — qoldiq miqdor, summa, StockMovement(+), qarz kamayishi, savdo holati
 - [ ] 6. REST (faqat o'qish): `/shifts/` (+report), `/sales/`, `/refunds/`, `/cash-movements/`; kassir faqat o'zinikini ko'radi
 - [ ] 7. Testlar: savdo → qoldiq va qarz, qaytarish → teskari harakat, summalar xatosi, smena hisob-kitobi, izolyatsiya, huquqlar
 - [ ] 8. openapi + schema.d.ts; lint/test; PROGRESS/ROADMAP; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-3-qadam: `apps/sales/services/` — common.py (MissingDependency, as_int/as_uuid/as_datetime, tenant_user, device_shift), shifts.py (open_shift, close_shift, expected_cash, record_cash_movement, shift_report).
+4-qadam: `services/sales.py` — record_sale (qator/summa/to'lov tekshiruvlari, duplicate_sale/duplicate_number, StockMovement(−), nasiya → record_sale_debt(shift=)). Testlar hali yo'q.
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-4-qadam: `backend/apps/sales/services/sales.py` — record_sale(device, payload): tekshiruvlar (invalid_sale), Sale+Item+Payment, StockMovement(sale, −qty), nasiya → record_sale_debt; `__init__.py` ga eksport.
+5-qadam: `backend/apps/sales/services/refunds.py` — record_refund(device, payload): qoldiq miqdor, proporsional summa, chek chegirmasi ulushi, to'liq qaytarishda qoldiq, debt cheklovi, StockMovement(+), record_refund_debt, Sale.status.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
