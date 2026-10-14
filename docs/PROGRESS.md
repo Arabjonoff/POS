@@ -204,3 +204,20 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-046 (squash merge)
 - Qoldi / keyingi qadam: 3-bosqich (kassa) yopildi; keyingisi — 4-bosqich, T-050 Tovarlar ro'yxati va kartasi.
 - Muammo yoki qaror: chiqarish kutilgan naqddan oshmasligi kassa tomonidagi qoida (server rad etmaydi). Haqiqiy naqd kutilgandan ko'p bo'lsa, ortiqchani avval "kiritish" orqali qayd qilish kerak. "Pul kiritish/chiqarish" tugmalari desktop'da bir qatorga sig'magani uchun harakatlar kartasiga ko'chirildi.
+
+## 2026-10-15 — T-050 Tovarlar ro'yxati va kartasi
+- Qilindi:
+  - Backend: narx tarixi — `GET /api/v1/products/{id}/price-history/` (JWT, ega/menejer) va kassa uchun `GET /api/v1/sync/price-history/?product=` (qurilma tokeni); OpenAPI, admin TS va Dart klientlari qayta yaratildi.
+  - Kassa: `ProductEditor` — server qoidalari bilan tekshiradi; lokal baza + outbox `product.upserted` bitta tranzaksiyada, `by` — menejer/ega.
+  - Lokal qoldiq: server qiymati + yuborilmagan harakatlar.
+  - "Tovarlar" bo'limi: qidiruv, kategoriya va holat filtrlari, jadval/kartalar; skaner → karta yoki yangi karta.
+  - Tovar kartasi: barcha maydonlar, ustama %, shtrix-kodlar skaner bilan, narx tarixi (onlayn).
+- Testlar:
+  - backend: +9 (narx tarixi: tartib, muallif, kassir 403, boshqa tenant 404, qurilma endpoint'i);
+  - apps/pos: 437 (+32): `ProductEditor` va qoldiq, 13 ta widget testi, parse yordamchilari.
+  - Golden'lar: `products` list/card × 3 o'lcham × 2 mavzu. Skrinshotlar: `docs/screenshots/T-050/`.
+- PR: T-050 (squash merge)
+- Qoldi / keyingi qadam: T-051 Excel/CSV import. T-047 — Q-007 (Android qurilma kerak). Kategoriya va birliklarni kassada boshqarish — keyin (hozir pull'dan).
+- Muammo yoki qaror:
+  - Kassada xodim JWT'si yo'q, faqat qurilma tokeni bor. Shuning uchun narx tarixi uchun sync nomlar maydonida qurilma endpoint'i qo'shildi; kim ko'rishi kassada lokal rol bilan cheklanadi (product.upserted `by` bilan bir xil ishonch modeli).
+  - Testlar ikki xatoni ushladi: kasrsiz birlikda `parseQtyMilli` regex guruhi xatosi va planshetda jadvaldagi qoldiq ustunining sig'masligi.

@@ -56,3 +56,10 @@ Format:
 - Agentning tavsiyasi: A — oddiy, ma'lumotni ko'paytirmaydi, mahalla do'konida kassalar odatda bir xonada va internet ko'pincha bor.
 - Hozircha tanlangan: C (T-045 ning hozirgi holati). A uchun backend'ga `?number=` filtri va kassada onlayn qidiruv kerak bo'ladi.
 - Javob:
+
+### Q-007 (T-047) Android Bluetooth/USB printer — qaysi printerlar va qurilma?
+- Kontekst: T-047 (qaror 0008) Android uchun Bluetooth (SPP) va USB printer ulanishini qo'shadi. Buning uchun native plagin kerak va uni haqiqiy Android qurilma hamda printerda sinash shart (ruxsatlar: Android 12+ `BLUETOOTH_CONNECT`/`BLUETOOTH_SCAN`, USB host). CI va emulyatorda bunday sinov imkoni yo'q.
+- Savol: do'konlarda qaysi printer modellari ko'p (masalan, Xprinter XP-58/80, MTP-II, Sunmi ichki printeri)? Sinov uchun Android qurilma va printer bormi?
+- Agentning tavsiyasi: T-047 ni haqiqiy qurilmada sinov imkoni paydo bo'lguncha keyinga qoldirish. Hozircha Android'da Wi-Fi/LAN printer ishlaydi (T-044). Sunmi kabi ichki printerli qurilmalar uchun alohida transport kerak bo'lishi mumkin.
+- Hozircha tanlangan: T-047 o'tkazib yuborildi, keyingi mustaqil vazifa (T-050) olindi.
+- Javob:

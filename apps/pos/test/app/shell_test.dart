@@ -56,8 +56,11 @@ void main() {
     testWidgets('keyboard: Ctrl+1..6 switch sections', (tester) async {
       await pumpPosApp(tester);
       await ctrl(tester, LogicalKeyboardKey.digit2);
-      expect(find.text(comingSoon), findsOneWidget);
+      expect(find.text("Hali tovar yo'q"), findsOneWidget);
       expect(find.text(emptyCart), findsNothing);
+
+      await ctrl(tester, LogicalKeyboardKey.digit3);
+      expect(find.text(comingSoon), findsOneWidget);
 
       await ctrl(tester, LogicalKeyboardKey.digit6);
       expect(find.text('Til'), findsOneWidget);

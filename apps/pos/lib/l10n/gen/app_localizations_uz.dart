@@ -963,6 +963,190 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get receiptPrintedAt => 'Chop etildi';
+
+  @override
+  String get productsSearchHint => 'Nom, shtrix-kod yoki PLU';
+
+  @override
+  String get productsAdd => 'Tovar qo\'shish';
+
+  @override
+  String get productsAll => 'Hammasi';
+
+  @override
+  String get productsFilterLow => 'Kam qolgan';
+
+  @override
+  String get productsFilterNegative => 'Manfiy qoldiq';
+
+  @override
+  String get productsFilterInactive => 'Nofaol';
+
+  @override
+  String get productsEmptyTitle => 'Hali tovar yo\'q';
+
+  @override
+  String get productsEmptyMessage =>
+      'Tovar qo\'shing yoki shtrix-kodni skanerlang';
+
+  @override
+  String get productsNotFound => 'Hech narsa topilmadi';
+
+  @override
+  String get productsColName => 'Nom';
+
+  @override
+  String get productsColBarcode => 'Shtrix-kod';
+
+  @override
+  String get productsColCategory => 'Kategoriya';
+
+  @override
+  String get productsColPrice => 'Narx';
+
+  @override
+  String get productsColCost => 'Tannarx';
+
+  @override
+  String get productsColStock => 'Qoldiq';
+
+  @override
+  String get productsBadgeLow => 'Kam';
+
+  @override
+  String get productsBadgeNegative => 'Manfiy';
+
+  @override
+  String get productsBadgeInactive => 'Nofaol';
+
+  @override
+  String get productNew => 'Yangi tovar';
+
+  @override
+  String get productName => 'Nomi';
+
+  @override
+  String get productCategory => 'Kategoriya';
+
+  @override
+  String get productNoCategory => 'Kategoriyasiz';
+
+  @override
+  String get productUnit => 'Birlik';
+
+  @override
+  String get productSellPrice => 'Sotish narxi, so\'m';
+
+  @override
+  String get productCostPrice => 'Tannarx, so\'m';
+
+  @override
+  String productMarkup(String percent) {
+    return 'Ustama: $percent';
+  }
+
+  @override
+  String get productWeighted => 'Vaznli tovar (tarozida tortiladi)';
+
+  @override
+  String get productPlu => 'PLU — tarozi kodi (5 raqam)';
+
+  @override
+  String productMinStock(String unit) {
+    return 'Kam qolgan deb belgilash, $unit';
+  }
+
+  @override
+  String get productIkpu => 'IKPU (ixtiyoriy, 17 raqam)';
+
+  @override
+  String get productQuickButton => 'Kassada tez tugma';
+
+  @override
+  String get productBarcodes => 'Shtrix-kodlar';
+
+  @override
+  String get productBarcodeAdd => 'Kodni yozing yoki skanerlang';
+
+  @override
+  String get productBarcodePrimary => 'Asosiy';
+
+  @override
+  String get productBarcodeRemove => 'Kodni olib tashlash';
+
+  @override
+  String get productDeactivate => 'Nofaol qilish';
+
+  @override
+  String get productActivate => 'Faollashtirish';
+
+  @override
+  String get productSaved => 'Saqlandi';
+
+  @override
+  String get productNeedsApproval =>
+      'Tovarni o\'zgartirishni menejer yoki ega tasdiqlashi kerak';
+
+  @override
+  String get productPriceHistory => 'Narx tarixi';
+
+  @override
+  String get productPriceHistoryOffline =>
+      'Narx tarixini ko\'rish uchun internet kerak';
+
+  @override
+  String get productPriceHistoryEmpty => 'Narx hali o\'zgarmagan';
+
+  @override
+  String productPriceHistoryRow(String sell, String cost) {
+    return 'Narx $sell · Tannarx $cost';
+  }
+
+  @override
+  String productStockNow(String qty) {
+    return 'Qoldiq: $qty';
+  }
+
+  @override
+  String get productErrPrice => 'Narx 0 dan katta bo\'lishi kerak';
+
+  @override
+  String productErrBarcodeFormat(String code) {
+    return '«$code» — noto\'g\'ri shtrix-kod';
+  }
+
+  @override
+  String productErrBarcodeCheck(String code) {
+    return '«$code» — kod noto\'g\'ri o\'qildi, qayta skanerlang';
+  }
+
+  @override
+  String productErrBarcodeRepeated(String code) {
+    return '«$code» ikki marta yozilgan';
+  }
+
+  @override
+  String productErrBarcodeTaken(String code, String product) {
+    return '«$code» — «$product» tovarida bor';
+  }
+
+  @override
+  String get productErrPluFormat => 'PLU 5 raqamdan iborat bo\'lishi kerak';
+
+  @override
+  String productErrPluTaken(String product) {
+    return 'Bu PLU «$product» tovarida bor';
+  }
+
+  @override
+  String get productErrWeightedUnit =>
+      'Vaznli tovar uchun kg kabi kasrli birlik tanlang';
+
+  @override
+  String get productErrIkpu => 'IKPU 17 raqamdan iborat bo\'lishi kerak';
+
+  @override
+  String get productErrQty => 'Miqdorni to\'g\'ri yozing (masalan, 5 yoki 0,5)';
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -1920,4 +2104,187 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get receiptPrintedAt => 'Чоп этилди';
+
+  @override
+  String get productsSearchHint => 'Ном, штрих-код ёки PLU';
+
+  @override
+  String get productsAdd => 'Товар қўшиш';
+
+  @override
+  String get productsAll => 'Ҳаммаси';
+
+  @override
+  String get productsFilterLow => 'Кам қолган';
+
+  @override
+  String get productsFilterNegative => 'Манфий қолдиқ';
+
+  @override
+  String get productsFilterInactive => 'Нофаол';
+
+  @override
+  String get productsEmptyTitle => 'Ҳали товар йўқ';
+
+  @override
+  String get productsEmptyMessage => 'Товар қўшинг ёки штрих-кодни сканерланг';
+
+  @override
+  String get productsNotFound => 'Ҳеч нарса топилмади';
+
+  @override
+  String get productsColName => 'Ном';
+
+  @override
+  String get productsColBarcode => 'Штрих-код';
+
+  @override
+  String get productsColCategory => 'Категория';
+
+  @override
+  String get productsColPrice => 'Нарх';
+
+  @override
+  String get productsColCost => 'Таннарх';
+
+  @override
+  String get productsColStock => 'Қолдиқ';
+
+  @override
+  String get productsBadgeLow => 'Кам';
+
+  @override
+  String get productsBadgeNegative => 'Манфий';
+
+  @override
+  String get productsBadgeInactive => 'Нофаол';
+
+  @override
+  String get productNew => 'Янги товар';
+
+  @override
+  String get productName => 'Номи';
+
+  @override
+  String get productCategory => 'Категория';
+
+  @override
+  String get productNoCategory => 'Категориясиз';
+
+  @override
+  String get productUnit => 'Бирлик';
+
+  @override
+  String get productSellPrice => 'Сотиш нархи, сўм';
+
+  @override
+  String get productCostPrice => 'Таннарх, сўм';
+
+  @override
+  String productMarkup(String percent) {
+    return 'Устама: $percent';
+  }
+
+  @override
+  String get productWeighted => 'Вазнли товар (тарозида тортилади)';
+
+  @override
+  String get productPlu => 'PLU — тарози коди (5 рақам)';
+
+  @override
+  String productMinStock(String unit) {
+    return 'Кам қолган деб белгилаш, $unit';
+  }
+
+  @override
+  String get productIkpu => 'ИКПУ (ихтиёрий, 17 рақам)';
+
+  @override
+  String get productQuickButton => 'Кассада тез тугма';
+
+  @override
+  String get productBarcodes => 'Штрих-кодлар';
+
+  @override
+  String get productBarcodeAdd => 'Кодни ёзинг ёки сканерланг';
+
+  @override
+  String get productBarcodePrimary => 'Асосий';
+
+  @override
+  String get productBarcodeRemove => 'Кодни олиб ташлаш';
+
+  @override
+  String get productDeactivate => 'Нофаол қилиш';
+
+  @override
+  String get productActivate => 'Фаоллаштириш';
+
+  @override
+  String get productSaved => 'Сақланди';
+
+  @override
+  String get productNeedsApproval =>
+      'Товарни ўзгартиришни менежер ёки эга тасдиқлаши керак';
+
+  @override
+  String get productPriceHistory => 'Нарх тарихи';
+
+  @override
+  String get productPriceHistoryOffline =>
+      'Нарх тарихини кўриш учун интернет керак';
+
+  @override
+  String get productPriceHistoryEmpty => 'Нарх ҳали ўзгармаган';
+
+  @override
+  String productPriceHistoryRow(String sell, String cost) {
+    return 'Нарх $sell · Таннарх $cost';
+  }
+
+  @override
+  String productStockNow(String qty) {
+    return 'Қолдиқ: $qty';
+  }
+
+  @override
+  String get productErrPrice => 'Нарх 0 дан катта бўлиши керак';
+
+  @override
+  String productErrBarcodeFormat(String code) {
+    return '«$code» — нотўғри штрих-код';
+  }
+
+  @override
+  String productErrBarcodeCheck(String code) {
+    return '«$code» — код нотўғри ўқилди, қайта сканерланг';
+  }
+
+  @override
+  String productErrBarcodeRepeated(String code) {
+    return '«$code» икки марта ёзилган';
+  }
+
+  @override
+  String productErrBarcodeTaken(String code, String product) {
+    return '«$code» — «$product» товарида бор';
+  }
+
+  @override
+  String get productErrPluFormat => 'PLU 5 рақамдан иборат бўлиши керак';
+
+  @override
+  String productErrPluTaken(String product) {
+    return 'Бу PLU «$product» товарида бор';
+  }
+
+  @override
+  String get productErrWeightedUnit =>
+      'Вазнли товар учун кг каби касрли бирлик танланг';
+
+  @override
+  String get productErrIkpu => 'ИКПУ 17 рақамдан иборат бўлиши керак';
+
+  @override
+  String get productErrQty => 'Миқдорни тўғри ёзинг (масалан, 5 ёки 0,5)';
 }

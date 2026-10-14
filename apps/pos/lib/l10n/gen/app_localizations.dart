@@ -1778,6 +1778,330 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Chop etildi'**
   String get receiptPrintedAt;
+
+  /// Tovarlar qidiruvi
+  ///
+  /// In uz, this message translates to:
+  /// **'Nom, shtrix-kod yoki PLU'**
+  String get productsSearchHint;
+
+  /// Yangi tovar tugmasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Tovar qo\'shish'**
+  String get productsAdd;
+
+  /// Kategoriya filtri: hammasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Hammasi'**
+  String get productsAll;
+
+  /// Filtr
+  ///
+  /// In uz, this message translates to:
+  /// **'Kam qolgan'**
+  String get productsFilterLow;
+
+  /// Filtr
+  ///
+  /// In uz, this message translates to:
+  /// **'Manfiy qoldiq'**
+  String get productsFilterNegative;
+
+  /// Filtr
+  ///
+  /// In uz, this message translates to:
+  /// **'Nofaol'**
+  String get productsFilterInactive;
+
+  /// Bo'sh ro'yxat
+  ///
+  /// In uz, this message translates to:
+  /// **'Hali tovar yo\'q'**
+  String get productsEmptyTitle;
+
+  /// Bo'sh ro'yxat izohi
+  ///
+  /// In uz, this message translates to:
+  /// **'Tovar qo\'shing yoki shtrix-kodni skanerlang'**
+  String get productsEmptyMessage;
+
+  /// Filtr natijasi bo'sh
+  ///
+  /// In uz, this message translates to:
+  /// **'Hech narsa topilmadi'**
+  String get productsNotFound;
+
+  /// Ustun
+  ///
+  /// In uz, this message translates to:
+  /// **'Nom'**
+  String get productsColName;
+
+  /// Ustun
+  ///
+  /// In uz, this message translates to:
+  /// **'Shtrix-kod'**
+  String get productsColBarcode;
+
+  /// Ustun
+  ///
+  /// In uz, this message translates to:
+  /// **'Kategoriya'**
+  String get productsColCategory;
+
+  /// Ustun
+  ///
+  /// In uz, this message translates to:
+  /// **'Narx'**
+  String get productsColPrice;
+
+  /// Ustun
+  ///
+  /// In uz, this message translates to:
+  /// **'Tannarx'**
+  String get productsColCost;
+
+  /// Ustun
+  ///
+  /// In uz, this message translates to:
+  /// **'Qoldiq'**
+  String get productsColStock;
+
+  /// Qoldiq belgisi
+  ///
+  /// In uz, this message translates to:
+  /// **'Kam'**
+  String get productsBadgeLow;
+
+  /// Qoldiq belgisi
+  ///
+  /// In uz, this message translates to:
+  /// **'Manfiy'**
+  String get productsBadgeNegative;
+
+  /// Holat belgisi
+  ///
+  /// In uz, this message translates to:
+  /// **'Nofaol'**
+  String get productsBadgeInactive;
+
+  /// Karta sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Yangi tovar'**
+  String get productNew;
+
+  /// Maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'Nomi'**
+  String get productName;
+
+  /// Maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'Kategoriya'**
+  String get productCategory;
+
+  /// Kategoriya yo'q
+  ///
+  /// In uz, this message translates to:
+  /// **'Kategoriyasiz'**
+  String get productNoCategory;
+
+  /// Maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'Birlik'**
+  String get productUnit;
+
+  /// Maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'Sotish narxi, so\'m'**
+  String get productSellPrice;
+
+  /// Maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'Tannarx, so\'m'**
+  String get productCostPrice;
+
+  /// Ustama foizi
+  ///
+  /// In uz, this message translates to:
+  /// **'Ustama: {percent}'**
+  String productMarkup(String percent);
+
+  /// Maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'Vaznli tovar (tarozida tortiladi)'**
+  String get productWeighted;
+
+  /// Maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'PLU — tarozi kodi (5 raqam)'**
+  String get productPlu;
+
+  /// Maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'Kam qolgan deb belgilash, {unit}'**
+  String productMinStock(String unit);
+
+  /// Maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'IKPU (ixtiyoriy, 17 raqam)'**
+  String get productIkpu;
+
+  /// Maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'Kassada tez tugma'**
+  String get productQuickButton;
+
+  /// Maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'Shtrix-kodlar'**
+  String get productBarcodes;
+
+  /// Shtrix-kod qo'shish maydoni
+  ///
+  /// In uz, this message translates to:
+  /// **'Kodni yozing yoki skanerlang'**
+  String get productBarcodeAdd;
+
+  /// Asosiy shtrix-kod belgisi
+  ///
+  /// In uz, this message translates to:
+  /// **'Asosiy'**
+  String get productBarcodePrimary;
+
+  /// Tooltip
+  ///
+  /// In uz, this message translates to:
+  /// **'Kodni olib tashlash'**
+  String get productBarcodeRemove;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Nofaol qilish'**
+  String get productDeactivate;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Faollashtirish'**
+  String get productActivate;
+
+  /// Xabar
+  ///
+  /// In uz, this message translates to:
+  /// **'Saqlandi'**
+  String get productSaved;
+
+  /// Huquq
+  ///
+  /// In uz, this message translates to:
+  /// **'Tovarni o\'zgartirishni menejer yoki ega tasdiqlashi kerak'**
+  String get productNeedsApproval;
+
+  /// Bo'lim
+  ///
+  /// In uz, this message translates to:
+  /// **'Narx tarixi'**
+  String get productPriceHistory;
+
+  /// Oflayn
+  ///
+  /// In uz, this message translates to:
+  /// **'Narx tarixini ko\'rish uchun internet kerak'**
+  String get productPriceHistoryOffline;
+
+  /// Bo'sh
+  ///
+  /// In uz, this message translates to:
+  /// **'Narx hali o\'zgarmagan'**
+  String get productPriceHistoryEmpty;
+
+  /// Narx tarixi qatori
+  ///
+  /// In uz, this message translates to:
+  /// **'Narx {sell} · Tannarx {cost}'**
+  String productPriceHistoryRow(String sell, String cost);
+
+  /// Kartadagi qoldiq
+  ///
+  /// In uz, this message translates to:
+  /// **'Qoldiq: {qty}'**
+  String productStockNow(String qty);
+
+  /// Xato
+  ///
+  /// In uz, this message translates to:
+  /// **'Narx 0 dan katta bo\'lishi kerak'**
+  String get productErrPrice;
+
+  /// Xato
+  ///
+  /// In uz, this message translates to:
+  /// **'«{code}» — noto\'g\'ri shtrix-kod'**
+  String productErrBarcodeFormat(String code);
+
+  /// Xato
+  ///
+  /// In uz, this message translates to:
+  /// **'«{code}» — kod noto\'g\'ri o\'qildi, qayta skanerlang'**
+  String productErrBarcodeCheck(String code);
+
+  /// Xato
+  ///
+  /// In uz, this message translates to:
+  /// **'«{code}» ikki marta yozilgan'**
+  String productErrBarcodeRepeated(String code);
+
+  /// Xato
+  ///
+  /// In uz, this message translates to:
+  /// **'«{code}» — «{product}» tovarida bor'**
+  String productErrBarcodeTaken(String code, String product);
+
+  /// Xato
+  ///
+  /// In uz, this message translates to:
+  /// **'PLU 5 raqamdan iborat bo\'lishi kerak'**
+  String get productErrPluFormat;
+
+  /// Xato
+  ///
+  /// In uz, this message translates to:
+  /// **'Bu PLU «{product}» tovarida bor'**
+  String productErrPluTaken(String product);
+
+  /// Xato
+  ///
+  /// In uz, this message translates to:
+  /// **'Vaznli tovar uchun kg kabi kasrli birlik tanlang'**
+  String get productErrWeightedUnit;
+
+  /// Xato
+  ///
+  /// In uz, this message translates to:
+  /// **'IKPU 17 raqamdan iborat bo\'lishi kerak'**
+  String get productErrIkpu;
+
+  /// Minimal qoldiq noto'g'ri
+  ///
+  /// In uz, this message translates to:
+  /// **'Miqdorni to\'g\'ri yozing (masalan, 5 yoki 0,5)'**
+  String get productErrQty;
 }
 
 class _AppLocalizationsDelegate

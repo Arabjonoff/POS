@@ -1686,6 +1686,41 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v1/products/{id}/price-history/:
+    get:
+      operationId: products_price_history_list
+      description: 'Narx tarixi: eng yangisi birinchi, oxirgi 50 ta (ega va menejer).'
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this tovar.
+        required: true
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPriceHistoryList'
+          description: ''
   /api/v1/products/by-barcode/{code}/:
     get:
       operationId: products_by_barcode_retrieve
@@ -2569,6 +2604,32 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v1/sync/price-history/:
+    get:
+      operationId: sync_price_history_list
+      description: |-
+        Kassa uchun tovar narx tarixi (onlayn): qurilma tokeni bilan, faqat
+        o'z tenanti. Kim ko'rishi (menejer/ega) — kassada lokal PIN bilan.
+      parameters:
+      - in: query
+        name: product
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - sync
+      security:
+      - deviceToken: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PriceHistory'
+          description: ''
   /api/v1/sync/pull/:
     get:
       operationId: sync_pull_retrieve
@@ -3971,6 +4032,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PlatformDevice'
+    PaginatedPriceHistoryList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceHistory'
     PaginatedProductList:
       type: object
       required:
@@ -4834,6 +4918,44 @@ components:
       - profit_tiyin
       - revenue_tiyin
       - sales_count
+    PriceHistory:
+      type: object
+      description: 'Narx o''zgarishi (faqat o''qish): kim va qachon.'
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        sell_price_tiyin:
+          type: integer
+          readOnly: true
+          title: Sotish narxi (tiyin)
+        cost_price_tiyin:
+          type: integer
+          readOnly: true
+          title: Tannarx (tiyin)
+        changed_by:
+          type: string
+          format: uuid
+          readOnly: true
+          nullable: true
+          title: O'zgartirgan
+        changed_by_name:
+          type: string
+          readOnly: true
+          nullable: true
+        at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Vaqt
+      required:
+      - at
+      - changed_by
+      - changed_by_name
+      - cost_price_tiyin
+      - id
+      - sell_price_tiyin
     Product:
       type: object
       properties:

@@ -22,6 +22,7 @@ export 'models/me.dart';
 export 'models/op_enum.dart';
 export 'models/paginated_device_list.dart';
 export 'models/platform_enum.dart';
+export 'models/price_history.dart';
 export 'models/pull_response.dart';
 export 'models/push_request_request.dart';
 export 'models/push_response.dart';
