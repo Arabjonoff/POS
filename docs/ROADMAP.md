@@ -73,7 +73,7 @@ Spec'lar: `data-model.md`, `auth-roles.md`, `sync.md`, `subscription-billing.md`
 - **Qabul:** kirim → qoldiq ortadi; inventarizatsiya farqni tuzatish harakati sifatida yozadi; qoldiq = harakatlar yig'indisi testi.
 - **Bog'liq:** T-014
 
-### [ ] T-016 Mijozlar va nasiya
+### [x] T-016 Mijozlar va nasiya
 - **Bajarish:** Customer, DebtEntry; mijoz balansi; qarz limiti.
 - **Qabul:** qarzga sotish va qisman to'lash balansni to'g'ri o'zgartiradi.
 - **Bog'liq:** T-011

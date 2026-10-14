@@ -249,6 +249,290 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v1/customers/:
+    get:
+      operationId: customers_list
+      description: Qarzdorlar birinchi (qarz kamayib), keyin ism.
+      parameters:
+      - in: query
+        name: has_debt
+        schema:
+          type: boolean
+        description: Faqat qarzdorlar (balans > 0)
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Ism yoki telefon (qisman)
+      tags:
+      - customers
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCustomerList'
+          description: ''
+    post:
+      operationId: customers_create
+      description: Queryset faqat joriy tenant yozuvlari; yaratishda tenant avtomatik
+        qo'yiladi.
+      tags:
+      - customers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+          description: ''
+  /api/v1/customers/{id}/:
+    get:
+      operationId: customers_retrieve
+      description: Queryset faqat joriy tenant yozuvlari; yaratishda tenant avtomatik
+        qo'yiladi.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this mijoz.
+        required: true
+      tags:
+      - customers
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+          description: ''
+    put:
+      operationId: customers_update
+      description: Queryset faqat joriy tenant yozuvlari; yaratishda tenant avtomatik
+        qo'yiladi.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this mijoz.
+        required: true
+      tags:
+      - customers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+          description: ''
+    patch:
+      operationId: customers_partial_update
+      description: Queryset faqat joriy tenant yozuvlari; yaratishda tenant avtomatik
+        qo'yiladi.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this mijoz.
+        required: true
+      tags:
+      - customers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCustomerRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCustomerRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCustomerRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+          description: ''
+    delete:
+      operationId: customers_destroy
+      description: Yumshoq o'chirish; qarzi bor — `409 customer_has_debt`.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this mijoz.
+        required: true
+      tags:
+      - customers
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/customers/{id}/adjustments/:
+    post:
+      operationId: customers_adjustments_create
+      description: Queryset faqat joriy tenant yozuvlari; yaratishda tenant avtomatik
+        qo'yiladi.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this mijoz.
+        required: true
+      tags:
+      - customers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdjustmentRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdjustmentRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdjustmentRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DebtEntryResult'
+          description: ''
+  /api/v1/customers/{id}/debt-entries/:
+    get:
+      operationId: customers_debt_entries_list
+      description: Queryset faqat joriy tenant yozuvlari; yaratishda tenant avtomatik
+        qo'yiladi.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this mijoz.
+        required: true
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - customers
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedDebtEntryList'
+          description: ''
+  /api/v1/customers/{id}/payments/:
+    post:
+      operationId: customers_payments_create
+      description: Queryset faqat joriy tenant yozuvlari; yaratishda tenant avtomatik
+        qo'yiladi.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this mijoz.
+        required: true
+      tags:
+      - customers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PaymentRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PaymentRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DebtEntryResult'
+          description: ''
   /api/v1/devices/:
     get:
       operationId: devices_list
@@ -1387,6 +1671,23 @@ paths:
           description: ''
 components:
   schemas:
+    AdjustmentRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        amount_tiyin:
+          type: integer
+        note:
+          type: string
+          minLength: 1
+      required:
+      - amount_tiyin
+      - note
+    BlankEnum:
+      enum:
+      - ''
     Category:
       type: object
       properties:
@@ -1437,6 +1738,137 @@ components:
           maxLength: 16
       required:
       - name
+    Customer:
+      type: object
+      description: '`id` klientda yaratilishi mumkin (UUIDv7); keyin o''zgarmaydi.'
+      properties:
+        id:
+          type: string
+          format: uuid
+        full_name:
+          type: string
+          title: Ism
+          maxLength: 200
+        phone:
+          type: string
+          title: Telefon
+          maxLength: 13
+        note:
+          type: string
+          title: Izoh
+        debt_limit_tiyin:
+          type: integer
+          minimum: 0
+          nullable: true
+        balance_tiyin:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - balance_tiyin
+      - created_at
+      - full_name
+      - updated_at
+    CustomerRequest:
+      type: object
+      description: '`id` klientda yaratilishi mumkin (UUIDv7); keyin o''zgarmaydi.'
+      properties:
+        id:
+          type: string
+          format: uuid
+        full_name:
+          type: string
+          minLength: 1
+          title: Ism
+          maxLength: 200
+        phone:
+          type: string
+          title: Telefon
+          maxLength: 13
+        note:
+          type: string
+          title: Izoh
+        debt_limit_tiyin:
+          type: integer
+          minimum: 0
+          nullable: true
+      required:
+      - full_name
+    DebtEntry:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        customer:
+          type: string
+          format: uuid
+          title: Mijoz
+        amount_tiyin:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          title: Summa (tiyin, ±)
+        type:
+          allOf:
+          - $ref: '#/components/schemas/DebtEntryTypeEnum'
+          title: Turi
+        method:
+          title: To'lov usuli
+          oneOf:
+          - $ref: '#/components/schemas/MethodEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        sale_id:
+          type: string
+          format: uuid
+          nullable: true
+          title: Savdo id
+        note:
+          type: string
+          title: Izoh
+        created_by:
+          type: string
+          format: uuid
+          nullable: true
+          title: Kim
+        at:
+          type: string
+          format: date-time
+          title: Vaqt
+      required:
+      - amount_tiyin
+      - customer
+      - type
+    DebtEntryResult:
+      type: object
+      properties:
+        entry:
+          $ref: '#/components/schemas/DebtEntry'
+        balance_tiyin:
+          type: integer
+      required:
+      - balance_tiyin
+      - entry
+    DebtEntryTypeEnum:
+      enum:
+      - sale
+      - payment
+      - refund
+      - adjustment
+      type: string
+      description: |-
+        * `sale` - savdo
+        * `payment` - to'lov
+        * `refund` - qaytarish
+        * `adjustment` - tuzatish
     Device:
       type: object
       properties:
@@ -1721,6 +2153,14 @@ components:
       - phone
       - role
       - tenant
+    MethodEnum:
+      enum:
+      - cash
+      - card
+      type: string
+      description: |-
+        * `cash` - naqd
+        * `card` - karta
     PaginatedCategoryList:
       type: object
       required:
@@ -1744,6 +2184,52 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Category'
+    PaginatedCustomerList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+    PaginatedDebtEntryList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DebtEntry'
     PaginatedDeviceList:
       type: object
       required:
@@ -1972,6 +2458,29 @@ components:
           type: string
           title: Rang (palitra kaliti)
           maxLength: 16
+    PatchedCustomerRequest:
+      type: object
+      description: '`id` klientda yaratilishi mumkin (UUIDv7); keyin o''zgarmaydi.'
+      properties:
+        id:
+          type: string
+          format: uuid
+        full_name:
+          type: string
+          minLength: 1
+          title: Ism
+          maxLength: 200
+        phone:
+          type: string
+          title: Telefon
+          maxLength: 13
+        note:
+          type: string
+          title: Izoh
+        debt_limit_tiyin:
+          type: integer
+          minimum: 0
+          nullable: true
     PatchedInventoryCountRequest:
       type: object
       description: '`id` klientda yaratilishi mumkin (UUIDv7); keyin o''zgarmaydi.'
@@ -2107,6 +2616,23 @@ components:
         is_fractional:
           type: boolean
           title: Kasrli
+    PaymentRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        amount_tiyin:
+          type: integer
+          minimum: 1
+        method:
+          $ref: '#/components/schemas/MethodEnum'
+        note:
+          type: string
+          default: ''
+      required:
+      - amount_tiyin
+      - method
     PlatformEnum:
       enum:
       - windows
@@ -2338,7 +2864,7 @@ components:
           title: Miqdor (milli, ±)
         type:
           allOf:
-          - $ref: '#/components/schemas/TypeEnum'
+          - $ref: '#/components/schemas/StockMovementTypeEnum'
           title: Turi
         ref_type:
           type: string
@@ -2363,6 +2889,20 @@ components:
       - qty_milli
       - store
       - type
+    StockMovementTypeEnum:
+      enum:
+      - receipt
+      - sale
+      - refund
+      - adjustment
+      - inventory
+      type: string
+      description: |-
+        * `receipt` - kirim
+        * `sale` - savdo
+        * `refund` - qaytarish
+        * `adjustment` - tuzatish
+        * `inventory` - inventarizatsiya
     StockReceipt:
       type: object
       description: '`id` klientda yaratilishi mumkin (UUIDv7); keyin o''zgarmaydi.'
@@ -2578,20 +3118,6 @@ components:
           minLength: 1
       required:
       - refresh
-    TypeEnum:
-      enum:
-      - receipt
-      - sale
-      - refund
-      - adjustment
-      - inventory
-      type: string
-      description: |-
-        * `receipt` - kirim
-        * `sale` - savdo
-        * `refund` - qaytarish
-        * `adjustment` - tuzatish
-        * `inventory` - inventarizatsiya
     Unit:
       type: object
       properties:

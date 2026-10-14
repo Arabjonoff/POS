@@ -5,29 +5,23 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-015 Ombor (StockMovement, kirim, inventarizatsiya)
-- Branch: feat/T-015-inventory
-- Boshlangan: 2026-10-14
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-14
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [x] 1. Spec `docs/specs/inventory-api.md` (harakatlar, kesh, kirim oqimi, teskari kirim, inventarizatsiya, API)
-- [x] 2. `apps/inventory` modellari: Supplier, StockMovement (o'zgarmas), ProductStock (kesh), StockReceipt(+Item), InventoryCount(+Item); migratsiya; admin
-- [x] 3. `services.py`: record_movement (+kesh), post_receipt, reverse_receipt, post_inventory; `manage.py rebuild_stock`
-- [x] 4. API: suppliers, stock-receipts (+post, +reverse), inventory-counts (+post), stock, stock-movements
-- [x] 5. Testlar: kirim → qoldiq, teskari kirim, inventarizatsiya farqi, qoldiq = yig'indi, o'zgarmaslik, izolyatsiya, huquqlar
-- [ ] 6. openapi + schema.d.ts; lint/test; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-6-qadam (qisman): openapi.yaml + schema.d.ts yangilandi, spec/ROADMAP/PROGRESS yozildi. 376 test, ruff, typecheck yashil. Hammasi lokal commit — hali push qilinmagan.
+T-016 Mijozlar va nasiya tugadi (PR ochildi, CI yashil bo'lsa squash merge).
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-`git push -u origin feat/T-015-inventory`, keyin `gh pr create` (T-015), CI yashil bo'lsa squash merge; STATE.md ni bo'sh shablonga qaytarish.
+T-016 PR merge qilinganini tekshirish (`gh pr list --state open`); keyin ROADMAP'dan T-017 Savdo, smena, qaytarish.
 
 ## Ochiq holatlar
-- Commit qilinmagan o'zgarishlar: yo'q (lekin 5 ta wip commit push qilinmagan)
+- Commit qilinmagan o'zgarishlar: yo'q
 - Ochiq PR: —
 - Ishlab turgan servislar: docker compose (pos-*) — 8100, 3100
 - Yiqilayotgan testlar: —

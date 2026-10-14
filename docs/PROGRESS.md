@@ -83,3 +83,9 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-015 (squash merge)
 - Qoldi / keyingi qadam: T-016 Mijozlar va nasiya. `low` filtri faqat harakati bor tovarlar — to'liq "kam qolganlar" T-054 da.
 - Muammo yoki qaror: elektr uzilishi `.git/config` ni nol baytlar bilan buzdi — foydalanuvchi tikladi. ViewSet'da action metodini `post` deb nomlash DRF'da detail URL'ga POST'ni shu action'ga yo'naltiradi — `post_document` + `url_path="post"` ishlatildi (405 testi bor).
+
+## 2026-10-14 — T-016 Mijozlar va nasiya
+- Qilindi: `apps/customers` — `Customer` (ism, telefon unique emas, `debt_limit_tiyin`: null = cheklovsiz, 0 = nasiya yo'q; yumshoq o'chirish, qarzi bo'lsa `409 customer_has_debt`), `DebtEntry` (AppendOnlyModel; turlar sale/payment/refund/adjustment, DB constraint'lar: ishora turga mos, `method` faqat to'lovda, `sale_id` savdo/qaytarishda). Balans = yig'indi (annotatsiya, kesh yo'q). Servislar: `check_debt_limit`, `record_sale_debt`/`record_refund_debt` (T-017 uchun), `pay_debt` (mijoz qulfi; `enforce_balance=False` — sinxron uchun), `adjust_debt`. API: `/customers/` (balans, qidiruv, `has_debt`, qarzdorlar birinchi), `/{id}/debt-entries/`, `/{id}/payments/` (har bir xodim), `/{id}/adjustments/` (faqat ega). Limitni faqat ega/menejer o'rnatadi. `ClientIdMixin` → `apps/core/serializers.py`. Spec `customers-api.md`. 425 test yashil (+49).
+- PR: T-016 (squash merge)
+- Qoldi / keyingi qadam: T-017 Savdo, smena, qaytarish (qarzga savdo `record_sale_debt` ni chaqiradi; naqd qarz to'lovini smenaga bog'lash — T-017).
+- Muammo yoki qaror: Q-003 — qarzdan ko'p to'lov vaqtincha rad etiladi (A), javob kutilmoqda. Limitdan oshgan qarzga savdo serverda rad etilmaydi (kassada menejer ruxsati).
