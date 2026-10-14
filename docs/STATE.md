@@ -16,18 +16,18 @@
 - [x] 2. To'liq ThemeData (komponent mavzulari) + summa/miqdor formatlash
 - [x] 3. Komponentlar 1: Button, IconButton, TextField, SearchField, Card, ListTile, Badge, StatusDot
 - [x] 4. Komponentlar 2: MoneyText, QtyStepper, NumericKeypad, PinPad
-- [ ] 5. Komponentlar 3: Dialog/Sheet, Toast, EmptyState, Skeleton, ScanFeedback
+- [x] 5. Komponentlar 3: Dialog/Sheet, Toast, EmptyState, Skeleton, ScanFeedback
 - [ ] 6. Komponentlar 4: DataTable, StatusBar, ResponsiveScaffold
 - [ ] 7. Widgetbook: har komponent galereyasi (barcha holatlar) + use-case'lar
 - [ ] 8. Golden testlar (3 o'lcham × 2 mavzu) + docs/screenshots/T-030
 - [ ] 9. analyze/format/test yashil, PR, merge, ROADMAP/PROGRESS
 
 ## Oxirgi bajarilgan ish
-Qadam 1–4: tokenlar (PosColors, PosPalette ThemeExtension, PosTone, PosTypography+Inter, PosSpacing/Radius/Sizes/Motion, PosWindowSize), to‘liq PosTheme, PosFormat (summa/miqdor). 82 test yashil (kontrast AA). Komponentlar 1 (Button+Keycap, IconButton, TextField, SearchField, Card, ListTile, Badge, StatusDot) + widget testlar; komponentlar 2 (MoneyText, QtyStepper, NumericKeypad, PinPad). 110 test yashil.
+Qadam 1–5: tokenlar (PosColors, PosPalette ThemeExtension, PosTone, PosTypography+Inter, PosSpacing/Radius/Sizes/Motion, PosWindowSize), to‘liq PosTheme, PosFormat (summa/miqdor). 82 test yashil (kontrast AA). Komponentlar 1 (Button+Keycap, IconButton, TextField, SearchField, Card, ListTile, Badge, StatusDot) + widget testlar; komponentlar 2 (MoneyText, QtyStepper, NumericKeypad, PinPad). komponentlar 3 (PosDialog+showPosDialog, PosToast+showPosToast, EmptyState, Skeleton, ScanFeedback). 118 test yashil.
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-Qadam 5: packages/ui/lib/src/components/ — pos_dialog.dart (showPosDialog: compact=bottom sheet, aks holda dialog), pos_toast.dart (showPosToast, undo), pos_empty_state.dart, pos_skeleton.dart, pos_scan_feedback.dart + test/components/feedback_components_test.dart.
+Qadam 6: packages/ui/lib/src/components/ — pos_data_table.dart (PosDataTable<T>, PosTableColumn), pos_status_bar.dart (PosStatusBar, PosStatusItem), pos_responsive_scaffold.dart (PosResponsiveScaffold, PosDestination: compact=NavigationBar+status tepada, medium=rels, expanded+=yon panel 240) + test/components/layout_components_test.dart.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
