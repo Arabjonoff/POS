@@ -14,16 +14,16 @@
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 - [x] 1. Spec `docs/specs/reports-api.md` (davr, formulalar: tushum, foyda, o'rtacha chek, solishtirish; endpointlar) + Q-004 (foyda formulasi)
 - [x] 2. `apps/reports/services.py` — davr chegaralari (TZ), summary, by_day, by_hour, top_products, cashiers, debts, stock
-- [ ] 3. API: `/api/v1/reports/...` (ega va menejer), serializerlar, urls
+- [x] 3. API: `/api/v1/reports/...` (ega va menejer), serializerlar, urls
 - [ ] 4. Testlar: qo'lda hisoblangan qiymatlar bilan (chegirma, qaytarish, vaznli, TZ chegarasi), huquqlar, izolyatsiya
 - [ ] 5. openapi + schema.d.ts; lint/test; PROGRESS/ROADMAP; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-2-qadam: `apps/reports/services.py` — Period (TZ, oldingi davr), summary, by_day, by_hour, top_products, cashiers, debts, stock; tannarx SQL ROUND.
+3-qadam: reports API — 7 endpoint (summary, by-day, by-hour, top-products, cashiers, debts, stock), ega/menejer, javob serializerlari; schema toza.
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-3-qadam: `backend/apps/reports/serializers.py`, `views.py` (ReportView bazasi: davr parametri, IsManagerOrOwner), `urls.py`; `config/urls.py`.
+4-qadam: `backend/apps/reports/tests/` — fixture (smena, savdolar Asia/Tashkent vaqtlarida, chegirma, qaytarish, nasiya), qo'lda hisoblangan qiymatlar; huquqlar, izolyatsiya, davr validatsiyasi.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
