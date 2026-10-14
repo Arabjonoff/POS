@@ -20,11 +20,11 @@ Format:
 - Variantlar: A) sinovdan keyin ham `grace_days` (3 kun) grace, keyin readonly. B) sinov tugashi bilan darhol readonly.
 - Agentning tavsiyasi: A — do'kon kutilmaganda to'xtab qolmaydi, ega to'lashga ulguradi.
 - Hozircha tanlangan: A (vaqtincha)
-- Javob:
+- Javob: A [javob berildi]
 
 ### Q-002 (T-013) Sinov davomida to'lov qilinsa — qolgan sinov kunlari kuyadimi?
 - Kontekst: spec: `period_from = max(paid_until, today)`. Sinov ichida birinchi to'lovda `paid_until` yo'q → davr bugundan boshlanadi, qolgan sinov kunlari yo'qoladi.
 - Variantlar: A) spec bo'yicha — bugundan. B) `period_from = max(paid_until, trial_ends_at, today)` — sinov oxirigacha bepul, to'langan davr undan keyin.
 - Agentning tavsiyasi: B — erta to'laganni jazolamaydi.
 - Hozircha tanlangan: B (vaqtincha; `services.record_payment` da bitta joyda o'zgartiriladi)
-- Javob:
+- Javob: B [javob berildi]

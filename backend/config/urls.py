@@ -9,6 +9,7 @@ api_v1 = [
     # Har bosqichda yangi ilovalar shu yerga qo'shiladi.
     path("", include("apps.accounts.urls")),
     path("", include("apps.devices.urls")),
+    path("", include("apps.catalog.urls")),
 ]
 
 urlpatterns = [

@@ -87,6 +87,168 @@ paths:
               schema:
                 $ref: '#/components/schemas/TokenRefresh'
           description: ''
+  /api/v1/categories/:
+    get:
+      operationId: categories_list
+      description: O'qish — tenantning har bir xodimi; yozish — ega va menejer.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCategoryList'
+          description: ''
+    post:
+      operationId: categories_create
+      description: O'qish — tenantning har bir xodimi; yozish — ega va menejer.
+      tags:
+      - catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CategoryRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CategoryRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+  /api/v1/categories/{id}/:
+    get:
+      operationId: categories_retrieve
+      description: O'qish — tenantning har bir xodimi; yozish — ega va menejer.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this kategoriya.
+        required: true
+      tags:
+      - catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+    put:
+      operationId: categories_update
+      description: O'qish — tenantning har bir xodimi; yozish — ega va menejer.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this kategoriya.
+        required: true
+      tags:
+      - catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CategoryRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CategoryRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+    patch:
+      operationId: categories_partial_update
+      description: O'qish — tenantning har bir xodimi; yozish — ega va menejer.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this kategoriya.
+        required: true
+      tags:
+      - catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCategoryRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCategoryRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCategoryRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: ''
+    delete:
+      operationId: categories_destroy
+      description: O'qish — tenantning har bir xodimi; yozish — ega va menejer.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this kategoriya.
+        required: true
+      tags:
+      - catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
   /api/v1/devices/:
     get:
       operationId: devices_list
@@ -187,6 +349,369 @@ paths:
               schema:
                 $ref: '#/components/schemas/DeviceRegisterResponse'
           description: Qayta ro'yxatdan o'tish
+  /api/v1/products/:
+    get:
+      operationId: products_list
+      description: O'qish — tenantning har bir xodimi; yozish — ega va menejer.
+      parameters:
+      - in: query
+        name: category
+        schema:
+          type: string
+          format: uuid
+      - in: query
+        name: is_active
+        schema:
+          type: boolean
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: quick_button
+        schema:
+          type: boolean
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Nom (qisman), shtrix-kod yoki PLU
+      tags:
+      - catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedProductList'
+          description: ''
+    post:
+      operationId: products_create
+      description: O'qish — tenantning har bir xodimi; yozish — ega va menejer.
+      tags:
+      - catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: ''
+  /api/v1/products/{id}/:
+    get:
+      operationId: products_retrieve
+      description: O'qish — tenantning har bir xodimi; yozish — ega va menejer.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this tovar.
+        required: true
+      tags:
+      - catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: ''
+    put:
+      operationId: products_update
+      description: O'qish — tenantning har bir xodimi; yozish — ega va menejer.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this tovar.
+        required: true
+      tags:
+      - catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: ''
+    patch:
+      operationId: products_partial_update
+      description: O'qish — tenantning har bir xodimi; yozish — ega va menejer.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this tovar.
+        required: true
+      tags:
+      - catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedProductRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedProductRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProductRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: ''
+    delete:
+      operationId: products_destroy
+      description: Nofaol qilish (`is_active=false`); tarix saqlanadi.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this tovar.
+        required: true
+      tags:
+      - catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/products/by-barcode/{code}/:
+    get:
+      operationId: products_by_barcode_retrieve
+      description: O'qish — tenantning har bir xodimi; yozish — ega va menejer.
+      parameters:
+      - in: path
+        name: code
+        schema:
+          type: string
+        required: true
+      tags:
+      - catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: ''
+  /api/v1/units/:
+    get:
+      operationId: units_list
+      description: O'qish — tenantning har bir xodimi; yozish — ega va menejer.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedUnitList'
+          description: ''
+    post:
+      operationId: units_create
+      description: O'qish — tenantning har bir xodimi; yozish — ega va menejer.
+      tags:
+      - catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnitRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UnitRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UnitRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unit'
+          description: ''
+  /api/v1/units/{id}/:
+    get:
+      operationId: units_retrieve
+      description: O'qish — tenantning har bir xodimi; yozish — ega va menejer.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this birlik.
+        required: true
+      tags:
+      - catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unit'
+          description: ''
+    put:
+      operationId: units_update
+      description: O'qish — tenantning har bir xodimi; yozish — ega va menejer.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this birlik.
+        required: true
+      tags:
+      - catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnitRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UnitRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UnitRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unit'
+          description: ''
+    patch:
+      operationId: units_partial_update
+      description: O'qish — tenantning har bir xodimi; yozish — ega va menejer.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this birlik.
+        required: true
+      tags:
+      - catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUnitRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUnitRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUnitRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unit'
+          description: ''
+    delete:
+      operationId: units_destroy
+      description: O'qish — tenantning har bir xodimi; yozish — ega va menejer.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this birlik.
+        required: true
+      tags:
+      - catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
   /api/v1/users/:
     get:
       operationId: users_list
@@ -240,6 +765,56 @@ paths:
           description: ''
 components:
   schemas:
+    Category:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          title: Nomi
+          maxLength: 100
+        parent:
+          type: string
+          format: uuid
+          nullable: true
+        sort:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Tartib
+        color:
+          type: string
+          title: Rang (palitra kaliti)
+          maxLength: 16
+      required:
+      - id
+      - name
+    CategoryRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          title: Nomi
+          maxLength: 100
+        parent:
+          type: string
+          format: uuid
+          nullable: true
+        sort:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Tartib
+        color:
+          type: string
+          title: Rang (palitra kaliti)
+          maxLength: 16
+      required:
+      - name
     Device:
       type: object
       properties:
@@ -415,6 +990,29 @@ components:
       - phone
       - role
       - tenant
+    PaginatedCategoryList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
     PaginatedDeviceList:
       type: object
       required:
@@ -438,6 +1036,52 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Device'
+    PaginatedProductList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+    PaginatedUnitList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Unit'
     PaginatedUserList:
       type: object
       required:
@@ -461,6 +1105,101 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/User'
+    PatchedCategoryRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          title: Nomi
+          maxLength: 100
+        parent:
+          type: string
+          format: uuid
+          nullable: true
+        sort:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Tartib
+        color:
+          type: string
+          title: Rang (palitra kaliti)
+          maxLength: 16
+    PatchedProductRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          title: Nomi
+          maxLength: 200
+        category:
+          type: string
+          format: uuid
+          nullable: true
+        unit:
+          type: string
+          format: uuid
+        sell_price_tiyin:
+          type: integer
+          minimum: 0
+        cost_price_tiyin:
+          type: integer
+          minimum: 0
+        is_weighted:
+          type: boolean
+          title: Vaznli
+        plu_code:
+          nullable: true
+          title: PLU
+          oneOf:
+          - type: string
+            pattern: ^[0-9]{5}$
+            maxLength: 5
+          - type: string
+            maxLength: 0
+        min_stock_milli:
+          type: integer
+          minimum: 0
+        ikpu_code:
+          title: IKPU
+          oneOf:
+          - type: string
+            pattern: ^[0-9]{17}$
+            maxLength: 17
+          - type: string
+            maxLength: 0
+        quick_button:
+          type: boolean
+          title: Tez tugma
+        is_active:
+          type: boolean
+          title: Faol
+        barcodes:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          maxItems: 20
+    PatchedUnitRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          minLength: 1
+          title: Kod
+          maxLength: 16
+        name:
+          type: string
+          title: Nomi
+          maxLength: 50
+        is_fractional:
+          type: boolean
+          title: Kasrli
     PlatformEnum:
       enum:
       - windows
@@ -471,6 +1210,145 @@ components:
         * `windows` - Windows
         * `android` - Android
         * `ios` - iOS
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          title: Nomi
+          maxLength: 200
+        category:
+          type: string
+          format: uuid
+          nullable: true
+        unit:
+          type: string
+          format: uuid
+        sell_price_tiyin:
+          type: integer
+          minimum: 0
+        cost_price_tiyin:
+          type: integer
+          minimum: 0
+        is_weighted:
+          type: boolean
+          title: Vaznli
+        plu_code:
+          nullable: true
+          title: PLU
+          oneOf:
+          - type: string
+            pattern: ^[0-9]{5}$
+            maxLength: 5
+          - type: string
+            maxLength: 0
+        min_stock_milli:
+          type: integer
+          minimum: 0
+        ikpu_code:
+          title: IKPU
+          oneOf:
+          - type: string
+            pattern: ^[0-9]{17}$
+            maxLength: 17
+          - type: string
+            maxLength: 0
+        quick_button:
+          type: boolean
+          title: Tez tugma
+        is_active:
+          type: boolean
+          title: Faol
+        barcodes:
+          type: array
+          items:
+            type: string
+          maxItems: 20
+        markup_bp:
+          type: integer
+          nullable: true
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - markup_bp
+      - name
+      - sell_price_tiyin
+      - unit
+      - updated_at
+    ProductRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          title: Nomi
+          maxLength: 200
+        category:
+          type: string
+          format: uuid
+          nullable: true
+        unit:
+          type: string
+          format: uuid
+        sell_price_tiyin:
+          type: integer
+          minimum: 0
+        cost_price_tiyin:
+          type: integer
+          minimum: 0
+        is_weighted:
+          type: boolean
+          title: Vaznli
+        plu_code:
+          nullable: true
+          title: PLU
+          oneOf:
+          - type: string
+            pattern: ^[0-9]{5}$
+            maxLength: 5
+          - type: string
+            maxLength: 0
+        min_stock_milli:
+          type: integer
+          minimum: 0
+        ikpu_code:
+          title: IKPU
+          oneOf:
+          - type: string
+            pattern: ^[0-9]{17}$
+            maxLength: 17
+          - type: string
+            maxLength: 0
+        quick_button:
+          type: boolean
+          title: Tez tugma
+        is_active:
+          type: boolean
+          title: Faol
+        barcodes:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          maxItems: 20
+      required:
+      - name
+      - sell_price_tiyin
+      - unit
     RoleEnum:
       enum:
       - platform_admin
@@ -532,6 +1410,44 @@ components:
           minLength: 1
       required:
       - refresh
+    Unit:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        code:
+          type: string
+          title: Kod
+          maxLength: 16
+        name:
+          type: string
+          title: Nomi
+          maxLength: 50
+        is_fractional:
+          type: boolean
+          title: Kasrli
+      required:
+      - code
+      - id
+    UnitRequest:
+      type: object
+      properties:
+        code:
+          type: string
+          minLength: 1
+          title: Kod
+          maxLength: 16
+        name:
+          type: string
+          title: Nomi
+          maxLength: 50
+        is_fractional:
+          type: boolean
+          title: Kasrli
+      required:
+      - code
     User:
       type: object
       properties:

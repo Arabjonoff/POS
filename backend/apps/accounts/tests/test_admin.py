@@ -28,6 +28,11 @@ def admin_client(make_user):
         "/admin/billing/subscription/add/",
         "/admin/billing/subscriptionpayment/",
         "/admin/devices/device/",
+        "/admin/catalog/product/",
+        "/admin/catalog/product/add/",
+        "/admin/catalog/category/",
+        "/admin/catalog/unit/",
+        "/admin/catalog/pricehistory/",
     ],
 )
 def test_admin_pages_open(admin_client, url):
