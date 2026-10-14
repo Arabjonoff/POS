@@ -1,0 +1,37 @@
+{
+  "_comment": "PIN hash vektorlari (qaror 0006). Python (apps/accounts/tests/test_pins.py) va Dart (kassa) bir xil natija berishi shart.",
+  "algorithm": "pbkdf2_sha256",
+  "iterations": 120000,
+  "cases": [
+    {
+      "pin": "1234",
+      "salt": "c2FsdHNhbHQ",
+      "encoded": "pbkdf2_sha256$120000$c2FsdHNhbHQ$qxLQ/NshlIkVFl8YCKVHFuksbvylfDpbcG607Ow+G5A="
+    },
+    {
+      "pin": "000000",
+      "salt": "Zm9vYmFyYmF6",
+      "encoded": "pbkdf2_sha256$120000$Zm9vYmFyYmF6$XYdazMCjkpzlxJqWy6hdr0QHrOQzVkoWLUWYwZoLoww="
+    },
+    {
+      "pin": "98765",
+      "salt": "x7KpQ2mN9vLs",
+      "encoded": "pbkdf2_sha256$120000$x7KpQ2mN9vLs$VzHb697g65N3jN8gx9Heb+E9j+6wG/MXYpaEyRYvA4s="
+    },
+    {
+      "pin": "4321",
+      "salt": "c2FsdHNhbHQ",
+      "encoded": "pbkdf2_sha256$120000$c2FsdHNhbHQ$C5rY9ckQedU8+rN+chGwqkiJu2BuN82X2cwDbqkmXdI="
+    }
+  ],
+  "wrong_pins": [
+    {
+      "pin": "1235",
+      "encoded_of": "1234"
+    },
+    {
+      "pin": "12345",
+      "encoded_of": "1234"
+    }
+  ]
+}

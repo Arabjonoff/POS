@@ -48,7 +48,7 @@ Spec'lar: `data-model.md`, `auth-roles.md`, `sync.md`, `subscription-billing.md`
 - **Qabul:** model testlari; tenant izolyatsiyasi testi uchun umumiy fixture.
 - **Bog'liq:** T-003
 
-### [ ] T-011 Foydalanuvchilar va autentifikatsiya
+### [x] T-011 Foydalanuvchilar va autentifikatsiya
 - **Bajarish:** custom `User` (telefon bilan kirish), rollar (platform_admin, owner, manager, cashier), PIN (4–6 raqam, hash), `/api/v1/auth/login`, `/refresh`, `/me`. Permission klasslari rollar bo'yicha.
 - **Qabul:** kirish/refresh testlari; kassir menejer endpointiga kira olmaydi; boshqa tenant foydalanuvchisini ko'ra olmaydi.
 - **Bog'liq:** T-010
