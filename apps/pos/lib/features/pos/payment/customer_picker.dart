@@ -192,3 +192,41 @@ class CustomerTile extends StatelessWidget {
     );
   }
 }
+
+/// F4 natijasi: [customer] `null` — chekdan mijozni olib tashlash.
+class CustomerChoice {
+  const CustomerChoice(this.customer);
+
+  final CustomerEntry? customer;
+}
+
+/// F4: chek mijozi (nasiyada oldindan tanlangan bo'ladi).
+Future<CustomerChoice?> showCustomerDialog(
+  BuildContext context, {
+  String? selectedId,
+}) => showPosDialog<CustomerChoice>(
+  context: context,
+  builder: (context) => PosDialog(
+    icon: Icons.person_outline,
+    title: AppLocalizations.of(context).posCustomerTitle,
+    content: CustomerPicker(
+      selectedId: selectedId,
+      onSelected: (c) => Navigator.of(context).pop(CustomerChoice(c)),
+    ),
+    actions: [
+      if (selectedId != null)
+        PosButton(
+          label: AppLocalizations.of(context).posCustomerRemove,
+          variant: PosButtonVariant.ghost,
+          onPressed: () =>
+              Navigator.of(context).pop(const CustomerChoice(null)),
+        ),
+      PosButton(
+        label: AppLocalizations.of(context).actionCancel,
+        variant: PosButtonVariant.secondary,
+        shortcut: 'Esc',
+        onPressed: () => Navigator.of(context).pop(),
+      ),
+    ],
+  ),
+);

@@ -517,10 +517,6 @@ class AppLocalizationsUz extends AppLocalizations {
   String get posDiscount => 'Chegirma';
 
   @override
-  String get posPayComingSoon =>
-      'To\'lov oynasi keyingi yangilanishda qo\'shiladi';
-
-  @override
   String posLineRemoved(String name) {
     return '$name o\'chirildi';
   }
@@ -1179,9 +1175,6 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get posDiscount => 'Чегирма';
-
-  @override
-  String get posPayComingSoon => 'Тўлов ойнаси кейинги янгиланишда қўшилади';
 
   @override
   String posLineRemoved(String name) {

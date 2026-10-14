@@ -957,12 +957,6 @@ abstract class AppLocalizations {
   /// **'Chegirma'**
   String get posDiscount;
 
-  /// T-043 gacha vaqtinchalik
-  ///
-  /// In uz, this message translates to:
-  /// **'To\'lov oynasi keyingi yangilanishda qo\'shiladi'**
-  String get posPayComingSoon;
-
   /// Qator o'chirildi (undo bilan)
   ///
   /// In uz, this message translates to:

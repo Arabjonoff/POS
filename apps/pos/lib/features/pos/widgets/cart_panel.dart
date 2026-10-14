@@ -384,13 +384,17 @@ class _CartLineTileState extends State<CartLineTile> {
   }
 }
 
-/// Savat osti: tovarlar soni, chegirma (F3), JAMI (eng katta matn), To'lash.
+/// Savat osti: mijoz (F4), chegirma (F3), tovarlar soni, JAMI (eng katta
+/// matn), To'lash.
 class CartSummary extends StatelessWidget {
   const CartSummary({
     required this.cart,
     required this.onDiscount,
     required this.onPay,
     required this.payEnabled,
+    this.customerName,
+    this.onCustomer,
+    this.onRemoveCustomer,
     this.compact = false,
     super.key,
   });
@@ -399,6 +403,11 @@ class CartSummary extends StatelessWidget {
   final VoidCallback onDiscount;
   final VoidCallback onPay;
   final bool payEnabled;
+
+  /// Chek mijozi ismi (`null` — tanlanmagan).
+  final String? customerName;
+  final VoidCallback? onCustomer;
+  final VoidCallback? onRemoveCustomer;
 
   /// Telefon: yopishqoq panel — faqat JAMI va To'lash.
   final bool compact;
@@ -468,6 +477,31 @@ class CartSummary extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
+        if (onCustomer != null)
+          Row(
+            children: [
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: PosButton(
+                    key: const ValueKey('cart-customer'),
+                    label: customerName ?? l10n.posCustomer,
+                    icon: Icons.person_outline,
+                    size: PosButtonSize.s,
+                    variant: PosButtonVariant.ghost,
+                    shortcut: 'F4',
+                    onPressed: onCustomer,
+                  ),
+                ),
+              ),
+              if (customerName != null && onRemoveCustomer != null)
+                PosIconButton(
+                  icon: Icons.close,
+                  tooltip: l10n.posCustomerRemove,
+                  onPressed: onRemoveCustomer,
+                ),
+            ],
+          ),
         if (discounts > 0)
           _SummaryRow(
             label: l10n.posSubtotal,

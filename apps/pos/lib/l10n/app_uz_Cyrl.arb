@@ -143,7 +143,6 @@
   "posItemsCount": "{count, plural, other{{count} та товар}}",
   "posSubtotal": "Товарлар",
   "posDiscount": "Чегирма",
-  "posPayComingSoon": "Тўлов ойнаси кейинги янгиланишда қўшилади",
   "posLineRemoved": "{name} ўчирилди",
   "posQtyTitle": "Миқдор",
   "posWeightTitle": "Вазн, кг",

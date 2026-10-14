@@ -537,9 +537,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get posDiscount => 'Скидка';
 
   @override
-  String get posPayComingSoon => 'Окно оплаты появится в следующем обновлении';
-
-  @override
   String posLineRemoved(String name) {
     return '$name: удалено';
   }

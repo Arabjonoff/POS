@@ -630,10 +630,6 @@
   "@posDiscount": {
     "description": "Chegirma (F3)"
   },
-  "posPayComingSoon": "To'lov oynasi keyingi yangilanishda qo'shiladi",
-  "@posPayComingSoon": {
-    "description": "T-043 gacha vaqtinchalik"
-  },
   "posLineRemoved": "{name} o'chirildi",
   "@posLineRemoved": {
     "description": "Qator o'chirildi (undo bilan)",

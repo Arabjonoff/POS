@@ -16,15 +16,15 @@
 - [x] 2. Mijozlar: `apps/pos/lib/data/customers/customer_directory.dart` (qidiruv, balans = Σ debt_entries, tez yaratish + `customer.upserted` outbox, limit tekshiruvi) + testlar
 - [x] 3. `Checkout` (`features/pos/payment/checkout.dart`): savat + to'lov → `SaleWriter.complete` (bitta tranzaksiya) → savat tozalanadi; atomarlik testi
 - [x] 4. To'lov oynasi UI (`features/pos/payment/payment_dialog.dart`): Naqd (Aniq/50 000/100 000/200 000, klaviatura, katta yashil qaytim, Enter), Karta, Nasiya (mijoz tanlash/yaratish, limit → menejer PIN), Aralash; oyna ochiqda skaner → "Avval to'lovni yakunlang"
-- [ ] 5. Kassa ekraniga ulash: F12, F4 mijoz (savatga), yakunlash xabari 3 s "Savdo yakunlandi · Qaytim …", fokus skanerga
+- [x] 5. Kassa ekraniga ulash: F12, F4 mijoz (savatga), yakunlash xabari 3 s "Savdo yakunlandi · Qaytim …", fokus skanerga
 - [ ] 6. Widget testlari (3 harakat: skan → F12 → Enter; qaytim; karta; nasiya + limit; aralash; skaner bloklangan) + golden + skrinshotlar `docs/screenshots/T-043/`
 - [ ] 7. To'liq tekshiruv, PR, CI → merge; ROADMAP, PROGRESS, STATE
 
 ## Oxirgi bajarilgan ish
-- 4-qadam: `features/pos/payment/payment_dialog.dart` (`showPaymentDialog(context, cart:)` → `CheckoutResult?`; savdoni oynaning o'zi yozadi), `MoneyInput` ga `pristine`/`hardwareDigits`, tarjimalar (payCash/payCard/payDebt/payChangeCustomer/posCustomerTitle/posCustomerNone).
+- 5-qadam: `pos_screen.dart` `_pay()` (to'lov oynasi → `clearActive` → 3 s xabar), F4 `_chooseCustomer()` (`showCustomerDialog` — `customer_picker.dart`), `CartSummary` da mijoz qatori (F4, olib tashlash). `posPayComingSoon` kaliti o'chirildi.
 
 ## Keyingi aniq harakat
-- 5-qadam: `features/pos/pos_screen.dart` `_pay()` → `_dialog(() => showPaymentDialog(context, cart: _state.cart))` → natija bo'lsa `_cart.clearActive()`, toast 3 s (`paySaleDone`/`paySaleDoneChange`), `_focusScreen()`. F4 → mijoz oynasi (`customer_picker.dart` ga `showCustomerDialog`), `CartController.setCustomer`; savat panelida mijoz qatori.
+- 6-qadam: yangi test fayli `apps/pos/test/features/payment_test.dart` (pos_screen_test.dart dagi `open()`/`scanCode`/`press` uslubida): skan → F12 → Enter (savdo bazada, savat bo'sh, xabar); naqd 50 000 → qaytim; karta; nasiya + limit → menejer PIN; aralash; oyna ochiq paytda skan → "Avval to'lovni yakunlang", savdo yozilmagan. Keyin golden `test/goldens/pos_golden_test.dart` ga to'lov oynasi (3 o'lcham).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
