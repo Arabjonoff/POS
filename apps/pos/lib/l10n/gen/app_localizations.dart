@@ -1232,6 +1232,240 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Mijoz tanlanmagan'**
   String get posCustomerNone;
+
+  /// Chekda: chek raqami yorlig'i
+  ///
+  /// In uz, this message translates to:
+  /// **'Chek'**
+  String get receiptCheck;
+
+  /// Chekda: kassir
+  ///
+  /// In uz, this message translates to:
+  /// **'Kassir'**
+  String get receiptCashier;
+
+  /// Chekda: chegirma
+  ///
+  /// In uz, this message translates to:
+  /// **'Chegirma'**
+  String get receiptDiscount;
+
+  /// Chekda: jami summa (katta harflar)
+  ///
+  /// In uz, this message translates to:
+  /// **'JAMI'**
+  String get receiptTotal;
+
+  /// Chekda: nasiya mijozi
+  ///
+  /// In uz, this message translates to:
+  /// **'Mijoz'**
+  String get receiptCustomer;
+
+  /// Chekda: mijozning savdodan keyingi qarzi
+  ///
+  /// In uz, this message translates to:
+  /// **'Joriy qarz'**
+  String get receiptDebtNow;
+
+  /// Chek oxiri
+  ///
+  /// In uz, this message translates to:
+  /// **'Fiskal chek emas'**
+  String get receiptNotFiscal;
+
+  /// Chek pastki matni (do'konda berilmagan bo'lsa)
+  ///
+  /// In uz, this message translates to:
+  /// **'Xaridingiz uchun rahmat!'**
+  String get receiptThanks;
+
+  /// Qayta chop etilgan chek belgisi
+  ///
+  /// In uz, this message translates to:
+  /// **'NUSXA'**
+  String get receiptCopy;
+
+  /// Holat qatori: printer tekshirilmoqda
+  ///
+  /// In uz, this message translates to:
+  /// **'Printer tekshirilmoqda'**
+  String get statusPrinterChecking;
+
+  /// Test chek sarlavhasi (chekda)
+  ///
+  /// In uz, this message translates to:
+  /// **'TEST CHEK'**
+  String get printerTestTitle;
+
+  /// Test chekda harflar sinovi
+  ///
+  /// In uz, this message translates to:
+  /// **'Lotin: O\'zbekiston. Kirill: Ўзбекистон, Россия'**
+  String get printerTestSample;
+
+  /// Test chek oxiri
+  ///
+  /// In uz, this message translates to:
+  /// **'Bu matn to\'g\'ri o\'qilsa, printer tayyor'**
+  String get printerTestOk;
+
+  /// Sozlamalar: printer bo'limi
+  ///
+  /// In uz, this message translates to:
+  /// **'Chek printeri'**
+  String get settingsPrinter;
+
+  /// Printer bo'limi izohi
+  ///
+  /// In uz, this message translates to:
+  /// **'Termal printer (ESC/POS), 58 yoki 80 mm'**
+  String get settingsPrinterHelper;
+
+  /// Printer ulanish turi
+  ///
+  /// In uz, this message translates to:
+  /// **'Ulanish'**
+  String get printerConnection;
+
+  /// Printer ishlatilmaydi
+  ///
+  /// In uz, this message translates to:
+  /// **'Printersiz'**
+  String get printerNone;
+
+  /// Tarmoq printeri
+  ///
+  /// In uz, this message translates to:
+  /// **'Tarmoq (IP)'**
+  String get printerNetwork;
+
+  /// Windows'ga o'rnatilgan printer
+  ///
+  /// In uz, this message translates to:
+  /// **'Kompyuter printeri'**
+  String get printerWindows;
+
+  /// Tarmoq printeri IP manzili
+  ///
+  /// In uz, this message translates to:
+  /// **'Printer manzili'**
+  String get printerAddress;
+
+  /// IP manzil namunasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Masalan: 192.168.1.50'**
+  String get printerAddressHint;
+
+  /// Windows printerlari ro'yxati bo'sh
+  ///
+  /// In uz, this message translates to:
+  /// **'Kompyuterda printer topilmadi'**
+  String get printerNoSystemPrinters;
+
+  /// Chek qog'ozi kengligi
+  ///
+  /// In uz, this message translates to:
+  /// **'Qog\'oz kengligi'**
+  String get printerWidth;
+
+  /// Qog'oz kengligi qiymati
+  ///
+  /// In uz, this message translates to:
+  /// **'{mm} mm'**
+  String printerWidthMm(int mm);
+
+  /// Printer kodlash jadvali
+  ///
+  /// In uz, this message translates to:
+  /// **'Harflar jadvali'**
+  String get printerEncoding;
+
+  /// CP866 kodlash
+  ///
+  /// In uz, this message translates to:
+  /// **'Kirill (CP866)'**
+  String get printerEncodingCp866;
+
+  /// UTF-8 kodlash
+  ///
+  /// In uz, this message translates to:
+  /// **'UTF-8'**
+  String get printerEncodingUtf8;
+
+  /// Avtomatik chop etish
+  ///
+  /// In uz, this message translates to:
+  /// **'Savdodan keyin chekni chiqarish'**
+  String get printerAutoPrint;
+
+  /// Chek nusxalari soni
+  ///
+  /// In uz, this message translates to:
+  /// **'Nusxalar soni'**
+  String get printerCopies;
+
+  /// Pul qutisi
+  ///
+  /// In uz, this message translates to:
+  /// **'Naqd to\'lovda pul qutisini ochish'**
+  String get printerDrawer;
+
+  /// Test chek chiqarish tugmasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Test chek'**
+  String get printerTest;
+
+  /// Pul qutisini ochish tugmasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Pul qutisini ochish'**
+  String get printerOpenDrawer;
+
+  /// Chop etish muvaffaqiyatli
+  ///
+  /// In uz, this message translates to:
+  /// **'Printerga yuborildi'**
+  String get printerSent;
+
+  /// Chop etish xatosi
+  ///
+  /// In uz, this message translates to:
+  /// **'Printerga ulanib bo\'lmadi. Kabel yoki manzilni tekshiring'**
+  String get printerFailed;
+
+  /// Printer sozlanmagan
+  ///
+  /// In uz, this message translates to:
+  /// **'Avval printerni sozlang'**
+  String get printerNotConfigured;
+
+  /// Kassa: chek chop etilmadi
+  ///
+  /// In uz, this message translates to:
+  /// **'Chek chiqmadi'**
+  String get posReceiptFailed;
+
+  /// Kassa: chekni qayta chop etish
+  ///
+  /// In uz, this message translates to:
+  /// **'Qayta chop etish'**
+  String get posReprint;
+
+  /// Kassa: oxirgi chekni qayta chop etish tugmasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Oxirgi chek'**
+  String get posLastReceipt;
+
+  /// Savdo yakunlandi, lekin chek chop etilmadi
+  ///
+  /// In uz, this message translates to:
+  /// **'{done}. Chek chiqmadi'**
+  String posSaleDoneReceiptFailed(String done);
 }
 
 class _AppLocalizationsDelegate

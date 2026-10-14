@@ -6,12 +6,12 @@ import 'package:pos_app/app/scanner/scanner_settings.dart';
 import 'package:pos_app/app/session/auto_lock.dart';
 import 'package:pos_app/app/session/session.dart';
 import 'package:pos_app/features/common/section_page.dart';
+import 'package:pos_app/features/printing/printer_settings_panel.dart';
 import 'package:pos_app/features/settings/language_picker.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
 import 'package:pos_ui/pos_ui.dart';
 
-/// Sozlamalar: til, avtomatik qulflash, qulflash. Printer va boshqalar —
-/// tegishli vazifalarda.
+/// Sozlamalar: til, avtomatik qulflash, skaner, chek printeri, qulflash.
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
@@ -39,6 +39,12 @@ class SettingsScreen extends ConsumerWidget {
           _SettingsCard(
             title: l10n.settingsScanner,
             child: const _ScannerSettingsPicker(),
+          ),
+          const SizedBox(height: PosSpacing.l),
+          _SettingsCard(
+            title: l10n.settingsPrinter,
+            subtitle: l10n.settingsPrinterHelper,
+            child: const PrinterSettingsPanel(),
           ),
           const SizedBox(height: PosSpacing.l),
           Align(

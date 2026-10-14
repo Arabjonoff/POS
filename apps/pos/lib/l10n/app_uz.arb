@@ -838,5 +838,171 @@
   "posCustomerNone": "Mijoz tanlanmagan",
   "@posCustomerNone": {
     "description": "Chekda mijoz yo'q"
+  },
+  "receiptCheck": "Chek",
+  "@receiptCheck": {
+    "description": "Chekda: chek raqami yorlig'i"
+  },
+  "receiptCashier": "Kassir",
+  "@receiptCashier": {
+    "description": "Chekda: kassir"
+  },
+  "receiptDiscount": "Chegirma",
+  "@receiptDiscount": {
+    "description": "Chekda: chegirma"
+  },
+  "receiptTotal": "JAMI",
+  "@receiptTotal": {
+    "description": "Chekda: jami summa (katta harflar)"
+  },
+  "receiptCustomer": "Mijoz",
+  "@receiptCustomer": {
+    "description": "Chekda: nasiya mijozi"
+  },
+  "receiptDebtNow": "Joriy qarz",
+  "@receiptDebtNow": {
+    "description": "Chekda: mijozning savdodan keyingi qarzi"
+  },
+  "receiptNotFiscal": "Fiskal chek emas",
+  "@receiptNotFiscal": {
+    "description": "Chek oxiri"
+  },
+  "receiptThanks": "Xaridingiz uchun rahmat!",
+  "@receiptThanks": {
+    "description": "Chek pastki matni (do'konda berilmagan bo'lsa)"
+  },
+  "receiptCopy": "NUSXA",
+  "@receiptCopy": {
+    "description": "Qayta chop etilgan chek belgisi"
+  },
+  "statusPrinterChecking": "Printer tekshirilmoqda",
+  "@statusPrinterChecking": {
+    "description": "Holat qatori: printer tekshirilmoqda"
+  },
+  "printerTestTitle": "TEST CHEK",
+  "@printerTestTitle": {
+    "description": "Test chek sarlavhasi (chekda)"
+  },
+  "printerTestSample": "Lotin: O'zbekiston. Kirill: Ўзбекистон, Россия",
+  "@printerTestSample": {
+    "description": "Test chekda harflar sinovi"
+  },
+  "printerTestOk": "Bu matn to'g'ri o'qilsa, printer tayyor",
+  "@printerTestOk": {
+    "description": "Test chek oxiri"
+  },
+  "settingsPrinter": "Chek printeri",
+  "@settingsPrinter": {
+    "description": "Sozlamalar: printer bo'limi"
+  },
+  "settingsPrinterHelper": "Termal printer (ESC/POS), 58 yoki 80 mm",
+  "@settingsPrinterHelper": {
+    "description": "Printer bo'limi izohi"
+  },
+  "printerConnection": "Ulanish",
+  "@printerConnection": {
+    "description": "Printer ulanish turi"
+  },
+  "printerNone": "Printersiz",
+  "@printerNone": {
+    "description": "Printer ishlatilmaydi"
+  },
+  "printerNetwork": "Tarmoq (IP)",
+  "@printerNetwork": {
+    "description": "Tarmoq printeri"
+  },
+  "printerWindows": "Kompyuter printeri",
+  "@printerWindows": {
+    "description": "Windows'ga o'rnatilgan printer"
+  },
+  "printerAddress": "Printer manzili",
+  "@printerAddress": {
+    "description": "Tarmoq printeri IP manzili"
+  },
+  "printerAddressHint": "Masalan: 192.168.1.50",
+  "@printerAddressHint": {
+    "description": "IP manzil namunasi"
+  },
+  "printerNoSystemPrinters": "Kompyuterda printer topilmadi",
+  "@printerNoSystemPrinters": {
+    "description": "Windows printerlari ro'yxati bo'sh"
+  },
+  "printerWidth": "Qog'oz kengligi",
+  "@printerWidth": {
+    "description": "Chek qog'ozi kengligi"
+  },
+  "printerWidthMm": "{mm} mm",
+  "@printerWidthMm": {
+    "description": "Qog'oz kengligi qiymati",
+    "placeholders": {
+      "mm": {
+        "type": "int"
+      }
+    }
+  },
+  "printerEncoding": "Harflar jadvali",
+  "@printerEncoding": {
+    "description": "Printer kodlash jadvali"
+  },
+  "printerEncodingCp866": "Kirill (CP866)",
+  "@printerEncodingCp866": {
+    "description": "CP866 kodlash"
+  },
+  "printerEncodingUtf8": "UTF-8",
+  "@printerEncodingUtf8": {
+    "description": "UTF-8 kodlash"
+  },
+  "printerAutoPrint": "Savdodan keyin chekni chiqarish",
+  "@printerAutoPrint": {
+    "description": "Avtomatik chop etish"
+  },
+  "printerCopies": "Nusxalar soni",
+  "@printerCopies": {
+    "description": "Chek nusxalari soni"
+  },
+  "printerDrawer": "Naqd to'lovda pul qutisini ochish",
+  "@printerDrawer": {
+    "description": "Pul qutisi"
+  },
+  "printerTest": "Test chek",
+  "@printerTest": {
+    "description": "Test chek chiqarish tugmasi"
+  },
+  "printerOpenDrawer": "Pul qutisini ochish",
+  "@printerOpenDrawer": {
+    "description": "Pul qutisini ochish tugmasi"
+  },
+  "printerSent": "Printerga yuborildi",
+  "@printerSent": {
+    "description": "Chop etish muvaffaqiyatli"
+  },
+  "printerFailed": "Printerga ulanib bo'lmadi. Kabel yoki manzilni tekshiring",
+  "@printerFailed": {
+    "description": "Chop etish xatosi"
+  },
+  "printerNotConfigured": "Avval printerni sozlang",
+  "@printerNotConfigured": {
+    "description": "Printer sozlanmagan"
+  },
+  "posReceiptFailed": "Chek chiqmadi",
+  "@posReceiptFailed": {
+    "description": "Kassa: chek chop etilmadi"
+  },
+  "posReprint": "Qayta chop etish",
+  "@posReprint": {
+    "description": "Kassa: chekni qayta chop etish"
+  },
+  "posLastReceipt": "Oxirgi chek",
+  "@posLastReceipt": {
+    "description": "Kassa: oxirgi chekni qayta chop etish tugmasi"
+  },
+  "posSaleDoneReceiptFailed": "{done}. Chek chiqmadi",
+  "@posSaleDoneReceiptFailed": {
+    "description": "Savdo yakunlandi, lekin chek chop etilmadi",
+    "placeholders": {
+      "done": {
+        "type": "String"
+      }
+    }
   }
 }

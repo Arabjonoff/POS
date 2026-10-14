@@ -32,3 +32,12 @@ Qaytim                  15 000
 - Nasiya bo'lsa: mijoz ismi va joriy qarz.
 - Chek matnini generatsiya qilish — sof funksiya (`ReceiptBuilder`), snapshot testlar bilan; printer drayveri alohida qatlam.
 - Printer xatosi savdoni bloklamaydi. "Oxirgi chekni qayta chop etish" har doim mavjud.
+
+## Kassada amalga oshirilishi (T-044)
+- **Chek matni** — `apps/pos/lib/features/printing/receipt.dart`: `ReceiptData` → `ReceiptBuilder(l10n, width)` → `ReceiptRow` lar (matn, qalin, markaz). Matn ilova tilida, belgilar ASCII bo'shliq/defis bilan. Uzun nom so'z bo'yicha o'raladi, "miqdor x narx" oxirgi qatorning o'ng chetida turadi. Qayta chop etilgan chekda "NUSXA" yoziladi. Snapshotlar: `apps/pos/test/printing/receipts/*.txt` (yangilash — `UPDATE_RECEIPTS=1`).
+- **Ma'lumot** — `receipt_loader.dart`: do'kon (smena → `stores`: nom, manzil, telefon, sarlavha, pastki matn), kassir, qatorlar (birlik — tovardan), to'lovlar (naqd → karta → nasiya), nasiya mijozi va uning savdodan keyingi qarzi.
+- **ESC/POS** — `escpos.dart`: `ESC @`, `ESC t 17` (CP866) yoki UTF-8, `ESC a` (markaz), `ESC E` (qalin), qog'oz surish + kesish `GS V 66 0`, pul qutisi `ESC p 0 25 250`. CP866 da yo'q o'zbek kirill harflari (ў қ ғ ҳ) у к г х bo'lib chiqadi.
+- **Ulanish** — `printer_transport.dart`: tarmoq `IP[:port]` (standart 9100), Windows spooler (`winspool.dart`, RAW). Android Bluetooth/USB — T-047 (qaror 0008).
+- **Sozlamalar** — har kassada o'zi (`local_settings`, kalit `printer`): ulanish, manzil yoki printer nomi, 58/80 mm, harflar jadvali, avtomatik chek, 1–3 nusxa, naqd to'lovda pul qutisi. Sozlamalar → Chek printeri sahifasida "Test chek" (chizg'ich, vaqt, lotin/kirill sinovi) va "Pul qutisini ochish" tugmalari bor.
+- **Kassada** — yakunlangandan keyin chek fonda chiqadi, savdo uni kutmaydi. Xato bo'lsa "Savdo yakunlandi · Qaytim … . Chek chiqmadi" xabari va "Qayta chop etish" (NUSXA) tugmasi chiqadi. Printer sozlangan bo'lsa, qidiruv qatorida "Oxirgi chek" tugmasi turadi.
+- **Holat qatori** — sozlanmagan / tekshirilmoqda (ochilganda ulanish sinovi) / ulangan / ulanmagan; holat har chop etishdan keyin yangilanadi.

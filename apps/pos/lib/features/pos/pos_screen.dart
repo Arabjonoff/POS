@@ -23,6 +23,8 @@ import 'package:pos_app/features/pos/widgets/cart_panel.dart';
 import 'package:pos_app/features/pos/widgets/discount_dialog.dart';
 import 'package:pos_app/features/pos/widgets/product_panel.dart';
 import 'package:pos_app/features/pos/widgets/qty_dialog.dart';
+import 'package:pos_app/features/printing/printer_service.dart';
+import 'package:pos_app/features/printing/printer_settings.dart';
 import 'package:pos_app/features/scanner/camera_scan_page.dart';
 import 'package:pos_app/features/shift/open_shift_card.dart';
 import 'package:pos_app/features/shift/shift_providers.dart';
@@ -310,15 +312,58 @@ class _CashierViewState extends ConsumerState<CashierView> {
     _cart.clearActive();
     final l10n = AppLocalizations.of(context);
     final change = result.changeTiyin;
+    final done = change > 0
+        ? l10n.paySaleDoneChange(context.fmt.money(change))
+        : l10n.paySaleDone;
     showPosToast(
       context,
-      message: change > 0
-          ? l10n.paySaleDoneChange(context.fmt.money(change))
-          : l10n.paySaleDone,
+      message: done,
       tone: PosTone.success,
       duration: const Duration(seconds: 3),
     );
     _focusScreen();
+    final printer = ref.read(printerSettingsProvider).value;
+    if (printer != null && printer.configured && printer.autoPrint) {
+      // Chek fonda: savdo uni kutmaydi, xato savdoni to'xtatmaydi.
+      unawaited(_printReceipt(result.sale.id, done: done));
+    }
+  }
+
+  /// [done] — savdo xabari: chek xatosi uni yopsa ham qaytim ko'rinib tursin.
+  Future<void> _printReceipt(
+    String saleId, {
+    bool copy = false,
+    String? done,
+  }) async {
+    final outcome = await ref
+        .read(printerServiceProvider)
+        .printSale(saleId, copy: copy);
+    if (!mounted || outcome == PrintOutcome.printed) return;
+    _receiptFailed(
+      () => unawaited(_printReceipt(saleId, copy: true)),
+      done: done,
+    );
+  }
+
+  /// "Oxirgi chek": oxirgi savdo nusxasi.
+  Future<void> _reprintLast() async {
+    final outcome = await ref.read(printerServiceProvider).reprintLast();
+    if (!mounted || outcome == PrintOutcome.printed) return;
+    _receiptFailed(() => unawaited(_reprintLast()));
+  }
+
+  void _receiptFailed(VoidCallback retry, {String? done}) {
+    final l10n = AppLocalizations.of(context);
+    showPosToast(
+      context,
+      message: done == null
+          ? l10n.posReceiptFailed
+          : l10n.posSaleDoneReceiptFailed(done),
+      tone: PosTone.warning,
+      actionLabel: l10n.posReprint,
+      onAction: retry,
+      duration: const Duration(seconds: 8),
+    );
   }
 
   /// F4: chek mijozi.
@@ -477,6 +522,8 @@ class _CashierViewState extends ConsumerState<CashierView> {
 
   Widget _searchRow({required bool compact}) {
     final l10n = AppLocalizations.of(context);
+    final printer = ref.watch(printerSettingsProvider).value;
+    final canPrint = printer != null && printer.configured;
     return Row(
       children: [
         Expanded(
@@ -507,6 +554,16 @@ class _CashierViewState extends ConsumerState<CashierView> {
             tooltip: l10n.posQuickButtons,
             variant: PosIconButtonVariant.outlined,
             onPressed: () => unawaited(_openQuickSheet()),
+          ),
+        ],
+        if (canPrint) ...[
+          const SizedBox(width: PosSpacing.s),
+          PosIconButton(
+            key: const ValueKey('pos-last-receipt'),
+            icon: Icons.print_outlined,
+            tooltip: l10n.posLastReceipt,
+            variant: PosIconButtonVariant.outlined,
+            onPressed: () => unawaited(_reprintLast()),
           ),
         ],
         if (!compact) ...[
