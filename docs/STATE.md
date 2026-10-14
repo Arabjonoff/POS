@@ -12,17 +12,17 @@
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [ ] 1. `ShiftService.moveCash` (cash_movements + outbox `cash.moved` bitta tranzaksiyada; chiqarish kutilgan naqddan oshmaydi) va `movements(shiftId)` + testlar (X/Z da naqd balansi)
+- [x] 1. `ShiftService.moveCash` (cash_movements + outbox `cash.moved` bitta tranzaksiyada; chiqarish kutilgan naqddan oshmaydi) va `movements(shiftId)` + testlar (X/Z da naqd balansi)
 - [ ] 2. Oyna "Kassa puli" (F9 kassada, smena sahifasida tugmalar): kiritish/chiqarish, summa, sabab (Inkassatsiya, Xarajat, Mayda pul, Boshqa + matn); smena sahifasida harakatlar ro'yxati; tarjimalar
 - [ ] 3. X/Z hisobot chekini chop etish (`ShiftReceiptBuilder` + snapshot), smena sahifasida "Chop etish" tugmalari yoqiladi
 - [ ] 4. Widget testlari + golden + skrinshotlar `docs/screenshots/T-046/`
 - [ ] 5. Spec, PR, CI → merge; ROADMAP, PROGRESS, STATE
 
 ## Oxirgi bajarilgan ish
-- T-045 merge qilindi (#29). T-046 boshlandi.
+- 1-qadam: `ShiftService.moveCash`, `CashMovementType`, `CashOutExceedsCashException`, `watchMovements`; testlar `test/data/shift_service_test.dart` (group "cash in/out").
 
 ## Keyingi aniq harakat
-- 1-qadam: `apps/pos/lib/data/shifts/shift_service.dart` ga `moveCash` va `CashMovementView` ro'yxati; test `apps/pos/test/data/shift_service_test.dart` ga.
+- 2-qadam: `apps/pos/lib/features/shift/cash_movement_dialog.dart` (`showCashMovementDialog(context, {type})`): Kiritish/Chiqarish, `MoneyInput`, sabab tugmalari + matn, xato "Kassada faqat X bor"; kassa ekranida F9, smena sahifasida "Pul kiritish"/"Pul chiqarish" tugmalari va harakatlar ro'yxati; `shiftReportProvider` ni invalidate qilish.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

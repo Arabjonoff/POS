@@ -262,4 +262,112 @@ void main() {
   test('negative amounts are rejected', () {
     expect(() => openShift(cash: -1), throwsArgumentError);
   });
+
+  group('cash in/out (T-046)', () {
+    test('writes the movement and cash.moved; Z balance is right', () async {
+      final shift = await openShift(cash: 5000000);
+      await sell(shift.id, [
+        const SalePaymentInput.cash(
+          amountTiyin: 3000000,
+          receivedTiyin: 3000000,
+        ),
+      ]);
+      await shifts.moveCash(
+        shiftId: shift.id,
+        type: CashMovementType.cashIn,
+        amountTiyin: 2000000,
+        by: 'cashier-1',
+        reason: ' Mayda pul ',
+      );
+      now = now.add(const Duration(minutes: 5));
+      await shifts.moveCash(
+        shiftId: shift.id,
+        type: CashMovementType.cashOut,
+        amountTiyin: 6000000,
+        by: 'cashier-1',
+        reason: 'Inkassatsiya',
+      );
+
+      final movements = await shifts.watchMovements(shift.id).first;
+      expect(
+        [for (final m in movements) (m.type, m.amountTiyin, m.reason)],
+        [
+          ('out', 6000000, 'Inkassatsiya'),
+          ('in', 2000000, 'Mayda pul'),
+        ],
+      );
+
+      final events = await (db.select(
+        db.outboxEvents,
+      )..where((e) => e.type.equals(OutboxEventType.cashMoved))).get();
+      expect(events, hasLength(2));
+      final payload = jsonDecode(events.first.payload) as Map<String, Object?>;
+      expect(payload, {
+        'id': movements.last.id,
+        'shift': shift.id,
+        'type': 'in',
+        'amount_tiyin': 2000000,
+        'reason': 'Mayda pul',
+        'by': 'cashier-1',
+        'at': isoUtc(DateTime.utc(2026, 10, 14, 8)),
+      });
+
+      // 50 000 + 30 000 + 20 000 − 60 000 = 40 000.
+      final x = await shifts.report(shift.id);
+      expect(
+        (x.cashIn, x.cashOut, x.expectedCash),
+        (2000000, 6000000, 4000000),
+      );
+      final z = await shifts.close(
+        shiftId: shift.id,
+        closedBy: 'cashier-1',
+        countedCashTiyin: 4000000,
+      );
+      expect(z.expectedCash, 4000000);
+      expect(z.difference, 0);
+    });
+
+    test('cash out above the drawer is refused; nothing written', () async {
+      final shift = await openShift(cash: 1000000);
+      await expectLater(
+        shifts.moveCash(
+          shiftId: shift.id,
+          type: CashMovementType.cashOut,
+          amountTiyin: 1000001,
+          by: 'cashier-1',
+        ),
+        throwsA(
+          isA<CashOutExceedsCashException>().having(
+            (e) => e.availableTiyin,
+            'available',
+            1000000,
+          ),
+        ),
+      );
+      expect(await db.select(db.cashMovements).get(), isEmpty);
+      expect(
+        () => shifts.moveCash(
+          shiftId: shift.id,
+          type: CashMovementType.cashIn,
+          amountTiyin: 0,
+          by: 'cashier-1',
+        ),
+        throwsArgumentError,
+      );
+    });
+
+    test('closed shift → no cash movement', () async {
+      final shift = await openShift(cash: 0);
+      await shifts.close(shiftId: shift.id, closedBy: 'c', countedCashTiyin: 0);
+      await expectLater(
+        shifts.moveCash(
+          shiftId: shift.id,
+          type: CashMovementType.cashIn,
+          amountTiyin: 100,
+          by: 'c',
+        ),
+        throwsA(isA<ShiftNotOpenException>()),
+      );
+    });
+  });
 }
