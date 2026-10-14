@@ -45,11 +45,9 @@ class _PosScanFeedbackState extends State<PosScanFeedback>
     with SingleTickerProviderStateMixin {
   static const _hold = Duration(milliseconds: 150);
 
-  late final AnimationController _animation = AnimationController(
-    vsync: this,
-    duration: _hold + PosMotion.overlay,
-    value: 1,
-  );
+  // initState da yaratiladi: dispose paytida (chaqnash bo'lmagan bo'lsa)
+  // dangasa yaratish faol bo'lmagan elementdan ticker so'raydi.
+  late final AnimationController _animation;
   int _seen = 0;
 
   late final Animation<double> _opacity = TweenSequence<double>([
@@ -66,6 +64,11 @@ class _PosScanFeedbackState extends State<PosScanFeedback>
   @override
   void initState() {
     super.initState();
+    _animation = AnimationController(
+      vsync: this,
+      duration: _hold + PosMotion.overlay,
+      value: 1,
+    );
     _seen = widget.controller._count;
     widget.controller.addListener(_onFlash);
   }

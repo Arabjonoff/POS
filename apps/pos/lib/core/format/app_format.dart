@@ -34,6 +34,9 @@ class AppFormat {
   String qtyValue(int qtyMilli, UnitCode unit) =>
       PosFormat.qty(qtyMilli, weighted: unit.fractional);
 
+  /// Butun foiz: `10%`.
+  String percent(int whole) => '$whole%';
+
   /// Sana do'kon vaqt zonasida: `13.10.2026`.
   String date(DateTime instant) {
     final t = timeZone.wallClock(instant);

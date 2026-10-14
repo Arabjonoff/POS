@@ -51,13 +51,7 @@ class AppStatusBar extends ConsumerWidget {
       if (block != SalesBlock.none)
         PosStatusItem(
           icon: Icons.block,
-          label: switch (block) {
-            SalesBlock.readonly => l10n.statusSalesReadonly,
-            SalesBlock.blocked => l10n.statusSalesBlocked,
-            SalesBlock.offlineTooLong => l10n.statusSalesOffline,
-            SalesBlock.deviceBlocked => l10n.statusDeviceBlocked,
-            SalesBlock.none => '',
-          },
+          label: salesBlockLabel(l10n, block),
           tone: PosTone.danger,
         ),
       connectionItem,
@@ -150,3 +144,13 @@ class _ClockState extends ConsumerState<_Clock> {
     );
   }
 }
+
+/// Savdo nega to'xtagani (holat qatori va kassa ekrani banneri).
+String salesBlockLabel(AppLocalizations l10n, SalesBlock block) =>
+    switch (block) {
+      SalesBlock.readonly => l10n.statusSalesReadonly,
+      SalesBlock.blocked => l10n.statusSalesBlocked,
+      SalesBlock.offlineTooLong => l10n.statusSalesOffline,
+      SalesBlock.deviceBlocked => l10n.statusDeviceBlocked,
+      SalesBlock.none => '',
+    };
