@@ -12,18 +12,18 @@
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [ ] 1. Spec `docs/specs/reports-api.md` (davr, formulalar: tushum, foyda, o'rtacha chek, solishtirish; endpointlar) + Q-004 (foyda formulasi)
+- [x] 1. Spec `docs/specs/reports-api.md` (davr, formulalar: tushum, foyda, o'rtacha chek, solishtirish; endpointlar) + Q-004 (foyda formulasi)
 - [ ] 2. `apps/reports/services.py` — davr chegaralari (TZ), summary, by_day, by_hour, top_products, cashiers, debts, stock
 - [ ] 3. API: `/api/v1/reports/...` (ega va menejer), serializerlar, urls
 - [ ] 4. Testlar: qo'lda hisoblangan qiymatlar bilan (chegirma, qaytarish, vaznli, TZ chegarasi), huquqlar, izolyatsiya
 - [ ] 5. openapi + schema.d.ts; lint/test; PROGRESS/ROADMAP; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-T-018 merge qilindi (#15). T-019 branch ochildi.
+1-qadam: spec `docs/specs/reports-api.md`; Q-004 (foyda = tushum − tannarx, chegirma va qaytarishlar bilan — vaqtincha A).
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-1-qadam: `docs/specs/reports-api.md` (`reports.md`, `data-model.md` hisoblanadigan qiymatlar asosida) + `QUESTIONS.md` Q-004.
+2-qadam: `backend/apps/reports/services.py` (Period, summary, by_day, by_hour, top_products, cashiers, debts, stock; tannarx SQL ROUND = half-up).
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
