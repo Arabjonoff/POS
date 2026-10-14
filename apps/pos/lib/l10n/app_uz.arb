@@ -193,5 +193,181 @@
   "sectionComingSoonMessage": "Bu bo'lim keyingi yangilanishda qo'shiladi",
   "@sectionComingSoonMessage": {
     "description": "Hali qurilmagan bo'lim izohi"
+  },
+  "setupTitle": "Kassani ulash",
+  "@setupTitle": {
+    "description": "Birinchi ishga tushirish sarlavhasi"
+  },
+  "setupSubtitle": "Do'kon egasining telefon raqami va paroli bilan kiring",
+  "@setupSubtitle": {
+    "description": "Ulash ekrani izohi"
+  },
+  "setupPhoneLabel": "Telefon raqami",
+  "@setupPhoneLabel": {
+    "description": "Maydon nomi"
+  },
+  "setupPhoneHint": "90 123 45 67",
+  "@setupPhoneHint": {
+    "description": "Telefon namunasi"
+  },
+  "setupPasswordLabel": "Parol",
+  "@setupPasswordLabel": {
+    "description": "Maydon nomi"
+  },
+  "setupNext": "Davom etish",
+  "@setupNext": {
+    "description": "Tugma: keyingi qadam"
+  },
+  "setupDeviceNameTitle": "Bu kassaga nom bering",
+  "@setupDeviceNameTitle": {
+    "description": "Qurilma nomi qadami sarlavhasi"
+  },
+  "setupDeviceNameLabel": "Kassa nomi",
+  "@setupDeviceNameLabel": {
+    "description": "Maydon nomi"
+  },
+  "setupDeviceNameHelper": "Masalan: Kassa 1, Peshtaxta",
+  "@setupDeviceNameHelper": {
+    "description": "Maydon izohi"
+  },
+  "setupDeviceNameDefault": "Kassa 1",
+  "@setupDeviceNameDefault": {
+    "description": "Standart kassa nomi"
+  },
+  "setupConnect": "Ulash",
+  "@setupConnect": {
+    "description": "Tugma: qurilmani ro'yxatdan o'tkazish"
+  },
+  "setupSyncTitle": "Ma'lumotlar yuklanmoqda",
+  "@setupSyncTitle": {
+    "description": "Birinchi sinxron sarlavhasi"
+  },
+  "setupSyncProgress": "{count, plural, =0{Tayyorlanmoqda…} other{{count} ta yozuv yuklandi}}",
+  "@setupSyncProgress": {
+    "description": "Birinchi sinxron jarayoni",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "setupSyncFailed": "Ma'lumotlarni yuklab bo'lmadi. Internetni tekshiring.",
+  "@setupSyncFailed": {
+    "description": "Birinchi sinxron xatosi"
+  },
+  "setupErrorInvalidCredentials": "Telefon raqami yoki parol noto'g'ri",
+  "@setupErrorInvalidCredentials": {
+    "description": "Kirish xatosi"
+  },
+  "setupErrorNotOwner": "Kassani faqat do'kon egasi ulay oladi",
+  "@setupErrorNotOwner": {
+    "description": "Kirish xatosi"
+  },
+  "setupErrorDeviceLimit": "Tarifingizdagi kassalar soni tugagan. Administratorga murojaat qiling.",
+  "@setupErrorDeviceLimit": {
+    "description": "Ulash xatosi"
+  },
+  "setupErrorNoSubscription": "Obuna topilmadi. Administratorga murojaat qiling.",
+  "@setupErrorNoSubscription": {
+    "description": "Ulash xatosi"
+  },
+  "setupErrorDeviceBlocked": "Bu kassa bloklangan. Administratorga murojaat qiling.",
+  "@setupErrorDeviceBlocked": {
+    "description": "Ulash xatosi"
+  },
+  "setupErrorNetwork": "Internet yo'q yoki server javob bermayapti. Qayta urinib ko'ring.",
+  "@setupErrorNetwork": {
+    "description": "Ulash xatosi"
+  },
+  "setupErrorUnknown": "Nimadir xato ketdi. Qayta urinib ko'ring.",
+  "@setupErrorUnknown": {
+    "description": "Ulash xatosi"
+  },
+  "fieldRequired": "To'ldiring",
+  "@fieldRequired": {
+    "description": "Bo'sh majburiy maydon"
+  },
+  "lockTitle": "Kim ishlaydi?",
+  "@lockTitle": {
+    "description": "Qulf ekrani: xodim tanlash"
+  },
+  "lockEnterPin": "PIN kodni kiriting",
+  "@lockEnterPin": {
+    "description": "Qulf ekrani: PIN so'rovi"
+  },
+  "lockSubmit": "Kirish",
+  "@lockSubmit": {
+    "description": "PIN tasdiqlash tugmasi"
+  },
+  "lockBack": "Boshqa xodim",
+  "@lockBack": {
+    "description": "Xodim tanlashga qaytish"
+  },
+  "lockWrongPin": "{count, plural, =0{PIN noto'g'ri} other{PIN noto'g'ri. Yana {count} ta urinish qoldi}}",
+  "@lockWrongPin": {
+    "description": "Noto'g'ri PIN",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "lockLockedOut": "{seconds, plural, other{Juda ko'p xato. {seconds} soniyadan keyin urinib ko'ring}}",
+  "@lockLockedOut": {
+    "description": "5 marta xatodan keyin kutish",
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "lockNoPin": "PIN o'rnatilmagan",
+  "@lockNoPin": {
+    "description": "Xodimda PIN yo'q"
+  },
+  "lockNoStaffTitle": "Xodimlar topilmadi",
+  "@lockNoStaffTitle": {
+    "description": "Qulf ekrani: bo'sh"
+  },
+  "lockNoStaffMessage": "Ma'lumotlar hali yuklanmagan. Internetni tekshirib, qayta urinib ko'ring.",
+  "@lockNoStaffMessage": {
+    "description": "Qulf ekrani: bo'sh izoh"
+  },
+  "roleOwner": "Ega",
+  "@roleOwner": {
+    "description": "Rol"
+  },
+  "roleManager": "Menejer",
+  "@roleManager": {
+    "description": "Rol"
+  },
+  "roleCashier": "Kassir",
+  "@roleCashier": {
+    "description": "Rol"
+  },
+  "actionLock": "Qulflash",
+  "@actionLock": {
+    "description": "Ekranni qulflash"
+  },
+  "settingsAutoLock": "Avtomatik qulflash",
+  "@settingsAutoLock": {
+    "description": "Sozlama nomi"
+  },
+  "settingsAutoLockHelper": "Kassada harakat bo'lmasa, ekran qulflanadi",
+  "@settingsAutoLockHelper": {
+    "description": "Sozlama izohi"
+  },
+  "settingsAutoLockOff": "O'chiq",
+  "@settingsAutoLockOff": {
+    "description": "Avtomatik qulflash o'chiq"
+  },
+  "settingsAutoLockMinutes": "{minutes, plural, other{{minutes} daqiqadan keyin}}",
+  "@settingsAutoLockMinutes": {
+    "description": "Avtomatik qulflash vaqti",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
   }
 }

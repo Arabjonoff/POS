@@ -156,6 +156,162 @@ class AppLocalizationsUz extends AppLocalizations {
   @override
   String get sectionComingSoonMessage =>
       'Bu bo\'lim keyingi yangilanishda qo\'shiladi';
+
+  @override
+  String get setupTitle => 'Kassani ulash';
+
+  @override
+  String get setupSubtitle =>
+      'Do\'kon egasining telefon raqami va paroli bilan kiring';
+
+  @override
+  String get setupPhoneLabel => 'Telefon raqami';
+
+  @override
+  String get setupPhoneHint => '90 123 45 67';
+
+  @override
+  String get setupPasswordLabel => 'Parol';
+
+  @override
+  String get setupNext => 'Davom etish';
+
+  @override
+  String get setupDeviceNameTitle => 'Bu kassaga nom bering';
+
+  @override
+  String get setupDeviceNameLabel => 'Kassa nomi';
+
+  @override
+  String get setupDeviceNameHelper => 'Masalan: Kassa 1, Peshtaxta';
+
+  @override
+  String get setupDeviceNameDefault => 'Kassa 1';
+
+  @override
+  String get setupConnect => 'Ulash';
+
+  @override
+  String get setupSyncTitle => 'Ma\'lumotlar yuklanmoqda';
+
+  @override
+  String setupSyncProgress(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ta yozuv yuklandi',
+      zero: 'Tayyorlanmoqda…',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get setupSyncFailed =>
+      'Ma\'lumotlarni yuklab bo\'lmadi. Internetni tekshiring.';
+
+  @override
+  String get setupErrorInvalidCredentials =>
+      'Telefon raqami yoki parol noto\'g\'ri';
+
+  @override
+  String get setupErrorNotOwner => 'Kassani faqat do\'kon egasi ulay oladi';
+
+  @override
+  String get setupErrorDeviceLimit =>
+      'Tarifingizdagi kassalar soni tugagan. Administratorga murojaat qiling.';
+
+  @override
+  String get setupErrorNoSubscription =>
+      'Obuna topilmadi. Administratorga murojaat qiling.';
+
+  @override
+  String get setupErrorDeviceBlocked =>
+      'Bu kassa bloklangan. Administratorga murojaat qiling.';
+
+  @override
+  String get setupErrorNetwork =>
+      'Internet yo\'q yoki server javob bermayapti. Qayta urinib ko\'ring.';
+
+  @override
+  String get setupErrorUnknown => 'Nimadir xato ketdi. Qayta urinib ko\'ring.';
+
+  @override
+  String get fieldRequired => 'To\'ldiring';
+
+  @override
+  String get lockTitle => 'Kim ishlaydi?';
+
+  @override
+  String get lockEnterPin => 'PIN kodni kiriting';
+
+  @override
+  String get lockSubmit => 'Kirish';
+
+  @override
+  String get lockBack => 'Boshqa xodim';
+
+  @override
+  String lockWrongPin(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'PIN noto\'g\'ri. Yana $count ta urinish qoldi',
+      zero: 'PIN noto\'g\'ri',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String lockLockedOut(int seconds) {
+    String _temp0 = intl.Intl.pluralLogic(
+      seconds,
+      locale: localeName,
+      other: 'Juda ko\'p xato. $seconds soniyadan keyin urinib ko\'ring',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get lockNoPin => 'PIN o\'rnatilmagan';
+
+  @override
+  String get lockNoStaffTitle => 'Xodimlar topilmadi';
+
+  @override
+  String get lockNoStaffMessage =>
+      'Ma\'lumotlar hali yuklanmagan. Internetni tekshirib, qayta urinib ko\'ring.';
+
+  @override
+  String get roleOwner => 'Ega';
+
+  @override
+  String get roleManager => 'Menejer';
+
+  @override
+  String get roleCashier => 'Kassir';
+
+  @override
+  String get actionLock => 'Qulflash';
+
+  @override
+  String get settingsAutoLock => 'Avtomatik qulflash';
+
+  @override
+  String get settingsAutoLockHelper =>
+      'Kassada harakat bo\'lmasa, ekran qulflanadi';
+
+  @override
+  String get settingsAutoLockOff => 'O\'chiq';
+
+  @override
+  String settingsAutoLockMinutes(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes daqiqadan keyin',
+    );
+    return '$_temp0';
+  }
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -310,4 +466,159 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
   @override
   String get sectionComingSoonMessage =>
       'Бу бўлим кейинги янгиланишда қўшилади';
+
+  @override
+  String get setupTitle => 'Кассани улаш';
+
+  @override
+  String get setupSubtitle =>
+      'Дўкон эгасининг телефон рақами ва пароли билан киринг';
+
+  @override
+  String get setupPhoneLabel => 'Телефон рақами';
+
+  @override
+  String get setupPhoneHint => '90 123 45 67';
+
+  @override
+  String get setupPasswordLabel => 'Парол';
+
+  @override
+  String get setupNext => 'Давом этиш';
+
+  @override
+  String get setupDeviceNameTitle => 'Бу кассага ном беринг';
+
+  @override
+  String get setupDeviceNameLabel => 'Касса номи';
+
+  @override
+  String get setupDeviceNameHelper => 'Масалан: Касса 1, Пештахта';
+
+  @override
+  String get setupDeviceNameDefault => 'Касса 1';
+
+  @override
+  String get setupConnect => 'Улаш';
+
+  @override
+  String get setupSyncTitle => 'Маълумотлар юкланмоқда';
+
+  @override
+  String setupSyncProgress(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count та ёзув юкланди',
+      zero: 'Тайёрланмоқда…',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get setupSyncFailed =>
+      'Маълумотларни юклаб бўлмади. Интернетни текширинг.';
+
+  @override
+  String get setupErrorInvalidCredentials => 'Телефон рақами ёки парол нотўғри';
+
+  @override
+  String get setupErrorNotOwner => 'Кассани фақат дўкон эгаси улай олади';
+
+  @override
+  String get setupErrorDeviceLimit =>
+      'Тарифингиздаги кассалар сони тугаган. Администраторга мурожаат қилинг.';
+
+  @override
+  String get setupErrorNoSubscription =>
+      'Обуна топилмади. Администраторга мурожаат қилинг.';
+
+  @override
+  String get setupErrorDeviceBlocked =>
+      'Бу касса блокланган. Администраторга мурожаат қилинг.';
+
+  @override
+  String get setupErrorNetwork =>
+      'Интернет йўқ ёки сервер жавоб бермаяпти. Қайта уриниб кўринг.';
+
+  @override
+  String get setupErrorUnknown => 'Нимадир хато кетди. Қайта уриниб кўринг.';
+
+  @override
+  String get fieldRequired => 'Тўлдиринг';
+
+  @override
+  String get lockTitle => 'Ким ишлайди?';
+
+  @override
+  String get lockEnterPin => 'PIN кодни киритинг';
+
+  @override
+  String get lockSubmit => 'Кириш';
+
+  @override
+  String get lockBack => 'Бошқа ходим';
+
+  @override
+  String lockWrongPin(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'PIN нотўғри. Яна $count та уриниш қолди',
+      zero: 'PIN нотўғри',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String lockLockedOut(int seconds) {
+    String _temp0 = intl.Intl.pluralLogic(
+      seconds,
+      locale: localeName,
+      other: 'Жуда кўп хато. $seconds сониядан кейин уриниб кўринг',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get lockNoPin => 'PIN ўрнатилмаган';
+
+  @override
+  String get lockNoStaffTitle => 'Ходимлар топилмади';
+
+  @override
+  String get lockNoStaffMessage =>
+      'Маълумотлар ҳали юкланмаган. Интернетни текшириб, қайта уриниб кўринг.';
+
+  @override
+  String get roleOwner => 'Эга';
+
+  @override
+  String get roleManager => 'Менежер';
+
+  @override
+  String get roleCashier => 'Кассир';
+
+  @override
+  String get actionLock => 'Қулфлаш';
+
+  @override
+  String get settingsAutoLock => 'Автоматик қулфлаш';
+
+  @override
+  String get settingsAutoLockHelper =>
+      'Кассада ҳаракат бўлмаса, экран қулфланади';
+
+  @override
+  String get settingsAutoLockOff => 'Ўчиқ';
+
+  @override
+  String settingsAutoLockMinutes(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes дақиқадан кейин',
+    );
+    return '$_temp0';
+  }
 }

@@ -374,6 +374,240 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Bu bo\'lim keyingi yangilanishda qo\'shiladi'**
   String get sectionComingSoonMessage;
+
+  /// Birinchi ishga tushirish sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Kassani ulash'**
+  String get setupTitle;
+
+  /// Ulash ekrani izohi
+  ///
+  /// In uz, this message translates to:
+  /// **'Do\'kon egasining telefon raqami va paroli bilan kiring'**
+  String get setupSubtitle;
+
+  /// Maydon nomi
+  ///
+  /// In uz, this message translates to:
+  /// **'Telefon raqami'**
+  String get setupPhoneLabel;
+
+  /// Telefon namunasi
+  ///
+  /// In uz, this message translates to:
+  /// **'90 123 45 67'**
+  String get setupPhoneHint;
+
+  /// Maydon nomi
+  ///
+  /// In uz, this message translates to:
+  /// **'Parol'**
+  String get setupPasswordLabel;
+
+  /// Tugma: keyingi qadam
+  ///
+  /// In uz, this message translates to:
+  /// **'Davom etish'**
+  String get setupNext;
+
+  /// Qurilma nomi qadami sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Bu kassaga nom bering'**
+  String get setupDeviceNameTitle;
+
+  /// Maydon nomi
+  ///
+  /// In uz, this message translates to:
+  /// **'Kassa nomi'**
+  String get setupDeviceNameLabel;
+
+  /// Maydon izohi
+  ///
+  /// In uz, this message translates to:
+  /// **'Masalan: Kassa 1, Peshtaxta'**
+  String get setupDeviceNameHelper;
+
+  /// Standart kassa nomi
+  ///
+  /// In uz, this message translates to:
+  /// **'Kassa 1'**
+  String get setupDeviceNameDefault;
+
+  /// Tugma: qurilmani ro'yxatdan o'tkazish
+  ///
+  /// In uz, this message translates to:
+  /// **'Ulash'**
+  String get setupConnect;
+
+  /// Birinchi sinxron sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Ma\'lumotlar yuklanmoqda'**
+  String get setupSyncTitle;
+
+  /// Birinchi sinxron jarayoni
+  ///
+  /// In uz, this message translates to:
+  /// **'{count, plural, =0{Tayyorlanmoqda…} other{{count} ta yozuv yuklandi}}'**
+  String setupSyncProgress(int count);
+
+  /// Birinchi sinxron xatosi
+  ///
+  /// In uz, this message translates to:
+  /// **'Ma\'lumotlarni yuklab bo\'lmadi. Internetni tekshiring.'**
+  String get setupSyncFailed;
+
+  /// Kirish xatosi
+  ///
+  /// In uz, this message translates to:
+  /// **'Telefon raqami yoki parol noto\'g\'ri'**
+  String get setupErrorInvalidCredentials;
+
+  /// Kirish xatosi
+  ///
+  /// In uz, this message translates to:
+  /// **'Kassani faqat do\'kon egasi ulay oladi'**
+  String get setupErrorNotOwner;
+
+  /// Ulash xatosi
+  ///
+  /// In uz, this message translates to:
+  /// **'Tarifingizdagi kassalar soni tugagan. Administratorga murojaat qiling.'**
+  String get setupErrorDeviceLimit;
+
+  /// Ulash xatosi
+  ///
+  /// In uz, this message translates to:
+  /// **'Obuna topilmadi. Administratorga murojaat qiling.'**
+  String get setupErrorNoSubscription;
+
+  /// Ulash xatosi
+  ///
+  /// In uz, this message translates to:
+  /// **'Bu kassa bloklangan. Administratorga murojaat qiling.'**
+  String get setupErrorDeviceBlocked;
+
+  /// Ulash xatosi
+  ///
+  /// In uz, this message translates to:
+  /// **'Internet yo\'q yoki server javob bermayapti. Qayta urinib ko\'ring.'**
+  String get setupErrorNetwork;
+
+  /// Ulash xatosi
+  ///
+  /// In uz, this message translates to:
+  /// **'Nimadir xato ketdi. Qayta urinib ko\'ring.'**
+  String get setupErrorUnknown;
+
+  /// Bo'sh majburiy maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'To\'ldiring'**
+  String get fieldRequired;
+
+  /// Qulf ekrani: xodim tanlash
+  ///
+  /// In uz, this message translates to:
+  /// **'Kim ishlaydi?'**
+  String get lockTitle;
+
+  /// Qulf ekrani: PIN so'rovi
+  ///
+  /// In uz, this message translates to:
+  /// **'PIN kodni kiriting'**
+  String get lockEnterPin;
+
+  /// PIN tasdiqlash tugmasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Kirish'**
+  String get lockSubmit;
+
+  /// Xodim tanlashga qaytish
+  ///
+  /// In uz, this message translates to:
+  /// **'Boshqa xodim'**
+  String get lockBack;
+
+  /// Noto'g'ri PIN
+  ///
+  /// In uz, this message translates to:
+  /// **'{count, plural, =0{PIN noto\'g\'ri} other{PIN noto\'g\'ri. Yana {count} ta urinish qoldi}}'**
+  String lockWrongPin(int count);
+
+  /// 5 marta xatodan keyin kutish
+  ///
+  /// In uz, this message translates to:
+  /// **'{seconds, plural, other{Juda ko\'p xato. {seconds} soniyadan keyin urinib ko\'ring}}'**
+  String lockLockedOut(int seconds);
+
+  /// Xodimda PIN yo'q
+  ///
+  /// In uz, this message translates to:
+  /// **'PIN o\'rnatilmagan'**
+  String get lockNoPin;
+
+  /// Qulf ekrani: bo'sh
+  ///
+  /// In uz, this message translates to:
+  /// **'Xodimlar topilmadi'**
+  String get lockNoStaffTitle;
+
+  /// Qulf ekrani: bo'sh izoh
+  ///
+  /// In uz, this message translates to:
+  /// **'Ma\'lumotlar hali yuklanmagan. Internetni tekshirib, qayta urinib ko\'ring.'**
+  String get lockNoStaffMessage;
+
+  /// Rol
+  ///
+  /// In uz, this message translates to:
+  /// **'Ega'**
+  String get roleOwner;
+
+  /// Rol
+  ///
+  /// In uz, this message translates to:
+  /// **'Menejer'**
+  String get roleManager;
+
+  /// Rol
+  ///
+  /// In uz, this message translates to:
+  /// **'Kassir'**
+  String get roleCashier;
+
+  /// Ekranni qulflash
+  ///
+  /// In uz, this message translates to:
+  /// **'Qulflash'**
+  String get actionLock;
+
+  /// Sozlama nomi
+  ///
+  /// In uz, this message translates to:
+  /// **'Avtomatik qulflash'**
+  String get settingsAutoLock;
+
+  /// Sozlama izohi
+  ///
+  /// In uz, this message translates to:
+  /// **'Kassada harakat bo\'lmasa, ekran qulflanadi'**
+  String get settingsAutoLockHelper;
+
+  /// Avtomatik qulflash o'chiq
+  ///
+  /// In uz, this message translates to:
+  /// **'O\'chiq'**
+  String get settingsAutoLockOff;
+
+  /// Avtomatik qulflash vaqti
+  ///
+  /// In uz, this message translates to:
+  /// **'{minutes, plural, other{{minutes} daqiqadan keyin}}'**
+  String settingsAutoLockMinutes(int minutes);
 }
 
 class _AppLocalizationsDelegate
