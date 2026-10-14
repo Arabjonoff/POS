@@ -2,8 +2,8 @@
 
 Umumiy tamoyillar: `sync.md`. Hodisa payloadlari va qo'llash qoidalari: `sales-api.md`, `customers-api.md`, `inventory-api.md`, `catalog-api.md`. Ikkala endpoint ham **faqat qurilma tokeni** bilan (`Authorization: Device <token>`, `devices.md`); foydalanuvchi JWT'si — `401`.
 
-## Push — `POST /api/v1/sync/push`
-- So'rov: `{events: [{id, type, payload, created_at}]}`, 1–100 ta hodisa. `id` — klient UUID, `created_at` — qurilma vaqti (ISO, vaqt zonasi bilan).
+## Push — `POST /api/v1/sync/push/`
+- So'rov: `{events: [{id, type, payload, created_at}]}`, 1–100 ta hodisa (qurilma tokendan aniqlanadi; `device_id` kerak emas). `id` — klient UUID, `created_at` — qurilma vaqti (ISO, vaqt zonasi bilan).
 - Hodisalar `created_at` bo'yicha (teng bo'lsa — kelgan tartibda) qo'llanadi. **Har hodisa alohida tranzaksiyada**: birining xatosi boshqasiga ta'sir qilmaydi.
 - Javob: `{results: [{id, status, error?}], server_time}` — natijalar so'rovdagi tartibda.
 - Statuslar:
@@ -34,7 +34,7 @@ Umumiy tamoyillar: `sync.md`. Hodisa payloadlari va qo'llash qoidalari: `sales-a
 - `by` — amalni bajargan xodim (tenant foydalanuvchisi). Huquq REST bilan bir xil: kassir tovar/kirim/inventarizatsiya yoza olmaydi, mijozga limit qo'ya olmaydi → `rejected` (`permission_denied`).
 - `*.upserted`: `id` bo'yicha bor bo'lsa — yangilanadi, yo'q bo'lsa — yaratiladi. Konflikt qoidasi: **server g'olib** — o'zgarish serverga yoziladi va pull orqali hamma qurilmaga qaytadi.
 
-## Pull — `GET /api/v1/sync/pull?cursor=<int>&limit=<1..500>`
+## Pull — `GET /api/v1/sync/pull/?cursor=<int>&limit=<1..500>`
 - `cursor` — oxirgi olingan `ChangeLog.seq` (birinchi marta `0`). `limit` — standart 500.
 - Javob: `{changes: [{entity, op, id, data}], next_cursor, has_more, subscription: {status, paid_until, days_left, offline_days}, server_time}`.
 - `op`: `upsert` (data — obyektning hozirgi holati) yoki `delete` (yumshoq o'chirilgan; `data: null`).

@@ -16,17 +16,17 @@
 - [x] 2. `apps/sync` modellari: SyncEvent, ChangeLog; migratsiya + mavjud ma'lumot uchun ChangeLog backfill; admin
 - [x] 3. ChangeLog yozish: signal'lar (Product, ProductBarcode, Category, Unit, Customer, Supplier, User, Store, DebtEntry, ProductStock) + `_bump_cache` (update()) uchun aniq yozuv
 - [x] 4. `handlers.py`: hodisa turi → servis (shift/cash/sale/refund/debt.paid/customer/supplier/product/receipt/inventory); xatolarni natijaga aylantirish
-- [ ] 5. Push: `POST /api/v1/sync/push` (qurilma tokeni; idempotent; har hodisa alohida tranzaksiya; pending qayta urinish)
+- [x] 5. Push: `POST /api/v1/sync/push` (qurilma tokeni; idempotent; har hodisa alohida tranzaksiya; pending qayta urinish)
 - [ ] 6. Pull: `GET /api/v1/sync/pull?cursor=&limit=` (ChangeLog, entity serializerlar, subscription, server_time)
 - [ ] 7. Testlar: sync.md server mezonlari 1–4 + handlerlar, pull kursori, izolyatsiya
 - [ ] 8. openapi + schema.d.ts; lint/test; PROGRESS/ROADMAP; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-4-qadam: `apps/sync/handlers.py` — HANDLERS (11 tur): sales servislari, debt.paid (pay_debt enforce_balance=False), *.upserted (REST serializer + `by` konteksti, huquqlar), receipt/inventory.posted (serializer + post).
+5-qadam: push — `apps/sync/services.py` (qurilma qulfi, idempotent, savepoint, pending qayta urinish boshida va oxirida, 7 kun TTL, kutilmagan xato → pending) + `POST /api/v1/sync/push/`.
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-5-qadam: `backend/apps/sync/services.py` — push(device, events): idempotent SyncEvent, har hodisa savepoint, xato → natija (DomainError/ValidationError/PermissionDenied → rejected, MissingDependency/kutilmagan → pending), pending qayta urinish, 7 kun; `views.py` SyncPushView.
+6-qadam: `backend/apps/sync/pull.py` (ChangeLog sahifasi, dedupe, ENTITY serializerlari, user/store/stock shakllari) + `SyncPullView` + url `sync/pull/`.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
