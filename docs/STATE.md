@@ -5,13 +5,24 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-060 Mijozlar va nasiya daftari
+- Branch: feat/T-060-customers
+- Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
+- [ ] 1. `CustomerDirectory`: `watchHistory` (debt_entries, yangisi birinchi), `purchases` (lokal savdolar), `payDebt` (DebtEntry(−, payment) + outbox `debt.paid`, ≤ balans), `update` (ism/telefon/izoh; limit — ega/menejer `by`) + testlar (balans = Σ yozuvlar, oflayn)
+- [ ] 2. Bo'lim "Mijozlar" (Ctrl+4): ro'yxat (qarzdorlar tepada, qidiruv, "Qarzi bor" filtri, jami qarz), yangi mijoz
+- [ ] 3. Mijoz kartasi: katta qarz, limit, tarix, xaridlar, "Qarzni to'lash" (summa, "To'liq", naqd/karta), tahrirlash (limit — PIN); tarjimalar
+- [ ] 4. Widget testlari + golden + skrinshotlar `docs/screenshots/T-060/`
+- [ ] 5. Spec, PR, CI → merge; ROADMAP, PROGRESS, STATE
+
+## Oxirgi bajarilgan ish
+- T-054 merge qilindi (#35), 4-bosqich yopildi. T-060 boshlandi.
+
+## Keyingi aniq harakat
+- 1-qadam: `apps/pos/lib/data/customers/customer_directory.dart` ga metodlar, test `apps/pos/test/data/customer_directory_test.dart` ga.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
