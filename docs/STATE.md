@@ -5,20 +5,28 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-017 Savdo, smena, qaytarish
+- Branch: feat/T-017-sales-shifts
+- Boshlangan: 2026-10-14
 - Oxirgi yangilanish: 2026-10-14
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
+- [ ] 1. Spec `docs/specs/sales-api.md` (smena, savdo, to'lov, qaytarish, pul harakati; tekshiruvlar; kutilayotgan naqd; REST faqat o'qish)
+- [ ] 2. `apps/sales` modellari: Shift, Sale (+Item, +Payment), Refund (+Item), CashMovement; `DebtEntry.shift` (customers 0002); migratsiya; admin
+- [ ] 3. `services/shifts.py`: open_shift, close_shift (expected_cash), record_cash_movement, shift_report (X/Z)
+- [ ] 4. `services/sales.py`: record_sale — tekshiruv (summalar, to'lovlar, tenant), StockMovement(−), DebtEntry (nasiya)
+- [ ] 5. `services/refunds.py`: record_refund — qoldiq miqdor, summa, StockMovement(+), qarz kamayishi, savdo holati
+- [ ] 6. REST (faqat o'qish): `/shifts/` (+report), `/sales/`, `/refunds/`, `/cash-movements/`; kassir faqat o'zinikini ko'radi
+- [ ] 7. Testlar: savdo → qoldiq va qarz, qaytarish → teskari harakat, summalar xatosi, smena hisob-kitobi, izolyatsiya, huquqlar
+- [ ] 8. openapi + schema.d.ts; lint/test; PROGRESS/ROADMAP; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-T-016 Mijozlar va nasiya tugadi (PR ochildi, CI yashil bo'lsa squash merge).
+T-016 merge qilindi (#13). T-017 branch ochildi.
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-T-016 PR merge qilinganini tekshirish (`gh pr list --state open`); keyin ROADMAP'dan T-017 Savdo, smena, qaytarish.
+1-qadam: `docs/specs/sales-api.md` ni yozish (`shifts.md`, `pos-screen.md`, `data-model.md`, `sync.md`, `customers-api.md` asosida).
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
