@@ -17,14 +17,14 @@
 - [x] 3. `Checkout` (`features/pos/payment/checkout.dart`): savat + to'lov → `SaleWriter.complete` (bitta tranzaksiya) → savat tozalanadi; atomarlik testi
 - [x] 4. To'lov oynasi UI (`features/pos/payment/payment_dialog.dart`): Naqd (Aniq/50 000/100 000/200 000, klaviatura, katta yashil qaytim, Enter), Karta, Nasiya (mijoz tanlash/yaratish, limit → menejer PIN), Aralash; oyna ochiqda skaner → "Avval to'lovni yakunlang"
 - [x] 5. Kassa ekraniga ulash: F12, F4 mijoz (savatga), yakunlash xabari 3 s "Savdo yakunlandi · Qaytim …", fokus skanerga
-- [ ] 6. Widget testlari (3 harakat: skan → F12 → Enter; qaytim; karta; nasiya + limit; aralash; skaner bloklangan) + golden + skrinshotlar `docs/screenshots/T-043/`
+- [x] 6. Widget testlari (3 harakat: skan → F12 → Enter; qaytim; karta; nasiya + limit; aralash; skaner bloklangan) + golden + skrinshotlar `docs/screenshots/T-043/`
 - [ ] 7. To'liq tekshiruv, PR, CI → merge; ROADMAP, PROGRESS, STATE
 
 ## Oxirgi bajarilgan ish
-- 6-qadam (qisman): `apps/pos/test/features/payment_test.dart` — 12 widget testi yashil (3 harakat, naqd/qaytim, karta, nasiya + limit + PIN, yangi mijoz, aralash, skaner bloklangan, F4, telefon). To'lov oynasida fokus `_focus` ga qaytariladi.
+- 6-qadam: 12 widget testi (`test/features/payment_test.dart`), goldenlar `pay_cash`/`pay_debt` (+ savat goldenlari mijoz qatori bilan yangilandi), skrinshotlar `docs/screenshots/T-043/`. Telefonda naqdda ekran klaviaturasi yopiq (summaga bosilsa ochiladi).
 
 ## Keyingi aniq harakat
-- 6-qadam davomi: golden — `apps/pos/test/goldens/pos_golden_test.dart` ga to'lov oynasi (naqd + qaytim, nasiya) 3 o'lchamda, `flutter test --update-goldens test/goldens/pos_golden_test.dart`; skrinshotlar `docs/screenshots/T-043/` (T-042 qanday qilingan bo'lsa — o'sha usul).
+- 7-qadam: `cd apps/pos && flutter analyze && flutter test`, `make ui-test`; `docs/specs/pos-screen.md` ga "Kassada amalga oshirilishi (T-043)" bo'limi; PR `feat/T-043-payment` → CI → squash merge; ROADMAP [x], PROGRESS, STATE bo'sh shablon.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

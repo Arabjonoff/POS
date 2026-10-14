@@ -341,11 +341,32 @@ void main() {
     expect(dialog, findsOneWidget);
     await tapText(tester, PosFormat.moneyAmount(5000000));
     expect(inDialog(som(46000)), findsOneWidget);
+    // Klaviatura yopiq — qaytim va "Yakunlash" aylantirmasdan ko'rinadi.
+    expect(find.byType(PosNumericKeypad), findsNothing);
     final complete = find.byKey(const ValueKey('pay-complete'));
+    expect(tester.getRect(complete).bottom, lessThan(844));
+
+    // Summaga bosilsa — ekran klaviaturasi. 4 000 o'rniga 5 000 → qaytim 1 000.
+    await tester.tap(find.byKey(const ValueKey('pay-received')));
+    await tester.pumpAndSettle();
+    expect(find.byType(PosNumericKeypad), findsOneWidget);
+    // "Aniq" — taklif; birinchi raqam uni almashtiradi.
+    await tapText(tester, 'Aniq');
+    for (final key in ['5', '0', '0', '0']) {
+      await tester.tap(
+        find.descendant(
+          of: find.byType(PosNumericKeypad),
+          matching: find.text(key),
+        ),
+      );
+      await tester.pump();
+    }
+    await tester.pumpAndSettle();
+    expect(inDialog(som(1000)), findsOneWidget);
     await tester.ensureVisible(complete);
     await tester.pumpAndSettle();
     await tester.tap(complete);
     await tester.pumpAndSettle();
-    expect(await payments(), {'cash': (400000, 5000000, 4600000)});
+    expect(await payments(), {'cash': (400000, 500000, 100000)});
   });
 }

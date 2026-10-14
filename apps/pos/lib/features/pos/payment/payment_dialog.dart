@@ -57,6 +57,10 @@ class _PaymentDialogState extends ConsumerState<PaymentDialog> {
 
   /// Nasiya mijozi tanlanmoqda (tanlangan bo'lsa ham "Boshqa mijoz").
   bool _picking = false;
+
+  /// Telefonda ekran klaviaturasi summaga bosilganda ochiladi (tez summalar
+  /// bilan qaytim va "Yakunlash" bir ekranda ko'rinsin).
+  bool? _keypadOpen;
   bool _busy = false;
 
   /// Menejer oynasi ochiq — PIN raqamlari skaner buferiga tushmasin.
@@ -358,6 +362,11 @@ class _PaymentDialogState extends ConsumerState<PaymentDialog> {
     );
   }
 
+  /// Telefonda naqdda yopiq (tez summalar bor), aralashda — ochiq.
+  bool get _keypad =>
+      _keypadOpen ??
+      (_draft.mode != PayMode.cash || !PosWindowSize.of(context).isCompact);
+
   MoneyInput _moneyInput({required Key key, bool pristine = false}) =>
       MoneyInput(
         key: key,
@@ -367,6 +376,8 @@ class _PaymentDialogState extends ConsumerState<PaymentDialog> {
         // oynaning o'zida.
         hardwareDigits: false,
         autofocus: false,
+        showKeypad: _keypad,
+        onDisplayTap: () => setState(() => _keypadOpen = !_keypad),
         onChanged: _setEdited,
       );
 

@@ -1,3 +1,5 @@
+import 'package:drift/drift.dart' show Value;
+import 'package:flutter/material.dart' show ValueKey;
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -6,6 +8,7 @@ import 'package:pos_app/data/catalog/product_catalog.dart';
 import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/features/pos/cart/cart.dart';
 import 'package:pos_app/features/pos/cart/cart_controller.dart';
+import 'package:pos_ui/pos_ui.dart';
 
 import '../helpers/catalog_seed.dart';
 import '../helpers/pump_app.dart';
@@ -78,5 +81,38 @@ void main() {
 
   goldenAcrossDevices('pos', 'empty', (tester, size) async {
     await _open(tester, size);
+  });
+
+  /// To'lov oynasi: naqd, 100 000 berildi — katta yashil qaytim.
+  goldenAcrossDevices('pos', 'pay_cash', (tester, size) async {
+    final (c, _) = await _open(tester, size);
+    await _fillCart(tester, c);
+    await tester.sendKeyEvent(LogicalKeyboardKey.f12);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(PosFormat.moneyAmount(10000000)));
+    await tester.pumpAndSettle();
+  });
+
+  /// Nasiya: mijoz tanlangan, limitdan oshadi — ogohlantirish.
+  goldenAcrossDevices('pos', 'pay_debt', (tester, size) async {
+    final (c, db) = await _open(tester, size);
+    await db
+        .into(db.customers)
+        .insert(
+          CustomersCompanion.insert(
+            id: 'c1',
+            fullName: 'Karimova Dilnoza',
+            phone: const Value('+998 90 123 45 67'),
+            debtLimitTiyin: const Value(5000000),
+            balanceTiyin: const Value(3500000),
+          ),
+        );
+    await _fillCart(tester, c);
+    c.read(cartControllerProvider.notifier).setCustomer('c1');
+    await tester.pumpAndSettle();
+    await tester.sendKeyEvent(LogicalKeyboardKey.f12);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('pay-mode-debt')));
+    await tester.pumpAndSettle();
   });
 }

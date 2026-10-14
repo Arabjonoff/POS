@@ -16,6 +16,8 @@ class MoneyInput extends StatefulWidget {
     this.maxDigits = 10,
     this.pristine = false,
     this.hardwareDigits = true,
+    this.showKeypad = true,
+    this.onDisplayTap,
     super.key,
   });
 
@@ -36,6 +38,11 @@ class MoneyInput extends StatefulWidget {
   /// aks holda skaner raqamlari ham summaga tushadi). Backspace va Enter —
   /// baribir shu yerda.
   final bool hardwareDigits;
+
+  /// `false` — faqat summa (telefonda joy tejash); [onDisplayTap] bilan
+  /// ekran klaviaturani ochadi.
+  final bool showKeypad;
+  final VoidCallback? onDisplayTap;
 
   /// [valueTiyin] oxiriga so'm raqamlarini qo'shadi (raqam bo'lmaganlar
   /// tashlanadi; [maxDigits] dan oshsa — o'zgarmaydi). Ekran klaviaturani
@@ -121,37 +128,42 @@ class _MoneyInputState extends State<MoneyInput> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: PosSpacing.l,
-              vertical: PosSpacing.m,
-            ),
-            decoration: BoxDecoration(
-              color: p.surface,
-              borderRadius: PosRadius.inputAll,
-              border: Border.all(color: p.focus, width: 2),
-            ),
-            child: Semantics(
-              liveRegion: true,
-              child: Text(
-                context.fmt.money(_value),
-                textAlign: TextAlign.right,
-                maxLines: 1,
-                style: PosTypography.h1.copyWith(
-                  color: p.text,
-                  fontFeatures: PosTypography.tabular,
+          GestureDetector(
+            onTap: widget.onDisplayTap,
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: PosSpacing.l,
+                vertical: PosSpacing.m,
+              ),
+              decoration: BoxDecoration(
+                color: p.surface,
+                borderRadius: PosRadius.inputAll,
+                border: Border.all(color: p.focus, width: 2),
+              ),
+              child: Semantics(
+                liveRegion: true,
+                child: Text(
+                  context.fmt.money(_value),
+                  textAlign: TextAlign.right,
+                  maxLines: 1,
+                  style: PosTypography.h1.copyWith(
+                    color: p.text,
+                    fontFeatures: PosTypography.tabular,
+                  ),
                 ),
               ),
             ),
           ),
-          const SizedBox(height: PosSpacing.m),
-          PosNumericKeypad(
-            onKey: _append,
-            onBackspace: _backspace,
-            onClear: () => _set(0),
-            backspaceTooltip: l10n.actionBackspace,
-            extraKey: '00',
-          ),
+          if (widget.showKeypad) ...[
+            const SizedBox(height: PosSpacing.m),
+            PosNumericKeypad(
+              onKey: _append,
+              onBackspace: _backspace,
+              onClear: () => _set(0),
+              backspaceTooltip: l10n.actionBackspace,
+              extraKey: '00',
+            ),
+          ],
         ],
       ),
     );
