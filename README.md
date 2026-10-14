@@ -24,6 +24,8 @@ cd apps/pos && flutter run -d windows
 ```
 - API hujjatlari: http://localhost:8000/api/docs/
 - Admin dashboard: http://localhost:3000
+- Port band bo'lsa — `.env` da `POSTGRES_PORT`, `REDIS_PORT`, `BACKEND_PORT`, `ADMIN_PORT` ni o'zgartiring va `make up` ni qayta bering.
+- Backend konteyneri ishga tushganda migratsiyalarni o'zi qo'llaydi.
 
 ## Buyruqlar
 `make help` — hamma buyruqlar ro'yxati. Asosiylari:

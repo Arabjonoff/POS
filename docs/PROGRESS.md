@@ -35,3 +35,9 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-006 (squash merge)
 - Qoldi / keyingi qadam: T-002 Docker Compose, T-004 CI. `make api-clients` Dart qismi (generator tanlovi) — birinchi haqiqiy API bilan (T-011).
 - Muammo yoki qaror: Lokal Flutter 3.41.7 / Dart 3.11; eng yangi paketlar (riverpod 3.4, drift 2.35, widgetbook 3.25) Dart 3.12 talab qiladi — mos versiyalar tanlandi, Flutter global yangilanmadi (boshqa loyihalarga ta'sir qilmasin). CI ham 3.41.7 ga pin qilinadi. `flutter test` Windows'da SQLite uchun `winsqlite3.dll` ishlatadi (`test/helpers/sqlite.dart`).
+
+## 2026-10-14 — T-002 Docker Compose
+- Qilindi: `docker-compose.yml` (postgres:16, redis:7, backend — Django runserver + avtomatik migrate, admin — Next.js dev), volume'lar, healthcheck'lar, `.env` orqali sozlanadigan portlar; `backend/Dockerfile` (uv, /opt/venv, gunicorn CMD, HEALTHCHECK), `apps/admin/Dockerfile.dev`; README'ga port eslatmasi. Tekshirildi: `docker compose up -d --build` → `/api/health/` `{"status":"ok"}`, admin 200, `/api/docs/` 200.
+- PR: T-002 (squash merge)
+- Qoldi / keyingi qadam: T-004 CI (GitHub Actions); keyin T-010 Tenant va Store.
+- Muammo yoki qaror: elektr uzilishi initdb vaqtida `pg_hba.conf` oxirini nol baytlar bilan buzgan — fayl qo'lda tuzatildi (volume o'chirilmadi). Bu kompyuterda standart portlar band, POS lokal portlari .env da: 55432/56379/8100/3100.
