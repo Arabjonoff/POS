@@ -13,7 +13,7 @@
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 - [x] 1. To'lov modeli `apps/pos/lib/features/pos/payment/payment_draft.dart` (naqd/karta/nasiya/aralash, olingan, qaytim, qoldiq, `SalePaymentInput` lar) + unit testlar
-- [ ] 2. Mijozlar: `apps/pos/lib/data/customers/customer_directory.dart` (qidiruv, balans = Σ debt_entries, tez yaratish + `customer.upserted` outbox, limit tekshiruvi) + testlar
+- [x] 2. Mijozlar: `apps/pos/lib/data/customers/customer_directory.dart` (qidiruv, balans = Σ debt_entries, tez yaratish + `customer.upserted` outbox, limit tekshiruvi) + testlar
 - [ ] 3. `Checkout` (`features/pos/payment/checkout.dart`): savat + to'lov → `SaleWriter.complete` (bitta tranzaksiya) → savat tozalanadi; atomarlik testi
 - [ ] 4. To'lov oynasi UI (`features/pos/payment/payment_dialog.dart`): Naqd (Aniq/50 000/100 000/200 000, klaviatura, katta yashil qaytim, Enter), Karta, Nasiya (mijoz tanlash/yaratish, limit → menejer PIN), Aralash; oyna ochiqda skaner → "Avval to'lovni yakunlang"
 - [ ] 5. Kassa ekraniga ulash: F12, F4 mijoz (savatga), yakunlash xabari 3 s "Savdo yakunlandi · Qaytim …", fokus skanerga
@@ -21,10 +21,10 @@
 - [ ] 7. To'liq tekshiruv, PR, CI → merge; ROADMAP, PROGRESS, STATE
 
 ## Oxirgi bajarilgan ish
-- 1-qadam: `features/pos/payment/payment_draft.dart` + `test/features/payment_draft_test.dart`.
+- 2-qadam: `data/customers/customer_directory.dart` (`customersProvider`, `CustomerDirectory.filter/create`, `CustomerEntry.allowsDebt`) + `test/data/customer_directory_test.dart`.
 
 ## Keyingi aniq harakat
-- 2-qadam: `apps/pos/lib/data/customers/customer_directory.dart` (`CustomerEntry` {id, name, phone, limit, balance}, `watchAll`, `search`, `create` + outbox `customer.upserted`, `DebtLimit.allows`), test `test/data/customer_directory_test.dart`.
+- 3-qadam: `features/pos/payment/checkout.dart` — `Checkout.complete(cart, draft, approvedBy)` → `SaleWriter` (deviceNumber/storeId — `sessionProvider.device`, cashier — `session.user`, shift — `currentShiftProvider`), keyin `CartController.clearActive()`; test `test/features/checkout_test.dart` (atomarlik).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
