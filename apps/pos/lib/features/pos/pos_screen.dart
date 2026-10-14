@@ -28,6 +28,7 @@ import 'package:pos_app/features/printing/printer_service.dart';
 import 'package:pos_app/features/printing/printer_settings.dart';
 import 'package:pos_app/features/refunds/refund_dialog.dart';
 import 'package:pos_app/features/scanner/camera_scan_page.dart';
+import 'package:pos_app/features/shift/cash_movement_dialog.dart';
 import 'package:pos_app/features/shift/open_shift_card.dart';
 import 'package:pos_app/features/shift/shift_providers.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
@@ -386,6 +387,13 @@ class _CashierViewState extends ConsumerState<CashierView> {
     _focusScreen();
   }
 
+  /// F9: kassaga pul kiritish/chiqarish.
+  Future<void> _openCash() async {
+    final result = await _dialog(() => showCashMovementDialog(context));
+    if (result != null && mounted) showCashMovementDone(context, result);
+    _focusScreen();
+  }
+
   /// F4: chek mijozi.
   Future<void> _chooseCustomer() async {
     final choice = await _dialog(
@@ -452,6 +460,10 @@ class _CashierViewState extends ConsumerState<CashierView> {
     }
     if (key == LogicalKeyboardKey.f8) {
       unawaited(_openRefund());
+      return true;
+    }
+    if (key == LogicalKeyboardKey.f9) {
+      unawaited(_openCash());
       return true;
     }
     if (key == LogicalKeyboardKey.f6) {
