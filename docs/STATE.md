@@ -12,17 +12,17 @@
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [ ] 1. `apps/pos/lib/data/receipts/receipt_store.dart`: qoralama (lokal `stock_receipts`/`items`, har o'zgarishda saqlanadi), skan → qator yoki +1 (tannarx/narx oldindan), miqdor/tannarx/narx tahriri, o'chirish; tasdiqlash — bitta tranzaksiya (posted + `stock_movements` (+) + tovar narxlari + outbox `receipt.posted` `{id, supplier, note, items, by}`); yetkazib beruvchi tez yaratish (`supplier.upserted`) + testlar (100 skan)
+- [x] 1. `apps/pos/lib/data/receipts/receipt_store.dart`: qoralama (lokal `stock_receipts`/`items`, har o'zgarishda saqlanadi), skan → qator yoki +1 (tannarx/narx oldindan), miqdor/tannarx/narx tahriri, o'chirish; tasdiqlash — bitta tranzaksiya (posted + `stock_movements` (+) + tovar narxlari + outbox `receipt.posted` `{id, supplier, note, items, by}`); yetkazib beruvchi tez yaratish (`supplier.upserted`) + testlar (100 skan)
 - [ ] 2. Kirim bo'limi (Ctrl+3): ro'yxat (qoralamalar, tasdiqlanganlar), "Yangi kirim"
 - [ ] 3. Kirim tahrirlovchisi: skaner (topildi → qator; noma'lum → tovar kartasi, kod to'ldirilgan → qatorga), qidiruv bilan qo'shish, qatorlar (miqdor/tannarx/narx, sariq ogohlantirish narx < tannarx), jami, yetkazib beruvchi, izoh, tasdiqlash (menejer/ega yoki PIN), qoralamani o'chirish; tarjimalar
 - [ ] 4. Widget testlari (100 skan, noma'lum kod oqimi, tasdiqlash → qoldiq, qoralama tiklanadi) + golden + skrinshotlar `docs/screenshots/T-052/`
 - [ ] 5. Spec, PR, CI → merge; ROADMAP, PROGRESS, STATE
 
 ## Oxirgi bajarilgan ish
-- T-051 merge qilindi (#32). T-052 boshlandi.
+- 1-qadam: `data/receipts/receipt_store.dart` (`ReceiptStore`: create/watch/watchAll/addProduct/setQty/setCost/setSellPrice/removeLine/setSupplier/setNote/deleteDraft/post/createSupplier/watchSuppliers), test `test/data/receipt_store_test.dart` (5).
 
 ## Keyingi aniq harakat
-- 1-qadam: `apps/pos/lib/data/receipts/receipt_store.dart` va test `apps/pos/test/data/receipt_store_test.dart`.
+- 2–3-qadam: `apps/pos/lib/features/receiving/receiving_screen.dart` (ro'yxat) va `receipt_editor.dart` (tahrirlovchi, ScanListener: `ProductCatalog.byCode` → `addProduct(qtyMilli: match.qtyMilli ?? 1000)`; topilmasa `showProductCard(barcode:)` → saqlangan ID ni qo'shish), router `AppSection.receiving`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
