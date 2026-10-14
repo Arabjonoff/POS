@@ -16,15 +16,15 @@
 - [x] 2. `apps/inventory` modellari: Supplier, StockMovement (o'zgarmas), ProductStock (kesh), StockReceipt(+Item), InventoryCount(+Item); migratsiya; admin
 - [x] 3. `services.py`: record_movement (+kesh), post_receipt, reverse_receipt, post_inventory; `manage.py rebuild_stock`
 - [x] 4. API: suppliers, stock-receipts (+post, +reverse), inventory-counts (+post), stock, stock-movements
-- [ ] 5. Testlar: kirim → qoldiq, teskari kirim, inventarizatsiya farqi, qoldiq = yig'indi, o'zgarmaslik, izolyatsiya, huquqlar
+- [x] 5. Testlar: kirim → qoldiq, teskari kirim, inventarizatsiya farqi, qoldiq = yig'indi, o'zgarmaslik, izolyatsiya, huquqlar
 - [ ] 6. openapi + schema.d.ts; lint/test; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-4-qadam: inventory API (serializers, views, urls; services ga create/update/delete_receipt va _count, kirim raqami tenant qulfi bilan). Schema validatsiyasi toza; testlar hali yozilmagan.
+5-qadam: inventory testlari (52 ta, yashil): kirim, teskari kirim, inventarizatsiya, qoldiq = yig'indi, rebuild_stock, o'zgarmaslik, izolyatsiya, huquqlar.
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-5-qadam: `backend/apps/inventory/tests/` — conftest (manager, cashier, product, store), test_receipts.py, test_inventory_counts.py, test_stock.py (qoldiq = yig'indi, rebuild_stock, o'zgarmaslik), test_suppliers.py; izolyatsiya + huquqlar. Keyin `DATABASE_URL=... uv run pytest apps/inventory`.
+6-qadam: `make schema` (openapi.yaml) + admin `schema.d.ts` (`make api-clients`), to'liq pytest, PROGRESS.md/ROADMAP.md, keyin PR.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
