@@ -21,10 +21,10 @@
 - [ ] 7. To'liq tekshiruv, PR, CI → merge; ROADMAP, PROGRESS, STATE
 
 ## Oxirgi bajarilgan ish
-- 5-qadam: `pos_screen.dart` `_pay()` (to'lov oynasi → `clearActive` → 3 s xabar), F4 `_chooseCustomer()` (`showCustomerDialog` — `customer_picker.dart`), `CartSummary` da mijoz qatori (F4, olib tashlash). `posPayComingSoon` kaliti o'chirildi.
+- 6-qadam (qisman): `apps/pos/test/features/payment_test.dart` — 12 widget testi yashil (3 harakat, naqd/qaytim, karta, nasiya + limit + PIN, yangi mijoz, aralash, skaner bloklangan, F4, telefon). To'lov oynasida fokus `_focus` ga qaytariladi.
 
 ## Keyingi aniq harakat
-- 6-qadam: yangi test fayli `apps/pos/test/features/payment_test.dart` (pos_screen_test.dart dagi `open()`/`scanCode`/`press` uslubida): skan → F12 → Enter (savdo bazada, savat bo'sh, xabar); naqd 50 000 → qaytim; karta; nasiya + limit → menejer PIN; aralash; oyna ochiq paytda skan → "Avval to'lovni yakunlang", savdo yozilmagan. Keyin golden `test/goldens/pos_golden_test.dart` ga to'lov oynasi (3 o'lcham).
+- 6-qadam davomi: golden — `apps/pos/test/goldens/pos_golden_test.dart` ga to'lov oynasi (naqd + qaytim, nasiya) 3 o'lchamda, `flutter test --update-goldens test/goldens/pos_golden_test.dart`; skrinshotlar `docs/screenshots/T-043/` (T-042 qanday qilingan bo'lsa — o'sha usul).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
@@ -39,5 +39,6 @@
 - API klient: `make api-clients` (backend sxema → admin TS + Dart: swagger_parser + build_runner `packages/api_client_dart`). Yangi endpoint kerak bo'lsa — `packages/api_client_dart/swagger_parser.yaml` `include_paths` ga qo'sh.
 - Vaqt: ilova kodida `DateTime.now()` emas, `clock.now()` (package:clock) yoki `clockProvider` — widget testlarida soxta vaqt ishlashi uchun.
 - Widget/golden testlarda telefonda (390×844) ekrandan pastdagi tugmani bosishdan oldin `tester.ensureVisible` — aks holda bosish pastki menyuga tushadi (ogohlantirish bilan, xatosiz).
+- Testda `PosFormat.moneyAmount` oddiy probel emas — matnni `PosFormat` bilan yasab izla. `find.byType(TextField).first` orqadagi kassa qidiruvini topadi — `find.descendant(of: dialog, ...)`.
 - Widget testi teardown'ida drift yozuvini kutma (`await notifier.flush()` addTearDown ichida) — test osilib qoladi (timeout ham ishlamaydi). Test tanasida kutish mumkin.
 - To'lov oynasida skaner ro'yxatdan o'tgan: Flutter `HardwareKeyboard` ishlovchisi `true` qaytarsa ham hodisa `Focus.onKeyEvent` ga baribir yetadi. Shuning uchun oynada raqamlar faqat `onTyping` orqali (`MoneyInput(hardwareDigits: false)`), skaner Enter'i `_swallowEnter` bilan yutiladi.

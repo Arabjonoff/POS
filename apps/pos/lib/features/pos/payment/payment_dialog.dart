@@ -51,6 +51,10 @@ class _PaymentDialogState extends ConsumerState<PaymentDialog> {
   );
   _Part _part = _Part.card;
 
+  /// Oyna klaviaturasi (Enter, Backspace). Matn maydoni yopilgach fokus
+  /// shu yerga qaytariladi — aks holda Enter hech qayerga yetmaydi.
+  final _focus = FocusNode(debugLabel: 'payment');
+
   /// Nasiya mijozi tanlanmoqda (tanlangan bo'lsa ham "Boshqa mijoz").
   bool _picking = false;
   bool _busy = false;
@@ -70,6 +74,7 @@ class _PaymentDialogState extends ConsumerState<PaymentDialog> {
   @override
   void dispose() {
     _noticeTimer?.cancel();
+    _focus.dispose();
     super.dispose();
   }
 
@@ -89,6 +94,12 @@ class _PaymentDialogState extends ConsumerState<PaymentDialog> {
       _part = _Part.card;
       _picking = false;
     });
+    _focus.requestFocus();
+  }
+
+  void _setPart(_Part part) {
+    setState(() => _part = part);
+    _focus.requestFocus();
   }
 
   /// Klaviaturadan tahrirlanadigan summa (karta/nasiyada — yo'q).
@@ -108,6 +119,7 @@ class _PaymentDialogState extends ConsumerState<PaymentDialog> {
   void _selectCustomer(CustomerEntry customer) {
     _update(_draft.copyWith(customerId: customer.id));
     setState(() => _picking = false);
+    _focus.requestFocus();
   }
 
   void _showNotice(String text, PosTone tone) {
@@ -263,6 +275,7 @@ class _PaymentDialogState extends ConsumerState<PaymentDialog> {
       onScan: _onScan,
       onTyping: _onTyping,
       child: Focus(
+        focusNode: _focus,
         autofocus: true,
         onKeyEvent: _onKey,
         child: PosDialog(
@@ -484,7 +497,7 @@ class _PaymentDialogState extends ConsumerState<PaymentDialog> {
         label: l10n.payCard,
         amount: _draft.cardTiyin,
         active: _part == _Part.card,
-        onTap: () => setState(() => _part = _Part.card),
+        onTap: () => _setPart(_Part.card),
       ),
       const SizedBox(height: PosSpacing.s),
       _PartRow(
@@ -492,7 +505,7 @@ class _PaymentDialogState extends ConsumerState<PaymentDialog> {
         label: l10n.payDebt,
         amount: _draft.debtTiyin,
         active: _part == _Part.debt,
-        onTap: () => setState(() => _part = _Part.debt),
+        onTap: () => _setPart(_Part.debt),
       ),
       const SizedBox(height: PosSpacing.s),
       Row(
