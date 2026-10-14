@@ -349,6 +349,167 @@ paths:
               schema:
                 $ref: '#/components/schemas/DeviceRegisterResponse'
           description: Qayta ro'yxatdan o'tish
+  /api/v1/inventory-counts/:
+    get:
+      operationId: inventory_counts_list
+      description: Kirim va inventarizatsiya hujjatlari — faqat ega va menejer (tannarx
+        ko'rinadi).
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - draft
+          - posted
+      tags:
+      - inventory
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedInventoryCountList'
+          description: ''
+    post:
+      operationId: inventory_counts_create
+      description: Kirim va inventarizatsiya hujjatlari — faqat ega va menejer (tannarx
+        ko'rinadi).
+      tags:
+      - inventory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventoryCountRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/InventoryCountRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/InventoryCountRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryCount'
+          description: ''
+  /api/v1/inventory-counts/{id}/:
+    get:
+      operationId: inventory_counts_retrieve
+      description: Kirim va inventarizatsiya hujjatlari — faqat ega va menejer (tannarx
+        ko'rinadi).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this inventarizatsiya.
+        required: true
+      tags:
+      - inventory
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryCount'
+          description: ''
+    patch:
+      operationId: inventory_counts_partial_update
+      description: Faqat qoralama; `items` yuborilsa — almashtiriladi.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this inventarizatsiya.
+        required: true
+      tags:
+      - inventory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedInventoryCountRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedInventoryCountRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedInventoryCountRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryCount'
+          description: ''
+    delete:
+      operationId: inventory_counts_destroy
+      description: Faqat qoralama; tasdiqlangani — `409 count_not_draft`.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this inventarizatsiya.
+        required: true
+      tags:
+      - inventory
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/inventory-counts/{id}/post/:
+    post:
+      operationId: inventory_counts_post_create
+      description: Kirim va inventarizatsiya hujjatlari — faqat ega va menejer (tannarx
+        ko'rinadi).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this inventarizatsiya.
+        required: true
+      tags:
+      - inventory
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryCount'
+          description: ''
   /api/v1/products/:
     get:
       operationId: products_list
@@ -550,6 +711,467 @@ paths:
               schema:
                 $ref: '#/components/schemas/Product'
           description: ''
+  /api/v1/stock/:
+    get:
+      operationId: stock_list
+      description: Queryset faqat joriy tenant yozuvlari; yaratishda tenant avtomatik
+        qo'yiladi.
+      parameters:
+      - in: query
+        name: low
+        schema:
+          type: boolean
+        description: Qoldiq `min_stock_milli` dan kam
+      - in: query
+        name: negative
+        schema:
+          type: boolean
+        description: Manfiy qoldiq
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: product
+        schema:
+          type: string
+          format: uuid
+      - in: query
+        name: store
+        schema:
+          type: string
+          format: uuid
+      tags:
+      - inventory
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedStockList'
+          description: ''
+  /api/v1/stock-movements/:
+    get:
+      operationId: stock_movements_list
+      description: Harakatlar tarixi, yangisi birinchi.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: product
+        schema:
+          type: string
+          format: uuid
+      - in: query
+        name: store
+        schema:
+          type: string
+          format: uuid
+      - in: query
+        name: type
+        schema:
+          type: string
+          enum:
+          - adjustment
+          - inventory
+          - receipt
+          - refund
+          - sale
+      tags:
+      - inventory
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedStockMovementList'
+          description: ''
+  /api/v1/stock-receipts/:
+    get:
+      operationId: stock_receipts_list
+      description: Kirim va inventarizatsiya hujjatlari — faqat ega va menejer (tannarx
+        ko'rinadi).
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - draft
+          - posted
+      tags:
+      - inventory
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedStockReceiptList'
+          description: ''
+    post:
+      operationId: stock_receipts_create
+      description: Kirim va inventarizatsiya hujjatlari — faqat ega va menejer (tannarx
+        ko'rinadi).
+      tags:
+      - inventory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StockReceiptRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StockReceiptRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StockReceiptRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockReceipt'
+          description: ''
+  /api/v1/stock-receipts/{id}/:
+    get:
+      operationId: stock_receipts_retrieve
+      description: Kirim va inventarizatsiya hujjatlari — faqat ega va menejer (tannarx
+        ko'rinadi).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this kirim.
+        required: true
+      tags:
+      - inventory
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockReceipt'
+          description: ''
+    patch:
+      operationId: stock_receipts_partial_update
+      description: Faqat qoralama; `items` yuborilsa — almashtiriladi.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this kirim.
+        required: true
+      tags:
+      - inventory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedStockReceiptRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedStockReceiptRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedStockReceiptRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockReceipt'
+          description: ''
+    delete:
+      operationId: stock_receipts_destroy
+      description: Faqat qoralama; tasdiqlangani — `409 receipt_not_draft`.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this kirim.
+        required: true
+      tags:
+      - inventory
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/stock-receipts/{id}/post/:
+    post:
+      operationId: stock_receipts_post_create
+      description: Kirim va inventarizatsiya hujjatlari — faqat ega va menejer (tannarx
+        ko'rinadi).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this kirim.
+        required: true
+      tags:
+      - inventory
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockReceipt'
+          description: ''
+  /api/v1/stock-receipts/{id}/reverse/:
+    post:
+      operationId: stock_receipts_reverse_create
+      description: Kirim va inventarizatsiya hujjatlari — faqat ega va menejer (tannarx
+        ko'rinadi).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this kirim.
+        required: true
+      tags:
+      - inventory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReverseReceiptRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ReverseReceiptRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ReverseReceiptRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockReceipt'
+          description: ''
+  /api/v1/suppliers/:
+    get:
+      operationId: suppliers_list
+      description: O'qish — tenantning har bir xodimi; yozish — ega va menejer. O'chirish
+        — yumshoq.
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - inventory
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedSupplierList'
+          description: ''
+    post:
+      operationId: suppliers_create
+      description: O'qish — tenantning har bir xodimi; yozish — ega va menejer. O'chirish
+        — yumshoq.
+      tags:
+      - inventory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplierRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SupplierRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SupplierRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplier'
+          description: ''
+  /api/v1/suppliers/{id}/:
+    get:
+      operationId: suppliers_retrieve
+      description: O'qish — tenantning har bir xodimi; yozish — ega va menejer. O'chirish
+        — yumshoq.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this yetkazib beruvchi.
+        required: true
+      tags:
+      - inventory
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplier'
+          description: ''
+    put:
+      operationId: suppliers_update
+      description: O'qish — tenantning har bir xodimi; yozish — ega va menejer. O'chirish
+        — yumshoq.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this yetkazib beruvchi.
+        required: true
+      tags:
+      - inventory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplierRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SupplierRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SupplierRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplier'
+          description: ''
+    patch:
+      operationId: suppliers_partial_update
+      description: O'qish — tenantning har bir xodimi; yozish — ega va menejer. O'chirish
+        — yumshoq.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this yetkazib beruvchi.
+        required: true
+      tags:
+      - inventory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSupplierRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedSupplierRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSupplierRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplier'
+          description: ''
+    delete:
+      operationId: suppliers_destroy
+      description: O'qish — tenantning har bir xodimi; yozish — ega va menejer. O'chirish
+        — yumshoq.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this yetkazib beruvchi.
+        required: true
+      tags:
+      - inventory
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
   /api/v1/units/:
     get:
       operationId: units_list
@@ -932,6 +1554,115 @@ components:
           type: string
       required:
       - status
+    InventoryCount:
+      type: object
+      description: '`id` klientda yaratilishi mumkin (UUIDv7); keyin o''zgarmaydi.'
+      properties:
+        id:
+          type: string
+          format: uuid
+        store:
+          type: string
+          format: uuid
+        status:
+          allOf:
+          - $ref: '#/components/schemas/StatusEnum'
+          readOnly: true
+          title: Holat
+        scope:
+          allOf:
+          - $ref: '#/components/schemas/ScopeEnum'
+          title: Qamrov
+        category:
+          type: string
+          format: uuid
+          nullable: true
+        note:
+          type: string
+          title: Izoh
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InventoryCountItem'
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        posted_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          title: Tasdiqlangan vaqt
+      required:
+      - created_at
+      - posted_at
+      - status
+    InventoryCountItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        product:
+          type: string
+          format: uuid
+        counted_milli:
+          type: integer
+          minimum: 0
+        expected_milli:
+          type: integer
+          readOnly: true
+          nullable: true
+          title: Kutilgan (milli)
+        diff_milli:
+          type: integer
+          nullable: true
+          readOnly: true
+      required:
+      - counted_milli
+      - diff_milli
+      - expected_milli
+      - id
+      - product
+    InventoryCountItemRequest:
+      type: object
+      properties:
+        product:
+          type: string
+          format: uuid
+        counted_milli:
+          type: integer
+          minimum: 0
+      required:
+      - counted_milli
+      - product
+    InventoryCountRequest:
+      type: object
+      description: '`id` klientda yaratilishi mumkin (UUIDv7); keyin o''zgarmaydi.'
+      properties:
+        id:
+          type: string
+          format: uuid
+        store:
+          type: string
+          format: uuid
+        scope:
+          allOf:
+          - $ref: '#/components/schemas/ScopeEnum'
+          title: Qamrov
+        category:
+          type: string
+          format: uuid
+          nullable: true
+        note:
+          type: string
+          title: Izoh
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InventoryCountItemRequest'
     LoginRequest:
       type: object
       properties:
@@ -1036,6 +1767,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Device'
+    PaginatedInventoryCountList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/InventoryCount'
     PaginatedProductList:
       type: object
       required:
@@ -1059,6 +1813,98 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Product'
+    PaginatedStockList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stock'
+    PaginatedStockMovementList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/StockMovement'
+    PaginatedStockReceiptList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/StockReceipt'
+    PaginatedSupplierList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Supplier'
     PaginatedUnitList:
       type: object
       required:
@@ -1126,6 +1972,31 @@ components:
           type: string
           title: Rang (palitra kaliti)
           maxLength: 16
+    PatchedInventoryCountRequest:
+      type: object
+      description: '`id` klientda yaratilishi mumkin (UUIDv7); keyin o''zgarmaydi.'
+      properties:
+        id:
+          type: string
+          format: uuid
+        store:
+          type: string
+          format: uuid
+        scope:
+          allOf:
+          - $ref: '#/components/schemas/ScopeEnum'
+          title: Qamrov
+        category:
+          type: string
+          format: uuid
+          nullable: true
+        note:
+          type: string
+          title: Izoh
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InventoryCountItemRequest'
     PatchedProductRequest:
       type: object
       properties:
@@ -1185,6 +2056,42 @@ components:
             type: string
             minLength: 1
           maxItems: 20
+    PatchedStockReceiptRequest:
+      type: object
+      description: '`id` klientda yaratilishi mumkin (UUIDv7); keyin o''zgarmaydi.'
+      properties:
+        id:
+          type: string
+          format: uuid
+        store:
+          type: string
+          format: uuid
+        supplier:
+          type: string
+          format: uuid
+          nullable: true
+        note:
+          type: string
+          title: Izoh
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/StockReceiptItemRequest'
+    PatchedSupplierRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          title: Nomi
+          maxLength: 200
+        phone:
+          type: string
+          title: Telefon
+          maxLength: 32
+        note:
+          type: string
+          title: Izoh
     PatchedUnitRequest:
       type: object
       properties:
@@ -1349,6 +2256,12 @@ components:
       - name
       - sell_price_tiyin
       - unit
+    ReverseReceiptRequest:
+      type: object
+      properties:
+        note:
+          type: string
+          default: ''
     RoleEnum:
       enum:
       - platform_admin
@@ -1361,6 +2274,223 @@ components:
         * `owner` - ega
         * `manager` - menejer
         * `cashier` - kassir
+    ScopeEnum:
+      enum:
+      - all
+      - category
+      type: string
+      description: |-
+        * `all` - hammasi
+        * `category` - kategoriya
+    StatusEnum:
+      enum:
+      - draft
+      - posted
+      type: string
+      description: |-
+        * `draft` - qoralama
+        * `posted` - tasdiqlangan
+    Stock:
+      type: object
+      properties:
+        product:
+          type: string
+          format: uuid
+          title: Tovar
+        store:
+          type: string
+          format: uuid
+          title: Do'kon
+        qty_milli:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          title: Qoldiq (milli)
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Yangilangan
+      required:
+      - product
+      - store
+      - updated_at
+    StockMovement:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        product:
+          type: string
+          format: uuid
+          title: Tovar
+        store:
+          type: string
+          format: uuid
+          title: Do'kon
+        qty_milli:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          title: Miqdor (milli, ±)
+        type:
+          allOf:
+          - $ref: '#/components/schemas/TypeEnum'
+          title: Turi
+        ref_type:
+          type: string
+          title: Hujjat turi
+          maxLength: 32
+        ref_id:
+          type: string
+          format: uuid
+          nullable: true
+          title: Hujjat id
+        at:
+          type: string
+          format: date-time
+          title: Vaqt
+        created_by:
+          type: string
+          format: uuid
+          nullable: true
+          title: Kim
+      required:
+      - product
+      - qty_milli
+      - store
+      - type
+    StockReceipt:
+      type: object
+      description: '`id` klientda yaratilishi mumkin (UUIDv7); keyin o''zgarmaydi.'
+      properties:
+        id:
+          type: string
+          format: uuid
+        number:
+          type: integer
+          readOnly: true
+          title: Raqam
+        store:
+          type: string
+          format: uuid
+        supplier:
+          type: string
+          format: uuid
+          nullable: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/StatusEnum'
+          readOnly: true
+          title: Holat
+        note:
+          type: string
+          title: Izoh
+        total_cost_tiyin:
+          type: integer
+          readOnly: true
+          title: Jami tannarx (tiyin)
+        reverses:
+          type: string
+          format: uuid
+          readOnly: true
+          nullable: true
+          title: Teskari qilingan kirim
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/StockReceiptItem'
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        posted_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          title: Tasdiqlangan vaqt
+      required:
+      - created_at
+      - number
+      - posted_at
+      - reverses
+      - status
+      - total_cost_tiyin
+    StockReceiptItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        product:
+          type: string
+          format: uuid
+        qty_milli:
+          type: integer
+          minimum: 1
+        cost_price_tiyin:
+          type: integer
+          minimum: 0
+        new_sell_price_tiyin:
+          type: integer
+          minimum: 0
+          nullable: true
+        line_total_tiyin:
+          type: integer
+          readOnly: true
+          title: Qator jami (tiyin)
+      required:
+      - cost_price_tiyin
+      - id
+      - line_total_tiyin
+      - product
+      - qty_milli
+    StockReceiptItemRequest:
+      type: object
+      properties:
+        product:
+          type: string
+          format: uuid
+        qty_milli:
+          type: integer
+          minimum: 1
+        cost_price_tiyin:
+          type: integer
+          minimum: 0
+        new_sell_price_tiyin:
+          type: integer
+          minimum: 0
+          nullable: true
+      required:
+      - cost_price_tiyin
+      - product
+      - qty_milli
+    StockReceiptRequest:
+      type: object
+      description: '`id` klientda yaratilishi mumkin (UUIDv7); keyin o''zgarmaydi.'
+      properties:
+        id:
+          type: string
+          format: uuid
+        store:
+          type: string
+          format: uuid
+        supplier:
+          type: string
+          format: uuid
+          nullable: true
+        note:
+          type: string
+          title: Izoh
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/StockReceiptItemRequest'
     SubscriptionSnapshot:
       type: object
       properties:
@@ -1380,6 +2510,44 @@ components:
       - offline_days
       - paid_until
       - status
+    Supplier:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          title: Nomi
+          maxLength: 200
+        phone:
+          type: string
+          title: Telefon
+          maxLength: 32
+        note:
+          type: string
+          title: Izoh
+      required:
+      - id
+      - name
+    SupplierRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          title: Nomi
+          maxLength: 200
+        phone:
+          type: string
+          title: Telefon
+          maxLength: 32
+        note:
+          type: string
+          title: Izoh
+      required:
+      - name
     TenantBrief:
       type: object
       properties:
@@ -1410,6 +2578,20 @@ components:
           minLength: 1
       required:
       - refresh
+    TypeEnum:
+      enum:
+      - receipt
+      - sale
+      - refund
+      - adjustment
+      - inventory
+      type: string
+      description: |-
+        * `receipt` - kirim
+        * `sale` - savdo
+        * `refund` - qaytarish
+        * `adjustment` - tuzatish
+        * `inventory` - inventarizatsiya
     Unit:
       type: object
       properties:

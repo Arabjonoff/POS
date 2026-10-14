@@ -77,3 +77,9 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-014 (squash merge)
 - Qoldi / keyingi qadam: T-015 Ombor (StockMovement, kirim, inventarizatsiya). Excel import — T-051.
 - Muammo yoki qaror: `barcode.md` dagi tarozi misoli `2012345012503` nazorat raqami noto'g'ri edi — `2012345012509` ga tuzatildi (T-040 Dart testlari shundan foydalanadi). Q-001/Q-002 egasi tomonidan tasdiqlandi (A, B).
+
+## 2026-10-14 — T-015 Ombor (StockMovement, kirim, inventarizatsiya)
+- Qilindi: `apps/inventory` — `StockMovement` (AppendOnlyModel: faqat qo'shiladi; qoldiq manbasi), `ProductStock` (kesh, harakat bilan bir tranzaksiyada; `manage.py rebuild_stock`), `Supplier` (yumshoq o'chirish), `StockReceipt`(+Item: qoralama → post → harakatlar, tannarx/sotish narxi + PriceHistory; teskari kirim manfiy harakatlar bilan, narxlar qaytarilmaydi; raqam tenant qulfi bilan), `InventoryCount`(+Item: post paytida expected keshdan, farq `inventory` harakati, sanalmagan tovar o'zgarmaydi). API: `/suppliers/`, `/stock-receipts/` (+post, +reverse), `/inventory-counts/` (+post), `/stock/` (low/negative), `/stock-movements/`. `TenantPKField` → `apps/core/serializers.py`. 376 test yashil (+52).
+- PR: T-015 (squash merge)
+- Qoldi / keyingi qadam: T-016 Mijozlar va nasiya. `low` filtri faqat harakati bor tovarlar — to'liq "kam qolganlar" T-054 da.
+- Muammo yoki qaror: elektr uzilishi `.git/config` ni nol baytlar bilan buzdi — foydalanuvchi tikladi. ViewSet'da action metodini `post` deb nomlash DRF'da detail URL'ga POST'ni shu action'ga yo'naltiradi — `post_document` + `url_path="post"` ishlatildi (405 testi bor).
