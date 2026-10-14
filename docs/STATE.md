@@ -5,17 +5,19 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-032 Lokal baza (Drift)
+- Branch: feat/T-032-local-db
+- Boshlangan: 2026-10-14
 - Oxirgi yangilanish: 2026-10-14
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-
-## Keyingi aniq harakat
-<!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-T-031 PR merge qilinganini tekshirish (`gh pr list --state open`); keyin T-032 Lokal baza (Drift) — `docs/specs/data-model.md` (do'kon qatlami), `sync.md` (OutboxEvent, SyncState, CartDraft), `apps/pos/lib/data/db/app_database.dart`.
+- [ ] 1. make-migrations sozlash (apps/pos/build.yaml), v1 sxema dump, uuid bog'liqligi
+- [ ] 2. Ma'lumotnoma jadvallari: stores, staff_users, units, categories, products, product_barcodes, customers, suppliers, product_stock, debt_entries
+- [ ] 3. Hujjat jadvallari: shifts, sales, sale_items, sale_payments, refunds, refund_items, cash_movements, stock_receipts(+items), inventory_counts(+items), stock_movements
+- [ ] 4. Sinxron: outbox_events, sync_state, cart_drafts, doc_counters; v1→v2 migratsiya; WAL + synchronous=FULL + foreign_keys
+- [ ] 5. SaleWriter: savdo bitta tranzaksiyada (sale+items+payments+stock+debt+outbox), chek raqami
+- [ ] 6. Testlar (sxema, pragmalar, migratsiya, atomarlik), spec, PR, merge
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
