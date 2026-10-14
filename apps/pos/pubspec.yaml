@@ -23,6 +23,7 @@ dependencies:
   pos_ui:
     path: ../../packages/ui
   sqlite3: ^2.9.4
+  uuid: ^4.6.0
 
 dev_dependencies:
   build_runner: ^2.15.1

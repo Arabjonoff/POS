@@ -113,7 +113,7 @@ Spec'lar: `design-system.md`, `sync.md`, `i18n.md`.
 - **Qabul:** formatlash unit testlari; kodda qattiq yozilgan matn yo'q (lint qoidasi yoki test).
 - **Bog'liq:** T-006
 
-### [ ] T-032 Lokal baza (Drift)
+### [x] T-032 Lokal baza (Drift)
 - **Bajarish:** `data-model.md` dagi do'kon qatlami jadvallari, OutboxEvent, SyncState; WAL va `synchronous=FULL`; migratsiya testlari.
 - **Qabul:** sxema testlari; savdo yozish tranzaksiyasi atomarligi testi.
 - **Bog'liq:** T-006

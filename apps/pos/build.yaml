@@ -1,0 +1,12 @@
+targets:
+  $default:
+    builders:
+      drift_dev:
+        options:
+          # `dart run drift_dev make-migrations` — sxema versiyalari va migratsiya testlari.
+          databases:
+            app_database: lib/data/db/app_database.dart
+          schema_dir: drift_schemas/
+          test_dir: test/drift/
+          # Sana ISO-8601 matn (ms aniqlik, vaqt zonasi bilan) — hodisalar tartibi uchun.
+          store_date_time_values_as_text: true

@@ -32,6 +32,7 @@ jobs:
           filters: |
             backend:
               - 'backend/**'
+              - 'testdata/**'
               - '.github/workflows/ci.yml'
             flutter:
               - 'apps/pos/**'
@@ -39,6 +40,7 @@ jobs:
               - 'packages/api_client_dart/**'
               - 'pubspec.yaml'
               - 'pubspec.lock'
+              - 'testdata/**'
               - 'analysis_options.yaml'
               - '.github/workflows/ci.yml'
             admin:
