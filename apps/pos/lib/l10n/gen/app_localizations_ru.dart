@@ -1165,4 +1165,107 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get productErrQty =>
       'Введите количество правильно (например, 5 или 0,5)';
+
+  @override
+  String get importTitle => 'Загрузка из Excel';
+
+  @override
+  String get importIntro =>
+      'Выберите файл Excel (.xlsx) или CSV. Первая строка — названия столбцов. Существующие товары обновляются по штрихкоду.';
+
+  @override
+  String get importPick => 'Выбрать файл';
+
+  @override
+  String get importTemplate => 'Скачать шаблон';
+
+  @override
+  String get importTemplateSaved => 'Шаблон сохранён';
+
+  @override
+  String get importOffline => 'Для импорта нужен интернет';
+
+  @override
+  String get importFailed =>
+      'Не удалось прочитать файл: .xlsx или .csv, до 10 МБ';
+
+  @override
+  String importRows(String file, int count) {
+    return '$file · строк: $count';
+  }
+
+  @override
+  String get importMapTitle => 'Сопоставьте столбцы';
+
+  @override
+  String get importNoColumn => '— нет —';
+
+  @override
+  String get importChooseColumn => 'Выберите столбец';
+
+  @override
+  String get importRequiredMissing => 'Выберите столбцы названия и цены';
+
+  @override
+  String get importCheck => 'Проверить';
+
+  @override
+  String importSummary(int creates, int updates, int errors) {
+    return 'Новых: $creates · Обновится: $updates · Ошибок: $errors';
+  }
+
+  @override
+  String importErrorRow(int row, String field, String reason) {
+    return 'Строка $row · $field: $reason';
+  }
+
+  @override
+  String importMoreErrors(int count) {
+    return 'Ещё ошибок: $count';
+  }
+
+  @override
+  String get importApply => 'Импортировать';
+
+  @override
+  String get importBack => 'Назад';
+
+  @override
+  String get importNeedsApproval =>
+      'Импорт должен подтвердить менеджер или владелец';
+
+  @override
+  String importDone(int created, int updated, int skipped) {
+    return 'Добавлено: $created · Обновлено: $updated · Пропущено: $skipped';
+  }
+
+  @override
+  String get importClose => 'Готово';
+
+  @override
+  String get importErrRequired => 'не заполнено';
+
+  @override
+  String get importErrNumber => 'не число';
+
+  @override
+  String get importErrPositive => 'должно быть больше 0';
+
+  @override
+  String get importErrBarcode => 'неверный штрихкод';
+
+  @override
+  String get importErrCheckDigit => 'неверная контрольная цифра';
+
+  @override
+  String get importErrDuplicate => 'повторяется в файле';
+
+  @override
+  String get importErrUnit => 'неизвестная единица';
+
+  @override
+  String get importErrTooLong => 'слишком длинно';
+
+  @override
+  String get importErrWeighted => 'весовому товару нужна дробная единица';
 }

@@ -1519,5 +1519,171 @@
   "productErrQty": "Miqdorni to'g'ri yozing (masalan, 5 yoki 0,5)",
   "@productErrQty": {
     "description": "Minimal qoldiq noto'g'ri"
+  },
+  "importTitle": "Excel'dan yuklash",
+  "@importTitle": {
+    "description": "Import oynasi va tugma"
+  },
+  "importIntro": "Excel (.xlsx) yoki CSV faylni tanlang. Birinchi qator — ustun nomlari. Mavjud tovarlar shtrix-kod bo'yicha yangilanadi.",
+  "@importIntro": {
+    "description": "Import izohi"
+  },
+  "importPick": "Faylni tanlash",
+  "@importPick": {
+    "description": "Tugma"
+  },
+  "importTemplate": "Shablonni yuklab olish",
+  "@importTemplate": {
+    "description": "Tugma"
+  },
+  "importTemplateSaved": "Shablon saqlandi",
+  "@importTemplateSaved": {
+    "description": "Xabar"
+  },
+  "importOffline": "Import uchun internet kerak",
+  "@importOffline": {
+    "description": "Oflayn"
+  },
+  "importFailed": "Faylni o'qib bo'lmadi: .xlsx yoki .csv, 10 MB gacha",
+  "@importFailed": {
+    "description": "Xato"
+  },
+  "importRows": "{file} · {count} ta qator",
+  "@importRows": {
+    "description": "Fayl haqida",
+    "placeholders": {
+      "file": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importMapTitle": "Ustunlarni moslang",
+  "@importMapTitle": {
+    "description": "Bosqich sarlavhasi"
+  },
+  "importNoColumn": "— yo'q —",
+  "@importNoColumn": {
+    "description": "Ustun tanlanmagan"
+  },
+  "importChooseColumn": "Ustunni tanlang",
+  "@importChooseColumn": {
+    "description": "Ustun tanlash oynasi"
+  },
+  "importRequiredMissing": "Nom va narx ustunlarini tanlang",
+  "@importRequiredMissing": {
+    "description": "Xato"
+  },
+  "importCheck": "Tekshirish",
+  "@importCheck": {
+    "description": "Tugma"
+  },
+  "importSummary": "Yangi: {creates} · Yangilanadi: {updates} · Xato: {errors}",
+  "@importSummary": {
+    "description": "Tekshiruv natijasi",
+    "placeholders": {
+      "creates": {
+        "type": "int"
+      },
+      "updates": {
+        "type": "int"
+      },
+      "errors": {
+        "type": "int"
+      }
+    }
+  },
+  "importErrorRow": "{row}-qator · {field}: {reason}",
+  "@importErrorRow": {
+    "description": "Xato qatori",
+    "placeholders": {
+      "row": {
+        "type": "int"
+      },
+      "field": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "importMoreErrors": "Yana {count} ta xato",
+  "@importMoreErrors": {
+    "description": "Ko'rsatilmagan xatolar",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importApply": "Import qilish",
+  "@importApply": {
+    "description": "Tugma"
+  },
+  "importBack": "Orqaga",
+  "@importBack": {
+    "description": "Tugma"
+  },
+  "importNeedsApproval": "Importni menejer yoki ega tasdiqlashi kerak",
+  "@importNeedsApproval": {
+    "description": "Huquq"
+  },
+  "importDone": "Qo'shildi: {created} · Yangilandi: {updated} · O'tkazib yuborildi: {skipped}",
+  "@importDone": {
+    "description": "Import natijasi",
+    "placeholders": {
+      "created": {
+        "type": "int"
+      },
+      "updated": {
+        "type": "int"
+      },
+      "skipped": {
+        "type": "int"
+      }
+    }
+  },
+  "importClose": "Tayyor",
+  "@importClose": {
+    "description": "Tugma"
+  },
+  "importErrRequired": "to'ldirilmagan",
+  "@importErrRequired": {
+    "description": "Sabab"
+  },
+  "importErrNumber": "son emas",
+  "@importErrNumber": {
+    "description": "Sabab"
+  },
+  "importErrPositive": "0 dan katta bo'lishi kerak",
+  "@importErrPositive": {
+    "description": "Sabab"
+  },
+  "importErrBarcode": "noto'g'ri shtrix-kod",
+  "@importErrBarcode": {
+    "description": "Sabab"
+  },
+  "importErrCheckDigit": "shtrix-kod nazorat raqami xato",
+  "@importErrCheckDigit": {
+    "description": "Sabab"
+  },
+  "importErrDuplicate": "faylda takrorlangan",
+  "@importErrDuplicate": {
+    "description": "Sabab"
+  },
+  "importErrUnit": "noma'lum birlik",
+  "@importErrUnit": {
+    "description": "Sabab"
+  },
+  "importErrTooLong": "juda uzun",
+  "@importErrTooLong": {
+    "description": "Sabab"
+  },
+  "importErrWeighted": "vaznli tovar uchun kasrli birlik kerak",
+  "@importErrWeighted": {
+    "description": "Sabab"
   }
 }

@@ -2102,6 +2102,186 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Miqdorni to\'g\'ri yozing (masalan, 5 yoki 0,5)'**
   String get productErrQty;
+
+  /// Import oynasi va tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Excel\'dan yuklash'**
+  String get importTitle;
+
+  /// Import izohi
+  ///
+  /// In uz, this message translates to:
+  /// **'Excel (.xlsx) yoki CSV faylni tanlang. Birinchi qator — ustun nomlari. Mavjud tovarlar shtrix-kod bo\'yicha yangilanadi.'**
+  String get importIntro;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Faylni tanlash'**
+  String get importPick;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Shablonni yuklab olish'**
+  String get importTemplate;
+
+  /// Xabar
+  ///
+  /// In uz, this message translates to:
+  /// **'Shablon saqlandi'**
+  String get importTemplateSaved;
+
+  /// Oflayn
+  ///
+  /// In uz, this message translates to:
+  /// **'Import uchun internet kerak'**
+  String get importOffline;
+
+  /// Xato
+  ///
+  /// In uz, this message translates to:
+  /// **'Faylni o\'qib bo\'lmadi: .xlsx yoki .csv, 10 MB gacha'**
+  String get importFailed;
+
+  /// Fayl haqida
+  ///
+  /// In uz, this message translates to:
+  /// **'{file} · {count} ta qator'**
+  String importRows(String file, int count);
+
+  /// Bosqich sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Ustunlarni moslang'**
+  String get importMapTitle;
+
+  /// Ustun tanlanmagan
+  ///
+  /// In uz, this message translates to:
+  /// **'— yo\'q —'**
+  String get importNoColumn;
+
+  /// Ustun tanlash oynasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Ustunni tanlang'**
+  String get importChooseColumn;
+
+  /// Xato
+  ///
+  /// In uz, this message translates to:
+  /// **'Nom va narx ustunlarini tanlang'**
+  String get importRequiredMissing;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Tekshirish'**
+  String get importCheck;
+
+  /// Tekshiruv natijasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Yangi: {creates} · Yangilanadi: {updates} · Xato: {errors}'**
+  String importSummary(int creates, int updates, int errors);
+
+  /// Xato qatori
+  ///
+  /// In uz, this message translates to:
+  /// **'{row}-qator · {field}: {reason}'**
+  String importErrorRow(int row, String field, String reason);
+
+  /// Ko'rsatilmagan xatolar
+  ///
+  /// In uz, this message translates to:
+  /// **'Yana {count} ta xato'**
+  String importMoreErrors(int count);
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Import qilish'**
+  String get importApply;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Orqaga'**
+  String get importBack;
+
+  /// Huquq
+  ///
+  /// In uz, this message translates to:
+  /// **'Importni menejer yoki ega tasdiqlashi kerak'**
+  String get importNeedsApproval;
+
+  /// Import natijasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Qo\'shildi: {created} · Yangilandi: {updated} · O\'tkazib yuborildi: {skipped}'**
+  String importDone(int created, int updated, int skipped);
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Tayyor'**
+  String get importClose;
+
+  /// Sabab
+  ///
+  /// In uz, this message translates to:
+  /// **'to\'ldirilmagan'**
+  String get importErrRequired;
+
+  /// Sabab
+  ///
+  /// In uz, this message translates to:
+  /// **'son emas'**
+  String get importErrNumber;
+
+  /// Sabab
+  ///
+  /// In uz, this message translates to:
+  /// **'0 dan katta bo\'lishi kerak'**
+  String get importErrPositive;
+
+  /// Sabab
+  ///
+  /// In uz, this message translates to:
+  /// **'noto\'g\'ri shtrix-kod'**
+  String get importErrBarcode;
+
+  /// Sabab
+  ///
+  /// In uz, this message translates to:
+  /// **'shtrix-kod nazorat raqami xato'**
+  String get importErrCheckDigit;
+
+  /// Sabab
+  ///
+  /// In uz, this message translates to:
+  /// **'faylda takrorlangan'**
+  String get importErrDuplicate;
+
+  /// Sabab
+  ///
+  /// In uz, this message translates to:
+  /// **'noma\'lum birlik'**
+  String get importErrUnit;
+
+  /// Sabab
+  ///
+  /// In uz, this message translates to:
+  /// **'juda uzun'**
+  String get importErrTooLong;
+
+  /// Sabab
+  ///
+  /// In uz, this message translates to:
+  /// **'vaznli tovar uchun kasrli birlik kerak'**
+  String get importErrWeighted;
 }
 
 class _AppLocalizationsDelegate

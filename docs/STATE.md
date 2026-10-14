@@ -15,15 +15,15 @@
 - [x] 0. Spec `docs/specs/product-import.md` va qaror 0009 (server tomonda import)
 - [x] 1. Backend: `openpyxl` (uv add), `apps/catalog/importing.py` — o'qish (xlsx/csv), sarlavhadan moslash taklifi, qator tahlili (pul, birlik, kategoriya, shtrix-kod), tekshirish va qo'llash (bitta tranzaksiya, bulk); `ProductImport` modeli + migratsiya
 - [x] 2. Backend API (qurilma tokeni): template / upload / check / apply + pytest (5000 qator, xatolar, tenant/qurilma izolyatsiyasi, takroriy apply), OpenAPI + `make api-clients`
-- [ ] 3. Kassa: `file_picker` bog'liqligi, `data/catalog/product_import.dart` (API o'rami, soxta bilan almashtiriladi), import oynasi (fayl → moslash → tekshirish → import → natija), shablonni saqlash, oflayn xabar, PIN; tarjimalar
+- [x] 3. Kassa: `file_picker` bog'liqligi, `data/catalog/product_import.dart` (API o'rami, soxta bilan almashtiriladi), import oynasi (fayl → moslash → tekshirish → import → natija), shablonni saqlash, oflayn xabar, PIN; tarjimalar
 - [ ] 4. Widget testlari + golden + skrinshotlar `docs/screenshots/T-051/`
 - [ ] 5. PR, CI → merge; ROADMAP, PROGRESS, STATE
 
 ## Oxirgi bajarilgan ish
-- 1–2-qadam: `apps/catalog/importing.py` (o'qish, moslash, tahlil, bulk qo'llash + ChangeLog), `ProductImport` (migratsiya 0003), `apps/sync/imports.py` (template/upload/check/apply), testlar `apps/sync/tests/test_product_import.py` (12, 5000 qator ham); OpenAPI + admin TS + Dart klient yangilandi.
+- 3-qadam: `file_picker ^13.1.0`, `data/catalog/product_import.dart` (`ProductImportApi`, `ImportFiles`, `refreshCatalogProvider` — testlarda almashtiriladi), `features/products/import_dialog.dart` (fayl → moslash → tekshirish → import → natija), Tovarlar ekranida "Excel'dan yuklash"; tarjimalar `import*`.
 
 ## Keyingi aniq harakat
-- 3-qadam: `apps/pos`: `flutter pub add file_picker` (ildizda `flutter pub get`), `lib/data/catalog/product_import.dart` (`ProductImportApi`: template baytlari — xom Dio, upload — `syncProductImportsCreate(file:)`, check/apply), `lib/features/products/import_dialog.dart` (bosqichlar), Tovarlar ekranida "Excel'dan yuklash".
+- 4-qadam: `apps/pos/test/features/import_test.dart` (soxta API/fayllar: to'liq oqim, ustun almashtirish, majburiy ustun yo'q, xatolar ro'yxati, kassir → PIN, oflayn, shablon saqlash), golden `products/import_*` (moslash, tekshirish natijasi), skrinshotlar.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
