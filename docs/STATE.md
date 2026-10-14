@@ -15,15 +15,15 @@
 - [x] 1. `apps/pos/lib/data/refunds/refund_calculator.dart`: sof hisob — server `record_refund` bilan bir xil (qator: `mulDivHalfUp(total, qty, sold)`, oxirgi qism — qoldiq; jami: chek chegirmasidan ulush yoki to'liq yopilsa `sale.total − oldingi`; nasiyadan ayirish chegarasi) + unit testlar
 - [x] 2. `refund_writer.dart` (bitta tranzaksiya: Refund + RefundItem + StockMovement(+qty) + DebtEntry(−) + Sale.status + outbox `refund.created`) va `sale_lookup.dart` (raqam bo'yicha, smena savdolari, qaytarilgan miqdorlar bilan) + testlar
 - [x] 3. Chekda savdo raqami shtrix-kodi (CODE128, `GS k`) — qaytarishda skanerlash uchun; snapshotlar yangilanadi
-- [ ] 4. Qaytarish oynasi (F8): savdoni topish (raqam/skan/oxirgi savdolar), qatorlar va miqdor, sabab, naqd yoki qarzdan ayirish, menejer/ega PIN; tarjimalar
+- [x] 4. Qaytarish oynasi (F8): savdoni topish (raqam/skan/oxirgi savdolar), qatorlar va miqdor, sabab, naqd yoki qarzdan ayirish, menejer/ega PIN; tarjimalar
 - [ ] 5. Widget testlari + golden + skrinshotlar `docs/screenshots/T-045/`
 - [ ] 6. Spec, PR, CI → merge; ROADMAP, PROGRESS, STATE
 
 ## Oxirgi bajarilgan ish
-- 3-qadam: `ReceiptRow.barcode`, `EscPos.code128`, chek snapshotlari yangilandi (`||||| D3-000123 |||||`).
+- 4-qadam: `features/refunds/refund_dialog.dart` (`showRefundDialog` → `RefundResult`), kassa ekranida F8 + "Qaytarish" ikoni (desktop qidiruv qatorida, telefonda chek tablari qatorida), toast `refundDoneCash`/`refundDoneDebt`, tarjimalar `refund*` (31 ta).
 
 ## Keyingi aniq harakat
-- 4-qadam: `apps/pos/lib/features/refunds/refund_dialog.dart` — `showRefundDialog(context)`: 1) savdoni topish: raqam maydoni + skaner (`ScanListener` → `SaleLookup.idByNumber`) + oxirgi savdolar ro'yxati; 2) qatorlar: qolgan miqdor, stepper/kg kiritish, "Hammasini"; sabab (tez tugmalar + matn); usul Naqd / Qarzdan ayirish (`quote.debtAllowed`); jami katta; 3) "Qaytarish" → menejer/ega PIN (`requestManagerApproval`; foydalanuvchi o'zi menejer/ega bo'lsa — o'zi) → `RefundWriter.record`. `pos_screen.dart` da F8. Tarjimalar `refund*`.
+- 5-qadam: `apps/pos/test/features/refund_test.dart` (savdo → F8 → ro'yxatdan tanlash/raqam/skan → qisman → sabab → PIN → bazada refund, qoldiq; to'liq; qarzdan ayirish; tanlanmagan/sababsiz; menejer o'zi — PIN so'ralmaydi), golden `refund` (topish va qatorlar), keyin `flutter test --update-goldens test/goldens/pos_golden_test.dart test/goldens/app_shell_golden_test.dart` (yangi tugma), skrinshotlar `docs/screenshots/T-045/`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

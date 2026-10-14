@@ -13,6 +13,7 @@ import 'package:pos_app/core/format/app_format.dart';
 import 'package:pos_app/core/format/unit_code.dart';
 import 'package:pos_app/data/catalog/product_catalog.dart';
 import 'package:pos_app/data/customers/customer_directory.dart';
+import 'package:pos_app/data/refunds/refund_writer.dart';
 import 'package:pos_app/features/common/manager_approval.dart';
 import 'package:pos_app/features/pos/cart/cart.dart';
 import 'package:pos_app/features/pos/cart/cart_controller.dart';
@@ -25,6 +26,7 @@ import 'package:pos_app/features/pos/widgets/product_panel.dart';
 import 'package:pos_app/features/pos/widgets/qty_dialog.dart';
 import 'package:pos_app/features/printing/printer_service.dart';
 import 'package:pos_app/features/printing/printer_settings.dart';
+import 'package:pos_app/features/refunds/refund_dialog.dart';
 import 'package:pos_app/features/scanner/camera_scan_page.dart';
 import 'package:pos_app/features/shift/open_shift_card.dart';
 import 'package:pos_app/features/shift/shift_providers.dart';
@@ -366,6 +368,24 @@ class _CashierViewState extends ConsumerState<CashierView> {
     );
   }
 
+  /// F8: qaytarish (menejer/ega tasdig'i bilan).
+  Future<void> _openRefund() async {
+    final result = await _dialog(() => showRefundDialog(context));
+    if (result != null && mounted) {
+      final l10n = AppLocalizations.of(context);
+      final amount = context.fmt.money(result.totalTiyin);
+      showPosToast(
+        context,
+        message: result.method == RefundMethod.cash
+            ? l10n.refundDoneCash(amount)
+            : l10n.refundDoneDebt(amount),
+        tone: PosTone.success,
+        duration: const Duration(seconds: 6),
+      );
+    }
+    _focusScreen();
+  }
+
   /// F4: chek mijozi.
   Future<void> _chooseCustomer() async {
     final choice = await _dialog(
@@ -428,6 +448,10 @@ class _CashierViewState extends ConsumerState<CashierView> {
     }
     if (key == LogicalKeyboardKey.f4) {
       unawaited(_chooseCustomer());
+      return true;
+    }
+    if (key == LogicalKeyboardKey.f8) {
+      unawaited(_openRefund());
       return true;
     }
     if (key == LogicalKeyboardKey.f6) {
@@ -567,6 +591,14 @@ class _CashierViewState extends ConsumerState<CashierView> {
           ),
         ],
         if (!compact) ...[
+          const SizedBox(width: PosSpacing.s),
+          PosIconButton(
+            key: const ValueKey('pos-refund'),
+            icon: Icons.assignment_return_outlined,
+            tooltip: '${l10n.refundTitle} (F8)',
+            variant: PosIconButtonVariant.outlined,
+            onPressed: () => unawaited(_openRefund()),
+          ),
           const SizedBox(width: PosSpacing.s),
           PosButton(
             label: l10n.shiftTitle,
@@ -727,11 +759,24 @@ class _CashierViewState extends ConsumerState<CashierView> {
             compact: true,
             onSelect: _cart.switchTo,
             onNew: _newCart,
-            trailing: PosIconButton(
-              icon: Icons.receipt_long_outlined,
-              tooltip: AppLocalizations.of(context).shiftTitle,
-              variant: PosIconButtonVariant.outlined,
-              onPressed: () => context.go('/pos/shift'),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                PosIconButton(
+                  key: const ValueKey('pos-refund'),
+                  icon: Icons.assignment_return_outlined,
+                  tooltip: AppLocalizations.of(context).refundTitle,
+                  variant: PosIconButtonVariant.outlined,
+                  onPressed: () => unawaited(_openRefund()),
+                ),
+                const SizedBox(width: PosSpacing.s),
+                PosIconButton(
+                  icon: Icons.receipt_long_outlined,
+                  tooltip: AppLocalizations.of(context).shiftTitle,
+                  variant: PosIconButtonVariant.outlined,
+                  onPressed: () => context.go('/pos/shift'),
+                ),
+              ],
             ),
           ),
         ),
