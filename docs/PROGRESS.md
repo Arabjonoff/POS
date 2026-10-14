@@ -289,7 +289,7 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
   - `CustomerDirectory`: tarix, xaridlar, `payDebt` (DebtEntry(−) + outbox `debt.paid` bitta tranzaksiyada, qarzdan ko'p emas), `update` (limit — `by` ega/menejer).
   - "Mijozlar" bo'limi: qarzdorlar tepada, qidiruv, "Qarzi borlar", jami qarz, yangi mijoz.
   - Mijoz kartasi: katta qarz, limit, tarix, xaridlar, to'lov oynasi (summa, "To'liq", naqd/karta), tahrirlash (limit — PIN).
-- Testlar: apps/pos 516 (+21):
+- Testlar: apps/pos 522 (+27):
   - `CustomerDirectory`: balans = Σ yozuvlar, to'lov payload'i, ortiqcha to'lov rad etiladi, tarix, update payload;
   - 5 ta widget testi: tartib/qidiruv/filtr/jami, to'liq to'lov, qisman to'lov, tahrir + limit PIN, yangi mijoz.
   - Golden'lar: `customers` list/card × 3 o'lcham × 2 mavzu. Skrinshotlar: `docs/screenshots/T-060/`.
