@@ -180,6 +180,60 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/inventory-counts/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Kirim va inventarizatsiya hujjatlari — faqat ega va menejer (tannarx ko'rinadi). */
+        get: operations["inventory_counts_list"];
+        put?: never;
+        /** @description Kirim va inventarizatsiya hujjatlari — faqat ega va menejer (tannarx ko'rinadi). */
+        post: operations["inventory_counts_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/inventory-counts/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Kirim va inventarizatsiya hujjatlari — faqat ega va menejer (tannarx ko'rinadi). */
+        get: operations["inventory_counts_retrieve"];
+        put?: never;
+        post?: never;
+        /** @description Faqat qoralama; tasdiqlangani — `409 count_not_draft`. */
+        delete: operations["inventory_counts_destroy"];
+        options?: never;
+        head?: never;
+        /** @description Faqat qoralama; `items` yuborilsa — almashtiriladi. */
+        patch: operations["inventory_counts_partial_update"];
+        trace?: never;
+    };
+    "/api/v1/inventory-counts/{id}/post/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Kirim va inventarizatsiya hujjatlari — faqat ega va menejer (tannarx ko'rinadi). */
+        post: operations["inventory_counts_post_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/products/": {
         parameters: {
             query?: never;
@@ -233,6 +287,149 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/api/v1/stock/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Queryset faqat joriy tenant yozuvlari; yaratishda tenant avtomatik qo'yiladi. */
+        get: operations["stock_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/stock-movements/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Harakatlar tarixi, yangisi birinchi. */
+        get: operations["stock_movements_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/stock-receipts/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Kirim va inventarizatsiya hujjatlari — faqat ega va menejer (tannarx ko'rinadi). */
+        get: operations["stock_receipts_list"];
+        put?: never;
+        /** @description Kirim va inventarizatsiya hujjatlari — faqat ega va menejer (tannarx ko'rinadi). */
+        post: operations["stock_receipts_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/stock-receipts/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Kirim va inventarizatsiya hujjatlari — faqat ega va menejer (tannarx ko'rinadi). */
+        get: operations["stock_receipts_retrieve"];
+        put?: never;
+        post?: never;
+        /** @description Faqat qoralama; tasdiqlangani — `409 receipt_not_draft`. */
+        delete: operations["stock_receipts_destroy"];
+        options?: never;
+        head?: never;
+        /** @description Faqat qoralama; `items` yuborilsa — almashtiriladi. */
+        patch: operations["stock_receipts_partial_update"];
+        trace?: never;
+    };
+    "/api/v1/stock-receipts/{id}/post/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Kirim va inventarizatsiya hujjatlari — faqat ega va menejer (tannarx ko'rinadi). */
+        post: operations["stock_receipts_post_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/stock-receipts/{id}/reverse/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Kirim va inventarizatsiya hujjatlari — faqat ega va menejer (tannarx ko'rinadi). */
+        post: operations["stock_receipts_reverse_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/suppliers/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description O'qish — tenantning har bir xodimi; yozish — ega va menejer. O'chirish — yumshoq. */
+        get: operations["suppliers_list"];
+        put?: never;
+        /** @description O'qish — tenantning har bir xodimi; yozish — ega va menejer. O'chirish — yumshoq. */
+        post: operations["suppliers_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/suppliers/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description O'qish — tenantning har bir xodimi; yozish — ega va menejer. O'chirish — yumshoq. */
+        get: operations["suppliers_retrieve"];
+        /** @description O'qish — tenantning har bir xodimi; yozish — ega va menejer. O'chirish — yumshoq. */
+        put: operations["suppliers_update"];
+        post?: never;
+        /** @description O'qish — tenantning har bir xodimi; yozish — ega va menejer. O'chirish — yumshoq. */
+        delete: operations["suppliers_destroy"];
+        options?: never;
+        head?: never;
+        /** @description O'qish — tenantning har bir xodimi; yozish — ega va menejer. O'chirish — yumshoq. */
+        patch: operations["suppliers_partial_update"];
         trace?: never;
     };
     "/api/v1/units/": {
@@ -388,6 +585,58 @@ export interface components {
         Health: {
             status: string;
         };
+        /** @description `id` klientda yaratilishi mumkin (UUIDv7); keyin o'zgarmaydi. */
+        InventoryCount: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            store?: string;
+            /** Holat */
+            readonly status: components["schemas"]["StatusEnum"];
+            /** Qamrov */
+            scope?: components["schemas"]["ScopeEnum"];
+            /** Format: uuid */
+            category?: string | null;
+            /** Izoh */
+            note?: string;
+            items?: components["schemas"]["InventoryCountItem"][];
+            /** Format: date-time */
+            readonly created_at: string;
+            /**
+             * Tasdiqlangan vaqt
+             * Format: date-time
+             */
+            readonly posted_at: string | null;
+        };
+        InventoryCountItem: {
+            /** Format: uuid */
+            readonly id: string;
+            /** Format: uuid */
+            product: string;
+            counted_milli: number;
+            /** Kutilgan (milli) */
+            readonly expected_milli: number | null;
+            readonly diff_milli: number | null;
+        };
+        InventoryCountItemRequest: {
+            /** Format: uuid */
+            product: string;
+            counted_milli: number;
+        };
+        /** @description `id` klientda yaratilishi mumkin (UUIDv7); keyin o'zgarmaydi. */
+        InventoryCountRequest: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            store?: string;
+            /** Qamrov */
+            scope?: components["schemas"]["ScopeEnum"];
+            /** Format: uuid */
+            category?: string | null;
+            /** Izoh */
+            note?: string;
+            items?: components["schemas"]["InventoryCountItemRequest"][];
+        };
         LoginRequest: {
             phone: string;
             password: string;
@@ -438,6 +687,21 @@ export interface components {
             previous?: string | null;
             results: components["schemas"]["Device"][];
         };
+        PaginatedInventoryCountList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["InventoryCount"][];
+        };
         PaginatedProductList: {
             /** @example 123 */
             count: number;
@@ -452,6 +716,66 @@ export interface components {
              */
             previous?: string | null;
             results: components["schemas"]["Product"][];
+        };
+        PaginatedStockList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["Stock"][];
+        };
+        PaginatedStockMovementList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["StockMovement"][];
+        };
+        PaginatedStockReceiptList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["StockReceipt"][];
+        };
+        PaginatedSupplierList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["Supplier"][];
         };
         PaginatedUnitList: {
             /** @example 123 */
@@ -493,6 +817,20 @@ export interface components {
             /** Rang (palitra kaliti) */
             color?: string;
         };
+        /** @description `id` klientda yaratilishi mumkin (UUIDv7); keyin o'zgarmaydi. */
+        PatchedInventoryCountRequest: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            store?: string;
+            /** Qamrov */
+            scope?: components["schemas"]["ScopeEnum"];
+            /** Format: uuid */
+            category?: string | null;
+            /** Izoh */
+            note?: string;
+            items?: components["schemas"]["InventoryCountItemRequest"][];
+        };
         PatchedProductRequest: {
             /** Format: uuid */
             id?: string;
@@ -516,6 +854,26 @@ export interface components {
             /** Faol */
             is_active?: boolean;
             barcodes?: string[];
+        };
+        /** @description `id` klientda yaratilishi mumkin (UUIDv7); keyin o'zgarmaydi. */
+        PatchedStockReceiptRequest: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            store?: string;
+            /** Format: uuid */
+            supplier?: string | null;
+            /** Izoh */
+            note?: string;
+            items?: components["schemas"]["StockReceiptItemRequest"][];
+        };
+        PatchedSupplierRequest: {
+            /** Nomi */
+            name?: string;
+            /** Telefon */
+            phone?: string;
+            /** Izoh */
+            note?: string;
         };
         PatchedUnitRequest: {
             /** Kod */
@@ -585,6 +943,10 @@ export interface components {
             is_active?: boolean;
             barcodes?: string[];
         };
+        ReverseReceiptRequest: {
+            /** @default  */
+            note: string;
+        };
         /**
          * @description * `platform_admin` - platforma admini
          *     * `owner` - ega
@@ -593,12 +955,162 @@ export interface components {
          * @enum {string}
          */
         RoleEnum: "platform_admin" | "owner" | "manager" | "cashier";
+        /**
+         * @description * `all` - hammasi
+         *     * `category` - kategoriya
+         * @enum {string}
+         */
+        ScopeEnum: "all" | "category";
+        /**
+         * @description * `draft` - qoralama
+         *     * `posted` - tasdiqlangan
+         * @enum {string}
+         */
+        StatusEnum: "draft" | "posted";
+        Stock: {
+            /**
+             * Tovar
+             * Format: uuid
+             */
+            product: string;
+            /**
+             * Do'kon
+             * Format: uuid
+             */
+            store: string;
+            /**
+             * Qoldiq (milli)
+             * Format: int64
+             */
+            qty_milli?: number;
+            /**
+             * Yangilangan
+             * Format: date-time
+             */
+            readonly updated_at: string;
+        };
+        StockMovement: {
+            /** Format: uuid */
+            id?: string;
+            /**
+             * Tovar
+             * Format: uuid
+             */
+            product: string;
+            /**
+             * Do'kon
+             * Format: uuid
+             */
+            store: string;
+            /**
+             * Miqdor (milli, ±)
+             * Format: int64
+             */
+            qty_milli: number;
+            /** Turi */
+            type: components["schemas"]["TypeEnum"];
+            /** Hujjat turi */
+            ref_type?: string;
+            /**
+             * Hujjat id
+             * Format: uuid
+             */
+            ref_id?: string | null;
+            /**
+             * Vaqt
+             * Format: date-time
+             */
+            at?: string;
+            /**
+             * Kim
+             * Format: uuid
+             */
+            created_by?: string | null;
+        };
+        /** @description `id` klientda yaratilishi mumkin (UUIDv7); keyin o'zgarmaydi. */
+        StockReceipt: {
+            /** Format: uuid */
+            id?: string;
+            /** Raqam */
+            readonly number: number;
+            /** Format: uuid */
+            store?: string;
+            /** Format: uuid */
+            supplier?: string | null;
+            /** Holat */
+            readonly status: components["schemas"]["StatusEnum"];
+            /** Izoh */
+            note?: string;
+            /** Jami tannarx (tiyin) */
+            readonly total_cost_tiyin: number;
+            /**
+             * Teskari qilingan kirim
+             * Format: uuid
+             */
+            readonly reverses: string | null;
+            items?: components["schemas"]["StockReceiptItem"][];
+            /** Format: date-time */
+            readonly created_at: string;
+            /**
+             * Tasdiqlangan vaqt
+             * Format: date-time
+             */
+            readonly posted_at: string | null;
+        };
+        StockReceiptItem: {
+            /** Format: uuid */
+            readonly id: string;
+            /** Format: uuid */
+            product: string;
+            qty_milli: number;
+            cost_price_tiyin: number;
+            new_sell_price_tiyin?: number | null;
+            /** Qator jami (tiyin) */
+            readonly line_total_tiyin: number;
+        };
+        StockReceiptItemRequest: {
+            /** Format: uuid */
+            product: string;
+            qty_milli: number;
+            cost_price_tiyin: number;
+            new_sell_price_tiyin?: number | null;
+        };
+        /** @description `id` klientda yaratilishi mumkin (UUIDv7); keyin o'zgarmaydi. */
+        StockReceiptRequest: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            store?: string;
+            /** Format: uuid */
+            supplier?: string | null;
+            /** Izoh */
+            note?: string;
+            items?: components["schemas"]["StockReceiptItemRequest"][];
+        };
         SubscriptionSnapshot: {
             status: string;
             /** Format: date */
             paid_until: string | null;
             days_left: number | null;
             offline_days: number;
+        };
+        Supplier: {
+            /** Format: uuid */
+            readonly id: string;
+            /** Nomi */
+            name: string;
+            /** Telefon */
+            phone?: string;
+            /** Izoh */
+            note?: string;
+        };
+        SupplierRequest: {
+            /** Nomi */
+            name: string;
+            /** Telefon */
+            phone?: string;
+            /** Izoh */
+            note?: string;
         };
         TenantBrief: {
             /** Format: uuid */
@@ -612,6 +1124,15 @@ export interface components {
         TokenRefreshRequest: {
             refresh: string;
         };
+        /**
+         * @description * `receipt` - kirim
+         *     * `sale` - savdo
+         *     * `refund` - qaytarish
+         *     * `adjustment` - tuzatish
+         *     * `inventory` - inventarizatsiya
+         * @enum {string}
+         */
+        TypeEnum: "receipt" | "sale" | "refund" | "adjustment" | "inventory";
         Unit: {
             /** Format: uuid */
             readonly id: string;
@@ -988,6 +1509,149 @@ export interface operations {
             };
         };
     };
+    inventory_counts_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                status?: "draft" | "posted";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedInventoryCountList"];
+                };
+            };
+        };
+    };
+    inventory_counts_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["InventoryCountRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["InventoryCountRequest"];
+                "multipart/form-data": components["schemas"]["InventoryCountRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InventoryCount"];
+                };
+            };
+        };
+    };
+    inventory_counts_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this inventarizatsiya. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InventoryCount"];
+                };
+            };
+        };
+    };
+    inventory_counts_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this inventarizatsiya. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    inventory_counts_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this inventarizatsiya. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedInventoryCountRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedInventoryCountRequest"];
+                "multipart/form-data": components["schemas"]["PatchedInventoryCountRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InventoryCount"];
+                };
+            };
+        };
+    };
+    inventory_counts_post_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this inventarizatsiya. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InventoryCount"];
+                };
+            };
+        };
+    };
     products_list: {
         parameters: {
             query?: {
@@ -1158,6 +1822,382 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Product"];
+                };
+            };
+        };
+    };
+    stock_list: {
+        parameters: {
+            query?: {
+                /** @description Qoldiq `min_stock_milli` dan kam */
+                low?: boolean;
+                /** @description Manfiy qoldiq */
+                negative?: boolean;
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                product?: string;
+                store?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedStockList"];
+                };
+            };
+        };
+    };
+    stock_movements_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                product?: string;
+                store?: string;
+                type?: "adjustment" | "inventory" | "receipt" | "refund" | "sale";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedStockMovementList"];
+                };
+            };
+        };
+    };
+    stock_receipts_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                status?: "draft" | "posted";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedStockReceiptList"];
+                };
+            };
+        };
+    };
+    stock_receipts_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["StockReceiptRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["StockReceiptRequest"];
+                "multipart/form-data": components["schemas"]["StockReceiptRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StockReceipt"];
+                };
+            };
+        };
+    };
+    stock_receipts_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this kirim. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StockReceipt"];
+                };
+            };
+        };
+    };
+    stock_receipts_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this kirim. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    stock_receipts_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this kirim. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedStockReceiptRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedStockReceiptRequest"];
+                "multipart/form-data": components["schemas"]["PatchedStockReceiptRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StockReceipt"];
+                };
+            };
+        };
+    };
+    stock_receipts_post_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this kirim. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StockReceipt"];
+                };
+            };
+        };
+    };
+    stock_receipts_reverse_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this kirim. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["ReverseReceiptRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["ReverseReceiptRequest"];
+                "multipart/form-data": components["schemas"]["ReverseReceiptRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StockReceipt"];
+                };
+            };
+        };
+    };
+    suppliers_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedSupplierList"];
+                };
+            };
+        };
+    };
+    suppliers_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SupplierRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["SupplierRequest"];
+                "multipart/form-data": components["schemas"]["SupplierRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Supplier"];
+                };
+            };
+        };
+    };
+    suppliers_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this yetkazib beruvchi. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Supplier"];
+                };
+            };
+        };
+    };
+    suppliers_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this yetkazib beruvchi. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SupplierRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["SupplierRequest"];
+                "multipart/form-data": components["schemas"]["SupplierRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Supplier"];
+                };
+            };
+        };
+    };
+    suppliers_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this yetkazib beruvchi. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    suppliers_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this yetkazib beruvchi. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedSupplierRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedSupplierRequest"];
+                "multipart/form-data": components["schemas"]["PatchedSupplierRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Supplier"];
                 };
             };
         };

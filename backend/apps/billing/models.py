@@ -6,7 +6,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from apps.core.models import TimeStampedModel
+from apps.core.models import AppendOnlyModel, ImmutableRecordError, TimeStampedModel
 
 from .status import Status
 
@@ -69,11 +69,7 @@ class PaymentMethod(models.TextChoices):
     OTHER = "other", _("boshqa")
 
 
-class ImmutableRecordError(Exception):
-    pass
-
-
-class SubscriptionPayment(TimeStampedModel):
+class SubscriptionPayment(AppendOnlyModel, TimeStampedModel):
     """O'zgarmas yozuv. Bekor qilish — teskari yozuv (`reverses`), manfiy summa va oy bilan."""
 
     tenant = models.ForeignKey(
@@ -114,10 +110,5 @@ class SubscriptionPayment(TimeStampedModel):
     def __str__(self):
         return f"{self.tenant}: {self.amount_tiyin} tiyin, {self.months} oy"
 
-    def save(self, *args, **kwargs):
-        if not self._state.adding:
-            raise ImmutableRecordError("subscription payment is immutable; create a reversal")
-        super().save(*args, **kwargs)
 
-    def delete(self, *args, **kwargs):
-        raise ImmutableRecordError("subscription payment cannot be deleted; create a reversal")
+__all__ = ["ImmutableRecordError", "PaymentMethod", "Plan", "Subscription", "SubscriptionPayment"]
