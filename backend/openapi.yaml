@@ -1112,6 +1112,225 @@ paths:
               schema:
                 $ref: '#/components/schemas/Refund'
           description: ''
+  /api/v1/reports/by-day/:
+    get:
+      operationId: reports_by_day_list
+      description: 'Hisobot bazasi: ega va menejer, faqat o''z tenanti.'
+      parameters:
+      - in: query
+        name: date_from
+        schema:
+          type: string
+          format: date
+        description: Do'kon vaqt zonasida
+      - in: query
+        name: date_to
+        schema:
+          type: string
+          format: date
+        description: Shu kun ham kiradi; ≤ 366 kun
+      tags:
+      - reports
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DayRow'
+          description: ''
+  /api/v1/reports/by-hour/:
+    get:
+      operationId: reports_by_hour_list
+      description: 'Hisobot bazasi: ega va menejer, faqat o''z tenanti.'
+      parameters:
+      - in: query
+        name: date_from
+        schema:
+          type: string
+          format: date
+        description: Do'kon vaqt zonasida
+      - in: query
+        name: date_to
+        schema:
+          type: string
+          format: date
+        description: Shu kun ham kiradi; ≤ 366 kun
+      tags:
+      - reports
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HourRow'
+          description: ''
+  /api/v1/reports/cashiers/:
+    get:
+      operationId: reports_cashiers_list
+      description: 'Hisobot bazasi: ega va menejer, faqat o''z tenanti.'
+      parameters:
+      - in: query
+        name: date_from
+        schema:
+          type: string
+          format: date
+        description: Do'kon vaqt zonasida
+      - in: query
+        name: date_to
+        schema:
+          type: string
+          format: date
+        description: Shu kun ham kiradi; ≤ 366 kun
+      tags:
+      - reports
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CashierRow'
+          description: ''
+  /api/v1/reports/debts/:
+    get:
+      operationId: reports_debts_retrieve
+      description: 'Hisobot bazasi: ega va menejer, faqat o''z tenanti.'
+      parameters:
+      - in: query
+        name: limit
+        schema:
+          type: integer
+          maximum: 100
+          minimum: 1
+          default: 20
+      tags:
+      - reports
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Debts'
+          description: ''
+  /api/v1/reports/stock/:
+    get:
+      operationId: reports_stock_retrieve
+      description: 'Hisobot bazasi: ega va menejer, faqat o''z tenanti.'
+      tags:
+      - reports
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockReport'
+          description: ''
+  /api/v1/reports/summary/:
+    get:
+      operationId: reports_summary_retrieve
+      description: 'Hisobot bazasi: ega va menejer, faqat o''z tenanti.'
+      parameters:
+      - in: query
+        name: date_from
+        schema:
+          type: string
+          format: date
+        description: Do'kon vaqt zonasida
+      - in: query
+        name: date_to
+        schema:
+          type: string
+          format: date
+        description: Shu kun ham kiradi; ≤ 366 kun
+      tags:
+      - reports
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Summary'
+          description: ''
+  /api/v1/reports/top-products/:
+    get:
+      operationId: reports_top_products_list
+      description: 'Hisobot bazasi: ega va menejer, faqat o''z tenanti.'
+      parameters:
+      - in: query
+        name: date_from
+        schema:
+          type: string
+          format: date
+        description: Do'kon vaqt zonasida
+      - in: query
+        name: date_to
+        schema:
+          type: string
+          format: date
+        description: Shu kun ham kiradi; ≤ 366 kun
+      - in: query
+        name: direction
+        schema:
+          enum:
+          - desc
+          - asc
+          type: string
+          default: desc
+          minLength: 1
+        description: |-
+          * `desc` - desc
+          * `asc` - asc
+      - in: query
+        name: limit
+        schema:
+          type: integer
+          maximum: 100
+          minimum: 1
+          default: 20
+      - in: query
+        name: order
+        schema:
+          enum:
+          - revenue
+          - qty
+          - profit
+          type: string
+          default: revenue
+          minLength: 1
+        description: |-
+          * `revenue` - revenue
+          * `qty` - qty
+          * `profit` - profit
+      tags:
+      - reports
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProductRow'
+          description: ''
   /api/v1/sales/:
     get:
       operationId: sales_list
@@ -2097,6 +2316,29 @@ components:
       description: |-
         * `in` - kiritish
         * `out` - chiqarish
+    CashierRow:
+      type: object
+      properties:
+        cashier:
+          type: string
+          format: uuid
+        full_name:
+          type: string
+        sales_count:
+          type: integer
+        sales_total_tiyin:
+          type: integer
+        refunds_count:
+          type: integer
+        refunds_total_tiyin:
+          type: integer
+      required:
+      - cashier
+      - full_name
+      - refunds_count
+      - refunds_total_tiyin
+      - sales_count
+      - sales_total_tiyin
     Category:
       type: object
       properties:
@@ -2227,6 +2469,23 @@ components:
           nullable: true
       required:
       - full_name
+    DayRow:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        revenue_tiyin:
+          type: integer
+        sales_count:
+          type: integer
+        profit_tiyin:
+          type: integer
+      required:
+      - date
+      - profit_tiyin
+      - revenue_tiyin
+      - sales_count
     DebtEntry:
       type: object
       properties:
@@ -2295,6 +2554,38 @@ components:
         * `payment` - to'lov
         * `refund` - qaytarish
         * `adjustment` - tuzatish
+    Debtor:
+      type: object
+      properties:
+        customer:
+          type: string
+          format: uuid
+        full_name:
+          type: string
+        phone:
+          type: string
+        balance_tiyin:
+          type: integer
+      required:
+      - balance_tiyin
+      - customer
+      - full_name
+      - phone
+    Debts:
+      type: object
+      properties:
+        total_debt_tiyin:
+          type: integer
+        debtors_count:
+          type: integer
+        top:
+          type: array
+          items:
+            $ref: '#/components/schemas/Debtor'
+      required:
+      - debtors_count
+      - top
+      - total_debt_tiyin
     Device:
       type: object
       properties:
@@ -2470,6 +2761,19 @@ components:
           type: string
       required:
       - status
+    HourRow:
+      type: object
+      properties:
+        hour:
+          type: integer
+        revenue_tiyin:
+          type: integer
+        sales_count:
+          type: integer
+      required:
+      - hour
+      - revenue_tiyin
+      - sales_count
     InventoryCount:
       type: object
       description: '`id` klientda yaratilishi mumkin (UUIDv7); keyin o''zgarmaydi.'
@@ -3217,6 +3521,31 @@ components:
       required:
       - amount_tiyin
       - method
+    Payments:
+      type: object
+      properties:
+        cash:
+          type: integer
+        card:
+          type: integer
+        debt:
+          type: integer
+      required:
+      - card
+      - cash
+      - debt
+    Period:
+      type: object
+      properties:
+        date_from:
+          type: string
+          format: date
+        date_to:
+          type: string
+          format: date
+      required:
+      - date_from
+      - date_to
     PlatformEnum:
       enum:
       - windows
@@ -3227,6 +3556,19 @@ components:
         * `windows` - Windows
         * `android` - Android
         * `ios` - iOS
+    Previous:
+      type: object
+      properties:
+        revenue_tiyin:
+          type: integer
+        profit_tiyin:
+          type: integer
+        sales_count:
+          type: integer
+      required:
+      - profit_tiyin
+      - revenue_tiyin
+      - sales_count
     Product:
       type: object
       properties:
@@ -3366,6 +3708,26 @@ components:
       - name
       - sell_price_tiyin
       - unit
+    ProductRow:
+      type: object
+      properties:
+        product:
+          type: string
+          format: uuid
+        name:
+          type: string
+        qty_milli:
+          type: integer
+        revenue_tiyin:
+          type: integer
+        profit_tiyin:
+          type: integer
+      required:
+      - name
+      - product
+      - profit_tiyin
+      - qty_milli
+      - revenue_tiyin
     PullResponse:
       type: object
       properties:
@@ -3502,6 +3864,16 @@ components:
       description: |-
         * `cash` - naqd
         * `debt` - nasiyadan ayirish
+    RefundsByMethod:
+      type: object
+      properties:
+        cash:
+          type: integer
+        debt:
+          type: integer
+      required:
+      - cash
+      - debt
     ReverseReceiptRequest:
       type: object
       properties:
@@ -4052,6 +4424,40 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/StockReceiptItemRequest'
+    StockReport:
+      type: object
+      properties:
+        stock_value_tiyin:
+          type: integer
+        low:
+          type: array
+          items:
+            $ref: '#/components/schemas/StockRow'
+        negative:
+          type: array
+          items:
+            $ref: '#/components/schemas/StockRow'
+      required:
+      - low
+      - negative
+      - stock_value_tiyin
+    StockRow:
+      type: object
+      properties:
+        product:
+          type: string
+          format: uuid
+        name:
+          type: string
+        qty_milli:
+          type: integer
+        min_stock_milli:
+          type: integer
+      required:
+      - min_stock_milli
+      - name
+      - product
+      - qty_milli
     SubscriptionSnapshot:
       type: object
       properties:
@@ -4071,6 +4477,48 @@ components:
       - offline_days
       - paid_until
       - status
+    Summary:
+      type: object
+      properties:
+        period:
+          $ref: '#/components/schemas/Period'
+        revenue_tiyin:
+          type: integer
+        sales_total_tiyin:
+          type: integer
+        refunds_total_tiyin:
+          type: integer
+        sales_count:
+          type: integer
+        average_check_tiyin:
+          type: integer
+        profit_tiyin:
+          type: integer
+        payments_tiyin:
+          $ref: '#/components/schemas/Payments'
+        refunds_tiyin:
+          $ref: '#/components/schemas/RefundsByMethod'
+        previous:
+          $ref: '#/components/schemas/Previous'
+        revenue_change_bp:
+          type: integer
+          nullable: true
+        profit_change_bp:
+          type: integer
+          nullable: true
+      required:
+      - average_check_tiyin
+      - payments_tiyin
+      - period
+      - previous
+      - profit_change_bp
+      - profit_tiyin
+      - refunds_tiyin
+      - refunds_total_tiyin
+      - revenue_change_bp
+      - revenue_tiyin
+      - sales_count
+      - sales_total_tiyin
     Supplier:
       type: object
       properties:

@@ -101,3 +101,9 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-018 (squash merge)
 - Qoldi / keyingi qadam: T-019 Do'kon egasi hisobotlari API. Kassa tomoni (outbox, pull dvigateli) — T-035.
 - Muammo yoki qaror: **teshiksiz pull kursori** — `seq` commit'dan oldin ajratilgani uchun kichik `seq` li tranzaksiya keyin commit bo'lsa oddiy `seq > cursor` uni o'tkazib yuborardi. Yechim: yozuvda `txid` (`pg_current_xact_id`), pull faqat `txid < pg_snapshot_xmin` yozuvlarni `(txid, seq)` tartibida beradi; kursor — satr `"<txid>:<seq>"`. Standart birliklar (`bulk_create`) va kategoriya o'chirish (`update()`) ChangeLog'ga tushmayotgani testda topilib tuzatildi.
+
+## 2026-10-14 — T-019 Do'kon egasi hisobotlari API
+- Qilindi: `apps/reports` (modelsiz) — `GET /api/v1/reports/summary|by-day|by-hour|top-products|cashiers|debts|stock/` (ega va menejer). Davr do'kon vaqt zonasida (`date_from`/`date_to`, standart bugun, ≤ 366 kun), oldingi teng davr bilan solishtirish (bazis punkt). Tushum = savdolar − qaytarishlar (qaytarish o'z kunida); foyda = tushum − sotilgan tannarx + qaytarilgan tannarx; qator tannarxi SQL `ROUND(numeric)` (musbatda half-up, `line_total` bilan bir xil). Top tovarlar (tushum/miqdor/foyda, asc/desc), kassirlar, qarzdorlar (joriy), ombor qiymati, kam qolgan (qoldiq qatori bo'lmasa ham) va manfiy qoldiq. Spec `reports-api.md`. 573 test yashil (+21), barcha raqamlar qo'lda hisoblangan qiymatlar bilan (vaqt zonasi chegarasi, chek chegirmasi, vaznli tovar yaxlitlashi, qaytarish).
+- PR: T-019 (squash merge)
+- Qoldi / keyingi qadam: T-020 Platforma admin API. xlsx eksport — klientda (kassa/admin).
+- Muammo yoki qaror: Q-004 — foyda chek chegirmasi va qaytarishlar bilan (A, vaqtincha); `data-model.md` dagi qator formulasi ularni hisobga olmasdi.

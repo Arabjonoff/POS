@@ -5,25 +5,20 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-019 Do'kon egasi hisobotlari API
-- Branch: feat/T-019-reports
-- Boshlangan: 2026-10-14
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-14
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [x] 1. Spec `docs/specs/reports-api.md` (davr, formulalar: tushum, foyda, o'rtacha chek, solishtirish; endpointlar) + Q-004 (foyda formulasi)
-- [x] 2. `apps/reports/services.py` — davr chegaralari (TZ), summary, by_day, by_hour, top_products, cashiers, debts, stock
-- [x] 3. API: `/api/v1/reports/...` (ega va menejer), serializerlar, urls
-- [ ] 4. Testlar: qo'lda hisoblangan qiymatlar bilan (chegirma, qaytarish, vaznli, TZ chegarasi), huquqlar, izolyatsiya
-- [ ] 5. openapi + schema.d.ts; lint/test; PROGRESS/ROADMAP; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-3-qadam: reports API — 7 endpoint (summary, by-day, by-hour, top-products, cashiers, debts, stock), ega/menejer, javob serializerlari; schema toza.
+T-019 hisobotlar API tugadi (PR ochildi, CI yashil bo'lsa squash merge).
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-4-qadam: `backend/apps/reports/tests/` — fixture (smena, savdolar Asia/Tashkent vaqtlarida, chegirma, qaytarish, nasiya), qo'lda hisoblangan qiymatlar; huquqlar, izolyatsiya, davr validatsiyasi.
+T-019 PR merge qilinganini tekshirish (`gh pr list --state open`); keyin ROADMAP'dan T-020 Platforma admin API.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q

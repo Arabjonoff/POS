@@ -446,6 +446,125 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/reports/by-day/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Hisobot bazasi: ega va menejer, faqat o'z tenanti. */
+        get: operations["reports_by_day_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reports/by-hour/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Hisobot bazasi: ega va menejer, faqat o'z tenanti. */
+        get: operations["reports_by_hour_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reports/cashiers/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Hisobot bazasi: ega va menejer, faqat o'z tenanti. */
+        get: operations["reports_cashiers_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reports/debts/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Hisobot bazasi: ega va menejer, faqat o'z tenanti. */
+        get: operations["reports_debts_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reports/stock/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Hisobot bazasi: ega va menejer, faqat o'z tenanti. */
+        get: operations["reports_stock_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reports/summary/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Hisobot bazasi: ega va menejer, faqat o'z tenanti. */
+        get: operations["reports_summary_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reports/top-products/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Hisobot bazasi: ega va menejer, faqat o'z tenanti. */
+        get: operations["reports_top_products_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/sales/": {
         parameters: {
             query?: never;
@@ -839,6 +958,15 @@ export interface components {
          * @enum {string}
          */
         CashMovementTypeEnum: "in" | "out";
+        CashierRow: {
+            /** Format: uuid */
+            cashier: string;
+            full_name: string;
+            sales_count: number;
+            sales_total_tiyin: number;
+            refunds_count: number;
+            refunds_total_tiyin: number;
+        };
         Category: {
             /** Format: uuid */
             readonly id: string;
@@ -897,6 +1025,13 @@ export interface components {
             note?: string;
             debt_limit_tiyin?: number | null;
         };
+        DayRow: {
+            /** Format: date */
+            date: string;
+            revenue_tiyin: number;
+            sales_count: number;
+            profit_tiyin: number;
+        };
         DebtEntry: {
             /** Format: uuid */
             id?: string;
@@ -944,6 +1079,18 @@ export interface components {
          * @enum {string}
          */
         DebtEntryTypeEnum: "sale" | "payment" | "refund" | "adjustment";
+        Debtor: {
+            /** Format: uuid */
+            customer: string;
+            full_name: string;
+            phone: string;
+            balance_tiyin: number;
+        };
+        Debts: {
+            total_debt_tiyin: number;
+            debtors_count: number;
+            top: components["schemas"]["Debtor"][];
+        };
         Device: {
             /** Format: uuid */
             readonly id: string;
@@ -1027,6 +1174,11 @@ export interface components {
         EventResultStatusEnum: "applied" | "duplicate" | "pending" | "rejected";
         Health: {
             status: string;
+        };
+        HourRow: {
+            hour: number;
+            revenue_tiyin: number;
+            sales_count: number;
         };
         /** @description `id` klientda yaratilishi mumkin (UUIDv7); keyin o'zgarmaydi. */
         InventoryCount: {
@@ -1448,6 +1600,17 @@ export interface components {
             /** @default  */
             note: string;
         };
+        Payments: {
+            cash: number;
+            card: number;
+            debt: number;
+        };
+        Period: {
+            /** Format: date */
+            date_from: string;
+            /** Format: date */
+            date_to: string;
+        };
         /**
          * @description * `windows` - Windows
          *     * `android` - Android
@@ -1455,6 +1618,11 @@ export interface components {
          * @enum {string}
          */
         PlatformEnum: "windows" | "android" | "ios";
+        Previous: {
+            revenue_tiyin: number;
+            profit_tiyin: number;
+            sales_count: number;
+        };
         Product: {
             /** Format: uuid */
             id?: string;
@@ -1507,6 +1675,14 @@ export interface components {
             /** Faol */
             is_active?: boolean;
             barcodes?: string[];
+        };
+        ProductRow: {
+            /** Format: uuid */
+            product: string;
+            name: string;
+            qty_milli: number;
+            revenue_tiyin: number;
+            profit_tiyin: number;
         };
         PullResponse: {
             changes: components["schemas"]["Change"][];
@@ -1593,6 +1769,10 @@ export interface components {
          * @enum {string}
          */
         RefundMethodEnum: "cash" | "debt";
+        RefundsByMethod: {
+            cash: number;
+            debt: number;
+        };
         ReverseReceiptRequest: {
             /** @default  */
             note: string;
@@ -1946,12 +2126,38 @@ export interface components {
             note?: string;
             items?: components["schemas"]["StockReceiptItemRequest"][];
         };
+        StockReport: {
+            stock_value_tiyin: number;
+            low: components["schemas"]["StockRow"][];
+            negative: components["schemas"]["StockRow"][];
+        };
+        StockRow: {
+            /** Format: uuid */
+            product: string;
+            name: string;
+            qty_milli: number;
+            min_stock_milli: number;
+        };
         SubscriptionSnapshot: {
             status: string;
             /** Format: date */
             paid_until: string | null;
             days_left: number | null;
             offline_days: number;
+        };
+        Summary: {
+            period: components["schemas"]["Period"];
+            revenue_tiyin: number;
+            sales_total_tiyin: number;
+            refunds_total_tiyin: number;
+            sales_count: number;
+            average_check_tiyin: number;
+            profit_tiyin: number;
+            payments_tiyin: components["schemas"]["Payments"];
+            refunds_tiyin: components["schemas"]["RefundsByMethod"];
+            previous: components["schemas"]["Previous"];
+            revenue_change_bp: number | null;
+            profit_change_bp: number | null;
         };
         Supplier: {
             /** Format: uuid */
@@ -3002,6 +3208,178 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Refund"];
+                };
+            };
+        };
+    };
+    reports_by_day_list: {
+        parameters: {
+            query?: {
+                /** @description Do'kon vaqt zonasida */
+                date_from?: string;
+                /** @description Shu kun ham kiradi; ≤ 366 kun */
+                date_to?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DayRow"][];
+                };
+            };
+        };
+    };
+    reports_by_hour_list: {
+        parameters: {
+            query?: {
+                /** @description Do'kon vaqt zonasida */
+                date_from?: string;
+                /** @description Shu kun ham kiradi; ≤ 366 kun */
+                date_to?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HourRow"][];
+                };
+            };
+        };
+    };
+    reports_cashiers_list: {
+        parameters: {
+            query?: {
+                /** @description Do'kon vaqt zonasida */
+                date_from?: string;
+                /** @description Shu kun ham kiradi; ≤ 366 kun */
+                date_to?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CashierRow"][];
+                };
+            };
+        };
+    };
+    reports_debts_retrieve: {
+        parameters: {
+            query?: {
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Debts"];
+                };
+            };
+        };
+    };
+    reports_stock_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StockReport"];
+                };
+            };
+        };
+    };
+    reports_summary_retrieve: {
+        parameters: {
+            query?: {
+                /** @description Do'kon vaqt zonasida */
+                date_from?: string;
+                /** @description Shu kun ham kiradi; ≤ 366 kun */
+                date_to?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Summary"];
+                };
+            };
+        };
+    };
+    reports_top_products_list: {
+        parameters: {
+            query?: {
+                /** @description Do'kon vaqt zonasida */
+                date_from?: string;
+                /** @description Shu kun ham kiradi; ≤ 366 kun */
+                date_to?: string;
+                /**
+                 * @description * `desc` - desc
+                 *     * `asc` - asc
+                 */
+                direction?: "desc" | "asc";
+                limit?: number;
+                /**
+                 * @description * `revenue` - revenue
+                 *     * `qty` - qty
+                 *     * `profit` - profit
+                 */
+                order?: "revenue" | "qty" | "profit";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductRow"][];
                 };
             };
         };
