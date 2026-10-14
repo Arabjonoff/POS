@@ -5,13 +5,26 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-043 To'lov oynasi
+- Branch: feat/T-043-payment
+- Boshlangan: 2026-10-14
 - Oxirgi yangilanish: 2026-10-14
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
+- [ ] 1. To'lov modeli `apps/pos/lib/features/pos/payment/payment_draft.dart` (naqd/karta/nasiya/aralash, olingan, qaytim, qoldiq, `SalePaymentInput` lar) + unit testlar
+- [ ] 2. Mijozlar: `apps/pos/lib/data/customers/customer_directory.dart` (qidiruv, balans = Σ debt_entries, tez yaratish + `customer.upserted` outbox, limit tekshiruvi) + testlar
+- [ ] 3. `Checkout` (`features/pos/payment/checkout.dart`): savat + to'lov → `SaleWriter.complete` (bitta tranzaksiya) → savat tozalanadi; atomarlik testi
+- [ ] 4. To'lov oynasi UI (`features/pos/payment/payment_dialog.dart`): Naqd (Aniq/50 000/100 000/200 000, klaviatura, katta yashil qaytim, Enter), Karta, Nasiya (mijoz tanlash/yaratish, limit → menejer PIN), Aralash; oyna ochiqda skaner → "Avval to'lovni yakunlang"
+- [ ] 5. Kassa ekraniga ulash: F12, F4 mijoz (savatga), yakunlash xabari 3 s "Savdo yakunlandi · Qaytim …", fokus skanerga
+- [ ] 6. Widget testlari (3 harakat: skan → F12 → Enter; qaytim; karta; nasiya + limit; aralash; skaner bloklangan) + golden + skrinshotlar `docs/screenshots/T-043/`
+- [ ] 7. To'liq tekshiruv, PR, CI → merge; ROADMAP, PROGRESS, STATE
+
+## Oxirgi bajarilgan ish
+- Vazifa boshlandi.
+
+## Keyingi aniq harakat
+- 1-qadam: `apps/pos/lib/features/pos/payment/payment_draft.dart`, test `apps/pos/test/features/payment_draft_test.dart`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
