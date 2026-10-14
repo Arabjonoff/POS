@@ -339,6 +339,37 @@ class AppLocalizationsUz extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get settingsScanner => 'Shtrix-kod skaneri';
+
+  @override
+  String get settingsScannerSound => 'Skanerlashda ovoz';
+
+  @override
+  String get settingsScannerSpeed => 'Skaner tezligi';
+
+  @override
+  String get settingsScannerSpeedNormal => 'Oddiy skaner';
+
+  @override
+  String get settingsScannerSpeedSlow => 'Sekin (Bluetooth) skaner';
+
+  @override
+  String get settingsScannerSpeedVerySlow => 'Juda sekin skaner';
+
+  @override
+  String get scanCamera => 'Kamera bilan skanerlash';
+
+  @override
+  String get scanCameraHint => 'Shtrix-kodni ramkaga to\'g\'rilang';
+
+  @override
+  String get scanCameraDenied =>
+      'Kameraga ruxsat berilmagan. Telefon sozlamalaridan ruxsat bering.';
+
+  @override
+  String get scanInvalidCode => 'Kod noto\'g\'ri o\'qildi, qayta skanerlang';
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -673,4 +704,35 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
     );
     return '$_temp0';
   }
+
+  @override
+  String get settingsScanner => 'Штрих-код сканери';
+
+  @override
+  String get settingsScannerSound => 'Сканерлашда овоз';
+
+  @override
+  String get settingsScannerSpeed => 'Сканер тезлиги';
+
+  @override
+  String get settingsScannerSpeedNormal => 'Оддий сканер';
+
+  @override
+  String get settingsScannerSpeedSlow => 'Секин (Bluetooth) сканер';
+
+  @override
+  String get settingsScannerSpeedVerySlow => 'Жуда секин сканер';
+
+  @override
+  String get scanCamera => 'Камера билан сканерлаш';
+
+  @override
+  String get scanCameraHint => 'Штрих-кодни рамкага тўғриланг';
+
+  @override
+  String get scanCameraDenied =>
+      'Камерага рухсат берилмаган. Телефон созламаларидан рухсат беринг.';
+
+  @override
+  String get scanInvalidCode => 'Код нотўғри ўқилди, қайта сканерланг';
 }

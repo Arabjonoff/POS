@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pos_app/app/app.dart';
 import 'package:pos_app/app/locale.dart';
+import 'package:pos_app/app/scanner/scanner_settings.dart';
 import 'package:pos_app/app/session/auto_lock.dart';
 import 'package:pos_app/app/session/session.dart';
 import 'package:pos_app/data/db/app_database.dart';
@@ -15,6 +16,7 @@ Future<void> main() async {
   final locale = await loadSavedLocale(db);
   final session = await loadSession(db, tokens);
   final autoLock = await loadAutoLockMinutes(db);
+  final scanner = await ScannerSettings.load(db);
   runApp(
     ProviderScope(
       overrides: [
@@ -23,6 +25,7 @@ Future<void> main() async {
         initialLocaleProvider.overrideWithValue(locale),
         initialSessionProvider.overrideWithValue(session),
         initialAutoLockMinutesProvider.overrideWithValue(autoLock),
+        initialScannerSettingsProvider.overrideWithValue(scanner),
       ],
       child: const PosApp(),
     ),

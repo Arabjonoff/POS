@@ -90,5 +90,15 @@
   "statusSalesOffline": "Долго нет интернета — продажи остановлены",
   "statusDeviceBlocked": "Касса заблокирована",
   "statusClockSkew": "Неверное время на компьютере",
-  "statusRejected": "{count, plural, one{{count} запись не принята} few{{count} записи не приняты} many{{count} записей не принято} other{{count} записи не приняты}}"
+  "statusRejected": "{count, plural, one{{count} запись не принята} few{{count} записи не приняты} many{{count} записей не принято} other{{count} записи не приняты}}",
+  "settingsScanner": "Сканер штрихкодов",
+  "settingsScannerSound": "Звук при сканировании",
+  "settingsScannerSpeed": "Скорость сканера",
+  "settingsScannerSpeedNormal": "Обычный сканер",
+  "settingsScannerSpeedSlow": "Медленный (Bluetooth) сканер",
+  "settingsScannerSpeedVerySlow": "Очень медленный сканер",
+  "scanCamera": "Сканировать камерой",
+  "scanCameraHint": "Наведите камеру на штрихкод",
+  "scanCameraDenied": "Нет доступа к камере. Разрешите его в настройках телефона.",
+  "scanInvalidCode": "Код считан неверно, отсканируйте ещё раз"
 }

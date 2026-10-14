@@ -45,3 +45,10 @@
 - Vaznli kod `2012345012509` → PLU `12345`, 1,250 kg (nazorat raqami 9; T-014 da tuzatildi — avval `…503` yozilgan edi, u noto'g'ri).
 - Nazorat raqami noto'g'ri EAN-13 rad etiladi.
 - Kirim: bir kod 5 marta → bitta qator, miqdor 5.
+
+## Kassada amalga oshirilishi (T-040)
+- `apps/pos/lib/core/barcode/barcode.dart` — `Barcodes.check` (server `apps/catalog/barcodes.py` bilan bir xil: 4–64 ko'rinadigan ASCII, raqamli 8/12/13 belgida GTIN nazorat raqami), `WeightedBarcodeFormat.parse` (prefikslar, PLU uzunligi, vazn/narx, kasr — sozlanadi).
+- `scanner_service.dart` — `BarcodeScannerService` (`HardwareKeyboard` handler): ekran ro'yxatdan o'tgan bo'lsagina ishlaydi (PIN ekrani kabi joylarda klaviaturaga aralashmaydi). Bosilgan belgi buferga olinadi (fokusdagi maydonga tushmaydi); interval ichida Enter/Tab va ≥ 4 belgi — `ScanEvent`; aks holda (sekin yozuv, qisqa kod, interval ichida tugash belgisi kelmadi) — matn fokusdagi `EditableText` ga kursor o'rniga qaytariladi, matn maydoni fokusda bo'lmasa — ekranning `onTyping` iga (kassa uni qidiruvga yo'naltiradi). Ctrl/Alt bilan bosilganlar, F-tugmalar, strelkalar — o'tib ketadi. Inson yozuvi ≤ 2 × interval kechikadi (sezilmaydi).
+- `ScanListener` vidjeti — ekranni ro'yxatdan o'tkazadi; faqat ko'rinib turgan (`TickerMode`) va eng yuqori ekran hodisani oladi.
+- Kamera: `features/scanner/camera_scan_page.dart` (`mobile_scanner`, Android/iOS) — topilgan kod o'sha yo'ldan (`service.emit`) ekranga boradi.
+- Signal: `ScanSignal` — muvaffaqiyat `SystemSound.click` + yengil vibratsiya, topilmadi — `alert` + kuchli vibratsiya; Sozlamalar → "Shtrix-kod skaneri": ovozni o'chirish, skaner tezligi (35 / 60 / 100 ms — sekin Bluetooth skanerlar uchun).

@@ -353,4 +353,35 @@ class AppLocalizationsRu extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get settingsScanner => 'Сканер штрихкодов';
+
+  @override
+  String get settingsScannerSound => 'Звук при сканировании';
+
+  @override
+  String get settingsScannerSpeed => 'Скорость сканера';
+
+  @override
+  String get settingsScannerSpeedNormal => 'Обычный сканер';
+
+  @override
+  String get settingsScannerSpeedSlow => 'Медленный (Bluetooth) сканер';
+
+  @override
+  String get settingsScannerSpeedVerySlow => 'Очень медленный сканер';
+
+  @override
+  String get scanCamera => 'Сканировать камерой';
+
+  @override
+  String get scanCameraHint => 'Наведите камеру на штрихкод';
+
+  @override
+  String get scanCameraDenied =>
+      'Нет доступа к камере. Разрешите его в настройках телефона.';
+
+  @override
+  String get scanInvalidCode => 'Код считан неверно, отсканируйте ещё раз';
 }

@@ -155,3 +155,10 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-035 (squash merge)
 - Qoldi / keyingi qadam: 3-bosqich — T-040 Skaner xizmati. Savdo tugmasi `salesAllowedProvider` ga ulanadi (T-042/T-043).
 - Muammo yoki qaror: kutish butun navbatga (eng eski hodisa bo'yicha) — tartib buzilmasin. Widget testlarida `DateTime.now()` soxta vaqtni bilmaydi → `clock.now()`.
+
+## 2026-10-14 — T-040 Skaner xizmati
+- Qilindi: `Barcodes` (server bilan bir xil format va GTIN nazorat raqami), `WeightedBarcodeFormat` (tarozi EAN-13: prefiks 20–29, PLU 5, vazn/narx, kasr), `BarcodeScannerService` (HID skanerni fokusdan qat'i nazar ajratish: bufer + 35 ms + ≥ 4 belgi + Enter/Tab; inson yozuvi fokusdagi maydonga qaytariladi yoki `onTyping`; ro'yxatdan o'tgan ekran bo'lmasa aralashmaydi), `ScanListener` (ko'rinadigan va eng yuqori ekran), kamera skaneri (`mobile_scanner`, Android/iOS; iOS/Android kamera ruxsati), `ScanSignal` (ovoz/vibratsiya), Sozlamalarda skaner kartasi (ovoz, tezlik).
+- Testlar: apps/pos 177 (+25): barcode.md test ro'yxati (13 belgi 10 ms → bitta hodisa va maydon bo'sh; 150 ms → oddiy matn; `2012345012509` → PLU 12345, 1,250 kg; noto'g'ri nazorat raqami), qisqa kod, Tab, inson yozuvi orasida skaner, `onTyping`, ro'yxatsiz klaviatura tegilmaydi, Ctrl tezkor tugmalar, stack/ko'rinmas ekran, kamera yo'li; skaner sozlamalari saqlanishi va qo'llanishi.
+- PR: T-040 (squash merge)
+- Qoldi / keyingi qadam: T-041 Smena ochish/yopish. Kassa ekrani (T-042) `ScanListener` + `onTyping` → qidiruv, `PosScanFeedback` + `ScanSignal`.
+- Muammo yoki qaror: tugmani "ushlab, keyin qaytarish" — chunki framework qayta ishlagan klaviatura hodisasi platformaning matn kiritishiga yetib bormaydi; qaytarish `EditableTextState.userUpdateTextEditingValue` orqali (formatter va onChanged ishlaydi). Haqiqiy qurilmada (Windows HID skaner) qo'lda sinash — T-090 chidamlilik testlarida.
