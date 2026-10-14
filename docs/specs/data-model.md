@@ -7,7 +7,7 @@ Pul: `*_tiyin` (bigint). Miqdor: `qty_milli` (bigint; 1 dona = 1000, 0,250 kg = 
 ## SaaS qatlami (faqat serverda)
 | Model | Maydonlar |
 |---|---|
-| Tenant | name, owner_phone, address, status (trial/active/grace/readonly/blocked — hisoblanadi), timezone (Asia/Tashkent), default_locale, notes |
+| Tenant | name, owner_phone (`+998XXXXXXXXX`), address, timezone (Asia/Tashkent), default_locale (uz/uz-Cyrl/ru), notes, is_blocked, blocked_reason. `status` (trial/active/grace/readonly/blocked) saqlanmaydi — Subscription va `is_blocked` dan hisoblanadi. Yangi tenantga bitta Store avtomatik yaratiladi |
 | Plan | name, price_tiyin_per_month, max_devices, max_users, features (JSON), is_active, sort |
 | Subscription | tenant (1:1), plan, trial_ends_at, paid_until, grace_days (default 3), offline_days (default 7) |
 | SubscriptionPayment | tenant, amount_tiyin, months, paid_at, period_from, period_to, method (cash/transfer/card/other), note, recorded_by |
