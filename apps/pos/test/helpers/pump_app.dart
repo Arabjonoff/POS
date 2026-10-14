@@ -8,6 +8,7 @@ import 'package:pos_app/app/sync/sync_runner.dart';
 import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/data/device/device_info.dart';
 import 'package:pos_app/data/remote/api.dart';
+import 'package:pos_app/data/shifts/shift_service.dart';
 
 import 'sqlite.dart';
 
@@ -43,6 +44,7 @@ Future<(ProviderContainer, AppDatabase)> pumpPosApp(
   AppDatabase? db,
   DeviceTokenStore? tokens,
   bool syncEnabled = false,
+  bool withOpenShift = true,
   bool settle = true,
 }) async {
   tester.view.physicalSize = size;
@@ -51,6 +53,25 @@ Future<(ProviderContainer, AppDatabase)> pumpPosApp(
 
   final database = db ?? openTestDatabase();
   if (db == null) addTearDown(database.close);
+  // Qobiq testlari uchun: kassa ekrani savat holatida (smena ochiq).
+  final device = session.device;
+  if (withOpenShift && device != null) {
+    final open = await ShiftService(database).currentShift(device.id);
+    if (open == null) {
+      await database
+          .into(database.shifts)
+          .insert(
+            ShiftsCompanion.insert(
+              id: 'shift-test',
+              storeId: device.storeId,
+              deviceId: device.id,
+              openedBy: testCashier.id,
+              openedAt: DateTime.utc(2026, 10, 14, 8),
+              openingCashTiyin: 0,
+            ),
+          );
+    }
+  }
   final container = ProviderContainer(
     overrides: [
       appDatabaseProvider.overrideWithValue(database),

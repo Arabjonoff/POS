@@ -370,6 +370,109 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get scanInvalidCode => 'Kod noto\'g\'ri o\'qildi, qayta skanerlang';
+
+  @override
+  String get shiftOpenTitle => 'Smenani oching';
+
+  @override
+  String get shiftOpenMessage =>
+      'Savdoni boshlash uchun kassadagi naqd pulni kiriting';
+
+  @override
+  String get shiftOpeningCash => 'Kassadagi naqd pul';
+
+  @override
+  String get shiftOpenAction => 'Smenani ochish';
+
+  @override
+  String get shiftTitle => 'Smena';
+
+  @override
+  String shiftOpenedInfo(String time, String name) {
+    return '$time da $name ochgan';
+  }
+
+  @override
+  String get shiftXReport => 'X hisobot';
+
+  @override
+  String get shiftZReport => 'Z hisobot';
+
+  @override
+  String get reportSales => 'Savdolar';
+
+  @override
+  String reportChecks(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ta chek',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reportCash => 'Naqd';
+
+  @override
+  String get reportCard => 'Karta';
+
+  @override
+  String get reportDebt => 'Nasiya';
+
+  @override
+  String get reportRefunds => 'Qaytarishlar';
+
+  @override
+  String get reportCashMovements => 'Kassa puli';
+
+  @override
+  String get reportCashIn => 'Kiritilgan';
+
+  @override
+  String get reportCashOut => 'Olingan';
+
+  @override
+  String get reportDebtPayments => 'Qarz to\'lovlari';
+
+  @override
+  String get reportCashBalance => 'Naqd hisobi';
+
+  @override
+  String get reportOpeningCash => 'Boshlang\'ich naqd';
+
+  @override
+  String get reportExpectedCash => 'Kassada bo\'lishi kerak';
+
+  @override
+  String get reportCountedCash => 'Sanalgan naqd';
+
+  @override
+  String get reportSurplus => 'Ortiqcha';
+
+  @override
+  String get reportShortage => 'Kam';
+
+  @override
+  String get reportNoDifference => 'Farq yo\'q';
+
+  @override
+  String get shiftCloseAction => 'Smenani yopish';
+
+  @override
+  String get shiftCloseTitle => 'Kassadagi pulni sanang';
+
+  @override
+  String get shiftCloseConfirm => 'Yopish';
+
+  @override
+  String get shiftClosedTitle => 'Smena yopildi';
+
+  @override
+  String get shiftBackToPos => 'Kassaga qaytish';
+
+  @override
+  String get shiftPrintReport => 'Chek chiqarish';
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -735,4 +838,107 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get scanInvalidCode => 'Код нотўғри ўқилди, қайта сканерланг';
+
+  @override
+  String get shiftOpenTitle => 'Сменани очинг';
+
+  @override
+  String get shiftOpenMessage =>
+      'Савдони бошлаш учун кассадаги нақд пулни киритинг';
+
+  @override
+  String get shiftOpeningCash => 'Кассадаги нақд пул';
+
+  @override
+  String get shiftOpenAction => 'Сменани очиш';
+
+  @override
+  String get shiftTitle => 'Смена';
+
+  @override
+  String shiftOpenedInfo(String time, String name) {
+    return '$time да $name очган';
+  }
+
+  @override
+  String get shiftXReport => 'X ҳисобот';
+
+  @override
+  String get shiftZReport => 'Z ҳисобот';
+
+  @override
+  String get reportSales => 'Савдолар';
+
+  @override
+  String reportChecks(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count та чек',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reportCash => 'Нақд';
+
+  @override
+  String get reportCard => 'Карта';
+
+  @override
+  String get reportDebt => 'Насия';
+
+  @override
+  String get reportRefunds => 'Қайтаришлар';
+
+  @override
+  String get reportCashMovements => 'Касса пули';
+
+  @override
+  String get reportCashIn => 'Киритилган';
+
+  @override
+  String get reportCashOut => 'Олинган';
+
+  @override
+  String get reportDebtPayments => 'Қарз тўловлари';
+
+  @override
+  String get reportCashBalance => 'Нақд ҳисоби';
+
+  @override
+  String get reportOpeningCash => 'Бошланғич нақд';
+
+  @override
+  String get reportExpectedCash => 'Кассада бўлиши керак';
+
+  @override
+  String get reportCountedCash => 'Саналган нақд';
+
+  @override
+  String get reportSurplus => 'Ортиқча';
+
+  @override
+  String get reportShortage => 'Кам';
+
+  @override
+  String get reportNoDifference => 'Фарқ йўқ';
+
+  @override
+  String get shiftCloseAction => 'Сменани ёпиш';
+
+  @override
+  String get shiftCloseTitle => 'Кассадаги пулни санаб чиқинг';
+
+  @override
+  String get shiftCloseConfirm => 'Ёпиш';
+
+  @override
+  String get shiftClosedTitle => 'Смена ёпилди';
+
+  @override
+  String get shiftBackToPos => 'Кассага қайтиш';
+
+  @override
+  String get shiftPrintReport => 'Чек чиқариш';
 }

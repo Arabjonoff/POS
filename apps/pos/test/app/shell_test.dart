@@ -116,7 +116,7 @@ void main() {
 
   group('status bar', () {
     testWidgets('defaults before sync/printer are set up', (tester) async {
-      await pumpPosApp(tester);
+      await pumpPosApp(tester, withOpenShift: false);
       expect(find.text('Ulanish tekshirilmoqda'), findsOneWidget);
       expect(find.text('Hammasi yuborilgan'), findsOneWidget);
       expect(find.text('Printer sozlanmagan'), findsOneWidget);
@@ -149,7 +149,7 @@ void main() {
     testWidgets('shift and queue come from the local database', (
       tester,
     ) async {
-      final (_, db) = await pumpPosApp(tester);
+      final (_, db) = await pumpPosApp(tester, withOpenShift: false);
       {
         final t = DateTime.utc(2026, 10, 14);
         await db
@@ -157,8 +157,8 @@ void main() {
             .insert(
               ShiftsCompanion.insert(
                 id: 's1',
-                storeId: 'store',
-                deviceId: 'device',
+                storeId: testDevice.storeId,
+                deviceId: testDevice.id,
                 openedBy: 'u',
                 openedAt: t,
                 openingCashTiyin: 0,
