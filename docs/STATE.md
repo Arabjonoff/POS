@@ -5,13 +5,26 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-044 Chek chop etish
+- Branch: feat/T-044-printing
+- Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
+- [ ] 1. `apps/pos/lib/features/printing/receipt.dart`: `ReceiptData` (do'kon, chek raqami, vaqt, kassir, qatorlar, chegirma, jami, to'lovlar, qaytim, nasiya mijozi + qarz) va `ReceiptBuilder` (sof: 32/48 belgi → qatorlar) + `ReceiptLoader` (bazadan savdo bo'yicha) + snapshot testlar `test/printing/receipts/*.txt`
+- [ ] 2. `escpos.dart`: ESC/POS kodlovchi (init, markaz, qalin, CP866 / UTF-8, kesish, pul qutisi impulsi) + testlar
+- [ ] 3. Uzatish qatlami: `PrinterTransport` (tarmoq IP:9100 — dart:io Socket; Windows RAW — win32 winspool; soxta — test), `PrinterService` (savdo cheki, test chek, pul qutisi, oxirgi chek, holat) + testlar
+- [ ] 4. Printer sozlamalari (`local_settings`: turi, manzil/printer nomi, kenglik, kodlash, avtomatik, nusxa, pul qutisi) + Sozlamalar ekranida "Printer" bo'limi (test chek) + tarjimalar
+- [ ] 5. Kassaga ulash: yakunlashda avtomatik chek (xato savdoni to'xtatmaydi → "Chek chiqmadi" + "Qayta chop etish"), "Oxirgi chek" tugmasi, holat qatorida haqiqiy printer holati
+- [ ] 6. Widget testlari + golden + skrinshotlar `docs/screenshots/T-044/`
+- [ ] 7. Qaror `docs/decisions/` (Android Bluetooth/USB — alohida vazifa), spec, PR, CI → merge; ROADMAP, PROGRESS, STATE
+
+## Oxirgi bajarilgan ish
+- T-043 merge qilindi (#27). T-044 boshlandi: branch va reja.
+
+## Keyingi aniq harakat
+- 1-qadam: `apps/pos/lib/features/printing/receipt.dart` ni yoz (`docs/specs/printing.md` shabloni), testlar `apps/pos/test/printing/receipt_test.dart`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
