@@ -13,7 +13,7 @@
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 - [x] 1. Spec `docs/specs/sync-api.md` (push formati, statuslar + pending, hodisa → servis jadvali, payloadlar, pull entitylari, ChangeLog, muddati o'tgan pending)
-- [ ] 2. `apps/sync` modellari: SyncEvent, ChangeLog; migratsiya + mavjud ma'lumot uchun ChangeLog backfill; admin
+- [x] 2. `apps/sync` modellari: SyncEvent, ChangeLog; migratsiya + mavjud ma'lumot uchun ChangeLog backfill; admin
 - [ ] 3. ChangeLog yozish: signal'lar (Product, ProductBarcode, Category, Unit, Customer, Supplier, User, Store, DebtEntry, ProductStock) + `_bump_cache` (update()) uchun aniq yozuv
 - [ ] 4. `handlers.py`: hodisa turi → servis (shift/cash/sale/refund/debt.paid/customer/supplier/product/receipt/inventory); xatolarni natijaga aylantirish
 - [ ] 5. Push: `POST /api/v1/sync/push` (qurilma tokeni; idempotent; har hodisa alohida tranzaksiya; pending qayta urinish)
@@ -22,11 +22,11 @@
 - [ ] 8. openapi + schema.d.ts; lint/test; PROGRESS/ROADMAP; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-1-qadam: spec `docs/specs/sync-api.md` (push statuslari + pending 7 kun, hodisa → servis jadvali, pull entitylari, ChangeLog).
+2-qadam: `apps/sync` — SyncEvent (id = klient UUID, status applied/pending/rejected, attempts), ChangeLog (seq); migratsiya 0001 + 0002 backfill (mavjud ma'lumot); admin (faqat ko'rish). Lokal dev bazaga migrate qilindi.
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-2-qadam: `backend/apps/sync/` (apps.py, models.py: SyncEvent + ChangeLog, admin.py), INSTALLED_APPS, makemigrations sync, keyin backfill data migration (0002).
+3-qadam: `backend/apps/sync/changes.py` (log_change, ENTITY ro'yxati) + `signals.py` (post_save/post_delete) + `apps/inventory/services.py` `_bump_cache` dan keyin stock yozuvi.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
