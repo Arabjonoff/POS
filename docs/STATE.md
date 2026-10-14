@@ -14,17 +14,17 @@
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 - [x] 1. Spec `docs/specs/customers-api.md` (mijoz, DebtEntry, balans, limit, to'lov, tuzatish, huquqlar, API); savol bo'lsa `QUESTIONS.md`
 - [x] 2. `apps/customers`: Customer (yumshoq o'chirish), DebtEntry (AppendOnlyModel); migratsiya; admin
-- [ ] 3. `services.py`: balance, record_debt (sale/refund — T-017 uchun), check_limit, pay_debt, adjust_debt (qulf bilan)
+- [x] 3. `services.py`: balance, record_debt (sale/refund — T-017 uchun), check_limit, pay_debt, adjust_debt (qulf bilan)
 - [ ] 4. API: `/customers/` (balance, search, has_debt, saralash), `/{id}/debt-entries/`, `/{id}/payments/`, `/{id}/adjustments/`
 - [ ] 5. Testlar: qarzga sotish + qisman to'lov → balans, limit, ortiqcha to'lov, tuzatish (faqat ega), o'zgarmaslik, izolyatsiya, huquqlar
 - [ ] 6. openapi + schema.d.ts; lint/test; PROGRESS/ROADMAP; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-2-qadam: `apps/customers` — Customer (yumshoq o'chirish, limit ≥ 0), DebtEntry (AppendOnly; DB constraint: ishora turga mos, method faqat payment, sale_id sale/refund uchun), migratsiya 0001, admin (yozuvlar faqat ko'rish).
+3-qadam: `apps/customers/services.py` — balans, with_balance, check_debt_limit, record_sale_debt/record_refund_debt (T-017 uchun), pay_debt (Q-003, enforce_balance), adjust_debt, soft_delete_customer (qarz bo'lsa 409).
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-3-qadam: `backend/apps/customers/services.py` — customer_balance, with_balance (annotate), check_debt_limit, record_sale_debt, record_refund_debt, pay_debt(enforce_balance), adjust_debt; Customer qatori select_for_update.
+4-qadam: `backend/apps/customers/serializers.py`, `views.py` (CustomerViewSet + actions debt-entries/payments/adjustments), `urls.py`; `config/urls.py` ga qo'shish.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
