@@ -59,3 +59,9 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-011 (squash merge)
 - Qoldi / keyingi qadam: T-012 Qurilmalar (T-013 ga ham bog'liq — avval T-013 Tariflar va obuna). Xodim qo'shish/tahrirlash API (PIN o'rnatish) hali yo'q — kassa xodimlar ekrani bilan birga.
 - Muammo yoki qaror: `AUTH_USER_MODEL` almashgani uchun lokal dev baza (pos_pgdata, bo'sh) eski migratsiya tarixi bilan mos emas — backend konteyneri `migrate` da InconsistentMigrationHistory beradi; tozalash foydalanuvchi ruxsati bilan (`DROP SCHEMA public CASCADE`). Python `\d` Unicode raqamlarni ham oladi — PIN/telefon `[0-9]` bilan tekshiriladi.
+
+## 2026-10-14 — T-013 Tariflar va obuna
+- Qilindi: `apps/billing` — `Plan` (narx tiyin, max_devices, max_users, features), `Subscription` (tenant 1:1, trial_ends_at, paid_until, grace_days 3, offline_days 7, kesh `status`), `SubscriptionPayment` (o'zgarmas; bekor qilish — teskari yozuv, `previous_paid_until` qaytariladi). `status.compute_status` (sof funksiya, kun aniqligida, tenant vaqt zonasi), `add_months` (oy oxiri qisqartiriladi), `services` (start_subscription, record_payment, reverse_payment, subscription_status, refresh_status), `manage.py update_subscriptions`. Admin (to'lovlar faqat ko'rish). Fixture'lar `make_plan`, `plan`. 208 test yashil (14 ta parametrlangan holat).
+- PR: T-013 (squash merge)
+- Qoldi / keyingi qadam: T-012 Qurilmalar (max_devices, qurilma tokeni). `max_users` tekshiruvi — xodim qo'shish API bilan. To'lov kiritish API va audit jurnali — T-020. Cron (`update_subscriptions`) — deploy (T-090).
+- Muammo yoki qaror: Q-001 (sinovdan keyin ham grace — A) va Q-002 (sinov ichida to'lov sinov oxiridan boshlanadi — B) vaqtincha tanlandi, `QUESTIONS.md` da javob kutilmoqda. Sana semantikasi `subscription-billing.md` "Sanalar" bo'limida.

@@ -58,7 +58,7 @@ Spec'lar: `data-model.md`, `auth-roles.md`, `sync.md`, `subscription-billing.md`
 - **Qabul:** chegara oshganda aniq xato; bloklangan qurilma sinxronlay olmaydi.
 - **Bog'liq:** T-011, T-013
 
-### [ ] T-013 Tariflar va obuna
+### [x] T-013 Tariflar va obuna
 - **Bajarish:** Plan, Subscription, SubscriptionPayment; holat hisoblash funksiyasi (trial/active/grace/readonly/blocked) — `subscription-billing.md` bo'yicha; kunlik `manage.py update_subscriptions` buyrug'i.
 - **Qabul:** sanalar bo'yicha holat o'tishlari uchun parametrlangan testlar (kamida 8 holat).
 - **Bog'liq:** T-010
