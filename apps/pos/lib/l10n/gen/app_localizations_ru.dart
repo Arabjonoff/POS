@@ -146,4 +146,17 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get settingsLanguage => 'Язык';
+
+  @override
+  String get statusConnectionUnknown => 'Проверка соединения';
+
+  @override
+  String get statusPrinterUnknown => 'Принтер не настроен';
+
+  @override
+  String get sectionComingSoonTitle => 'Раздел в разработке';
+
+  @override
+  String get sectionComingSoonMessage =>
+      'Раздел появится в следующем обновлении';
 }

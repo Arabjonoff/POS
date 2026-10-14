@@ -12,9 +12,9 @@
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [ ] 1. Router: StatefulShellRoute (6 bo'lim: /pos, /products, /receiving, /customers, /reports, /settings)
-- [ ] 2. AppShell: PosResponsiveScaffold + Ctrl+1..6 tezkor tugmalar; bo'lim sahifalari (tayyorlanmoqda holati), Sozlamalar — til
-- [ ] 3. Holat qatori: internet, printer, smena, navbat (provayderlar; navbat va smena — bazadan)
+- [x] 1. Router: StatefulShellRoute (6 bo'lim: /pos, /products, /receiving, /customers, /reports, /settings)
+- [x] 2. AppShell: PosResponsiveScaffold + Ctrl+1..6 tezkor tugmalar; bo'lim sahifalari (tayyorlanmoqda holati), Sozlamalar — til
+- [x] 3. Holat qatori: internet, printer, smena, navbat (provayderlar; navbat va smena — bazadan)
 - [ ] 4. Testlar: navigatsiya (bosish, klaviatura), holat qatori; golden 3 o'lcham × 2 mavzu; skrinshotlar
 - [ ] 5. Tekshiruv, PR, merge, hujjatlar
 
