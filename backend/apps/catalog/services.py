@@ -2,6 +2,8 @@ from django.db import IntegrityError, transaction
 from django.utils import timezone
 
 from apps.core.exceptions import DomainError
+from apps.sync.changes import log_change
+from apps.sync.models import ChangeOp
 
 from .models import Category, PriceHistory, Product, ProductBarcode
 
@@ -78,5 +80,11 @@ def soft_delete_category(category: Category) -> None:
                 "pk", flat=True
             )
         )
-    Product.objects.filter(category_id__in=ids).update(category=None, updated_at=now)
+    products = list(Product.objects.filter(category_id__in=ids).values_list("pk", flat=True))
+    Product.objects.filter(pk__in=products).update(category=None, updated_at=now)
     Category.objects.filter(pk__in=ids).update(deleted_at=now, updated_at=now)
+    # `update()` signal bermaydi — kassalar pull orqali bilsin.
+    for product_id in products:
+        log_change(category.tenant_id, "product", product_id)
+    for category_id in ids:
+        log_change(category.tenant_id, "category", category_id, ChangeOp.DELETE)

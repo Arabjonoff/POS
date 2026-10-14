@@ -18,15 +18,15 @@
 - [x] 4. `handlers.py`: hodisa turi → servis (shift/cash/sale/refund/debt.paid/customer/supplier/product/receipt/inventory); xatolarni natijaga aylantirish
 - [x] 5. Push: `POST /api/v1/sync/push` (qurilma tokeni; idempotent; har hodisa alohida tranzaksiya; pending qayta urinish)
 - [x] 6. Pull: `GET /api/v1/sync/pull?cursor=&limit=` (ChangeLog, entity serializerlar, subscription, server_time)
-- [ ] 7. Testlar: sync.md server mezonlari 1–4 + handlerlar, pull kursori, izolyatsiya
+- [x] 7. Testlar: sync.md server mezonlari 1–4 + handlerlar, pull kursori, izolyatsiya
 - [ ] 8. openapi + schema.d.ts; lint/test; PROGRESS/ROADMAP; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-6-qadam: pull — `apps/sync/pull.py` (entity serializerlari, dedupe, `(txid, seq)` kursor — `apps/sync/db.py`, migratsiya 0003), `GET /api/v1/sync/pull/`, `subscription_snapshot` billing'ga chiqarildi (devices/me ham ishlatadi).
+7-qadam: sync testlari (47): mezon 1–4, statuslar (pending/TTL/server_error/id_conflict/unknown), 11 hodisa turi, envelope, auth; pull (kursor, sahifalar, dedupe, delete, entitylar, update() orqali o'zgarishlar, izolyatsiya). Topilib tuzatildi: standart birliklar va kategoriya o'chirish ChangeLog'ga tushmasdi. Jami 552 test.
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-7-qadam: `backend/apps/sync/tests/` — conftest (qurilma + token client), test_push.py (mezon 1–4, statuslar, handlerlar), test_pull.py (kursor, dedupe, delete, entitylar, izolyatsiya).
+8-qadam: `make schema` + admin `npm run api:generate`, typecheck/lint; PROGRESS/ROADMAP; PR (T-018), CI, squash merge; STATE shablonga.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q

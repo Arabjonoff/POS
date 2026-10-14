@@ -87,6 +87,7 @@ def push(device, events: list[dict]) -> list[dict]:
 
     # Indeks → tayyor natija (dublikat, konflikt) yoki saqlangan hodisa id'si.
     fixed, stored = {}, {}
+    applied_any = False
     ordered = sorted(enumerate(events), key=lambda pair: (pair[1]["created_at"], pair[0]))
     for index, item in ordered:
         event_id = item["id"]
@@ -113,10 +114,12 @@ def push(device, events: list[dict]) -> list[dict]:
         event.save(force_insert=True)
         if event.status == EventStatus.PENDING:
             _apply(device, event)
+            applied_any |= event.status == EventStatus.APPLIED
         stored[index] = event_id
 
-    # Yangi hodisalar kutilayotganlarning bog'liqligini yaratgan bo'lishi mumkin.
-    retry_pending(device)
+    # Yangi qo'llangan hodisalar kutilayotganlarning bog'liqligini yaratgan bo'lishi mumkin.
+    if applied_any:
+        retry_pending(device)
     final = SyncEvent.objects.filter(pk__in=stored.values()).in_bulk()
     now = timezone.now()
     device.last_sync_at = now
