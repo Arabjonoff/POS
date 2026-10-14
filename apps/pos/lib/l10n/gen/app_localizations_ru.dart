@@ -1491,4 +1491,112 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get orderColSum => 'Сумма';
+
+  @override
+  String get customersSearchHint => 'Имя или телефон';
+
+  @override
+  String get customersAdd => 'Новый клиент';
+
+  @override
+  String get customersDebtorsOnly => 'С долгом';
+
+  @override
+  String get customersAll => 'Все';
+
+  @override
+  String customersTotalDebt(String amount) {
+    return 'Общий долг: $amount';
+  }
+
+  @override
+  String get customersEmptyTitle => 'Клиентов пока нет';
+
+  @override
+  String get customersEmptyMessage =>
+      'Клиент добавляется при продаже в долг или здесь';
+
+  @override
+  String get customersNotFound => 'Никого не найдено';
+
+  @override
+  String get customerDebt => 'Долг';
+
+  @override
+  String get customerNoDebt => 'Долга нет';
+
+  @override
+  String customerLimit(String amount) {
+    return 'Лимит: $amount';
+  }
+
+  @override
+  String get customerNoLimit => 'Лимит: без ограничений';
+
+  @override
+  String get customerPay => 'Погасить долг';
+
+  @override
+  String get customerEdit => 'Изменить';
+
+  @override
+  String get customerHistory => 'История долга';
+
+  @override
+  String get customerPurchases => 'Покупки (на этой кассе)';
+
+  @override
+  String get customerHistoryEmpty => 'Записей пока нет';
+
+  @override
+  String get debtSale => 'Продажа в долг';
+
+  @override
+  String get debtPayment => 'Оплата';
+
+  @override
+  String get debtRefund => 'Возврат';
+
+  @override
+  String get debtAdjustment => 'Корректировка';
+
+  @override
+  String get payDebtTitle => 'Погашение долга';
+
+  @override
+  String get payDebtFull => 'Полностью';
+
+  @override
+  String get payDebtCash => 'Наличные';
+
+  @override
+  String get payDebtCard => 'Карта';
+
+  @override
+  String get payDebtConfirm => 'Принять';
+
+  @override
+  String payDebtTooMuch(String amount) {
+    return 'Не больше долга: $amount';
+  }
+
+  @override
+  String payDebtDone(String amount, String left) {
+    return 'Принято $amount · Остаток долга: $left';
+  }
+
+  @override
+  String get customerNote => 'Комментарий';
+
+  @override
+  String get customerLimitField => 'Лимит долга, сум (пусто — без лимита)';
+
+  @override
+  String get customerLimitNeedsApproval => 'Лимит меняет менеджер или владелец';
+
+  @override
+  String get customerSaved => 'Сохранено';
+
+  @override
+  String get customerBack => 'Клиенты';
 }

@@ -2678,6 +2678,204 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Summa'**
   String get orderColSum;
+
+  /// Qidiruv
+  ///
+  /// In uz, this message translates to:
+  /// **'Ism yoki telefon'**
+  String get customersSearchHint;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Yangi mijoz'**
+  String get customersAdd;
+
+  /// Filtr
+  ///
+  /// In uz, this message translates to:
+  /// **'Qarzi borlar'**
+  String get customersDebtorsOnly;
+
+  /// Filtr
+  ///
+  /// In uz, this message translates to:
+  /// **'Hammasi'**
+  String get customersAll;
+
+  /// Jami
+  ///
+  /// In uz, this message translates to:
+  /// **'Jami qarz: {amount}'**
+  String customersTotalDebt(String amount);
+
+  /// Bo'sh
+  ///
+  /// In uz, this message translates to:
+  /// **'Hali mijoz yo\'q'**
+  String get customersEmptyTitle;
+
+  /// Bo'sh izoh
+  ///
+  /// In uz, this message translates to:
+  /// **'Nasiyaga sotganda mijoz qo\'shiladi yoki shu yerda yarating'**
+  String get customersEmptyMessage;
+
+  /// Bo'sh qidiruv
+  ///
+  /// In uz, this message translates to:
+  /// **'Hech kim topilmadi'**
+  String get customersNotFound;
+
+  /// Kartadagi katta raqam yorlig'i
+  ///
+  /// In uz, this message translates to:
+  /// **'Qarz'**
+  String get customerDebt;
+
+  /// Holat
+  ///
+  /// In uz, this message translates to:
+  /// **'Qarzi yo\'q'**
+  String get customerNoDebt;
+
+  /// Limit
+  ///
+  /// In uz, this message translates to:
+  /// **'Limit: {amount}'**
+  String customerLimit(String amount);
+
+  /// Limit
+  ///
+  /// In uz, this message translates to:
+  /// **'Limit: cheklovsiz'**
+  String get customerNoLimit;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Qarzni to\'lash'**
+  String get customerPay;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Tahrirlash'**
+  String get customerEdit;
+
+  /// Bo'lim
+  ///
+  /// In uz, this message translates to:
+  /// **'Qarz tarixi'**
+  String get customerHistory;
+
+  /// Bo'lim
+  ///
+  /// In uz, this message translates to:
+  /// **'Xaridlar (shu kassada)'**
+  String get customerPurchases;
+
+  /// Bo'sh
+  ///
+  /// In uz, this message translates to:
+  /// **'Hali yozuv yo\'q'**
+  String get customerHistoryEmpty;
+
+  /// Yozuv turi
+  ///
+  /// In uz, this message translates to:
+  /// **'Nasiyaga savdo'**
+  String get debtSale;
+
+  /// Yozuv turi
+  ///
+  /// In uz, this message translates to:
+  /// **'To\'lov'**
+  String get debtPayment;
+
+  /// Yozuv turi
+  ///
+  /// In uz, this message translates to:
+  /// **'Qaytarish'**
+  String get debtRefund;
+
+  /// Yozuv turi
+  ///
+  /// In uz, this message translates to:
+  /// **'Tuzatish'**
+  String get debtAdjustment;
+
+  /// Oyna
+  ///
+  /// In uz, this message translates to:
+  /// **'Qarzni to\'lash'**
+  String get payDebtTitle;
+
+  /// Tez tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'To\'liq'**
+  String get payDebtFull;
+
+  /// Usul
+  ///
+  /// In uz, this message translates to:
+  /// **'Naqd'**
+  String get payDebtCash;
+
+  /// Usul
+  ///
+  /// In uz, this message translates to:
+  /// **'Karta'**
+  String get payDebtCard;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Qabul qilish'**
+  String get payDebtConfirm;
+
+  /// Xato
+  ///
+  /// In uz, this message translates to:
+  /// **'Qarzdan ko\'p bo\'lmasin: {amount}'**
+  String payDebtTooMuch(String amount);
+
+  /// Xabar
+  ///
+  /// In uz, this message translates to:
+  /// **'{amount} qabul qilindi · Qolgan qarz: {left}'**
+  String payDebtDone(String amount, String left);
+
+  /// Maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'Izoh'**
+  String get customerNote;
+
+  /// Maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'Qarz limiti, so\'m (bo\'sh — cheklovsiz)'**
+  String get customerLimitField;
+
+  /// Huquq
+  ///
+  /// In uz, this message translates to:
+  /// **'Qarz limitini menejer yoki ega o\'zgartiradi'**
+  String get customerLimitNeedsApproval;
+
+  /// Xabar
+  ///
+  /// In uz, this message translates to:
+  /// **'Saqlandi'**
+  String get customerSaved;
+
+  /// Orqaga
+  ///
+  /// In uz, this message translates to:
+  /// **'Mijozlar'**
+  String get customerBack;
 }
 
 class _AppLocalizationsDelegate

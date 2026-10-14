@@ -1475,6 +1475,115 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get orderColSum => 'Summa';
+
+  @override
+  String get customersSearchHint => 'Ism yoki telefon';
+
+  @override
+  String get customersAdd => 'Yangi mijoz';
+
+  @override
+  String get customersDebtorsOnly => 'Qarzi borlar';
+
+  @override
+  String get customersAll => 'Hammasi';
+
+  @override
+  String customersTotalDebt(String amount) {
+    return 'Jami qarz: $amount';
+  }
+
+  @override
+  String get customersEmptyTitle => 'Hali mijoz yo\'q';
+
+  @override
+  String get customersEmptyMessage =>
+      'Nasiyaga sotganda mijoz qo\'shiladi yoki shu yerda yarating';
+
+  @override
+  String get customersNotFound => 'Hech kim topilmadi';
+
+  @override
+  String get customerDebt => 'Qarz';
+
+  @override
+  String get customerNoDebt => 'Qarzi yo\'q';
+
+  @override
+  String customerLimit(String amount) {
+    return 'Limit: $amount';
+  }
+
+  @override
+  String get customerNoLimit => 'Limit: cheklovsiz';
+
+  @override
+  String get customerPay => 'Qarzni to\'lash';
+
+  @override
+  String get customerEdit => 'Tahrirlash';
+
+  @override
+  String get customerHistory => 'Qarz tarixi';
+
+  @override
+  String get customerPurchases => 'Xaridlar (shu kassada)';
+
+  @override
+  String get customerHistoryEmpty => 'Hali yozuv yo\'q';
+
+  @override
+  String get debtSale => 'Nasiyaga savdo';
+
+  @override
+  String get debtPayment => 'To\'lov';
+
+  @override
+  String get debtRefund => 'Qaytarish';
+
+  @override
+  String get debtAdjustment => 'Tuzatish';
+
+  @override
+  String get payDebtTitle => 'Qarzni to\'lash';
+
+  @override
+  String get payDebtFull => 'To\'liq';
+
+  @override
+  String get payDebtCash => 'Naqd';
+
+  @override
+  String get payDebtCard => 'Karta';
+
+  @override
+  String get payDebtConfirm => 'Qabul qilish';
+
+  @override
+  String payDebtTooMuch(String amount) {
+    return 'Qarzdan ko\'p bo\'lmasin: $amount';
+  }
+
+  @override
+  String payDebtDone(String amount, String left) {
+    return '$amount qabul qilindi · Qolgan qarz: $left';
+  }
+
+  @override
+  String get customerNote => 'Izoh';
+
+  @override
+  String get customerLimitField => 'Qarz limiti, so\'m (bo\'sh — cheklovsiz)';
+
+  @override
+  String get customerLimitNeedsApproval =>
+      'Qarz limitini menejer yoki ega o\'zgartiradi';
+
+  @override
+  String get customerSaved => 'Saqlandi';
+
+  @override
+  String get customerBack => 'Mijozlar';
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -2941,4 +3050,113 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get orderColSum => 'Сумма';
+
+  @override
+  String get customersSearchHint => 'Исм ёки телефон';
+
+  @override
+  String get customersAdd => 'Янги мижоз';
+
+  @override
+  String get customersDebtorsOnly => 'Қарзи борлар';
+
+  @override
+  String get customersAll => 'Ҳаммаси';
+
+  @override
+  String customersTotalDebt(String amount) {
+    return 'Жами қарз: $amount';
+  }
+
+  @override
+  String get customersEmptyTitle => 'Ҳали мижоз йўқ';
+
+  @override
+  String get customersEmptyMessage =>
+      'Насияга сотганда мижоз қўшилади ёки шу ерда яратинг';
+
+  @override
+  String get customersNotFound => 'Ҳеч ким топилмади';
+
+  @override
+  String get customerDebt => 'Қарз';
+
+  @override
+  String get customerNoDebt => 'Қарзи йўқ';
+
+  @override
+  String customerLimit(String amount) {
+    return 'Лимит: $amount';
+  }
+
+  @override
+  String get customerNoLimit => 'Лимит: чекловсиз';
+
+  @override
+  String get customerPay => 'Қарзни тўлаш';
+
+  @override
+  String get customerEdit => 'Таҳрирлаш';
+
+  @override
+  String get customerHistory => 'Қарз тарихи';
+
+  @override
+  String get customerPurchases => 'Харидлар (шу кассада)';
+
+  @override
+  String get customerHistoryEmpty => 'Ҳали ёзув йўқ';
+
+  @override
+  String get debtSale => 'Насияга савдо';
+
+  @override
+  String get debtPayment => 'Тўлов';
+
+  @override
+  String get debtRefund => 'Қайтариш';
+
+  @override
+  String get debtAdjustment => 'Тузатиш';
+
+  @override
+  String get payDebtTitle => 'Қарзни тўлаш';
+
+  @override
+  String get payDebtFull => 'Тўлиқ';
+
+  @override
+  String get payDebtCash => 'Нақд';
+
+  @override
+  String get payDebtCard => 'Карта';
+
+  @override
+  String get payDebtConfirm => 'Қабул қилиш';
+
+  @override
+  String payDebtTooMuch(String amount) {
+    return 'Қарздан кўп бўлмасин: $amount';
+  }
+
+  @override
+  String payDebtDone(String amount, String left) {
+    return '$amount қабул қилинди · Қолган қарз: $left';
+  }
+
+  @override
+  String get customerNote => 'Изоҳ';
+
+  @override
+  String get customerLimitField => 'Қарз лимити, сўм (бўш — чекловсиз)';
+
+  @override
+  String get customerLimitNeedsApproval =>
+      'Қарз лимитини менежер ёки эга ўзгартиради';
+
+  @override
+  String get customerSaved => 'Сақланди';
+
+  @override
+  String get customerBack => 'Мижозлар';
 }
