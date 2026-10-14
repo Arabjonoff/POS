@@ -12,6 +12,18 @@
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
+- [x] 1. ShiftService (open/close/report, X/Z) + unit testlar — `apps/pos/lib/data/shifts/shift_service.dart`
+- [x] 2. UI: OpenShiftCard, ShiftScreen (/pos/shift), ShiftReportView, MoneyInput, tarjimalar (uz/uz-Cyrl/ru); analyze toza
+- [ ] 3. Widget testlar: smena yopiq → karta; ochish; X hisobot; yopish → farq → Z hisobot — `apps/pos/test/features/shift_test.dart`
+- [ ] 4. Golden testlar + skrinshotlar (390×844, 1024×768, 1440×900) — `docs/screenshots/T-041/`
+- [ ] 5. To'liq tekshiruv: `make pos-analyze pos-test ui-test`
+- [ ] 6. PR, CI yashil → squash merge; ROADMAP `[x]`, PROGRESS, STATE tozalash
+
+## Oxirgi bajarilgan ish
+- 2-qadam: uzilishdan tiklandi, analyze xatolari tuzatildi (shift_providers turi, pump_app drift `&`).
+
+## Keyingi aniq harakat
+- `apps/pos/test/features/shift_test.dart` yozish: `pumpPosApp(withOpenShift: false)` → "Smenani oching" ko'rinadi → ochish → `/pos/shift` → yopish dialogi.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

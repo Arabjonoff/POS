@@ -704,6 +704,192 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Kod noto\'g\'ri o\'qildi, qayta skanerlang'**
   String get scanInvalidCode;
+
+  /// Smena yopiq: kassa ekrani kartasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Smenani oching'**
+  String get shiftOpenTitle;
+
+  /// Smena ochish izohi
+  ///
+  /// In uz, this message translates to:
+  /// **'Savdoni boshlash uchun kassadagi naqd pulni kiriting'**
+  String get shiftOpenMessage;
+
+  /// Boshlang'ich naqd maydoni
+  ///
+  /// In uz, this message translates to:
+  /// **'Kassadagi naqd pul'**
+  String get shiftOpeningCash;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Smenani ochish'**
+  String get shiftOpenAction;
+
+  /// Smena sahifasi sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Smena'**
+  String get shiftTitle;
+
+  /// Smena kim va qachon ochgani
+  ///
+  /// In uz, this message translates to:
+  /// **'{time} da {name} ochgan'**
+  String shiftOpenedInfo(String time, String name);
+
+  /// Ochiq smena hisoboti
+  ///
+  /// In uz, this message translates to:
+  /// **'X hisobot'**
+  String get shiftXReport;
+
+  /// Yopilgan smena hisoboti
+  ///
+  /// In uz, this message translates to:
+  /// **'Z hisobot'**
+  String get shiftZReport;
+
+  /// Hisobot qatori
+  ///
+  /// In uz, this message translates to:
+  /// **'Savdolar'**
+  String get reportSales;
+
+  /// Cheklar soni
+  ///
+  /// In uz, this message translates to:
+  /// **'{count, plural, other{{count} ta chek}}'**
+  String reportChecks(int count);
+
+  /// To'lov turi
+  ///
+  /// In uz, this message translates to:
+  /// **'Naqd'**
+  String get reportCash;
+
+  /// To'lov turi
+  ///
+  /// In uz, this message translates to:
+  /// **'Karta'**
+  String get reportCard;
+
+  /// To'lov turi
+  ///
+  /// In uz, this message translates to:
+  /// **'Nasiya'**
+  String get reportDebt;
+
+  /// Hisobot qatori
+  ///
+  /// In uz, this message translates to:
+  /// **'Qaytarishlar'**
+  String get reportRefunds;
+
+  /// Hisobot bo'limi
+  ///
+  /// In uz, this message translates to:
+  /// **'Kassa puli'**
+  String get reportCashMovements;
+
+  /// Kassaga kiritilgan pul
+  ///
+  /// In uz, this message translates to:
+  /// **'Kiritilgan'**
+  String get reportCashIn;
+
+  /// Kassadan olingan pul
+  ///
+  /// In uz, this message translates to:
+  /// **'Olingan'**
+  String get reportCashOut;
+
+  /// Hisobot qatori
+  ///
+  /// In uz, this message translates to:
+  /// **'Qarz to\'lovlari'**
+  String get reportDebtPayments;
+
+  /// Hisobot bo'limi
+  ///
+  /// In uz, this message translates to:
+  /// **'Naqd hisobi'**
+  String get reportCashBalance;
+
+  /// Hisobot qatori
+  ///
+  /// In uz, this message translates to:
+  /// **'Boshlang\'ich naqd'**
+  String get reportOpeningCash;
+
+  /// Kutilgan naqd
+  ///
+  /// In uz, this message translates to:
+  /// **'Kassada bo\'lishi kerak'**
+  String get reportExpectedCash;
+
+  /// Hisobot qatori
+  ///
+  /// In uz, this message translates to:
+  /// **'Sanalgan naqd'**
+  String get reportCountedCash;
+
+  /// Farq: ko'p
+  ///
+  /// In uz, this message translates to:
+  /// **'Ortiqcha'**
+  String get reportSurplus;
+
+  /// Farq: kam
+  ///
+  /// In uz, this message translates to:
+  /// **'Kam'**
+  String get reportShortage;
+
+  /// Farq nol
+  ///
+  /// In uz, this message translates to:
+  /// **'Farq yo\'q'**
+  String get reportNoDifference;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Smenani yopish'**
+  String get shiftCloseAction;
+
+  /// Yopish oynasi sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Kassadagi pulni sanang'**
+  String get shiftCloseTitle;
+
+  /// Yopishni tasdiqlash
+  ///
+  /// In uz, this message translates to:
+  /// **'Yopish'**
+  String get shiftCloseConfirm;
+
+  /// Z hisobot sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Smena yopildi'**
+  String get shiftClosedTitle;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Kassaga qaytish'**
+  String get shiftBackToPos;
+
+  /// Z hisobotni chop etish
+  ///
+  /// In uz, this message translates to:
+  /// **'Chek chiqarish'**
+  String get shiftPrintReport;
 }
 
 class _AppLocalizationsDelegate

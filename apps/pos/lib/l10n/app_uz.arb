@@ -438,5 +438,142 @@
   "scanInvalidCode": "Kod noto'g'ri o'qildi, qayta skanerlang",
   "@scanInvalidCode": {
     "description": "Nazorat raqami xato"
+  },
+  "shiftOpenTitle": "Smenani oching",
+  "@shiftOpenTitle": {
+    "description": "Smena yopiq: kassa ekrani kartasi"
+  },
+  "shiftOpenMessage": "Savdoni boshlash uchun kassadagi naqd pulni kiriting",
+  "@shiftOpenMessage": {
+    "description": "Smena ochish izohi"
+  },
+  "shiftOpeningCash": "Kassadagi naqd pul",
+  "@shiftOpeningCash": {
+    "description": "Boshlang'ich naqd maydoni"
+  },
+  "shiftOpenAction": "Smenani ochish",
+  "@shiftOpenAction": {
+    "description": "Tugma"
+  },
+  "shiftTitle": "Smena",
+  "@shiftTitle": {
+    "description": "Smena sahifasi sarlavhasi"
+  },
+  "shiftOpenedInfo": "{time} da {name} ochgan",
+  "@shiftOpenedInfo": {
+    "description": "Smena kim va qachon ochgani",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "shiftXReport": "X hisobot",
+  "@shiftXReport": {
+    "description": "Ochiq smena hisoboti"
+  },
+  "shiftZReport": "Z hisobot",
+  "@shiftZReport": {
+    "description": "Yopilgan smena hisoboti"
+  },
+  "reportSales": "Savdolar",
+  "@reportSales": {
+    "description": "Hisobot qatori"
+  },
+  "reportChecks": "{count, plural, other{{count} ta chek}}",
+  "@reportChecks": {
+    "description": "Cheklar soni",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reportCash": "Naqd",
+  "@reportCash": {
+    "description": "To'lov turi"
+  },
+  "reportCard": "Karta",
+  "@reportCard": {
+    "description": "To'lov turi"
+  },
+  "reportDebt": "Nasiya",
+  "@reportDebt": {
+    "description": "To'lov turi"
+  },
+  "reportRefunds": "Qaytarishlar",
+  "@reportRefunds": {
+    "description": "Hisobot qatori"
+  },
+  "reportCashMovements": "Kassa puli",
+  "@reportCashMovements": {
+    "description": "Hisobot bo'limi"
+  },
+  "reportCashIn": "Kiritilgan",
+  "@reportCashIn": {
+    "description": "Kassaga kiritilgan pul"
+  },
+  "reportCashOut": "Olingan",
+  "@reportCashOut": {
+    "description": "Kassadan olingan pul"
+  },
+  "reportDebtPayments": "Qarz to'lovlari",
+  "@reportDebtPayments": {
+    "description": "Hisobot qatori"
+  },
+  "reportCashBalance": "Naqd hisobi",
+  "@reportCashBalance": {
+    "description": "Hisobot bo'limi"
+  },
+  "reportOpeningCash": "Boshlang'ich naqd",
+  "@reportOpeningCash": {
+    "description": "Hisobot qatori"
+  },
+  "reportExpectedCash": "Kassada bo'lishi kerak",
+  "@reportExpectedCash": {
+    "description": "Kutilgan naqd"
+  },
+  "reportCountedCash": "Sanalgan naqd",
+  "@reportCountedCash": {
+    "description": "Hisobot qatori"
+  },
+  "reportSurplus": "Ortiqcha",
+  "@reportSurplus": {
+    "description": "Farq: ko'p"
+  },
+  "reportShortage": "Kam",
+  "@reportShortage": {
+    "description": "Farq: kam"
+  },
+  "reportNoDifference": "Farq yo'q",
+  "@reportNoDifference": {
+    "description": "Farq nol"
+  },
+  "shiftCloseAction": "Smenani yopish",
+  "@shiftCloseAction": {
+    "description": "Tugma"
+  },
+  "shiftCloseTitle": "Kassadagi pulni sanang",
+  "@shiftCloseTitle": {
+    "description": "Yopish oynasi sarlavhasi"
+  },
+  "shiftCloseConfirm": "Yopish",
+  "@shiftCloseConfirm": {
+    "description": "Yopishni tasdiqlash"
+  },
+  "shiftClosedTitle": "Smena yopildi",
+  "@shiftClosedTitle": {
+    "description": "Z hisobot sarlavhasi"
+  },
+  "shiftBackToPos": "Kassaga qaytish",
+  "@shiftBackToPos": {
+    "description": "Tugma"
+  },
+  "shiftPrintReport": "Chek chiqarish",
+  "@shiftPrintReport": {
+    "description": "Z hisobotni chop etish"
   }
 }

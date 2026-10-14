@@ -384,4 +384,110 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get scanInvalidCode => 'Код считан неверно, отсканируйте ещё раз';
+
+  @override
+  String get shiftOpenTitle => 'Откройте смену';
+
+  @override
+  String get shiftOpenMessage =>
+      'Чтобы начать продажи, введите наличные в кассе';
+
+  @override
+  String get shiftOpeningCash => 'Наличные в кассе';
+
+  @override
+  String get shiftOpenAction => 'Открыть смену';
+
+  @override
+  String get shiftTitle => 'Смена';
+
+  @override
+  String shiftOpenedInfo(String time, String name) {
+    return 'Открыта в $time, $name';
+  }
+
+  @override
+  String get shiftXReport => 'X-отчёт';
+
+  @override
+  String get shiftZReport => 'Z-отчёт';
+
+  @override
+  String get reportSales => 'Продажи';
+
+  @override
+  String reportChecks(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count чека',
+      many: '$count чеков',
+      few: '$count чека',
+      one: '$count чек',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reportCash => 'Наличные';
+
+  @override
+  String get reportCard => 'Карта';
+
+  @override
+  String get reportDebt => 'В долг';
+
+  @override
+  String get reportRefunds => 'Возвраты';
+
+  @override
+  String get reportCashMovements => 'Движение денег';
+
+  @override
+  String get reportCashIn => 'Внесено';
+
+  @override
+  String get reportCashOut => 'Изъято';
+
+  @override
+  String get reportDebtPayments => 'Погашение долгов';
+
+  @override
+  String get reportCashBalance => 'Учёт наличных';
+
+  @override
+  String get reportOpeningCash => 'Начальный остаток';
+
+  @override
+  String get reportExpectedCash => 'Должно быть в кассе';
+
+  @override
+  String get reportCountedCash => 'Пересчитано';
+
+  @override
+  String get reportSurplus => 'Излишек';
+
+  @override
+  String get reportShortage => 'Недостача';
+
+  @override
+  String get reportNoDifference => 'Без расхождений';
+
+  @override
+  String get shiftCloseAction => 'Закрыть смену';
+
+  @override
+  String get shiftCloseTitle => 'Пересчитайте наличные';
+
+  @override
+  String get shiftCloseConfirm => 'Закрыть';
+
+  @override
+  String get shiftClosedTitle => 'Смена закрыта';
+
+  @override
+  String get shiftBackToPos => 'Вернуться к кассе';
+
+  @override
+  String get shiftPrintReport => 'Печать отчёта';
 }

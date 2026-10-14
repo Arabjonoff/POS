@@ -9,6 +9,7 @@ import 'package:pos_app/features/auth/setup_screen.dart';
 import 'package:pos_app/features/common/section_page.dart';
 import 'package:pos_app/features/pos/pos_screen.dart';
 import 'package:pos_app/features/settings/settings_screen.dart';
+import 'package:pos_app/features/shift/shift_screen.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
 
 abstract final class AppRoutes {
@@ -73,6 +74,13 @@ final routerProvider = Provider<GoRouter>((ref) {
                     AppSection.settings => const SettingsScreen(),
                     _ => _comingSoon(context, section),
                   },
+                  routes: [
+                    if (section == AppSection.pos)
+                      GoRoute(
+                        path: 'shift',
+                        builder: (context, state) => const ShiftScreen(),
+                      ),
+                  ],
                 ),
               ],
             ),
