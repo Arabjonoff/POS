@@ -5,14 +5,16 @@ import 'package:pos_app/app/sync/sync_runner.dart';
 import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/data/sync/outbox.dart';
 import 'package:pos_app/data/sync/sync_engine.dart';
+import 'package:pos_app/features/printing/printer_service.dart';
 import 'package:pos_app/features/shift/shift_providers.dart';
 
 /// Internet holati — fon sinxronining oxirgi urinishi bo'yicha (haqiqiy
 /// server bilan aloqa; Wi-Fi bor-yo'qligi emas).
 enum ConnectionStatus { unknown, online, offline }
 
-/// Printer holati. Haqiqiy tekshiruv — chek chop etishda (T-044).
-enum PrinterStatus { unknown, ready, missing }
+/// Printer holati: `unknown` — sozlanmagan, `checking` — ochilganda
+/// tekshirilmoqda, keyin har chop etishdan so'ng `ready` / `missing`.
+enum PrinterStatus { unknown, checking, ready, missing }
 
 final connectionStatusProvider = Provider<ConnectionStatus>(
   (ref) => switch (ref.watch(syncStatusProvider).health) {
@@ -25,7 +27,7 @@ final connectionStatusProvider = Provider<ConnectionStatus>(
 );
 
 final printerStatusProvider = Provider<PrinterStatus>(
-  (ref) => PrinterStatus.unknown,
+  (ref) => ref.watch(printerHealthProvider),
 );
 
 /// Serverga hali yuborilmagan yozuvlar soni.

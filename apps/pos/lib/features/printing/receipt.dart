@@ -133,7 +133,7 @@ class ReceiptBuilder {
   List<ReceiptRow> build(ReceiptData data, {bool copy = false}) {
     final rows = <ReceiptRow>[];
     void center(String text, {bool bold = false}) {
-      for (final part in _wrap(plain(text), _w)) {
+      for (final part in wrap(plain(text), _w)) {
         rows.add(ReceiptRow(part, bold: bold, center: true));
       }
     }
@@ -227,12 +227,12 @@ class ReceiptBuilder {
   /// Chap va o'ng matn bir qatorda; sig'masa — chap matn o'raladi, o'ng
   /// matn oxirgi qatorning o'ng chetida (yoki alohida qatorda).
   List<String> _pair(String left, String right) {
-    if (right.isEmpty) return _wrap(left, _w);
+    if (right.isEmpty) return wrap(left, _w);
     if (left.isEmpty) return [right.padLeft(_w)];
     if (left.length + 1 + right.length <= _w) {
       return [left + right.padLeft(_w - left.length)];
     }
-    final wrapped = _wrap(left, _w);
+    final wrapped = wrap(left, _w);
     final last = wrapped.last;
     if (last.length + 1 + right.length <= _w) {
       return [
@@ -244,7 +244,7 @@ class ReceiptBuilder {
   }
 
   /// So'z bo'yicha o'rash; juda uzun so'z — bo'linadi.
-  static List<String> _wrap(String text, int width) {
+  static List<String> wrap(String text, int width) {
     final words = text.trim().split(RegExp(r'\s+'));
     final out = <String>[];
     var current = '';

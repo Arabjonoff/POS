@@ -712,4 +712,17 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get receiptCopy => 'КОПИЯ';
+
+  @override
+  String get statusPrinterChecking => 'Проверка принтера';
+
+  @override
+  String get printerTestTitle => 'ТЕСТОВЫЙ ЧЕК';
+
+  @override
+  String get printerTestSample =>
+      'Lotin: O\'zbekiston. Kirill: Ўзбекистон, Россия';
+
+  @override
+  String get printerTestOk => 'Если текст читается, принтер готов';
 }

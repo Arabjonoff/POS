@@ -874,5 +874,21 @@
   "receiptCopy": "NUSXA",
   "@receiptCopy": {
     "description": "Qayta chop etilgan chek belgisi"
+  },
+  "statusPrinterChecking": "Printer tekshirilmoqda",
+  "@statusPrinterChecking": {
+    "description": "Holat qatori: printer tekshirilmoqda"
+  },
+  "printerTestTitle": "TEST CHEK",
+  "@printerTestTitle": {
+    "description": "Test chek sarlavhasi (chekda)"
+  },
+  "printerTestSample": "Lotin: O'zbekiston. Kirill: Ўзбекистон, Россия",
+  "@printerTestSample": {
+    "description": "Test chekda harflar sinovi"
+  },
+  "printerTestOk": "Bu matn to'g'ri o'qilsa, printer tayyor",
+  "@printerTestOk": {
+    "description": "Test chek oxiri"
   }
 }

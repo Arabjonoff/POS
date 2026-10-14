@@ -692,6 +692,19 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get receiptCopy => 'NUSXA';
+
+  @override
+  String get statusPrinterChecking => 'Printer tekshirilmoqda';
+
+  @override
+  String get printerTestTitle => 'TEST CHEK';
+
+  @override
+  String get printerTestSample =>
+      'Lotin: O\'zbekiston. Kirill: Ўзбекистон, Россия';
+
+  @override
+  String get printerTestOk => 'Bu matn to\'g\'ri o\'qilsa, printer tayyor';
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -1379,4 +1392,17 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get receiptCopy => 'НУСХА';
+
+  @override
+  String get statusPrinterChecking => 'Принтер текширилмоқда';
+
+  @override
+  String get printerTestTitle => 'ТЕСТ ЧЕК';
+
+  @override
+  String get printerTestSample =>
+      'Lotin: O\'zbekiston. Kirill: Ўзбекистон, Россия';
+
+  @override
+  String get printerTestOk => 'Бу матн тўғри ўқилса, принтер тайёр';
 }

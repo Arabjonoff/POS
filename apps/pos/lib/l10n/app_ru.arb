@@ -197,5 +197,9 @@
   "receiptDebtNow": "Текущий долг",
   "receiptNotFiscal": "Не фискальный чек",
   "receiptThanks": "Спасибо за покупку!",
-  "receiptCopy": "КОПИЯ"
+  "receiptCopy": "КОПИЯ",
+  "statusPrinterChecking": "Проверка принтера",
+  "printerTestTitle": "ТЕСТОВЫЙ ЧЕК",
+  "printerTestSample": "Lotin: O'zbekiston. Kirill: Ўзбекистон, Россия",
+  "printerTestOk": "Если текст читается, принтер готов"
 }

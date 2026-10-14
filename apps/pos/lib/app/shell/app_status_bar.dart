@@ -64,6 +64,10 @@ class AppStatusBar extends ConsumerWidget {
           icon: Icons.print_outlined,
           label: l10n.statusPrinterUnknown,
         ),
+        PrinterStatus.checking => PosStatusItem(
+          icon: Icons.print_outlined,
+          label: l10n.statusPrinterChecking,
+        ),
         PrinterStatus.ready => PosStatusItem(
           icon: Icons.print_outlined,
           label: l10n.statusPrinterReady,

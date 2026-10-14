@@ -197,5 +197,9 @@
   "receiptDebtNow": "Жорий қарз",
   "receiptNotFiscal": "Фискал чек эмас",
   "receiptThanks": "Харидингиз учун раҳмат!",
-  "receiptCopy": "НУСХА"
+  "receiptCopy": "НУСХА",
+  "statusPrinterChecking": "Принтер текширилмоқда",
+  "printerTestTitle": "ТЕСТ ЧЕК",
+  "printerTestSample": "Lotin: O'zbekiston. Kirill: Ўзбекистон, Россия",
+  "printerTestOk": "Бу матн тўғри ўқилса, принтер тайёр"
 }

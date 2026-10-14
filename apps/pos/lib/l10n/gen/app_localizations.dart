@@ -1286,6 +1286,30 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'NUSXA'**
   String get receiptCopy;
+
+  /// Holat qatori: printer tekshirilmoqda
+  ///
+  /// In uz, this message translates to:
+  /// **'Printer tekshirilmoqda'**
+  String get statusPrinterChecking;
+
+  /// Test chek sarlavhasi (chekda)
+  ///
+  /// In uz, this message translates to:
+  /// **'TEST CHEK'**
+  String get printerTestTitle;
+
+  /// Test chekda harflar sinovi
+  ///
+  /// In uz, this message translates to:
+  /// **'Lotin: O\'zbekiston. Kirill: Ўзбекистон, Россия'**
+  String get printerTestSample;
+
+  /// Test chek oxiri
+  ///
+  /// In uz, this message translates to:
+  /// **'Bu matn to\'g\'ri o\'qilsa, printer tayyor'**
+  String get printerTestOk;
 }
 
 class _AppLocalizationsDelegate

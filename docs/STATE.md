@@ -14,17 +14,17 @@
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 - [x] 1. `apps/pos/lib/features/printing/receipt.dart`: `ReceiptData` (do'kon, chek raqami, vaqt, kassir, qatorlar, chegirma, jami, to'lovlar, qaytim, nasiya mijozi + qarz) va `ReceiptBuilder` (sof: 32/48 belgi → qatorlar) + `ReceiptLoader` (bazadan savdo bo'yicha) + snapshot testlar `test/printing/receipts/*.txt`
 - [x] 2. `escpos.dart`: ESC/POS kodlovchi (init, markaz, qalin, CP866 / UTF-8, kesish, pul qutisi impulsi) + testlar
-- [ ] 3. Uzatish qatlami: `PrinterTransport` (tarmoq IP:9100 — dart:io Socket; Windows RAW — win32 winspool; soxta — test), `PrinterService` (savdo cheki, test chek, pul qutisi, oxirgi chek, holat) + testlar
+- [x] 3. Uzatish qatlami: `PrinterTransport` (tarmoq IP:9100 — dart:io Socket; Windows RAW — win32 winspool; soxta — test), `PrinterService` (savdo cheki, test chek, pul qutisi, oxirgi chek, holat) + testlar
 - [ ] 4. Printer sozlamalari (`local_settings`: turi, manzil/printer nomi, kenglik, kodlash, avtomatik, nusxa, pul qutisi) + Sozlamalar ekranida "Printer" bo'limi (test chek) + tarjimalar
 - [ ] 5. Kassaga ulash: yakunlashda avtomatik chek (xato savdoni to'xtatmaydi → "Chek chiqmadi" + "Qayta chop etish"), "Oxirgi chek" tugmasi, holat qatorida haqiqiy printer holati
 - [ ] 6. Widget testlari + golden + skrinshotlar `docs/screenshots/T-044/`
 - [ ] 7. Qaror `docs/decisions/` (Android Bluetooth/USB — alohida vazifa), spec, PR, CI → merge; ROADMAP, PROGRESS, STATE
 
 ## Oxirgi bajarilgan ish
-- 2-qadam: `features/printing/escpos.dart` (`EscPos.receipt(rows, encoding:, cut:, drawer:)`, `EscPos.drawerOnly()`, CP866 + o'zbek kirill → rus, UTF-8), test `test/printing/escpos_test.dart`.
+- 3-qadam: `printer_transport.dart` (tarmoq IP:9100, Windows spooler), `winspool.dart` (o'z FFI bog'lamalari, `ffi` bog'liqligi), `printer_settings.dart` (`PrinterSettings` JSON → local_settings `printer`, `printerSettingsProvider`), `printer_service.dart` (`printSale`, `reprintLast`, `printTest`, `openDrawer`, `printerHealthProvider`; `PrinterStatus.checking` qo'shildi). Testlar `test/printing/printer_service_test.dart`.
 
 ## Keyingi aniq harakat
-- 3-qadam: `features/printing/printer_transport.dart` — `abstract class PrinterTransport { Future<void> send(Uint8List); Future<bool> isReachable(); }`, `NetworkPrinterTransport(host, port=9100)` (dart:io Socket, timeout 5 s), `WindowsSpoolerTransport(printerName)` (package:win32 winspool: OpenPrinter/StartDocPrinter RAW/WritePrinter), `printer_service.dart` (`PrinterService.printSale(saleId)`, `printTest()`, `openDrawer()`, `reprintLast()`, holat `printerStatusProvider`) + testlar soxta transport bilan.
+- 4-qadam: Sozlamalar ekrani (`apps/pos/lib/features/settings/settings_screen.dart`) ga "Printer" bo'limi: `features/printing/printer_settings_page.dart` — ulanish (yo'q/tarmoq/Windows), manzil yoki printer ro'yxati (`Winspool.printers()`), kenglik 58/80, kodlash, avtomatik, nusxa 1–3, pul qutisi; tugmalar "Test chek", "Pul qutisini ochish"; tarjimalar.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
