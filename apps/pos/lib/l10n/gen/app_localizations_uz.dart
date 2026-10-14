@@ -473,6 +473,105 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get shiftPrintReport => 'Chek chiqarish';
+
+  @override
+  String get posSearchHint => 'Nom, shtrix-kod yoki PLU';
+
+  @override
+  String get posQuickAll => 'Hammasi';
+
+  @override
+  String get posQuickButtons => 'Tez tugmalar';
+
+  @override
+  String get posQuickEmpty => 'Tez tugmalar hali sozlanmagan';
+
+  @override
+  String get posNoResults => 'Hech narsa topilmadi';
+
+  @override
+  String posCartTab(int number) {
+    return 'Chek $number';
+  }
+
+  @override
+  String get posNewCart => 'Yangi chek';
+
+  @override
+  String get posCartLimit => '5 tadan ortiq chek ochib bo\'lmaydi';
+
+  @override
+  String posItemsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ta tovar',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get posSubtotal => 'Tovarlar';
+
+  @override
+  String get posDiscount => 'Chegirma';
+
+  @override
+  String get posPayComingSoon =>
+      'To\'lov oynasi keyingi yangilanishda qo\'shiladi';
+
+  @override
+  String posLineRemoved(String name) {
+    return '$name o\'chirildi';
+  }
+
+  @override
+  String get posQtyTitle => 'Miqdor';
+
+  @override
+  String get posWeightTitle => 'Vazn, kg';
+
+  @override
+  String get posQtyApply => 'Tayyor';
+
+  @override
+  String get posCodeNotFound => 'Bu kod bazada yo\'q';
+
+  @override
+  String get posNotSellable =>
+      'Bu tovarni sotib bo\'lmaydi: nofaol yoki narxi yo\'q';
+
+  @override
+  String get posDiscountLine => 'Qatorga';
+
+  @override
+  String get posDiscountCheck => 'Butun chekka';
+
+  @override
+  String get posDiscountPercent => 'Foiz';
+
+  @override
+  String get posDiscountAmount => 'Summa';
+
+  @override
+  String get posDiscountApply => 'Qo\'llash';
+
+  @override
+  String get posDiscountRemove => 'Olib tashlash';
+
+  @override
+  String posDiscountNeedsApproval(String percent) {
+    return '$percent% dan katta chegirma uchun menejer yoki ega tasdiqlashi kerak';
+  }
+
+  @override
+  String get approvalTitle => 'Tasdiqlash kerak';
+
+  @override
+  String get approvalNoManagers => 'Menejer yoki ega uchun PIN o\'rnatilmagan';
+
+  @override
+  String get approvalConfirm => 'Tasdiqlash';
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -941,4 +1040,102 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get shiftPrintReport => 'Чек чиқариш';
+
+  @override
+  String get posSearchHint => 'Ном, штрих-код ёки PLU';
+
+  @override
+  String get posQuickAll => 'Ҳаммаси';
+
+  @override
+  String get posQuickButtons => 'Тез тугмалар';
+
+  @override
+  String get posQuickEmpty => 'Тез тугмалар ҳали созланмаган';
+
+  @override
+  String get posNoResults => 'Ҳеч нарса топилмади';
+
+  @override
+  String posCartTab(int number) {
+    return 'Чек $number';
+  }
+
+  @override
+  String get posNewCart => 'Янги чек';
+
+  @override
+  String get posCartLimit => '5 тадан ортиқ чек очиб бўлмайди';
+
+  @override
+  String posItemsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count та товар',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get posSubtotal => 'Товарлар';
+
+  @override
+  String get posDiscount => 'Чегирма';
+
+  @override
+  String get posPayComingSoon => 'Тўлов ойнаси кейинги янгиланишда қўшилади';
+
+  @override
+  String posLineRemoved(String name) {
+    return '$name ўчирилди';
+  }
+
+  @override
+  String get posQtyTitle => 'Миқдор';
+
+  @override
+  String get posWeightTitle => 'Вазн, кг';
+
+  @override
+  String get posQtyApply => 'Тайёр';
+
+  @override
+  String get posCodeNotFound => 'Бу код базада йўқ';
+
+  @override
+  String get posNotSellable =>
+      'Бу товарни сотиб бўлмайди: нофаол ёки нархи йўқ';
+
+  @override
+  String get posDiscountLine => 'Қаторга';
+
+  @override
+  String get posDiscountCheck => 'Бутун чекка';
+
+  @override
+  String get posDiscountPercent => 'Фоиз';
+
+  @override
+  String get posDiscountAmount => 'Сумма';
+
+  @override
+  String get posDiscountApply => 'Қўллаш';
+
+  @override
+  String get posDiscountRemove => 'Олиб ташлаш';
+
+  @override
+  String posDiscountNeedsApproval(String percent) {
+    return '$percent% дан катта чегирма учун менежер ёки эга тасдиқлаши керак';
+  }
+
+  @override
+  String get approvalTitle => 'Тасдиқлаш керак';
+
+  @override
+  String get approvalNoManagers => 'Менежер ёки эга учун PIN ўрнатилмаган';
+
+  @override
+  String get approvalConfirm => 'Тасдиқлаш';
 }

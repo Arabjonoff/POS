@@ -198,5 +198,16 @@ void main() {
       expect(controller.last, PosScanResult.warning);
       await tester.pumpAndSettle();
     });
+
+    testWidgets('can be removed before it ever flashed', (tester) async {
+      final controller = PosScanFeedbackController();
+      addTearDown(controller.dispose);
+      await pumpPos(
+        tester,
+        PosScanFeedback(controller: controller, child: const Text('Cart')),
+      );
+      await pumpPos(tester, const Text('Other screen'));
+      expect(tester.takeException(), isNull);
+    });
   });
 }

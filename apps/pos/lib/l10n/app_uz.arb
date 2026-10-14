@@ -575,5 +575,137 @@
   "shiftPrintReport": "Chek chiqarish",
   "@shiftPrintReport": {
     "description": "Z hisobotni chop etish"
+  },
+  "posSearchHint": "Nom, shtrix-kod yoki PLU",
+  "@posSearchHint": {
+    "description": "Kassa qidiruv maydoni"
+  },
+  "posQuickAll": "Hammasi",
+  "@posQuickAll": {
+    "description": "Tez tugmalar: barcha kategoriyalar"
+  },
+  "posQuickButtons": "Tez tugmalar",
+  "@posQuickButtons": {
+    "description": "Tez tugmalar paneli/varag'i"
+  },
+  "posQuickEmpty": "Tez tugmalar hali sozlanmagan",
+  "@posQuickEmpty": {
+    "description": "Tez tugmali tovar yo'q"
+  },
+  "posNoResults": "Hech narsa topilmadi",
+  "@posNoResults": {
+    "description": "Qidiruv natijasi bo'sh"
+  },
+  "posCartTab": "Chek {number}",
+  "@posCartTab": {
+    "description": "Savat tabi",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "posNewCart": "Yangi chek",
+  "@posNewCart": {
+    "description": "Kechiktirib, yangi chek ochish (F6)"
+  },
+  "posCartLimit": "5 tadan ortiq chek ochib bo'lmaydi",
+  "@posCartLimit": {
+    "description": "Kechiktirilgan cheklar chegarasi"
+  },
+  "posItemsCount": "{count, plural, other{{count} ta tovar}}",
+  "@posItemsCount": {
+    "description": "Savatdagi tovarlar soni",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "posSubtotal": "Tovarlar",
+  "@posSubtotal": {
+    "description": "Chegirmadan oldingi summa"
+  },
+  "posDiscount": "Chegirma",
+  "@posDiscount": {
+    "description": "Chegirma (F3)"
+  },
+  "posPayComingSoon": "To'lov oynasi keyingi yangilanishda qo'shiladi",
+  "@posPayComingSoon": {
+    "description": "T-043 gacha vaqtinchalik"
+  },
+  "posLineRemoved": "{name} o'chirildi",
+  "@posLineRemoved": {
+    "description": "Qator o'chirildi (undo bilan)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "posQtyTitle": "Miqdor",
+  "@posQtyTitle": {
+    "description": "Miqdor oynasi (F2)"
+  },
+  "posWeightTitle": "Vazn, kg",
+  "@posWeightTitle": {
+    "description": "Vaznli tovar miqdori"
+  },
+  "posQtyApply": "Tayyor",
+  "@posQtyApply": {
+    "description": "Miqdorni tasdiqlash"
+  },
+  "posCodeNotFound": "Bu kod bazada yo'q",
+  "@posCodeNotFound": {
+    "description": "Skanerlangan kod topilmadi"
+  },
+  "posNotSellable": "Bu tovarni sotib bo'lmaydi: nofaol yoki narxi yo'q",
+  "@posNotSellable": {
+    "description": "Nofaol yoki narxi 0"
+  },
+  "posDiscountLine": "Qatorga",
+  "@posDiscountLine": {
+    "description": "Chegirma turi"
+  },
+  "posDiscountCheck": "Butun chekka",
+  "@posDiscountCheck": {
+    "description": "Chegirma turi"
+  },
+  "posDiscountPercent": "Foiz",
+  "@posDiscountPercent": {
+    "description": "Chegirma: foiz"
+  },
+  "posDiscountAmount": "Summa",
+  "@posDiscountAmount": {
+    "description": "Chegirma: summa"
+  },
+  "posDiscountApply": "Qo'llash",
+  "@posDiscountApply": {
+    "description": "Chegirmani qo'llash"
+  },
+  "posDiscountRemove": "Olib tashlash",
+  "@posDiscountRemove": {
+    "description": "Chegirmani olib tashlash"
+  },
+  "posDiscountNeedsApproval": "{percent}% dan katta chegirma uchun menejer yoki ega tasdiqlashi kerak",
+  "@posDiscountNeedsApproval": {
+    "description": "Katta chegirma",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "approvalTitle": "Tasdiqlash kerak",
+  "@approvalTitle": {
+    "description": "Menejer/ega PIN oynasi"
+  },
+  "approvalNoManagers": "Menejer yoki ega uchun PIN o'rnatilmagan",
+  "@approvalNoManagers": {
+    "description": "Tasdiqlovchi yo'q"
+  },
+  "approvalConfirm": "Tasdiqlash",
+  "@approvalConfirm": {
+    "description": "PIN bilan tasdiqlash"
   }
 }

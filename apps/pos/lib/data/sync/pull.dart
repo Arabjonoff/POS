@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:clock/clock.dart';
 import 'package:drift/drift.dart';
 import 'package:pos_api_client/pos_api_client.dart';
+import 'package:pos_app/core/text/search_key.dart';
 import 'package:pos_app/data/db/app_database.dart';
 
 /// Pull sahifasini lokal bazaga qo'llaydi (`docs/specs/sync.md`, `sync-api.md`).
@@ -148,8 +149,7 @@ class PullApplier {
           ProductsCompanion.insert(
             id: id,
             name: name,
-            // To'liq transliteratsiya indeksi — T-042.
-            searchKey: Value(name.toLowerCase()),
+            searchKey: Value(SearchKey.of(name)),
             categoryId: Value(d['category'] as String?),
             unitId: _s(d['unit']),
             sellPriceTiyin: _i(d['sell_price_tiyin']),

@@ -92,7 +92,7 @@ void main() {
     final db = await _shiftWithSales();
     addTearDown(db.close);
     await _pump(tester, size, db);
-    await tester.tap(find.text('Smena'));
+    await tester.tap(_shiftButton());
     await tester.pumpAndSettle();
   });
 
@@ -100,7 +100,7 @@ void main() {
     final db = await _shiftWithSales();
     addTearDown(db.close);
     await _pump(tester, size, db);
-    await tester.tap(find.text('Smena'));
+    await tester.tap(_shiftButton());
     await tester.pumpAndSettle();
     await tester.ensureVisible(find.text('Smenani yopish'));
     await tester.pumpAndSettle();
@@ -120,7 +120,7 @@ void main() {
     final db = await _shiftWithSales();
     addTearDown(db.close);
     await _pump(tester, size, db);
-    await tester.tap(find.text('Smena'));
+    await tester.tap(_shiftButton());
     await tester.pumpAndSettle();
     await tester.ensureVisible(find.text('Smenani yopish'));
     await tester.pumpAndSettle();
@@ -136,4 +136,10 @@ void main() {
       LogicalKeyboardKey.enter,
     ]);
   });
+}
+
+/// Smena tugmasi: desktopda yozuvli, telefonda ikon (tooltip).
+Finder _shiftButton() {
+  final text = find.text('Smena');
+  return text.evaluate().isNotEmpty ? text : find.byTooltip('Smena');
 }
