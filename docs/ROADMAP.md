@@ -153,7 +153,7 @@ Spec'lar: `barcode.md`, `pos-screen.md`, `printing.md`, `shifts.md`.
 - **Qabul:** widget va golden testlar; 3000 tovarda qidiruv < 50 ms; ilova o'ldirilib qayta ochilsa savat tiklanadi.
 - **Bog'liq:** T-040, T-041, T-030
 
-### [ ] T-043 To'lov oynasi
+### [x] T-043 To'lov oynasi
 - **Bajarish:** naqd (tez summalar: aniq, 50 000, 100 000, 200 000; qaytim katta), karta (terminalda to'landi deb belgilash), nasiya (mijoz tanlash, limit tekshiruvi), aralash to'lov. Tasdiqlash = bitta tranzaksiya (Sale + items + payments + stock + debt + outbox).
 - **Qabul:** unit testlar (qaytim, aralash, limit); tranzaksiya atomarligi testi; to'lov 3 harakatda.
 - **Bog'liq:** T-042, T-016 (klient tomoni T-060 bilan birga)
