@@ -13,9 +13,9 @@
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 - [x] 1. `QUESTIONS.md` Q-001/Q-002 (sinovdan keyin grace; sinov ichida to'lov) + `subscription-billing.md` sana semantikasi
-- [ ] 2. `apps/billing`: Plan, Subscription (cached status), SubscriptionPayment (o'zgarmas, teskari yozuv), migratsiya, admin
-- [ ] 3. `status.py` (sof funksiya `compute_status`, `add_months`) + `services.py` (start_subscription, record_payment, reverse_payment, refresh_status)
-- [ ] 4. `manage.py update_subscriptions`
+- [x] 2. `apps/billing`: Plan, Subscription (cached status), SubscriptionPayment (o'zgarmas, teskari yozuv), migratsiya, admin
+- [x] 3. `status.py` (sof funksiya `compute_status`, `add_months`) + `services.py` (start_subscription, record_payment, reverse_payment, refresh_status)
+- [x] 4. `manage.py update_subscriptions`
 - [ ] 5. Testlar (≥ 8 holat parametrlangan, to'lov matematikasi, bekor qilish, buyruq)
 - [ ] 6. lint/test/schema; PR, CI, merge
 
@@ -24,7 +24,7 @@ T-011 merge qilindi (#8); dev baza qayta yaratildi (foydalanuvchi ruxsati bilan)
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-2-qadam: `backend/apps/billing` (models.py, admin.py, apps.py), INSTALLED_APPS, makemigrations.
+5-qadam: `backend/apps/billing/tests/` — test_status.py (parametrlangan holatlar), test_services.py, test_command.py.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
