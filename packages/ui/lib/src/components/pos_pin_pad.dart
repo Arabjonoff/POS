@@ -9,6 +9,8 @@ import 'package:pos_ui/src/tokens/pos_typography.dart';
 /// raqamlar va Backspace ham ishlaydi (fokus shu vidjetda bo'lsa).
 ///
 /// Holat tashqarida saqlanadi: [filled] — kiritilgan raqamlar soni.
+/// PIN uzunligi o'zgaruvchan bo'lsa (4–6) — [onSubmit] (✓ tugma va Enter);
+/// nuqtalar soni `max(length, filled)`.
 class PosPinPad extends StatelessWidget {
   const PosPinPad({
     required this.filled,
@@ -16,18 +18,29 @@ class PosPinPad extends StatelessWidget {
     required this.onBackspace,
     required this.backspaceTooltip,
     this.length = 4,
+    this.maxLength = 6,
+    this.onSubmit,
+    this.submitTooltip,
     this.errorText,
     this.enabled = true,
     this.autofocus = true,
     this.focusNode,
     super.key,
-  }) : assert(filled >= 0 && filled <= length, 'filled 0..length');
+  }) : assert(filled >= 0 && filled <= maxLength, 'filled 0..maxLength'),
+       assert(length <= maxLength, 'length <= maxLength');
 
   final int filled;
   final ValueChanged<String> onDigit;
   final VoidCallback onBackspace;
   final String backspaceTooltip;
+
+  /// Kamida shuncha nuqta ko'rinadi.
   final int length;
+  final int maxLength;
+
+  /// Tasdiqlash (✓ tugma, Enter). `null` — tugma yo'q.
+  final VoidCallback? onSubmit;
+  final String? submitTooltip;
 
   /// Xato (noto'g'ri PIN, kutish vaqti) — nuqtalar qizil, ostida matn.
   final String? errorText;
@@ -42,6 +55,12 @@ class PosPinPad extends StatelessWidget {
     final key = event.logicalKey;
     if (key == LogicalKeyboardKey.backspace) {
       onBackspace();
+      return KeyEventResult.handled;
+    }
+    if (onSubmit != null &&
+        (key == LogicalKeyboardKey.enter ||
+            key == LogicalKeyboardKey.numpadEnter)) {
+      onSubmit!();
       return KeyEventResult.handled;
     }
     final digit = _digitKeys[key];
@@ -90,11 +109,11 @@ class PosPinPad extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Semantics(
-              label: '$filled / $length',
+              label: '$filled',
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  for (var i = 0; i < length; i++)
+                  for (var i = 0; i < (filled > length ? filled : length); i++)
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: PosSpacing.s,
@@ -146,6 +165,8 @@ class PosPinPad extends StatelessWidget {
               ),
             ),
             PosNumericKeypad(
+              onSubmit: onSubmit,
+              submitTooltip: submitTooltip,
               onKey: onDigit,
               onBackspace: onBackspace,
               backspaceTooltip: backspaceTooltip,

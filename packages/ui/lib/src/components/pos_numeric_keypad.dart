@@ -14,11 +14,17 @@ class PosNumericKeypad extends StatelessWidget {
     required this.backspaceTooltip,
     this.extraKey,
     this.onClear,
+    this.onSubmit,
+    this.submitTooltip,
     this.keyHeight = PosSizes.keypadKey,
     this.gap = PosSpacing.s,
     this.enabled = true,
     super.key,
-  }) : assert(keyHeight >= PosSizes.keypadKey, 'Tugma kamida 64 dp');
+  }) : assert(keyHeight >= PosSizes.keypadKey, 'Tugma kamida 64 dp'),
+       assert(
+         onSubmit == null || (extraKey == null && submitTooltip != null),
+         'Tasdiqlash tugmasi pastki chapda: extraKey bilan birga emas',
+       );
 
   /// Raqam yoki [extraKey] matni bosildi.
   final ValueChanged<String> onKey;
@@ -32,6 +38,10 @@ class PosNumericKeypad extends StatelessWidget {
 
   /// O'chirish tugmasini uzoq bosish — hammasini tozalash.
   final VoidCallback? onClear;
+
+  /// Berilsa — pastki chapda tasdiqlash (✓) tugmasi.
+  final VoidCallback? onSubmit;
+  final String? submitTooltip;
   final double keyHeight;
   final double gap;
   final bool enabled;
@@ -63,7 +73,15 @@ class PosNumericKeypad extends StatelessWidget {
         row([digit('7'), digit('8'), digit('9')]),
         SizedBox(height: gap),
         row([
-          if (extraKey == null)
+          if (onSubmit != null)
+            _KeypadKey(
+              height: keyHeight,
+              tooltip: submitTooltip,
+              onTap: enabled ? onSubmit : null,
+              accent: true,
+              child: const Icon(Icons.check),
+            )
+          else if (extraKey == null)
             SizedBox(height: keyHeight)
           else
             digit(extraKey!),
@@ -90,6 +108,7 @@ class _KeypadKey extends StatelessWidget {
     this.onLongPress,
     this.tooltip,
     this.muted = false,
+    this.accent = false,
   });
 
   final double height;
@@ -99,15 +118,22 @@ class _KeypadKey extends StatelessWidget {
   final String? tooltip;
   final bool muted;
 
+  /// Asosiy amal (tasdiqlash): primary fon.
+  final bool accent;
+
   @override
   Widget build(BuildContext context) {
     final p = PosPalette.of(context);
-    final fg = onTap == null ? p.disabled : p.text;
+    final enabled = onTap != null;
+    final fg = !enabled ? p.disabled : (accent ? p.onPrimary : p.text);
+    final bg = accent && enabled
+        ? p.primary
+        : (muted || accent ? p.surfaceMuted : p.surface);
     Widget key = Material(
-      color: muted ? p.surfaceMuted : p.surface,
+      color: bg,
       shape: RoundedRectangleBorder(
         borderRadius: PosRadius.controlAll,
-        side: BorderSide(color: p.border),
+        side: BorderSide(color: accent && enabled ? p.primary : p.border),
       ),
       clipBehavior: Clip.antiAlias,
       child: InkWell(

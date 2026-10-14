@@ -198,14 +198,10 @@ class _PinPadDemoState extends State<_PinPadDemo> {
   String? _error;
 
   void _digit(String d) {
-    if (_pin.length >= 4) return;
+    if (_pin.length >= 6) return;
     setState(() {
       _error = null;
       _pin += d;
-      if (_pin.length == 4 && _pin != '1234') {
-        _error = "PIN noto'g'ri (to'g'risi: 1234)";
-        _pin = '';
-      }
     });
   }
 
@@ -218,6 +214,11 @@ class _PinPadDemoState extends State<_PinPadDemo> {
       onBackspace: () => setState(() {
         if (_pin.isNotEmpty) _pin = _pin.substring(0, _pin.length - 1);
       }),
+      onSubmit: () => setState(() {
+        if (_pin != '1234') _error = "PIN noto'g'ri (to'g'risi: 1234)";
+        _pin = '';
+      }),
+      submitTooltip: 'Kirish',
       backspaceTooltip: "O'chirish",
     ),
   );
