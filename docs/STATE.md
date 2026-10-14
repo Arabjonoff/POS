@@ -5,20 +5,29 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-030 Dizayn tizimi (packages/ui)
+- Branch: feat/T-030-design-system
+- Boshlangan: 2026-10-14
 - Oxirgi yangilanish: 2026-10-14
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
+- [ ] 1. Tokenlar: palitra (ThemeExtension), Inter shrifti, tipografiya, oraliq, radius, soya, harakat, breakpoint + kontrast (WCAG AA) testi
+- [ ] 2. To'liq ThemeData (komponent mavzulari) + summa/miqdor formatlash
+- [ ] 3. Komponentlar 1: Button, IconButton, TextField, SearchField, Card, ListTile, Badge, StatusDot
+- [ ] 4. Komponentlar 2: MoneyText, QtyStepper, NumericKeypad, PinPad
+- [ ] 5. Komponentlar 3: Dialog/Sheet, Toast, EmptyState, Skeleton, ScanFeedback
+- [ ] 6. Komponentlar 4: DataTable, StatusBar, ResponsiveScaffold
+- [ ] 7. Widgetbook: har komponent galereyasi (barcha holatlar) + use-case'lar
+- [ ] 8. Golden testlar (3 o'lcham × 2 mavzu) + docs/screenshots/T-030
+- [ ] 9. analyze/format/test yashil, PR, merge, ROADMAP/PROGRESS
 
 ## Oxirgi bajarilgan ish
-T-020 Platforma admin API tugadi (PR ochildi, CI yashil bo'lsa squash merge). 1-bosqich (backend) tugadi.
+T-030 boshlandi: branch yaratildi, qadamlar yozildi.
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-T-020 PR merge qilinganini tekshirish (`gh pr list --state open`); keyin ROADMAP'dan T-030 Dizayn tizimi (packages/ui) — `docs/specs/design-system.md`.
+Qadam 1: packages/ui/lib/src/tokens/ (pos_palette.dart, pos_typography.dart, ...) va packages/ui/assets/fonts/Inter-*.ttf.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
