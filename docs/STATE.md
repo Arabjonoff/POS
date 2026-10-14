@@ -5,26 +5,20 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-016 Mijozlar va nasiya
-- Branch: feat/T-016-customers-debts
-- Boshlangan: 2026-10-14
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-14
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [x] 1. Spec `docs/specs/customers-api.md` (mijoz, DebtEntry, balans, limit, to'lov, tuzatish, huquqlar, API); savol bo'lsa `QUESTIONS.md`
-- [x] 2. `apps/customers`: Customer (yumshoq o'chirish), DebtEntry (AppendOnlyModel); migratsiya; admin
-- [x] 3. `services.py`: balance, record_debt (sale/refund — T-017 uchun), check_limit, pay_debt, adjust_debt (qulf bilan)
-- [x] 4. API: `/customers/` (balance, search, has_debt, saralash), `/{id}/debt-entries/`, `/{id}/payments/`, `/{id}/adjustments/`
-- [ ] 5. Testlar: qarzga sotish + qisman to'lov → balans, limit, ortiqcha to'lov, tuzatish (faqat ega), o'zgarmaslik, izolyatsiya, huquqlar
-- [ ] 6. openapi + schema.d.ts; lint/test; PROGRESS/ROADMAP; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-4-qadam: customers API (serializers, views, urls); `ClientIdMixin` → `apps/core/serializers.py`. openapi.yaml yozildi (validatsiya toza). Testlar hali yo'q.
+T-016 Mijozlar va nasiya tugadi (PR ochildi, CI yashil bo'lsa squash merge).
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-5-qadam: `backend/apps/customers/tests/` — conftest, test_customers.py (CRUD, limit huquqi, qidiruv, saralash, o'chirish), test_debts.py (sale+payment balans, ortiqcha to'lov, tuzatish, o'zgarmaslik, DB constraint, izolyatsiya).
+T-016 PR merge qilinganini tekshirish (`gh pr list --state open`); keyin ROADMAP'dan T-017 Savdo, smena, qaytarish.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q

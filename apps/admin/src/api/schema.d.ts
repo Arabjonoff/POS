@@ -112,6 +112,95 @@ export interface paths {
         patch: operations["categories_partial_update"];
         trace?: never;
     };
+    "/api/v1/customers/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Qarzdorlar birinchi (qarz kamayib), keyin ism. */
+        get: operations["customers_list"];
+        put?: never;
+        /** @description Queryset faqat joriy tenant yozuvlari; yaratishda tenant avtomatik qo'yiladi. */
+        post: operations["customers_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/customers/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Queryset faqat joriy tenant yozuvlari; yaratishda tenant avtomatik qo'yiladi. */
+        get: operations["customers_retrieve"];
+        /** @description Queryset faqat joriy tenant yozuvlari; yaratishda tenant avtomatik qo'yiladi. */
+        put: operations["customers_update"];
+        post?: never;
+        /** @description Yumshoq o'chirish; qarzi bor — `409 customer_has_debt`. */
+        delete: operations["customers_destroy"];
+        options?: never;
+        head?: never;
+        /** @description Queryset faqat joriy tenant yozuvlari; yaratishda tenant avtomatik qo'yiladi. */
+        patch: operations["customers_partial_update"];
+        trace?: never;
+    };
+    "/api/v1/customers/{id}/adjustments/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Queryset faqat joriy tenant yozuvlari; yaratishda tenant avtomatik qo'yiladi. */
+        post: operations["customers_adjustments_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/customers/{id}/debt-entries/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Queryset faqat joriy tenant yozuvlari; yaratishda tenant avtomatik qo'yiladi. */
+        get: operations["customers_debt_entries_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/customers/{id}/payments/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Queryset faqat joriy tenant yozuvlari; yaratishda tenant avtomatik qo'yiladi. */
+        post: operations["customers_payments_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/devices/": {
         parameters: {
             query?: never;
@@ -508,6 +597,14 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        AdjustmentRequest: {
+            /** Format: uuid */
+            id?: string;
+            amount_tiyin: number;
+            note: string;
+        };
+        /** @enum {unknown} */
+        BlankEnum: "";
         Category: {
             /** Format: uuid */
             readonly id: string;
@@ -530,6 +627,82 @@ export interface components {
             /** Rang (palitra kaliti) */
             color?: string;
         };
+        /** @description `id` klientda yaratilishi mumkin (UUIDv7); keyin o'zgarmaydi. */
+        Customer: {
+            /** Format: uuid */
+            id?: string;
+            /** Ism */
+            full_name: string;
+            /** Telefon */
+            phone?: string;
+            /** Izoh */
+            note?: string;
+            debt_limit_tiyin?: number | null;
+            readonly balance_tiyin: number;
+            /** Format: date-time */
+            readonly created_at: string;
+            /** Format: date-time */
+            readonly updated_at: string;
+        };
+        /** @description `id` klientda yaratilishi mumkin (UUIDv7); keyin o'zgarmaydi. */
+        CustomerRequest: {
+            /** Format: uuid */
+            id?: string;
+            /** Ism */
+            full_name: string;
+            /** Telefon */
+            phone?: string;
+            /** Izoh */
+            note?: string;
+            debt_limit_tiyin?: number | null;
+        };
+        DebtEntry: {
+            /** Format: uuid */
+            id?: string;
+            /**
+             * Mijoz
+             * Format: uuid
+             */
+            customer: string;
+            /**
+             * Summa (tiyin, ±)
+             * Format: int64
+             */
+            amount_tiyin: number;
+            /** Turi */
+            type: components["schemas"]["DebtEntryTypeEnum"];
+            /** To'lov usuli */
+            method?: components["schemas"]["MethodEnum"] | components["schemas"]["BlankEnum"];
+            /**
+             * Savdo id
+             * Format: uuid
+             */
+            sale_id?: string | null;
+            /** Izoh */
+            note?: string;
+            /**
+             * Kim
+             * Format: uuid
+             */
+            created_by?: string | null;
+            /**
+             * Vaqt
+             * Format: date-time
+             */
+            at?: string;
+        };
+        DebtEntryResult: {
+            entry: components["schemas"]["DebtEntry"];
+            balance_tiyin: number;
+        };
+        /**
+         * @description * `sale` - savdo
+         *     * `payment` - to'lov
+         *     * `refund` - qaytarish
+         *     * `adjustment` - tuzatish
+         * @enum {string}
+         */
+        DebtEntryTypeEnum: "sale" | "payment" | "refund" | "adjustment";
         Device: {
             /** Format: uuid */
             readonly id: string;
@@ -657,6 +830,12 @@ export interface components {
             readonly role: components["schemas"]["RoleEnum"];
             tenant: components["schemas"]["TenantBrief"] | null;
         };
+        /**
+         * @description * `cash` - naqd
+         *     * `card` - karta
+         * @enum {string}
+         */
+        MethodEnum: "cash" | "card";
         PaginatedCategoryList: {
             /** @example 123 */
             count: number;
@@ -671,6 +850,36 @@ export interface components {
              */
             previous?: string | null;
             results: components["schemas"]["Category"][];
+        };
+        PaginatedCustomerList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["Customer"][];
+        };
+        PaginatedDebtEntryList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["DebtEntry"][];
         };
         PaginatedDeviceList: {
             /** @example 123 */
@@ -818,6 +1027,18 @@ export interface components {
             color?: string;
         };
         /** @description `id` klientda yaratilishi mumkin (UUIDv7); keyin o'zgarmaydi. */
+        PatchedCustomerRequest: {
+            /** Format: uuid */
+            id?: string;
+            /** Ism */
+            full_name?: string;
+            /** Telefon */
+            phone?: string;
+            /** Izoh */
+            note?: string;
+            debt_limit_tiyin?: number | null;
+        };
+        /** @description `id` klientda yaratilishi mumkin (UUIDv7); keyin o'zgarmaydi. */
         PatchedInventoryCountRequest: {
             /** Format: uuid */
             id?: string;
@@ -882,6 +1103,14 @@ export interface components {
             name?: string;
             /** Kasrli */
             is_fractional?: boolean;
+        };
+        PaymentRequest: {
+            /** Format: uuid */
+            id?: string;
+            amount_tiyin: number;
+            method: components["schemas"]["MethodEnum"];
+            /** @default  */
+            note: string;
         };
         /**
          * @description * `windows` - Windows
@@ -1008,7 +1237,7 @@ export interface components {
              */
             qty_milli: number;
             /** Turi */
-            type: components["schemas"]["TypeEnum"];
+            type: components["schemas"]["StockMovementTypeEnum"];
             /** Hujjat turi */
             ref_type?: string;
             /**
@@ -1027,6 +1256,15 @@ export interface components {
              */
             created_by?: string | null;
         };
+        /**
+         * @description * `receipt` - kirim
+         *     * `sale` - savdo
+         *     * `refund` - qaytarish
+         *     * `adjustment` - tuzatish
+         *     * `inventory` - inventarizatsiya
+         * @enum {string}
+         */
+        StockMovementTypeEnum: "receipt" | "sale" | "refund" | "adjustment" | "inventory";
         /** @description `id` klientda yaratilishi mumkin (UUIDv7); keyin o'zgarmaydi. */
         StockReceipt: {
             /** Format: uuid */
@@ -1124,15 +1362,6 @@ export interface components {
         TokenRefreshRequest: {
             refresh: string;
         };
-        /**
-         * @description * `receipt` - kirim
-         *     * `sale` - savdo
-         *     * `refund` - qaytarish
-         *     * `adjustment` - tuzatish
-         *     * `inventory` - inventarizatsiya
-         * @enum {string}
-         */
-        TypeEnum: "receipt" | "sale" | "refund" | "adjustment" | "inventory";
         Unit: {
             /** Format: uuid */
             readonly id: string;
@@ -1406,6 +1635,241 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Category"];
+                };
+            };
+        };
+    };
+    customers_list: {
+        parameters: {
+            query?: {
+                /** @description Faqat qarzdorlar (balans > 0) */
+                has_debt?: boolean;
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                /** @description Ism yoki telefon (qisman) */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedCustomerList"];
+                };
+            };
+        };
+    };
+    customers_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CustomerRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["CustomerRequest"];
+                "multipart/form-data": components["schemas"]["CustomerRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Customer"];
+                };
+            };
+        };
+    };
+    customers_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this mijoz. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Customer"];
+                };
+            };
+        };
+    };
+    customers_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this mijoz. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CustomerRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["CustomerRequest"];
+                "multipart/form-data": components["schemas"]["CustomerRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Customer"];
+                };
+            };
+        };
+    };
+    customers_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this mijoz. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    customers_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this mijoz. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedCustomerRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedCustomerRequest"];
+                "multipart/form-data": components["schemas"]["PatchedCustomerRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Customer"];
+                };
+            };
+        };
+    };
+    customers_adjustments_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this mijoz. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AdjustmentRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["AdjustmentRequest"];
+                "multipart/form-data": components["schemas"]["AdjustmentRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DebtEntryResult"];
+                };
+            };
+        };
+    };
+    customers_debt_entries_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+            };
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this mijoz. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedDebtEntryList"];
+                };
+            };
+        };
+    };
+    customers_payments_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this mijoz. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PaymentRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PaymentRequest"];
+                "multipart/form-data": components["schemas"]["PaymentRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DebtEntryResult"];
                 };
             };
         };

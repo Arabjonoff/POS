@@ -37,7 +37,8 @@ def _positive(amount_tiyin) -> None:
 
 
 def _create(customer, **fields) -> DebtEntry:
-    fields.setdefault("at", timezone.now())
+    if fields.get("at") is None:
+        fields["at"] = timezone.now()
     return DebtEntry.objects.create(tenant_id=customer.tenant_id, customer=customer, **fields)
 
 
