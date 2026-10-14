@@ -13,6 +13,7 @@ class PosTableColumn<T> {
     this.width,
     this.numeric = false,
     this.sortable = false,
+    this.minWidth = 112,
   });
 
   final String label;
@@ -23,6 +24,10 @@ class PosTableColumn<T> {
   /// Raqamli ustun: o'ngga tekislangan, raqamlar bir xil kenglikda.
   final bool numeric;
   final bool sortable;
+
+  /// [flex] ustunning eng kichik kengligi. Jadval kengligi ustunlar
+  /// yig'indisidan kichik bo'lsa, jadval gorizontal suriladi.
+  final double minWidth;
 }
 
 /// Desktop/planshet jadvali: sarlavha (saralash bilan), qatorlar (hover,
@@ -153,17 +158,19 @@ class PosDataTable<T> extends StatelessWidget {
         itemCount: 5,
         itemBuilder: (context, _) => Container(
           height: rowHeight,
-          padding: const EdgeInsets.symmetric(horizontal: _cellPadding),
           decoration: BoxDecoration(
             border: Border(bottom: BorderSide(color: p.border)),
           ),
-          child: const Row(
+          child: Row(
             children: [
-              Expanded(flex: 3, child: PosSkeleton(height: 14)),
-              SizedBox(width: PosSpacing.xxl),
-              Expanded(child: PosSkeleton(height: 14)),
-              SizedBox(width: PosSpacing.xxl),
-              Expanded(child: PosSkeleton(height: 14)),
+              for (final column in columns)
+                sized(
+                  column,
+                  FractionallySizedBox(
+                    widthFactor: column.numeric ? 0.5 : 0.8,
+                    child: const PosSkeleton(height: 14),
+                  ),
+                ),
             ],
           ),
         ),
@@ -187,14 +194,28 @@ class PosDataTable<T> extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: PosRadius.controlAll,
-        child: Column(
-          mainAxisSize: shrinkWrap ? MainAxisSize.min : MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            header,
-            Divider(height: 1, color: p.border),
-            if (shrinkWrap) bodyContent else Expanded(child: bodyContent),
-          ],
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final table = Column(
+              mainAxisSize: shrinkWrap ? MainAxisSize.min : MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                header,
+                Divider(height: 1, color: p.border),
+                if (shrinkWrap) bodyContent else Expanded(child: bodyContent),
+              ],
+            );
+            // Tor ekranda ustunlar siqilmaydi — jadval gorizontal suriladi.
+            final minWidth = columns.fold<double>(
+              0,
+              (sum, c) => sum + (c.width ?? c.minWidth),
+            );
+            if (constraints.maxWidth >= minWidth) return table;
+            return SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: SizedBox(width: minWidth, child: table),
+            );
+          },
         ),
       ),
     );

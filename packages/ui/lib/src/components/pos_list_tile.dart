@@ -48,7 +48,9 @@ class PosListTile extends StatelessWidget {
             if (leading != null) ...[
               IconTheme.merge(
                 data: IconThemeData(
-                  color: selected ? p.onPrimarySoft : p.textSecondary,
+                  color: !enabled
+                      ? p.disabled
+                      : (selected ? p.onPrimarySoft : p.textSecondary),
                 ),
                 child: leading!,
               ),

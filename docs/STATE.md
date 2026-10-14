@@ -18,16 +18,16 @@
 - [x] 4. Komponentlar 2: MoneyText, QtyStepper, NumericKeypad, PinPad
 - [x] 5. Komponentlar 3: Dialog/Sheet, Toast, EmptyState, Skeleton, ScanFeedback
 - [x] 6. Komponentlar 4: DataTable, StatusBar, ResponsiveScaffold
-- [ ] 7. Widgetbook: har komponent galereyasi (barcha holatlar) + use-case'lar
+- [x] 7. Widgetbook: har komponent galereyasi (barcha holatlar) + use-case'lar
 - [ ] 8. Golden testlar (3 o'lcham × 2 mavzu) + docs/screenshots/T-030
 - [ ] 9. analyze/format/test yashil, PR, merge, ROADMAP/PROGRESS
 
 ## Oxirgi bajarilgan ish
-Qadam 1–6: tokenlar (PosColors, PosPalette ThemeExtension, PosTone, PosTypography+Inter, PosSpacing/Radius/Sizes/Motion, PosWindowSize), to‘liq PosTheme, PosFormat (summa/miqdor). 82 test yashil (kontrast AA). Komponentlar 1 (Button+Keycap, IconButton, TextField, SearchField, Card, ListTile, Badge, StatusDot) + widget testlar; komponentlar 2 (MoneyText, QtyStepper, NumericKeypad, PinPad). komponentlar 3 (PosDialog+showPosDialog, PosToast+showPosToast, EmptyState, Skeleton, ScanFeedback). Komponentlar 4 (DataTable, StatusBar, ResponsiveScaffold). 130 test yashil.
+Qadam 1–7: tokenlar (PosColors, PosPalette ThemeExtension, PosTone, PosTypography+Inter, PosSpacing/Radius/Sizes/Motion, PosWindowSize), to‘liq PosTheme, PosFormat (summa/miqdor). 82 test yashil (kontrast AA). Komponentlar 1 (Button+Keycap, IconButton, TextField, SearchField, Card, ListTile, Badge, StatusDot) + widget testlar; komponentlar 2 (MoneyText, QtyStepper, NumericKeypad, PinPad). komponentlar 3 (PosDialog+showPosDialog, PosToast+showPosToast, EmptyState, Skeleton, ScanFeedback). Komponentlar 4 (DataTable, StatusBar, ResponsiveScaffold). Widgetbook galereyalari (9 ta + dialog), knob playground, golden test (widgetbook/test/goldens_test.dart, 60 PNG) yaratildi. ui 131 + widgetbook 62 test yashil.
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-Qadam 7: packages/ui/widgetbook/lib/galleries/*.dart (har komponent guruhi uchun galereya — barcha holatlar), catalog.dart da use-case + knob; widgetbook/test/flutter_test_config.dart (Inter + MaterialIcons yuklash).
+Qadam 8: goldenlarni ko‘rib chiqish (widgetbook/test/goldens/*/), kamchiliklarni tuzatish, `flutter test --update-goldens` (widgetbook papkasida), skrinshotlarni docs/screenshots/T-030/ ga nusxalash; Makefile ui-test ga widgetbook testlarini qo‘shish.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q

@@ -139,7 +139,8 @@ void main() {
       );
       await tester.pump(const Duration(milliseconds: 100));
       expect(find.text('Non'), findsNothing);
-      expect(find.byType(PosSkeleton), findsNWidgets(15));
+      // 5 qator × 2 ustun.
+      expect(find.byType(PosSkeleton), findsNWidgets(10));
     });
 
     testWidgets('keyboard: focus row and press Enter', (tester) async {
@@ -163,6 +164,33 @@ void main() {
       await tester.sendKeyEvent(LogicalKeyboardKey.enter);
       await tester.pump();
       expect(tapped?.name, 'Non');
+    });
+
+    testWidgets('narrow screen scrolls horizontally instead of squeezing', (
+      tester,
+    ) async {
+      await pumpPos(
+        tester,
+        SizedBox(
+          width: 200,
+          height: 300,
+          child: PosDataTable<_Row>(columns: _columns(), rows: _rows),
+        ),
+        size: const Size(390, 844),
+      );
+      expect(tester.takeException(), isNull);
+      final scroll = tester.widget<SingleChildScrollView>(
+        find.descendant(
+          of: find.byType(PosDataTable<_Row>),
+          matching: find.byType(SingleChildScrollView),
+        ),
+      );
+      expect(scroll.scrollDirection, Axis.horizontal);
+      // Ustun kengligi minWidth dan kichik emas.
+      expect(
+        tester.getSize(find.text('Name')).width,
+        greaterThan(0),
+      );
     });
 
     testWidgets('shrinkWrap works inside unbounded height', (tester) async {
