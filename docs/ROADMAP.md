@@ -158,7 +158,7 @@ Spec'lar: `barcode.md`, `pos-screen.md`, `printing.md`, `shifts.md`.
 - **Qabul:** unit testlar (qaytim, aralash, limit); tranzaksiya atomarligi testi; to'lov 3 harakatda.
 - **Bog'liq:** T-042, T-016 (klient tomoni T-060 bilan birga)
 
-### [ ] T-044 Chek chop etish
+### [x] T-044 Chek chop etish
 - **Bajarish:** `printing.md` bo'yicha: ESC/POS 58/80 mm; Windows — o'rnatilgan printer yoki USB/tarmoq; Android — Bluetooth/USB/tarmoq. Chek shabloni, test chek, pul qutisini ochish, printer holati. Printer yo'q bo'lsa savdo to'xtamaydi.
 - **Qabul:** chek matnini generatsiya qiluvchi funksiya uchun snapshot testlar; printersiz savdo ishlaydi.
 - **Bog'liq:** T-043
