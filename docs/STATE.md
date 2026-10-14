@@ -5,25 +5,13 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-041 Smena ochish/yopish
-- Branch: feat/T-041-shifts
-- Boshlangan: 2026-10-14
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-14
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [x] 1. ShiftService (open/close/report, X/Z) + unit testlar — `apps/pos/lib/data/shifts/shift_service.dart`
-- [x] 2. UI: OpenShiftCard, ShiftScreen (/pos/shift), ShiftReportView, MoneyInput, tarjimalar (uz/uz-Cyrl/ru); analyze toza
-- [x] 3. Widget testlar: smena yopiq → karta; ochish; X hisobot; yopish → farq → Z hisobot — `apps/pos/test/features/shift_test.dart`
-- [x] 4. Golden testlar + skrinshotlar (390×844, 1024×768, 1440×900) — `docs/screenshots/T-041/`
-- [ ] 5. To'liq tekshiruv: `make pos-analyze pos-test ui-test`
-- [ ] 6. PR, CI yashil → squash merge; ROADMAP `[x]`, PROGRESS, STATE tozalash
-
-## Oxirgi bajarilgan ish
-- 4-qadam: `test/goldens/shift_golden_test.dart` (open, x_report, close, z_report × 3 o'lcham × 2 mavzu), app_shell pos golden'lari yangilandi, skrinshotlar `docs/screenshots/T-041/`.
-
-## Keyingi aniq harakat
-- 5-qadam: `make pos-analyze pos-test ui-test` (ildizda). Yashil bo'lsa — PR.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
@@ -37,3 +25,4 @@
 - Flutter widget testida `tester.runAsync` + drift stream osilib qoladi — bazaga yozishni test tanasida to'g'ridan-to'g'ri `await` qil. Osilgan test: `flutter test --timeout 30s -r expanded`.
 - API klient: `make api-clients` (backend sxema → admin TS + Dart: swagger_parser + build_runner `packages/api_client_dart`). Yangi endpoint kerak bo'lsa — `packages/api_client_dart/swagger_parser.yaml` `include_paths` ga qo'sh.
 - Vaqt: ilova kodida `DateTime.now()` emas, `clock.now()` (package:clock) yoki `clockProvider` — widget testlarida soxta vaqt ishlashi uchun.
+- Widget/golden testlarda telefonda (390×844) ekrandan pastdagi tugmani bosishdan oldin `tester.ensureVisible` — aks holda bosish pastki menyuga tushadi (ogohlantirish bilan, xatosiz).

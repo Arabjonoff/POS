@@ -143,7 +143,7 @@ Spec'lar: `barcode.md`, `pos-screen.md`, `printing.md`, `shifts.md`.
 - **Qabul:** unit testlar: tez kiritish → shtrix-kod hodisasi; sekin qo'lda yozish → oddiy matn; vaznli EAN-13 to'g'ri ajratiladi; EAN-13/EAN-8/UPC nazorat raqami tekshiriladi.
 - **Bog'liq:** T-006
 
-### [ ] T-041 Smena ochish/yopish
+### [x] T-041 Smena ochish/yopish
 - **Bajarish:** smena ochilmaguncha savdo yo'q; ochishda boshlang'ich naqd; yopishda sanalgan naqd, farq, X/Z hisobot (ekran + chek).
 - **Qabul:** widget testlari; Z hisobot raqamlari savdolar bilan mos.
 - **Bog'liq:** T-034

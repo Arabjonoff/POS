@@ -162,3 +162,10 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-040 (squash merge)
 - Qoldi / keyingi qadam: T-041 Smena ochish/yopish. Kassa ekrani (T-042) `ScanListener` + `onTyping` → qidiruv, `PosScanFeedback` + `ScanSignal`.
 - Muammo yoki qaror: tugmani "ushlab, keyin qaytarish" — chunki framework qayta ishlagan klaviatura hodisasi platformaning matn kiritishiga yetib bormaydi; qaytarish `EditableTextState.userUpdateTextEditingValue` orqali (formatter va onChanged ishlaydi). Haqiqiy qurilmada (Windows HID skaner) qo'lda sinash — T-090 chidamlilik testlarida.
+
+## 2026-10-14 — T-041 Smena ochish/yopish
+- Qilindi: `ShiftService` (ochish — oldingi sanalgan naqd taklif qilinadi, yopish — sanalgan naqd va farq, X/Z hisobot: savdolar, to'lov turlari, qaytarishlar, kiritish/chiqarish, qarz to'lovlari, kutilgan naqd; outbox `shift.opened`/`shift.closed`), kassa ekrani smena yopiq bo'lsa "Smenani oching" kartasi (savdo yo'q), `/pos/shift` — X hisobot, yopish oynasi (farq darhol: ortiqcha/kam), Z hisobot. `MoneyInput` (katta summa + ekran klaviaturasi `00`, fizik klaviatura). Holat qatoridagi smena belgisi — shu qurilma smenasi.
+- Testlar: apps/pos 211 (+34): ShiftService unit testlari (Z raqamlari savdolar bilan mos), widget testlari (ochish, taklif, X hisobot, yopish → kam, bekor qilish), golden'lar (ochish, X, yopish, Z × 3 o'lcham × 2 mavzu). Skrinshotlar `docs/screenshots/T-041/`, qobiq — `T-033/` yangilandi.
+- PR: T-041 (squash merge)
+- Qoldi / keyingi qadam: T-042 Kassa ekrani — savat. Z hisobot chekini chop etish — T-044 (tugma hozircha o'chiq); pul kiritish/chiqarish UI — T-046.
+- Muammo yoki qaror: uzilishdan tiklandi — UI qadami commit qilinmagan edi, analyze xatolari tuzatildi. `MoneyInput` bir kadr ichida kelgan bir nechta tugmada raqam yo'qotardi (qiymat faqat ota qayta chizganda yangilanardi) — ichki holat bilan tuzatildi.
