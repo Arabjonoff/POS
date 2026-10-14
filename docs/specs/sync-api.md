@@ -58,3 +58,7 @@ Umumiy tamoyillar: `sync.md`. Hodisa payloadlari va qo'llash qoidalari: `sales-a
 ## Narx tarixi — `GET /api/v1/sync/price-history/?product=<uuid>` (T-050)
 - Faqat qurilma tokeni bilan; tovar qurilma tenantida bo'lishi shart (boshqa tenant yoki noma'lum — `404`, noto'g'ri UUID — `400`).
 - Javob: `catalog-api.md` dagi `price-history` bilan bir xil (oxirgi 50 ta, eng yangisi birinchi). Kassada faqat menejer/ega ko'radi (lokal PIN); oflaynda — "Internet kerak".
+
+## Qoldiq harakatlari — `GET /api/v1/sync/stock-movements/?product=<uuid>` (T-054)
+- Faqat qurilma tokeni bilan; tovar qurilma tenantida bo'lishi shart (aks holda `404`, noto'g'ri UUID — `400`).
+- Javob: oxirgi 100 ta harakat (barcha kassalar, eng yangisi birinchi): `[{id, type, qty_milli, ref_type, at, created_by_name}]`.

@@ -1265,6 +1265,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/sync/stock-movements/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * @description Kassa uchun tovar qoldiq harakatlari (onlayn, T-054): barcha kassalar,
+         *     oxirgi 100 ta, faqat o'z tenanti.
+         */
+        get: operations["sync_stock_movements_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/units/": {
         parameters: {
             query?: never;
@@ -2956,6 +2976,22 @@ export interface components {
              * Format: uuid
              */
             created_by?: string | null;
+        };
+        StockMovementEntry: {
+            /** Format: uuid */
+            readonly id: string;
+            /** Turi */
+            readonly type: components["schemas"]["StockMovementTypeEnum"];
+            /** Miqdor (milli, ±) */
+            readonly qty_milli: number;
+            /** Hujjat turi */
+            readonly ref_type: string;
+            /**
+             * Vaqt
+             * Format: date-time
+             */
+            readonly at: string;
+            readonly created_by_name: string | null;
         };
         /**
          * @description * `receipt` - kirim
@@ -5747,6 +5783,27 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PushResponse"];
+                };
+            };
+        };
+    };
+    sync_stock_movements_list: {
+        parameters: {
+            query: {
+                product: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StockMovementEntry"][];
                 };
             };
         };

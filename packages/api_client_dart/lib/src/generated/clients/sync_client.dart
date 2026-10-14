@@ -17,6 +17,7 @@ import '../models/price_history.dart';
 import '../models/pull_response.dart';
 import '../models/push_request_request.dart';
 import '../models/push_response.dart';
+import '../models/stock_movement_entry.dart';
 import '../models/upload_response.dart';
 
 part 'sync_client.g.dart';
@@ -65,5 +66,12 @@ abstract class SyncClient {
   @POST('/api/v1/sync/push/')
   Future<PushResponse> syncPushCreate({
     @Body() required PushRequestRequest body,
+  });
+
+  /// Kassa uchun tovar qoldiq harakatlari (onlayn, T-054): barcha kassalar,.
+  /// oxirgi 100 ta, faqat o'z tenanti.
+  @GET('/api/v1/sync/stock-movements/')
+  Future<List<StockMovementEntry>> syncStockMovementsList({
+    @Query('product') required String product,
   });
 }

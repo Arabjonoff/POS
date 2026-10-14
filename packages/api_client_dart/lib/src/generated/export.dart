@@ -34,6 +34,8 @@ export 'models/push_request_request.dart';
 export 'models/push_response.dart';
 export 'models/role_enum.dart';
 export 'models/row_error.dart';
+export 'models/stock_movement_entry.dart';
+export 'models/stock_movement_type_enum.dart';
 export 'models/subscription_snapshot.dart';
 export 'models/tenant_brief.dart';
 export 'models/token_refresh.dart';

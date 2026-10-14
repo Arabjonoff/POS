@@ -12,17 +12,17 @@
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [ ] 1. Spec (`products.md`): tarix — server (onlayn) + yuborilmagan lokal; buyurtma ro'yxati — CSV, taklif = 2×min − qoldiq
-- [ ] 2. Backend: `GET /api/v1/sync/stock-movements/?product=` (qurilma tokeni, oxirgi 100, kim) + pytest (tenant izolyatsiyasi) + OpenAPI + klientlar
+- [x] 1. Spec (`products.md`): tarix — server (onlayn) + yuborilmagan lokal; buyurtma ro'yxati — CSV, taklif = 2×min − qoldiq
+- [x] 2. Backend: `GET /api/v1/sync/stock-movements/?product=` (qurilma tokeni, oxirgi 100, kim) + pytest (tenant izolyatsiyasi) + OpenAPI + klientlar
 - [ ] 3. Kassa: `data/catalog/stock_history.dart` (server + lokal yuborilmagan), tovar kartasida "Harakatlar tarixi"; `data/catalog/order_list.dart` (kam qolganlar → CSV, sof funksiya + test), Tovarlar → "Kam qolgan" filtrida "Buyurtma ro'yxati" eksporti; tarjimalar
 - [ ] 4. Widget testlari + golden + skrinshotlar
 - [ ] 5. PR, CI → merge; ROADMAP, PROGRESS, STATE
 
 ## Oxirgi bajarilgan ish
-- T-053 merge qilindi (#34). T-054 boshlandi.
+- 1–2-qadam: spec (`products.md`), `GET /api/v1/sync/stock-movements/?product=` + pytest, `StockMovementTypeEnum` ENUM_NAME_OVERRIDES da qotirildi; klientlar yangilandi (`syncStockMovementsList`).
 
 ## Keyingi aniq harakat
-- 1-qadam: `docs/specs/products.md` ga "Qoldiq tarixi va buyurtma ro'yxati (T-054)" bo'limi.
+- 3-qadam: `apps/pos/lib/data/catalog/stock_history.dart`, `order_list.dart`; tovar kartasi va Tovarlar ekraniga ulash.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
