@@ -3126,8 +3126,6 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["LoginRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["LoginRequest"];
-                "multipart/form-data": components["schemas"]["LoginRequest"];
             };
         };
         responses: {
@@ -3170,8 +3168,6 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["TokenRefreshRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["TokenRefreshRequest"];
-                "multipart/form-data": components["schemas"]["TokenRefreshRequest"];
             };
         };
         responses: {
@@ -3266,8 +3262,6 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["CategoryRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["CategoryRequest"];
-                "multipart/form-data": components["schemas"]["CategoryRequest"];
             };
         };
         responses: {
@@ -3316,8 +3310,6 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["CategoryRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["CategoryRequest"];
-                "multipart/form-data": components["schemas"]["CategoryRequest"];
             };
         };
         responses: {
@@ -3365,8 +3357,6 @@ export interface operations {
         requestBody?: {
             content: {
                 "application/json": components["schemas"]["PatchedCategoryRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["PatchedCategoryRequest"];
-                "multipart/form-data": components["schemas"]["PatchedCategoryRequest"];
             };
         };
         responses: {
@@ -3418,8 +3408,6 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["CustomerRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["CustomerRequest"];
-                "multipart/form-data": components["schemas"]["CustomerRequest"];
             };
         };
         responses: {
@@ -3468,8 +3456,6 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["CustomerRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["CustomerRequest"];
-                "multipart/form-data": components["schemas"]["CustomerRequest"];
             };
         };
         responses: {
@@ -3517,8 +3503,6 @@ export interface operations {
         requestBody?: {
             content: {
                 "application/json": components["schemas"]["PatchedCustomerRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["PatchedCustomerRequest"];
-                "multipart/form-data": components["schemas"]["PatchedCustomerRequest"];
             };
         };
         responses: {
@@ -3545,8 +3529,6 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["AdjustmentRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["AdjustmentRequest"];
-                "multipart/form-data": components["schemas"]["AdjustmentRequest"];
             };
         };
         responses: {
@@ -3600,8 +3582,6 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["PaymentRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["PaymentRequest"];
-                "multipart/form-data": components["schemas"]["PaymentRequest"];
             };
         };
         responses: {
@@ -3690,8 +3670,6 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["DeviceRegisterRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["DeviceRegisterRequest"];
-                "multipart/form-data": components["schemas"]["DeviceRegisterRequest"];
             };
         };
         responses: {
@@ -3749,8 +3727,6 @@ export interface operations {
         requestBody?: {
             content: {
                 "application/json": components["schemas"]["InventoryCountRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["InventoryCountRequest"];
-                "multipart/form-data": components["schemas"]["InventoryCountRequest"];
             };
         };
         responses: {
@@ -3820,8 +3796,6 @@ export interface operations {
         requestBody?: {
             content: {
                 "application/json": components["schemas"]["PatchedInventoryCountRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["PatchedInventoryCountRequest"];
-                "multipart/form-data": components["schemas"]["PatchedInventoryCountRequest"];
             };
         };
         responses: {
@@ -3970,8 +3944,6 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["ReasonRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["ReasonRequest"];
-                "multipart/form-data": components["schemas"]["ReasonRequest"];
             };
         };
         responses: {
@@ -3998,8 +3970,6 @@ export interface operations {
         requestBody?: {
             content: {
                 "application/json": components["schemas"]["OptionalReasonRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["OptionalReasonRequest"];
-                "multipart/form-data": components["schemas"]["OptionalReasonRequest"];
             };
         };
         responses: {
@@ -4075,8 +4045,6 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["ReverseInputRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["ReverseInputRequest"];
-                "multipart/form-data": components["schemas"]["ReverseInputRequest"];
             };
         };
         responses: {
@@ -4124,8 +4092,6 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["PlanRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["PlanRequest"];
-                "multipart/form-data": components["schemas"]["PlanRequest"];
             };
         };
         responses: {
@@ -4195,8 +4161,6 @@ export interface operations {
         requestBody?: {
             content: {
                 "application/json": components["schemas"]["PatchedPlanRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["PatchedPlanRequest"];
-                "multipart/form-data": components["schemas"]["PatchedPlanRequest"];
             };
         };
         responses: {
@@ -4266,8 +4230,6 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["OnboardRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["OnboardRequest"];
-                "multipart/form-data": components["schemas"]["OnboardRequest"];
             };
         };
         responses: {
@@ -4316,8 +4278,6 @@ export interface operations {
         requestBody?: {
             content: {
                 "application/json": components["schemas"]["PatchedTenantUpdateRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["PatchedTenantUpdateRequest"];
-                "multipart/form-data": components["schemas"]["PatchedTenantUpdateRequest"];
             };
         };
         responses: {
@@ -4344,8 +4304,6 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["ReasonRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["ReasonRequest"];
-                "multipart/form-data": components["schemas"]["ReasonRequest"];
             };
         };
         responses: {
@@ -4399,8 +4357,6 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["PaymentInputRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["PaymentInputRequest"];
-                "multipart/form-data": components["schemas"]["PaymentInputRequest"];
             };
         };
         responses: {
@@ -4427,8 +4383,6 @@ export interface operations {
         requestBody?: {
             content: {
                 "application/json": components["schemas"]["PatchedSubscriptionRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["PatchedSubscriptionRequest"];
-                "multipart/form-data": components["schemas"]["PatchedSubscriptionRequest"];
             };
         };
         responses: {
@@ -4483,8 +4437,6 @@ export interface operations {
         requestBody?: {
             content: {
                 "application/json": components["schemas"]["OptionalReasonRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["OptionalReasonRequest"];
-                "multipart/form-data": components["schemas"]["OptionalReasonRequest"];
             };
         };
         responses: {
@@ -4585,8 +4537,6 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["ProductRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["ProductRequest"];
-                "multipart/form-data": components["schemas"]["ProductRequest"];
             };
         };
         responses: {
@@ -4635,8 +4585,6 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["ProductRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["ProductRequest"];
-                "multipart/form-data": components["schemas"]["ProductRequest"];
             };
         };
         responses: {
@@ -4684,8 +4632,6 @@ export interface operations {
         requestBody?: {
             content: {
                 "application/json": components["schemas"]["PatchedProductRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["PatchedProductRequest"];
-                "multipart/form-data": components["schemas"]["PatchedProductRequest"];
             };
         };
         responses: {
@@ -5155,8 +5101,6 @@ export interface operations {
         requestBody?: {
             content: {
                 "application/json": components["schemas"]["StockReceiptRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["StockReceiptRequest"];
-                "multipart/form-data": components["schemas"]["StockReceiptRequest"];
             };
         };
         responses: {
@@ -5226,8 +5170,6 @@ export interface operations {
         requestBody?: {
             content: {
                 "application/json": components["schemas"]["PatchedStockReceiptRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["PatchedStockReceiptRequest"];
-                "multipart/form-data": components["schemas"]["PatchedStockReceiptRequest"];
             };
         };
         responses: {
@@ -5276,8 +5218,6 @@ export interface operations {
         requestBody?: {
             content: {
                 "application/json": components["schemas"]["ReverseReceiptRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["ReverseReceiptRequest"];
-                "multipart/form-data": components["schemas"]["ReverseReceiptRequest"];
             };
         };
         responses: {
@@ -5325,8 +5265,6 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["SupplierRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["SupplierRequest"];
-                "multipart/form-data": components["schemas"]["SupplierRequest"];
             };
         };
         responses: {
@@ -5375,8 +5313,6 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["SupplierRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["SupplierRequest"];
-                "multipart/form-data": components["schemas"]["SupplierRequest"];
             };
         };
         responses: {
@@ -5424,8 +5360,6 @@ export interface operations {
         requestBody?: {
             content: {
                 "application/json": components["schemas"]["PatchedSupplierRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["PatchedSupplierRequest"];
-                "multipart/form-data": components["schemas"]["PatchedSupplierRequest"];
             };
         };
         responses: {
@@ -5471,8 +5405,6 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["PushRequestRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["PushRequestRequest"];
-                "multipart/form-data": components["schemas"]["PushRequestRequest"];
             };
         };
         responses: {
@@ -5520,8 +5452,6 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["UnitRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["UnitRequest"];
-                "multipart/form-data": components["schemas"]["UnitRequest"];
             };
         };
         responses: {
@@ -5570,8 +5500,6 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["UnitRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["UnitRequest"];
-                "multipart/form-data": components["schemas"]["UnitRequest"];
             };
         };
         responses: {
@@ -5619,8 +5547,6 @@ export interface operations {
         requestBody?: {
             content: {
                 "application/json": components["schemas"]["PatchedUnitRequest"];
-                "application/x-www-form-urlencoded": components["schemas"]["PatchedUnitRequest"];
-                "multipart/form-data": components["schemas"]["PatchedUnitRequest"];
             };
         };
         responses: {

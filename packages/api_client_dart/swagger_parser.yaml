@@ -1,0 +1,18 @@
+# Dart API klient generatsiyasi (`make api-clients`). Manba — backend OpenAPI sxemasi.
+swagger_parser:
+  schema_path: ../../backend/openapi.yaml
+  output_directory: lib/src/generated
+  name: pos_api
+  language: dart
+  json_serializer: json_serializable
+  default_content_type: "application/json"
+  root_client: true
+  root_client_name: PosApi
+  export_file: true
+  put_clients_in_folder: true
+  unknown_enum_value: true
+  # Kassa ishlatadigan endpoint'lar (platforma admini va REST hisobotlari — admin dashboardda).
+  include_paths:
+    - "/api/v1/auth/**"
+    - "/api/v1/devices/**"
+    - "/api/v1/sync/**"

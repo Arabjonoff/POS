@@ -94,7 +94,7 @@ schema: ## OpenAPI sxemasini backend/openapi.yaml ga yozish
 
 api-clients: schema ## OpenAPI'dan Dart va TypeScript klientlarni generatsiya qilish
 	cd $(ADMIN) && npm run api:generate
-	cd $(API_DART) && dart run swagger_parser
+	cd $(API_DART) && dart run swagger_parser && dart run build_runner build
 
 # --- Hammasi ---
 lint: backend-lint pos-analyze admin-lint ## Barcha lint tekshiruvlari

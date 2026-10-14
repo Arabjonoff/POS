@@ -1,0 +1,8 @@
+targets:
+  $default:
+    builders:
+      json_serializable:
+        options:
+          explicit_to_json: true
+          # Ixtiyoriy maydon yuborilmaydi (null emas) — server "may not be null" demasin.
+          include_if_null: false
