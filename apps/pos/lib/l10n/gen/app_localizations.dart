@@ -1202,6 +1202,42 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Mijozni olib tashlash'**
   String get posCustomerRemove;
+
+  /// To'lov turi: naqd
+  ///
+  /// In uz, this message translates to:
+  /// **'Naqd'**
+  String get payCash;
+
+  /// To'lov turi: karta
+  ///
+  /// In uz, this message translates to:
+  /// **'Karta'**
+  String get payCard;
+
+  /// To'lov turi: nasiya
+  ///
+  /// In uz, this message translates to:
+  /// **'Nasiya'**
+  String get payDebt;
+
+  /// Tanlangan mijozni almashtirish
+  ///
+  /// In uz, this message translates to:
+  /// **'Boshqa mijoz'**
+  String get payChangeCustomer;
+
+  /// F4 oynasi sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Chek mijozi'**
+  String get posCustomerTitle;
+
+  /// Chekda mijoz yo'q
+  ///
+  /// In uz, this message translates to:
+  /// **'Mijoz tanlanmagan'**
+  String get posCustomerNone;
 }
 
 class _AppLocalizationsDelegate

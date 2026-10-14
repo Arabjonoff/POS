@@ -651,6 +651,24 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get posCustomerRemove => 'Mijozni olib tashlash';
+
+  @override
+  String get payCash => 'Naqd';
+
+  @override
+  String get payCard => 'Karta';
+
+  @override
+  String get payDebt => 'Nasiya';
+
+  @override
+  String get payChangeCustomer => 'Boshqa mijoz';
+
+  @override
+  String get posCustomerTitle => 'Chek mijozi';
+
+  @override
+  String get posCustomerNone => 'Mijoz tanlanmagan';
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -1296,4 +1314,22 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get posCustomerRemove => 'Мижозни олиб ташлаш';
+
+  @override
+  String get payCash => 'Нақд';
+
+  @override
+  String get payCard => 'Карта';
+
+  @override
+  String get payDebt => 'Насия';
+
+  @override
+  String get payChangeCustomer => 'Бошқа мижоз';
+
+  @override
+  String get posCustomerTitle => 'Чек мижози';
+
+  @override
+  String get posCustomerNone => 'Мижоз танланмаган';
 }

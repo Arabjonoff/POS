@@ -670,4 +670,22 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get posCustomerRemove => 'Убрать клиента';
+
+  @override
+  String get payCash => 'Наличные';
+
+  @override
+  String get payCard => 'Карта';
+
+  @override
+  String get payDebt => 'В долг';
+
+  @override
+  String get payChangeCustomer => 'Другой клиент';
+
+  @override
+  String get posCustomerTitle => 'Клиент чека';
+
+  @override
+  String get posCustomerNone => 'Клиент не выбран';
 }

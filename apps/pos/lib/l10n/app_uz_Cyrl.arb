@@ -183,5 +183,11 @@
   "paySaleDoneChange": "Савдо якунланди · Қайтим {amount}",
   "payFailed": "Савдони сақлаб бўлмади. Қайта уриниб кўринг",
   "posCustomer": "Мижоз",
-  "posCustomerRemove": "Мижозни олиб ташлаш"
+  "posCustomerRemove": "Мижозни олиб ташлаш",
+  "payCash": "Нақд",
+  "payCard": "Карта",
+  "payDebt": "Насия",
+  "payChangeCustomer": "Бошқа мижоз",
+  "posCustomerTitle": "Чек мижози",
+  "posCustomerNone": "Мижоз танланмаган"
 }

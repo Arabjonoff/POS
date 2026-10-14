@@ -14,6 +14,8 @@ class MoneyInput extends StatefulWidget {
     this.onSubmit,
     this.autofocus = true,
     this.maxDigits = 10,
+    this.pristine = false,
+    this.hardwareDigits = true,
     super.key,
   });
 
@@ -24,6 +26,16 @@ class MoneyInput extends StatefulWidget {
 
   /// So'mdagi raqamlar soni chegarasi (10 — 9 999 999 999 so'm).
   final int maxDigits;
+
+  /// Ko'rsatilgan qiymat taklif (masalan, to'lovda "Aniq" summa): birinchi
+  /// raqam uni almashtiradi, Backspace — nolga tushiradi.
+  final bool pristine;
+
+  /// `false` — fizik klaviatura raqamlarini bu maydon o'zi olmaydi (ekran
+  /// ularni skaner xizmatining `onTyping` i orqali [append] bilan beradi,
+  /// aks holda skaner raqamlari ham summaga tushadi). Backspace va Enter —
+  /// baribir shu yerda.
+  final bool hardwareDigits;
 
   /// [valueTiyin] oxiriga so'm raqamlarini qo'shadi (raqam bo'lmaganlar
   /// tashlanadi; [maxDigits] dan oshsa — o'zgarmaydi). Ekran klaviaturani
@@ -48,26 +60,30 @@ class _MoneyInputState extends State<MoneyInput> {
   /// Oxirgi qiymat: bir kadr ichida bir nechta tugma kelsa ham raqam
   /// yo'qolmaydi (ota widget hali qayta chizilmagan bo'lishi mumkin).
   late int _value = widget.valueTiyin;
+  late bool _pristine = widget.pristine;
 
   @override
   void didUpdateWidget(MoneyInput oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.valueTiyin != oldWidget.valueTiyin) _value = widget.valueTiyin;
+    if (widget.pristine != oldWidget.pristine) _pristine = widget.pristine;
   }
 
   int get _som => _value ~/ 100;
 
   void _set(int tiyin) {
     _value = tiyin;
+    _pristine = false;
     widget.onChanged(tiyin);
   }
 
   void _append(String digits) {
-    final next = MoneyInput.append(_value, digits, maxDigits: widget.maxDigits);
-    if (next != _value) _set(next);
+    final base = _pristine ? 0 : _value;
+    final next = MoneyInput.append(base, digits, maxDigits: widget.maxDigits);
+    if (next != _value || _pristine) _set(next);
   }
 
-  void _backspace() => _set((_som ~/ 10) * 100);
+  void _backspace() => _set(_pristine ? 0 : (_som ~/ 10) * 100);
 
   KeyEventResult _onKey(FocusNode node, KeyEvent event) {
     if (event is KeyUpEvent) return KeyEventResult.ignored;
@@ -84,7 +100,10 @@ class _MoneyInputState extends State<MoneyInput> {
       return KeyEventResult.handled;
     }
     final char = event.character;
-    if (char != null && char.length == 1 && '0123456789'.contains(char)) {
+    if (widget.hardwareDigits &&
+        char != null &&
+        char.length == 1 &&
+        '0123456789'.contains(char)) {
       _append(char);
       return KeyEventResult.handled;
     }

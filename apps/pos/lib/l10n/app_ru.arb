@@ -183,5 +183,11 @@
   "paySaleDoneChange": "Продажа завершена · Сдача {amount}",
   "payFailed": "Не удалось сохранить продажу. Попробуйте ещё раз",
   "posCustomer": "Клиент",
-  "posCustomerRemove": "Убрать клиента"
+  "posCustomerRemove": "Убрать клиента",
+  "payCash": "Наличные",
+  "payCard": "Карта",
+  "payDebt": "В долг",
+  "payChangeCustomer": "Другой клиент",
+  "posCustomerTitle": "Клиент чека",
+  "posCustomerNone": "Клиент не выбран"
 }
