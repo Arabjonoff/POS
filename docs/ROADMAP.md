@@ -148,7 +148,7 @@ Spec'lar: `barcode.md`, `pos-screen.md`, `printing.md`, `shifts.md`.
 - **Qabul:** widget testlari; Z hisobot raqamlari savdolar bilan mos.
 - **Bog'liq:** T-034
 
-### [ ] T-042 Kassa ekrani — savat
+### [x] T-042 Kassa ekrani — savat
 - **Bajarish:** `pos-screen.md` bo'yicha: skanerlash → savatga qo'shish (bor bo'lsa miqdor +1), qidiruv (nomi, shtrix-kod, PLU), tez tugmalar paneli (non, tuxum kabi shtrix-kodsiz tovarlar), miqdor o'zgartirish, qatorni o'chirish, chegirma (huquq bo'yicha), ochiq savatni avtomatik saqlash, "kechiktirilgan chek" (2–3 ta parallel savat).
 - **Qabul:** widget va golden testlar; 3000 tovarda qidiruv < 50 ms; ilova o'ldirilib qayta ochilsa savat tiklanadi.
 - **Bog'liq:** T-040, T-041, T-030

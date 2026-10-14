@@ -5,28 +5,13 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-042 Kassa ekrani — savat
-- Branch: feat/T-042-cart
-- Boshlangan: 2026-10-14
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-14
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [x] 1. Transliteratsiya (`core/text/translit.dart`) + pull'da `searchKey` + `ProductCatalog` (`data/catalog/product_catalog.dart`: shtrix-kod, vaznli kod/PLU, qidiruv nom/shtrix-kod boshi/PLU, tez tugmalar) + unit va tezlik testi (3000 tovar < 50 ms)
-- [x] 2. Savat modeli va `CartController` (`features/pos/cart/`): qo'shish (+1, vaznli — yangi qator), miqdor, o'chirish + undo, qator/chek chegirmasi, 5 ta chek (slot), `cart_drafts` ga avto-saqlash va tiklash + unit testlar
-- [x] 3. Chegirma huquqi: kassir uchun maksimal foiz (lokal sozlama), oshsa — menejer/ega PIN tasdig'i; `docs/QUESTIONS.md` Q-005
-- [x] 4. Kassa ekrani UI (desktop/planshet): qidiruv + natijalar, tez tugmalar (kategoriya tablari), savat paneli (qatorlar, stepper, JAMI, To'lash), chek tablari
-- [x] 5. Telefon maketi: qidiruv + kamera, savat, yopishqoq JAMI + To'lash paneli, tez tugmalar varag'i
-- [x] 6. Klaviatura va skaner: F1/F2/F3/F6/F12/Delete/↑↓/Esc, `ScanListener` + `onTyping`, chaqnash/signal, "Bu kod bazada yo'q"
-- [x] 7. Widget testlari (+ ilova qayta ochilganda savat tiklanishi)
-- [ ] 8. Golden + skrinshotlar `docs/screenshots/T-042/`
-- [ ] 9. To'liq tekshiruv, PR, CI → merge; ROADMAP, PROGRESS, STATE
-
-## Oxirgi bajarilgan ish
-- 6–7-qadam: `test/features/pos_screen_test.dart` (15 test), `test/helpers/keyboard.dart`. Tuzatildi: oyna ochiq paytda skaner raqamlarni yutardi (`ScanListener.enabled`), fokus kassa ekraniga o'tmasdi (`_focusScreen`), qidiruvda Enter. Golden'lar yangilandi.
-
-## Keyingi aniq harakat
-- 8-qadam: `docs/screenshots/T-042/` ga `test/goldens/pos/*.png` nusxasi, `T-033/pos_*` yangilash; `docs/specs/pos-screen.md` ga "Kassada amalga oshirilishi (T-042)" bo'limi.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
