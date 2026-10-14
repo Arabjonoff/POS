@@ -12,7 +12,7 @@
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [ ] 1. Spec `docs/specs/sync-api.md` (push formati, statuslar + pending, hodisa → servis jadvali, payloadlar, pull entitylari, ChangeLog, muddati o'tgan pending)
+- [x] 1. Spec `docs/specs/sync-api.md` (push formati, statuslar + pending, hodisa → servis jadvali, payloadlar, pull entitylari, ChangeLog, muddati o'tgan pending)
 - [ ] 2. `apps/sync` modellari: SyncEvent, ChangeLog; migratsiya + mavjud ma'lumot uchun ChangeLog backfill; admin
 - [ ] 3. ChangeLog yozish: signal'lar (Product, ProductBarcode, Category, Unit, Customer, Supplier, User, Store, DebtEntry, ProductStock) + `_bump_cache` (update()) uchun aniq yozuv
 - [ ] 4. `handlers.py`: hodisa turi → servis (shift/cash/sale/refund/debt.paid/customer/supplier/product/receipt/inventory); xatolarni natijaga aylantirish
@@ -22,11 +22,11 @@
 - [ ] 8. openapi + schema.d.ts; lint/test; PROGRESS/ROADMAP; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-T-017 merge qilindi (#14). T-018 branch ochildi.
+1-qadam: spec `docs/specs/sync-api.md` (push statuslari + pending 7 kun, hodisa → servis jadvali, pull entitylari, ChangeLog).
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-1-qadam: `docs/specs/sync-api.md` ni yozish (`sync.md`, `sales-api.md`, `customers-api.md`, `inventory-api.md`, `catalog-api.md` asosida).
+2-qadam: `backend/apps/sync/` (apps.py, models.py: SyncEvent + ChangeLog, admin.py), INSTALLED_APPS, makemigrations sync, keyin backfill data migration (0002).
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
