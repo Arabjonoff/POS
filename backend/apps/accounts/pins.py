@@ -8,7 +8,7 @@ import re
 
 from django.contrib.auth.hashers import PBKDF2PasswordHasher
 
-PIN_RE = re.compile(r"^\d{4,6}$")
+PIN_RE = re.compile(r"^[0-9]{4,6}$")  # \d emas: u boshqa yozuvlardagi raqamlarni ham oladi
 PIN_ITERATIONS = 120_000
 
 

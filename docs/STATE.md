@@ -14,9 +14,9 @@
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 - [x] 1. Qaror `docs/decisions/0006-users-pin.md` (custom User, PIN = PBKDF2-SHA256 120k Django formati, kassir telefoni ixtiyoriy) + `auth-roles.md` aniqlashtirish
 - [x] 2. `apps/accounts`: User (AbstractBaseUser+PermissionsMixin, UUIDv7, tenant null faqat platform_admin, phone unique null, role, pin_hash), UserManager, `pins.py` (PinHasher), `AUTH_USER_MODEL`, migratsiya; dev bazani qayta yaratish (bo'sh edi)
-- [ ] 3. Endpoint'lar: `/api/v1/auth/login`, `/refresh`, `/me`; login throttle
-- [ ] 4. `permissions.py` (IsPlatformAdmin, IsOwner, IsManagerOrOwner, IsTenantMember) + `/api/v1/users/` (read-only, manager+)
-- [ ] 5. Testlar: model, PIN vektorlari `testdata/pin_hash.json`, login/refresh/me, rollar, tenant izolyatsiyasi
+- [x] 3. Endpoint'lar: `/api/v1/auth/login`, `/refresh`, `/me`; login throttle
+- [x] 4. `permissions.py` (IsPlatformAdmin, IsOwner, IsManagerOrOwner, IsTenantMember) + `/api/v1/users/` (read-only, manager+)
+- [x] 5. Testlar: model, PIN vektorlari `testdata/pin_hash.json`, login/refresh/me, rollar, tenant izolyatsiyasi
 - [ ] 6. openapi.yaml + admin schema.d.ts yangilash; lint/test; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
@@ -24,7 +24,7 @@ T-010 merge qilindi (#7). T-011 branch ochildi.
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-3-qadam: `backend/apps/accounts/serializers.py`, `views.py` (LoginView, RefreshView, MeView), `urls.py`; config/urls.py ga ulash; THROTTLE_RATES auth.
+6-qadam: `make schema` (backend/openapi.yaml), `cd apps/admin && npm run api:generate`, keyin PR.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q

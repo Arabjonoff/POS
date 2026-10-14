@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 COUNTRY_CODE = "998"
-PHONE_RE = re.compile(r"^\+998\d{9}$")
+PHONE_RE = re.compile(r"^\+998[0-9]{9}$")
 _SEPARATORS_RE = re.compile(r"[\s\-()]")
 
 
@@ -18,7 +18,7 @@ def normalize_phone(raw: str) -> str:
     value = _SEPARATORS_RE.sub("", raw or "")
     if value.startswith("+"):
         value = value[1:]
-    if not value.isdigit():
+    if not (value.isascii() and value.isdigit()):
         raise ValueError("phone must contain only digits")
     if len(value) == 9:
         value = COUNTRY_CODE + value

@@ -7,6 +7,7 @@ from apps.core.views import HealthView
 
 api_v1 = [
     # Har bosqichda yangi ilovalar shu yerga qo'shiladi.
+    path("", include("apps.accounts.urls")),
 ]
 
 urlpatterns = [
