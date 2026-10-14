@@ -187,3 +187,31 @@ class PriceHistory(TenantScopedModel):
         verbose_name = _("narx tarixi")
         verbose_name_plural = _("narx tarixi")
         ordering = ["-at"]
+
+
+class ProductImport(TenantScopedModel):
+    """Excel/CSV import (T-051, `product-import.md`): o'qilgan jadval va natija.
+
+    Fayl o'zi saqlanmaydi — faqat matn katakchalari (`rows`, sarlavha bilan).
+    """
+
+    class Status(models.TextChoices):
+        UPLOADED = "uploaded", _("yuklangan")
+        APPLIED = "applied", _("qo'llangan")
+
+    tenant = models.ForeignKey(
+        "tenants.Tenant", on_delete=models.CASCADE, related_name="+", verbose_name=_("tenant")
+    )
+    device = models.ForeignKey(
+        "devices.Device", on_delete=models.CASCADE, related_name="+", verbose_name=_("qurilma")
+    )
+    filename = models.CharField(_("fayl nomi"), max_length=255, blank=True)
+    rows = models.JSONField(_("qatorlar"), default=list)
+    status = models.CharField(
+        _("holat"), max_length=16, choices=Status.choices, default=Status.UPLOADED
+    )
+    result = models.JSONField(_("natija"), default=dict, blank=True)
+
+    class Meta:
+        verbose_name = _("tovar importi")
+        verbose_name_plural = _("tovar importlari")

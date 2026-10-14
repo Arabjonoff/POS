@@ -2,13 +2,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, unused_import, invalid_annotation_target, unnecessary_import
 
+import 'dart:convert';
+import 'dart:io';
+
+import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
+import '../models/apply_request_request.dart';
+import '../models/apply_response.dart';
+import '../models/check_request_request.dart';
+import '../models/check_response.dart';
 import '../models/price_history.dart';
 import '../models/pull_response.dart';
 import '../models/push_request_request.dart';
 import '../models/push_response.dart';
+import '../models/upload_response.dart';
 
 part 'sync_client.g.dart';
 
@@ -21,6 +30,28 @@ abstract class SyncClient {
   @GET('/api/v1/sync/price-history/')
   Future<List<PriceHistory>> syncPriceHistoryList({
     @Query('product') required String product,
+  });
+
+  @GET('/api/v1/sync/product-import/template/')
+  @DioResponseType(ResponseType.stream)
+  Stream<String> syncProductImportTemplateRetrieve();
+
+  @MultiPart()
+  @POST('/api/v1/sync/product-imports/')
+  Future<UploadResponse> syncProductImportsCreate({
+    @Part(name: 'file') required File file,
+  });
+
+  @POST('/api/v1/sync/product-imports/{id}/apply/')
+  Future<ApplyResponse> syncProductImportsApplyCreate({
+    @Path('id') required String id,
+    @Body() required ApplyRequestRequest body,
+  });
+
+  @POST('/api/v1/sync/product-imports/{id}/check/')
+  Future<CheckResponse> syncProductImportsCheckCreate({
+    @Path('id') required String id,
+    @Body() required CheckRequestRequest body,
   });
 
   /// Server o'zgarishlari (ChangeLog) kursor bo'yicha + obuna holati.

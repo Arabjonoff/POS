@@ -2630,6 +2630,95 @@ paths:
                 items:
                   $ref: '#/components/schemas/PriceHistory'
           description: ''
+  /api/v1/sync/product-import/template/:
+    get:
+      operationId: sync_product_import_template_retrieve
+      tags:
+      - sync
+      security:
+      - deviceToken: []
+      responses:
+        '200':
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+          description: ''
+  /api/v1/sync/product-imports/:
+    post:
+      operationId: sync_product_imports_create
+      tags:
+      - sync
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UploadRequest'
+        required: true
+      security:
+      - deviceToken: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadResponse'
+          description: ''
+  /api/v1/sync/product-imports/{id}/apply/:
+    post:
+      operationId: sync_product_imports_apply_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - sync
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplyRequestRequest'
+        required: true
+      security:
+      - deviceToken: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplyResponse'
+          description: ''
+  /api/v1/sync/product-imports/{id}/check/:
+    post:
+      operationId: sync_product_imports_check_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - sync
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckRequestRequest'
+        required: true
+      security:
+      - deviceToken: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckResponse'
+          description: ''
   /api/v1/sync/pull/:
     get:
       operationId: sync_pull_retrieve
@@ -2892,6 +2981,42 @@ components:
       required:
       - amount_tiyin
       - note
+    ApplyRequestRequest:
+      type: object
+      properties:
+        mapping:
+          $ref: '#/components/schemas/MappingRequest'
+        by:
+          type: string
+          format: uuid
+      required:
+      - by
+      - mapping
+    ApplyResponse:
+      type: object
+      properties:
+        created:
+          type: integer
+        updated:
+          type: integer
+        skipped:
+          type: integer
+        error_count:
+          type: integer
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/RowError'
+        receipt:
+          type: integer
+          nullable: true
+      required:
+      - created
+      - error_count
+      - errors
+      - receipt
+      - skipped
+      - updated
     AuditLog:
       type: object
       properties:
@@ -3111,6 +3236,31 @@ components:
       - entity
       - id
       - op
+    CheckRequestRequest:
+      type: object
+      properties:
+        mapping:
+          $ref: '#/components/schemas/MappingRequest'
+      required:
+      - mapping
+    CheckResponse:
+      type: object
+      properties:
+        creates:
+          type: integer
+        updates:
+          type: integer
+        error_count:
+          type: integer
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/RowError'
+      required:
+      - creates
+      - error_count
+      - errors
+      - updates
     Customer:
       type: object
       description: '`id` klientda yaratilishi mumkin (UUIDv7); keyin o''zgarmaydi.'
@@ -3643,6 +3793,68 @@ components:
       - access
       - refresh
       - user
+    Mapping:
+      type: object
+      properties:
+        name:
+          type: integer
+          minimum: 0
+          nullable: true
+        barcode:
+          type: integer
+          minimum: 0
+          nullable: true
+        category:
+          type: integer
+          minimum: 0
+          nullable: true
+        unit:
+          type: integer
+          minimum: 0
+          nullable: true
+        sell_price:
+          type: integer
+          minimum: 0
+          nullable: true
+        cost_price:
+          type: integer
+          minimum: 0
+          nullable: true
+        stock:
+          type: integer
+          minimum: 0
+          nullable: true
+    MappingRequest:
+      type: object
+      properties:
+        name:
+          type: integer
+          minimum: 0
+          nullable: true
+        barcode:
+          type: integer
+          minimum: 0
+          nullable: true
+        category:
+          type: integer
+          minimum: 0
+          nullable: true
+        unit:
+          type: integer
+          minimum: 0
+          nullable: true
+        sell_price:
+          type: integer
+          minimum: 0
+          nullable: true
+        cost_price:
+          type: integer
+          minimum: 0
+          nullable: true
+        stock:
+          type: integer
+          minimum: 0
+          nullable: true
     Me:
       type: object
       properties:
@@ -5297,6 +5509,19 @@ components:
         * `owner` - ega
         * `manager` - menejer
         * `cashier` - kassir
+    RowError:
+      type: object
+      properties:
+        row:
+          type: integer
+        field:
+          type: string
+        code:
+          type: string
+      required:
+      - code
+      - field
+      - row
     Sale:
       type: object
       properties:
@@ -6327,6 +6552,40 @@ components:
           title: Kasrli
       required:
       - code
+    UploadRequest:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+      required:
+      - file
+    UploadResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        columns:
+          type: array
+          items:
+            type: string
+        sample:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+        total_rows:
+          type: integer
+        mapping:
+          $ref: '#/components/schemas/Mapping'
+      required:
+      - columns
+      - id
+      - mapping
+      - sample
+      - total_rows
     User:
       type: object
       properties:

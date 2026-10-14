@@ -1167,6 +1167,70 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/sync/product-import/template/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["sync_product_import_template_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/sync/product-imports/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["sync_product_imports_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/sync/product-imports/{id}/apply/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["sync_product_imports_apply_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/sync/product-imports/{id}/check/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["sync_product_imports_check_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/sync/pull/": {
         parameters: {
             query?: never;
@@ -1283,6 +1347,19 @@ export interface components {
             amount_tiyin: number;
             note: string;
         };
+        ApplyRequestRequest: {
+            mapping: components["schemas"]["MappingRequest"];
+            /** Format: uuid */
+            by: string;
+        };
+        ApplyResponse: {
+            created: number;
+            updated: number;
+            skipped: number;
+            error_count: number;
+            errors: components["schemas"]["RowError"][];
+            receipt: number | null;
+        };
         AuditLog: {
             /** Format: uuid */
             id?: string;
@@ -1398,6 +1475,15 @@ export interface components {
             /** Format: uuid */
             id: string;
             data: unknown;
+        };
+        CheckRequestRequest: {
+            mapping: components["schemas"]["MappingRequest"];
+        };
+        CheckResponse: {
+            creates: number;
+            updates: number;
+            error_count: number;
+            errors: components["schemas"]["RowError"][];
         };
         /** @description `id` klientda yaratilishi mumkin (UUIDv7); keyin o'zgarmaydi. */
         Customer: {
@@ -1658,6 +1744,24 @@ export interface components {
             access: string;
             refresh: string;
             user: components["schemas"]["Me"];
+        };
+        Mapping: {
+            name?: number | null;
+            barcode?: number | null;
+            category?: number | null;
+            unit?: number | null;
+            sell_price?: number | null;
+            cost_price?: number | null;
+            stock?: number | null;
+        };
+        MappingRequest: {
+            name?: number | null;
+            barcode?: number | null;
+            category?: number | null;
+            unit?: number | null;
+            sell_price?: number | null;
+            cost_price?: number | null;
+            stock?: number | null;
         };
         Me: {
             /** Format: uuid */
@@ -2568,6 +2672,11 @@ export interface components {
          * @enum {string}
          */
         RoleEnum: "platform_admin" | "owner" | "manager" | "cashier";
+        RowError: {
+            row: number;
+            field: string;
+            code: string;
+        };
         Sale: {
             /** Format: uuid */
             id?: string;
@@ -3126,6 +3235,18 @@ export interface components {
             name?: string;
             /** Kasrli */
             is_fractional?: boolean;
+        };
+        UploadRequest: {
+            /** Format: binary */
+            file: string;
+        };
+        UploadResponse: {
+            /** Format: uuid */
+            id: string;
+            columns: string[];
+            sample: string[][];
+            total_rows: number;
+            mapping: components["schemas"]["Mapping"];
         };
         User: {
             /** Format: uuid */
@@ -5489,6 +5610,98 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PriceHistory"][];
+                };
+            };
+        };
+    };
+    sync_product_import_template_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/octet-stream": string;
+                };
+            };
+        };
+    };
+    sync_product_imports_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["UploadRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UploadResponse"];
+                };
+            };
+        };
+    };
+    sync_product_imports_apply_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ApplyRequestRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApplyResponse"];
+                };
+            };
+        };
+    };
+    sync_product_imports_check_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CheckRequestRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CheckResponse"];
                 };
             };
         };
