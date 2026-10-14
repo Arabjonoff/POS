@@ -197,3 +197,10 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-045 (squash merge)
 - Qoldi / keyingi qadam: T-046 Kassaga pul kiritish/chiqarish. Boshqa kassada sotilgan chekni qaytarish — Q-006 (hozircha faqat shu kassa savdolari). Qaytarish chekini chop etish — keyin.
 - Muammo yoki qaror: tarjima testi qattiq yozilgan namuna (`D1-000001`) va tooltip'dagi `(F8)` ni ushladi — tarjimaga o'tkazildi. Skaner bilan chek raqamini o'qish uchun test yordamchisiga `-` qo'shildi.
+
+## 2026-10-15 — T-046 Kassaga pul kiritish/chiqarish
+- Qilindi: `ShiftService.moveCash` — `cash_movements` va outbox `cash.moved` bitta tranzaksiyada; faqat ochiq smenaga; chiqarish kutilgan naqddan oshmaydi. Kassa puli oynasi (F9 kassada, smena sahifasida tugmalar): turi, summa, sabab (tez tugmalar va matn, majburiy), kassadagi naqd ko'rinadi. Smena sahifasida harakatlar ro'yxati. X/Z hisobot cheki (`ReceiptBuilder.buildShift`, `PrinterService.printShiftReport`), smena sahifasida "Chek chiqarish" (T-044 da o'chiq qolgan edi).
+- Testlar: apps/pos 405 (+21): `moveCash` (outbox payload, Z da naqd balansi to'g'ri, ortiqcha chiqarish rad etiladi, yopiq smena), X/Z chek snapshotlari, 4 ta widget testi (F9 kiritish, rad etish, smena sahifasi + ro'yxat + X hisobot, X chekini chop etish). Golden'lar: `shift` cash_out / cash_list, X/Z kassa puli bilan. Skrinshotlar: `docs/screenshots/T-046/`.
+- PR: T-046 (squash merge)
+- Qoldi / keyingi qadam: 3-bosqich (kassa) yopildi; keyingisi — 4-bosqich, T-050 Tovarlar ro'yxati va kartasi.
+- Muammo yoki qaror: chiqarish kutilgan naqddan oshmasligi kassa tomonidagi qoida (server rad etmaydi). Haqiqiy naqd kutilgandan ko'p bo'lsa, ortiqchani avval "kiritish" orqali qayd qilish kerak. "Pul kiritish/chiqarish" tugmalari desktop'da bir qatorga sig'magani uchun harakatlar kartasiga ko'chirildi.

@@ -168,7 +168,7 @@ Spec'lar: `barcode.md`, `pos-screen.md`, `printing.md`, `shifts.md`.
 - **Qabul:** qaytarilgan miqdor sotilgandan oshmaydi; qoldiq va qarz to'g'ri.
 - **Bog'liq:** T-043
 
-### [ ] T-046 Kassaga pul kiritish/chiqarish
+### [x] T-046 Kassaga pul kiritish/chiqarish
 - **Bajarish:** sabab bilan; smena hisobotida ko'rinadi.
 - **Qabul:** Z hisobotda naqd balansi to'g'ri.
 - **Bog'liq:** T-041

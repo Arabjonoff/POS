@@ -5,24 +5,13 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-046 Kassaga pul kiritish/chiqarish
-- Branch: feat/T-046-cash-movements
-- Boshlangan: 2026-10-15
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [x] 1. `ShiftService.moveCash` (cash_movements + outbox `cash.moved` bitta tranzaksiyada; chiqarish kutilgan naqddan oshmaydi) va `movements(shiftId)` + testlar (X/Z da naqd balansi)
-- [x] 2. Oyna "Kassa puli" (F9 kassada, smena sahifasida tugmalar): kiritish/chiqarish, summa, sabab (Inkassatsiya, Xarajat, Mayda pul, Boshqa + matn); smena sahifasida harakatlar ro'yxati; tarjimalar
-- [x] 3. X/Z hisobot chekini chop etish (`ShiftReceiptBuilder` + snapshot), smena sahifasida "Chop etish" tugmalari yoqiladi
-- [x] 4. Widget testlari + golden + skrinshotlar `docs/screenshots/T-046/`
-- [ ] 5. Spec, PR, CI → merge; ROADMAP, PROGRESS, STATE
-
-## Oxirgi bajarilgan ish
-- 4-qadam: `test/features/cash_movement_test.dart` (4 test), smena goldenlari (kassa puli bilan) + `cash_out`, `cash_list`; "Pul kiritish/chiqarish" tugmalari harakatlar kartasiga ko'chirildi; skrinshotlar `docs/screenshots/T-046/`.
-
-## Keyingi aniq harakat
-- 5-qadam: `docs/specs/shifts.md` ga "Kassada amalga oshirilishi (T-046)", CI tekshiruvlari, PR → merge, ROADMAP [x], PROGRESS, STATE shablon.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
