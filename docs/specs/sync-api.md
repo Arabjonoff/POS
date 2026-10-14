@@ -34,11 +34,11 @@ Umumiy tamoyillar: `sync.md`. Hodisa payloadlari va qo'llash qoidalari: `sales-a
 - `by` — amalni bajargan xodim (tenant foydalanuvchisi). Huquq REST bilan bir xil: kassir tovar/kirim/inventarizatsiya yoza olmaydi, mijozga limit qo'ya olmaydi → `rejected` (`permission_denied`).
 - `*.upserted`: `id` bo'yicha bor bo'lsa — yangilanadi, yo'q bo'lsa — yaratiladi. Konflikt qoidasi: **server g'olib** — o'zgarish serverga yoziladi va pull orqali hamma qurilmaga qaytadi.
 
-## Pull — `GET /api/v1/sync/pull/?cursor=<int>&limit=<1..500>`
-- `cursor` — oxirgi olingan `ChangeLog.seq` (birinchi marta `0`). `limit` — standart 500.
+## Pull — `GET /api/v1/sync/pull/?cursor=<str>&limit=<1..500>`
+- `cursor` — oldingi javobdagi `next_cursor` (ochiq bo'lmagan satr, `"<txid>:<seq>"`; birinchi marta `"0"`). `limit` — standart 500. Noto'g'ri kursor — `400`.
 - Javob: `{changes: [{entity, op, id, data}], next_cursor, has_more, subscription: {status, paid_until, days_left, offline_days}, server_time}`.
 - `op`: `upsert` (data — obyektning hozirgi holati) yoki `delete` (yumshoq o'chirilgan; `data: null`).
-- Sahifa ichida bir obyekt bir marta (eng oxirgi o'zgarish). Tartib — `seq` bo'yicha.
+- Sahifa ichida bir obyekt bir marta (eng oxirgi o'zgarish). Tartib — `(txid, seq)` bo'yicha (pastga qarang).
 - Entitylar va `data` shakli:
   | `entity` | Shakl |
   |---|---|
@@ -50,6 +50,7 @@ Umumiy tamoyillar: `sync.md`. Hodisa payloadlari va qo'llash qoidalari: `sales-a
 - Faqat qurilma tenantining o'zgarishlari.
 
 ## ChangeLog
-- `ChangeLog {seq (BigAutoField), tenant, entity, entity_id, op, at}` — yuqoridagi entitylar o'zgarganda yoziladi (signal; `ProductStock` `update()` bilan o'zgargani uchun — `record_movement` ichida aniq yozuv).
+- `ChangeLog {seq (BigAutoField), txid, tenant, entity, entity_id, op, at}` — yuqoridagi entitylar o'zgarganda yoziladi (signal; `ProductStock` `update()` bilan o'zgargani uchun — `record_movement` ichida aniq yozuv).
 - `ProductBarcode` o'zgarishi — `product` upsert sifatida.
 - Joriy ma'lumot uchun migratsiya boshlang'ich yozuvlarni yaratadi (yangi qurilma `cursor=0` dan hammasini oladi).
+- **Teshiksiz kursor:** `seq` commit'dan oldin ajratiladi — kichik `seq` li tranzaksiya kattasidan keyin commit bo'lishi mumkin va oddiy `seq > cursor` uni o'tkazib yuboradi. Shuning uchun har yozuvda uni yozgan PostgreSQL tranzaksiya ID'si (`txid`) saqlanadi; pull faqat `txid < pg_snapshot_xmin(...)` (barcha eski tranzaksiyalar tugagan) yozuvlarni `(txid, seq)` tartibida beradi. Bunday yozuvlar orasiga keyin yangisi tushmaydi. Uzoq tranzaksiya tugaguncha keyingi o'zgarishlar biroz kechikadi — bu maqbul.

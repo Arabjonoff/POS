@@ -4,6 +4,8 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+from .db import CurrentTxid
+
 
 class EventStatus(models.TextChoices):
     APPLIED = "applied", _("qo'llangan")
@@ -55,6 +57,8 @@ class ChangeLog(models.Model):
     """Pull uchun: qaysi obyekt o'zgardi. Ma'lumot o'zi pull paytida o'qiladi."""
 
     seq = models.BigAutoField(primary_key=True)
+    # Yozgan tranzaksiya ID'si — pull tartibi `(txid, seq)` (apps/sync/db.py).
+    txid = models.BigIntegerField(_("tranzaksiya"), db_default=CurrentTxid(), editable=False)
     tenant = models.ForeignKey(
         "tenants.Tenant", on_delete=models.PROTECT, related_name="+", verbose_name=_("tenant")
     )
@@ -66,8 +70,8 @@ class ChangeLog(models.Model):
     class Meta:
         verbose_name = _("o'zgarish")
         verbose_name_plural = _("o'zgarishlar")
-        ordering = ["seq"]
-        indexes = [models.Index(fields=["tenant", "seq"])]
+        ordering = ["txid", "seq"]
+        indexes = [models.Index(fields=["tenant", "txid", "seq"])]
 
     def __str__(self):
         return f"{self.seq} {self.entity} {self.entity_id} {self.op}"

@@ -31,6 +31,18 @@ def subscription_status(tenant, today: date | None = None) -> StatusInfo:
     )
 
 
+def subscription_snapshot(tenant) -> dict:
+    """Kassaga beriladigan obuna holati (`/devices/me/`, `/sync/pull/`)."""
+    info = subscription_status(tenant)
+    sub = Subscription.objects.filter(tenant=tenant).first()
+    return {
+        "status": info.status,
+        "paid_until": sub.paid_until if sub else None,
+        "days_left": info.days_left,
+        "offline_days": sub.offline_days if sub else 0,
+    }
+
+
 def refresh_status(sub: Subscription, today: date | None = None) -> bool:
     """Kesh holatni yangilaydi; o'zgargan bo'lsa `True`."""
     info = subscription_status(sub.tenant, today)

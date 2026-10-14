@@ -6,8 +6,7 @@ from rest_framework.throttling import ScopedRateThrottle
 from rest_framework.views import APIView
 
 from apps.accounts.permissions import IsManagerOrOwner, IsOwner
-from apps.billing.models import Subscription
-from apps.billing.services import subscription_status
+from apps.billing.services import subscription_snapshot
 from apps.core.tenancy import TenantScopedReadOnlyViewSet
 
 from .authentication import DeviceTokenAuthentication
@@ -67,17 +66,10 @@ class DeviceMeView(APIView):
         device.last_seen_at = timezone.now()
         device.last_ip = request.META.get("REMOTE_ADDR") or None
         device.save(update_fields=["last_seen_at", "last_ip"])
-        info = subscription_status(device.tenant)
-        sub = Subscription.objects.filter(tenant_id=device.tenant_id).first()
         return Response(
             {
                 "device": DeviceSerializer(device).data,
-                "subscription": {
-                    "status": info.status,
-                    "paid_until": sub.paid_until if sub else None,
-                    "days_left": info.days_left,
-                    "offline_days": sub.offline_days if sub else 0,
-                },
+                "subscription": subscription_snapshot(device.tenant),
                 "server_time": device.last_seen_at,
             }
         )

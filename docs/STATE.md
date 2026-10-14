@@ -17,16 +17,16 @@
 - [x] 3. ChangeLog yozish: signal'lar (Product, ProductBarcode, Category, Unit, Customer, Supplier, User, Store, DebtEntry, ProductStock) + `_bump_cache` (update()) uchun aniq yozuv
 - [x] 4. `handlers.py`: hodisa turi → servis (shift/cash/sale/refund/debt.paid/customer/supplier/product/receipt/inventory); xatolarni natijaga aylantirish
 - [x] 5. Push: `POST /api/v1/sync/push` (qurilma tokeni; idempotent; har hodisa alohida tranzaksiya; pending qayta urinish)
-- [ ] 6. Pull: `GET /api/v1/sync/pull?cursor=&limit=` (ChangeLog, entity serializerlar, subscription, server_time)
+- [x] 6. Pull: `GET /api/v1/sync/pull?cursor=&limit=` (ChangeLog, entity serializerlar, subscription, server_time)
 - [ ] 7. Testlar: sync.md server mezonlari 1–4 + handlerlar, pull kursori, izolyatsiya
 - [ ] 8. openapi + schema.d.ts; lint/test; PROGRESS/ROADMAP; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-5-qadam: push — `apps/sync/services.py` (qurilma qulfi, idempotent, savepoint, pending qayta urinish boshida va oxirida, 7 kun TTL, kutilmagan xato → pending) + `POST /api/v1/sync/push/`.
+6-qadam: pull — `apps/sync/pull.py` (entity serializerlari, dedupe, `(txid, seq)` kursor — `apps/sync/db.py`, migratsiya 0003), `GET /api/v1/sync/pull/`, `subscription_snapshot` billing'ga chiqarildi (devices/me ham ishlatadi).
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-6-qadam: `backend/apps/sync/pull.py` (ChangeLog sahifasi, dedupe, ENTITY serializerlari, user/store/stock shakllari) + `SyncPullView` + url `sync/pull/`.
+7-qadam: `backend/apps/sync/tests/` — conftest (qurilma + token client), test_push.py (mezon 1–4, statuslar, handlerlar), test_pull.py (kursor, dedupe, delete, entitylar, izolyatsiya).
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
