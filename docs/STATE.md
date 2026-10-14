@@ -5,20 +5,28 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-018 Sinxronlash API
+- Branch: feat/T-018-sync-api
+- Boshlangan: 2026-10-14
 - Oxirgi yangilanish: 2026-10-14
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
+- [ ] 1. Spec `docs/specs/sync-api.md` (push formati, statuslar + pending, hodisa → servis jadvali, payloadlar, pull entitylari, ChangeLog, muddati o'tgan pending)
+- [ ] 2. `apps/sync` modellari: SyncEvent, ChangeLog; migratsiya + mavjud ma'lumot uchun ChangeLog backfill; admin
+- [ ] 3. ChangeLog yozish: signal'lar (Product, ProductBarcode, Category, Unit, Customer, Supplier, User, Store, DebtEntry, ProductStock) + `_bump_cache` (update()) uchun aniq yozuv
+- [ ] 4. `handlers.py`: hodisa turi → servis (shift/cash/sale/refund/debt.paid/customer/supplier/product/receipt/inventory); xatolarni natijaga aylantirish
+- [ ] 5. Push: `POST /api/v1/sync/push` (qurilma tokeni; idempotent; har hodisa alohida tranzaksiya; pending qayta urinish)
+- [ ] 6. Pull: `GET /api/v1/sync/pull?cursor=&limit=` (ChangeLog, entity serializerlar, subscription, server_time)
+- [ ] 7. Testlar: sync.md server mezonlari 1–4 + handlerlar, pull kursori, izolyatsiya
+- [ ] 8. openapi + schema.d.ts; lint/test; PROGRESS/ROADMAP; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-T-017 Savdo, smena, qaytarish tugadi (PR ochildi, CI yashil bo'lsa squash merge).
+T-017 merge qilindi (#14). T-018 branch ochildi.
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-T-017 PR merge qilinganini tekshirish (`gh pr list --state open`); keyin ROADMAP'dan T-018 Sinxronlash API.
+1-qadam: `docs/specs/sync-api.md` ni yozish (`sync.md`, `sales-api.md`, `customers-api.md`, `inventory-api.md`, `catalog-api.md` asosida).
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
