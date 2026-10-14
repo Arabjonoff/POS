@@ -665,6 +665,33 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get posCustomerNone => 'Mijoz tanlanmagan';
+
+  @override
+  String get receiptCheck => 'Chek';
+
+  @override
+  String get receiptCashier => 'Kassir';
+
+  @override
+  String get receiptDiscount => 'Chegirma';
+
+  @override
+  String get receiptTotal => 'JAMI';
+
+  @override
+  String get receiptCustomer => 'Mijoz';
+
+  @override
+  String get receiptDebtNow => 'Joriy qarz';
+
+  @override
+  String get receiptNotFiscal => 'Fiskal chek emas';
+
+  @override
+  String get receiptThanks => 'Xaridingiz uchun rahmat!';
+
+  @override
+  String get receiptCopy => 'NUSXA';
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -1325,4 +1352,31 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get posCustomerNone => 'Мижоз танланмаган';
+
+  @override
+  String get receiptCheck => 'Чек';
+
+  @override
+  String get receiptCashier => 'Кассир';
+
+  @override
+  String get receiptDiscount => 'Чегирма';
+
+  @override
+  String get receiptTotal => 'ЖАМИ';
+
+  @override
+  String get receiptCustomer => 'Мижоз';
+
+  @override
+  String get receiptDebtNow => 'Жорий қарз';
+
+  @override
+  String get receiptNotFiscal => 'Фискал чек эмас';
+
+  @override
+  String get receiptThanks => 'Харидингиз учун раҳмат!';
+
+  @override
+  String get receiptCopy => 'НУСХА';
 }

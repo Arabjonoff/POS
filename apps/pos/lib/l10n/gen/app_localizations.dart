@@ -1232,6 +1232,60 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Mijoz tanlanmagan'**
   String get posCustomerNone;
+
+  /// Chekda: chek raqami yorlig'i
+  ///
+  /// In uz, this message translates to:
+  /// **'Chek'**
+  String get receiptCheck;
+
+  /// Chekda: kassir
+  ///
+  /// In uz, this message translates to:
+  /// **'Kassir'**
+  String get receiptCashier;
+
+  /// Chekda: chegirma
+  ///
+  /// In uz, this message translates to:
+  /// **'Chegirma'**
+  String get receiptDiscount;
+
+  /// Chekda: jami summa (katta harflar)
+  ///
+  /// In uz, this message translates to:
+  /// **'JAMI'**
+  String get receiptTotal;
+
+  /// Chekda: nasiya mijozi
+  ///
+  /// In uz, this message translates to:
+  /// **'Mijoz'**
+  String get receiptCustomer;
+
+  /// Chekda: mijozning savdodan keyingi qarzi
+  ///
+  /// In uz, this message translates to:
+  /// **'Joriy qarz'**
+  String get receiptDebtNow;
+
+  /// Chek oxiri
+  ///
+  /// In uz, this message translates to:
+  /// **'Fiskal chek emas'**
+  String get receiptNotFiscal;
+
+  /// Chek pastki matni (do'konda berilmagan bo'lsa)
+  ///
+  /// In uz, this message translates to:
+  /// **'Xaridingiz uchun rahmat!'**
+  String get receiptThanks;
+
+  /// Qayta chop etilgan chek belgisi
+  ///
+  /// In uz, this message translates to:
+  /// **'NUSXA'**
+  String get receiptCopy;
 }
 
 class _AppLocalizationsDelegate

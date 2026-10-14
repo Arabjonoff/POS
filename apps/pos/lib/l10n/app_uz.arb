@@ -838,5 +838,41 @@
   "posCustomerNone": "Mijoz tanlanmagan",
   "@posCustomerNone": {
     "description": "Chekda mijoz yo'q"
+  },
+  "receiptCheck": "Chek",
+  "@receiptCheck": {
+    "description": "Chekda: chek raqami yorlig'i"
+  },
+  "receiptCashier": "Kassir",
+  "@receiptCashier": {
+    "description": "Chekda: kassir"
+  },
+  "receiptDiscount": "Chegirma",
+  "@receiptDiscount": {
+    "description": "Chekda: chegirma"
+  },
+  "receiptTotal": "JAMI",
+  "@receiptTotal": {
+    "description": "Chekda: jami summa (katta harflar)"
+  },
+  "receiptCustomer": "Mijoz",
+  "@receiptCustomer": {
+    "description": "Chekda: nasiya mijozi"
+  },
+  "receiptDebtNow": "Joriy qarz",
+  "@receiptDebtNow": {
+    "description": "Chekda: mijozning savdodan keyingi qarzi"
+  },
+  "receiptNotFiscal": "Fiskal chek emas",
+  "@receiptNotFiscal": {
+    "description": "Chek oxiri"
+  },
+  "receiptThanks": "Xaridingiz uchun rahmat!",
+  "@receiptThanks": {
+    "description": "Chek pastki matni (do'konda berilmagan bo'lsa)"
+  },
+  "receiptCopy": "NUSXA",
+  "@receiptCopy": {
+    "description": "Qayta chop etilgan chek belgisi"
   }
 }

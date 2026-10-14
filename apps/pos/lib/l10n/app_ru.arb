@@ -188,5 +188,14 @@
   "payDebt": "В долг",
   "payChangeCustomer": "Другой клиент",
   "posCustomerTitle": "Клиент чека",
-  "posCustomerNone": "Клиент не выбран"
+  "posCustomerNone": "Клиент не выбран",
+  "receiptCheck": "Чек",
+  "receiptCashier": "Кассир",
+  "receiptDiscount": "Скидка",
+  "receiptTotal": "ИТОГО",
+  "receiptCustomer": "Клиент",
+  "receiptDebtNow": "Текущий долг",
+  "receiptNotFiscal": "Не фискальный чек",
+  "receiptThanks": "Спасибо за покупку!",
+  "receiptCopy": "КОПИЯ"
 }

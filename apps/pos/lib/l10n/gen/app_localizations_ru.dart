@@ -685,4 +685,31 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get posCustomerNone => 'Клиент не выбран';
+
+  @override
+  String get receiptCheck => 'Чек';
+
+  @override
+  String get receiptCashier => 'Кассир';
+
+  @override
+  String get receiptDiscount => 'Скидка';
+
+  @override
+  String get receiptTotal => 'ИТОГО';
+
+  @override
+  String get receiptCustomer => 'Клиент';
+
+  @override
+  String get receiptDebtNow => 'Текущий долг';
+
+  @override
+  String get receiptNotFiscal => 'Не фискальный чек';
+
+  @override
+  String get receiptThanks => 'Спасибо за покупку!';
+
+  @override
+  String get receiptCopy => 'КОПИЯ';
 }

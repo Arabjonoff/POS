@@ -188,5 +188,14 @@
   "payDebt": "Насия",
   "payChangeCustomer": "Бошқа мижоз",
   "posCustomerTitle": "Чек мижози",
-  "posCustomerNone": "Мижоз танланмаган"
+  "posCustomerNone": "Мижоз танланмаган",
+  "receiptCheck": "Чек",
+  "receiptCashier": "Кассир",
+  "receiptDiscount": "Чегирма",
+  "receiptTotal": "ЖАМИ",
+  "receiptCustomer": "Мижоз",
+  "receiptDebtNow": "Жорий қарз",
+  "receiptNotFiscal": "Фискал чек эмас",
+  "receiptThanks": "Харидингиз учун раҳмат!",
+  "receiptCopy": "НУСХА"
 }
