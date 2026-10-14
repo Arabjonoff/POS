@@ -173,6 +173,11 @@ Spec'lar: `barcode.md`, `pos-screen.md`, `printing.md`, `shifts.md`.
 - **Qabul:** Z hisobotda naqd balansi to'g'ri.
 - **Bog'liq:** T-041
 
+### [ ] T-047 Android: Bluetooth va USB chek printeri
+- **Bajarish:** `printing.md` va qaror 0008 bo'yicha: Android uchun `PrinterTransport` ning Bluetooth (SPP, juftlangan qurilmalar ro'yxati, Android 12+ ruxsatlari) va USB (host, ruxsat so'rash) turlari; Sozlamalar → Chek printeri da ulanish tanlovi. Chek matni va ESC/POS — T-044 dagidek.
+- **Qabul:** soxta kanal bilan unit testlar; haqiqiy printerda qo'lda sinov ro'yxati `docs/` da; printer uzilsa savdo to'xtamaydi.
+- **Bog'liq:** T-044
+
 ---
 
 ## 4-bosqich. Tovarlar va ombor
