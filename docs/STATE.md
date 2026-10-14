@@ -5,22 +5,26 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: — (masalan: T-042 Kassa ekrani — savat)
-- Branch: —
-- Boshlangan: —
-- Oxirgi yangilanish: —
+- Vazifa: T-015 Ombor (StockMovement, kirim, inventarizatsiya)
+- Branch: feat/T-015-inventory
+- Boshlangan: 2026-10-14
+- Oxirgi yangilanish: 2026-10-14
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [ ] 1. ...
-- [ ] 2. ...
+- [x] 1. Spec `docs/specs/inventory-api.md` (harakatlar, kesh, kirim oqimi, teskari kirim, inventarizatsiya, API)
+- [ ] 2. `apps/inventory` modellari: Supplier, StockMovement (o'zgarmas), ProductStock (kesh), StockReceipt(+Item), InventoryCount(+Item); migratsiya; admin
+- [ ] 3. `services.py`: record_movement (+kesh), post_receipt, reverse_receipt, post_inventory; `manage.py rebuild_stock`
+- [ ] 4. API: suppliers, stock-receipts (+post, +reverse), inventory-counts (+post), stock, stock-movements
+- [ ] 5. Testlar: kirim → qoldiq, teskari kirim, inventarizatsiya farqi, qoldiq = yig'indi, o'zgarmaslik, izolyatsiya, huquqlar
+- [ ] 6. openapi + schema.d.ts; lint/test; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-—
+T-014 merge qilindi (#11). T-015 branch ochildi.
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-—
+2-qadam: `backend/apps/inventory/models.py`, admin.py, apps.py, makemigrations.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q

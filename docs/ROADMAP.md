@@ -68,7 +68,7 @@ Spec'lar: `data-model.md`, `auth-roles.md`, `sync.md`, `subscription-billing.md`
 - **Qabul:** CRUD, takroriy shtrix-kod rad etiladi, izolyatsiya testi.
 - **Bog'liq:** T-011
 
-### [ ] T-015 Ombor (StockMovement, kirim, inventarizatsiya)
+### [~] T-015 Ombor (StockMovement, kirim, inventarizatsiya)
 - **Bajarish:** StockMovement (faqat qo'shiladi), StockReceipt + items, InventoryCount + items, qoldiq hisoblash (agregat + materialized `ProductStock` kesh jadvali).
 - **Qabul:** kirim → qoldiq ortadi; inventarizatsiya farqni tuzatish harakati sifatida yozadi; qoldiq = harakatlar yig'indisi testi.
 - **Bog'liq:** T-014
