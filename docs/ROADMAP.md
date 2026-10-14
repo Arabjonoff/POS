@@ -203,7 +203,7 @@ Spec'lar: `products.md`, `stock-receipt.md`, `barcode.md`.
 - **Qabul:** farq hisoboti to'g'ri; tasdiqlangandan keyin qoldiq = sanalgan.
 - **Bog'liq:** T-052
 
-### [ ] T-054 Qoldiq harakatlari tarixi va kam qolganlar
+### [x] T-054 Qoldiq harakatlari tarixi va kam qolganlar
 - **Bajarish:** tovar bo'yicha harakatlar tarixi; kam qolganlar ro'yxati; "buyurtma ro'yxati" eksporti.
 - **Qabul:** widget testlari.
 - **Bog'liq:** T-052

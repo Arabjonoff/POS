@@ -268,3 +268,18 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - Muammo yoki qaror:
   - `inventory_count_items` da tartib ustuni yo'q — sxemani o'zgartirmasdan `rowid` (qo'shilish tartibi) ishlatildi.
   - Tarjima testi birlik bilan qo'shib yasalgan yorliqni ushladi: `inventoryCountedUnit` / `receivingQtyUnit` kalitlariga o'tkazildi (kirim tahrirlovchisi ham tuzatildi).
+
+## 2026-10-15 — T-054 Qoldiq harakatlari tarixi va kam qolganlar
+- Qilindi:
+  - Backend: `GET /api/v1/sync/stock-movements/?product=` (qurilma tokeni, oxirgi 100 ta, kim); `StockMovementTypeEnum` OpenAPI nomi qotirildi.
+  - Kassa: tovar kartasida "Harakatlar tarixi" — yuborilmagan lokal harakatlar ("Yuborilmagan" belgisi bilan) va server tarixi; oflaynda faqat lokal harakatlar va izoh.
+  - "Kam qolgan" filtrida "Buyurtma ro'yxati" — CSV (UTF-8 BOM, `;`), buyurtma = 2 × min − qoldiq (dona — yuqoriga yaxlitlanadi).
+- Testlar:
+  - backend +4 (tartib, kim, boshqa tenant 404, 400, JWT yopiq);
+  - apps/pos 495 (+5): buyurtma miqdori va CSV, 3 ta widget testi (tarix onlayn/oflayn, CSV eksport).
+  - Golden: `products/card_history`. Skrinshotlar: `docs/screenshots/T-054/`.
+- PR: T-054 (squash merge)
+- Qoldi / keyingi qadam: 4-bosqich (tovarlar va ombor) yopildi; keyingisi — T-060 Mijozlar va nasiya daftari. T-047 — Q-007.
+- Muammo yoki qaror:
+  - Yangi `type` maydoni OpenAPI enum nomini o'zgartirib yuborgan edi; ENUM_NAME_OVERRIDES bilan qotirildi.
+  - Buyurtma formulasi (2 × min) — oddiy boshlang'ich qoida, spec'da yozilgan.

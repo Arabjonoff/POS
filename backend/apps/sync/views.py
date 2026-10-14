@@ -11,6 +11,7 @@ from apps.catalog.models import Product
 from apps.catalog.serializers import PriceHistorySerializer
 from apps.devices.authentication import DeviceTokenAuthentication
 from apps.devices.permissions import IsDevice
+from apps.inventory.models import StockMovement
 
 from . import services
 from .pull import pull
@@ -80,3 +81,41 @@ class SyncPriceHistoryView(APIView):
         )
         entries = product.price_history.select_related("changed_by").order_by("-at", "-id")
         return Response(PriceHistorySerializer(entries[: self.LIMIT], many=True).data)
+
+
+class StockMovementEntrySerializer(serializers.ModelSerializer):
+    created_by_name = serializers.CharField(
+        source="created_by.full_name", default=None, read_only=True, allow_null=True
+    )
+
+    class Meta:
+        model = StockMovement
+        fields = ["id", "type", "qty_milli", "ref_type", "at", "created_by_name"]
+        read_only_fields = fields
+
+
+class SyncStockMovementsView(APIView):
+    """Kassa uchun tovar qoldiq harakatlari (onlayn, T-054): barcha kassalar,
+    oxirgi 100 ta, faqat o'z tenanti."""
+
+    authentication_classes = [DeviceTokenAuthentication]
+    permission_classes = [IsDevice]
+    LIMIT = 100
+
+    @extend_schema(
+        parameters=[OpenApiParameter("product", OpenApiTypes.UUID, required=True)],
+        responses=StockMovementEntrySerializer(many=True),
+        tags=["sync"],
+    )
+    def get(self, request):
+        product_id = serializers.UUIDField().run_validation(request.query_params.get("product"))
+        product = get_object_or_404(
+            Product.objects.filter(tenant_id=request.auth.tenant_id, deleted_at__isnull=True),
+            pk=product_id,
+        )
+        movements = (
+            StockMovement.objects.filter(tenant_id=request.auth.tenant_id, product=product)
+            .select_related("created_by")
+            .order_by("-at", "-id")[: self.LIMIT]
+        )
+        return Response(StockMovementEntrySerializer(movements, many=True).data)

@@ -2770,6 +2770,32 @@ paths:
               schema:
                 $ref: '#/components/schemas/PushResponse'
           description: ''
+  /api/v1/sync/stock-movements/:
+    get:
+      operationId: sync_stock_movements_list
+      description: |-
+        Kassa uchun tovar qoldiq harakatlari (onlayn, T-054): barcha kassalar,
+        oxirgi 100 ta, faqat o'z tenanti.
+      parameters:
+      - in: query
+        name: product
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - sync
+      security:
+      - deviceToken: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StockMovementEntry'
+          description: ''
   /api/v1/units/:
     get:
       operationId: units_list
@@ -5937,6 +5963,42 @@ components:
       - product
       - qty_milli
       - store
+      - type
+    StockMovementEntry:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        type:
+          allOf:
+          - $ref: '#/components/schemas/StockMovementTypeEnum'
+          readOnly: true
+          title: Turi
+        qty_milli:
+          type: integer
+          readOnly: true
+          title: Miqdor (milli, ±)
+        ref_type:
+          type: string
+          readOnly: true
+          title: Hujjat turi
+        at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Vaqt
+        created_by_name:
+          type: string
+          readOnly: true
+          nullable: true
+      required:
+      - at
+      - created_by_name
+      - id
+      - qty_milli
+      - ref_type
       - type
     StockMovementTypeEnum:
       enum:

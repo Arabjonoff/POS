@@ -9,6 +9,7 @@ import 'package:pos_app/core/format/app_format.dart';
 import 'package:pos_app/core/format/unit_code.dart';
 import 'package:pos_app/data/catalog/price_history.dart';
 import 'package:pos_app/data/catalog/product_editor.dart';
+import 'package:pos_app/data/catalog/stock_history.dart';
 import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/features/common/manager_approval.dart';
 import 'package:pos_app/features/pos/cart/discount_policy.dart';
@@ -107,6 +108,7 @@ class _ProductCardState extends ConsumerState<ProductCard> {
   bool _busy = false;
   bool _subDialog = false;
   bool _showHistory = false;
+  bool _showMoves = false;
 
   @override
   void initState() {
@@ -570,6 +572,19 @@ class _ProductCardState extends ConsumerState<ProductCard> {
               ),
               if (_showHistory) _PriceHistory(productId: draft.id!),
             ],
+            if (!draft.isNew) ...[
+              PosListTile(
+                key: const ValueKey('product-stock-history'),
+                leading: const Icon(Icons.swap_vert),
+                title: l10n.productStockHistory,
+                trailing: Icon(
+                  _showMoves ? Icons.expand_less : Icons.expand_more,
+                ),
+                onTap: () => setState(() => _showMoves = !_showMoves),
+              ),
+              if (_showMoves)
+                _StockHistoryList(productId: draft.id!, unit: unitCode),
+            ],
             if (!draft.isActive)
               Padding(
                 padding: const EdgeInsets.only(top: PosSpacing.s),
@@ -733,6 +748,88 @@ class _PriceHistory extends ConsumerWidget {
                     ),
                 ],
               ),
+      ),
+    );
+  }
+}
+
+/// Qoldiq harakatlari: yuborilmaganlar (belgi bilan) va server tarixi.
+class _StockHistoryList extends ConsumerWidget {
+  const _StockHistoryList({required this.productId, required this.unit});
+
+  final String productId;
+  final UnitCode unit;
+
+  static String _type(AppLocalizations l10n, String type) => switch (type) {
+    'receipt' => l10n.moveReceipt,
+    'sale' => l10n.moveSale,
+    'refund' => l10n.moveRefund,
+    'inventory' => l10n.moveInventory,
+    _ => l10n.moveAdjustment,
+  };
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final fmt = context.fmt;
+    final p = PosPalette.of(context);
+    final history = ref.watch(stockHistoryProvider(productId)).value;
+    final style = PosTypography.small.copyWith(color: p.textSecondary);
+    if (history == null) {
+      return const Padding(
+        padding: EdgeInsets.symmetric(horizontal: PosSpacing.l),
+        child: LinearProgressIndicator(),
+      );
+    }
+    final moves = history.all;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        PosSpacing.l,
+        0,
+        PosSpacing.l,
+        PosSpacing.s,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (moves.isEmpty && !history.offline)
+            Text(l10n.stockHistoryEmpty, style: style),
+          for (final m in moves)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: PosSpacing.xs),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      [
+                        fmt.dateTime(m.at),
+                        _type(l10n, m.type),
+                        ?m.byName,
+                      ].join(' · '),
+                      style: PosTypography.small.copyWith(color: p.text),
+                    ),
+                  ),
+                  if (m.pending) ...[
+                    PosBadge(
+                      label: l10n.stockHistoryPending,
+                      tone: PosTone.warning,
+                    ),
+                    const SizedBox(width: PosSpacing.s),
+                  ],
+                  Text(
+                    m.qtyMilli > 0
+                        ? '+${fmt.qty(m.qtyMilli, unit)}'
+                        : fmt.qty(m.qtyMilli, unit),
+                    style: PosTypography.bodyStrong.copyWith(
+                      color: m.qtyMilli < 0 ? p.dangerText : p.successText,
+                      fontFeatures: PosTypography.tabular,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          if (history.offline) Text(l10n.stockHistoryOffline, style: style),
+        ],
       ),
     );
   }

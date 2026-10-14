@@ -139,6 +139,7 @@ SPECTACULAR_SETTINGS = {
         "SubscriptionPaymentMethodEnum": "apps.billing.models.PaymentMethod",
         "StatusEnum": "apps.inventory.models.DocumentStatus",
         "SaleStatusEnum": "apps.sales.models.SaleStatus",
+        "StockMovementTypeEnum": "apps.inventory.models.MovementType",
     },
 }
 

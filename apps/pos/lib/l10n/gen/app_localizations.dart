@@ -2558,6 +2558,126 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Miqdor, {unit}'**
   String receivingQtyUnit(String unit);
+
+  /// Bo'lim
+  ///
+  /// In uz, this message translates to:
+  /// **'Harakatlar tarixi'**
+  String get productStockHistory;
+
+  /// Oflayn
+  ///
+  /// In uz, this message translates to:
+  /// **'To\'liq tarix uchun internet kerak'**
+  String get stockHistoryOffline;
+
+  /// Bo'sh
+  ///
+  /// In uz, this message translates to:
+  /// **'Hali harakat yo\'q'**
+  String get stockHistoryEmpty;
+
+  /// Belgi
+  ///
+  /// In uz, this message translates to:
+  /// **'Yuborilmagan'**
+  String get stockHistoryPending;
+
+  /// Harakat turi
+  ///
+  /// In uz, this message translates to:
+  /// **'Kirim'**
+  String get moveReceipt;
+
+  /// Harakat turi
+  ///
+  /// In uz, this message translates to:
+  /// **'Savdo'**
+  String get moveSale;
+
+  /// Harakat turi
+  ///
+  /// In uz, this message translates to:
+  /// **'Qaytarish'**
+  String get moveRefund;
+
+  /// Harakat turi
+  ///
+  /// In uz, this message translates to:
+  /// **'Tuzatish'**
+  String get moveAdjustment;
+
+  /// Harakat turi
+  ///
+  /// In uz, this message translates to:
+  /// **'Inventarizatsiya'**
+  String get moveInventory;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Buyurtma ro\'yxati'**
+  String get productsOrderList;
+
+  /// Xabar
+  ///
+  /// In uz, this message translates to:
+  /// **'Buyurtma ro\'yxati saqlandi'**
+  String get orderListSaved;
+
+  /// Xabar
+  ///
+  /// In uz, this message translates to:
+  /// **'Kam qolgan tovar yo\'q'**
+  String get orderListEmpty;
+
+  /// Fayl nomi (kengaytmasiz)
+  ///
+  /// In uz, this message translates to:
+  /// **'buyurtma'**
+  String get orderFileName;
+
+  /// CSV ustuni
+  ///
+  /// In uz, this message translates to:
+  /// **'Nomi'**
+  String get orderColName;
+
+  /// CSV ustuni
+  ///
+  /// In uz, this message translates to:
+  /// **'Shtrix-kod'**
+  String get orderColBarcode;
+
+  /// CSV ustuni
+  ///
+  /// In uz, this message translates to:
+  /// **'Qoldiq'**
+  String get orderColStock;
+
+  /// CSV ustuni
+  ///
+  /// In uz, this message translates to:
+  /// **'Minimal qoldiq'**
+  String get orderColMin;
+
+  /// CSV ustuni
+  ///
+  /// In uz, this message translates to:
+  /// **'Buyurtma'**
+  String get orderColOrder;
+
+  /// CSV ustuni
+  ///
+  /// In uz, this message translates to:
+  /// **'Tannarx'**
+  String get orderColCost;
+
+  /// CSV ustuni
+  ///
+  /// In uz, this message translates to:
+  /// **'Summa'**
+  String get orderColSum;
 }
 
 class _AppLocalizationsDelegate

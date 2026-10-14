@@ -1431,4 +1431,64 @@ class AppLocalizationsRu extends AppLocalizations {
   String receivingQtyUnit(String unit) {
     return 'Кол-во, $unit';
   }
+
+  @override
+  String get productStockHistory => 'История движения';
+
+  @override
+  String get stockHistoryOffline => 'Для полной истории нужен интернет';
+
+  @override
+  String get stockHistoryEmpty => 'Движений пока нет';
+
+  @override
+  String get stockHistoryPending => 'Не отправлено';
+
+  @override
+  String get moveReceipt => 'Приход';
+
+  @override
+  String get moveSale => 'Продажа';
+
+  @override
+  String get moveRefund => 'Возврат';
+
+  @override
+  String get moveAdjustment => 'Корректировка';
+
+  @override
+  String get moveInventory => 'Инвентаризация';
+
+  @override
+  String get productsOrderList => 'Список заказа';
+
+  @override
+  String get orderListSaved => 'Список заказа сохранён';
+
+  @override
+  String get orderListEmpty => 'Нет заканчивающихся товаров';
+
+  @override
+  String get orderFileName => 'zakaz';
+
+  @override
+  String get orderColName => 'Название';
+
+  @override
+  String get orderColBarcode => 'Штрихкод';
+
+  @override
+  String get orderColStock => 'Остаток';
+
+  @override
+  String get orderColMin => 'Мин. остаток';
+
+  @override
+  String get orderColOrder => 'Заказать';
+
+  @override
+  String get orderColCost => 'Себестоимость';
+
+  @override
+  String get orderColSum => 'Сумма';
 }

@@ -1928,5 +1928,85 @@
         "type": "String"
       }
     }
+  },
+  "productStockHistory": "Harakatlar tarixi",
+  "@productStockHistory": {
+    "description": "Bo'lim"
+  },
+  "stockHistoryOffline": "To'liq tarix uchun internet kerak",
+  "@stockHistoryOffline": {
+    "description": "Oflayn"
+  },
+  "stockHistoryEmpty": "Hali harakat yo'q",
+  "@stockHistoryEmpty": {
+    "description": "Bo'sh"
+  },
+  "stockHistoryPending": "Yuborilmagan",
+  "@stockHistoryPending": {
+    "description": "Belgi"
+  },
+  "moveReceipt": "Kirim",
+  "@moveReceipt": {
+    "description": "Harakat turi"
+  },
+  "moveSale": "Savdo",
+  "@moveSale": {
+    "description": "Harakat turi"
+  },
+  "moveRefund": "Qaytarish",
+  "@moveRefund": {
+    "description": "Harakat turi"
+  },
+  "moveAdjustment": "Tuzatish",
+  "@moveAdjustment": {
+    "description": "Harakat turi"
+  },
+  "moveInventory": "Inventarizatsiya",
+  "@moveInventory": {
+    "description": "Harakat turi"
+  },
+  "productsOrderList": "Buyurtma ro'yxati",
+  "@productsOrderList": {
+    "description": "Tugma"
+  },
+  "orderListSaved": "Buyurtma ro'yxati saqlandi",
+  "@orderListSaved": {
+    "description": "Xabar"
+  },
+  "orderListEmpty": "Kam qolgan tovar yo'q",
+  "@orderListEmpty": {
+    "description": "Xabar"
+  },
+  "orderFileName": "buyurtma",
+  "@orderFileName": {
+    "description": "Fayl nomi (kengaytmasiz)"
+  },
+  "orderColName": "Nomi",
+  "@orderColName": {
+    "description": "CSV ustuni"
+  },
+  "orderColBarcode": "Shtrix-kod",
+  "@orderColBarcode": {
+    "description": "CSV ustuni"
+  },
+  "orderColStock": "Qoldiq",
+  "@orderColStock": {
+    "description": "CSV ustuni"
+  },
+  "orderColMin": "Minimal qoldiq",
+  "@orderColMin": {
+    "description": "CSV ustuni"
+  },
+  "orderColOrder": "Buyurtma",
+  "@orderColOrder": {
+    "description": "CSV ustuni"
+  },
+  "orderColCost": "Tannarx",
+  "@orderColCost": {
+    "description": "CSV ustuni"
+  },
+  "orderColSum": "Summa",
+  "@orderColSum": {
+    "description": "CSV ustuni"
   }
 }
