@@ -14,11 +14,11 @@
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 
 ## Oxirgi bajarilgan ish
-T-019 hisobotlar API tugadi (PR ochildi, CI yashil bo'lsa squash merge).
+T-020 Platforma admin API tugadi (PR ochildi, CI yashil bo'lsa squash merge). 1-bosqich (backend) tugadi.
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-T-019 PR merge qilinganini tekshirish (`gh pr list --state open`); keyin ROADMAP'dan T-020 Platforma admin API.
+T-020 PR merge qilinganini tekshirish (`gh pr list --state open`); keyin ROADMAP'dan T-030 Dizayn tizimi (packages/ui) — `docs/specs/design-system.md`.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q

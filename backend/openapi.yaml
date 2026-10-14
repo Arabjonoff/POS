@@ -850,6 +850,824 @@ paths:
               schema:
                 $ref: '#/components/schemas/InventoryCount'
           description: ''
+  /api/v1/platform/audit-log/:
+    get:
+      operationId: platform_audit_log_list
+      parameters:
+      - in: query
+        name: action
+        schema:
+          type: string
+      - in: query
+        name: actor
+        schema:
+          type: string
+          format: uuid
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: target_type
+        schema:
+          type: string
+      - in: query
+        name: tenant
+        schema:
+          type: string
+          format: uuid
+      tags:
+      - platform
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAuditLogList'
+          description: ''
+  /api/v1/platform/audit-log/{id}/:
+    get:
+      operationId: platform_audit_log_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this audit yozuvi.
+        required: true
+      tags:
+      - platform
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditLog'
+          description: ''
+  /api/v1/platform/devices/:
+    get:
+      operationId: platform_devices_list
+      parameters:
+      - in: query
+        name: blocked
+        schema:
+          type: boolean
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: stale_days
+        schema:
+          type: integer
+        description: N kundan beri sinxronlanmagan
+      - in: query
+        name: tenant
+        schema:
+          type: string
+          format: uuid
+      tags:
+      - platform
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPlatformDeviceList'
+          description: ''
+  /api/v1/platform/devices/{id}/:
+    get:
+      operationId: platform_devices_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this qurilma.
+        required: true
+      tags:
+      - platform
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformDevice'
+          description: ''
+  /api/v1/platform/devices/{id}/block/:
+    post:
+      operationId: platform_devices_block_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this qurilma.
+        required: true
+      tags:
+      - platform
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReasonRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ReasonRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ReasonRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformDevice'
+          description: ''
+  /api/v1/platform/devices/{id}/unblock/:
+    post:
+      operationId: platform_devices_unblock_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this qurilma.
+        required: true
+      tags:
+      - platform
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OptionalReasonRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OptionalReasonRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OptionalReasonRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformDevice'
+          description: ''
+  /api/v1/platform/payments/:
+    get:
+      operationId: platform_payments_list
+      parameters:
+      - in: query
+        name: date_from
+        schema:
+          type: string
+          format: date
+      - in: query
+        name: date_to
+        schema:
+          type: string
+          format: date
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: tenant
+        schema:
+          type: string
+          format: uuid
+      tags:
+      - platform
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPaymentsListList'
+          description: ''
+  /api/v1/platform/payments/{id}/:
+    get:
+      operationId: platform_payments_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this obuna to'lovi.
+        required: true
+      tags:
+      - platform
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+          description: ''
+  /api/v1/platform/payments/{id}/reverse/:
+    post:
+      operationId: platform_payments_reverse_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this obuna to'lovi.
+        required: true
+      tags:
+      - platform
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReverseInputRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ReverseInputRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ReverseInputRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+          description: ''
+  /api/v1/platform/plans/:
+    get:
+      operationId: platform_plans_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - platform
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPlanList'
+          description: ''
+    post:
+      operationId: platform_plans_create
+      tags:
+      - platform
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlanRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PlanRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PlanRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plan'
+          description: ''
+  /api/v1/platform/plans/{id}/:
+    get:
+      operationId: platform_plans_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this tarif.
+        required: true
+      tags:
+      - platform
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plan'
+          description: ''
+    patch:
+      operationId: platform_plans_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this tarif.
+        required: true
+      tags:
+      - platform
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPlanRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPlanRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPlanRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plan'
+          description: ''
+    delete:
+      operationId: platform_plans_destroy
+      description: Nofaol qilish; obunalar saqlanadi.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this tarif.
+        required: true
+      tags:
+      - platform
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/platform/stats/:
+    get:
+      operationId: platform_stats_retrieve
+      tags:
+      - platform
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stats'
+          description: ''
+  /api/v1/platform/tenants/:
+    get:
+      operationId: platform_tenants_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Nom yoki ega telefoni
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - active
+          - blocked
+          - grace
+          - readonly
+          - trial
+      tags:
+      - platform
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedTenantListList'
+          description: ''
+    post:
+      operationId: platform_tenants_create
+      tags:
+      - platform
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OnboardRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OnboardRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OnboardRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardResult'
+          description: ''
+  /api/v1/platform/tenants/{id}/:
+    get:
+      operationId: platform_tenants_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this tenant.
+        required: true
+      tags:
+      - platform
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantDetail'
+          description: ''
+    patch:
+      operationId: platform_tenants_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this tenant.
+        required: true
+      tags:
+      - platform
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTenantUpdateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTenantUpdateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTenantUpdateRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantDetail'
+          description: ''
+  /api/v1/platform/tenants/{id}/block/:
+    post:
+      operationId: platform_tenants_block_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this tenant.
+        required: true
+      tags:
+      - platform
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReasonRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ReasonRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ReasonRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantDetail'
+          description: ''
+  /api/v1/platform/tenants/{id}/payments/:
+    get:
+      operationId: platform_tenants_payments_list
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this tenant.
+        required: true
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - platform
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPaymentList'
+          description: ''
+    post:
+      operationId: platform_tenants_payments_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this tenant.
+        required: true
+      tags:
+      - platform
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentInputRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PaymentInputRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PaymentInputRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+          description: ''
+  /api/v1/platform/tenants/{id}/subscription/:
+    patch:
+      operationId: platform_tenants_subscription_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this tenant.
+        required: true
+      tags:
+      - platform
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSubscriptionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedSubscriptionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSubscriptionRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantDetail'
+          description: ''
+  /api/v1/platform/tenants/{id}/sync-events/:
+    get:
+      operationId: platform_tenants_sync_events_list
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this tenant.
+        required: true
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - applied
+          - pending
+          - rejected
+      tags:
+      - platform
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedSyncEventList'
+          description: ''
+  /api/v1/platform/tenants/{id}/unblock/:
+    post:
+      operationId: platform_tenants_unblock_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this tenant.
+        required: true
+      tags:
+      - platform
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OptionalReasonRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OptionalReasonRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OptionalReasonRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantDetail'
+          description: ''
+  /api/v1/platform/tenants/{id}/users/:
+    get:
+      operationId: platform_tenants_users_list
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this tenant.
+        required: true
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - platform
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedUserBriefList'
+          description: ''
+  /api/v1/platform/users/{id}/reset-password/:
+    post:
+      operationId: platform_users_reset_password_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - platform
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PasswordResult'
+          description: ''
   /api/v1/products/:
     get:
       operationId: products_list
@@ -2235,6 +3053,54 @@ components:
       required:
       - amount_tiyin
       - note
+    AuditLog:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        actor:
+          type: string
+          format: uuid
+          title: Kim
+        actor_name:
+          type: string
+          readOnly: true
+        action:
+          type: string
+          title: Amal
+          maxLength: 64
+        target_type:
+          type: string
+          title: Obyekt turi
+          maxLength: 64
+        target_id:
+          type: string
+          title: Obyekt id
+          maxLength: 64
+        tenant:
+          type: string
+          format: uuid
+          nullable: true
+        before:
+          nullable: true
+          title: Oldin
+        after:
+          nullable: true
+          title: Keyin
+        reason:
+          type: string
+          title: Sabab
+        at:
+          type: string
+          format: date-time
+          title: Vaqt
+      required:
+      - action
+      - actor
+      - actor_name
+      - target_id
+      - target_type
     BlankEnum:
       enum:
       - ''
@@ -2586,6 +3452,16 @@ components:
       - debtors_count
       - top
       - total_debt_tiyin
+    DefaultLocaleEnum:
+      enum:
+      - uz
+      - uz-Cyrl
+      - ru
+      type: string
+      description: |-
+        * `uz` - O'zbekcha
+        * `uz-Cyrl` - Ўзбекча
+        * `ru` - Русский
     Device:
       type: object
       properties:
@@ -2754,6 +3630,24 @@ components:
         * `duplicate` - duplicate
         * `pending` - pending
         * `rejected` - rejected
+    Expiring:
+      type: object
+      properties:
+        tenant:
+          type: string
+          format: uuid
+        name:
+          type: string
+        paid_until:
+          type: string
+          format: date
+        days_left:
+          type: integer
+      required:
+      - days_left
+      - name
+      - paid_until
+      - tenant
     Health:
       type: object
       properties:
@@ -2949,6 +3843,68 @@ components:
       description: |-
         * `cash` - naqd
         * `card` - karta
+    MonthRevenue:
+      type: object
+      properties:
+        month:
+          type: string
+        revenue_tiyin:
+          type: integer
+      required:
+      - month
+      - revenue_tiyin
+    OnboardRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          title: Nomi
+          maxLength: 200
+        address:
+          type: string
+          title: Manzil
+          maxLength: 300
+        timezone:
+          type: string
+          minLength: 1
+          title: Vaqt zonasi
+          maxLength: 64
+        default_locale:
+          allOf:
+          - $ref: '#/components/schemas/DefaultLocaleEnum'
+          title: Til
+        notes:
+          type: string
+          title: Izoh
+        owner:
+          $ref: '#/components/schemas/OwnerInputRequest'
+        plan:
+          type: string
+          format: uuid
+        trial_days:
+          type: integer
+          maximum: 90
+          minimum: 0
+          default: 14
+      required:
+      - name
+      - owner
+      - plan
+    OnboardResult:
+      type: object
+      properties:
+        tenant:
+          $ref: '#/components/schemas/TenantDetail'
+        owner:
+          $ref: '#/components/schemas/UserBrief'
+        temporary_password:
+          type: string
+          nullable: true
+      required:
+      - owner
+      - temporary_password
+      - tenant
     OpEnum:
       enum:
       - upsert
@@ -2957,6 +3913,56 @@ components:
       description: |-
         * `upsert` - upsert
         * `delete` - delete
+    OptionalReasonRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          default: ''
+          maxLength: 300
+    OwnerInputRequest:
+      type: object
+      properties:
+        phone:
+          type: string
+          minLength: 1
+        full_name:
+          type: string
+          minLength: 1
+          maxLength: 200
+        password:
+          writeOnly: true
+          oneOf:
+          - type: string
+            minLength: 8
+          - type: string
+            maxLength: 0
+      required:
+      - full_name
+      - phone
+    PaginatedAuditLogList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditLog'
     PaginatedCashMovementList:
       type: object
       required:
@@ -3095,6 +4101,98 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/InventoryCount'
+    PaginatedPaymentList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Payment'
+    PaginatedPaymentsListList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentsList'
+    PaginatedPlanList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Plan'
+    PaginatedPlatformDeviceList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlatformDevice'
     PaginatedProductList:
       type: object
       required:
@@ -3279,6 +4377,52 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Supplier'
+    PaginatedSyncEventList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/SyncEvent'
+    PaginatedTenantListList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TenantList'
     PaginatedUnitList:
       type: object
       required:
@@ -3302,6 +4446,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Unit'
+    PaginatedUserBriefList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserBrief'
     PaginatedUserList:
       type: object
       required:
@@ -3325,6 +4492,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/User'
+    PasswordResult:
+      type: object
+      properties:
+        temporary_password:
+          type: string
+      required:
+      - temporary_password
     PatchedCategoryRequest:
       type: object
       properties:
@@ -3394,6 +4568,40 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/InventoryCountItemRequest'
+    PatchedPlanRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          title: Nomi
+          maxLength: 100
+        price_tiyin_per_month:
+          type: integer
+          minimum: 0
+        max_devices:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Qurilmalar chegarasi
+        max_users:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Xodimlar chegarasi
+        features:
+          title: Imkoniyatlar
+        is_active:
+          type: boolean
+          title: Faol
+        sort:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Tartib
     PatchedProductRequest:
       type: object
       properties:
@@ -3474,6 +4682,27 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/StockReceiptItemRequest'
+    PatchedSubscriptionRequest:
+      type: object
+      properties:
+        plan:
+          type: string
+          format: uuid
+        trial_ends_at:
+          type: string
+          format: date
+          nullable: true
+          title: Sinov tugashi (birinchi to'lanmagan kun)
+        grace_days:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          title: Imtiyozli kunlar
+        offline_days:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          title: Oflayn ishlash kunlari
     PatchedSupplierRequest:
       type: object
       properties:
@@ -3487,6 +4716,30 @@ components:
           title: Telefon
           maxLength: 32
         note:
+          type: string
+          title: Izoh
+    PatchedTenantUpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          title: Nomi
+          maxLength: 200
+        address:
+          type: string
+          title: Manzil
+          maxLength: 300
+        timezone:
+          type: string
+          minLength: 1
+          title: Vaqt zonasi
+          maxLength: 64
+        default_locale:
+          allOf:
+          - $ref: '#/components/schemas/DefaultLocaleEnum'
+          title: Til
+        notes:
           type: string
           title: Izoh
     PatchedUnitRequest:
@@ -3504,6 +4757,87 @@ components:
         is_fractional:
           type: boolean
           title: Kasrli
+    Payment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        tenant:
+          type: string
+          format: uuid
+        tenant_name:
+          type: string
+          readOnly: true
+        amount_tiyin:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          title: Summa (tiyin)
+        months:
+          type: integer
+          maximum: 32767
+          minimum: -32768
+          title: Oylar
+        paid_at:
+          type: string
+          format: date-time
+          title: To'langan vaqt
+        period_from:
+          type: string
+          format: date
+          title: Davr boshi
+        period_to:
+          type: string
+          format: date
+          title: Davr oxiri
+        method:
+          allOf:
+          - $ref: '#/components/schemas/SubscriptionPaymentMethodEnum'
+          title: Usul
+        note:
+          type: string
+          title: Izoh
+          maxLength: 300
+        recorded_by:
+          type: string
+          format: uuid
+          nullable: true
+          title: Kiritgan
+        reverses:
+          type: string
+          format: uuid
+          nullable: true
+          title: Bekor qilingan to'lov
+      required:
+      - amount_tiyin
+      - method
+      - months
+      - period_from
+      - period_to
+      - tenant
+      - tenant_name
+    PaymentInputRequest:
+      type: object
+      properties:
+        amount_tiyin:
+          type: integer
+          minimum: 0
+        months:
+          type: integer
+          maximum: 36
+          minimum: 1
+        method:
+          $ref: '#/components/schemas/SubscriptionPaymentMethodEnum'
+        note:
+          type: string
+          default: ''
+          maxLength: 300
+      required:
+      - amount_tiyin
+      - method
+      - months
     PaymentRequest:
       type: object
       properties:
@@ -3534,6 +4868,32 @@ components:
       - card
       - cash
       - debt
+    PaymentsList:
+      type: object
+      description: Sahifa + filtrlangan jami (schema uchun).
+      properties:
+        count:
+          type: integer
+        next:
+          type: string
+          format: uri
+          nullable: true
+        previous:
+          type: string
+          format: uri
+          nullable: true
+        total_tiyin:
+          type: integer
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Payment'
+      required:
+      - count
+      - next
+      - previous
+      - results
+      - total_tiyin
     Period:
       type: object
       properties:
@@ -3546,6 +4906,133 @@ components:
       required:
       - date_from
       - date_to
+    Plan:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          title: Nomi
+          maxLength: 100
+        price_tiyin_per_month:
+          type: integer
+          minimum: 0
+        max_devices:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Qurilmalar chegarasi
+        max_users:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Xodimlar chegarasi
+        features:
+          title: Imkoniyatlar
+        is_active:
+          type: boolean
+          title: Faol
+        sort:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Tartib
+        subscribers_count:
+          type: integer
+          readOnly: true
+          default: 0
+      required:
+      - name
+      - price_tiyin_per_month
+      - subscribers_count
+    PlanRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          minLength: 1
+          title: Nomi
+          maxLength: 100
+        price_tiyin_per_month:
+          type: integer
+          minimum: 0
+        max_devices:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Qurilmalar chegarasi
+        max_users:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Xodimlar chegarasi
+        features:
+          title: Imkoniyatlar
+        is_active:
+          type: boolean
+          title: Faol
+        sort:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Tartib
+      required:
+      - name
+      - price_tiyin_per_month
+    PlatformDevice:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        tenant:
+          type: string
+          format: uuid
+        tenant_name:
+          type: string
+          readOnly: true
+        code:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          title: Nomi
+          maxLength: 100
+        platform:
+          allOf:
+          - $ref: '#/components/schemas/PlatformEnum'
+          title: Platforma
+        app_version:
+          type: string
+          title: Ilova versiyasi
+          maxLength: 32
+        last_sync_at:
+          type: string
+          format: date-time
+          nullable: true
+          title: Oxirgi sinxron
+        last_seen_at:
+          type: string
+          format: date-time
+          nullable: true
+          title: Oxirgi ulanish
+        is_blocked:
+          type: boolean
+          title: Bloklangan
+        created_at:
+          type: string
+          format: date-time
+      required:
+      - code
+      - name
+      - platform
+      - tenant
+      - tenant_name
     PlatformEnum:
       enum:
       - windows
@@ -3772,6 +5259,15 @@ components:
       required:
       - results
       - server_time
+    ReasonRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          minLength: 1
+          maxLength: 300
+      required:
+      - reason
     Refund:
       type: object
       properties:
@@ -3874,6 +5370,15 @@ components:
       required:
       - cash
       - debt
+    ReverseInputRequest:
+      type: object
+      properties:
+        note:
+          type: string
+          minLength: 1
+          maxLength: 300
+      required:
+      - note
     ReverseReceiptRequest:
       type: object
       properties:
@@ -4201,6 +5706,32 @@ components:
       - sales_count
       - sales_total_tiyin
       - shift
+    Stats:
+      type: object
+      properties:
+        tenants:
+          $ref: '#/components/schemas/TenantCounts'
+        mrr_tiyin:
+          type: integer
+        revenue_this_month_tiyin:
+          type: integer
+        expiring_soon:
+          type: array
+          items:
+            $ref: '#/components/schemas/Expiring'
+        stale_devices:
+          type: integer
+        monthly_revenue:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonthRevenue'
+      required:
+      - expiring_soon
+      - monthly_revenue
+      - mrr_tiyin
+      - revenue_this_month_tiyin
+      - stale_devices
+      - tenants
     StatusEnum:
       enum:
       - draft
@@ -4458,6 +5989,57 @@ components:
       - name
       - product
       - qty_milli
+    Subscription:
+      type: object
+      properties:
+        plan:
+          type: string
+          format: uuid
+        trial_ends_at:
+          type: string
+          format: date
+          nullable: true
+          title: Sinov tugashi (birinchi to'lanmagan kun)
+        paid_until:
+          type: string
+          format: date
+          readOnly: true
+          nullable: true
+          title: To'langan oxirgi kun
+        grace_days:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          title: Imtiyozli kunlar
+        offline_days:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          title: Oflayn ishlash kunlari
+        status:
+          type: string
+          readOnly: true
+        days_left:
+          type: integer
+          nullable: true
+          readOnly: true
+      required:
+      - days_left
+      - paid_until
+      - plan
+      - status
+    SubscriptionPaymentMethodEnum:
+      enum:
+      - cash
+      - transfer
+      - card
+      - other
+      type: string
+      description: |-
+        * `cash` - naqd
+        * `transfer` - o'tkazma
+        * `card` - karta
+        * `other` - boshqa
     SubscriptionSnapshot:
       type: object
       properties:
@@ -4557,6 +6139,61 @@ components:
           title: Izoh
       required:
       - name
+    SyncEvent:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        device:
+          type: string
+          format: uuid
+          title: Qurilma
+        type:
+          type: string
+          title: Turi
+          maxLength: 32
+        status:
+          allOf:
+          - $ref: '#/components/schemas/SyncEventStatusEnum'
+          title: Holat
+        error:
+          nullable: true
+          title: Xato
+        attempts:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Urinishlar
+        client_created_at:
+          type: string
+          format: date-time
+          title: Qurilmadagi vaqt
+        received_at:
+          type: string
+          format: date-time
+          title: Qabul qilingan
+        applied_at:
+          type: string
+          format: date-time
+          nullable: true
+          title: Qo'llangan vaqt
+      required:
+      - client_created_at
+      - device
+      - id
+      - status
+      - type
+    SyncEventStatusEnum:
+      enum:
+      - applied
+      - pending
+      - rejected
+      type: string
+      description: |-
+        * `applied` - qo'llangan
+        * `pending` - kutilmoqda
+        * `rejected` - rad etilgan
     TenantBrief:
       type: object
       properties:
@@ -4568,6 +6205,171 @@ components:
       required:
       - id
       - name
+    TenantCounts:
+      type: object
+      properties:
+        total:
+          type: integer
+        trial:
+          type: integer
+        active:
+          type: integer
+        grace:
+          type: integer
+        readonly:
+          type: integer
+        blocked:
+          type: integer
+      required:
+      - active
+      - blocked
+      - grace
+      - readonly
+      - total
+      - trial
+    TenantDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          title: Nomi
+          maxLength: 200
+        owner_phone:
+          type: string
+          title: Egasining telefoni
+          maxLength: 13
+        owner_name:
+          type: string
+          readOnly: true
+          default: ''
+        plan:
+          type: string
+          nullable: true
+          readOnly: true
+        status:
+          type: string
+          readOnly: true
+        paid_until:
+          type: string
+          nullable: true
+          readOnly: true
+        trial_ends_at:
+          type: string
+          nullable: true
+          readOnly: true
+        devices_count:
+          type: integer
+          readOnly: true
+        last_activity_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        is_blocked:
+          type: boolean
+          title: Bloklangan
+        created_at:
+          type: string
+          format: date-time
+        address:
+          type: string
+          title: Manzil
+          maxLength: 300
+        timezone:
+          type: string
+          title: Vaqt zonasi
+          maxLength: 64
+        default_locale:
+          allOf:
+          - $ref: '#/components/schemas/DefaultLocaleEnum'
+          title: Til
+        notes:
+          type: string
+          title: Izoh
+        blocked_reason:
+          type: string
+          title: Bloklash sababi
+          maxLength: 300
+        subscription:
+          allOf:
+          - $ref: '#/components/schemas/Subscription'
+          readOnly: true
+          nullable: true
+        users_count:
+          type: integer
+          readOnly: true
+      required:
+      - devices_count
+      - last_activity_at
+      - name
+      - owner_name
+      - owner_phone
+      - paid_until
+      - plan
+      - status
+      - subscription
+      - trial_ends_at
+      - users_count
+    TenantList:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          title: Nomi
+          maxLength: 200
+        owner_phone:
+          type: string
+          title: Egasining telefoni
+          maxLength: 13
+        owner_name:
+          type: string
+          readOnly: true
+          default: ''
+        plan:
+          type: string
+          nullable: true
+          readOnly: true
+        status:
+          type: string
+          readOnly: true
+        paid_until:
+          type: string
+          nullable: true
+          readOnly: true
+        trial_ends_at:
+          type: string
+          nullable: true
+          readOnly: true
+        devices_count:
+          type: integer
+          readOnly: true
+        last_activity_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        is_blocked:
+          type: boolean
+          title: Bloklangan
+        created_at:
+          type: string
+          format: date-time
+      required:
+      - devices_count
+      - last_activity_at
+      - name
+      - owner_name
+      - owner_phone
+      - paid_until
+      - plan
+      - status
+      - trial_ends_at
     TokenRefresh:
       type: object
       properties:
@@ -4660,6 +6462,39 @@ components:
       - id
       - is_active
       - phone
+      - role
+    UserBrief:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        phone:
+          type: string
+          nullable: true
+          title: Telefon
+          maxLength: 13
+        full_name:
+          type: string
+          title: Ism
+          maxLength: 200
+        role:
+          allOf:
+          - $ref: '#/components/schemas/RoleEnum'
+          title: Rol
+        is_active:
+          type: boolean
+          title: Faol
+        last_login:
+          type: string
+          format: date-time
+          nullable: true
+          title: Oxirgi kirish
+        created_at:
+          type: string
+          format: date-time
+      required:
+      - full_name
       - role
   securitySchemes:
     deviceToken:

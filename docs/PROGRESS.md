@@ -107,3 +107,9 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-019 (squash merge)
 - Qoldi / keyingi qadam: T-020 Platforma admin API. xlsx eksport — klientda (kassa/admin).
 - Muammo yoki qaror: Q-004 — foyda chek chegirmasi va qaytarishlar bilan (A, vaqtincha); `data-model.md` dagi qator formulasi ularni hisobga olmasdi.
+
+## 2026-10-14 — T-020 Platforma admin API
+- Qilindi: `apps/platform_admin` — `AdminAuditLog` (o'zgarmas; actor, action, target, tenant, before/after — sirlarsiz, sabab). `/api/v1/platform/...` (faqat platform_admin): tenantlar (ro'yxat — jonli obuna holati, qidiruv, holat filtri, qurilmalar soni, oxirgi faollik; karta; onboarding — tenant + do'kon + birliklar + ega + sinov obunasi bitta tranzaksiyada, vaqtinchalik parol faqat javobda; tahrir; bloklash/ochish sabab bilan; obuna sozlamalari; xodimlar; parol tiklash; sinxron hodisalari), tariflar CRUD (DELETE = nofaol), to'lovlar (kiritish, bekor qilish, ro'yxat + filtrlangan jami), qurilmalar (filtrlar, bloklash), statistika (holatlar, MRR, shu oy tushum, 7 kunda tugaydiganlar, sinxronlanmagan qurilmalar, 12 oylik tushum), audit jurnali. Har o'zgarish audit bilan bitta tranzaksiyada. Spec `platform-api.md`. 704 test yashil (+131: 23 endpoint × 3 rol = 403, anonim = 401).
+- PR: T-020 (squash merge)
+- Qoldi / keyingi qadam: 1-bosqich (backend yadrosi) tugadi. Keyingi: 2-bosqich — T-030 Dizayn tizimi (packages/ui, Flutter).
+- Muammo yoki qaror: testlar ikkita xatoni topdi — onboarding audit yozuvida `tenant` bo'sh edi; band telefon 500 berardi (model validatsiyasi) → oldindan tekshiruv, `409 phone_taken`.

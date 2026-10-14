@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "apps.sales",
     "apps.sync",
     "apps.reports",
+    "apps.platform_admin",
 ]
 
 MIDDLEWARE = [
@@ -132,6 +133,7 @@ SPECTACULAR_SETTINGS = {
         "MethodEnum": "apps.customers.models.PaymentMethod",
         "SalePaymentMethodEnum": "apps.sales.models.PaymentMethod",
         "RefundMethodEnum": "apps.sales.models.RefundMethod",
+        "SubscriptionPaymentMethodEnum": "apps.billing.models.PaymentMethod",
         "StatusEnum": "apps.inventory.models.DocumentStatus",
         "SaleStatusEnum": "apps.sales.models.SaleStatus",
     },

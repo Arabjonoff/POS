@@ -357,6 +357,343 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/platform/audit-log/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["platform_audit_log_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/audit-log/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["platform_audit_log_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/devices/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["platform_devices_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/devices/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["platform_devices_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/devices/{id}/block/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["platform_devices_block_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/devices/{id}/unblock/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["platform_devices_unblock_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/payments/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["platform_payments_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/payments/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["platform_payments_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/payments/{id}/reverse/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["platform_payments_reverse_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/plans/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["platform_plans_list"];
+        put?: never;
+        post: operations["platform_plans_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/plans/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["platform_plans_retrieve"];
+        put?: never;
+        post?: never;
+        /** @description Nofaol qilish; obunalar saqlanadi. */
+        delete: operations["platform_plans_destroy"];
+        options?: never;
+        head?: never;
+        patch: operations["platform_plans_partial_update"];
+        trace?: never;
+    };
+    "/api/v1/platform/stats/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["platform_stats_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/tenants/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["platform_tenants_list"];
+        put?: never;
+        post: operations["platform_tenants_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/tenants/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["platform_tenants_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["platform_tenants_partial_update"];
+        trace?: never;
+    };
+    "/api/v1/platform/tenants/{id}/block/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["platform_tenants_block_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/tenants/{id}/payments/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["platform_tenants_payments_list"];
+        put?: never;
+        post: operations["platform_tenants_payments_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/tenants/{id}/subscription/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["platform_tenants_subscription_partial_update"];
+        trace?: never;
+    };
+    "/api/v1/platform/tenants/{id}/sync-events/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["platform_tenants_sync_events_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/tenants/{id}/unblock/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["platform_tenants_unblock_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/tenants/{id}/users/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["platform_tenants_users_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/users/{id}/reset-password/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["platform_users_reset_password_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/products/": {
         parameters: {
             query?: never;
@@ -909,6 +1246,35 @@ export interface components {
             amount_tiyin: number;
             note: string;
         };
+        AuditLog: {
+            /** Format: uuid */
+            id?: string;
+            /**
+             * Kim
+             * Format: uuid
+             */
+            actor: string;
+            readonly actor_name: string;
+            /** Amal */
+            action: string;
+            /** Obyekt turi */
+            target_type: string;
+            /** Obyekt id */
+            target_id: string;
+            /** Format: uuid */
+            tenant?: string | null;
+            /** Oldin */
+            before?: unknown;
+            /** Keyin */
+            after?: unknown;
+            /** Sabab */
+            reason?: string;
+            /**
+             * Vaqt
+             * Format: date-time
+             */
+            at?: string;
+        };
         /** @enum {unknown} */
         BlankEnum: "";
         ByCashCard: {
@@ -1091,6 +1457,13 @@ export interface components {
             debtors_count: number;
             top: components["schemas"]["Debtor"][];
         };
+        /**
+         * @description * `uz` - O'zbekcha
+         *     * `uz-Cyrl` - Ўзбекча
+         *     * `ru` - Русский
+         * @enum {string}
+         */
+        DefaultLocaleEnum: "uz" | "uz-Cyrl" | "ru";
         Device: {
             /** Format: uuid */
             readonly id: string;
@@ -1172,6 +1545,14 @@ export interface components {
          * @enum {string}
          */
         EventResultStatusEnum: "applied" | "duplicate" | "pending" | "rejected";
+        Expiring: {
+            /** Format: uuid */
+            tenant: string;
+            name: string;
+            /** Format: date */
+            paid_until: string;
+            days_left: number;
+        };
         Health: {
             status: string;
         };
@@ -1258,12 +1639,62 @@ export interface components {
          * @enum {string}
          */
         MethodEnum: "cash" | "card";
+        MonthRevenue: {
+            month: string;
+            revenue_tiyin: number;
+        };
+        OnboardRequest: {
+            /** Nomi */
+            name: string;
+            /** Manzil */
+            address?: string;
+            /** Vaqt zonasi */
+            timezone?: string;
+            /** Til */
+            default_locale?: components["schemas"]["DefaultLocaleEnum"];
+            /** Izoh */
+            notes?: string;
+            owner: components["schemas"]["OwnerInputRequest"];
+            /** Format: uuid */
+            plan: string;
+            /** @default 14 */
+            trial_days: number;
+        };
+        OnboardResult: {
+            tenant: components["schemas"]["TenantDetail"];
+            owner: components["schemas"]["UserBrief"];
+            temporary_password: string | null;
+        };
         /**
          * @description * `upsert` - upsert
          *     * `delete` - delete
          * @enum {string}
          */
         OpEnum: "upsert" | "delete";
+        OptionalReasonRequest: {
+            /** @default  */
+            reason: string;
+        };
+        OwnerInputRequest: {
+            phone: string;
+            full_name: string;
+            password?: string;
+        };
+        PaginatedAuditLogList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["AuditLog"][];
+        };
         PaginatedCashMovementList: {
             /** @example 123 */
             count: number;
@@ -1353,6 +1784,66 @@ export interface components {
              */
             previous?: string | null;
             results: components["schemas"]["InventoryCount"][];
+        };
+        PaginatedPaymentList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["Payment"][];
+        };
+        PaginatedPaymentsListList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["PaymentsList"][];
+        };
+        PaginatedPlanList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["Plan"][];
+        };
+        PaginatedPlatformDeviceList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["PlatformDevice"][];
         };
         PaginatedProductList: {
             /** @example 123 */
@@ -1474,6 +1965,36 @@ export interface components {
             previous?: string | null;
             results: components["schemas"]["Supplier"][];
         };
+        PaginatedSyncEventList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["SyncEvent"][];
+        };
+        PaginatedTenantListList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["TenantList"][];
+        };
         PaginatedUnitList: {
             /** @example 123 */
             count: number;
@@ -1489,6 +2010,21 @@ export interface components {
             previous?: string | null;
             results: components["schemas"]["Unit"][];
         };
+        PaginatedUserBriefList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=4
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?page=2
+             */
+            previous?: string | null;
+            results: components["schemas"]["UserBrief"][];
+        };
         PaginatedUserList: {
             /** @example 123 */
             count: number;
@@ -1503,6 +2039,9 @@ export interface components {
              */
             previous?: string | null;
             results: components["schemas"]["User"][];
+        };
+        PasswordResult: {
+            temporary_password: string;
         };
         PatchedCategoryRequest: {
             /** Nomi */
@@ -1540,6 +2079,23 @@ export interface components {
             note?: string;
             items?: components["schemas"]["InventoryCountItemRequest"][];
         };
+        PatchedPlanRequest: {
+            /** Format: uuid */
+            id?: string;
+            /** Nomi */
+            name?: string;
+            price_tiyin_per_month?: number;
+            /** Qurilmalar chegarasi */
+            max_devices?: number;
+            /** Xodimlar chegarasi */
+            max_users?: number;
+            /** Imkoniyatlar */
+            features?: unknown;
+            /** Faol */
+            is_active?: boolean;
+            /** Tartib */
+            sort?: number;
+        };
         PatchedProductRequest: {
             /** Format: uuid */
             id?: string;
@@ -1576,6 +2132,19 @@ export interface components {
             note?: string;
             items?: components["schemas"]["StockReceiptItemRequest"][];
         };
+        PatchedSubscriptionRequest: {
+            /** Format: uuid */
+            plan?: string;
+            /**
+             * Sinov tugashi (birinchi to'lanmagan kun)
+             * Format: date
+             */
+            trial_ends_at?: string | null;
+            /** Imtiyozli kunlar */
+            grace_days?: number;
+            /** Oflayn ishlash kunlari */
+            offline_days?: number;
+        };
         PatchedSupplierRequest: {
             /** Nomi */
             name?: string;
@@ -1584,6 +2153,18 @@ export interface components {
             /** Izoh */
             note?: string;
         };
+        PatchedTenantUpdateRequest: {
+            /** Nomi */
+            name?: string;
+            /** Manzil */
+            address?: string;
+            /** Vaqt zonasi */
+            timezone?: string;
+            /** Til */
+            default_locale?: components["schemas"]["DefaultLocaleEnum"];
+            /** Izoh */
+            notes?: string;
+        };
         PatchedUnitRequest: {
             /** Kod */
             code?: string;
@@ -1591,6 +2172,56 @@ export interface components {
             name?: string;
             /** Kasrli */
             is_fractional?: boolean;
+        };
+        Payment: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            tenant: string;
+            readonly tenant_name: string;
+            /**
+             * Summa (tiyin)
+             * Format: int64
+             */
+            amount_tiyin: number;
+            /** Oylar */
+            months: number;
+            /**
+             * To'langan vaqt
+             * Format: date-time
+             */
+            paid_at?: string;
+            /**
+             * Davr boshi
+             * Format: date
+             */
+            period_from: string;
+            /**
+             * Davr oxiri
+             * Format: date
+             */
+            period_to: string;
+            /** Usul */
+            method: components["schemas"]["SubscriptionPaymentMethodEnum"];
+            /** Izoh */
+            note?: string;
+            /**
+             * Kiritgan
+             * Format: uuid
+             */
+            recorded_by?: string | null;
+            /**
+             * Bekor qilingan to'lov
+             * Format: uuid
+             */
+            reverses?: string | null;
+        };
+        PaymentInputRequest: {
+            amount_tiyin: number;
+            months: number;
+            method: components["schemas"]["SubscriptionPaymentMethodEnum"];
+            /** @default  */
+            note: string;
         };
         PaymentRequest: {
             /** Format: uuid */
@@ -1605,11 +2236,85 @@ export interface components {
             card: number;
             debt: number;
         };
+        /** @description Sahifa + filtrlangan jami (schema uchun). */
+        PaymentsList: {
+            count: number;
+            /** Format: uri */
+            next: string | null;
+            /** Format: uri */
+            previous: string | null;
+            total_tiyin: number;
+            results: components["schemas"]["Payment"][];
+        };
         Period: {
             /** Format: date */
             date_from: string;
             /** Format: date */
             date_to: string;
+        };
+        Plan: {
+            /** Format: uuid */
+            id?: string;
+            /** Nomi */
+            name: string;
+            price_tiyin_per_month: number;
+            /** Qurilmalar chegarasi */
+            max_devices?: number;
+            /** Xodimlar chegarasi */
+            max_users?: number;
+            /** Imkoniyatlar */
+            features?: unknown;
+            /** Faol */
+            is_active?: boolean;
+            /** Tartib */
+            sort?: number;
+            /** @default 0 */
+            readonly subscribers_count: number;
+        };
+        PlanRequest: {
+            /** Format: uuid */
+            id?: string;
+            /** Nomi */
+            name: string;
+            price_tiyin_per_month: number;
+            /** Qurilmalar chegarasi */
+            max_devices?: number;
+            /** Xodimlar chegarasi */
+            max_users?: number;
+            /** Imkoniyatlar */
+            features?: unknown;
+            /** Faol */
+            is_active?: boolean;
+            /** Tartib */
+            sort?: number;
+        };
+        PlatformDevice: {
+            /** Format: uuid */
+            id?: string;
+            /** Format: uuid */
+            tenant: string;
+            readonly tenant_name: string;
+            readonly code: string;
+            /** Nomi */
+            name: string;
+            /** Platforma */
+            platform: components["schemas"]["PlatformEnum"];
+            /** Ilova versiyasi */
+            app_version?: string;
+            /**
+             * Oxirgi sinxron
+             * Format: date-time
+             */
+            last_sync_at?: string | null;
+            /**
+             * Oxirgi ulanish
+             * Format: date-time
+             */
+            last_seen_at?: string | null;
+            /** Bloklangan */
+            is_blocked?: boolean;
+            /** Format: date-time */
+            created_at?: string;
         };
         /**
          * @description * `windows` - Windows
@@ -1700,6 +2405,9 @@ export interface components {
             /** Format: date-time */
             server_time: string;
         };
+        ReasonRequest: {
+            reason: string;
+        };
         Refund: {
             /** Format: uuid */
             id?: string;
@@ -1772,6 +2480,9 @@ export interface components {
         RefundsByMethod: {
             cash: number;
             debt: number;
+        };
+        ReverseInputRequest: {
+            note: string;
         };
         ReverseReceiptRequest: {
             /** @default  */
@@ -1991,6 +2702,14 @@ export interface components {
             counted_cash_tiyin: number | null;
             difference_tiyin: number | null;
         };
+        Stats: {
+            tenants: components["schemas"]["TenantCounts"];
+            mrr_tiyin: number;
+            revenue_this_month_tiyin: number;
+            expiring_soon: components["schemas"]["Expiring"][];
+            stale_devices: number;
+            monthly_revenue: components["schemas"]["MonthRevenue"][];
+        };
         /**
          * @description * `draft` - qoralama
          *     * `posted` - tasdiqlangan
@@ -2138,6 +2857,34 @@ export interface components {
             qty_milli: number;
             min_stock_milli: number;
         };
+        Subscription: {
+            /** Format: uuid */
+            plan: string;
+            /**
+             * Sinov tugashi (birinchi to'lanmagan kun)
+             * Format: date
+             */
+            trial_ends_at?: string | null;
+            /**
+             * To'langan oxirgi kun
+             * Format: date
+             */
+            readonly paid_until: string | null;
+            /** Imtiyozli kunlar */
+            grace_days?: number;
+            /** Oflayn ishlash kunlari */
+            offline_days?: number;
+            readonly status: string;
+            readonly days_left: number | null;
+        };
+        /**
+         * @description * `cash` - naqd
+         *     * `transfer` - o'tkazma
+         *     * `card` - karta
+         *     * `other` - boshqa
+         * @enum {string}
+         */
+        SubscriptionPaymentMethodEnum: "cash" | "transfer" | "card" | "other";
         SubscriptionSnapshot: {
             status: string;
             /** Format: date */
@@ -2177,10 +2924,111 @@ export interface components {
             /** Izoh */
             note?: string;
         };
+        SyncEvent: {
+            /** Format: uuid */
+            id: string;
+            /**
+             * Qurilma
+             * Format: uuid
+             */
+            device: string;
+            /** Turi */
+            type: string;
+            /** Holat */
+            status: components["schemas"]["SyncEventStatusEnum"];
+            /** Xato */
+            error?: unknown;
+            /** Urinishlar */
+            attempts?: number;
+            /**
+             * Qurilmadagi vaqt
+             * Format: date-time
+             */
+            client_created_at: string;
+            /**
+             * Qabul qilingan
+             * Format: date-time
+             */
+            received_at?: string;
+            /**
+             * Qo'llangan vaqt
+             * Format: date-time
+             */
+            applied_at?: string | null;
+        };
+        /**
+         * @description * `applied` - qo'llangan
+         *     * `pending` - kutilmoqda
+         *     * `rejected` - rad etilgan
+         * @enum {string}
+         */
+        SyncEventStatusEnum: "applied" | "pending" | "rejected";
         TenantBrief: {
             /** Format: uuid */
             id: string;
             name: string;
+        };
+        TenantCounts: {
+            total: number;
+            trial: number;
+            active: number;
+            grace: number;
+            readonly: number;
+            blocked: number;
+        };
+        TenantDetail: {
+            /** Format: uuid */
+            id?: string;
+            /** Nomi */
+            name: string;
+            /** Egasining telefoni */
+            owner_phone: string;
+            /** @default  */
+            readonly owner_name: string;
+            readonly plan: string | null;
+            readonly status: string;
+            readonly paid_until: string | null;
+            readonly trial_ends_at: string | null;
+            readonly devices_count: number;
+            /** Format: date-time */
+            readonly last_activity_at: string | null;
+            /** Bloklangan */
+            is_blocked?: boolean;
+            /** Format: date-time */
+            created_at?: string;
+            /** Manzil */
+            address?: string;
+            /** Vaqt zonasi */
+            timezone?: string;
+            /** Til */
+            default_locale?: components["schemas"]["DefaultLocaleEnum"];
+            /** Izoh */
+            notes?: string;
+            /** Bloklash sababi */
+            blocked_reason?: string;
+            readonly subscription: components["schemas"]["Subscription"] | null;
+            readonly users_count: number;
+        };
+        TenantList: {
+            /** Format: uuid */
+            id?: string;
+            /** Nomi */
+            name: string;
+            /** Egasining telefoni */
+            owner_phone: string;
+            /** @default  */
+            readonly owner_name: string;
+            readonly plan: string | null;
+            readonly status: string;
+            readonly paid_until: string | null;
+            readonly trial_ends_at: string | null;
+            readonly devices_count: number;
+            /** Format: date-time */
+            readonly last_activity_at: string | null;
+            /** Bloklangan */
+            is_blocked?: boolean;
+            /** Format: date-time */
+            created_at?: string;
         };
         TokenRefresh: {
             readonly access: string;
@@ -2220,6 +3068,25 @@ export interface components {
             readonly is_active: boolean;
             /** Format: date-time */
             readonly created_at: string;
+        };
+        UserBrief: {
+            /** Format: uuid */
+            id?: string;
+            /** Telefon */
+            phone?: string | null;
+            /** Ism */
+            full_name: string;
+            /** Rol */
+            role: components["schemas"]["RoleEnum"];
+            /** Faol */
+            is_active?: boolean;
+            /**
+             * Oxirgi kirish
+             * Format: date-time
+             */
+            last_login?: string | null;
+            /** Format: date-time */
+            created_at?: string;
         };
     };
     responses: never;
@@ -2986,6 +3853,695 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["InventoryCount"];
+                };
+            };
+        };
+    };
+    platform_audit_log_list: {
+        parameters: {
+            query?: {
+                action?: string;
+                actor?: string;
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                target_type?: string;
+                tenant?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedAuditLogList"];
+                };
+            };
+        };
+    };
+    platform_audit_log_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this audit yozuvi. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuditLog"];
+                };
+            };
+        };
+    };
+    platform_devices_list: {
+        parameters: {
+            query?: {
+                blocked?: boolean;
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                /** @description N kundan beri sinxronlanmagan */
+                stale_days?: number;
+                tenant?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedPlatformDeviceList"];
+                };
+            };
+        };
+    };
+    platform_devices_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this qurilma. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlatformDevice"];
+                };
+            };
+        };
+    };
+    platform_devices_block_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this qurilma. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReasonRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["ReasonRequest"];
+                "multipart/form-data": components["schemas"]["ReasonRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlatformDevice"];
+                };
+            };
+        };
+    };
+    platform_devices_unblock_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this qurilma. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["OptionalReasonRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["OptionalReasonRequest"];
+                "multipart/form-data": components["schemas"]["OptionalReasonRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlatformDevice"];
+                };
+            };
+        };
+    };
+    platform_payments_list: {
+        parameters: {
+            query?: {
+                date_from?: string;
+                date_to?: string;
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                tenant?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedPaymentsListList"];
+                };
+            };
+        };
+    };
+    platform_payments_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this obuna to'lovi. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Payment"];
+                };
+            };
+        };
+    };
+    platform_payments_reverse_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this obuna to'lovi. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReverseInputRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["ReverseInputRequest"];
+                "multipart/form-data": components["schemas"]["ReverseInputRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Payment"];
+                };
+            };
+        };
+    };
+    platform_plans_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedPlanList"];
+                };
+            };
+        };
+    };
+    platform_plans_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlanRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PlanRequest"];
+                "multipart/form-data": components["schemas"]["PlanRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Plan"];
+                };
+            };
+        };
+    };
+    platform_plans_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this tarif. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Plan"];
+                };
+            };
+        };
+    };
+    platform_plans_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this tarif. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    platform_plans_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this tarif. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedPlanRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedPlanRequest"];
+                "multipart/form-data": components["schemas"]["PatchedPlanRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Plan"];
+                };
+            };
+        };
+    };
+    platform_stats_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Stats"];
+                };
+            };
+        };
+    };
+    platform_tenants_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                /** @description Nom yoki ega telefoni */
+                search?: string;
+                status?: "active" | "blocked" | "grace" | "readonly" | "trial";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedTenantListList"];
+                };
+            };
+        };
+    };
+    platform_tenants_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OnboardRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["OnboardRequest"];
+                "multipart/form-data": components["schemas"]["OnboardRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OnboardResult"];
+                };
+            };
+        };
+    };
+    platform_tenants_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this tenant. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TenantDetail"];
+                };
+            };
+        };
+    };
+    platform_tenants_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this tenant. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedTenantUpdateRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedTenantUpdateRequest"];
+                "multipart/form-data": components["schemas"]["PatchedTenantUpdateRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TenantDetail"];
+                };
+            };
+        };
+    };
+    platform_tenants_block_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this tenant. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReasonRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["ReasonRequest"];
+                "multipart/form-data": components["schemas"]["ReasonRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TenantDetail"];
+                };
+            };
+        };
+    };
+    platform_tenants_payments_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+            };
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this tenant. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedPaymentList"];
+                };
+            };
+        };
+    };
+    platform_tenants_payments_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this tenant. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PaymentInputRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PaymentInputRequest"];
+                "multipart/form-data": components["schemas"]["PaymentInputRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Payment"];
+                };
+            };
+        };
+    };
+    platform_tenants_subscription_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this tenant. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedSubscriptionRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedSubscriptionRequest"];
+                "multipart/form-data": components["schemas"]["PatchedSubscriptionRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TenantDetail"];
+                };
+            };
+        };
+    };
+    platform_tenants_sync_events_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+                status?: "applied" | "pending" | "rejected";
+            };
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this tenant. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedSyncEventList"];
+                };
+            };
+        };
+    };
+    platform_tenants_unblock_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this tenant. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["OptionalReasonRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["OptionalReasonRequest"];
+                "multipart/form-data": components["schemas"]["OptionalReasonRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TenantDetail"];
+                };
+            };
+        };
+    };
+    platform_tenants_users_list: {
+        parameters: {
+            query?: {
+                /** @description A page number within the paginated result set. */
+                page?: number;
+                /** @description Number of results to return per page. */
+                page_size?: number;
+            };
+            header?: never;
+            path: {
+                /** @description A UUID string identifying this tenant. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedUserBriefList"];
+                };
+            };
+        };
+    };
+    platform_users_reset_password_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PasswordResult"];
                 };
             };
         };
