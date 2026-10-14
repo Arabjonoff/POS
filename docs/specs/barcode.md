@@ -42,6 +42,6 @@
 ## Testlar
 - Simulyatsiya: 13 belgi 10 ms oraliqda + Enter → 1 ta `ScanEvent`.
 - 13 belgi 150 ms oraliqda → oddiy matn.
-- Vaznli kod `2012345012503` → PLU `12345`, 1,250 kg.
+- Vaznli kod `2012345012509` → PLU `12345`, 1,250 kg (nazorat raqami 9; T-014 da tuzatildi — avval `…503` yozilgan edi, u noto'g'ri).
 - Nazorat raqami noto'g'ri EAN-13 rad etiladi.
 - Kirim: bir kod 5 marta → bitta qator, miqdor 5.
