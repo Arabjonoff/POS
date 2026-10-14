@@ -15,18 +15,18 @@
 - [x] 1. Spec `docs/specs/sync-api.md` (push formati, statuslar + pending, hodisa → servis jadvali, payloadlar, pull entitylari, ChangeLog, muddati o'tgan pending)
 - [x] 2. `apps/sync` modellari: SyncEvent, ChangeLog; migratsiya + mavjud ma'lumot uchun ChangeLog backfill; admin
 - [x] 3. ChangeLog yozish: signal'lar (Product, ProductBarcode, Category, Unit, Customer, Supplier, User, Store, DebtEntry, ProductStock) + `_bump_cache` (update()) uchun aniq yozuv
-- [ ] 4. `handlers.py`: hodisa turi → servis (shift/cash/sale/refund/debt.paid/customer/supplier/product/receipt/inventory); xatolarni natijaga aylantirish
+- [x] 4. `handlers.py`: hodisa turi → servis (shift/cash/sale/refund/debt.paid/customer/supplier/product/receipt/inventory); xatolarni natijaga aylantirish
 - [ ] 5. Push: `POST /api/v1/sync/push` (qurilma tokeni; idempotent; har hodisa alohida tranzaksiya; pending qayta urinish)
 - [ ] 6. Pull: `GET /api/v1/sync/pull?cursor=&limit=` (ChangeLog, entity serializerlar, subscription, server_time)
 - [ ] 7. Testlar: sync.md server mezonlari 1–4 + handlerlar, pull kursori, izolyatsiya
 - [ ] 8. openapi + schema.d.ts; lint/test; PROGRESS/ROADMAP; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-3-qadam: `apps/sync/changes.py` (log_change, op_for) + `signals.py` (entitylar, User — last_login emas, ProductBarcode → product, ProductStock), `record_movement` da stock yozuvi. 505 test yashil.
+4-qadam: `apps/sync/handlers.py` — HANDLERS (11 tur): sales servislari, debt.paid (pay_debt enforce_balance=False), *.upserted (REST serializer + `by` konteksti, huquqlar), receipt/inventory.posted (serializer + post).
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-4-qadam: `backend/apps/sync/handlers.py` — HANDLERS {type: fn(device, payload)}; debt.paid, customer/supplier/product.upserted (serializer + `by` foydalanuvchi konteksti), receipt.posted, inventory.posted; sales servislariga yo'naltirish.
+5-qadam: `backend/apps/sync/services.py` — push(device, events): idempotent SyncEvent, har hodisa savepoint, xato → natija (DomainError/ValidationError/PermissionDenied → rejected, MissingDependency/kutilmagan → pending), pending qayta urinish, 7 kun; `views.py` SyncPushView.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
