@@ -11,14 +11,14 @@ Internet yoki elektr uzilganda kassa to'xtamaydi; hech bir savdo yo'qolmaydi va 
 
 ## Yuqoriga: outbox (kassa → server)
 - Hodisa turlari: `sale.completed`, `refund.created`, `shift.opened`, `shift.closed`, `cash.moved`, `receipt.posted`, `inventory.posted`, `debt.paid`, `product.upserted`, `customer.upserted`, `supplier.upserted`.
-- Fon xizmati: internet bo'lsa har 10 s yoki yangi hodisa paydo bo'lganda, 100 tadan paket: `POST /api/v1/sync/push` `{device_id, events:[{id,type,payload,created_at}]}`.
+- Fon xizmati: internet bo'lsa har 10 s yoki yangi hodisa paydo bo'lganda, 100 tadan paket: `POST /api/v1/sync/push/` `{events:[{id,type,payload,created_at}]}` (qurilma tokendan aniqlanadi). Server tafsilotlari: `sync-api.md`.
 - Server har hodisani `id` bo'yicha idempotent qabul qiladi: bor bo'lsa `duplicate` (xato emas). Har hodisa alohida tranzaksiyada qo'llanadi.
-- Javob: `{results:[{id,status:"applied"|"duplicate"|"rejected",error?}]}`. Kassa `applied`/`duplicate`ni `sent_at` bilan belgilaydi; `rejected` — `last_error` saqlanadi, holat qatorida ogohlantirish, qayta yuborilmaydi (admin ko'radi).
+- Javob: `{results:[{id,status:"applied"|"duplicate"|"pending"|"rejected",error?}]}`. Kassa `applied`/`duplicate`/`pending`ni `sent_at` bilan belgilaydi (`pending` — server saqlab, o'zi qayta urinadi); `rejected` — `last_error` saqlanadi, holat qatorida ogohlantirish, qayta yuborilmaydi (admin ko'radi).
 - Tarmoq xatosida: eksponensial kutish 5 s → 5 daq.
 - Hodisalar tartibi: bir qurilma ichida `created_at` bo'yicha; server bog'liq obyekt hali yo'q bo'lsa (masalan smena) — `pending` holatida saqlaydi va keyingi push'da qayta urinadi.
 
 ## Pastga: pull (server → kassa)
-- `GET /api/v1/sync/pull?cursor=<int>&limit=500` → `{changes:[{entity,op,data}], next_cursor, has_more, subscription:{status,paid_until,...}, server_time}`.
+- `GET /api/v1/sync/pull/?cursor=<str>&limit=500` (kursor — ochiq bo'lmagan satr, boshida `"0"`) → `{changes:[{entity,op,data}], next_cursor, has_more, subscription:{status,paid_until,...}, server_time}`.
 - Entitylar: Product, ProductBarcode, Category, Unit, Customer, Supplier, User (pin_hash bilan), Store, Plan cheklovlari, DebtEntry (boshqa qurilmalardan), StockMovement yig'indisi (`ProductStock`).
 - Katalog uchun konflikt qoidasi: **server g'olib**. Klient o'zgarishi outbox orqali serverga boradi, pull orqali qaytadi.
 - Pull har 60 s va push'dan keyin.

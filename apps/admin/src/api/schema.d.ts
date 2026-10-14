@@ -674,6 +674,40 @@ export interface paths {
         patch: operations["suppliers_partial_update"];
         trace?: never;
     };
+    "/api/v1/sync/pull/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Server o'zgarishlari (ChangeLog) kursor bo'yicha + obuna holati. */
+        get: operations["sync_pull_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/sync/push/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Kassa hodisalarini qabul qiladi (idempotent, paketli). */
+        post: operations["sync_push_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/units/": {
         parameters: {
             query?: never;
@@ -827,6 +861,13 @@ export interface components {
             /** Rang (palitra kaliti) */
             color?: string;
         };
+        Change: {
+            entity: string;
+            op: components["schemas"]["OpEnum"];
+            /** Format: uuid */
+            id: string;
+            data: unknown;
+        };
         /** @description `id` klientda yaratilishi mumkin (UUIDv7); keyin o'zgarmaydi. */
         Customer: {
             /** Format: uuid */
@@ -955,6 +996,35 @@ export interface components {
             device: components["schemas"]["Device"];
             token: string;
         };
+        EventError: {
+            code: string;
+            message: string;
+            details: unknown;
+        };
+        EventRequest: {
+            /** Format: uuid */
+            id: string;
+            type: string;
+            payload: {
+                [key: string]: unknown;
+            };
+            /** Format: date-time */
+            created_at: string;
+        };
+        EventResult: {
+            /** Format: uuid */
+            id: string;
+            status: components["schemas"]["EventResultStatusEnum"];
+            error?: components["schemas"]["EventError"];
+        };
+        /**
+         * @description * `applied` - applied
+         *     * `duplicate` - duplicate
+         *     * `pending` - pending
+         *     * `rejected` - rejected
+         * @enum {string}
+         */
+        EventResultStatusEnum: "applied" | "duplicate" | "pending" | "rejected";
         Health: {
             status: string;
         };
@@ -1036,6 +1106,12 @@ export interface components {
          * @enum {string}
          */
         MethodEnum: "cash" | "card";
+        /**
+         * @description * `upsert` - upsert
+         *     * `delete` - delete
+         * @enum {string}
+         */
+        OpEnum: "upsert" | "delete";
         PaginatedCashMovementList: {
             /** @example 123 */
             count: number;
@@ -1431,6 +1507,22 @@ export interface components {
             /** Faol */
             is_active?: boolean;
             barcodes?: string[];
+        };
+        PullResponse: {
+            changes: components["schemas"]["Change"][];
+            next_cursor: string;
+            has_more: boolean;
+            subscription: components["schemas"]["SubscriptionSnapshot"];
+            /** Format: date-time */
+            server_time: string;
+        };
+        PushRequestRequest: {
+            events: components["schemas"]["EventRequest"][];
+        };
+        PushResponse: {
+            results: components["schemas"]["EventResult"][];
+            /** Format: date-time */
+            server_time: string;
         };
         Refund: {
             /** Format: uuid */
@@ -3409,6 +3501,53 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Supplier"];
+                };
+            };
+        };
+    };
+    sync_pull_retrieve: {
+        parameters: {
+            query?: {
+                cursor?: string;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PullResponse"];
+                };
+            };
+        };
+    };
+    sync_push_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PushRequestRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PushRequestRequest"];
+                "multipart/form-data": components["schemas"]["PushRequestRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PushResponse"];
                 };
             };
         };

@@ -1730,6 +1730,63 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v1/sync/pull/:
+    get:
+      operationId: sync_pull_retrieve
+      description: Server o'zgarishlari (ChangeLog) kursor bo'yicha + obuna holati.
+      parameters:
+      - in: query
+        name: cursor
+        schema:
+          type: string
+          minLength: 1
+          default: '0'
+          maxLength: 64
+      - in: query
+        name: limit
+        schema:
+          type: integer
+          maximum: 500
+          minimum: 1
+          default: 500
+      tags:
+      - sync
+      security:
+      - deviceToken: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PullResponse'
+          description: ''
+  /api/v1/sync/push/:
+    post:
+      operationId: sync_push_create
+      description: Kassa hodisalarini qabul qiladi (idempotent, paketli).
+      tags:
+      - sync
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PushRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PushRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PushRequestRequest'
+        required: true
+      security:
+      - deviceToken: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PushResponse'
+          description: ''
   /api/v1/units/:
     get:
       operationId: units_list
@@ -2090,6 +2147,23 @@ components:
           maxLength: 16
       required:
       - name
+    Change:
+      type: object
+      properties:
+        entity:
+          type: string
+        op:
+          $ref: '#/components/schemas/OpEnum'
+        id:
+          type: string
+          format: uuid
+        data:
+          nullable: true
+      required:
+      - data
+      - entity
+      - id
+      - op
     Customer:
       type: object
       description: '`id` klientda yaratilishi mumkin (UUIDv7); keyin o''zgarmaydi.'
@@ -2331,6 +2405,64 @@ components:
       required:
       - device
       - token
+    EventError:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details: {}
+      required:
+      - code
+      - details
+      - message
+    EventRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          type: string
+          minLength: 1
+          maxLength: 32
+        payload:
+          type: object
+          additionalProperties: {}
+        created_at:
+          type: string
+          format: date-time
+      required:
+      - created_at
+      - id
+      - payload
+      - type
+    EventResult:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          $ref: '#/components/schemas/EventResultStatusEnum'
+        error:
+          $ref: '#/components/schemas/EventError'
+      required:
+      - id
+      - status
+    EventResultStatusEnum:
+      enum:
+      - applied
+      - duplicate
+      - pending
+      - rejected
+      type: string
+      description: |-
+        * `applied` - applied
+        * `duplicate` - duplicate
+        * `pending` - pending
+        * `rejected` - rejected
     Health:
       type: object
       properties:
@@ -2513,6 +2645,14 @@ components:
       description: |-
         * `cash` - naqd
         * `card` - karta
+    OpEnum:
+      enum:
+      - upsert
+      - delete
+      type: string
+      description: |-
+        * `upsert` - upsert
+        * `delete` - delete
     PaginatedCashMovementList:
       type: object
       required:
@@ -3226,6 +3366,50 @@ components:
       - name
       - sell_price_tiyin
       - unit
+    PullResponse:
+      type: object
+      properties:
+        changes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Change'
+        next_cursor:
+          type: string
+        has_more:
+          type: boolean
+        subscription:
+          $ref: '#/components/schemas/SubscriptionSnapshot'
+        server_time:
+          type: string
+          format: date-time
+      required:
+      - changes
+      - has_more
+      - next_cursor
+      - server_time
+      - subscription
+    PushRequestRequest:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventRequest'
+      required:
+      - events
+    PushResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventResult'
+        server_time:
+          type: string
+          format: date-time
+      required:
+      - results
+      - server_time
     Refund:
       type: object
       properties:

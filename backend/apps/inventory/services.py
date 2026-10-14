@@ -7,6 +7,7 @@ from django.utils import timezone
 from apps.catalog.models import PriceHistory, Product
 from apps.core.exceptions import DomainError
 from apps.core.money import line_total
+from apps.sync.changes import log_change
 from apps.tenants.models import Store, Tenant
 
 from .models import (
@@ -70,6 +71,8 @@ def record_movement(
         at=at or timezone.now(),
     )
     _bump_cache(movement)
+    # Kesh `update()` bilan o'zgaradi (signal yo'q) — pull uchun aniq yozuv.
+    log_change(movement.tenant_id, "stock", movement.product_id)
     return movement
 
 
