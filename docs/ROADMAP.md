@@ -83,7 +83,7 @@ Spec'lar: `data-model.md`, `auth-roles.md`, `sync.md`, `subscription-billing.md`
 - **Qabul:** savdo yozilganda qoldiq harakati va (nasiya bo'lsa) qarz yozuvi yaratiladi; qaytarish teskari harakat yaratadi.
 - **Bog'liq:** T-015, T-016
 
-### [ ] T-018 Sinxronlash API
+### [x] T-018 Sinxronlash API
 - **Bajarish:** `sync.md` bo'yicha: `POST /api/v1/sync/push` (idempotent, paketli), `GET /api/v1/sync/pull?cursor=` (ChangeLog asosida), SyncEvent jurnali.
 - **Qabul:** `sync.md` dagi barcha server qabul mezonlari testlarda (takroriy push, tartibsiz kelish, 2 qurilma bir tovarni sotishi).
 - **Bog'liq:** T-012, T-017

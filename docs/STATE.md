@@ -5,28 +5,20 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-018 Sinxronlash API
-- Branch: feat/T-018-sync-api
-- Boshlangan: 2026-10-14
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-14
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [x] 1. Spec `docs/specs/sync-api.md` (push formati, statuslar + pending, hodisa → servis jadvali, payloadlar, pull entitylari, ChangeLog, muddati o'tgan pending)
-- [x] 2. `apps/sync` modellari: SyncEvent, ChangeLog; migratsiya + mavjud ma'lumot uchun ChangeLog backfill; admin
-- [x] 3. ChangeLog yozish: signal'lar (Product, ProductBarcode, Category, Unit, Customer, Supplier, User, Store, DebtEntry, ProductStock) + `_bump_cache` (update()) uchun aniq yozuv
-- [x] 4. `handlers.py`: hodisa turi → servis (shift/cash/sale/refund/debt.paid/customer/supplier/product/receipt/inventory); xatolarni natijaga aylantirish
-- [x] 5. Push: `POST /api/v1/sync/push` (qurilma tokeni; idempotent; har hodisa alohida tranzaksiya; pending qayta urinish)
-- [x] 6. Pull: `GET /api/v1/sync/pull?cursor=&limit=` (ChangeLog, entity serializerlar, subscription, server_time)
-- [x] 7. Testlar: sync.md server mezonlari 1–4 + handlerlar, pull kursori, izolyatsiya
-- [ ] 8. openapi + schema.d.ts; lint/test; PROGRESS/ROADMAP; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-7-qadam: sync testlari (47): mezon 1–4, statuslar (pending/TTL/server_error/id_conflict/unknown), 11 hodisa turi, envelope, auth; pull (kursor, sahifalar, dedupe, delete, entitylar, update() orqali o'zgarishlar, izolyatsiya). Topilib tuzatildi: standart birliklar va kategoriya o'chirish ChangeLog'ga tushmasdi. Jami 552 test.
+T-018 Sinxronlash API tugadi (PR ochildi, CI yashil bo'lsa squash merge).
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-8-qadam: `make schema` + admin `npm run api:generate`, typecheck/lint; PROGRESS/ROADMAP; PR (T-018), CI, squash merge; STATE shablonga.
+T-018 PR merge qilinganini tekshirish (`gh pr list --state open`); keyin ROADMAP'dan T-019 Do'kon egasi hisobotlari API.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
