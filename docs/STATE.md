@@ -5,29 +5,20 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-030 Dizayn tizimi (packages/ui)
-- Branch: feat/T-030-design-system
-- Boshlangan: 2026-10-14
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-14
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [x] 1. Tokenlar: palitra (ThemeExtension), Inter shrifti, tipografiya, oraliq, radius, soya, harakat, breakpoint + kontrast (WCAG AA) testi
-- [x] 2. To'liq ThemeData (komponent mavzulari) + summa/miqdor formatlash
-- [x] 3. Komponentlar 1: Button, IconButton, TextField, SearchField, Card, ListTile, Badge, StatusDot
-- [x] 4. Komponentlar 2: MoneyText, QtyStepper, NumericKeypad, PinPad
-- [x] 5. Komponentlar 3: Dialog/Sheet, Toast, EmptyState, Skeleton, ScanFeedback
-- [x] 6. Komponentlar 4: DataTable, StatusBar, ResponsiveScaffold
-- [x] 7. Widgetbook: har komponent galereyasi (barcha holatlar) + use-case'lar
-- [ ] 8. Golden testlar (3 o'lcham × 2 mavzu) + docs/screenshots/T-030
-- [ ] 9. analyze/format/test yashil, PR, merge, ROADMAP/PROGRESS
 
 ## Oxirgi bajarilgan ish
-Qadam 1–7: tokenlar (PosColors, PosPalette ThemeExtension, PosTone, PosTypography+Inter, PosSpacing/Radius/Sizes/Motion, PosWindowSize), to‘liq PosTheme, PosFormat (summa/miqdor). 82 test yashil (kontrast AA). Komponentlar 1 (Button+Keycap, IconButton, TextField, SearchField, Card, ListTile, Badge, StatusDot) + widget testlar; komponentlar 2 (MoneyText, QtyStepper, NumericKeypad, PinPad). komponentlar 3 (PosDialog+showPosDialog, PosToast+showPosToast, EmptyState, Skeleton, ScanFeedback). Komponentlar 4 (DataTable, StatusBar, ResponsiveScaffold). Widgetbook galereyalari (9 ta + dialog), knob playground, golden test (widgetbook/test/goldens_test.dart, 60 PNG) yaratildi. ui 131 + widgetbook 62 test yashil.
+T-030 Dizayn tizimi tugadi (PR ochildi, CI yashil bo'lsa squash merge).
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-Qadam 8: goldenlarni ko‘rib chiqish (widgetbook/test/goldens/*/), kamchiliklarni tuzatish, `flutter test --update-goldens` (widgetbook papkasida), skrinshotlarni docs/screenshots/T-030/ ga nusxalash; Makefile ui-test ga widgetbook testlarini qo‘shish.
+T-030 PR merge qilinganini tekshirish (`gh pr list --state open`); keyin ROADMAP'dan T-031 Tarjimalar va formatlash — `docs/specs/i18n.md`, `apps/pos/lib/l10n/`.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
@@ -42,3 +33,4 @@ Qadam 8: goldenlarni ko‘rib chiqish (widgetbook/test/goldens/*/), kamchiliklar
 - Testlar `.env` ni o'qimaydi: `cd backend && DATABASE_URL=postgres://pos:pos@127.0.0.1:55432/pos uv run pytest`.
 - 2026-10-14: elektr uzilishi `.git/config` ni nol baytlar bilan buzgan edi; foydalanuvchi qayta tikladi (`[core]` + `origin`).
 - Docker Desktop o'chiq bo'lishi mumkin: `C:\Users\Muhammadi\AppData\Local\Programs\DockerDesktop\Docker Desktop.exe` ni ishga tushir, `docker info` javob berguncha kut.
+- Flutter: golden'lar `packages/ui/widgetbook/test/goldens/` da, qayta yaratish `make ui-goldens` (faqat Windows). Xatolarni ko'rish: `flutter test --no-pub -r failures-only`. Bash'da `sed -i` ba'zan "Device or resource busy" beradi (Windows) — Edit vositasini ishlat.

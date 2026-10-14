@@ -11,6 +11,19 @@ const Map<String, (Size, TargetPlatform)> devices = {
   'desktop': (Size(1440, 900), TargetPlatform.windows),
 };
 
+/// Golden test: soyalar haqiqiy (xira) chiziladi — flutter_test standartda
+/// ularni qattiq to'rtburchak qiladi. O'zgaruvchi test oxirida qaytariladi.
+void goldenTest(String name, Future<void> Function(WidgetTester) body) {
+  testWidgets(name, (tester) async {
+    debugDisableShadows = false;
+    try {
+      await body(tester);
+    } finally {
+      debugDisableShadows = true;
+    }
+  });
+}
+
 Future<void> _pumpDevice(
   WidgetTester tester, {
   required Size size,
@@ -42,7 +55,7 @@ void main() {
 
       group('$device $theme', () {
         for (final MapEntry(key: name, value: builder) in galleries.entries) {
-          testWidgets(name, (tester) async {
+          goldenTest(name, (tester) async {
             await _pumpDevice(
               tester,
               size: size,
@@ -58,7 +71,7 @@ void main() {
           });
         }
 
-        testWidgets('dialog', (tester) async {
+        goldenTest('dialog', (tester) async {
           await _pumpDevice(
             tester,
             size: size,
