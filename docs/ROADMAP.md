@@ -183,7 +183,7 @@ Spec'lar: `barcode.md`, `pos-screen.md`, `printing.md`, `shifts.md`.
 ## 4-bosqich. Tovarlar va ombor
 Spec'lar: `products.md`, `stock-receipt.md`, `barcode.md`.
 
-### [ ] T-050 Tovarlar ro'yxati va kartasi
+### [x] T-050 Tovarlar ro'yxati va kartasi
 - **Bajarish:** ro'yxat (qidiruv, kategoriya filtri, qoldiq, kam qolganlar belgisi), tovar qo'shish/tahrirlash: nom, kategoriya, birlik, sotish narxi, tannarx, shtrix-kodlar (skaner bilan qo'shish, bir nechta), vaznli tovar, PLU, min qoldiq, IKPU (ixtiyoriy). Narx tarixi.
 - **Qabul:** skaner bilan yangi tovar kartasini ochish → shtrix-kod maydoni avtomatik to'ladi; takroriy shtrix-kod ogohlantiriladi.
 - **Bog'liq:** T-040, T-033
