@@ -12,7 +12,7 @@
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [ ] 1. Transliteratsiya (`core/text/translit.dart`) + pull'da `searchKey` + `ProductCatalog` (`data/catalog/product_catalog.dart`: shtrix-kod, vaznli kod/PLU, qidiruv nom/shtrix-kod boshi/PLU, tez tugmalar) + unit va tezlik testi (3000 tovar < 50 ms)
+- [x] 1. Transliteratsiya (`core/text/translit.dart`) + pull'da `searchKey` + `ProductCatalog` (`data/catalog/product_catalog.dart`: shtrix-kod, vaznli kod/PLU, qidiruv nom/shtrix-kod boshi/PLU, tez tugmalar) + unit va tezlik testi (3000 tovar < 50 ms)
 - [ ] 2. Savat modeli va `CartController` (`features/pos/cart/`): qo'shish (+1, vaznli — yangi qator), miqdor, o'chirish + undo, qator/chek chegirmasi, 5 ta chek (slot), `cart_drafts` ga avto-saqlash va tiklash + unit testlar
 - [ ] 3. Chegirma huquqi: kassir uchun maksimal foiz (lokal sozlama), oshsa — menejer/ega PIN tasdig'i; `docs/QUESTIONS.md` Q-005
 - [ ] 4. Kassa ekrani UI (desktop/planshet): qidiruv + natijalar, tez tugmalar (kategoriya tablari), savat paneli (qatorlar, stepper, JAMI, To'lash), chek tablari
@@ -23,10 +23,10 @@
 - [ ] 9. To'liq tekshiruv, PR, CI → merge; ROADMAP, PROGRESS, STATE
 
 ## Oxirgi bajarilgan ish
-- Vazifa boshlandi.
+- 1-qadam: `core/text/search_key.dart` (`SearchKey.of`, h=x, tutuq belgilarsiz), `data/catalog/product_catalog.dart` (`ProductCatalog` + `productCatalogProvider`), pull `searchKey`. Testlar: `test/core/search_key_test.dart`, `test/data/product_catalog_test.dart`.
 
 ## Keyingi aniq harakat
-- 1-qadam: `apps/pos/lib/core/text/translit.dart` (lotin↔kirill → bitta lotin kalit), `pull.dart:151` da ishlatish, `apps/pos/lib/data/catalog/product_catalog.dart`.
+- 2-qadam: `apps/pos/lib/features/pos/cart/cart.dart` (CartLine, Cart — sof model, hisob-kitob `Money.lineTotal`), `cart_controller.dart` (Notifier: 5 slot, `cart_drafts` avto-saqlash), `test/features/cart_controller_test.dart`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
