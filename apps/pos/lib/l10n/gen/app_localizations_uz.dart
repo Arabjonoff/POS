@@ -312,6 +312,33 @@ class AppLocalizationsUz extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get statusSalesReadonly =>
+      'Obuna muddati tugagan — savdo to\'xtatilgan';
+
+  @override
+  String get statusSalesBlocked => 'Do\'kon bloklangan — savdo to\'xtatilgan';
+
+  @override
+  String get statusSalesOffline =>
+      'Uzoq vaqt internet yo\'q — savdo to\'xtatilgan';
+
+  @override
+  String get statusDeviceBlocked => 'Kassa bloklangan';
+
+  @override
+  String get statusClockSkew => 'Kompyuter soati noto\'g\'ri';
+
+  @override
+  String statusRejected(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ta yozuv qabul qilinmadi',
+    );
+    return '$_temp0';
+  }
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -618,6 +645,31 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
       minutes,
       locale: localeName,
       other: '$minutes дақиқадан кейин',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get statusSalesReadonly => 'Обуна муддати тугаган — савдо тўхтатилган';
+
+  @override
+  String get statusSalesBlocked => 'Дўкон блокланган — савдо тўхтатилган';
+
+  @override
+  String get statusSalesOffline => 'Узоқ вақт интернет йўқ — савдо тўхтатилган';
+
+  @override
+  String get statusDeviceBlocked => 'Касса блокланган';
+
+  @override
+  String get statusClockSkew => 'Компьютер соати нотўғри';
+
+  @override
+  String statusRejected(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count та ёзув қабул қилинмади',
     );
     return '$_temp0';
   }

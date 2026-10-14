@@ -325,4 +325,32 @@ class AppLocalizationsRu extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get statusSalesReadonly => 'Подписка истекла — продажи остановлены';
+
+  @override
+  String get statusSalesBlocked => 'Магазин заблокирован — продажи остановлены';
+
+  @override
+  String get statusSalesOffline => 'Долго нет интернета — продажи остановлены';
+
+  @override
+  String get statusDeviceBlocked => 'Касса заблокирована';
+
+  @override
+  String get statusClockSkew => 'Неверное время на компьютере';
+
+  @override
+  String statusRejected(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count записи не приняты',
+      many: '$count записей не принято',
+      few: '$count записи не приняты',
+      one: '$count запись не принята',
+    );
+    return '$_temp0';
+  }
 }

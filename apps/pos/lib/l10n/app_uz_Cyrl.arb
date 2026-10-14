@@ -84,5 +84,11 @@
   "settingsAutoLock": "Автоматик қулфлаш",
   "settingsAutoLockHelper": "Кассада ҳаракат бўлмаса, экран қулфланади",
   "settingsAutoLockOff": "Ўчиқ",
-  "settingsAutoLockMinutes": "{minutes, plural, other{{minutes} дақиқадан кейин}}"
+  "settingsAutoLockMinutes": "{minutes, plural, other{{minutes} дақиқадан кейин}}",
+  "statusSalesReadonly": "Обуна муддати тугаган — савдо тўхтатилган",
+  "statusSalesBlocked": "Дўкон блокланган — савдо тўхтатилган",
+  "statusSalesOffline": "Узоқ вақт интернет йўқ — савдо тўхтатилган",
+  "statusDeviceBlocked": "Касса блокланган",
+  "statusClockSkew": "Компьютер соати нотўғри",
+  "statusRejected": "{count, plural, other{{count} та ёзув қабул қилинмади}}"
 }

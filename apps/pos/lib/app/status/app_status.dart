@@ -1,16 +1,25 @@
 import 'package:drift/drift.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pos_app/app/sync/sync_runner.dart';
 import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/data/sync/outbox.dart';
+import 'package:pos_app/data/sync/sync_engine.dart';
 
-/// Internet holati. Haqiqiy kuzatuv — sinxron dvigatelida (T-035).
+/// Internet holati — fon sinxronining oxirgi urinishi bo'yicha (haqiqiy
+/// server bilan aloqa; Wi-Fi bor-yo'qligi emas).
 enum ConnectionStatus { unknown, online, offline }
 
 /// Printer holati. Haqiqiy tekshiruv — chek chop etishda (T-044).
 enum PrinterStatus { unknown, ready, missing }
 
 final connectionStatusProvider = Provider<ConnectionStatus>(
-  (ref) => ConnectionStatus.unknown,
+  (ref) => switch (ref.watch(syncStatusProvider).health) {
+    SyncHealth.unknown => ConnectionStatus.unknown,
+    SyncHealth.online => ConnectionStatus.online,
+    SyncHealth.offline ||
+    SyncHealth.unauthorized ||
+    SyncHealth.deviceBlocked => ConnectionStatus.offline,
+  },
 );
 
 final printerStatusProvider = Provider<PrinterStatus>(

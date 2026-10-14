@@ -608,6 +608,42 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'{minutes, plural, other{{minutes} daqiqadan keyin}}'**
   String settingsAutoLockMinutes(int minutes);
+
+  /// Holat qatori: obuna readonly
+  ///
+  /// In uz, this message translates to:
+  /// **'Obuna muddati tugagan — savdo to\'xtatilgan'**
+  String get statusSalesReadonly;
+
+  /// Holat qatori: tenant bloklangan
+  ///
+  /// In uz, this message translates to:
+  /// **'Do\'kon bloklangan — savdo to\'xtatilgan'**
+  String get statusSalesBlocked;
+
+  /// Holat qatori: oflayn muddati o'tdi
+  ///
+  /// In uz, this message translates to:
+  /// **'Uzoq vaqt internet yo\'q — savdo to\'xtatilgan'**
+  String get statusSalesOffline;
+
+  /// Holat qatori: qurilma bloklangan
+  ///
+  /// In uz, this message translates to:
+  /// **'Kassa bloklangan'**
+  String get statusDeviceBlocked;
+
+  /// Holat qatori: qurilma soati serverdan farq qiladi
+  ///
+  /// In uz, this message translates to:
+  /// **'Kompyuter soati noto\'g\'ri'**
+  String get statusClockSkew;
+
+  /// Holat qatori: server rad etgan yozuvlar
+  ///
+  /// In uz, this message translates to:
+  /// **'{count, plural, other{{count} ta yozuv qabul qilinmadi}}'**
+  String statusRejected(int count);
 }
 
 class _AppLocalizationsDelegate

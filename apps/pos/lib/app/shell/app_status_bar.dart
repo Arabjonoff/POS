@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pos_app/app/status/app_status.dart';
+import 'package:pos_app/app/sync/sales_gate.dart';
 import 'package:pos_app/core/format/app_format.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
 import 'package:pos_ui/pos_ui.dart';
@@ -41,7 +42,24 @@ class AppStatusBar extends ConsumerWidget {
       ),
     };
 
+    final block = ref.watch(salesBlockProvider);
+    final rejected = ref.watch(rejectedEventsProvider).value ?? 0;
+    final skew = ref.watch(clockSkewProvider);
+
     final items = [
+      // Eng muhimi — birinchi: savdo to'xtagan bo'lsa, sababi.
+      if (block != SalesBlock.none)
+        PosStatusItem(
+          icon: Icons.block,
+          label: switch (block) {
+            SalesBlock.readonly => l10n.statusSalesReadonly,
+            SalesBlock.blocked => l10n.statusSalesBlocked,
+            SalesBlock.offlineTooLong => l10n.statusSalesOffline,
+            SalesBlock.deviceBlocked => l10n.statusDeviceBlocked,
+            SalesBlock.none => '',
+          },
+          tone: PosTone.danger,
+        ),
       connectionItem,
       PosStatusItem(
         icon: queued > 0 ? Icons.sync : Icons.cloud_done_outlined,
@@ -63,6 +81,18 @@ class AppStatusBar extends ConsumerWidget {
           tone: PosTone.danger,
         ),
       },
+      if (rejected > 0)
+        PosStatusItem(
+          icon: Icons.error_outline,
+          label: l10n.statusRejected(rejected),
+          tone: PosTone.danger,
+        ),
+      if (skew)
+        PosStatusItem(
+          icon: Icons.schedule,
+          label: l10n.statusClockSkew,
+          tone: PosTone.warning,
+        ),
       if (shiftOpen)
         PosStatusItem(
           icon: Icons.schedule,

@@ -84,5 +84,11 @@
   "settingsAutoLock": "Автоблокировка",
   "settingsAutoLockHelper": "Экран блокируется, если касса не используется",
   "settingsAutoLockOff": "Выключена",
-  "settingsAutoLockMinutes": "{minutes, plural, one{Через {minutes} минуту} few{Через {minutes} минуты} many{Через {minutes} минут} other{Через {minutes} минуты}}"
+  "settingsAutoLockMinutes": "{minutes, plural, one{Через {minutes} минуту} few{Через {minutes} минуты} many{Через {minutes} минут} other{Через {minutes} минуты}}",
+  "statusSalesReadonly": "Подписка истекла — продажи остановлены",
+  "statusSalesBlocked": "Магазин заблокирован — продажи остановлены",
+  "statusSalesOffline": "Долго нет интернета — продажи остановлены",
+  "statusDeviceBlocked": "Касса заблокирована",
+  "statusClockSkew": "Неверное время на компьютере",
+  "statusRejected": "{count, plural, one{{count} запись не принята} few{{count} записи не приняты} many{{count} записей не принято} other{{count} записи не приняты}}"
 }

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pos_app/app/app.dart';
 import 'package:pos_app/app/session/session.dart';
+import 'package:pos_app/app/sync/sync_runner.dart';
 import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/data/device/device_info.dart';
 import 'package:pos_app/data/remote/api.dart';
@@ -41,6 +42,7 @@ Future<(ProviderContainer, AppDatabase)> pumpPosApp(
   Session session = unlockedSession,
   AppDatabase? db,
   DeviceTokenStore? tokens,
+  bool syncEnabled = false,
   bool settle = true,
 }) async {
   tester.view.physicalSize = size;
@@ -56,6 +58,8 @@ Future<(ProviderContainer, AppDatabase)> pumpPosApp(
         tokens ?? MemoryDeviceTokenStore(),
       ),
       initialSessionProvider.overrideWithValue(session),
+      // Fon sinxroni standartda o'chiq (testda haqiqiy tarmoq yo'q).
+      syncEnabledProvider.overrideWithValue(syncEnabled),
       ...overrides,
     ],
   );
