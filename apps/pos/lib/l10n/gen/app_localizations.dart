@@ -1058,6 +1058,150 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Tasdiqlash'**
   String get approvalConfirm;
+
+  /// To'lov oynasi sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'To\'lov'**
+  String get payTitle;
+
+  /// Aralash to'lov
+  ///
+  /// In uz, this message translates to:
+  /// **'Aralash'**
+  String get payMixed;
+
+  /// Tez summa: aniq to'lov
+  ///
+  /// In uz, this message translates to:
+  /// **'Aniq'**
+  String get payExact;
+
+  /// Mijoz bergan naqd
+  ///
+  /// In uz, this message translates to:
+  /// **'Olindi'**
+  String get payReceived;
+
+  /// Naqd yetmaydi
+  ///
+  /// In uz, this message translates to:
+  /// **'Yetmaydi'**
+  String get payShort;
+
+  /// Karta to'lovi
+  ///
+  /// In uz, this message translates to:
+  /// **'Terminalda to\'lovni o\'tkazing, keyin tasdiqlang'**
+  String get payCardHint;
+
+  /// Savdoni yakunlash
+  ///
+  /// In uz, this message translates to:
+  /// **'Yakunlash'**
+  String get payComplete;
+
+  /// Aralash: naqd qismi
+  ///
+  /// In uz, this message translates to:
+  /// **'Naqd (qolgani)'**
+  String get payCashRest;
+
+  /// Aralash: xato
+  ///
+  /// In uz, this message translates to:
+  /// **'Karta va nasiya jamidan oshib ketdi'**
+  String get payPartsExceed;
+
+  /// To'lov paytida skanerlash
+  ///
+  /// In uz, this message translates to:
+  /// **'Avval to\'lovni yakunlang'**
+  String get payScanBlocked;
+
+  /// Nasiya: mijoz kerak
+  ///
+  /// In uz, this message translates to:
+  /// **'Mijozni tanlang'**
+  String get payChooseCustomer;
+
+  /// Mijoz qidiruvi
+  ///
+  /// In uz, this message translates to:
+  /// **'Ism yoki telefon'**
+  String get payCustomerSearch;
+
+  /// Mijozni tez yaratish
+  ///
+  /// In uz, this message translates to:
+  /// **'Yangi mijoz'**
+  String get payNewCustomer;
+
+  /// Yangi mijoz ismi
+  ///
+  /// In uz, this message translates to:
+  /// **'Ism'**
+  String get payCustomerName;
+
+  /// Yangi mijoz telefoni
+  ///
+  /// In uz, this message translates to:
+  /// **'Telefon'**
+  String get payCustomerPhone;
+
+  /// Mijozning joriy qarzi
+  ///
+  /// In uz, this message translates to:
+  /// **'Qarzi: {amount}'**
+  String payCustomerDebt(String amount);
+
+  /// Mijozning qarz limiti
+  ///
+  /// In uz, this message translates to:
+  /// **'Limit: {amount}'**
+  String payCustomerLimit(String amount);
+
+  /// Nasiya limiti
+  ///
+  /// In uz, this message translates to:
+  /// **'Qarz limitdan oshadi — menejer yoki ega tasdiqlashi kerak'**
+  String get payLimitExceeded;
+
+  /// Mijoz qidiruvi bo'sh
+  ///
+  /// In uz, this message translates to:
+  /// **'Mijozlar topilmadi'**
+  String get payNoCustomers;
+
+  /// Yakunlash xabari
+  ///
+  /// In uz, this message translates to:
+  /// **'Savdo yakunlandi'**
+  String get paySaleDone;
+
+  /// Yakunlash xabari (qaytim bilan)
+  ///
+  /// In uz, this message translates to:
+  /// **'Savdo yakunlandi · Qaytim {amount}'**
+  String paySaleDoneChange(String amount);
+
+  /// Savdo yozilmadi
+  ///
+  /// In uz, this message translates to:
+  /// **'Savdoni saqlab bo\'lmadi. Qayta urinib ko\'ring'**
+  String get payFailed;
+
+  /// Chek mijozi (F4)
+  ///
+  /// In uz, this message translates to:
+  /// **'Mijoz'**
+  String get posCustomer;
+
+  /// Chekdan mijozni olib tashlash
+  ///
+  /// In uz, this message translates to:
+  /// **'Mijozni olib tashlash'**
+  String get posCustomerRemove;
 }
 
 class _AppLocalizationsDelegate

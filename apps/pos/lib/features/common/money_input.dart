@@ -25,6 +25,21 @@ class MoneyInput extends StatefulWidget {
   /// So'mdagi raqamlar soni chegarasi (10 — 9 999 999 999 so'm).
   final int maxDigits;
 
+  /// [valueTiyin] oxiriga so'm raqamlarini qo'shadi (raqam bo'lmaganlar
+  /// tashlanadi; [maxDigits] dan oshsa — o'zgarmaydi). Ekran klaviaturani
+  /// o'zi ushlaganda (skaner xizmati `onTyping`) ham shu qoida.
+  static int append(int valueTiyin, String digits, {int maxDigits = 10}) {
+    final clean = digits.replaceAll(RegExp(r'\D'), '');
+    if (clean.isEmpty) return valueTiyin;
+    final som = valueTiyin ~/ 100;
+    final text = (som == 0 ? clean : '$som$clean').replaceFirst(
+      RegExp('^0+(?=.)'),
+      '',
+    );
+    if (text.length > maxDigits) return valueTiyin;
+    return int.parse(text) * 100;
+  }
+
   @override
   State<MoneyInput> createState() => _MoneyInputState();
 }
@@ -48,10 +63,8 @@ class _MoneyInputState extends State<MoneyInput> {
   }
 
   void _append(String digits) {
-    final text = _som == 0 ? digits : '$_som$digits';
-    final trimmed = text.replaceFirst(RegExp('^0+(?=.)'), '');
-    if (trimmed.length > widget.maxDigits) return;
-    _set(int.parse(trimmed) * 100);
+    final next = MoneyInput.append(_value, digits, maxDigits: widget.maxDigits);
+    if (next != _value) _set(next);
   }
 
   void _backspace() => _set((_som ~/ 10) * 100);

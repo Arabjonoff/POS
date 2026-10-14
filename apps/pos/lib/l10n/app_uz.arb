@@ -707,5 +707,116 @@
   "approvalConfirm": "Tasdiqlash",
   "@approvalConfirm": {
     "description": "PIN bilan tasdiqlash"
+  },
+  "payTitle": "To'lov",
+  "@payTitle": {
+    "description": "To'lov oynasi sarlavhasi"
+  },
+  "payMixed": "Aralash",
+  "@payMixed": {
+    "description": "Aralash to'lov"
+  },
+  "payExact": "Aniq",
+  "@payExact": {
+    "description": "Tez summa: aniq to'lov"
+  },
+  "payReceived": "Olindi",
+  "@payReceived": {
+    "description": "Mijoz bergan naqd"
+  },
+  "payShort": "Yetmaydi",
+  "@payShort": {
+    "description": "Naqd yetmaydi"
+  },
+  "payCardHint": "Terminalda to'lovni o'tkazing, keyin tasdiqlang",
+  "@payCardHint": {
+    "description": "Karta to'lovi"
+  },
+  "payComplete": "Yakunlash",
+  "@payComplete": {
+    "description": "Savdoni yakunlash"
+  },
+  "payCashRest": "Naqd (qolgani)",
+  "@payCashRest": {
+    "description": "Aralash: naqd qismi"
+  },
+  "payPartsExceed": "Karta va nasiya jamidan oshib ketdi",
+  "@payPartsExceed": {
+    "description": "Aralash: xato"
+  },
+  "payScanBlocked": "Avval to'lovni yakunlang",
+  "@payScanBlocked": {
+    "description": "To'lov paytida skanerlash"
+  },
+  "payChooseCustomer": "Mijozni tanlang",
+  "@payChooseCustomer": {
+    "description": "Nasiya: mijoz kerak"
+  },
+  "payCustomerSearch": "Ism yoki telefon",
+  "@payCustomerSearch": {
+    "description": "Mijoz qidiruvi"
+  },
+  "payNewCustomer": "Yangi mijoz",
+  "@payNewCustomer": {
+    "description": "Mijozni tez yaratish"
+  },
+  "payCustomerName": "Ism",
+  "@payCustomerName": {
+    "description": "Yangi mijoz ismi"
+  },
+  "payCustomerPhone": "Telefon",
+  "@payCustomerPhone": {
+    "description": "Yangi mijoz telefoni"
+  },
+  "payCustomerDebt": "Qarzi: {amount}",
+  "@payCustomerDebt": {
+    "description": "Mijozning joriy qarzi",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "payCustomerLimit": "Limit: {amount}",
+  "@payCustomerLimit": {
+    "description": "Mijozning qarz limiti",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "payLimitExceeded": "Qarz limitdan oshadi — menejer yoki ega tasdiqlashi kerak",
+  "@payLimitExceeded": {
+    "description": "Nasiya limiti"
+  },
+  "payNoCustomers": "Mijozlar topilmadi",
+  "@payNoCustomers": {
+    "description": "Mijoz qidiruvi bo'sh"
+  },
+  "paySaleDone": "Savdo yakunlandi",
+  "@paySaleDone": {
+    "description": "Yakunlash xabari"
+  },
+  "paySaleDoneChange": "Savdo yakunlandi · Qaytim {amount}",
+  "@paySaleDoneChange": {
+    "description": "Yakunlash xabari (qaytim bilan)",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "payFailed": "Savdoni saqlab bo'lmadi. Qayta urinib ko'ring",
+  "@payFailed": {
+    "description": "Savdo yozilmadi"
+  },
+  "posCustomer": "Mijoz",
+  "@posCustomer": {
+    "description": "Chek mijozi (F4)"
+  },
+  "posCustomerRemove": "Mijozni olib tashlash",
+  "@posCustomerRemove": {
+    "description": "Chekdan mijozni olib tashlash"
   }
 }
