@@ -5,20 +5,25 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-019 Do'kon egasi hisobotlari API
+- Branch: feat/T-019-reports
+- Boshlangan: 2026-10-14
 - Oxirgi yangilanish: 2026-10-14
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
+- [ ] 1. Spec `docs/specs/reports-api.md` (davr, formulalar: tushum, foyda, o'rtacha chek, solishtirish; endpointlar) + Q-004 (foyda formulasi)
+- [ ] 2. `apps/reports/services.py` — davr chegaralari (TZ), summary, by_day, by_hour, top_products, cashiers, debts, stock
+- [ ] 3. API: `/api/v1/reports/...` (ega va menejer), serializerlar, urls
+- [ ] 4. Testlar: qo'lda hisoblangan qiymatlar bilan (chegirma, qaytarish, vaznli, TZ chegarasi), huquqlar, izolyatsiya
+- [ ] 5. openapi + schema.d.ts; lint/test; PROGRESS/ROADMAP; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-T-018 Sinxronlash API tugadi (PR ochildi, CI yashil bo'lsa squash merge).
+T-018 merge qilindi (#15). T-019 branch ochildi.
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-T-018 PR merge qilinganini tekshirish (`gh pr list --state open`); keyin ROADMAP'dan T-019 Do'kon egasi hisobotlari API.
+1-qadam: `docs/specs/reports-api.md` (`reports.md`, `data-model.md` hisoblanadigan qiymatlar asosida) + `QUESTIONS.md` Q-004.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
