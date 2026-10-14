@@ -12,10 +12,10 @@
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [ ] 1. make-migrations sozlash (apps/pos/build.yaml), v1 sxema dump, uuid bog'liqligi
-- [ ] 2. Ma'lumotnoma jadvallari: stores, staff_users, units, categories, products, product_barcodes, customers, suppliers, product_stock, debt_entries
-- [ ] 3. Hujjat jadvallari: shifts, sales, sale_items, sale_payments, refunds, refund_items, cash_movements, stock_receipts(+items), inventory_counts(+items), stock_movements
-- [ ] 4. Sinxron: outbox_events, sync_state, cart_drafts, doc_counters; v1→v2 migratsiya; WAL + synchronous=FULL + foreign_keys
+- [x] 1. make-migrations sozlash (apps/pos/build.yaml), v1 sxema dump, uuid bog'liqligi
+- [x] 2. Ma'lumotnoma jadvallari: stores, staff_users, units, categories, products, product_barcodes, customers, suppliers, product_stock, debt_entries
+- [x] 3. Hujjat jadvallari: shifts, sales, sale_items, sale_payments, refunds, refund_items, cash_movements, stock_receipts(+items), inventory_counts(+items), stock_movements
+- [x] 4. Sinxron: outbox_events, sync_state, cart_drafts, doc_counters; v1→v2 migratsiya; WAL + synchronous=FULL + foreign_keys
 - [ ] 5. SaleWriter: savdo bitta tranzaksiyada (sale+items+payments+stock+debt+outbox), chek raqami
 - [ ] 6. Testlar (sxema, pragmalar, migratsiya, atomarlik), spec, PR, merge
 

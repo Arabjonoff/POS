@@ -1,19 +1,54 @@
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pos_app/data/db/app_database.steps.dart';
+import 'package:pos_app/data/db/tables/document_tables.dart';
+import 'package:pos_app/data/db/tables/reference_tables.dart';
+import 'package:pos_app/data/db/tables/sync_tables.dart';
+
+export 'package:pos_app/data/db/tables/document_tables.dart';
+export 'package:pos_app/data/db/tables/reference_tables.dart';
+export 'package:pos_app/data/db/tables/sync_tables.dart';
 
 part 'app_database.g.dart';
 
-/// Lokal sozlamalar (kalit → qiymat). Biznes jadvallari T-032 da qo'shiladi.
-class LocalSettings extends Table {
-  TextColumn get key => text()();
-  TextColumn get value => text()();
-
-  @override
-  Set<Column<Object>> get primaryKey => {key};
-}
-
-@DriftDatabase(tables: [LocalSettings])
+/// Kassaning lokal bazasi (`docs/specs/data-model.md`, `sync.md`).
+/// Savdo, kirim, qarz — avval shu yerda (bitta tranzaksiya + outbox),
+/// keyin server.
+@DriftDatabase(
+  tables: [
+    LocalSettings,
+    // Ma'lumotnomalar (pull)
+    Stores,
+    StaffUsers,
+    Units,
+    Categories,
+    Products,
+    ProductBarcodes,
+    Customers,
+    Suppliers,
+    ProductStock,
+    DebtEntries,
+    // Hujjatlar
+    Shifts,
+    Sales,
+    SaleItems,
+    SalePayments,
+    Refunds,
+    RefundItems,
+    CashMovements,
+    StockReceipts,
+    StockReceiptItems,
+    InventoryCounts,
+    InventoryCountItems,
+    StockMovements,
+    // Sinxron
+    OutboxEvents,
+    SyncState,
+    CartDrafts,
+    DocCounters,
+  ],
+)
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.e);
 
@@ -21,7 +56,18 @@ class AppDatabase extends _$AppDatabase {
   factory AppDatabase.open() => AppDatabase(driftDatabase(name: 'pos'));
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
+
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+    onUpgrade: _upgrade,
+    beforeOpen: (details) async {
+      // Elektr o'chsa ham commit qilingan savdo yo'qolmasin: WAL + FULL.
+      await customStatement('PRAGMA journal_mode = WAL');
+      await customStatement('PRAGMA synchronous = FULL');
+      await customStatement('PRAGMA foreign_keys = ON');
+    },
+  );
 
   Future<String?> readSetting(String key) async {
     final row = await (select(
@@ -35,6 +81,21 @@ class AppDatabase extends _$AppDatabase {
       localSettings,
     ).insertOnConflictUpdate(LocalSetting(key: key, value: value));
   }
+}
+
+/// Sxema migratsiyalari. Har versiya — `drift_schemas/` dagi suratga
+/// nisbatan (`dart run drift_dev make-migrations`), joriy jadval sinflariga
+/// emas. Testlar: `test/drift/app_database/`.
+extension _Migrations on GeneratedDatabase {
+  OnUpgrade get _upgrade => stepByStep(
+    // v2: do'kon qatlami, hujjatlar va sinxron jadvallari (T-032).
+    from1To2: (m, schema) async {
+      for (final entity in schema.entities) {
+        if (entity == schema.localSettings) continue;
+        await m.create(entity);
+      }
+    },
+  );
 }
 
 final appDatabaseProvider = Provider<AppDatabase>((ref) {
