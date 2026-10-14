@@ -5,22 +5,26 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: — (masalan: T-042 Kassa ekrani — savat)
-- Branch: —
-- Boshlangan: —
-- Oxirgi yangilanish: —
+- Vazifa: T-011 Foydalanuvchilar va autentifikatsiya
+- Branch: feat/T-011-auth
+- Boshlangan: 2026-10-14
+- Oxirgi yangilanish: 2026-10-14
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [ ] 1. ...
-- [ ] 2. ...
+- [x] 1. Qaror `docs/decisions/0006-users-pin.md` (custom User, PIN = PBKDF2-SHA256 120k Django formati, kassir telefoni ixtiyoriy) + `auth-roles.md` aniqlashtirish
+- [ ] 2. `apps/accounts`: User (AbstractBaseUser+PermissionsMixin, UUIDv7, tenant null faqat platform_admin, phone unique null, role, pin_hash), UserManager, `pins.py` (PinHasher), `AUTH_USER_MODEL`, migratsiya; dev bazani qayta yaratish (bo'sh edi)
+- [ ] 3. Endpoint'lar: `/api/v1/auth/login`, `/refresh`, `/me`; login throttle
+- [ ] 4. `permissions.py` (IsPlatformAdmin, IsOwner, IsManagerOrOwner, IsTenantMember) + `/api/v1/users/` (read-only, manager+)
+- [ ] 5. Testlar: model, PIN vektorlari `testdata/pin_hash.json`, login/refresh/me, rollar, tenant izolyatsiyasi
+- [ ] 6. openapi.yaml + admin schema.d.ts yangilash; lint/test; PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-—
+T-010 merge qilindi (#7). T-011 branch ochildi.
 
 ## Keyingi aniq harakat
 <!-- Bitta aniq buyruq yoki amal. Masalan: "apps/pos/lib/features/cart/cart_controller.dart da removeLine() ni yozish, keyin flutter test test/cart" -->
-—
+2-qadam: `backend/apps/accounts` (models.py, pins.py, managers), `AUTH_USER_MODEL`, makemigrations.
 
 ## Ochiq holatlar
 - Commit qilinmagan o'zgarishlar: yo'q
