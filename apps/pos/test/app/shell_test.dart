@@ -60,6 +60,9 @@ void main() {
       expect(find.text(emptyCart), findsNothing);
 
       await ctrl(tester, LogicalKeyboardKey.digit3);
+      expect(find.text("Hali kirim yo'q"), findsOneWidget);
+
+      await ctrl(tester, LogicalKeyboardKey.digit4);
       expect(find.text(comingSoon), findsOneWidget);
 
       await ctrl(tester, LogicalKeyboardKey.digit6);
