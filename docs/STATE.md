@@ -20,10 +20,10 @@
 - [ ] 6. Spec, PR, CI → merge; ROADMAP, PROGRESS, STATE
 
 ## Oxirgi bajarilgan ish
-- 2-qadam: `data/catalog/product_editor.dart` (`ProductDraft` + `markupBp`, `ProductEditor.load/validate/save/ownerOf`, `stockQuery` + `stockByProductProvider`), test `test/data/product_editor_test.dart` (7).
+- 3–4-qadam (kod yozildi, testlanmagan): `features/products/product_list.dart` (`ProductRow`, `filterProducts`, `productRowsProvider`), `products_screen.dart` (router: AppSection.products), `product_card.dart` (`showProductCard`, parse/format yordamchilari, narx tarixi), `data/catalog/price_history.dart`; tarjimalar `products*`/`product*`.
 
 ## Keyingi aniq harakat
-- 3-qadam: `apps/pos/lib/features/products/products_screen.dart` (bo'lim `AppSection.products` → router), qidiruv (`ProductCatalog.search` yoki o'z filtri: nofaol ham), kategoriya chiplari, filtrlar (kam qolgan: qoldiq ≤ min_stock va min > 0; manfiy; nofaol), desktop `PosDataTable` / telefon kartalar, bo'sh holat; `ScanListener` → `ProductEditor.ownerOf` → karta.
+- Testlar: `apps/pos/test/features/products_test.dart` — ro'yxat/qidiruv/filtrlar, skan → mavjud karta / yangi karta (kod to'ldirilgan), takroriy kod ogohlantirish, yangi tovar saqlash (kassir → PIN), tahrir, nofaol qilish, narx tarixi (soxta `priceHistoryFetcherProvider`), `filterProducts` va parse unit testlari. Keyin 3 va 4-qadamni [x].
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

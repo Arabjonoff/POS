@@ -982,4 +982,187 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get receiptPrintedAt => 'Напечатано';
+
+  @override
+  String get productsSearchHint => 'Название, штрихкод или PLU';
+
+  @override
+  String get productsAdd => 'Добавить товар';
+
+  @override
+  String get productsAll => 'Все';
+
+  @override
+  String get productsFilterLow => 'Заканчивается';
+
+  @override
+  String get productsFilterNegative => 'Отрицательный остаток';
+
+  @override
+  String get productsFilterInactive => 'Неактивные';
+
+  @override
+  String get productsEmptyTitle => 'Товаров пока нет';
+
+  @override
+  String get productsEmptyMessage => 'Добавьте товар или отсканируйте штрихкод';
+
+  @override
+  String get productsNotFound => 'Ничего не найдено';
+
+  @override
+  String get productsColName => 'Название';
+
+  @override
+  String get productsColBarcode => 'Штрихкод';
+
+  @override
+  String get productsColCategory => 'Категория';
+
+  @override
+  String get productsColPrice => 'Цена';
+
+  @override
+  String get productsColCost => 'Себестоимость';
+
+  @override
+  String get productsColStock => 'Остаток';
+
+  @override
+  String get productsBadgeLow => 'Мало';
+
+  @override
+  String get productsBadgeNegative => 'Минус';
+
+  @override
+  String get productsBadgeInactive => 'Неактивен';
+
+  @override
+  String get productNew => 'Новый товар';
+
+  @override
+  String get productName => 'Название';
+
+  @override
+  String get productCategory => 'Категория';
+
+  @override
+  String get productNoCategory => 'Без категории';
+
+  @override
+  String get productUnit => 'Единица';
+
+  @override
+  String get productSellPrice => 'Цена продажи, сум';
+
+  @override
+  String get productCostPrice => 'Себестоимость, сум';
+
+  @override
+  String productMarkup(String percent) {
+    return 'Наценка: $percent';
+  }
+
+  @override
+  String get productWeighted => 'Весовой товар';
+
+  @override
+  String get productPlu => 'PLU — код весов (5 цифр)';
+
+  @override
+  String productMinStock(String unit) {
+    return 'Минимальный остаток, $unit';
+  }
+
+  @override
+  String get productIkpu => 'ИКПУ (необязательно, 17 цифр)';
+
+  @override
+  String get productQuickButton => 'Быстрая кнопка на кассе';
+
+  @override
+  String get productBarcodes => 'Штрихкоды';
+
+  @override
+  String get productBarcodeAdd => 'Введите или отсканируйте код';
+
+  @override
+  String get productBarcodePrimary => 'Основной';
+
+  @override
+  String get productBarcodeRemove => 'Удалить код';
+
+  @override
+  String get productDeactivate => 'Сделать неактивным';
+
+  @override
+  String get productActivate => 'Активировать';
+
+  @override
+  String get productSaved => 'Сохранено';
+
+  @override
+  String get productNeedsApproval =>
+      'Изменение товара должен подтвердить менеджер или владелец';
+
+  @override
+  String get productPriceHistory => 'История цен';
+
+  @override
+  String get productPriceHistoryOffline => 'Для истории цен нужен интернет';
+
+  @override
+  String get productPriceHistoryEmpty => 'Цена ещё не менялась';
+
+  @override
+  String productPriceHistoryRow(String sell, String cost) {
+    return 'Цена $sell · Себестоимость $cost';
+  }
+
+  @override
+  String productStockNow(String qty) {
+    return 'Остаток: $qty';
+  }
+
+  @override
+  String get productErrPrice => 'Цена должна быть больше 0';
+
+  @override
+  String productErrBarcodeFormat(String code) {
+    return '«$code» — неверный штрихкод';
+  }
+
+  @override
+  String productErrBarcodeCheck(String code) {
+    return '«$code» — код считан с ошибкой, отсканируйте снова';
+  }
+
+  @override
+  String productErrBarcodeRepeated(String code) {
+    return '«$code» указан дважды';
+  }
+
+  @override
+  String productErrBarcodeTaken(String code, String product) {
+    return '«$code» уже у товара «$product»';
+  }
+
+  @override
+  String get productErrPluFormat => 'PLU должен состоять из 5 цифр';
+
+  @override
+  String productErrPluTaken(String product) {
+    return 'Этот PLU уже у товара «$product»';
+  }
+
+  @override
+  String get productErrWeightedUnit =>
+      'Для весового товара выберите дробную единицу, например кг';
+
+  @override
+  String get productErrIkpu => 'ИКПУ должен состоять из 17 цифр';
+
+  @override
+  String get productErrQty =>
+      'Введите количество правильно (например, 5 или 0,5)';
 }

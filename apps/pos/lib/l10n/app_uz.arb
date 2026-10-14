@@ -1252,5 +1252,272 @@
   "receiptPrintedAt": "Chop etildi",
   "@receiptPrintedAt": {
     "description": "Hisobot chekida: chop etilgan vaqt"
+  },
+  "productsSearchHint": "Nom, shtrix-kod yoki PLU",
+  "@productsSearchHint": {
+    "description": "Tovarlar qidiruvi"
+  },
+  "productsAdd": "Tovar qo'shish",
+  "@productsAdd": {
+    "description": "Yangi tovar tugmasi"
+  },
+  "productsAll": "Hammasi",
+  "@productsAll": {
+    "description": "Kategoriya filtri: hammasi"
+  },
+  "productsFilterLow": "Kam qolgan",
+  "@productsFilterLow": {
+    "description": "Filtr"
+  },
+  "productsFilterNegative": "Manfiy qoldiq",
+  "@productsFilterNegative": {
+    "description": "Filtr"
+  },
+  "productsFilterInactive": "Nofaol",
+  "@productsFilterInactive": {
+    "description": "Filtr"
+  },
+  "productsEmptyTitle": "Hali tovar yo'q",
+  "@productsEmptyTitle": {
+    "description": "Bo'sh ro'yxat"
+  },
+  "productsEmptyMessage": "Tovar qo'shing yoki shtrix-kodni skanerlang",
+  "@productsEmptyMessage": {
+    "description": "Bo'sh ro'yxat izohi"
+  },
+  "productsNotFound": "Hech narsa topilmadi",
+  "@productsNotFound": {
+    "description": "Filtr natijasi bo'sh"
+  },
+  "productsColName": "Nom",
+  "@productsColName": {
+    "description": "Ustun"
+  },
+  "productsColBarcode": "Shtrix-kod",
+  "@productsColBarcode": {
+    "description": "Ustun"
+  },
+  "productsColCategory": "Kategoriya",
+  "@productsColCategory": {
+    "description": "Ustun"
+  },
+  "productsColPrice": "Narx",
+  "@productsColPrice": {
+    "description": "Ustun"
+  },
+  "productsColCost": "Tannarx",
+  "@productsColCost": {
+    "description": "Ustun"
+  },
+  "productsColStock": "Qoldiq",
+  "@productsColStock": {
+    "description": "Ustun"
+  },
+  "productsBadgeLow": "Kam",
+  "@productsBadgeLow": {
+    "description": "Qoldiq belgisi"
+  },
+  "productsBadgeNegative": "Manfiy",
+  "@productsBadgeNegative": {
+    "description": "Qoldiq belgisi"
+  },
+  "productsBadgeInactive": "Nofaol",
+  "@productsBadgeInactive": {
+    "description": "Holat belgisi"
+  },
+  "productNew": "Yangi tovar",
+  "@productNew": {
+    "description": "Karta sarlavhasi"
+  },
+  "productName": "Nomi",
+  "@productName": {
+    "description": "Maydon"
+  },
+  "productCategory": "Kategoriya",
+  "@productCategory": {
+    "description": "Maydon"
+  },
+  "productNoCategory": "Kategoriyasiz",
+  "@productNoCategory": {
+    "description": "Kategoriya yo'q"
+  },
+  "productUnit": "Birlik",
+  "@productUnit": {
+    "description": "Maydon"
+  },
+  "productSellPrice": "Sotish narxi, so'm",
+  "@productSellPrice": {
+    "description": "Maydon"
+  },
+  "productCostPrice": "Tannarx, so'm",
+  "@productCostPrice": {
+    "description": "Maydon"
+  },
+  "productMarkup": "Ustama: {percent}",
+  "@productMarkup": {
+    "description": "Ustama foizi",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "productWeighted": "Vaznli tovar (tarozida tortiladi)",
+  "@productWeighted": {
+    "description": "Maydon"
+  },
+  "productPlu": "PLU — tarozi kodi (5 raqam)",
+  "@productPlu": {
+    "description": "Maydon"
+  },
+  "productMinStock": "Kam qolgan deb belgilash, {unit}",
+  "@productMinStock": {
+    "description": "Maydon",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "productIkpu": "IKPU (ixtiyoriy, 17 raqam)",
+  "@productIkpu": {
+    "description": "Maydon"
+  },
+  "productQuickButton": "Kassada tez tugma",
+  "@productQuickButton": {
+    "description": "Maydon"
+  },
+  "productBarcodes": "Shtrix-kodlar",
+  "@productBarcodes": {
+    "description": "Maydon"
+  },
+  "productBarcodeAdd": "Kodni yozing yoki skanerlang",
+  "@productBarcodeAdd": {
+    "description": "Shtrix-kod qo'shish maydoni"
+  },
+  "productBarcodePrimary": "Asosiy",
+  "@productBarcodePrimary": {
+    "description": "Asosiy shtrix-kod belgisi"
+  },
+  "productBarcodeRemove": "Kodni olib tashlash",
+  "@productBarcodeRemove": {
+    "description": "Tooltip"
+  },
+  "productDeactivate": "Nofaol qilish",
+  "@productDeactivate": {
+    "description": "Tugma"
+  },
+  "productActivate": "Faollashtirish",
+  "@productActivate": {
+    "description": "Tugma"
+  },
+  "productSaved": "Saqlandi",
+  "@productSaved": {
+    "description": "Xabar"
+  },
+  "productNeedsApproval": "Tovarni o'zgartirishni menejer yoki ega tasdiqlashi kerak",
+  "@productNeedsApproval": {
+    "description": "Huquq"
+  },
+  "productPriceHistory": "Narx tarixi",
+  "@productPriceHistory": {
+    "description": "Bo'lim"
+  },
+  "productPriceHistoryOffline": "Narx tarixini ko'rish uchun internet kerak",
+  "@productPriceHistoryOffline": {
+    "description": "Oflayn"
+  },
+  "productPriceHistoryEmpty": "Narx hali o'zgarmagan",
+  "@productPriceHistoryEmpty": {
+    "description": "Bo'sh"
+  },
+  "productPriceHistoryRow": "Narx {sell} · Tannarx {cost}",
+  "@productPriceHistoryRow": {
+    "description": "Narx tarixi qatori",
+    "placeholders": {
+      "sell": {
+        "type": "String"
+      },
+      "cost": {
+        "type": "String"
+      }
+    }
+  },
+  "productStockNow": "Qoldiq: {qty}",
+  "@productStockNow": {
+    "description": "Kartadagi qoldiq",
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "productErrPrice": "Narx 0 dan katta bo'lishi kerak",
+  "@productErrPrice": {
+    "description": "Xato"
+  },
+  "productErrBarcodeFormat": "«{code}» — noto'g'ri shtrix-kod",
+  "@productErrBarcodeFormat": {
+    "description": "Xato",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "productErrBarcodeCheck": "«{code}» — kod noto'g'ri o'qildi, qayta skanerlang",
+  "@productErrBarcodeCheck": {
+    "description": "Xato",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "productErrBarcodeRepeated": "«{code}» ikki marta yozilgan",
+  "@productErrBarcodeRepeated": {
+    "description": "Xato",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "productErrBarcodeTaken": "«{code}» — «{product}» tovarida bor",
+  "@productErrBarcodeTaken": {
+    "description": "Xato",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      },
+      "product": {
+        "type": "String"
+      }
+    }
+  },
+  "productErrPluFormat": "PLU 5 raqamdan iborat bo'lishi kerak",
+  "@productErrPluFormat": {
+    "description": "Xato"
+  },
+  "productErrPluTaken": "Bu PLU «{product}» tovarida bor",
+  "@productErrPluTaken": {
+    "description": "Xato",
+    "placeholders": {
+      "product": {
+        "type": "String"
+      }
+    }
+  },
+  "productErrWeightedUnit": "Vaznli tovar uchun kg kabi kasrli birlik tanlang",
+  "@productErrWeightedUnit": {
+    "description": "Xato"
+  },
+  "productErrIkpu": "IKPU 17 raqamdan iborat bo'lishi kerak",
+  "@productErrIkpu": {
+    "description": "Xato"
+  },
+  "productErrQty": "Miqdorni to'g'ri yozing (masalan, 5 yoki 0,5)",
+  "@productErrQty": {
+    "description": "Minimal qoldiq noto'g'ri"
   }
 }
