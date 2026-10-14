@@ -123,7 +123,7 @@ Spec'lar: `design-system.md`, `sync.md`, `i18n.md`.
 - **Qabul:** 3 o'lchamda golden testlar; klaviatura bilan navigatsiya ishlaydi.
 - **Bog'liq:** T-030, T-031
 
-### [ ] T-034 Kirish, qurilmani ulash, PIN ekrani
+### [x] T-034 Kirish, qurilmani ulash, PIN ekrani
 - **Bajarish:** birinchi ishga tushishda: ega telefon+parol → qurilma nomi → birinchi sinxron (progress bilan). Keyin har safar: kassir tanlash + PIN (katta raqamli klaviatura). Avtomatik qulflash (sozlanadigan).
 - **Qabul:** oflaynda PIN bilan kirish ishlaydi; noto'g'ri PIN 5 marta — 1 daqiqa kutish.
 - **Bog'liq:** T-032, T-033, T-011

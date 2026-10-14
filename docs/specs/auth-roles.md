@@ -19,3 +19,10 @@
 - `GET /api/v1/users/`, `/users/{id}/` — o'z tenanti xodimlari (manager va owner). Boshqa tenant foydalanuvchisi — `404`.
 - Login va refresh — throttle (`auth`: 20/daqiqa IP bo'yicha).
 - Model va PIN formati: `docs/decisions/0006-users-pin.md`.
+
+## Kassada PIN bilan kirish (T-034)
+- Qulf ekrani (`/lock`): faol xodimlar (pull'dan, `staff_users`) kartalari; PIN'i yo'q xodim — o'chiq ("PIN o'rnatilmagan"). PIN 4–6 raqam: ekran klaviaturasi yoki fizik klaviatura (raqamlar, numpad, Backspace), tasdiqlash — ✓ yoki Enter; Esc — boshqa xodim.
+- Tekshiruv oflayn (`PinHash`, PBKDF2-SHA256, alohida isolate'da), `testdata/pin_hash.json` vektorlari bilan server bilan bir xil.
+- **5 marta xato → 1 daqiqa kutish** (teskari sanoq ko'rinadi); hisoblagich va kutish muddati `LocalSettings` da — ilovani qayta ochish chetlab o'tmaydi. To'g'ri PIN hisoblagichni nolga tushiradi.
+- **Avtomatik qulflash**: ekranga tegish/tugma (skaner ham) bo'lmasa — sozlamadagi vaqtdan keyin (O'chiq, 2, 5 (standart), 10, 30 daqiqa). Qo'lda: yon paneldagi qulf tugmasi yoki Sozlamalar → "Qulflash".
+- PIN'dan keyin darhol kassa ekrani.
