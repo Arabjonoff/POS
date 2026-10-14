@@ -53,3 +53,9 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-010 (squash merge)
 - Qoldi / keyingi qadam: T-011 Foydalanuvchilar va autentifikatsiya (telefon normalizatsiyasi tayyor).
 - Muammo yoki qaror: Tenant `status` saqlanmaydi — Subscription (T-013) va `is_blocked` dan hisoblanadi; `data-model.md` shunga moslandi. Tenant o'chirilmaydi (Store PROTECT).
+
+## 2026-10-14 — T-011 Foydalanuvchilar va autentifikatsiya
+- Qilindi: `apps/accounts` — `User` (`AUTH_USER_MODEL`, UUIDv7, telefon bilan kirish, rollar platform_admin/owner/manager/cashier, `tenant` faqat platform_admin'da bo'sh — DB constraint, kassir telefonsiz va parolsiz), PIN hash `pins.py` (PBKDF2-SHA256 120k, Django formati) + umumiy vektorlar `testdata/pin_hash.json`; `/api/v1/auth/login/`, `/refresh/` (rotatsiya, nofaol user rad), `/me/`, `/api/v1/users/` (read-only, manager+); permission klasslari (IsPlatformAdmin, IsOwner, IsManagerOrOwner, IsTenantMember); auth throttle 20/min; Django admin (faqat platform_admin). Fixture'lar `make_user`, `owner`, `client_as`. 149 test yashil. openapi.yaml va admin `schema.d.ts` yangilandi. Qaror 0006.
+- PR: T-011 (squash merge)
+- Qoldi / keyingi qadam: T-012 Qurilmalar (T-013 ga ham bog'liq — avval T-013 Tariflar va obuna). Xodim qo'shish/tahrirlash API (PIN o'rnatish) hali yo'q — kassa xodimlar ekrani bilan birga.
+- Muammo yoki qaror: `AUTH_USER_MODEL` almashgani uchun lokal dev baza (pos_pgdata, bo'sh) eski migratsiya tarixi bilan mos emas — backend konteyneri `migrate` da InconsistentMigrationHistory beradi; tozalash foydalanuvchi ruxsati bilan (`DROP SCHEMA public CASCADE`). Python `\d` Unicode raqamlarni ham oladi — PIN/telefon `[0-9]` bilan tekshiriladi.

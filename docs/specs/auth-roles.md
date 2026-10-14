@@ -13,9 +13,9 @@
 - Admin dashboard: platform_admin login, JWT httpOnly cookie, 2FA keyinroq.
 
 ## API (T-011)
-- `POST /api/v1/auth/login` `{phone, password}` → `{access, refresh, user}`. Telefon istalgan ko'rinishda (`90 123 45 67`) — serverda normallashtiriladi. Xato: `401 invalid_credentials` (telefon/parol noto'g'ri, parolsiz foydalanuvchi, nofaol).
-- `POST /api/v1/auth/refresh` `{refresh}` → `{access, refresh}` (rotatsiya). Nofaol foydalanuvchi — `401`.
-- `GET /api/v1/auth/me` → `{id, phone, full_name, role, tenant: {id, name} | null}`.
+- `POST /api/v1/auth/login/` `{phone, password}` → `{access, refresh, user}`. Telefon istalgan ko'rinishda (`90 123 45 67`) — serverda normallashtiriladi. Xato: `401 invalid_credentials` (telefon/parol noto'g'ri, parolsiz foydalanuvchi, nofaol).
+- `POST /api/v1/auth/refresh/` `{refresh}` → `{access, refresh}` (rotatsiya). Nofaol foydalanuvchi — `401`.
+- `GET /api/v1/auth/me/` → `{id, phone, full_name, role, tenant: {id, name} | null}`.
 - `GET /api/v1/users/`, `/users/{id}/` — o'z tenanti xodimlari (manager va owner). Boshqa tenant foydalanuvchisi — `404`.
 - Login va refresh — throttle (`auth`: 20/daqiqa IP bo'yicha).
 - Model va PIN formati: `docs/decisions/0006-users-pin.md`.
