@@ -4,9 +4,11 @@ from rest_framework import serializers
 
 
 class StrictIntegerField(serializers.IntegerField):
-    """Faqat JSON butun son: `150.0`, `"150"`, `true` rad etiladi (DRF IntegerField ularni oladi)."""
+    """Faqat JSON butun son. `150.0`, `"150"`, `true` rad etiladi (DRF IntegerField oladi)."""
 
-    default_error_messages = {"not_integer": "A whole number is required (no decimals, no strings)."}
+    default_error_messages = {
+        "not_integer": "A whole number is required (no decimals, no strings)."
+    }
 
     def to_internal_value(self, data):
         if isinstance(data, bool) or not isinstance(data, int):

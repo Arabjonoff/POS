@@ -19,11 +19,14 @@ def gtin_check_digit(body: str) -> int:
 
 
 def normalize_barcode(raw: str) -> str:
-    """Bosh/oxirgi bo'shliqlarni olib tashlaydi; boshidagi nollar saqlanadi. Xato — `BarcodeError`."""
+    """Bosh/oxirgi bo'shliqlar olib tashlanadi, boshidagi nollar saqlanadi.
+
+    Xato — `BarcodeError`.
+    """
     value = (raw or "").strip()
     if not BARCODE_RE.match(value):
         raise BarcodeError("invalid_barcode", "Barcode must be 4-64 visible ASCII characters.")
-    if value.isdigit() and len(value) in CHECKED_LENGTHS:
-        if gtin_check_digit(value[:-1]) != int(value[-1]):
-            raise BarcodeError("invalid_check_digit", "Barcode check digit is wrong.")
+    checked = value.isdigit() and len(value) in CHECKED_LENGTHS
+    if checked and gtin_check_digit(value[:-1]) != int(value[-1]):
+        raise BarcodeError("invalid_check_digit", "Barcode check digit is wrong.")
     return value

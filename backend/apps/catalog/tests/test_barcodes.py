@@ -39,6 +39,8 @@ def test_invalid_format(code):
     assert exc.value.code == "invalid_barcode"
 
 
-@pytest.mark.parametrize(("body", "digit"), [("478000000001", 4), ("9638507", 4), ("03600029145", 2)])
+@pytest.mark.parametrize(
+    ("body", "digit"), [("478000000001", 4), ("9638507", 4), ("03600029145", 2)]
+)
 def test_check_digit(body, digit):
     assert gtin_check_digit(body) == digit
