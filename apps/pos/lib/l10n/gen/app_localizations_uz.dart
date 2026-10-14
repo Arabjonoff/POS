@@ -1250,6 +1250,89 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get importErrWeighted => 'vaznli tovar uchun kasrli birlik kerak';
+
+  @override
+  String get receivingNew => 'Yangi kirim';
+
+  @override
+  String get receivingEmptyTitle => 'Hali kirim yo\'q';
+
+  @override
+  String get receivingEmptyMessage =>
+      'Yetkazib beruvchidan kelgan tovarni skaner bilan qabul qiling';
+
+  @override
+  String get receivingDraft => 'Qoralama';
+
+  @override
+  String get receivingPostedBadge => 'Tasdiqlangan';
+
+  @override
+  String receivingLines(int count) {
+    return '$count ta qator';
+  }
+
+  @override
+  String receivingTitle(String date) {
+    return 'Kirim · $date';
+  }
+
+  @override
+  String get receivingBack => 'Kirimlar';
+
+  @override
+  String get receivingSupplier => 'Yetkazib beruvchi';
+
+  @override
+  String get receivingNoSupplier => 'Yetkazib beruvchisiz';
+
+  @override
+  String get receivingNewSupplier => 'Yangi yetkazib beruvchi';
+
+  @override
+  String get receivingNote => 'Izoh';
+
+  @override
+  String get receivingSearchHint => 'Tovar nomi yoki shtrix-kod (skanerlang)';
+
+  @override
+  String get receivingEmptyLines => 'Tovarni skanerlang yoki qidiring';
+
+  @override
+  String get receivingQty => 'Miqdor';
+
+  @override
+  String get receivingCost => 'Tannarx';
+
+  @override
+  String get receivingSell => 'Sotish narxi';
+
+  @override
+  String receivingTotal(String amount) {
+    return 'Jami tannarx: $amount';
+  }
+
+  @override
+  String get receivingSellBelowCost => 'Narx tannarxdan past';
+
+  @override
+  String get receivingPost => 'Tasdiqlash';
+
+  @override
+  String get receivingDelete => 'Qoralamani o\'chirish';
+
+  @override
+  String get receivingRemoveLine => 'Qatorni o\'chirish';
+
+  @override
+  String get receivingPostedToast => 'Kirim tasdiqlandi: qoldiq oshdi';
+
+  @override
+  String get receivingNeedsApproval =>
+      'Kirimni menejer yoki ega tasdiqlashi kerak';
+
+  @override
+  String get receivingEmptyPost => 'Bo\'sh kirimni tasdiqlab bo\'lmaydi';
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -2491,4 +2574,87 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get importErrWeighted => 'вазнли товар учун касрли бирлик керак';
+
+  @override
+  String get receivingNew => 'Янги кирим';
+
+  @override
+  String get receivingEmptyTitle => 'Ҳали кирим йўқ';
+
+  @override
+  String get receivingEmptyMessage =>
+      'Етказиб берувчидан келган товарни сканер билан қабул қилинг';
+
+  @override
+  String get receivingDraft => 'Қоралама';
+
+  @override
+  String get receivingPostedBadge => 'Тасдиқланган';
+
+  @override
+  String receivingLines(int count) {
+    return '$count та қатор';
+  }
+
+  @override
+  String receivingTitle(String date) {
+    return 'Кирим · $date';
+  }
+
+  @override
+  String get receivingBack => 'Киримлар';
+
+  @override
+  String get receivingSupplier => 'Етказиб берувчи';
+
+  @override
+  String get receivingNoSupplier => 'Етказиб берувчисиз';
+
+  @override
+  String get receivingNewSupplier => 'Янги етказиб берувчи';
+
+  @override
+  String get receivingNote => 'Изоҳ';
+
+  @override
+  String get receivingSearchHint => 'Товар номи ёки штрих-код (сканерланг)';
+
+  @override
+  String get receivingEmptyLines => 'Товарни сканерланг ёки қидиринг';
+
+  @override
+  String get receivingQty => 'Миқдор';
+
+  @override
+  String get receivingCost => 'Таннарх';
+
+  @override
+  String get receivingSell => 'Сотиш нархи';
+
+  @override
+  String receivingTotal(String amount) {
+    return 'Жами таннарх: $amount';
+  }
+
+  @override
+  String get receivingSellBelowCost => 'Нарх таннархдан паст';
+
+  @override
+  String get receivingPost => 'Тасдиқлаш';
+
+  @override
+  String get receivingDelete => 'Қораламани ўчириш';
+
+  @override
+  String get receivingRemoveLine => 'Қаторни ўчириш';
+
+  @override
+  String get receivingPostedToast => 'Кирим тасдиқланди: қолдиқ ошди';
+
+  @override
+  String get receivingNeedsApproval =>
+      'Киримни менежер ёки эга тасдиқлаши керак';
+
+  @override
+  String get receivingEmptyPost => 'Бўш киримни тасдиқлаб бўлмайди';
 }

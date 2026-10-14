@@ -1268,4 +1268,86 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get importErrWeighted => 'весовому товару нужна дробная единица';
+
+  @override
+  String get receivingNew => 'Новый приход';
+
+  @override
+  String get receivingEmptyTitle => 'Приходов пока нет';
+
+  @override
+  String get receivingEmptyMessage => 'Принимайте товар от поставщика сканером';
+
+  @override
+  String get receivingDraft => 'Черновик';
+
+  @override
+  String get receivingPostedBadge => 'Проведён';
+
+  @override
+  String receivingLines(int count) {
+    return 'Строк: $count';
+  }
+
+  @override
+  String receivingTitle(String date) {
+    return 'Приход · $date';
+  }
+
+  @override
+  String get receivingBack => 'Приходы';
+
+  @override
+  String get receivingSupplier => 'Поставщик';
+
+  @override
+  String get receivingNoSupplier => 'Без поставщика';
+
+  @override
+  String get receivingNewSupplier => 'Новый поставщик';
+
+  @override
+  String get receivingNote => 'Комментарий';
+
+  @override
+  String get receivingSearchHint => 'Название или штрихкод (сканируйте)';
+
+  @override
+  String get receivingEmptyLines => 'Отсканируйте или найдите товар';
+
+  @override
+  String get receivingQty => 'Кол-во';
+
+  @override
+  String get receivingCost => 'Себестоимость';
+
+  @override
+  String get receivingSell => 'Цена продажи';
+
+  @override
+  String receivingTotal(String amount) {
+    return 'Итого себестоимость: $amount';
+  }
+
+  @override
+  String get receivingSellBelowCost => 'Цена ниже себестоимости';
+
+  @override
+  String get receivingPost => 'Провести';
+
+  @override
+  String get receivingDelete => 'Удалить черновик';
+
+  @override
+  String get receivingRemoveLine => 'Удалить строку';
+
+  @override
+  String get receivingPostedToast => 'Приход проведён: остатки увеличены';
+
+  @override
+  String get receivingNeedsApproval =>
+      'Приход должен подтвердить менеджер или владелец';
+
+  @override
+  String get receivingEmptyPost => 'Нельзя провести пустой приход';
 }

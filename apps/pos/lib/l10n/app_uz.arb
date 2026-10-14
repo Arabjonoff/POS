@@ -1685,5 +1685,120 @@
   "importErrWeighted": "vaznli tovar uchun kasrli birlik kerak",
   "@importErrWeighted": {
     "description": "Sabab"
+  },
+  "receivingNew": "Yangi kirim",
+  "@receivingNew": {
+    "description": "Tugma"
+  },
+  "receivingEmptyTitle": "Hali kirim yo'q",
+  "@receivingEmptyTitle": {
+    "description": "Bo'sh ro'yxat"
+  },
+  "receivingEmptyMessage": "Yetkazib beruvchidan kelgan tovarni skaner bilan qabul qiling",
+  "@receivingEmptyMessage": {
+    "description": "Bo'sh ro'yxat izohi"
+  },
+  "receivingDraft": "Qoralama",
+  "@receivingDraft": {
+    "description": "Holat"
+  },
+  "receivingPostedBadge": "Tasdiqlangan",
+  "@receivingPostedBadge": {
+    "description": "Holat"
+  },
+  "receivingLines": "{count} ta qator",
+  "@receivingLines": {
+    "description": "Qatorlar soni",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "receivingTitle": "Kirim · {date}",
+  "@receivingTitle": {
+    "description": "Tahrirlovchi sarlavhasi",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "receivingBack": "Kirimlar",
+  "@receivingBack": {
+    "description": "Orqaga tugmasi"
+  },
+  "receivingSupplier": "Yetkazib beruvchi",
+  "@receivingSupplier": {
+    "description": "Maydon"
+  },
+  "receivingNoSupplier": "Yetkazib beruvchisiz",
+  "@receivingNoSupplier": {
+    "description": "Tanlov"
+  },
+  "receivingNewSupplier": "Yangi yetkazib beruvchi",
+  "@receivingNewSupplier": {
+    "description": "Tugma"
+  },
+  "receivingNote": "Izoh",
+  "@receivingNote": {
+    "description": "Maydon"
+  },
+  "receivingSearchHint": "Tovar nomi yoki shtrix-kod (skanerlang)",
+  "@receivingSearchHint": {
+    "description": "Qidiruv"
+  },
+  "receivingEmptyLines": "Tovarni skanerlang yoki qidiring",
+  "@receivingEmptyLines": {
+    "description": "Bo'sh kirim"
+  },
+  "receivingQty": "Miqdor",
+  "@receivingQty": {
+    "description": "Ustun"
+  },
+  "receivingCost": "Tannarx",
+  "@receivingCost": {
+    "description": "Ustun"
+  },
+  "receivingSell": "Sotish narxi",
+  "@receivingSell": {
+    "description": "Ustun"
+  },
+  "receivingTotal": "Jami tannarx: {amount}",
+  "@receivingTotal": {
+    "description": "Pastki qator",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "receivingSellBelowCost": "Narx tannarxdan past",
+  "@receivingSellBelowCost": {
+    "description": "Ogohlantirish"
+  },
+  "receivingPost": "Tasdiqlash",
+  "@receivingPost": {
+    "description": "Tugma"
+  },
+  "receivingDelete": "Qoralamani o'chirish",
+  "@receivingDelete": {
+    "description": "Tugma"
+  },
+  "receivingRemoveLine": "Qatorni o'chirish",
+  "@receivingRemoveLine": {
+    "description": "Tooltip"
+  },
+  "receivingPostedToast": "Kirim tasdiqlandi: qoldiq oshdi",
+  "@receivingPostedToast": {
+    "description": "Xabar"
+  },
+  "receivingNeedsApproval": "Kirimni menejer yoki ega tasdiqlashi kerak",
+  "@receivingNeedsApproval": {
+    "description": "Huquq"
+  },
+  "receivingEmptyPost": "Bo'sh kirimni tasdiqlab bo'lmaydi",
+  "@receivingEmptyPost": {
+    "description": "Xato"
   }
 }

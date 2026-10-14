@@ -2282,6 +2282,156 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'vaznli tovar uchun kasrli birlik kerak'**
   String get importErrWeighted;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Yangi kirim'**
+  String get receivingNew;
+
+  /// Bo'sh ro'yxat
+  ///
+  /// In uz, this message translates to:
+  /// **'Hali kirim yo\'q'**
+  String get receivingEmptyTitle;
+
+  /// Bo'sh ro'yxat izohi
+  ///
+  /// In uz, this message translates to:
+  /// **'Yetkazib beruvchidan kelgan tovarni skaner bilan qabul qiling'**
+  String get receivingEmptyMessage;
+
+  /// Holat
+  ///
+  /// In uz, this message translates to:
+  /// **'Qoralama'**
+  String get receivingDraft;
+
+  /// Holat
+  ///
+  /// In uz, this message translates to:
+  /// **'Tasdiqlangan'**
+  String get receivingPostedBadge;
+
+  /// Qatorlar soni
+  ///
+  /// In uz, this message translates to:
+  /// **'{count} ta qator'**
+  String receivingLines(int count);
+
+  /// Tahrirlovchi sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Kirim · {date}'**
+  String receivingTitle(String date);
+
+  /// Orqaga tugmasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Kirimlar'**
+  String get receivingBack;
+
+  /// Maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'Yetkazib beruvchi'**
+  String get receivingSupplier;
+
+  /// Tanlov
+  ///
+  /// In uz, this message translates to:
+  /// **'Yetkazib beruvchisiz'**
+  String get receivingNoSupplier;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Yangi yetkazib beruvchi'**
+  String get receivingNewSupplier;
+
+  /// Maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'Izoh'**
+  String get receivingNote;
+
+  /// Qidiruv
+  ///
+  /// In uz, this message translates to:
+  /// **'Tovar nomi yoki shtrix-kod (skanerlang)'**
+  String get receivingSearchHint;
+
+  /// Bo'sh kirim
+  ///
+  /// In uz, this message translates to:
+  /// **'Tovarni skanerlang yoki qidiring'**
+  String get receivingEmptyLines;
+
+  /// Ustun
+  ///
+  /// In uz, this message translates to:
+  /// **'Miqdor'**
+  String get receivingQty;
+
+  /// Ustun
+  ///
+  /// In uz, this message translates to:
+  /// **'Tannarx'**
+  String get receivingCost;
+
+  /// Ustun
+  ///
+  /// In uz, this message translates to:
+  /// **'Sotish narxi'**
+  String get receivingSell;
+
+  /// Pastki qator
+  ///
+  /// In uz, this message translates to:
+  /// **'Jami tannarx: {amount}'**
+  String receivingTotal(String amount);
+
+  /// Ogohlantirish
+  ///
+  /// In uz, this message translates to:
+  /// **'Narx tannarxdan past'**
+  String get receivingSellBelowCost;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Tasdiqlash'**
+  String get receivingPost;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Qoralamani o\'chirish'**
+  String get receivingDelete;
+
+  /// Tooltip
+  ///
+  /// In uz, this message translates to:
+  /// **'Qatorni o\'chirish'**
+  String get receivingRemoveLine;
+
+  /// Xabar
+  ///
+  /// In uz, this message translates to:
+  /// **'Kirim tasdiqlandi: qoldiq oshdi'**
+  String get receivingPostedToast;
+
+  /// Huquq
+  ///
+  /// In uz, this message translates to:
+  /// **'Kirimni menejer yoki ega tasdiqlashi kerak'**
+  String get receivingNeedsApproval;
+
+  /// Xato
+  ///
+  /// In uz, this message translates to:
+  /// **'Bo\'sh kirimni tasdiqlab bo\'lmaydi'**
+  String get receivingEmptyPost;
 }
 
 class _AppLocalizationsDelegate

@@ -240,3 +240,16 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-051 (squash merge)
 - Qoldi / keyingi qadam: T-052 Kirim skaner bilan. T-047 — Q-007.
 - Muammo yoki qaror: Excel'da son ko'rinishidagi shtrix-kod kasrsiz matnga aylantiriladi; boshidagi nollar faqat matn katakda saqlanadi, shuning uchun shablonda ustunlar matn formatida. Mavjud tovar qoldig'i import bilan o'zgarmaydi (kirim yoki inventarizatsiya orqali).
+
+## 2026-10-15 — T-052 Kirim skaner bilan
+- Qilindi:
+  - `ReceiptStore`: lokal qoralama (har o'zgarishda saqlanadi), skan → qator yoki +1, miqdor/tannarx/narx tahriri, yetkazib beruvchini tez yaratish (`supplier.upserted`).
+  - Tasdiqlash bitta tranzaksiyada: `stock_movements` (+), tovar narxlari, outbox `receipt.posted`.
+  - "Kirim" bo'limi: ro'yxat va tahrirlovchi. Skaner: topildi → qator; noma'lum → tovar kartasi → kirimga. Sariq "narx tannarxdan past" belgisi; kassir uchun menejer PIN.
+- Testlar: apps/pos 477 (+23):
+  - `ReceiptStore`: 100 skan, tahrir, tasdiqlash → qoldiq va payload, bo'sh kirim, ro'yxat tartibi;
+  - 6 ta widget testi: 100 ketma-ket skan, noma'lum kod oqimi, tahrir + PIN + qoldiq, qoralama tiklanishi va o'chirish, yetkazib beruvchi, bo'sh kirim.
+  - Golden'lar: `receiving` list/editor × 3 o'lcham × 2 mavzu. Skrinshotlar: `docs/screenshots/T-052/`.
+- PR: T-052 (squash merge)
+- Qoldi / keyingi qadam: T-053 Inventarizatsiya. Teskari kirim (qaytarish yetkazib beruvchiga) kassada — keyin. Kassirga kirim huquqi "sozlamaga qarab" — hozircha har doim menejer PIN.
+- Muammo yoki qaror: telefonda tahrirlovchining pastki paneli ixchamlashtirildi (o'chirish — ikon, tasdiqlash — to'liq kenglikda).
