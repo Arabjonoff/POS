@@ -14,16 +14,16 @@
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 - [x] 1. Backend: `GET /api/v1/products/{id}/price-history/` (owner/manager; boshqa tenant — 404) + pytest + OpenAPI + `make api-clients`
 - [x] 2. Kassa: `data/catalog/product_editor.dart` — tekshiruv (nom, birlik, narx, shtrix-kod nazorat raqami va takrori, PLU 5 raqam va takrori, vaznli → kasrli birlik), saqlash (products + product_barcodes + outbox `product.upserted` bitta tranzaksiyada, `by` — menejer/ega), nofaol qilish; qoldiq (`product_stock` + yuborilmagan harakatlar) + testlar
-- [ ] 3. Tovarlar ro'yxati (bo'lim "Tovarlar"): qidiruv, kategoriya, filtrlar (kam qolgan, manfiy, nofaol), desktop jadval / telefon kartalar, bo'sh holat; skaner → mavjud bo'lsa karta, yo'q bo'lsa yangi karta (shtrix-kod to'ldirilgan)
-- [ ] 4. Tovar kartasi: maydonlar, shtrix-kodlar (skaner bilan qo'shish, takror ogohlantirish), ustama %, narx tarixi (onlayn), saqlash/nofaol qilish; kassir → menejer PIN; tarjimalar
-- [ ] 5. Widget testlari + golden + skrinshotlar `docs/screenshots/T-050/`
+- [x] 3. Tovarlar ro'yxati (bo'lim "Tovarlar"): qidiruv, kategoriya, filtrlar (kam qolgan, manfiy, nofaol), desktop jadval / telefon kartalar, bo'sh holat; skaner → mavjud bo'lsa karta, yo'q bo'lsa yangi karta (shtrix-kod to'ldirilgan)
+- [x] 4. Tovar kartasi: maydonlar, shtrix-kodlar (skaner bilan qo'shish, takror ogohlantirish), ustama %, narx tarixi (onlayn), saqlash/nofaol qilish; kassir → menejer PIN; tarjimalar
+- [x] 5. Widget testlari + golden + skrinshotlar `docs/screenshots/T-050/`
 - [ ] 6. Spec, PR, CI → merge; ROADMAP, PROGRESS, STATE
 
 ## Oxirgi bajarilgan ish
-- 3–4-qadam (kod yozildi, testlanmagan): `features/products/product_list.dart` (`ProductRow`, `filterProducts`, `productRowsProvider`), `products_screen.dart` (router: AppSection.products), `product_card.dart` (`showProductCard`, parse/format yordamchilari, narx tarixi), `data/catalog/price_history.dart`; tarjimalar `products*`/`product*`.
+- 3–5-qadam: tovarlar ro'yxati (jadval tor ekranda ixcham, telefon kartalar), tovar kartasi (kassir → PIN, narx tarixi onlayn), `test/features/products_test.dart` (13), golden `products` list/card, skrinshotlar `docs/screenshots/T-050/`; shell testi yangilandi (Tovarlar endi tayyor). apps/pos: 437 test yashil.
 
 ## Keyingi aniq harakat
-- Testlar: `apps/pos/test/features/products_test.dart` — ro'yxat/qidiruv/filtrlar, skan → mavjud karta / yangi karta (kod to'ldirilgan), takroriy kod ogohlantirish, yangi tovar saqlash (kassir → PIN), tahrir, nofaol qilish, narx tarixi (soxta `priceHistoryFetcherProvider`), `filterProducts` va parse unit testlari. Keyin 3 va 4-qadamni [x].
+- 6-qadam: `docs/specs/products.md` ga "Kassada amalga oshirilishi (T-050)", CI tekshiruvlari (backend lint/test, admin lint/typecheck — schema.d.ts o'zgardi, flutter), PR → merge, ROADMAP/PROGRESS/STATE.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

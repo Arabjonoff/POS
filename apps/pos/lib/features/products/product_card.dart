@@ -57,7 +57,10 @@ int? parseQtyMilli(String text, {required bool fractional}) {
   final match = pattern.firstMatch(clean);
   if (match == null) return null;
   final whole = int.parse(match.group(1)!);
-  final frac = (match.group(2) ?? '').padRight(3, '0');
+  final frac = ((match.groupCount >= 2 ? match.group(2) : null) ?? '').padRight(
+    3,
+    '0',
+  );
   return whole * 1000 + (frac.isEmpty ? 0 : int.parse(frac));
 }
 

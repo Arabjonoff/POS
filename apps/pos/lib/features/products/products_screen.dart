@@ -20,6 +20,10 @@ class ProductsScreen extends ConsumerStatefulWidget {
   /// Kontent shu kenglikdan katta bo'lsa — jadval.
   static const double tableMinWidth = 720;
 
+  /// Jadval shundan tor bo'lsa — shtrix-kod va tannarx ustunlari yashiriladi
+  /// (qoldiq doim ko'rinsin).
+  static const double fullTableMinWidth = 1000;
+
   @override
   ConsumerState<ProductsScreen> createState() => _ProductsScreenState();
 }
@@ -144,7 +148,10 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
       body = LayoutBuilder(
         builder: (context, constraints) =>
             constraints.maxWidth >= ProductsScreen.tableMinWidth
-            ? _table(rows)
+            ? _table(
+                rows,
+                full: constraints.maxWidth >= ProductsScreen.fullTableMinWidth,
+              )
             : _cards(rows),
       );
     }
@@ -240,17 +247,20 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
     );
   }
 
-  Widget _table(List<ProductRow> rows) {
+  Widget _table(List<ProductRow> rows, {required bool full}) {
     final l10n = AppLocalizations.of(context);
     final fmt = context.fmt;
     final p = PosPalette.of(context);
     return PosDataTable<ProductRow>(
       rows: rows,
       onRowTap: (r) => unawaited(_open(productId: r.id)),
-      sortColumnIndex: _sortColumn,
+      sortColumnIndex: full
+          ? _sortColumn
+          : const {0: 0, 3: 2, 5: 3}[_sortColumn],
       sortAscending: _ascending,
       onSort: (i, {required ascending}) => setState(() {
-        _sortColumn = i;
+        // Tor jadvalda ustun indekslari: nom 0, kategoriya 1, narx 2, qoldiq 3.
+        _sortColumn = full ? i : const {0: 0, 2: 3, 3: 5}[i] ?? 0;
         _ascending = ascending;
       }),
       columns: [
@@ -268,20 +278,21 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
             ),
           ),
         ),
-        PosTableColumn(
-          label: l10n.productsColBarcode,
-          flex: 2,
-          minWidth: 150,
-          cell: (context, r) => Text(
-            r.barcodes.isEmpty ? (r.pluCode ?? '') : r.barcodes.first,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: PosTypography.body.copyWith(
-              color: p.textSecondary,
-              fontFeatures: PosTypography.tabular,
+        if (full)
+          PosTableColumn(
+            label: l10n.productsColBarcode,
+            flex: 2,
+            minWidth: 150,
+            cell: (context, r) => Text(
+              r.barcodes.isEmpty ? (r.pluCode ?? '') : r.barcodes.first,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: PosTypography.body.copyWith(
+                color: p.textSecondary,
+                fontFeatures: PosTypography.tabular,
+              ),
             ),
           ),
-        ),
         PosTableColumn(
           label: l10n.productsColCategory,
           flex: 2,
@@ -294,26 +305,36 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
         ),
         PosTableColumn(
           label: l10n.productsColPrice,
+          flex: 2,
+          minWidth: 130,
           numeric: true,
           sortable: true,
           cell: (context, r) =>
               PosMoneyText(amount: r.priceTiyin, currency: fmt.currency),
         ),
-        PosTableColumn(
-          label: l10n.productsColCost,
-          numeric: true,
-          cell: (context, r) => PosMoneyText(
-            amount: r.costTiyin,
-            currency: fmt.currency,
-            tone: PosTone.neutral,
+        if (full)
+          PosTableColumn(
+            label: l10n.productsColCost,
+            flex: 2,
+            minWidth: 130,
+            numeric: true,
+            cell: (context, r) => PosMoneyText(
+              amount: r.costTiyin,
+              currency: fmt.currency,
+              tone: PosTone.neutral,
+            ),
           ),
-        ),
         PosTableColumn(
           label: l10n.productsColStock,
           numeric: true,
           sortable: true,
-          minWidth: 140,
-          cell: (context, r) => _Stock(row: r),
+          flex: 2,
+          minWidth: 200,
+          cell: (context, r) => FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerRight,
+            child: _Stock(row: r),
+          ),
         ),
       ],
     );
@@ -400,11 +421,15 @@ class _Stock extends StatelessWidget {
           PosBadge(label: label, tone: tone!),
           const SizedBox(width: PosSpacing.xs),
         ],
-        Text(
-          fmt.qty(row.stockMilli, row.unit),
-          style: PosTypography.body.copyWith(
-            color: row.negative ? p.dangerText : p.text,
-            fontFeatures: PosTypography.tabular,
+        Flexible(
+          child: Text(
+            fmt.qty(row.stockMilli, row.unit),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: PosTypography.body.copyWith(
+              color: row.negative ? p.dangerText : p.text,
+              fontFeatures: PosTypography.tabular,
+            ),
           ),
         ),
       ],
