@@ -12406,6 +12406,17 @@ class $CartDraftsTable extends CartDrafts
     requiredDuringInsert: false,
     defaultValue: const Constant('[]'),
   );
+  static const VerificationMeta _discountJsonMeta = const VerificationMeta(
+    'discountJson',
+  );
+  @override
+  late final GeneratedColumn<String> discountJson = GeneratedColumn<String>(
+    'discount_json',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
   );
@@ -12434,6 +12445,7 @@ class $CartDraftsTable extends CartDrafts
     slot,
     customerId,
     linesJson,
+    discountJson,
     createdAt,
     updatedAt,
   ];
@@ -12472,6 +12484,15 @@ class $CartDraftsTable extends CartDrafts
       context.handle(
         _linesJsonMeta,
         linesJson.isAcceptableOrUnknown(data['lines_json']!, _linesJsonMeta),
+      );
+    }
+    if (data.containsKey('discount_json')) {
+      context.handle(
+        _discountJsonMeta,
+        discountJson.isAcceptableOrUnknown(
+          data['discount_json']!,
+          _discountJsonMeta,
+        ),
       );
     }
     if (data.containsKey('created_at')) {
@@ -12515,6 +12536,10 @@ class $CartDraftsTable extends CartDrafts
         DriftSqlType.string,
         data['${effectivePrefix}lines_json'],
       )!,
+      discountJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}discount_json'],
+      ),
       createdAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_at'],
@@ -12541,6 +12566,9 @@ class CartDraft extends DataClass implements Insertable<CartDraft> {
 
   /// Savat qatorlari (JSON).
   final String linesJson;
+
+  /// Chek chegirmasi (JSON: `percent_bp` yoki `amount_tiyin`), v3.
+  final String? discountJson;
   final DateTime createdAt;
   final DateTime updatedAt;
   const CartDraft({
@@ -12548,6 +12576,7 @@ class CartDraft extends DataClass implements Insertable<CartDraft> {
     required this.slot,
     this.customerId,
     required this.linesJson,
+    this.discountJson,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -12560,6 +12589,9 @@ class CartDraft extends DataClass implements Insertable<CartDraft> {
       map['customer_id'] = Variable<String>(customerId);
     }
     map['lines_json'] = Variable<String>(linesJson);
+    if (!nullToAbsent || discountJson != null) {
+      map['discount_json'] = Variable<String>(discountJson);
+    }
     map['created_at'] = Variable<DateTime>(createdAt);
     map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
@@ -12573,6 +12605,9 @@ class CartDraft extends DataClass implements Insertable<CartDraft> {
           ? const Value.absent()
           : Value(customerId),
       linesJson: Value(linesJson),
+      discountJson: discountJson == null && nullToAbsent
+          ? const Value.absent()
+          : Value(discountJson),
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
     );
@@ -12588,6 +12623,7 @@ class CartDraft extends DataClass implements Insertable<CartDraft> {
       slot: serializer.fromJson<int>(json['slot']),
       customerId: serializer.fromJson<String?>(json['customerId']),
       linesJson: serializer.fromJson<String>(json['linesJson']),
+      discountJson: serializer.fromJson<String?>(json['discountJson']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
@@ -12600,6 +12636,7 @@ class CartDraft extends DataClass implements Insertable<CartDraft> {
       'slot': serializer.toJson<int>(slot),
       'customerId': serializer.toJson<String?>(customerId),
       'linesJson': serializer.toJson<String>(linesJson),
+      'discountJson': serializer.toJson<String?>(discountJson),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
@@ -12610,6 +12647,7 @@ class CartDraft extends DataClass implements Insertable<CartDraft> {
     int? slot,
     Value<String?> customerId = const Value.absent(),
     String? linesJson,
+    Value<String?> discountJson = const Value.absent(),
     DateTime? createdAt,
     DateTime? updatedAt,
   }) => CartDraft(
@@ -12617,6 +12655,7 @@ class CartDraft extends DataClass implements Insertable<CartDraft> {
     slot: slot ?? this.slot,
     customerId: customerId.present ? customerId.value : this.customerId,
     linesJson: linesJson ?? this.linesJson,
+    discountJson: discountJson.present ? discountJson.value : this.discountJson,
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
   );
@@ -12628,6 +12667,9 @@ class CartDraft extends DataClass implements Insertable<CartDraft> {
           ? data.customerId.value
           : this.customerId,
       linesJson: data.linesJson.present ? data.linesJson.value : this.linesJson,
+      discountJson: data.discountJson.present
+          ? data.discountJson.value
+          : this.discountJson,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
@@ -12640,6 +12682,7 @@ class CartDraft extends DataClass implements Insertable<CartDraft> {
           ..write('slot: $slot, ')
           ..write('customerId: $customerId, ')
           ..write('linesJson: $linesJson, ')
+          ..write('discountJson: $discountJson, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt')
           ..write(')'))
@@ -12647,8 +12690,15 @@ class CartDraft extends DataClass implements Insertable<CartDraft> {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, slot, customerId, linesJson, createdAt, updatedAt);
+  int get hashCode => Object.hash(
+    id,
+    slot,
+    customerId,
+    linesJson,
+    discountJson,
+    createdAt,
+    updatedAt,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -12657,6 +12707,7 @@ class CartDraft extends DataClass implements Insertable<CartDraft> {
           other.slot == this.slot &&
           other.customerId == this.customerId &&
           other.linesJson == this.linesJson &&
+          other.discountJson == this.discountJson &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt);
 }
@@ -12666,6 +12717,7 @@ class CartDraftsCompanion extends UpdateCompanion<CartDraft> {
   final Value<int> slot;
   final Value<String?> customerId;
   final Value<String> linesJson;
+  final Value<String?> discountJson;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
   final Value<int> rowid;
@@ -12674,6 +12726,7 @@ class CartDraftsCompanion extends UpdateCompanion<CartDraft> {
     this.slot = const Value.absent(),
     this.customerId = const Value.absent(),
     this.linesJson = const Value.absent(),
+    this.discountJson = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -12683,6 +12736,7 @@ class CartDraftsCompanion extends UpdateCompanion<CartDraft> {
     required int slot,
     this.customerId = const Value.absent(),
     this.linesJson = const Value.absent(),
+    this.discountJson = const Value.absent(),
     required DateTime createdAt,
     required DateTime updatedAt,
     this.rowid = const Value.absent(),
@@ -12695,6 +12749,7 @@ class CartDraftsCompanion extends UpdateCompanion<CartDraft> {
     Expression<int>? slot,
     Expression<String>? customerId,
     Expression<String>? linesJson,
+    Expression<String>? discountJson,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
     Expression<int>? rowid,
@@ -12704,6 +12759,7 @@ class CartDraftsCompanion extends UpdateCompanion<CartDraft> {
       if (slot != null) 'slot': slot,
       if (customerId != null) 'customer_id': customerId,
       if (linesJson != null) 'lines_json': linesJson,
+      if (discountJson != null) 'discount_json': discountJson,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
       if (rowid != null) 'rowid': rowid,
@@ -12715,6 +12771,7 @@ class CartDraftsCompanion extends UpdateCompanion<CartDraft> {
     Value<int>? slot,
     Value<String?>? customerId,
     Value<String>? linesJson,
+    Value<String?>? discountJson,
     Value<DateTime>? createdAt,
     Value<DateTime>? updatedAt,
     Value<int>? rowid,
@@ -12724,6 +12781,7 @@ class CartDraftsCompanion extends UpdateCompanion<CartDraft> {
       slot: slot ?? this.slot,
       customerId: customerId ?? this.customerId,
       linesJson: linesJson ?? this.linesJson,
+      discountJson: discountJson ?? this.discountJson,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       rowid: rowid ?? this.rowid,
@@ -12745,6 +12803,9 @@ class CartDraftsCompanion extends UpdateCompanion<CartDraft> {
     if (linesJson.present) {
       map['lines_json'] = Variable<String>(linesJson.value);
     }
+    if (discountJson.present) {
+      map['discount_json'] = Variable<String>(discountJson.value);
+    }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
@@ -12764,6 +12825,7 @@ class CartDraftsCompanion extends UpdateCompanion<CartDraft> {
           ..write('slot: $slot, ')
           ..write('customerId: $customerId, ')
           ..write('linesJson: $linesJson, ')
+          ..write('discountJson: $discountJson, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
           ..write('rowid: $rowid')
@@ -21177,6 +21239,7 @@ typedef $$CartDraftsTableCreateCompanionBuilder =
       required int slot,
       Value<String?> customerId,
       Value<String> linesJson,
+      Value<String?> discountJson,
       required DateTime createdAt,
       required DateTime updatedAt,
       Value<int> rowid,
@@ -21187,6 +21250,7 @@ typedef $$CartDraftsTableUpdateCompanionBuilder =
       Value<int> slot,
       Value<String?> customerId,
       Value<String> linesJson,
+      Value<String?> discountJson,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt,
       Value<int> rowid,
@@ -21218,6 +21282,11 @@ class $$CartDraftsTableFilterComposer
 
   ColumnFilters<String> get linesJson => $composableBuilder(
     column: $table.linesJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get discountJson => $composableBuilder(
+    column: $table.discountJson,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -21261,6 +21330,11 @@ class $$CartDraftsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get discountJson => $composableBuilder(
+    column: $table.discountJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<DateTime> get createdAt => $composableBuilder(
     column: $table.createdAt,
     builder: (column) => ColumnOrderings(column),
@@ -21294,6 +21368,11 @@ class $$CartDraftsTableAnnotationComposer
 
   GeneratedColumn<String> get linesJson =>
       $composableBuilder(column: $table.linesJson, builder: (column) => column);
+
+  GeneratedColumn<String> get discountJson => $composableBuilder(
+    column: $table.discountJson,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
@@ -21337,6 +21416,7 @@ class $$CartDraftsTableTableManager
                 Value<int> slot = const Value.absent(),
                 Value<String?> customerId = const Value.absent(),
                 Value<String> linesJson = const Value.absent(),
+                Value<String?> discountJson = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -21345,6 +21425,7 @@ class $$CartDraftsTableTableManager
                 slot: slot,
                 customerId: customerId,
                 linesJson: linesJson,
+                discountJson: discountJson,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
                 rowid: rowid,
@@ -21355,6 +21436,7 @@ class $$CartDraftsTableTableManager
                 required int slot,
                 Value<String?> customerId = const Value.absent(),
                 Value<String> linesJson = const Value.absent(),
+                Value<String?> discountJson = const Value.absent(),
                 required DateTime createdAt,
                 required DateTime updatedAt,
                 Value<int> rowid = const Value.absent(),
@@ -21363,6 +21445,7 @@ class $$CartDraftsTableTableManager
                 slot: slot,
                 customerId: customerId,
                 linesJson: linesJson,
+                discountJson: discountJson,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
                 rowid: rowid,

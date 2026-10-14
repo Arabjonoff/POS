@@ -56,7 +56,7 @@ class AppDatabase extends _$AppDatabase {
   factory AppDatabase.open() => AppDatabase(driftDatabase(name: 'pos'));
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -94,6 +94,10 @@ extension _Migrations on GeneratedDatabase {
         if (entity == schema.localSettings) continue;
         await m.create(entity);
       }
+    },
+    // v3: ochiq savatda chek chegirmasi (T-042).
+    from2To3: (m, schema) async {
+      await m.addColumn(schema.cartDrafts, schema.cartDrafts.discountJson);
     },
   );
 }

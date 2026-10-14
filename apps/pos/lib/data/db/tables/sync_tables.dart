@@ -69,6 +69,9 @@ class CartDrafts extends Table {
 
   /// Savat qatorlari (JSON).
   TextColumn get linesJson => text().withDefault(const Constant('[]'))();
+
+  /// Chek chegirmasi (JSON: `percent_bp` yoki `amount_tiyin`), v3.
+  TextColumn get discountJson => text().nullable()();
   DateTimeColumn get createdAt => dateTime()();
   DateTimeColumn get updatedAt => dateTime()();
 

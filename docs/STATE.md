@@ -13,7 +13,7 @@
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 - [x] 1. Transliteratsiya (`core/text/translit.dart`) + pull'da `searchKey` + `ProductCatalog` (`data/catalog/product_catalog.dart`: shtrix-kod, vaznli kod/PLU, qidiruv nom/shtrix-kod boshi/PLU, tez tugmalar) + unit va tezlik testi (3000 tovar < 50 ms)
-- [ ] 2. Savat modeli va `CartController` (`features/pos/cart/`): qo'shish (+1, vaznli — yangi qator), miqdor, o'chirish + undo, qator/chek chegirmasi, 5 ta chek (slot), `cart_drafts` ga avto-saqlash va tiklash + unit testlar
+- [x] 2. Savat modeli va `CartController` (`features/pos/cart/`): qo'shish (+1, vaznli — yangi qator), miqdor, o'chirish + undo, qator/chek chegirmasi, 5 ta chek (slot), `cart_drafts` ga avto-saqlash va tiklash + unit testlar
 - [ ] 3. Chegirma huquqi: kassir uchun maksimal foiz (lokal sozlama), oshsa — menejer/ega PIN tasdig'i; `docs/QUESTIONS.md` Q-005
 - [ ] 4. Kassa ekrani UI (desktop/planshet): qidiruv + natijalar, tez tugmalar (kategoriya tablari), savat paneli (qatorlar, stepper, JAMI, To'lash), chek tablari
 - [ ] 5. Telefon maketi: qidiruv + kamera, savat, yopishqoq JAMI + To'lash paneli, tez tugmalar varag'i
@@ -23,10 +23,10 @@
 - [ ] 9. To'liq tekshiruv, PR, CI → merge; ROADMAP, PROGRESS, STATE
 
 ## Oxirgi bajarilgan ish
-- 1-qadam: `core/text/search_key.dart` (`SearchKey.of`, h=x, tutuq belgilarsiz), `data/catalog/product_catalog.dart` (`ProductCatalog` + `productCatalogProvider`), pull `searchKey`. Testlar: `test/core/search_key_test.dart`, `test/data/product_catalog_test.dart`.
+- 2-qadam: `features/pos/cart/cart.dart` (Discount, CartLine, Cart), `cart_controller.dart` (`cartControllerProvider`, AsyncNotifier, `flush()`), baza v3: `cart_drafts.discount_json` (+ migratsiya testi). Testlar: `test/features/cart_controller_test.dart`.
 
 ## Keyingi aniq harakat
-- 2-qadam: `apps/pos/lib/features/pos/cart/cart.dart` (CartLine, Cart — sof model, hisob-kitob `Money.lineTotal`), `cart_controller.dart` (Notifier: 5 slot, `cart_drafts` avto-saqlash), `test/features/cart_controller_test.dart`.
+- 3-qadam: chegirma huquqi — `features/pos/cart/discount_policy.dart` (kassir max foiz, lokal sozlama `discount.cashier_max_bp`, standart — Q-005), menejer/ega PIN tasdiqlash oynasi (`app/session/pin_gate.dart` dan foydalanish). `docs/QUESTIONS.md` ga Q-005.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
