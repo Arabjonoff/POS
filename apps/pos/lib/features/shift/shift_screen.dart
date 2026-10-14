@@ -131,7 +131,9 @@ class _ReportPage extends StatelessWidget {
     final padding = compact ? PosSpacing.l : PosSpacing.xl;
     return SectionPage(
       title: title,
+      // X → Z: yangi hisobot tepadan boshlanadi.
       child: ListView(
+        key: ValueKey(subtitle),
         padding: EdgeInsets.fromLTRB(padding, 0, padding, padding),
         children: [
           Align(
