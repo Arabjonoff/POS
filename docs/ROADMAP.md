@@ -108,7 +108,7 @@ Spec'lar: `design-system.md`, `sync.md`, `i18n.md`.
 - **Qabul:** har komponent Widgetbook'da barcha holatlari bilan; golden testlar yorug'/qorong'i va 3 o'lchamda; kontrast WCAG AA.
 - **Bog'liq:** T-006
 
-### [ ] T-031 Tarjimalar va formatlash
+### [x] T-031 Tarjimalar va formatlash
 - **Bajarish:** ARB fayllar, til tanlash, summa formatlash (`125 000 so'm`), miqdor (`0,250 kg`), sana/vaqt (Asia/Tashkent).
 - **Qabul:** formatlash unit testlari; kodda qattiq yozilgan matn yo'q (lint qoidasi yoki test).
 - **Bog'liq:** T-006
