@@ -638,5 +638,7 @@
   "posStockLow": "Мало",
   "posOutOfStock": "Нет в наличии",
   "posOutOfStockAdded": "«{name}» нет в наличии — добавлено в чек. Проверьте остаток",
-  "posProductTileLabel": "{name}, {price}"
+  "posProductTileLabel": "{name}, {price}",
+  "posPricePerUnit": "{price}/{unit}",
+  "labelWithShortcut": "{label} · {key}"
 }

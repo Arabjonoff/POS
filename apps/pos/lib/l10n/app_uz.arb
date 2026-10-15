@@ -3022,5 +3022,29 @@
         "type": "String"
       }
     }
+  },
+  "posPricePerUnit": "{price}/{unit}",
+  "@posPricePerUnit": {
+    "description": "Narx birlik uchun: so'm/dona, 4 000 so'm/kg",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "labelWithShortcut": "{label} · {key}",
+  "@labelWithShortcut": {
+    "description": "Tooltip: amal nomi va tezkor tugma",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "key": {
+        "type": "String"
+      }
+    }
   }
 }

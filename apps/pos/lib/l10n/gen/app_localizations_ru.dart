@@ -2252,4 +2252,14 @@ class AppLocalizationsRu extends AppLocalizations {
   String posProductTileLabel(String name, String price) {
     return '$name, $price';
   }
+
+  @override
+  String posPricePerUnit(String price, String unit) {
+    return '$price/$unit';
+  }
+
+  @override
+  String labelWithShortcut(String label, String key) {
+    return '$label · $key';
+  }
 }

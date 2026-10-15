@@ -667,7 +667,9 @@ class _CashierViewState extends ConsumerState<CashierView> {
     );
   }
 
-  Widget _searchRow({required bool compact}) {
+  /// [compact] — telefon; [narrow] — tor chap panel (planshet): Qaytarish va
+  /// Smena faqat ikon (qidiruvga joy qolsin).
+  Widget _searchRow({required bool compact, bool narrow = false}) {
     final l10n = AppLocalizations.of(context);
     final printer = ref.watch(printerSettingsProvider).value;
     final canPrint = printer != null && printer.configured;
@@ -716,7 +718,23 @@ class _CashierViewState extends ConsumerState<CashierView> {
             onPressed: () => unawaited(_reprintLast()),
           ),
         ],
-        if (!compact) ...[
+        if (!compact && narrow) ...[
+          const SizedBox(width: PosSpacing.s),
+          PosIconButton(
+            key: const ValueKey('pos-refund'),
+            icon: Icons.assignment_return_outlined,
+            tooltip: l10n.labelWithShortcut(l10n.refundTitle, 'F8'),
+            variant: PosIconButtonVariant.outlined,
+            onPressed: () => unawaited(_openRefund()),
+          ),
+          const SizedBox(width: PosSpacing.s),
+          PosIconButton(
+            icon: Icons.receipt_long_outlined,
+            tooltip: l10n.shiftTitle,
+            variant: PosIconButtonVariant.outlined,
+            onPressed: () => context.go('/pos/shift'),
+          ),
+        ] else if (!compact) ...[
           const SizedBox(width: PosSpacing.s),
           PosButton(
             key: const ValueKey('pos-refund'),
@@ -835,6 +853,9 @@ class _CashierViewState extends ConsumerState<CashierView> {
     );
   }
 
+  /// Chap panel shundan tor bo'lsa — qidiruv qatoridagi tugmalar ikon.
+  static const double _wideSearchRow = 640;
+
   Widget _twoPane(CartState state, ProductCatalog catalog, SalesBlock block) {
     final p = PosPalette.of(context);
     final banner = _banner(block);
@@ -852,7 +873,12 @@ class _CashierViewState extends ConsumerState<CashierView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                _searchRow(compact: false),
+                LayoutBuilder(
+                  builder: (context, constraints) => _searchRow(
+                    compact: false,
+                    narrow: constraints.maxWidth < _wideSearchRow,
+                  ),
+                ),
                 if (notFound != null) ...[
                   const SizedBox(height: PosSpacing.m),
                   notFound,

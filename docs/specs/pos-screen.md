@@ -62,3 +62,11 @@ Tezkor tugmalar ekranda kichik yorliq sifatida ko'rinadi (desktopda).
 - **Sabab** (majburiy): Sifatsiz / Muddati o'tgan / Mijoz fikridan qaytdi / Xato urilgan va/yoki matn. **Usul**: naqd berish; savdoda nasiya qismi yetarli bo'lsa — "Qarzdan ayirish".
 - **Huquq**: kassir bo'lsa — menejer/ega PIN (`requestManagerApproval`); menejer yoki ega o'zi bo'lsa, qayta PIN so'ralmaydi (`approved_by` — o'zi).
 - **Yozish** — `refund_writer.dart`, bitta tranzaksiya: Refund + RefundItem + `StockMovement(refund, +qty)` + (qarzdan bo'lsa) `DebtEntry(refund, −summa)` + `sales.status` (`partially_refunded` / `refunded`) + outbox `refund.created`. Natija xabari: "Qaytarildi · Mijozga 4 000 so'm bering" yoki "Qaytarildi · Qarzdan … ayirildi". Smena X/Z hisobotida naqd qaytarishlar kutilgan naqddan ayiriladi (T-041).
+
+## Kassada amalga oshirilishi (T-108b — tovar kartalari, qaror 0014)
+- **Chap panel** (`widgets/product_panel.dart` → `ProductGrid`): qidiruv qatori (Qaytarish F8 va Smena — tor panelda faqat ikon), kategoriya tablari (48 dp, gorizontal suriladi, rangli nuqta), tovar kartalari panjarasi — `auto-fill, minmax(160, 1fr)`, karta 112 dp (`PosProductTile`).
+- **Tablar:** "Sevimlilar" birinchi (tez tugmali tovarlar + shu kassada so'nggi 30 kunda eng ko'p sotilgan 24 ta, `topSellersProvider`), keyin "Hammasi" va faol tovari bor kategoriyalar. "Sevimlilar" bo'sh bo'lsa — "Hammasi". Kategoriya rangi — `PosPalette.categoryAccent(tartib)` (8 ta, AA), bazada maydon yo'q.
+- **Karta:** rasm yoki bosh harf, nom (2 qator), narx qalin + `so'm/dona`, qoldiq. Kam (`min_stock` dan past) — sariq "Kam"; qoldiq ≤ 0 — kulrang karta, bosilsa baribir qo'shiladi va ogohlantiradi ("qoldiqda yo'q — chekka qo'shildi"). Do'kon qoldiq yuritmasa (hech bir tovarda musbat qoldiq yo'q) — qoldiq umuman ko'rsatilmaydi.
+- **Qidiruv** panjarani jonli filtrlaydi (nom/shtrix-kod/PLU, hamma tovardan; tab tanlanmagan), ↑/↓ — kartani tanlaydi (ko'rinishga suriladi), Enter — qo'shadi; tab bosilsa qidiruv tozalanadi.
+- **Topilmadi:** skanerlangan kod bazada yo'q — chap panelda qizil xabar "Tovar topilmadi: 4780001234567", xato ovozi, "Yangi tovar qo'shish" (tovar kartasi shu kod bilan; saqlansa — darhol chekka) va yopish (Esc). Keyingi skan xabarni olib tashlaydi.
+- Telefonda: qidiruv natijasi — ro'yxat; tovar kartalari — varaqda (`ProductGrid`).

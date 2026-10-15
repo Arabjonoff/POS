@@ -407,14 +407,17 @@ class ProductTile extends StatelessWidget {
         : (out ? l10n.posOutOfStock : fmt.qty(qty, unit));
     final price = '${fmt.moneyAmount(product.priceTiyin)} ${fmt.currency}';
     final label = [
-      l10n.posProductTileLabel(product.name, '$price/${unit.label(l10n)}'),
+      l10n.posProductTileLabel(
+        product.name,
+        l10n.posPricePerUnit(price, unit.label(l10n)),
+      ),
       ?stockText,
       if (low) l10n.posStockLow,
     ].join(', ');
     return PosProductTile(
       name: product.name,
       price: fmt.moneyAmount(product.priceTiyin),
-      unit: '${fmt.currency}/${unit.label(l10n)}',
+      unit: l10n.posPricePerUnit(fmt.currency, unit.label(l10n)),
       accent: accent == null ? null : p.categoryAccent(accent),
       image: product.imageId == null
           ? null

@@ -2232,6 +2232,16 @@ class AppLocalizationsUz extends AppLocalizations {
   String posProductTileLabel(String name, String price) {
     return '$name, $price';
   }
+
+  @override
+  String posPricePerUnit(String price, String unit) {
+    return '$price/$unit';
+  }
+
+  @override
+  String labelWithShortcut(String label, String key) {
+    return '$label · $key';
+  }
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -4450,5 +4460,15 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
   @override
   String posProductTileLabel(String name, String price) {
     return '$name, $price';
+  }
+
+  @override
+  String posPricePerUnit(String price, String unit) {
+    return '$price/$unit';
+  }
+
+  @override
+  String labelWithShortcut(String label, String key) {
+    return '$label · $key';
   }
 }

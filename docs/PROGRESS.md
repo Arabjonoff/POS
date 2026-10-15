@@ -483,3 +483,8 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - Qilindi (qaror 0014, eskiz tasdiqlangan): desktopda 64 dp ikon menyu (hover 300 ms — ustida ochiladi, Ctrl+B/tugma — doim ochiq), pastda kassir bosh harfi va qulf; obuna banneri 28 dp, sinov xabari yopiladi; holat paneli 48 dp, yozuvlar bosiladi (Sozlamalar / smena), oflayn — qizil "oflayn rejimda ishlayapti", printer sozlanmagan — sariq, smena "… dan", kassir va soat.
 - Sinov: apps/pos — yangi/yangilangan testlar (menyu hover/Ctrl+B, banner yopish, holat yozuvi 48 dp va bosish), golden'lar yangilandi (184 ta — faqat menyu/holat paneli); packages/ui +2; widgetbook scaffold golden'lari.
 - Qoldi: T-108b (tovar kartalari), T-108c (chek paneli va to'lov).
+
+## 2026-10-15 — T-108b Tovarlar paneli: kartalar, kategoriyalar, topilmadi
+- Qilindi (qaror 0014, `pos-screen.md` T-108b): `PosProductTile` (packages/ui; kategoriya chizig'i, rasm/bosh harf, narx, qoldiq, "Kam", kulrang "Qoldiq yo'q", tanlangan), kategoriya ranglari (8 ta, AA testi); `ProductGrid` — "Sevimlilar" (tez tugmalar + 30 kun top sotuv), "Hammasi", kategoriyalar; qidiruv panjarani filtrlaydi, ↑/↓ karta tanlaydi; qoldiqsiz tovar — ogohlantirish bilan qo'shiladi, do'kon qoldiq yuritmasa qoldiq ko'rsatilmaydi; topilmagan kod — qizil xabar + "Yangi tovar qo'shish" (saqlansa chekka).
+- Sinov: pos_screen +8 (tablar, top sotuv, qidiruv/tanlash, qoldiq, topilmadi, Esc), product_catalog +2 (active/categories/rang, top sotuv 30 kun), pos_theme +2 (kategoriya kontrasti); golden'lar yangilandi.
+- Qoldi: T-108c (chek paneli, F9/F10/F11, QQS).

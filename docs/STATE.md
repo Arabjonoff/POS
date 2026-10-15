@@ -16,13 +16,14 @@
 - [x] 3. ProductGrid (Sevimlilar/Hammasi/kategoriya, qidiruv natijasi, ↑/↓), StockView (kam/yo'q)
 - [x] 4. Topilmadi: qizil xabar + "Yangi tovar qo'shish" (tovar kartasi, saqlansa chekka)
 - [x] 5. Testlar (pos_screen, product_catalog)
-- [ ] 6. To'liq testlar, golden'lar, skrinshotlar, hujjat, PR
+- [x] 6. To'liq testlar, golden'lar, skrinshotlar, hujjat
+- [ ] 7. main ga rebase, PR, CI, merge
 
 ## Oxirgi bajarilgan ish
 - T-108b kodi va testlari; to'liq test to'plami ishlab turibdi.
 
 ## Keyingi aniq harakat
-- `cd apps/pos && flutter test --update-goldens test/goldens` (kassa golden'lari kartalar bilan o'zgaradi), ko'rib chiqish, skrinshotlar `docs/screenshots/T-108b/`, `pos-screen.md` ga T-108b bo'limi, PR.
+- `git rebase --onto origin/main feat/T-108a-kassa-shell` (T-108a #59 merge bo'ldi), push --force-with-lease, PR, CI, merge; keyin T-108c.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

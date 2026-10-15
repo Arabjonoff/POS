@@ -638,5 +638,7 @@
   "posStockLow": "Кам",
   "posOutOfStock": "Қолдиқ йўқ",
   "posOutOfStockAdded": "«{name}» қолдиқда йўқ — чекка қўшилди. Қолдиқни текширинг",
-  "posProductTileLabel": "{name}, {price}"
+  "posProductTileLabel": "{name}, {price}",
+  "posPricePerUnit": "{price}/{unit}",
+  "labelWithShortcut": "{label} · {key}"
 }
