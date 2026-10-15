@@ -251,9 +251,83 @@
       "resetConfirm": "Tiklash",
       "cancel": "Bekor qilish",
       "done": "Tayyor"
+    },
+    "payment": {
+      "add": "To'lov kiritish",
+      "title": "To'lov kiritish",
+      "text": "{name} — to'lov kiritilgach, obuna muddati avtomatik uzayadi.",
+      "months": "Oylar soni",
+      "amount": "Summa (so'm)",
+      "amountHint": "Tarif bo'yicha: {price} × {months}",
+      "method": "Usul",
+      "note": "Izoh",
+      "preview": "Yangi davr: {from} – {to}",
+      "save": "To'lovni saqlash",
+      "cancel": "Bekor qilish",
+      "errors": {
+        "amount": "Summani so'mda to'g'ri kiriting",
+        "months": "1 dan 36 gacha butun son",
+        "failed": "To'lovni saqlab bo'lmadi. Qayta urinib ko'ring."
+      },
+      "reverse": "Bekor qilish",
+      "reverseTitle": "To'lovni bekor qilish",
+      "reverseText": "Teskari yozuv qo'shiladi va to'langan muddat oldingi holatiga qaytadi.",
+      "reverseNote": "Sabab",
+      "reverseNoteRequired": "Sababni yozing",
+      "reverseConfirm": "To'lovni bekor qilish",
+      "onlyLatest": "Faqat oxirgi to'lovni bekor qilish mumkin",
+      "reversed": "Bekor qilingan",
+      "reversal": "Bekor qilish"
     }
   },
   "common": {
     "close": "Yopish"
+  },
+  "plans": {
+    "title": "Tariflar",
+    "subtitle": "Oylik narx va cheklovlar",
+    "add": "Yangi tarif",
+    "addTitle": "Yangi tarif",
+    "edit": "Tahrirlash",
+    "editTitle": "Tarifni tahrirlash",
+    "dialogText": "Narx so'mda, oyiga. Cheklovlar kassa ilovasida tekshiriladi.",
+    "name": "Nomi",
+    "pricePerMonth": "Narx (oyiga)",
+    "maxDevices": "Qurilmalar",
+    "maxUsers": "Xodimlar",
+    "subscribers": "Obunachilar",
+    "state": "Holat",
+    "active": "Faol",
+    "inactive": "Nofaol",
+    "activeLabel": "Faol (yangi mijozlarga taklif qilinadi)",
+    "empty": "Hali tarif yo'q",
+    "save": "Saqlash",
+    "cancel": "Bekor qilish",
+    "deactivate": "Nofaol qilish",
+    "deactivateTitle": "\"{name}\" tarifini nofaol qilish",
+    "deactivateText": "{count, plural, =0 {Yangi mijozlarga taklif qilinmaydi.} other {Yangi mijozlarga taklif qilinmaydi. # ta mavjud obuna o'zgarmaydi.}}",
+    "errors": {
+      "name": "Nomini kiriting",
+      "price": "Narxni so'mda kiriting, masalan 99 000",
+      "limits": "Cheklovlar 1 yoki undan katta butun son bo'lsin",
+      "failed": "Saqlab bo'lmadi. Qayta urinib ko'ring."
+    }
+  },
+  "payments": {
+    "title": "To'lovlar",
+    "subtitle": "Barcha mijozlarning obuna to'lovlari",
+    "from": "Sanadan",
+    "to": "Sanagacha",
+    "apply": "Ko'rsatish",
+    "reset": "Tozalash",
+    "filters": "Davr",
+    "tenant": "Mijoz",
+    "total": "Jami (netto): {amount}",
+    "empty": "Bu davrda to'lov yo'q",
+    "exportCsv": "CSV yuklab olish",
+    "pageInfo": "{from}–{to} / {total}",
+    "prev": "Oldingi",
+    "next": "Keyingi",
+    "pagination": "Sahifalar"
   }
 }
