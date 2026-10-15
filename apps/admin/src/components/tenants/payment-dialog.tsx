@@ -18,7 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { parseSom, previewPeriod, tashkentToday } from "@/lib/billing";
-import { formatDate, formatMoney, formatMoneyAmount } from "@/lib/format";
+import { formatDate, formatMoney, formatMoneyInput } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
 const METHODS: PaymentMethod[] = ["cash", "transfer", "card", "other"];
@@ -50,7 +50,7 @@ export function PaymentDialog({
   const currency = useTranslations("format")("currency");
   const router = useRouter();
   const pathname = usePathname();
-  const suggested = (m: number) => (planPriceTiyin === null ? "" : formatMoneyAmount(planPriceTiyin * m));
+  const suggested = (m: number) => (planPriceTiyin === null ? "" : formatMoneyInput(planPriceTiyin * m));
 
   const [open, setOpen] = useState(defaultOpen);
   const [months, setMonths] = useState("1");

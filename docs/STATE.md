@@ -16,14 +16,14 @@
 - [x] 2. `/plans`: jadval, yaratish/tahrirlash oynasi, nofaol qilish (tasdiqlash)
 - [x] 3. Mijoz sahifasida "To'lov kiritish" oynasi (tarif narxi × oy taklif, yangi muddat oldindan ko'rinadi; `?payment=1` ochadi), to'lovlar tabida oxirgi to'lovni bekor qilish (izoh majburiy)
 - [x] 4. `/payments`: barcha to'lovlar, sana oralig'i filtri, jami, sahifalash, CSV
-- [ ] 5. Soxta API (tariflar CRUD, to'lov — muddat hisobi, bekor qilish, ro'yxat filtrlari) + Playwright
+- [x] 5. Soxta API (tariflar CRUD, to'lov — muddat hisobi, bekor qilish, ro'yxat filtrlari) + Playwright
 - [ ] 6. Spec, skrinshotlar, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- 4: `/payments` (sana oralig'i formasi URL'da, jadval + mijozga havola, jami netto, sahifalash, CSV — `formatSomPlain`).
+- 5: soxta API (tariflar CRUD, to'lov — addMonths/max, bekor qilish faqat oxirgisi, sana filtri; refresh eski tokenni o'chirmaydi — Django kabi), e2e `billing.spec.ts` (4) — jami 21, 3 marta barqaror; Vitest 55 (+PaymentDialog 3).
 
 ## Keyingi aniq harakat
-- 5-qadam: `e2e/mock-api.mjs` — tariflar POST/PATCH/DELETE, `POST tenants/{id}/payments/` (addMonths, period_from = max(paid_until, trial_ends_at, bugun)), `POST payments/{id}/reverse/` (faqat oxirgi), payments `date_from/date_to`; `e2e/billing.spec.ts`.
+- 6-qadam: skrinshotlar `docs/screenshots/T-083/` (tariflar, to'lov oynasi, to'lovlar), spec, PROGRESS, ROADMAP, PR.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

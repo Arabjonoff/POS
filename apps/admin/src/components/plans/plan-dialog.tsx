@@ -18,7 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { parseSom } from "@/lib/billing";
-import { formatMoneyAmount } from "@/lib/format";
+import { formatMoneyInput } from "@/lib/format";
 
 export type PlanValues = {
   id: string | null;
@@ -52,7 +52,7 @@ export function PlanDialog({ plan }: { plan?: PlanValues }) {
 
   function start() {
     setName(plan?.name ?? "");
-    setPrice(plan ? formatMoneyAmount(plan.priceTiyin) : "");
+    setPrice(plan ? formatMoneyInput(plan.priceTiyin) : "");
     setDevices(String(plan?.maxDevices ?? 1));
     setUsers(String(plan?.maxUsers ?? 3));
     setActive(plan?.isActive ?? true);

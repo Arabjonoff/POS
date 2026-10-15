@@ -43,3 +43,8 @@ export function formatSomPlain(tiyin: number): string {
   const text = `${Math.floor(abs / 100)}${cents ? `,${String(cents).padStart(2, "0")}` : ""}`;
   return tiyin < 0 ? `-${text}` : text;
 }
+
+/** Kiritish maydoni uchun: oddiy probel bilan (`99 000`) — tahrirlash qulay, `parseSom` o'qiydi. */
+export function formatMoneyInput(tiyin: number): string {
+  return formatMoneyAmount(tiyin).replace(/ /g, " ");
+}
