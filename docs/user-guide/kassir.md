@@ -40,7 +40,7 @@ Chek raqamini kiriting yoki chekdagi kodni skanerlang → qaytariladigan tovarla
 
 ### Cheklar tarixi (F7 yoki Ctrl+7)
 Menyuda "**Cheklar**" bo'limida shu kassada yopilgan hamma cheklar bor: bugungi, kechagi yoki tanlangan kun. Chek raqami, mijoz ismi yoki tovar nomi bilan qidiring, yoki chekdagi shtrix-kodni skanerlang — chek darhol ochiladi.
-Chekni tanlang → printerdagidek ko'rinadi → "**Qayta chop etish**" (**Ctrl+P**) bosilsa, "NUSXA" belgili chek chiqadi. Shu yerdan "**Qaytarish**" ham mumkin.
+Boshqa kassada sotilgan chek ham topiladi (internet bo'lsa — chek raqamini skanerlang yoki yozib Enter bosing). Chekni tanlang → printerdagidek ko'rinadi → "**Qayta chop etish**" (**Ctrl+P**) bosilsa, "NUSXA" belgili chek chiqadi. Shu yerdan "**Qaytarish**" ham mumkin.
 
 ![Cheklar](../screenshots/T-109/detail_tablet_light.png)
 

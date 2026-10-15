@@ -12,7 +12,8 @@ Maydalash uchun pul kiritish yoki inkassatsiya — summa va sabab bilan. Smena h
 
 ## Cheklar tarixi (Ctrl+7)
 Har bir yopilgan chek: vaqt, kassir, mijoz, to'lov turi, summa, qaytarilganmi. Kun, to'lov turi yoki qidiruv (chek raqami, mijoz, tovar)
-bo'yicha topiladi; chekni qayta chop etish (NUSXA) va qaytarish shu yerdan. Faqat shu kassaning cheklari ko'rinadi.
+bo'yicha topiladi; chekni qayta chop etish (NUSXA) va qaytarish shu yerdan. Ro'yxatda shu kassaning cheklari; boshqa kassa chekini
+raqami bilan topish mumkin (internet kerak).
 
 ## Hisobotlar (Ctrl+5) — ega va menejer
 Davr: **Bugun, Kecha, 7 kun, Shu oy, O'tgan oy**.
