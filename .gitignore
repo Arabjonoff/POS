@@ -49,3 +49,6 @@ coverage/
 
 # Production zaxiralari (T-092)
 backups/
+
+# Ilova o'rnatuvchilari (T-093)
+dist/

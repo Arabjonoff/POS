@@ -3134,6 +3134,48 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Hozir tasdiqlab bo\'lmaydi: {reason}'**
   String salesBlockedAction(String reason);
+
+  /// Holat qatori: yangi versiya bor
+  ///
+  /// In uz, this message translates to:
+  /// **'Yangi versiya {version}'**
+  String statusUpdate(String version);
+
+  /// Sozlamalar bo'limi
+  ///
+  /// In uz, this message translates to:
+  /// **'Ilova haqida'**
+  String get settingsAbout;
+
+  /// O'rnatilgan versiya
+  ///
+  /// In uz, this message translates to:
+  /// **'Versiya: {version}'**
+  String settingsVersion(String version);
+
+  /// Yangi versiya
+  ///
+  /// In uz, this message translates to:
+  /// **'Yangi versiya mavjud: {version}'**
+  String settingsUpdateAvailable(String version);
+
+  /// Yuklab olish havolasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Yuklab olish: {url}'**
+  String settingsUpdateDownload(String url);
+
+  /// Havola yo'q
+  ///
+  /// In uz, this message translates to:
+  /// **'O\'rnatish uchun administrator bilan bog\'laning'**
+  String get settingsUpdateAskAdmin;
+
+  /// Yangilash kerak emas
+  ///
+  /// In uz, this message translates to:
+  /// **'Eng so\'nggi versiya o\'rnatilgan'**
+  String get settingsUpToDate;
 }
 
 class _AppLocalizationsDelegate

@@ -282,7 +282,7 @@ Spec'lar: `admin-dashboard.md`, `subscription-billing.md`.
 - **Qabul:** toza serverda yo'riqnoma bo'yicha 30 daqiqada ishga tushadi; backup'dan tiklash sinovdan o'tgan.
 - **Bog'liq:** T-020
 
-### [ ] T-093 Ilovani chiqarish
+### [x] T-093 Ilovani chiqarish
 - **Bajarish:** Windows o'rnatuvchi (MSIX yoki Inno Setup), Android APK/AAB, versiyalash, ilova ichida yangi versiya haqida xabar, `docs/RELEASE.md`.
 - **Qabul:** toza Windows kompyuterga o'rnatiladi va ishga tushadi.
 - **Bog'liq:** T-090

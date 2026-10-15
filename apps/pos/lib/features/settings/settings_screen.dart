@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pos_app/app/scanner/scanner_settings.dart';
 import 'package:pos_app/app/session/auto_lock.dart';
 import 'package:pos_app/app/session/session.dart';
+import 'package:pos_app/app/update/app_update.dart';
 import 'package:pos_app/features/common/section_page.dart';
 import 'package:pos_app/features/printing/printer_settings_panel.dart';
 import 'package:pos_app/features/settings/language_picker.dart';
@@ -46,6 +47,8 @@ class SettingsScreen extends ConsumerWidget {
             subtitle: l10n.settingsPrinterHelper,
             child: const PrinterSettingsPanel(),
           ),
+          const SizedBox(height: PosSpacing.l),
+          _SettingsCard(title: l10n.settingsAbout, child: const _AboutPanel()),
           const SizedBox(height: PosSpacing.l),
           Align(
             alignment: Alignment.centerLeft,
@@ -200,6 +203,53 @@ class _ScannerSettingsPicker extends ConsumerWidget {
             onTap: () => unawaited(controller.setInterval(ms)),
           ),
       ],
+    );
+  }
+}
+
+/// Versiya va yangi versiya haqida (T-093). Havola nusxa olish uchun tanlanadi.
+class _AboutPanel extends ConsumerWidget {
+  const _AboutPanel();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final p = PosPalette.of(context);
+    final update = ref.watch(appUpdateProvider).value;
+    return Padding(
+      key: const ValueKey('settings-about'),
+      padding: const EdgeInsets.all(PosSpacing.s),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            l10n.settingsVersion(ref.watch(installedVersionProvider)),
+            style: PosTypography.body.copyWith(color: p.text),
+          ),
+          const SizedBox(height: PosSpacing.xs),
+          if (update == null)
+            Text(
+              l10n.settingsUpToDate,
+              style: PosTypography.small.copyWith(color: p.textSecondary),
+            )
+          else ...[
+            Text(
+              l10n.settingsUpdateAvailable(update.latestVersion),
+              style: PosTypography.bodyStrong.copyWith(color: p.primaryText),
+            ),
+            if (update.downloadUrl.isEmpty)
+              Text(
+                l10n.settingsUpdateAskAdmin,
+                style: PosTypography.small.copyWith(color: p.textSecondary),
+              )
+            else
+              SelectableText(
+                l10n.settingsUpdateDownload(update.downloadUrl),
+                style: PosTypography.small.copyWith(color: p.textSecondary),
+              ),
+          ],
+        ],
+      ),
     );
   }
 }

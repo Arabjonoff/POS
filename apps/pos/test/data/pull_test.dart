@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pos_api_client/pos_api_client.dart';
+import 'package:pos_app/app/update/app_update.dart';
 import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/data/remote/api.dart';
 import 'package:pos_app/data/sync/pull.dart';
@@ -236,6 +237,26 @@ void main() {
     expect(await db.select(db.productBarcodes).get(), isEmpty);
     expect(await db.select(db.staffUsers).get(), isEmpty);
   });
+
+  test(
+    'remembers the latest app version; clears it when not announced',
+    () async {
+      await apply({
+        ...page(const []),
+        'app': {
+          'latest_version': '1.1.0',
+          'download_url': 'https://x.uz/pos-setup-1.1.0.exe',
+        },
+      });
+      expect(
+        await db.readSetting(appReleaseSettingKey),
+        encodeRelease('1.1.0', 'https://x.uz/pos-setup-1.1.0.exe'),
+      );
+      // Eski server (`app` yo'q) yoki e'lon olib tashlandi.
+      await apply(page(const []));
+      expect(await db.readSetting(appReleaseSettingKey), '');
+    },
+  );
 
   test('unknown entities are ignored (new server, old app)', () async {
     await apply(

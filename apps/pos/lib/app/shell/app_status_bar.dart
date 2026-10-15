@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pos_app/app/status/app_status.dart';
 import 'package:pos_app/app/sync/sales_gate.dart';
+import 'package:pos_app/app/update/app_update.dart';
 import 'package:pos_app/core/format/app_format.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
 import 'package:pos_ui/pos_ui.dart';
@@ -45,6 +46,7 @@ class AppStatusBar extends ConsumerWidget {
     final block = ref.watch(salesBlockProvider);
     final rejected = ref.watch(rejectedEventsProvider).value ?? 0;
     final skew = ref.watch(clockSkewProvider);
+    final update = ref.watch(appUpdateProvider).value;
 
     final items = [
       // Eng muhimi — birinchi: savdo to'xtagan bo'lsa, sababi.
@@ -102,6 +104,13 @@ class AppStatusBar extends ConsumerWidget {
           icon: Icons.schedule,
           label: l10n.statusShiftClosed,
           tone: PosTone.warning,
+        ),
+      // Oxirida: muhim emas, lekin ko'rinib tursin (Sozlamalar → Ilova haqida).
+      if (update != null)
+        PosStatusItem(
+          icon: Icons.system_update_alt,
+          label: l10n.statusUpdate(update.latestVersion),
+          tone: PosTone.primary,
         ),
     ];
 

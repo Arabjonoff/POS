@@ -505,5 +505,12 @@
   "salesHelpReadonly": "Просмотр, отчёты и синхронизация работают. Чтобы возобновить продажи, оплатите подписку.",
   "salesHelpBlocked": "Просмотр, отчёты и синхронизация работают.",
   "salesHelpOffline": "Подключитесь к интернету — после синхронизации продажи продолжатся. Все данные сохранены.",
-  "salesBlockedAction": "Сейчас нельзя провести: {reason}"
+  "salesBlockedAction": "Сейчас нельзя провести: {reason}",
+  "statusUpdate": "Новая версия {version}",
+  "settingsAbout": "О приложении",
+  "settingsVersion": "Версия: {version}",
+  "settingsUpdateAvailable": "Доступна новая версия: {version}",
+  "settingsUpdateDownload": "Скачать: {url}",
+  "settingsUpdateAskAdmin": "Для установки свяжитесь с администратором",
+  "settingsUpToDate": "Установлена последняя версия"
 }

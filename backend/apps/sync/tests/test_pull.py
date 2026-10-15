@@ -200,3 +200,18 @@ def test_pull_updates_device(kassa):
     _pull(client)
     device.refresh_from_db()
     assert device.last_sync_at is not None
+
+
+def test_pull_announces_the_latest_app_for_the_device_platform(kassa, settings):
+    """T-093: kassa yangi versiya haqida pull'dan biladi; sozlanmagan — `null`."""
+    _, client = kassa
+    assert _pull(client)["app"] is None
+
+    settings.APP_RELEASES = {
+        "windows": {"latest_version": "1.1.0", "download_url": "https://x.uz/pos-setup-1.1.0.exe"},
+        "android": {"latest_version": "1.2.0", "download_url": ""},
+    }
+    assert _pull(client)["app"] == {
+        "latest_version": "1.1.0",
+        "download_url": "https://x.uz/pos-setup-1.1.0.exe",
+    }

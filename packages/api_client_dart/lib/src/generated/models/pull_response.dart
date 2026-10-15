@@ -4,6 +4,7 @@
 
 import 'package:json_annotation/json_annotation.dart';
 
+import 'app_release.dart';
 import 'change.dart';
 import 'subscription_snapshot.dart';
 
@@ -17,6 +18,7 @@ class PullResponse {
     required this.hasMore,
     required this.subscription,
     required this.serverTime,
+    this.app,
   });
   
   factory PullResponse.fromJson(Map<String, Object?> json) => _$PullResponseFromJson(json);
@@ -27,6 +29,7 @@ class PullResponse {
   @JsonKey(name: 'has_more')
   final bool hasMore;
   final SubscriptionSnapshot subscription;
+  final AppRelease? app;
   @JsonKey(name: 'server_time')
   final DateTime serverTime;
 

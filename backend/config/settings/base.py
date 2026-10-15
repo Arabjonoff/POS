@@ -149,3 +149,14 @@ LOGGING = {
     "handlers": {"console": {"class": "logging.StreamHandler"}},
     "root": {"handlers": ["console"], "level": "INFO"},
 }
+
+# Kassa ilovasining oxirgi versiyasi (T-093): pull javobida `app` — kassa "yangi versiya
+# mavjud" deb ko'rsatadi. Platforma bo'yicha: APP_LATEST_WINDOWS=1.1.0,
+# APP_DOWNLOAD_WINDOWS=https://.../pos-setup-1.1.0.exe (bo'sh — xabar yo'q).
+APP_RELEASES = {
+    platform: {
+        "latest_version": env_str(f"APP_LATEST_{platform.upper()}"),
+        "download_url": env_str(f"APP_DOWNLOAD_{platform.upper()}"),
+    }
+    for platform in ("windows", "android", "ios")
+}

@@ -7,6 +7,7 @@ export 'clients/auth_client.dart';
 export 'clients/devices_client.dart';
 export 'clients/sync_client.dart';
 // Data classes
+export 'models/app_release.dart';
 export 'models/apply_request_request.dart';
 export 'models/apply_response.dart';
 export 'models/cashier_row.dart';

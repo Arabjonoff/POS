@@ -1794,4 +1794,34 @@ class AppLocalizationsRu extends AppLocalizations {
   String salesBlockedAction(String reason) {
     return 'Сейчас нельзя провести: $reason';
   }
+
+  @override
+  String statusUpdate(String version) {
+    return 'Новая версия $version';
+  }
+
+  @override
+  String get settingsAbout => 'О приложении';
+
+  @override
+  String settingsVersion(String version) {
+    return 'Версия: $version';
+  }
+
+  @override
+  String settingsUpdateAvailable(String version) {
+    return 'Доступна новая версия: $version';
+  }
+
+  @override
+  String settingsUpdateDownload(String url) {
+    return 'Скачать: $url';
+  }
+
+  @override
+  String get settingsUpdateAskAdmin =>
+      'Для установки свяжитесь с администратором';
+
+  @override
+  String get settingsUpToDate => 'Установлена последняя версия';
 }

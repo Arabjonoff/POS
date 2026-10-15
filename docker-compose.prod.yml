@@ -20,6 +20,11 @@ x-backend-env: &backend-env
   SENTRY_DSN: ${SENTRY_DSN:-}
   SENTRY_ENVIRONMENT: ${SENTRY_ENVIRONMENT:-production}
   APP_VERSION: ${APP_VERSION:-}
+  # Kassa ilovasining oxirgi versiyasi (T-093, docs/RELEASE.md).
+  APP_LATEST_WINDOWS: ${APP_LATEST_WINDOWS:-}
+  APP_DOWNLOAD_WINDOWS: ${APP_DOWNLOAD_WINDOWS:-}
+  APP_LATEST_ANDROID: ${APP_LATEST_ANDROID:-}
+  APP_DOWNLOAD_ANDROID: ${APP_DOWNLOAD_ANDROID:-}
 
 services:
   postgres:

@@ -11,6 +11,7 @@ from apps.catalog.models import Product
 from apps.catalog.serializers import PriceHistorySerializer
 from apps.devices.authentication import DeviceTokenAuthentication
 from apps.devices.permissions import IsDevice
+from apps.devices.releases import app_release
 from apps.inventory.models import StockMovement
 
 from . import services
@@ -56,7 +57,11 @@ class SyncPullView(APIView):
         device.last_sync_at = now
         device.last_seen_at = now
         device.save(update_fields=["last_sync_at", "last_seen_at"])
-        data |= {"subscription": subscription_snapshot(device.tenant), "server_time": now}
+        data |= {
+            "subscription": subscription_snapshot(device.tenant),
+            "app": app_release(device.platform),
+            "server_time": now,
+        }
         return Response(PullResponseSerializer(data).data)
 
 
