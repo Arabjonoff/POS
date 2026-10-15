@@ -285,6 +285,10 @@ class _ProductCardState extends ConsumerState<ProductCard> {
   String _message(AppLocalizations l10n, ProductProblem p) => switch (p.code) {
     ProductProblemCode.required => l10n.fieldRequired,
     ProductProblemCode.notPositive => l10n.productErrPrice,
+    ProductProblemCode.tooLong => l10n.productErrNameTooLong(maxNameLength),
+    ProductProblemCode.tooManyBarcodes => l10n.productErrTooManyBarcodes(
+      maxBarcodes,
+    ),
     ProductProblemCode.barcodeFormat => l10n.productErrBarcodeFormat(
       p.barcode ?? '',
     ),

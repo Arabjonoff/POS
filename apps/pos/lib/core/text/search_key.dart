@@ -49,7 +49,8 @@ abstract final class SearchKey {
     'я': 'ya',
   };
 
-  static const String _apostrophes = "'`ʻʼ‘’";
+  // `´` (U+00B4) va `‛` ham apostrof sifatida yoziladi ("o´rik").
+  static const String _apostrophes = "'`ʻʼ‘’´‛";
 
   static String of(String text) {
     final buffer = StringBuffer();

@@ -1104,6 +1104,16 @@ class AppLocalizationsUz extends AppLocalizations {
   }
 
   @override
+  String productErrNameTooLong(int max) {
+    return 'Nom $max belgidan oshmasin';
+  }
+
+  @override
+  String productErrTooManyBarcodes(int max) {
+    return 'Ko\'pi bilan $max ta shtrix-kod';
+  }
+
+  @override
   String get productErrPrice => 'Narx 0 dan katta bo\'lishi kerak';
 
   @override
@@ -2898,6 +2908,16 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
   @override
   String productStockNow(String qty) {
     return 'Қолдиқ: $qty';
+  }
+
+  @override
+  String productErrNameTooLong(int max) {
+    return 'Ном $max белгидан ошмасин';
+  }
+
+  @override
+  String productErrTooManyBarcodes(int max) {
+    return 'Кўпи билан $max та штрих-код';
   }
 
   @override

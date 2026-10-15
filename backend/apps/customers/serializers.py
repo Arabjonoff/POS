@@ -5,6 +5,7 @@ from apps.accounts.models import Role
 from apps.core.fields import StrictIntegerField
 from apps.core.phone import normalize_phone
 from apps.core.serializers import ClientIdMixin
+from apps.core.text import clean_line
 
 from .models import Customer, DebtEntry, PaymentMethod
 from .services import customer_balance
@@ -34,6 +35,12 @@ class CustomerSerializer(ClientIdMixin, serializers.ModelSerializer):
     def get_balance_tiyin(self, customer) -> int:
         balance = getattr(customer, "balance_tiyin", None)
         return balance if balance is not None else customer_balance(customer)
+
+    def validate_full_name(self, value):
+        value = clean_line(value)
+        if not value:
+            raise serializers.ValidationError("This field may not be blank.", code="blank")
+        return value
 
     def validate_phone(self, value):
         # Kassa raqamni yozilganicha yuboradi ("90 123 45 67"): rad etilsa mijoz va

@@ -1448,6 +1448,16 @@
       }
     }
   },
+  "productErrNameTooLong": "Nom {max} belgidan oshmasin",
+  "@productErrNameTooLong": {
+    "description": "Xato",
+    "placeholders": {"max": {"type": "int"}}
+  },
+  "productErrTooManyBarcodes": "Ko'pi bilan {max} ta shtrix-kod",
+  "@productErrTooManyBarcodes": {
+    "description": "Xato",
+    "placeholders": {"max": {"type": "int"}}
+  },
   "productErrPrice": "Narx 0 dan katta bo'lishi kerak",
   "@productErrPrice": {
     "description": "Xato"

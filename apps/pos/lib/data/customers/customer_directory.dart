@@ -1,6 +1,7 @@
 import 'package:clock/clock.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pos_app/core/text/clean_text.dart';
 import 'package:pos_app/core/text/phone.dart';
 import 'package:pos_app/core/text/search_key.dart';
 import 'package:pos_app/data/db/app_database.dart';
@@ -183,7 +184,7 @@ ORDER BY c.full_name
           .insert(
             CustomersCompanion.insert(
               id: id,
-              fullName: name.trim(),
+              fullName: cleanLine(name),
               phone: Value(normalized),
               updatedAt: Value(now),
             ),
@@ -194,7 +195,7 @@ ORDER BY c.full_name
         createdAt: now,
         payload: {
           'id': id,
-          'full_name': name.trim(),
+          'full_name': cleanLine(name),
           'phone': normalized,
           'note': '',
           'by': createdBy,
@@ -203,7 +204,7 @@ ORDER BY c.full_name
     });
     return CustomerEntry(
       id: id,
-      name: name.trim(),
+      name: cleanLine(name),
       phone: normalized,
       balanceTiyin: 0,
     );
@@ -335,7 +336,7 @@ ORDER BY c.full_name
     bool changeLimit = false,
     int? limitTiyin,
   }) async {
-    if (name.trim().isEmpty) throw ArgumentError.value(name, 'name');
+    if (cleanLine(name).isEmpty) throw ArgumentError.value(name, 'name');
     final normalized = normalizePhone(phone);
     if (normalized == null) throw ArgumentError.value(phone, 'phone');
     if (limitTiyin != null && limitTiyin < 0) {
@@ -345,7 +346,7 @@ ORDER BY c.full_name
     await _db.transaction(() async {
       await (_db.update(_db.customers)..where((c) => c.id.equals(id))).write(
         CustomersCompanion(
-          fullName: Value(name.trim()),
+          fullName: Value(cleanLine(name)),
           phone: Value(normalized),
           note: Value(note.trim()),
           debtLimitTiyin: changeLimit
@@ -360,7 +361,7 @@ ORDER BY c.full_name
         createdAt: now,
         payload: {
           'id': id,
-          'full_name': name.trim(),
+          'full_name': cleanLine(name),
           'phone': normalized,
           'note': note.trim(),
           if (changeLimit) 'debt_limit_tiyin': limitTiyin,
