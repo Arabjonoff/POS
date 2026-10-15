@@ -325,3 +325,13 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-081 (squash merge)
 - Qoldi / keyingi qadam: T-082 Admin: mijozlar (tenantlar).
 - Muammo yoki qaror: `recharts` qo'shildi (spec'dagi grafik kutubxonasi). npm (Windows) lock fayldan `@emnapi/*` optional yozuvlarini olib tashlagan edi — CI `npm ci` yiqildi; yozuvlar main'dagi lock'dan qaytarildi. Planshetda o'ng ustun tor bo'lgani uchun 3 ustunli joylashuv faqat ≥ 1280 px'da.
+
+## 2026-10-15 — T-082 Admin: mijozlar (tenantlar)
+- Qilindi:
+  - `/tenants`: qidiruv + holat filtri (URL), jadval, sahifalash, CSV; `/tenants/new` 3 qadamli usta va kirish ma'lumotlari kartasi; `/tenants/{id}` tablar (umumiy, to'lovlar, qurilmalar, foydalanuvchilar, faollik), bloklash/blokdan chiqarish, ega/menejer parolini tiklash.
+  - Server Actions (`onboardTenant`, `blockTenant`, `unblockTenant`, `resetUserPassword`), `platform.ts` ga tenant funksiyalari; shadcn dialog/table/tabs/select/label/textarea (dialog yopish matni tarjimada).
+  - Backend: `GET /platform/payments/` OpenAPI sxemasi ikki marta "paginated" edi — `PaymentPagination` (sxemada `total_tiyin`), TS klient qayta generatsiya.
+- Testlar: Vitest 38 (+6: usta 4, csv, formatDateTime), Playwright 17 (+6: qidiruv/filtr, usta → ro'yxat → ega API orqali kiradi, band telefon, bloklash/blokdan chiqarish, tablar, parol tiklash). Soxta API — xotiradagi tenantlar. Skrinshotlar: `docs/screenshots/T-082/`.
+- PR: T-082 (squash merge)
+- Qoldi / keyingi qadam: T-083 tariflar, obunani uzaytirish (to'lov kiritish), to'lovlar ro'yxati. Ro'yxatda ustun bo'yicha saralash — API'da `ordering` qo'shilganda.
+- Muammo yoki qaror: e2e topgan xato — qidiruv debounce eski URL parametrlari bilan holat filtrini bekor qilardi; endi navigatsiya joriy `window.location.search` dan.

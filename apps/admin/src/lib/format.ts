@@ -25,3 +25,13 @@ export function formatDate(isoDate: string): string {
   const [year, month, day] = isoDate.slice(0, 10).split("-");
   return `${day}.${month}.${year}`;
 }
+
+/** Platforma vaqt zonasi — Toshkent (UTC+5, yozgi vaqt yo'q; kassadagi qaror 0007 kabi). */
+const TASHKENT_OFFSET_MS = 5 * 60 * 60 * 1000;
+
+/** ISO vaqt → `15.10.2026 14:30` (Toshkent vaqti). */
+export function formatDateTime(iso: string): string {
+  const t = new Date(new Date(iso).getTime() + TASHKENT_OFFSET_MS);
+  const two = (n: number) => String(n).padStart(2, "0");
+  return `${two(t.getUTCDate())}.${two(t.getUTCMonth() + 1)}.${t.getUTCFullYear()} ${two(t.getUTCHours())}:${two(t.getUTCMinutes())}`;
+}

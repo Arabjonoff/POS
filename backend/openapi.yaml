@@ -997,7 +997,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedPaymentsListList'
+                $ref: '#/components/schemas/PaginatedPaymentList'
           description: ''
   /api/v1/platform/payments/{id}/:
     get:
@@ -4248,6 +4248,7 @@ components:
       required:
       - count
       - results
+      - total_tiyin
       properties:
         count:
           type: integer
@@ -4266,29 +4267,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Payment'
-    PaginatedPaymentsListList:
-      type: object
-      required:
-      - count
-      - results
-      properties:
-        count:
+        total_tiyin:
           type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=4
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=2
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/PaymentsList'
+          format: int64
     PaginatedPlanList:
       type: object
       required:
@@ -5033,32 +5014,6 @@ components:
       - card
       - cash
       - debt
-    PaymentsList:
-      type: object
-      description: Sahifa + filtrlangan jami (schema uchun).
-      properties:
-        count:
-          type: integer
-        next:
-          type: string
-          format: uri
-          nullable: true
-        previous:
-          type: string
-          format: uri
-          nullable: true
-        total_tiyin:
-          type: integer
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Payment'
-      required:
-      - count
-      - next
-      - previous
-      - results
-      - total_tiyin
     Period:
       type: object
       properties:

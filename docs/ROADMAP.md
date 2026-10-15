@@ -243,7 +243,7 @@ Spec'lar: `admin-dashboard.md`, `subscription-billing.md`.
 - **Qabul:** Playwright + API mock testlari.
 - **Bog'liq:** T-080
 
-### [ ] T-082 Admin: mijozlar (tenantlar)
+### [x] T-082 Admin: mijozlar (tenantlar)
 - **Bajarish:** ro'yxat (qidiruv, holat filtri), yangi mijoz yaratish ustasi (do'kon, ega telefoni, vaqtinchalik parol, tarif, sinov muddati), mijoz sahifasi (obuna, to'lovlar, qurilmalar, foydalanuvchilar, oxirgi faollik), bloklash/blokdan chiqarish.
 - **Qabul:** Playwright: yangi mijoz yaratish → ro'yxatda ko'rinadi → ega kassa ilovasiga kira oladi (API darajasida tekshiruv).
 - **Bog'liq:** T-080

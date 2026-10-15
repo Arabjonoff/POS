@@ -311,13 +311,3 @@ class StatsSerializer(serializers.Serializer):
     expiring_soon = ExpiringSerializer(many=True)
     stale_devices = serializers.IntegerField()
     monthly_revenue = MonthRevenueSerializer(many=True)
-
-
-class PaymentsListSerializer(serializers.Serializer):
-    """Sahifa + filtrlangan jami (schema uchun)."""
-
-    count = serializers.IntegerField()
-    next = serializers.URLField(allow_null=True)
-    previous = serializers.URLField(allow_null=True)
-    total_tiyin = serializers.IntegerField()
-    results = PaymentSerializer(many=True)
