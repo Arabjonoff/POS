@@ -164,7 +164,9 @@ void main() {
   });
 
   group('PosScanFeedback', () {
-    testWidgets('flashes the edge only and fades within 200 ms', (tester) async {
+    testWidgets('flashes the edge only and fades within 200 ms', (
+      tester,
+    ) async {
       final controller = PosScanFeedbackController();
       addTearDown(controller.dispose);
       await pumpPos(

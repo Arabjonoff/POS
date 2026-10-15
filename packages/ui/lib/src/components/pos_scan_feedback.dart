@@ -44,7 +44,7 @@ class PosScanFeedback extends StatefulWidget {
 
 class _PosScanFeedbackState extends State<PosScanFeedback>
     with SingleTickerProviderStateMixin {
-    // initState da yaratiladi: dispose paytida (chaqnash bo'lmagan bo'lsa)
+  // initState da yaratiladi: dispose paytida (chaqnash bo'lmagan bo'lsa)
   // dangasa yaratish faol bo'lmagan elementdan ticker so'raydi.
   late final AnimationController _animation;
   int _seen = 0;
