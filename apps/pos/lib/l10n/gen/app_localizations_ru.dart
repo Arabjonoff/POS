@@ -154,13 +154,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get statusPrinterUnknown => 'Принтер не настроен';
 
   @override
-  String get sectionComingSoonTitle => 'Раздел в разработке';
-
-  @override
-  String get sectionComingSoonMessage =>
-      'Раздел появится в следующем обновлении';
-
-  @override
   String get setupTitle => 'Подключение кассы';
 
   @override
@@ -1599,4 +1592,140 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get customerBack => 'Клиенты';
+
+  @override
+  String get reportsToday => 'Сегодня';
+
+  @override
+  String get reportsYesterday => 'Вчера';
+
+  @override
+  String get reportsLast7Days => '7 дней';
+
+  @override
+  String get reportsThisMonth => 'Этот месяц';
+
+  @override
+  String get reportsLastMonth => 'Прошлый месяц';
+
+  @override
+  String reportsPeriodRange(String from, String to) {
+    return '$from – $to';
+  }
+
+  @override
+  String get reportsRevenue => 'Выручка';
+
+  @override
+  String get reportsProfit => 'Прибыль';
+
+  @override
+  String get reportsChecks => 'Чеки';
+
+  @override
+  String get reportsAverageCheck => 'Средний чек';
+
+  @override
+  String reportsChangeUp(String percent) {
+    return '↑ $percent';
+  }
+
+  @override
+  String reportsChangeDown(String percent) {
+    return '↓ $percent';
+  }
+
+  @override
+  String reportsPrevious(String amount) {
+    return 'Ранее: $amount';
+  }
+
+  @override
+  String get reportsByHour => 'По часам';
+
+  @override
+  String get reportsByDay => 'По дням';
+
+  @override
+  String get reportsPayments => 'Способы оплаты';
+
+  @override
+  String get reportsTopProducts => 'Топ товаров';
+
+  @override
+  String get reportsCashiers => 'Кассиры';
+
+  @override
+  String reportsCashierRefunds(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count возвратов',
+      few: '$count возврата',
+      one: '$count возврат',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reportsDebts => 'Долги';
+
+  @override
+  String reportsDebtors(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count должников',
+      few: '$count должника',
+      one: '$count должник',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reportsStock => 'Склад';
+
+  @override
+  String get reportsStockValue => 'Стоимость склада (себестоимость)';
+
+  @override
+  String get reportsLowStock => 'Заканчиваются';
+
+  @override
+  String get reportsNegativeStock => 'Отрицательный остаток';
+
+  @override
+  String reportsStockLine(String qty, String min) {
+    return '$qty · минимум $min';
+  }
+
+  @override
+  String get reportsNothing => 'Нет';
+
+  @override
+  String get reportsNoSales => 'За этот период продаж нет';
+
+  @override
+  String get reportsLocalOnly => 'Нет интернета — только данные этой кассы';
+
+  @override
+  String get reportsNoAccessTitle => 'Отчёты — для владельца и менеджера';
+
+  @override
+  String get reportsNoAccessMessage =>
+      'Для просмотра менеджер должен ввести PIN';
+
+  @override
+  String get reportsUnlock => 'PIN менеджера';
+
+  @override
+  String get reportsUnlockReason => 'Просмотр отчётов';
+
+  @override
+  String get reportsLoadFailed => 'Не удалось открыть отчёт';
+
+  @override
+  String reportsCashierLine(String checks, String refunds) {
+    return '$checks · $refunds';
+  }
 }

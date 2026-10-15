@@ -12,7 +12,7 @@ const Size phone = Size(390, 844);
 const Size tablet = Size(1024, 768);
 
 const String emptyCart = 'Tovarni skanerlang yoki qidiring';
-const String comingSoon = "Bo'lim tayyorlanmoqda";
+const String reportsNoAccess = 'Hisobotlar ega va menejer uchun';
 
 Future<void> ctrl(WidgetTester tester, LogicalKeyboardKey key) async {
   await tester.sendKeyDownEvent(LogicalKeyboardKey.controlLeft);
@@ -66,7 +66,7 @@ void main() {
       expect(find.text("Hali mijoz yo'q"), findsOneWidget);
 
       await ctrl(tester, LogicalKeyboardKey.digit5);
-      expect(find.text(comingSoon), findsOneWidget);
+      expect(find.text(reportsNoAccess), findsOneWidget);
 
       await ctrl(tester, LogicalKeyboardKey.digit6);
       expect(find.text('Til'), findsOneWidget);

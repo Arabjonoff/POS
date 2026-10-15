@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show FutureProviderFamily;
 import 'package:pos_api_client/pos_api_client.dart' as api;
+import 'package:pos_app/core/format/unit_code.dart';
 import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/data/remote/api.dart';
 import 'package:pos_app/data/reports/local_reports.dart';
@@ -133,3 +134,19 @@ StockRow _stock(api.StockRow s) => StockRow(
   qtyMilli: s.qtyMilli,
   minStockMilli: s.minStockMilli,
 );
+
+/// Tovar birligi (miqdorni `3 dona` / `1,250 kg` ko'rinishida chiqarish
+/// uchun) — lokal katalogdan.
+final FutureProvider<Map<String, UnitCode>> productUnitsProvider =
+    FutureProvider.autoDispose<Map<String, UnitCode>>((
+      ref,
+    ) async {
+      final db = ref.read(appDatabaseProvider);
+      final units = {
+        for (final u in await db.select(db.units).get()) u.id: u.code,
+      };
+      return {
+        for (final p in await db.select(db.products).get())
+          p.id: UnitCode.fromCode(units[p.unitId]),
+      };
+    });

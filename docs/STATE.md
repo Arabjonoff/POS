@@ -19,10 +19,10 @@
 - [ ] 5. Widget testlari + golden + skrinshotlar; spec, PR, merge
 
 ## Oxirgi bajarilgan ish
-- 3-qadam: `lib/data/reports/reports_provider.dart` (`reportsFetcherProvider` — dio to'g'ridan, sana `YYYY-MM-DD`; `reportsProvider` family — ApiFailure → `LocalReports`), `test/data/reports_provider_test.dart` (3 test).
+- 4-qadam (yarim): `lib/features/reports/reports_screen.dart` (davr tugmalari, KPI, grafik, to'lov turlari, top, kassirlar, qarzlar, ombor; kassirga — menejer PIN), router ulandi, `ComingSoonPage` olib tashlandi, tarjimalar.
 
 ## Keyingi aniq harakat
-- 4-qadam: `lib/features/reports/reports_screen.dart` + router.dart (`AppSection.reports` → ekran o'rniga `_comingSoon`), tarjimalar (addkeys.mjs), `test/app/shell_test.dart` Ctrl+5 kutilmasini yangilash.
+- `flutter test test/app/shell_test.dart`; keyin `test/features/reports_test.dart` (menejer sessiyasi, vektor ma'lumotlari, davr almashishi, oflayn belgi) va `test/goldens/reports_golden_test.dart`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
