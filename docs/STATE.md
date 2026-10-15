@@ -13,7 +13,7 @@
 ## Qadamlar (vazifa ichida)
 - [x] 1. Spec `docs/specs/receipt-history.md`, ROADMAP 12-bosqich T-109
 - [x] 2. Ma'lumot: `lib/data/sales/sale_history.dart` (filtr, ro'yxat, jonli)
-- [ ] 3. Unit test `test/data/sale_history_test.dart`
+- [x] 3. Unit test `test/data/sale_history_test.dart`
 - [ ] 4. Bo'lim: `AppSection.sales` (kassadan keyin, Ctrl+7, kassada F7), router
 - [ ] 5. `lib/features/sales/sales_screen.dart` (filtrlar, ro'yxat, skaner) + `sale_detail.dart` (chek ko'rinishi, qayta chop etish, qaytarish)
 - [ ] 6. `showRefundDialog(saleId:)`; l10n (uz/uz-Cyrl/ru)
@@ -21,10 +21,10 @@
 - [ ] 8. Hujjatlar (pos-screen.md klaviatura, user guide), tekshiruvlar, PR, merge
 
 ## Oxirgi bajarilgan ish
-- Spec va ma'lumot qatlami yozildi.
+- Spec, ma'lumot qatlami va unit test (6) yashil.
 
 ## Keyingi aniq harakat
-- 3-qadam: `apps/pos/test/data/sale_history_test.dart` (sana, qidiruv raqam/tovar/mijoz, to'lov filtri, qaytarilgan summa).
+- 4-qadam: `apps/pos/lib/app/shell/app_sections.dart` ga `sales` (kassadan keyin, aniq Ctrl+7), router, kassada F7.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
@@ -57,3 +57,4 @@
 - Flutter: bo'lim (StatefulShellRoute) almashganda fokus yo'qoladi — qaytganda ekran o'zi fokusni olishi kerak (`TickerMode.valuesOf` o'zgarishi, kassa misoli). Oyna mazmuni suriladi — testda pastdagi elementni bosishdan oldin `ensureVisible`.
 - Prod stack lokal sinovi: `.env.prod.local` (CADDY_TLS=tls internal, 18080\/18443) + `docker compose -f docker-compose.prod.yml --env-file .env.prod.local -p pos-prodtest up -d --build`; curl `--resolve api.localhost:18443:127.0.0.1`. Git Bash'da `docker ... /deploy/x.sh` uchun `MSYS_NO_PATHCONV=1`. Admin→Django so'rovlari Content-Length bilan bo'lishi shart (WSGI chunked'ni o'qimaydi).
 - Windows o'rnatuvchi lokal: `powershell -ExecutionPolicy Bypass -File apps/pos/tool/build-windows-installer.ps1 -ApiUrl ...`; jim sinov: `dist\kassa-setup-X.exe /VERYSILENT /CURRENTUSER /DIR=%TEMP%\kassa-test`, so'ng `unins000.exe /VERYSILENT`.
+- Drift jonli oqimini `async*` + `await for (tableUpdates)` bilan yozma: obunani bekor qilish osilib qoladi (test timeout). `customSelect('SELECT 1', readsFrom: {...}).watch().asyncMap(...)` ishlat (`sale_history.dart`).

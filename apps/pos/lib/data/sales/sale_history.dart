@@ -118,20 +118,15 @@ class SaleHistory {
   /// Qidiruvdagi eng ko'p natija.
   static const int searchLimit = 200;
 
-  /// Savdo, qaytarish yoki to'lov o'zgarsa qayta o'qiladi.
-  Stream<SaleHistoryPage> watch(SaleHistoryFilter filter) async* {
-    yield await load(filter);
-    await for (final _ in _db.tableUpdates(
-      TableUpdateQuery.onAllTables([
-        _db.sales,
-        _db.salePayments,
-        _db.refunds,
-        _db.customers,
-      ]),
-    )) {
-      yield await load(filter);
-    }
-  }
+  /// Savdo, qaytarish yoki to'lov o'zgarsa qayta o'qiladi (`async*` emas:
+  /// u `await for` da turganda bekor qilish osilib qoladi).
+  Stream<SaleHistoryPage> watch(SaleHistoryFilter filter) => _db
+      .customSelect(
+        'SELECT 1',
+        readsFrom: {_db.sales, _db.salePayments, _db.refunds, _db.customers},
+      )
+      .watch()
+      .asyncMap((_) => load(filter));
 
   Future<SaleHistoryPage> load(SaleHistoryFilter filter) async {
     final query = filter.query.trim();
