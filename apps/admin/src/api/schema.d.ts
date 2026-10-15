@@ -1991,21 +1991,8 @@ export interface components {
              */
             previous?: string | null;
             results: components["schemas"]["Payment"][];
-        };
-        PaginatedPaymentsListList: {
-            /** @example 123 */
-            count: number;
-            /**
-             * Format: uri
-             * @example http://api.example.org/accounts/?page=4
-             */
-            next?: string | null;
-            /**
-             * Format: uri
-             * @example http://api.example.org/accounts/?page=2
-             */
-            previous?: string | null;
-            results: components["schemas"]["PaymentsList"][];
+            /** Format: int64 */
+            total_tiyin: number;
         };
         PaginatedPlanList: {
             /** @example 123 */
@@ -2442,16 +2429,6 @@ export interface components {
             cash: number;
             card: number;
             debt: number;
-        };
-        /** @description Sahifa + filtrlangan jami (schema uchun). */
-        PaymentsList: {
-            count: number;
-            /** Format: uri */
-            next: string | null;
-            /** Format: uri */
-            previous: string | null;
-            total_tiyin: number;
-            results: components["schemas"]["Payment"][];
         };
         Period: {
             /** Format: date */
@@ -4265,7 +4242,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PaginatedPaymentsListList"];
+                    "application/json": components["schemas"]["PaginatedPaymentList"];
                 };
             };
         };

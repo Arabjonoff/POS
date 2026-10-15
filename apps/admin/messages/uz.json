@@ -160,6 +160,100 @@
       "copied": "Nusxa olindi",
       "openTenant": "Mijoz sahifasi",
       "addAnother": "Yana qo'shish"
+    },
+    "detail": {
+      "tabs": "Bo'limlar",
+      "tab": {
+        "overview": "Umumiy",
+        "payments": "To'lovlar",
+        "devices": "Qurilmalar",
+        "users": "Foydalanuvchilar",
+        "activity": "Faollik"
+      },
+      "subscription": "Obuna",
+      "store": "Do'kon",
+      "trialEndsAt": "Sinov tugashi",
+      "paidUntil": "To'langan muddat",
+      "daysLeft": "Qolgan kunlar",
+      "graceDays": "Imtiyozli kunlar",
+      "offlineDays": "Oflayn kunlar",
+      "address": "Manzil",
+      "timezone": "Vaqt zonasi",
+      "users": "Xodimlar",
+      "createdAt": "Qo'shilgan",
+      "notes": "Izoh",
+      "blockedBanner": "Mijoz bloklangan. Sabab: {reason}",
+      "noPayments": "Hali to'lov yo'q",
+      "paidAt": "Sana",
+      "amount": "Summa",
+      "months": "Oylar",
+      "period": "Davr",
+      "method": "Usul",
+      "note": "Izoh",
+      "total": "Jami: {amount}",
+      "methods": {
+        "cash": "Naqd",
+        "transfer": "O'tkazma",
+        "card": "Karta",
+        "other": "Boshqa"
+      },
+      "noDevices": "Hali qurilma ulanmagan",
+      "deviceName": "Qurilma",
+      "platform": "Platforma",
+      "version": "Versiya",
+      "lastSync": "Oxirgi sinxron",
+      "platforms": {
+        "windows": "Windows",
+        "android": "Android",
+        "ios": "iOS"
+      },
+      "noUsers": "Xodim yo'q",
+      "userName": "Ism",
+      "role": "Rol",
+      "lastLogin": "Oxirgi kirish",
+      "roles": {
+        "platform_admin": "Platforma admini",
+        "owner": "Ega",
+        "manager": "Menejer",
+        "cashier": "Kassir"
+      },
+      "noEvents": "Sinxron hodisalari yo'q",
+      "eventType": "Hodisa",
+      "attempts": "Urinishlar",
+      "receivedAt": "Qabul qilingan",
+      "eventStatus": {
+        "applied": "Qo'llangan",
+        "pending": "Kutilmoqda",
+        "rejected": "Rad etilgan"
+      }
+    },
+    "block": {
+      "block": "Bloklash",
+      "unblock": "Blokdan chiqarish",
+      "blockTitle": "Mijozni bloklash",
+      "blockText": "Do'kon kassalari ishlashdan to'xtaydi (faqat ko'rish). Sababini yozing — audit jurnaliga tushadi.",
+      "unblockTitle": "Blokdan chiqarish",
+      "unblockText": "Do'kon kassalari yana ishlay boshlaydi.",
+      "reason": "Sabab",
+      "reasonOptional": "Izoh (ixtiyoriy)",
+      "reasonRequired": "Sababni yozing",
+      "failed": "Amalni bajarib bo'lmadi. Qayta urinib ko'ring.",
+      "cancel": "Bekor qilish",
+      "confirmBlock": "Bloklash",
+      "confirmUnblock": "Blokdan chiqarish"
+    },
+    "users": {
+      "resetPassword": "Parolni tiklash",
+      "resetTitle": "{name} — parolni tiklash",
+      "resetText": "Yangi vaqtinchalik parol yaratiladi, eskisi ishlamay qoladi.",
+      "resetDone": "Yangi parol. Faqat hozir ko'rinadi — xodimga yuboring.",
+      "resetFailed": "Parolni tiklab bo'lmadi. Qayta urinib ko'ring.",
+      "resetConfirm": "Tiklash",
+      "cancel": "Bekor qilish",
+      "done": "Tayyor"
     }
+  },
+  "common": {
+    "close": "Yopish"
   }
 }

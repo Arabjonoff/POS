@@ -15,6 +15,7 @@ from rest_framework.views import APIView
 from apps.accounts.models import Role, User
 from apps.accounts.permissions import IsPlatformAdmin
 from apps.billing.models import Plan, SubscriptionPayment
+from apps.core.pagination import DefaultPagination
 from apps.devices.models import Device
 from apps.sync.models import EventStatus, SyncEvent
 from apps.tenants.models import DEFAULT_TIMEZONE, Tenant
@@ -29,7 +30,6 @@ from .serializers import (
     PasswordResultSerializer,
     PaymentInputSerializer,
     PaymentSerializer,
-    PaymentsListSerializer,
     PlanSerializer,
     PlatformDeviceSerializer,
     ReasonSerializer,
@@ -237,6 +237,16 @@ class PlanViewSet(PlatformMixin, viewsets.ModelViewSet):
         services.save_plan(plan, actor=self.request.user, data={"is_active": False})
 
 
+class PaymentPagination(DefaultPagination):
+    """Sahifa + filtrlangan jami `total_tiyin` (bekor qilishlar bilan netto)."""
+
+    def get_paginated_response_schema(self, schema):
+        response = super().get_paginated_response_schema(schema)
+        response["properties"]["total_tiyin"] = {"type": "integer", "format": "int64"}
+        response["required"] = [*response.get("required", []), "total_tiyin"]
+        return response
+
+
 @extend_schema_view(
     list=extend_schema(
         parameters=[
@@ -244,12 +254,12 @@ class PlanViewSet(PlatformMixin, viewsets.ModelViewSet):
             OpenApiParameter("date_from", OpenApiTypes.DATE),
             OpenApiParameter("date_to", OpenApiTypes.DATE),
         ],
-        responses=PaymentsListSerializer,
     )
 )
 @extend_schema(tags=["platform"])
 class PaymentViewSet(PlatformMixin, viewsets.ReadOnlyModelViewSet):
     serializer_class = PaymentSerializer
+    pagination_class = PaymentPagination
 
     def get_queryset(self):
         queryset = SubscriptionPayment.objects.select_related("tenant").order_by("-paid_at", "-id")
