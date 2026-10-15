@@ -38,8 +38,8 @@ describe("proxy", () => {
     expect(cookies).toMatch(/pos_refresh=new-r/);
     // So'rovning o'zi ham yangi token bilan (server komponentlar uchun).
     expect(response.headers.get("x-middleware-request-cookie")).toMatch(/pos_access=new-a/);
-    const [sent] = fetch.mock.calls[0] as unknown as [Request];
-    expect(await sent.json()).toEqual({ refresh: "old-r" });
+    const [, init] = fetch.mock.calls[0] as unknown as [string, RequestInit];
+    expect(JSON.parse(String(init.body))).toEqual({ refresh: "old-r" });
   });
 
   it("an invalid refresh token clears cookies and goes to login", async () => {

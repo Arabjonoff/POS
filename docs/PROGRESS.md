@@ -386,3 +386,10 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - Testlar: apps/pos 617 (+39), admin e2e 25 (+2). Skrinshotlar: `docs/screenshots/ui-review/`.
 - PR: T-091 (squash merge)
 - Qoldi / keyingi qadam: past og'irlikdagi kuzatuvlar `docs/ui-review.md` da; admin "Sozlamalar" sahifasi ROADMAP'da yo'q. Keyingi: T-092 Production deploy.
+
+## 2026-10-15 — T-092 Production deploy
+- Qilindi: `docker-compose.prod.yml` (Caddy HTTPS 2 domen, backend gunicorn + migrate + collectstatic, admin Next standalone, postgres, redis, kunlik `update_subscriptions`, kunlik `pg_dump` 14 kun), `deploy/{Caddyfile,backup.sh,restore.sh}`, `.env.prod.example`, admin prod `Dockerfile`, Sentry (backend, `SENTRY_DSN`), `docs/DEPLOY.md`.
+- Sinov: butun stack lokal Docker'da (ichki TLS) — health, HTTPS yo'naltirish, static, `createsuperuser`, admin oqimi haqiqiy Django bilan (tarif → mijoz → ega kirishi → to'lov → bloklash → audit), zaxira → yangi bazaga va joyida tiklash mashqi — hammasi ✅.
+- **Topilgan og'ir xato:** admin server tomoni Django'ga `chunked` tana yuborardi → prod'da kirish va barcha o'zgartirishlar ishlamas edi. `fetchWithLength` bilan tuzatildi; soxta API endi Content-Length'siz tanani qabul qilmaydi (regressiyani e2e ushlaydi).
+- PR: T-092 (squash merge)
+- Qoldi / keyingi qadam: haqiqiy toza serverda (DNS, Let's Encrypt) sinov — birinchi chiqarishda. Keyingi: T-093 ilovani chiqarish.

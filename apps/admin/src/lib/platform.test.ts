@@ -28,9 +28,9 @@ describe("getStats", () => {
     const fetch = vi.fn(async () => Response.json(body));
     vi.stubGlobal("fetch", fetch);
     expect(await getStats()).toEqual(body);
-    const [request] = fetch.mock.calls[0] as unknown as [Request];
-    expect(request.url).toMatch(/\/api\/v1\/platform\/stats\/$/);
-    expect(request.headers.get("Authorization")).toBe("Bearer acc-1");
+    const [url, init] = fetch.mock.calls[0] as unknown as [string, RequestInit];
+    expect(url).toMatch(/\/api\/v1\/platform\/stats\/$/);
+    expect(new Headers(init.headers).get("Authorization")).toBe("Bearer acc-1");
   });
 
   it("an expired session goes to the login page", async () => {

@@ -277,7 +277,7 @@ Spec'lar: `admin-dashboard.md`, `subscription-billing.md`.
 - **Qabul:** tekshiruv ro'yxati `docs/ui-review.md` da to'liq bajarilgan.
 - **Bog'liq:** 3–7 bosqichlar
 
-### [ ] T-092 Production deploy
+### [x] T-092 Production deploy
 - **Bajarish:** `docker-compose.prod.yml` (gunicorn, nginx, postgres, redis), HTTPS (Caddy yoki nginx + certbot), kunlik baza zaxirasi (backup) va tiklash yo'riqnomasi, Sentry, `docs/DEPLOY.md`.
 - **Qabul:** toza serverda yo'riqnoma bo'yicha 30 daqiqada ishga tushadi; backup'dan tiklash sinovdan o'tgan.
 - **Bog'liq:** T-020
