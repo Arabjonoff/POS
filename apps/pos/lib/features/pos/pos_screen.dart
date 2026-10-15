@@ -195,12 +195,16 @@ class _CashierViewState extends ConsumerState<CashierView> {
     } else {
       _cart.add(product, barcode: barcode);
     }
-    _added();
+    _added(scanned: barcode != null);
   }
 
-  void _added() {
-    _feedback.flash(PosScanResult.success);
-    unawaited(ref.read(scanSignalProvider).success());
+  /// Tovar savatga tushdi. Chaqnash va signal — faqat skaner uchun: oddiy
+  /// bosishda savatdagi yangi qator belgilanadi, ekran chaqnamaydi.
+  void _added({required bool scanned}) {
+    if (scanned) {
+      _feedback.flash(PosScanResult.success);
+      unawaited(ref.read(scanSignalProvider).success());
+    }
     if (_hasQuery) _clearSearch();
     _focusScreen();
   }
@@ -229,7 +233,7 @@ class _CashierViewState extends ConsumerState<CashierView> {
     }
     if (match.weighted) {
       _cart.addMatch(match);
-      _added();
+      _added(scanned: true);
       return;
     }
     unawaited(_pick(match.product, barcode: match.code));

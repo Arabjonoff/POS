@@ -53,8 +53,14 @@ class _CountEditorState extends ConsumerState<CountEditor> {
     super.dispose();
   }
 
-  Future<void> _add(String productId, {int qtyMilli = 1000}) async {
+  /// Chaqnash va signal — faqat skaner uchun (oddiy bosishda ekran chaqnamaydi).
+  Future<void> _add(
+    String productId, {
+    int qtyMilli = 1000,
+    bool scanned = false,
+  }) async {
     await _store.addCounted(widget.countId, productId, qtyMilli: qtyMilli);
+    if (!scanned) return;
     _feedback.flash(PosScanResult.success);
     unawaited(ref.read(scanSignalProvider).success());
   }
@@ -78,7 +84,11 @@ class _CountEditorState extends ConsumerState<CountEditor> {
       _warn(l10n.inventoryNotFound);
       return;
     }
-    await _add(match.product.id, qtyMilli: match.qtyMilli ?? 1000);
+    await _add(
+      match.product.id,
+      qtyMilli: match.qtyMilli ?? 1000,
+      scanned: true,
+    );
   }
 
   void _onTyping(String text) {

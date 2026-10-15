@@ -23,8 +23,9 @@ class PosScanFeedbackController extends ChangeNotifier {
   }
 }
 
-/// Skanerlashdan keyin hudud chetini qisqa chaqnatadi. Chaqnash ko'zga
-/// tashlanishi uchun 150 ms to'liq turadi, keyin 200 ms da so'nadi.
+/// Skanerlashdan keyin hudud *chetini* qisqa chaqnatadi (fon bo'yalmaydi).
+/// Jami ≤ 200 ms (design-system: animatsiya ≤ 200 ms): 60 ms to'liq, keyin
+/// so'nadi. Faqat skaner natijasi uchun — oddiy bosishga ishlatilmaydi.
 class PosScanFeedback extends StatefulWidget {
   const PosScanFeedback({
     required this.controller,
@@ -43,21 +44,19 @@ class PosScanFeedback extends StatefulWidget {
 
 class _PosScanFeedbackState extends State<PosScanFeedback>
     with SingleTickerProviderStateMixin {
-  static const _hold = Duration(milliseconds: 150);
-
-  // initState da yaratiladi: dispose paytida (chaqnash bo'lmagan bo'lsa)
+    // initState da yaratiladi: dispose paytida (chaqnash bo'lmagan bo'lsa)
   // dangasa yaratish faol bo'lmagan elementdan ticker so'raydi.
   late final AnimationController _animation;
   int _seen = 0;
 
   late final Animation<double> _opacity = TweenSequence<double>([
-    TweenSequenceItem(tween: ConstantTween(1), weight: 150),
+    TweenSequenceItem(tween: ConstantTween(1), weight: 60),
     TweenSequenceItem(
       tween: Tween<double>(
         begin: 1,
         end: 0,
       ).chain(CurveTween(curve: Curves.easeOut)),
-      weight: 200,
+      weight: 140,
     ),
   ]).animate(_animation);
 
@@ -66,7 +65,7 @@ class _PosScanFeedbackState extends State<PosScanFeedback>
     super.initState();
     _animation = AnimationController(
       vsync: this,
-      duration: _hold + PosMotion.overlay,
+      duration: PosMotion.overlay,
       value: 1,
     );
     _seen = widget.controller._count;
@@ -148,10 +147,9 @@ class PosScanFeedbackOverlay extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: borderRadius,
-        color: color.withValues(alpha: 0.10 * opacity),
         border: Border.all(
           color: color.withValues(alpha: opacity),
-          width: 3,
+          width: 2,
         ),
       ),
       child: const SizedBox.expand(),

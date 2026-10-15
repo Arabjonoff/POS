@@ -164,7 +164,7 @@ void main() {
   });
 
   group('PosScanFeedback', () {
-    testWidgets('flashes then fades within 350 ms', (tester) async {
+    testWidgets('flashes the edge only and fades within 200 ms', (tester) async {
       final controller = PosScanFeedbackController();
       addTearDown(controller.dispose);
       await pumpPos(
@@ -186,9 +186,17 @@ void main() {
       controller.flash(PosScanResult.success);
       await tester.pump();
       expect(opacity(), 1);
-      await tester.pump(const Duration(milliseconds: 140));
+      // Fon bo'yalmaydi — faqat chegara (butun ekran chaqnamasin).
+      final box = tester.widget<DecoratedBox>(
+        find.descendant(
+          of: find.byType(PosScanFeedbackOverlay),
+          matching: find.byType(DecoratedBox),
+        ),
+      );
+      expect((box.decoration as BoxDecoration).color, isNull);
+      await tester.pump(const Duration(milliseconds: 50));
       expect(opacity(), 1);
-      await tester.pump(const Duration(milliseconds: 250));
+      await tester.pump(const Duration(milliseconds: 160));
       expect(opacity(), 0);
 
       // Ketma-ket skaner — chaqnash qaytadan.

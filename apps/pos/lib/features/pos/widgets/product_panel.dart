@@ -67,7 +67,8 @@ class QuickPanel extends StatelessWidget {
   final ValueChanged<CatalogProduct> onPick;
 
   static const double _tileMinWidth = 152;
-  static const double _tileHeight = 88;
+  // Ichki joy: 2 qator nom (2 × 24) + narx (20) + chekka (2 × 12) = 92.
+  static const double _tileHeight = 96;
 
   @override
   Widget build(BuildContext context) {
