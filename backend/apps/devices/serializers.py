@@ -51,6 +51,13 @@ class SubscriptionSnapshotSerializer(serializers.Serializer):
     offline_days = serializers.IntegerField()
 
 
+class AppReleaseSerializer(serializers.Serializer):
+    """Kassa ilovasining oxirgi versiyasi (T-093)."""
+
+    latest_version = serializers.CharField()
+    download_url = serializers.CharField(allow_blank=True)
+
+
 class DeviceMeSerializer(serializers.Serializer):
     device = DeviceSerializer()
     subscription = SubscriptionSnapshotSerializer()

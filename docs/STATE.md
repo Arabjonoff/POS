@@ -12,17 +12,17 @@
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [ ] 1. Backend: pull javobida `app {latest_version, download_url}` (platforma bo'yicha, env) + test, OpenAPI, Dart klient
+- [x] 1. Backend: pull javobida `app {latest_version, download_url}` (platforma bo'yicha, env) + test, OpenAPI, Dart klient
 - [ ] 2. Kassa: pull'dan saqlash, versiya solishtirish, holat qatori va Sozlamalar → "Ilova haqida" (versiya, yangi versiya, havola)
 - [ ] 3. Windows o'rnatuvchi: `apps/pos/windows/installer/pos.iss` (Inno Setup, VC++ runtime DLL'lar, ma'lumot o'chirilmaydi), `apps/pos/tool/build-windows-installer.ps1`; lokal yig'ish, jim o'rnatish → ishga tushirish → o'chirish
 - [ ] 4. Android APK: imzo (key.properties, repoga tushmaydi), lokal build
 - [ ] 5. CI `release.yml` (tag v* → o'rnatuvchi va APK artefakt), versiya 1.0.0, `docs/RELEASE.md`, PR, merge
 
 ## Oxirgi bajarilgan ish
-- Reja yozildi.
+- 1: `APP_RELEASES` (env), `apps/devices/releases.py`, pull javobida `app` (+test), OpenAPI, TS va Dart klient (`AppRelease`), prod compose env.
 
 ## Keyingi aniq harakat
-- 1-qadam: `backend/apps/sync` pull javobiga `app`.
+- 2-qadam: `apps/pos/lib/data/sync/pull.dart` — `page.app` ni LocalSettings'ga; `lib/app/update/app_update.dart` (semver solishtirish, provider); holat qatori + Sozlamalar.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

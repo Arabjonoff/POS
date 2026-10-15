@@ -1388,6 +1388,11 @@ export interface components {
             amount_tiyin: number;
             note: string;
         };
+        /** @description Kassa ilovasining oxirgi versiyasi (T-093). */
+        AppRelease: {
+            latest_version: string;
+            download_url: string;
+        };
         ApplyRequestRequest: {
             mapping: components["schemas"]["MappingRequest"];
             /** Format: uuid */
@@ -2598,6 +2603,7 @@ export interface components {
             next_cursor: string;
             has_more: boolean;
             subscription: components["schemas"]["SubscriptionSnapshot"];
+            app?: components["schemas"]["AppRelease"] | null;
             /** Format: date-time */
             server_time: string;
         };

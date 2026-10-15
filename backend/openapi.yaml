@@ -3038,6 +3038,17 @@ components:
       required:
       - amount_tiyin
       - note
+    AppRelease:
+      type: object
+      description: Kassa ilovasining oxirgi versiyasi (T-093).
+      properties:
+        latest_version:
+          type: string
+        download_url:
+          type: string
+      required:
+      - download_url
+      - latest_version
     ApplyRequestRequest:
       type: object
       properties:
@@ -5386,6 +5397,10 @@ components:
           type: boolean
         subscription:
           $ref: '#/components/schemas/SubscriptionSnapshot'
+        app:
+          allOf:
+          - $ref: '#/components/schemas/AppRelease'
+          nullable: true
         server_time:
           type: string
           format: date-time

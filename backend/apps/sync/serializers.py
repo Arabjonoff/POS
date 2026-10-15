@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from apps.devices.serializers import SubscriptionSnapshotSerializer
+from apps.devices.serializers import AppReleaseSerializer, SubscriptionSnapshotSerializer
 
 MAX_EVENTS = 100
 
@@ -59,4 +59,6 @@ class PullResponseSerializer(serializers.Serializer):
     next_cursor = serializers.CharField()
     has_more = serializers.BooleanField()
     subscription = SubscriptionSnapshotSerializer()
+    # Eski kassa e'tibor bermaydi (CLAUDE.md, 10-qoida).
+    app = AppReleaseSerializer(allow_null=True, required=False)
     server_time = serializers.DateTimeField()
