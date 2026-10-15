@@ -35,6 +35,70 @@ class CustomerEntry {
       limitTiyin == null ? null : limitTiyin! - balanceTiyin;
 }
 
+/// Mijoz kartasi uchun to'liq ma'lumot.
+class CustomerDetails {
+  const CustomerDetails({
+    required this.id,
+    required this.name,
+    required this.phone,
+    required this.note,
+    required this.balanceTiyin,
+    this.limitTiyin,
+  });
+
+  final String id;
+  final String name;
+  final String phone;
+  final String note;
+  final int balanceTiyin;
+  final int? limitTiyin;
+}
+
+/// Qarz daftari yozuvi: `sale` (+), `payment` / `refund` (−),
+/// `adjustment` (±).
+class DebtRecord {
+  const DebtRecord({
+    required this.id,
+    required this.type,
+    required this.amountTiyin,
+    required this.at,
+    this.method,
+    this.note = '',
+    this.saleNumber,
+    this.byName,
+  });
+
+  final String id;
+  final String type;
+  final int amountTiyin;
+  final DateTime at;
+  final String? method;
+  final String note;
+  final String? saleNumber;
+  final String? byName;
+}
+
+class PurchaseRecord {
+  const PurchaseRecord({
+    required this.number,
+    required this.soldAt,
+    required this.totalTiyin,
+    required this.status,
+  });
+
+  final String number;
+  final DateTime soldAt;
+  final int totalTiyin;
+  final String status;
+}
+
+/// To'lov joriy qarzdan ko'p (`payment_exceeds_debt`).
+class PaymentExceedsDebtException implements Exception {
+  const PaymentExceedsDebtException(this.balanceTiyin);
+
+  final int balanceTiyin;
+}
+
 /// Lokal mijozlar ro'yxati. Balans = qarz daftari yozuvlari yig'indisi
 /// (`debts.md`): pull'dan kelganlar + shu kassada oflayn yozilganlar bir
 /// jadvalda. Yozuvi umuman yo'q mijozda — serverdagi balans (tarix hali
@@ -140,6 +204,165 @@ ORDER BY c.full_name
       phone: phone.trim(),
       balanceTiyin: 0,
     );
+  }
+
+  // ---- Mijoz kartasi (T-060) ------------------------------------------
+
+  Future<CustomerDetails?> details(String id) async {
+    final c = await (_db.select(
+      _db.customers,
+    )..where((t) => t.id.equals(id))).getSingleOrNull();
+    if (c == null || c.deletedAt != null) return null;
+    final entry = await byId(id);
+    return CustomerDetails(
+      id: c.id,
+      name: c.fullName,
+      phone: c.phone,
+      note: c.note,
+      limitTiyin: c.debtLimitTiyin,
+      balanceTiyin: entry?.balanceTiyin ?? 0,
+    );
+  }
+
+  /// Qarz daftari (yangisi birinchi): savdo raqami va kim bilan.
+  Stream<List<DebtRecord>> watchHistory(String customerId) => _db
+      .customSelect(
+        'SELECT d.id, d.type, d.amount_tiyin, d.method, d.note, d.at, '
+        's.number AS sale, u.full_name AS by_name FROM debt_entries d '
+        'LEFT JOIN sales s ON s.id = d.sale_id '
+        'LEFT JOIN staff_users u ON u.id = d.by_user_id '
+        'WHERE d.customer_id = ? ORDER BY d.at DESC',
+        variables: [Variable.withString(customerId)],
+        readsFrom: {_db.debtEntries, _db.sales, _db.staffUsers},
+      )
+      .watch()
+      .map(
+        (rows) => [
+          for (final r in rows)
+            DebtRecord(
+              id: r.read<String>('id'),
+              type: r.read<String>('type'),
+              amountTiyin: r.read<int>('amount_tiyin'),
+              at: r.read<DateTime>('at'),
+              method: r.readNullable<String>('method'),
+              note: r.read<String>('note'),
+              saleNumber: r.readNullable<String>('sale'),
+              byName: r.readNullable<String>('by_name'),
+            ),
+        ],
+      );
+
+  /// Shu kassadagi xaridlar (yangisi birinchi).
+  Stream<List<PurchaseRecord>> watchPurchases(String customerId) =>
+      (_db.select(_db.sales)
+            ..where((s) => s.customerId.equals(customerId))
+            ..orderBy([(s) => OrderingTerm.desc(s.soldAt)]))
+          .watch()
+          .map(
+            (rows) => [
+              for (final s in rows)
+                PurchaseRecord(
+                  number: s.number,
+                  soldAt: s.soldAt,
+                  totalTiyin: s.totalTiyin,
+                  status: s.status,
+                ),
+            ],
+          );
+
+  /// Qarz to'lovi (`debts.md`): `DebtEntry(−, payment)` + outbox
+  /// `debt.paid` bitta tranzaksiyada. Qarzdan ko'p to'lov — xato (avans yo'q,
+  /// Q-003).
+  Future<void> payDebt({
+    required String customerId,
+    required int amountTiyin,
+    required String method,
+    required String by,
+    String? shiftId,
+    String note = '',
+  }) async {
+    if (amountTiyin <= 0) throw ArgumentError.value(amountTiyin);
+    if (method != 'cash' && method != 'card') throw ArgumentError.value(method);
+    await _db.transaction(() async {
+      final balance = (await byId(customerId))?.balanceTiyin ?? 0;
+      if (amountTiyin > balance) throw PaymentExceedsDebtException(balance);
+      final id = _newId();
+      final now = _now();
+      await _db
+          .into(_db.debtEntries)
+          .insert(
+            DebtEntriesCompanion.insert(
+              id: id,
+              customerId: customerId,
+              amountTiyin: -amountTiyin,
+              type: 'payment',
+              method: Value(method),
+              shiftId: Value(shiftId),
+              note: Value(note.trim()),
+              byUserId: Value(by),
+              at: now,
+            ),
+          );
+      await _db.enqueueEvent(
+        id: _newId(),
+        type: OutboxEventType.debtPaid,
+        createdAt: now,
+        payload: {
+          'id': id,
+          'customer': customerId,
+          'amount_tiyin': amountTiyin,
+          'method': method,
+          'note': note.trim(),
+          'shift': ?shiftId,
+          'at': isoUtc(now),
+          'by': by,
+        },
+      );
+    });
+  }
+
+  /// Ism/telefon/izoh; [limitTiyin] berilsa (`clearLimit` — cheklovsiz)
+  /// limit ham o'zgaradi — buni server faqat ega/menejerdan qabul qiladi.
+  Future<void> update({
+    required String id,
+    required String name,
+    required String by,
+    String phone = '',
+    String note = '',
+    bool changeLimit = false,
+    int? limitTiyin,
+  }) async {
+    if (name.trim().isEmpty) throw ArgumentError.value(name, 'name');
+    if (limitTiyin != null && limitTiyin < 0) {
+      throw ArgumentError.value(limitTiyin);
+    }
+    final now = _now();
+    await _db.transaction(() async {
+      await (_db.update(_db.customers)..where((c) => c.id.equals(id))).write(
+        CustomersCompanion(
+          fullName: Value(name.trim()),
+          phone: Value(phone.trim()),
+          note: Value(note.trim()),
+          debtLimitTiyin: changeLimit
+              ? Value(limitTiyin)
+              : const Value.absent(),
+          updatedAt: Value(now),
+        ),
+      );
+      await _db.enqueueEvent(
+        id: _newId(),
+        type: OutboxEventType.customerUpserted,
+        createdAt: now,
+        payload: {
+          'id': id,
+          'full_name': name.trim(),
+          'phone': phone.trim(),
+          'note': note.trim(),
+          if (changeLimit) 'debt_limit_tiyin': limitTiyin,
+          'by': by,
+        },
+      );
+    });
   }
 }
 

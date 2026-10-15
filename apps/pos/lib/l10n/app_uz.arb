@@ -2008,5 +2008,160 @@
   "orderColSum": "Summa",
   "@orderColSum": {
     "description": "CSV ustuni"
+  },
+  "customersSearchHint": "Ism yoki telefon",
+  "@customersSearchHint": {
+    "description": "Qidiruv"
+  },
+  "customersAdd": "Yangi mijoz",
+  "@customersAdd": {
+    "description": "Tugma"
+  },
+  "customersDebtorsOnly": "Qarzi borlar",
+  "@customersDebtorsOnly": {
+    "description": "Filtr"
+  },
+  "customersAll": "Hammasi",
+  "@customersAll": {
+    "description": "Filtr"
+  },
+  "customersTotalDebt": "Jami qarz: {amount}",
+  "@customersTotalDebt": {
+    "description": "Jami",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "customersEmptyTitle": "Hali mijoz yo'q",
+  "@customersEmptyTitle": {
+    "description": "Bo'sh"
+  },
+  "customersEmptyMessage": "Nasiyaga sotganda mijoz qo'shiladi yoki shu yerda yarating",
+  "@customersEmptyMessage": {
+    "description": "Bo'sh izoh"
+  },
+  "customersNotFound": "Hech kim topilmadi",
+  "@customersNotFound": {
+    "description": "Bo'sh qidiruv"
+  },
+  "customerDebt": "Qarz",
+  "@customerDebt": {
+    "description": "Kartadagi katta raqam yorlig'i"
+  },
+  "customerNoDebt": "Qarzi yo'q",
+  "@customerNoDebt": {
+    "description": "Holat"
+  },
+  "customerLimit": "Limit: {amount}",
+  "@customerLimit": {
+    "description": "Limit",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "customerNoLimit": "Limit: cheklovsiz",
+  "@customerNoLimit": {
+    "description": "Limit"
+  },
+  "customerPay": "Qarzni to'lash",
+  "@customerPay": {
+    "description": "Tugma"
+  },
+  "customerEdit": "Tahrirlash",
+  "@customerEdit": {
+    "description": "Tugma"
+  },
+  "customerHistory": "Qarz tarixi",
+  "@customerHistory": {
+    "description": "Bo'lim"
+  },
+  "customerPurchases": "Xaridlar (shu kassada)",
+  "@customerPurchases": {
+    "description": "Bo'lim"
+  },
+  "customerHistoryEmpty": "Hali yozuv yo'q",
+  "@customerHistoryEmpty": {
+    "description": "Bo'sh"
+  },
+  "debtSale": "Nasiyaga savdo",
+  "@debtSale": {
+    "description": "Yozuv turi"
+  },
+  "debtPayment": "To'lov",
+  "@debtPayment": {
+    "description": "Yozuv turi"
+  },
+  "debtRefund": "Qaytarish",
+  "@debtRefund": {
+    "description": "Yozuv turi"
+  },
+  "debtAdjustment": "Tuzatish",
+  "@debtAdjustment": {
+    "description": "Yozuv turi"
+  },
+  "payDebtTitle": "Qarzni to'lash",
+  "@payDebtTitle": {
+    "description": "Oyna"
+  },
+  "payDebtFull": "To'liq",
+  "@payDebtFull": {
+    "description": "Tez tugma"
+  },
+  "payDebtCash": "Naqd",
+  "@payDebtCash": {
+    "description": "Usul"
+  },
+  "payDebtCard": "Karta",
+  "@payDebtCard": {
+    "description": "Usul"
+  },
+  "payDebtConfirm": "Qabul qilish",
+  "@payDebtConfirm": {
+    "description": "Tugma"
+  },
+  "payDebtTooMuch": "Qarzdan ko'p bo'lmasin: {amount}",
+  "@payDebtTooMuch": {
+    "description": "Xato",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "payDebtDone": "{amount} qabul qilindi · Qolgan qarz: {left}",
+  "@payDebtDone": {
+    "description": "Xabar",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "left": {
+        "type": "String"
+      }
+    }
+  },
+  "customerNote": "Izoh",
+  "@customerNote": {
+    "description": "Maydon"
+  },
+  "customerLimitField": "Qarz limiti, so'm (bo'sh — cheklovsiz)",
+  "@customerLimitField": {
+    "description": "Maydon"
+  },
+  "customerLimitNeedsApproval": "Qarz limitini menejer yoki ega o'zgartiradi",
+  "@customerLimitNeedsApproval": {
+    "description": "Huquq"
+  },
+  "customerSaved": "Saqlandi",
+  "@customerSaved": {
+    "description": "Xabar"
+  },
+  "customerBack": "Mijozlar",
+  "@customerBack": {
+    "description": "Orqaga"
   }
 }

@@ -213,7 +213,7 @@ Spec'lar: `products.md`, `stock-receipt.md`, `barcode.md`.
 ## 5-bosqich. Mijozlar va nasiya
 Spec: `debts.md`.
 
-### [ ] T-060 Mijozlar va nasiya daftari
+### [x] T-060 Mijozlar va nasiya daftari
 - **Bajarish:** mijozlar ro'yxati (qarzi borlar tepada), mijoz kartasi (qarz tarixi, xaridlar), qarzni qisman/to'liq to'lash, qarz limiti, kassada mijozni tez tanlash (ism/telefon qidiruv).
 - **Qabul:** balans har doim DebtEntry yig'indisiga teng; oflaynda ishlaydi.
 - **Bog'liq:** T-043

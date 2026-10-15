@@ -7,6 +7,7 @@ import 'package:pos_app/app/shell/app_shell.dart';
 import 'package:pos_app/features/auth/lock_screen.dart';
 import 'package:pos_app/features/auth/setup_screen.dart';
 import 'package:pos_app/features/common/section_page.dart';
+import 'package:pos_app/features/customers/customers_screen.dart';
 import 'package:pos_app/features/inventory/inventory_screen.dart';
 import 'package:pos_app/features/pos/pos_screen.dart';
 import 'package:pos_app/features/products/products_screen.dart';
@@ -76,6 +77,7 @@ final routerProvider = Provider<GoRouter>((ref) {
                     AppSection.pos => const PosScreen(),
                     AppSection.products => const ProductsScreen(),
                     AppSection.receiving => const ReceivingScreen(),
+                    AppSection.customers => const CustomersScreen(),
                     AppSection.settings => const SettingsScreen(),
                     _ => _comingSoon(context, section),
                   },

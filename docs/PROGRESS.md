@@ -283,3 +283,16 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - Muammo yoki qaror:
   - Yangi `type` maydoni OpenAPI enum nomini o'zgartirib yuborgan edi; ENUM_NAME_OVERRIDES bilan qotirildi.
   - Buyurtma formulasi (2 × min) — oddiy boshlang'ich qoida, spec'da yozilgan.
+
+## 2026-10-15 — T-060 Mijozlar va nasiya daftari
+- Qilindi:
+  - `CustomerDirectory`: tarix, xaridlar, `payDebt` (DebtEntry(−) + outbox `debt.paid` bitta tranzaksiyada, qarzdan ko'p emas), `update` (limit — `by` ega/menejer).
+  - "Mijozlar" bo'limi: qarzdorlar tepada, qidiruv, "Qarzi borlar", jami qarz, yangi mijoz.
+  - Mijoz kartasi: katta qarz, limit, tarix, xaridlar, to'lov oynasi (summa, "To'liq", naqd/karta), tahrirlash (limit — PIN).
+- Testlar: apps/pos 522 (+27):
+  - `CustomerDirectory`: balans = Σ yozuvlar, to'lov payload'i, ortiqcha to'lov rad etiladi, tarix, update payload;
+  - 5 ta widget testi: tartib/qidiruv/filtr/jami, to'liq to'lov, qisman to'lov, tahrir + limit PIN, yangi mijoz.
+  - Golden'lar: `customers` list/card × 3 o'lcham × 2 mavzu. Skrinshotlar: `docs/screenshots/T-060/`.
+- PR: T-060 (squash merge)
+- Qoldi / keyingi qadam: T-070 Bosh sahifa va hisobotlar. Qo'lda tuzatish (`adjustment`, faqat ega) kassada yo'q.
+- Muammo yoki qaror: widget testi "yangi mijoz" oynasidagi xatoni ushladi — controller'lar oyna yopilish animatsiyasidan oldin dispose qilinardi; endi ular oynaning o'z State'ida. Telefonda "Jami qarz" alohida qatorga tushirildi.
