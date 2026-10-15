@@ -12,17 +12,17 @@
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [ ] 1. `lib/app/sync/subscription_notice.dart`: oxirgi pull'dagi `subscription` + o'tgan kunlar (Toshkent, server farqi bilan) → sinov / tugashiga ≤ 3 kun / grace ogohlantirishi; `supportPhoneProvider` (`--dart-define=SUPPORT_PHONE`) + unit testlar
+- [x] 1. `lib/app/sync/subscription_notice.dart`: oxirgi pull'dagi `subscription` + o'tgan kunlar (Toshkent, server farqi bilan) → sinov / tugashiga ≤ 3 kun / grace ogohlantirishi; `supportPhoneProvider` (`--dart-define=SUPPORT_PHONE`) + unit testlar
 - [ ] 2. `SubscriptionBanner` qobiqda (barcha bo'limlar tepasida): sinov — ko'k, tugash — sariq, grace — qizil; aloqa raqami
 - [ ] 3. Savdo to'xtaganda (readonly/blocked/oflayn/qurilma): kassa banneri — sabab + nima ishlaydi + aloqa; kirim va inventarizatsiyani tasdiqlash ham o'chadi (sync.md)
 - [ ] 4. Widget testlari (har holat), golden, skrinshotlar; Q-008 (aloqa raqami) QUESTIONS.md
 - [ ] 5. Spec, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- Reja yozildi.
+- 1: `subscription_notice.dart` (`subscriptionNotice` sof funksiya, `subscriptionNoticeProvider`, `supportPhoneProvider`) + 5 test.
 
 ## Keyingi aniq harakat
-- 1-qadam: `apps/pos/lib/app/sync/subscription_notice.dart` + `test/app/subscription_notice_test.dart`.
+- 2-qadam: `lib/app/shell/subscription_banner.dart` + `app_shell.dart` body ustiga; tarjimalar (addkeys.mjs).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
