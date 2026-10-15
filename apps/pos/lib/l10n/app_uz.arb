@@ -3268,5 +3268,30 @@
   "salesSetUpPrinter": "Sozlash",
   "@salesSetUpPrinter": {
     "description": "Open printer settings from a toast"
+  },
+  "salesOtherKassa": "{number}-kassa cheki",
+  "@salesOtherKassa": {
+    "description": "Badge: receipt from another register (server)",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "salesSearchServer": "Boshqa kassalardan qidirish",
+  "@salesSearchServer": {
+    "description": "Look up a receipt number on the server"
+  },
+  "salesSearchServerHint": "Chek boshqa kassada sotilgan bo'lsa, serverdan topiladi (internet kerak)",
+  "@salesSearchServerHint": {
+    "description": "Hint under the server search button"
+  },
+  "salesRemoteOffline": "Bu chek shu kassada yo'q. Boshqa kassa chekini ko'rish uchun internet kerak",
+  "@salesRemoteOffline": {
+    "description": "Remote receipt lookup offline"
+  },
+  "salesRemoteFailed": "Serverdan chekni olib bo'lmadi. Keyinroq urinib ko'ring",
+  "@salesRemoteFailed": {
+    "description": "Remote receipt lookup failed"
   }
 }

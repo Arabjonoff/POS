@@ -10,6 +10,7 @@ import 'package:pos_app/core/format/unit_code.dart';
 import 'package:pos_app/data/refunds/refund_calculator.dart';
 import 'package:pos_app/data/refunds/refund_writer.dart';
 import 'package:pos_app/data/refunds/sale_lookup.dart';
+import 'package:pos_app/data/sales/remote_sale.dart';
 import 'package:pos_app/features/common/manager_approval.dart';
 import 'package:pos_app/features/pos/cart/discount_policy.dart';
 import 'package:pos_app/features/pos/widgets/qty_dialog.dart';
@@ -28,22 +29,25 @@ class RefundResult {
 /// F8: qaytarish (`docs/specs/sales-api.md`, T-045). Savdo chek raqami,
 /// chekdagi shtrix-kod yoki oxirgi cheklar ro'yxatidan topiladi; qisman yoki
 /// to'liq, sabab bilan, naqd yoki qarzdan ayirib. Menejer/ega tasdiqlaydi.
-/// [saleId] — chek oldindan tanlangan (cheklar tarixidan, T-109).
+/// [saleId] — chek oldindan tanlangan (cheklar tarixidan, T-109); [sale] —
+/// boshqa kassa cheki serverdan (T-110).
 Future<RefundResult?> showRefundDialog(
   BuildContext context, {
   String? saleId,
+  RefundableSale? sale,
 }) => showPosDialog<RefundResult>(
   context: context,
   maxWidth: RefundDialog.maxWidth,
-  builder: (context) => RefundDialog(saleId: saleId),
+  builder: (context) => RefundDialog(saleId: saleId, sale: sale),
 );
 
 class RefundDialog extends ConsumerStatefulWidget {
-  const RefundDialog({this.saleId, super.key});
+  const RefundDialog({this.saleId, this.sale, super.key});
 
   static const double maxWidth = 600;
 
   final String? saleId;
+  final RefundableSale? sale;
 
   @override
   ConsumerState<RefundDialog> createState() => _RefundDialogState();
@@ -72,7 +76,10 @@ class _RefundDialogState extends ConsumerState<RefundDialog> {
   void initState() {
     super.initState();
     final saleId = widget.saleId;
-    if (saleId != null) {
+    final preset = widget.sale;
+    if (preset != null) {
+      _show(preset);
+    } else if (saleId != null) {
       unawaited(_openSale(saleId));
     } else {
       unawaited(_loadRecent());
@@ -97,16 +104,37 @@ class _RefundDialogState extends ConsumerState<RefundDialog> {
   Future<void> _openNumber(String number) async {
     final id = await ref.read(saleLookupProvider).idByNumber(number);
     if (!mounted) return;
-    if (id == null) {
-      setState(() => _notice = AppLocalizations.of(context).refundNotFound);
-      return;
+    if (id != null) return _openSale(id);
+    // Shu kassada yo'q — boshqa kassa cheki bo'lishi mumkin (T-110).
+    if (looksLikeReceiptNumber(number)) {
+      setState(() => _busy = true);
+      final result = await ref.read(remoteSalesProvider).find(number);
+      if (!mounted) return;
+      setState(() => _busy = false);
+      final l10n = AppLocalizations.of(context);
+      switch (result) {
+        case RemoteSaleFound(:final sale):
+          return _show(sale.refundable);
+        case RemoteSaleOffline():
+          setState(() => _notice = l10n.salesRemoteOffline);
+          return;
+        case RemoteSaleFailed():
+          setState(() => _notice = l10n.salesRemoteFailed);
+          return;
+        case RemoteSaleNotFound():
+          break;
+      }
     }
-    await _openSale(id);
+    setState(() => _notice = AppLocalizations.of(context).refundNotFound);
   }
 
   Future<void> _openSale(String id) async {
     final sale = await ref.read(saleLookupProvider).refundable(id);
     if (!mounted || sale == null) return;
+    _show(sale);
+  }
+
+  void _show(RefundableSale sale) {
     setState(() {
       _sale = sale;
       _qty = {for (final i in sale.items) i.saleItemId: 0};

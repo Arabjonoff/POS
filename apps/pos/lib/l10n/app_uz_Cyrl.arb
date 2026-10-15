@@ -682,5 +682,10 @@
   "salesSelectHint": "Кўриш учун чекни танланг",
   "salesRefunds": "Қайтаришлар",
   "salesBack": "Чеклар рўйхати",
-  "salesSetUpPrinter": "Созлаш"
+  "salesSetUpPrinter": "Созлаш",
+  "salesOtherKassa": "{number}-касса чеки",
+  "salesSearchServer": "Бошқа кассалардан қидириш",
+  "salesSearchServerHint": "Чек бошқа кассада сотилган бўлса, сервердан топилади (интернет керак)",
+  "salesRemoteOffline": "Бу чек шу кассада йўқ. Бошқа касса чекини кўриш учун интернет керак",
+  "salesRemoteFailed": "Сервердан чекни олиб бўлмади. Кейинроқ уриниб кўринг"
 }

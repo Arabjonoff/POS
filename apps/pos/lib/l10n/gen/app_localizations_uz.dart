@@ -2391,6 +2391,26 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get salesSetUpPrinter => 'Sozlash';
+
+  @override
+  String salesOtherKassa(int number) {
+    return '$number-kassa cheki';
+  }
+
+  @override
+  String get salesSearchServer => 'Boshqa kassalardan qidirish';
+
+  @override
+  String get salesSearchServerHint =>
+      'Chek boshqa kassada sotilgan bo\'lsa, serverdan topiladi (internet kerak)';
+
+  @override
+  String get salesRemoteOffline =>
+      'Bu chek shu kassada yo\'q. Boshqa kassa chekini ko\'rish uchun internet kerak';
+
+  @override
+  String get salesRemoteFailed =>
+      'Serverdan chekni olib bo\'lmadi. Keyinroq urinib ko\'ring';
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -4768,4 +4788,24 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get salesSetUpPrinter => 'Созлаш';
+
+  @override
+  String salesOtherKassa(int number) {
+    return '$number-касса чеки';
+  }
+
+  @override
+  String get salesSearchServer => 'Бошқа кассалардан қидириш';
+
+  @override
+  String get salesSearchServerHint =>
+      'Чек бошқа кассада сотилган бўлса, сервердан топилади (интернет керак)';
+
+  @override
+  String get salesRemoteOffline =>
+      'Бу чек шу кассада йўқ. Бошқа касса чекини кўриш учун интернет керак';
+
+  @override
+  String get salesRemoteFailed =>
+      'Сервердан чекни олиб бўлмади. Кейинроқ уриниб кўринг';
 }

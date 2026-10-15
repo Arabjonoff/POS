@@ -682,5 +682,10 @@
   "salesSelectHint": "Выберите чек для просмотра",
   "salesRefunds": "Возвраты",
   "salesBack": "Список чеков",
-  "salesSetUpPrinter": "Настроить"
+  "salesSetUpPrinter": "Настроить",
+  "salesOtherKassa": "Чек кассы {number}",
+  "salesSearchServer": "Искать на других кассах",
+  "salesSearchServerHint": "Если чек пробит на другой кассе, он найдётся на сервере (нужен интернет)",
+  "salesRemoteOffline": "Этого чека нет на этой кассе. Чтобы открыть чек другой кассы, нужен интернет",
+  "salesRemoteFailed": "Не удалось получить чек с сервера. Попробуйте позже"
 }
