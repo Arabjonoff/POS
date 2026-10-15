@@ -50,5 +50,8 @@ cd apps/pos && flutter run -d windows
 | `docs/STATE.md` | Agent hozir nima ustida ishlayapti (uzilishdan keyin davom etish uchun) |
 | `docs/PROGRESS.md` | Bajarilgan ishlar jurnali |
 | `docs/QUESTIONS.md` | Loyiha egasiga savollar |
+| `docs/user-guide/` | Foydalanuvchi qo'llanmasi (kassir, do'kon egasi) |
+| `docs/DEPLOY.md`, `docs/RELEASE.md` | Serverga chiqarish, ilovani chiqarish |
+| `docs/resilience.md`, `docs/ui-review.md` | Chidamlilik va UI tekshiruvlari natijalari |
 | `docs/AGENT_SETUP.md` | O'rnatish, MCP serverlar, avtomatik sikl |
 | `prompts/` | Agent uchun tayyor promptlar |

@@ -14,10 +14,10 @@
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 
 ## Oxirgi bajarilgan ish
-- T-093 tugadi (PR, merge).
+- T-094 tugadi (PR, merge). ROADMAP'dagi barcha vazifalar bajarildi, faqat T-047 (Q-007 — haqiqiy Android qurilma va printer kerak) qoldi.
 
 ## Keyingi aniq harakat
-- ROADMAP'dan keyingi vazifa: T-094 Foydalanuvchi qo'llanmasi (`docs/user-guide/`).
+- Loyiha egasining javoblarini kutish: `docs/QUESTIONS.md` (Q-001…Q-009). T-047 — Q-007 javobi va qurilma bo'lganda.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
