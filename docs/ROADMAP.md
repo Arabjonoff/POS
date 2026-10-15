@@ -233,7 +233,7 @@ Spec: `reports.md`.
 ## 7-bosqich. Admin dashboard (Next.js) va obuna nazorati
 Spec'lar: `admin-dashboard.md`, `subscription-billing.md`.
 
-### [ ] T-080 Admin: kirish va layout
+### [x] T-080 Admin: kirish va layout
 - **Bajarish:** login (platform_admin), JWT httpOnly cookie (Next.js route handler orqali), himoyalangan sahifalar, sidebar, yorug'/qorong'i.
 - **Qabul:** Playwright: noto'g'ri parol xatosi, to'g'ri kirish, chiqish.
 - **Bog'liq:** T-005, T-020

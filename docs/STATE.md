@@ -5,25 +5,19 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-080 Admin: kirish va layout
-- Branch: feat/T-080-admin-auth
-- Boshlangan: 2026-10-15
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [x] 1. Server tomoni (Next): `src/lib/auth/` (cookie nomlari, Django manzili, `login`/`refresh`/`me`), route handler'lar `POST /api/auth/login`, `POST /api/auth/logout` (httpOnly cookie, faqat `platform_admin`)
-- [x] 2. `src/proxy.ts`: kirmagan — `/login?next=`; access eskirgan, refresh bor — yangilab cookie qo'yadi
-- [x] 3. Route guruhlari: `(auth)/login` (qobiqsiz), `(app)/layout.tsx` (qobiq + `getCurrentAdmin()` DAL); header'da admin ismi va "Chiqish"
-- [x] 4. Kirish sahifasi (telefon, parol, xatolar: noto'g'ri parol, admin emas, tarmoq), tarjimalar uz/ru, Vitest
-- [x] 5. Playwright: soxta Django API (`e2e/mock-api.mjs`, webServer), noto'g'ri parol, kirish, chiqish, himoyalangan sahifa; eski smoke testlar kirish bilan
-- [ ] 6. Spec (admin-dashboard.md), skrinshotlar, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- 5: `e2e/mock-api.mjs`, playwright webServer massiv, `e2e/auth.spec.ts` (5) + smoke (3) — 8 o'tdi. `(app)/[section]` — menyu bo'limlari uchun "tayyorlanmoqda". Proxy matcher'da `\.` yo'qolishi tuzatildi.
+- T-080 tugadi (PR, merge).
 
 ## Keyingi aniq harakat
-- 6-qadam: main'ni merge qilish (STATE/ROADMAP/PROGRESS konflikti), skrinshotlar `docs/screenshots/T-080/` (login, bosh sahifa yorug'/qorong'i), spec, PROGRESS, ROADMAP, PR.
+- ROADMAP'dan keyingi vazifa: T-081 Admin: bosh sahifa (KPI).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
@@ -44,3 +38,4 @@
 - Widget testi teardown'ida drift yozuvini kutma (`await notifier.flush()` addTearDown ichida) — test osilib qoladi (timeout ham ishlamaydi). Test tanasida kutish mumkin.
 - To'lov oynasida skaner ro'yxatdan o'tgan: Flutter `HardwareKeyboard` ishlovchisi `true` qaytarsa ham hodisa `Focus.onKeyEvent` ga baribir yetadi. Shuning uchun oynada raqamlar faqat `onTyping` orqali (`MoneyInput(hardwareDigits: false)`), skaner Enter'i `_swallowEnter` bilan yutiladi.
 - Generatsiya qilingan Dart klient `DateTime` query'ni to'liq ISO vaqt qilib yuboradi; server `DateField` (`YYYY-MM-DD`) bo'lsa — Dio bilan to'g'ridan-to'g'ri chaqir (`reports_provider.dart` misoli).
+- Admin e2e lokal: `cd apps/admin && npm run build && E2E_PORT=3150 npx playwright test` (3100 — docker admin bo'lishi mumkin; reuseExistingServer uni qayta ishlatib yuboradi). Soxta Django API: `e2e/mock-api.mjs` (3199).
