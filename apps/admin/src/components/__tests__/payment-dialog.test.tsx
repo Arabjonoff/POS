@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -49,9 +49,9 @@ describe("PaymentDialog", () => {
     actions.recordPayment.mockResolvedValue({ ok: true, data: { periodFrom: "", periodTo: "" } });
     open({ paidUntil: null, trialEndsAt: "2026-10-01" });
     const user = userEvent.setup();
+    // Dialog ochilishda fokusni o'zi qo'yadi — sekin muhitda user.type matni boshqa joyga tushishi mumkin.
     const amount = screen.getByLabelText("Summa (so'm)");
-    await user.clear(amount);
-    await user.type(amount, "250 000,50");
+    fireEvent.change(amount, { target: { value: "250 000,50" } });
     await user.click(screen.getByRole("button", { name: "6" }));
     expect(amount).toHaveValue("250 000,50");
     // Sinov tugagan, to'lov yo'q → bugundan.
@@ -64,18 +64,16 @@ describe("PaymentDialog", () => {
       method: "card",
       note: "",
     });
-    expect(router.replace).toHaveBeenCalledWith("/tenants/t1?tab=payments");
+    await waitFor(() => expect(router.replace).toHaveBeenCalledWith("/tenants/t1?tab=payments"));
   });
 
   it("rejects a bad amount or month count without calling the server", async () => {
     open();
     const user = userEvent.setup();
-    await user.clear(screen.getByLabelText("Summa (so'm)"));
-    await user.type(screen.getByLabelText("Summa (so'm)"), "abc");
+    fireEvent.change(screen.getByLabelText("Summa (so'm)"), { target: { value: "abc" } });
     await user.click(screen.getByRole("button", { name: "To'lovni saqlash" }));
     expect(screen.getByText("Summani so'mda to'g'ri kiriting")).toBeInTheDocument();
-    await user.clear(screen.getByLabelText("Oylar soni"));
-    await user.type(screen.getByLabelText("Oylar soni"), "40");
+    fireEvent.change(screen.getByLabelText("Oylar soni"), { target: { value: "40" } });
     await user.click(screen.getByRole("button", { name: "To'lovni saqlash" }));
     expect(screen.getByText("1 dan 36 gacha butun son")).toBeInTheDocument();
     expect(actions.recordPayment).not.toHaveBeenCalled();
