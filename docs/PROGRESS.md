@@ -377,3 +377,12 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-090 (squash merge)
 - Qoldi / keyingi qadam: T-091 UI/UX sayqal. Haqiqiy arzon Android qurilmada o'lchash — T-093.
 - Muammo yoki qaror: yo'q — barcha ssenariylar birinchi urinishda yashil (faqat testdagi backoff vaqtini surish kerak bo'ldi).
+
+## 2026-10-15 — T-091 UI/UX sayqal
+- Qilindi: `docs/ui-review.md` — har ekran tekshiruv ro'yxati bo'yicha; avtomatik tekshiruvlar qo'shildi: rus va kirill matni barcha bo'limlar va ichki ekranlarda sig'adi (`test/ui_review/locale_fit_test.dart`, 20), rus tilidagi golden'lar, admin sahifalari 390 px va rus tilida gorizontal surilmaydi (`e2e/ui-review.spec.ts`).
+- Tuzatilgan og'ir muammolar:
+  - Bo'lim almashgandan keyin kassada F12/F1/Ctrl+raqam ishlamay qolardi (fokus yo'qolgan) — kassa faol bo'lganda fokusni qaytaradi, regressiya testi.
+  - Baland oynalarda (planshetda to'lov) "Yakunlash" tugmasi ekrandan pastda edi — `PosDialog` da faqat mazmun suriladi, tugmalar joyida.
+- Testlar: apps/pos 617 (+39), admin e2e 25 (+2). Skrinshotlar: `docs/screenshots/ui-review/`.
+- PR: T-091 (squash merge)
+- Qoldi / keyingi qadam: past og'irlikdagi kuzatuvlar `docs/ui-review.md` da; admin "Sozlamalar" sahifasi ROADMAP'da yo'q. Keyingi: T-092 Production deploy.

@@ -78,11 +78,16 @@ Future<Map<String, (int, int?, int)>> payments() async => {
 };
 
 Future<void> tapText(WidgetTester tester, String text) async {
+  // Oyna mazmuni suriladi (tugmalar joyida) — element ko'rinsin.
+  await tester.ensureVisible(find.text(text).last);
+  await tester.pumpAndSettle();
   await tester.tap(find.text(text).last);
   await tester.pumpAndSettle();
 }
 
 Future<void> tapKey(WidgetTester tester, String key) async {
+  await tester.ensureVisible(find.byKey(ValueKey(key)));
+  await tester.pumpAndSettle();
   await tester.tap(find.byKey(ValueKey(key)));
   await tester.pumpAndSettle();
 }

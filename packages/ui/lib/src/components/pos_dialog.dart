@@ -78,7 +78,9 @@ class PosDialog extends StatelessWidget {
           ],
           if (content != null) ...[
             const SizedBox(height: PosSpacing.l),
-            Flexible(child: content!),
+            // Faqat mazmun suriladi: sarlavha va tugmalar har doim ko'rinadi
+            // (planshetda baland oyna — tasdiqlash tugmasi ekrandan tushmasin).
+            Flexible(child: SingleChildScrollView(child: content)),
           ],
           if (actions.isNotEmpty) ...[
             const SizedBox(height: PosSpacing.xl),
@@ -143,7 +145,7 @@ Future<T?> showPosDialog<T>({
       useSafeArea: true,
       isDismissible: dismissible,
       enableDrag: dismissible,
-      builder: (context) => SingleChildScrollView(
+      builder: (context) => Padding(
         padding: EdgeInsets.only(
           bottom: MediaQuery.viewInsetsOf(context).bottom,
         ),
@@ -160,9 +162,7 @@ Future<T?> showPosDialog<T>({
       backgroundColor: Colors.transparent,
       child: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: maxWidth),
-        child: PosOverlaySurface(
-          child: SingleChildScrollView(child: builder(context)),
-        ),
+        child: PosOverlaySurface(child: builder(context)),
       ),
     ),
   );
