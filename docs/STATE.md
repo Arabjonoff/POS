@@ -12,16 +12,16 @@
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [ ] 1. Server ma'lumot qatlami: `src/lib/platform.ts` (`platformApi()` — cookie'dagi access bilan, 401 → `/login`), `getStats()`; `src/lib/format.ts` (pul tiyin → `1 250 000 so'm`, sana) + Vitest
-- [ ] 2. Bosh sahifa: KPI kartalari (faol, sinovda, MRR, shu oy tushum), muddati tugaydiganlar ro'yxati ("To'lov kiritish"), eski qurilmalar, oylik tushum grafigi (Recharts); `loading.tsx`, `error.tsx`
+- [x] 1. Server ma'lumot qatlami: `src/lib/platform.ts` (`platformApi()` — cookie'dagi access bilan, 401 → `/login`), `getStats()`; `src/lib/format.ts` (pul tiyin → `1 250 000 so'm`, sana) + Vitest
+- [x] 2. Bosh sahifa: KPI kartalari (faol, sinovda, MRR, shu oy tushum), muddati tugaydiganlar ro'yxati ("To'lov kiritish"), eski qurilmalar, oylik tushum grafigi (Recharts); `loading.tsx`, `error.tsx`
 - [ ] 3. Testlar: komponent (Vitest), soxta API'ga `/platform/stats/`, Playwright `e2e/dashboard.spec.ts`
 - [ ] 4. Spec, skrinshotlar, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- Reja yozildi.
+- 1–2: `src/lib/platform.ts` (`platformApi`, `getStats`), `src/lib/format.ts` (+test), `components/dashboard/{dashboard,revenue-chart}.tsx` (Recharts), `(app)/{page,loading,error}.tsx`, tarjimalar.
 
 ## Keyingi aniq harakat
-- 1-qadam: `apps/admin/src/lib/platform.ts`, `src/lib/format.ts`.
+- 3-qadam: Vitest `components/__tests__/dashboard.test.tsx` (RevenueChart mock), `src/lib/platform.test.ts` (next/headers mock); `e2e/mock-api.mjs` ga `GET /api/v1/platform/stats/`; `e2e/dashboard.spec.ts`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
