@@ -223,7 +223,7 @@ Spec: `debts.md`.
 ## 6-bosqich. Do'kon egasi hisobotlari (ilovada)
 Spec: `reports.md`.
 
-### [ ] T-070 Bosh sahifa va hisobotlar
+### [x] T-070 Bosh sahifa va hisobotlar
 - **Bajarish:** bugungi savdo, foyda, cheklar soni, o'rtacha chek; davr tanlash; top tovarlar; kassir bo'yicha; to'lov turlari; qarzlar; kam qolgan tovarlar. Oflaynda lokal ma'lumotdan, onlaynda serverdan.
 - **Qabul:** raqamlar backend hisobotlari bilan mos (test ma'lumotlarida).
 - **Bog'liq:** T-019, T-035

@@ -186,14 +186,6 @@
   "@statusPrinterUnknown": {
     "description": "Holat qatori: printer tanlanmagan"
   },
-  "sectionComingSoonTitle": "Bo'lim tayyorlanmoqda",
-  "@sectionComingSoonTitle": {
-    "description": "Hali qurilmagan bo'lim sarlavhasi"
-  },
-  "sectionComingSoonMessage": "Bu bo'lim keyingi yangilanishda qo'shiladi",
-  "@sectionComingSoonMessage": {
-    "description": "Hali qurilmagan bo'lim izohi"
-  },
   "setupTitle": "Kassani ulash",
   "@setupTitle": {
     "description": "Birinchi ishga tushirish sarlavhasi"
@@ -2163,5 +2155,194 @@
   "customerBack": "Mijozlar",
   "@customerBack": {
     "description": "Orqaga"
+  },
+  "reportsToday": "Bugun",
+  "@reportsToday": {
+    "description": "Hisobot davri"
+  },
+  "reportsYesterday": "Kecha",
+  "@reportsYesterday": {
+    "description": "Hisobot davri"
+  },
+  "reportsLast7Days": "7 kun",
+  "@reportsLast7Days": {
+    "description": "Hisobot davri: oxirgi 7 kun"
+  },
+  "reportsThisMonth": "Shu oy",
+  "@reportsThisMonth": {
+    "description": "Hisobot davri"
+  },
+  "reportsLastMonth": "O'tgan oy",
+  "@reportsLastMonth": {
+    "description": "Hisobot davri"
+  },
+  "reportsPeriodRange": "{from} – {to}",
+  "@reportsPeriodRange": {
+    "description": "Davr sanalari",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "reportsRevenue": "Tushum",
+  "@reportsRevenue": {
+    "description": "Savdo minus qaytarishlar"
+  },
+  "reportsProfit": "Foyda",
+  "@reportsProfit": {
+    "description": "Tushum minus tannarx"
+  },
+  "reportsChecks": "Cheklar",
+  "@reportsChecks": {
+    "description": "Cheklar soni sarlavhasi"
+  },
+  "reportsAverageCheck": "O'rtacha chek",
+  "@reportsAverageCheck": {
+    "description": "KPI"
+  },
+  "reportsChangeUp": "↑ {percent}",
+  "@reportsChangeUp": {
+    "description": "Oldingi davrga nisbatan o'sish",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "reportsChangeDown": "↓ {percent}",
+  "@reportsChangeDown": {
+    "description": "Oldingi davrga nisbatan kamayish",
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "reportsPrevious": "Oldin: {amount}",
+  "@reportsPrevious": {
+    "description": "Oldingi davr qiymati",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "reportsByHour": "Soatlar bo'yicha",
+  "@reportsByHour": {
+    "description": "Grafik sarlavhasi"
+  },
+  "reportsByDay": "Kunlar bo'yicha",
+  "@reportsByDay": {
+    "description": "Grafik sarlavhasi"
+  },
+  "reportsPayments": "To'lov turlari",
+  "@reportsPayments": {
+    "description": "Karta sarlavhasi"
+  },
+  "reportsTopProducts": "Ko'p sotilgan tovarlar",
+  "@reportsTopProducts": {
+    "description": "Karta sarlavhasi"
+  },
+  "reportsCashiers": "Kassirlar",
+  "@reportsCashiers": {
+    "description": "Karta sarlavhasi"
+  },
+  "reportsCashierRefunds": "{count, plural, other{{count} ta qaytarish}}",
+  "@reportsCashierRefunds": {
+    "description": "Kassir qaytarishlari soni",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reportsDebts": "Qarzlar",
+  "@reportsDebts": {
+    "description": "Karta sarlavhasi"
+  },
+  "reportsDebtors": "{count, plural, other{{count} ta qarzdor}}",
+  "@reportsDebtors": {
+    "description": "Qarzdorlar soni",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reportsStock": "Ombor",
+  "@reportsStock": {
+    "description": "Karta sarlavhasi"
+  },
+  "reportsStockValue": "Ombor qiymati (tannarx)",
+  "@reportsStockValue": {
+    "description": "Qoldiq × tannarx"
+  },
+  "reportsLowStock": "Kam qolganlar",
+  "@reportsLowStock": {
+    "description": "Minimal qoldiqdan kam"
+  },
+  "reportsNegativeStock": "Manfiy qoldiq",
+  "@reportsNegativeStock": {
+    "description": "Qoldiq noldan kam"
+  },
+  "reportsStockLine": "{qty} · eng kami {min}",
+  "@reportsStockLine": {
+    "description": "Qoldiq va minimal qoldiq",
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      },
+      "min": {
+        "type": "String"
+      }
+    }
+  },
+  "reportsNothing": "Yo'q",
+  "@reportsNothing": {
+    "description": "Ro'yxat bo'sh"
+  },
+  "reportsNoSales": "Bu davrda savdo yo'q",
+  "@reportsNoSales": {
+    "description": "Bo'sh davr"
+  },
+  "reportsLocalOnly": "Internet yo'q — faqat shu kassa ma'lumoti",
+  "@reportsLocalOnly": {
+    "description": "Server javob bermadi, lokal hisobot"
+  },
+  "reportsNoAccessTitle": "Hisobotlar ega va menejer uchun",
+  "@reportsNoAccessTitle": {
+    "description": "Kassirga ruxsat yo'q"
+  },
+  "reportsNoAccessMessage": "Ko'rish uchun menejer PIN kodini kiritsin",
+  "@reportsNoAccessMessage": {
+    "description": "Kassirga ruxsat yo'q"
+  },
+  "reportsUnlock": "Menejer PIN",
+  "@reportsUnlock": {
+    "description": "Tugma: menejer ruxsati bilan ochish"
+  },
+  "reportsUnlockReason": "Hisobotlarni ko'rish",
+  "@reportsUnlockReason": {
+    "description": "Menejer ruxsati sababi"
+  },
+  "reportsLoadFailed": "Hisobotni ochib bo'lmadi",
+  "@reportsLoadFailed": {
+    "description": "Xato"
+  },
+  "reportsCashierLine": "{checks} · {refunds}",
+  "@reportsCashierLine": {
+    "description": "Kassir: cheklar va qaytarishlar",
+    "placeholders": {
+      "checks": {
+        "type": "String"
+      },
+      "refunds": {
+        "type": "String"
+      }
+    }
   }
 }

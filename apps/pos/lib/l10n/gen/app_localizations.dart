@@ -363,18 +363,6 @@ abstract class AppLocalizations {
   /// **'Printer sozlanmagan'**
   String get statusPrinterUnknown;
 
-  /// Hali qurilmagan bo'lim sarlavhasi
-  ///
-  /// In uz, this message translates to:
-  /// **'Bo\'lim tayyorlanmoqda'**
-  String get sectionComingSoonTitle;
-
-  /// Hali qurilmagan bo'lim izohi
-  ///
-  /// In uz, this message translates to:
-  /// **'Bu bo\'lim keyingi yangilanishda qo\'shiladi'**
-  String get sectionComingSoonMessage;
-
   /// Birinchi ishga tushirish sarlavhasi
   ///
   /// In uz, this message translates to:
@@ -2876,6 +2864,216 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Mijozlar'**
   String get customerBack;
+
+  /// Hisobot davri
+  ///
+  /// In uz, this message translates to:
+  /// **'Bugun'**
+  String get reportsToday;
+
+  /// Hisobot davri
+  ///
+  /// In uz, this message translates to:
+  /// **'Kecha'**
+  String get reportsYesterday;
+
+  /// Hisobot davri: oxirgi 7 kun
+  ///
+  /// In uz, this message translates to:
+  /// **'7 kun'**
+  String get reportsLast7Days;
+
+  /// Hisobot davri
+  ///
+  /// In uz, this message translates to:
+  /// **'Shu oy'**
+  String get reportsThisMonth;
+
+  /// Hisobot davri
+  ///
+  /// In uz, this message translates to:
+  /// **'O\'tgan oy'**
+  String get reportsLastMonth;
+
+  /// Davr sanalari
+  ///
+  /// In uz, this message translates to:
+  /// **'{from} – {to}'**
+  String reportsPeriodRange(String from, String to);
+
+  /// Savdo minus qaytarishlar
+  ///
+  /// In uz, this message translates to:
+  /// **'Tushum'**
+  String get reportsRevenue;
+
+  /// Tushum minus tannarx
+  ///
+  /// In uz, this message translates to:
+  /// **'Foyda'**
+  String get reportsProfit;
+
+  /// Cheklar soni sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Cheklar'**
+  String get reportsChecks;
+
+  /// KPI
+  ///
+  /// In uz, this message translates to:
+  /// **'O\'rtacha chek'**
+  String get reportsAverageCheck;
+
+  /// Oldingi davrga nisbatan o'sish
+  ///
+  /// In uz, this message translates to:
+  /// **'↑ {percent}'**
+  String reportsChangeUp(String percent);
+
+  /// Oldingi davrga nisbatan kamayish
+  ///
+  /// In uz, this message translates to:
+  /// **'↓ {percent}'**
+  String reportsChangeDown(String percent);
+
+  /// Oldingi davr qiymati
+  ///
+  /// In uz, this message translates to:
+  /// **'Oldin: {amount}'**
+  String reportsPrevious(String amount);
+
+  /// Grafik sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Soatlar bo\'yicha'**
+  String get reportsByHour;
+
+  /// Grafik sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Kunlar bo\'yicha'**
+  String get reportsByDay;
+
+  /// Karta sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'To\'lov turlari'**
+  String get reportsPayments;
+
+  /// Karta sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Ko\'p sotilgan tovarlar'**
+  String get reportsTopProducts;
+
+  /// Karta sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Kassirlar'**
+  String get reportsCashiers;
+
+  /// Kassir qaytarishlari soni
+  ///
+  /// In uz, this message translates to:
+  /// **'{count, plural, other{{count} ta qaytarish}}'**
+  String reportsCashierRefunds(int count);
+
+  /// Karta sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Qarzlar'**
+  String get reportsDebts;
+
+  /// Qarzdorlar soni
+  ///
+  /// In uz, this message translates to:
+  /// **'{count, plural, other{{count} ta qarzdor}}'**
+  String reportsDebtors(int count);
+
+  /// Karta sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Ombor'**
+  String get reportsStock;
+
+  /// Qoldiq × tannarx
+  ///
+  /// In uz, this message translates to:
+  /// **'Ombor qiymati (tannarx)'**
+  String get reportsStockValue;
+
+  /// Minimal qoldiqdan kam
+  ///
+  /// In uz, this message translates to:
+  /// **'Kam qolganlar'**
+  String get reportsLowStock;
+
+  /// Qoldiq noldan kam
+  ///
+  /// In uz, this message translates to:
+  /// **'Manfiy qoldiq'**
+  String get reportsNegativeStock;
+
+  /// Qoldiq va minimal qoldiq
+  ///
+  /// In uz, this message translates to:
+  /// **'{qty} · eng kami {min}'**
+  String reportsStockLine(String qty, String min);
+
+  /// Ro'yxat bo'sh
+  ///
+  /// In uz, this message translates to:
+  /// **'Yo\'q'**
+  String get reportsNothing;
+
+  /// Bo'sh davr
+  ///
+  /// In uz, this message translates to:
+  /// **'Bu davrda savdo yo\'q'**
+  String get reportsNoSales;
+
+  /// Server javob bermadi, lokal hisobot
+  ///
+  /// In uz, this message translates to:
+  /// **'Internet yo\'q — faqat shu kassa ma\'lumoti'**
+  String get reportsLocalOnly;
+
+  /// Kassirga ruxsat yo'q
+  ///
+  /// In uz, this message translates to:
+  /// **'Hisobotlar ega va menejer uchun'**
+  String get reportsNoAccessTitle;
+
+  /// Kassirga ruxsat yo'q
+  ///
+  /// In uz, this message translates to:
+  /// **'Ko\'rish uchun menejer PIN kodini kiritsin'**
+  String get reportsNoAccessMessage;
+
+  /// Tugma: menejer ruxsati bilan ochish
+  ///
+  /// In uz, this message translates to:
+  /// **'Menejer PIN'**
+  String get reportsUnlock;
+
+  /// Menejer ruxsati sababi
+  ///
+  /// In uz, this message translates to:
+  /// **'Hisobotlarni ko\'rish'**
+  String get reportsUnlockReason;
+
+  /// Xato
+  ///
+  /// In uz, this message translates to:
+  /// **'Hisobotni ochib bo\'lmadi'**
+  String get reportsLoadFailed;
+
+  /// Kassir: cheklar va qaytarishlar
+  ///
+  /// In uz, this message translates to:
+  /// **'{checks} · {refunds}'**
+  String reportsCashierLine(String checks, String refunds);
 }
 
 class _AppLocalizationsDelegate
