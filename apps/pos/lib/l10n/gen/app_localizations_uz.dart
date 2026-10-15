@@ -2335,6 +2335,62 @@ class AppLocalizationsUz extends AppLocalizations {
   @override
   String get printerNoUsbHint =>
       'Printerni OTG kabel bilan ulang va yoqing, keyin ro\'yxatni yangilang.';
+
+  @override
+  String get navSales => 'Cheklar';
+
+  @override
+  String get salesSearchHint => 'Chek raqami, mijoz yoki tovar';
+
+  @override
+  String get salesAllPayments => 'Hammasi';
+
+  @override
+  String salesSummary(int count, String total) {
+    return '$count ta chek · $total';
+  }
+
+  @override
+  String salesRefundedTotal(String amount) {
+    return 'Qaytarilgan: $amount';
+  }
+
+  @override
+  String get salesEmptyTitle => 'Bu kunda chek yo\'q';
+
+  @override
+  String get salesNotFound => 'Hech narsa topilmadi';
+
+  @override
+  String get salesLocalNote => 'Faqat shu kassada sotilgan cheklar ko\'rinadi';
+
+  @override
+  String salesItems(int count) {
+    return '$count pozitsiya';
+  }
+
+  @override
+  String get salesStatusRefunded => 'Qaytarilgan';
+
+  @override
+  String get salesStatusPartial => 'Qisman qaytarilgan';
+
+  @override
+  String salesReceiptNotFound(String code) {
+    return 'Chek topilmadi: $code';
+  }
+
+  @override
+  String get salesSelectHint => 'Ko\'rish uchun chekni tanlang';
+
+  @override
+  String get salesRefunds => 'Qaytarishlar';
+
+  @override
+  String get salesBack => 'Cheklar ro\'yxati';
+
+  @override
+  String get salesSetUpPrinter => 'Sozlash';
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -4656,4 +4712,60 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
   @override
   String get printerNoUsbHint =>
       'Принтерни OTG кабел билан уланг ва ёқинг, кейин рўйхатни янгиланг.';
+
+  @override
+  String get navSales => 'Чеклар';
+
+  @override
+  String get salesSearchHint => 'Чек рақами, мижоз ёки товар';
+
+  @override
+  String get salesAllPayments => 'Ҳаммаси';
+
+  @override
+  String salesSummary(int count, String total) {
+    return '$count та чек · $total';
+  }
+
+  @override
+  String salesRefundedTotal(String amount) {
+    return 'Қайтарилган: $amount';
+  }
+
+  @override
+  String get salesEmptyTitle => 'Бу кунда чек йўқ';
+
+  @override
+  String get salesNotFound => 'Ҳеч нарса топилмади';
+
+  @override
+  String get salesLocalNote => 'Фақат шу кассада сотилган чеклар кўринади';
+
+  @override
+  String salesItems(int count) {
+    return '$count позиция';
+  }
+
+  @override
+  String get salesStatusRefunded => 'Қайтарилган';
+
+  @override
+  String get salesStatusPartial => 'Қисман қайтарилган';
+
+  @override
+  String salesReceiptNotFound(String code) {
+    return 'Чек топилмади: $code';
+  }
+
+  @override
+  String get salesSelectHint => 'Кўриш учун чекни танланг';
+
+  @override
+  String get salesRefunds => 'Қайтаришлар';
+
+  @override
+  String get salesBack => 'Чеклар рўйхати';
+
+  @override
+  String get salesSetUpPrinter => 'Созлаш';
 }

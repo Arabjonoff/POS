@@ -334,6 +334,13 @@ Audit: `PROJECT_AUDIT.md`, batafsil — `docs/audit/`. Jurnal: `AGENT_WORKLOG.md
 - **Qabul:** 3 tovarli chek faqat skaner va klaviatura bilan yopiladi; 1366×768 da hech narsa kesilmaydi, TO'LASH doim ko'rinadi.
 - **Bog'liq:** T-108b
 
+## 12-bosqich. Loyiha egasi talablari (2026-10-15)
+
+### [x] T-109 Cheklar tarixi va qayta chop etish
+- **Bajarish:** `receipt-history.md` bo'yicha: yangi bo'lim "Cheklar" (menyuda kassadan keyin, Ctrl+7; kassada F7) — shu kassaning yakunlangan cheklari: sana (bugun/kecha/tanlash), qidiruv (chek raqami, mijoz, tovar; skaner — chekdagi shtrix-kod), to'lov turi filtri, jami; qator — raqam, vaqt, kassir, mijoz, pozitsiyalar, to'lov turi, summa, qaytarilgan belgisi. Chek tafsiloti — chek ko'rinishi (printerdagidek), qaytarilganlar, "Qayta chop etish" (NUSXA) va "Qaytarish".
+- **Qabul:** widget testlari: ro'yxat va filtrlar, skaner bilan topish, qayta chop etish (printer bor/yo'q/xato), qaytarish oynasi shu chek bilan ochiladi; golden telefon/planshet/desktop.
+- **Bog'liq:** T-044, T-045
+
 ---
 
 ## Keyinroq (hozir QILINMAYDI)

@@ -14,10 +14,10 @@
 - (yo'q)
 
 ## Oxirgi bajarilgan ish
-- T-047 Android Bluetooth/USB chek printeri (PR #62). Haqiqiy qurilmada sinov — `docs/printing-android-checklist.md`.
+- T-109 Cheklar tarixi va qayta chop etish (loyiha egasi talabi).
 
 ## Keyingi aniq harakat
-- ROADMAP'da bajarilmagan vazifa qolmadi; ochiq savollar `docs/QUESTIONS.md` (Q-001…Q-007, Q-009…Q-011). Loyiha egasidan yangi vazifa kutiladi.
+- ROADMAP'da bajarilmagan vazifa yo'q; ochiq savollar `docs/QUESTIONS.md`. Loyiha egasidan yangi talab kutiladi.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
@@ -50,3 +50,4 @@
 - Flutter: bo'lim (StatefulShellRoute) almashganda fokus yo'qoladi — qaytganda ekran o'zi fokusni olishi kerak (`TickerMode.valuesOf` o'zgarishi, kassa misoli). Oyna mazmuni suriladi — testda pastdagi elementni bosishdan oldin `ensureVisible`.
 - Prod stack lokal sinovi: `.env.prod.local` (CADDY_TLS=tls internal, 18080\/18443) + `docker compose -f docker-compose.prod.yml --env-file .env.prod.local -p pos-prodtest up -d --build`; curl `--resolve api.localhost:18443:127.0.0.1`. Git Bash'da `docker ... /deploy/x.sh` uchun `MSYS_NO_PATHCONV=1`. Admin→Django so'rovlari Content-Length bilan bo'lishi shart (WSGI chunked'ni o'qimaydi).
 - Windows o'rnatuvchi lokal: `powershell -ExecutionPolicy Bypass -File apps/pos/tool/build-windows-installer.ps1 -ApiUrl ...`; jim sinov: `dist\kassa-setup-X.exe /VERYSILENT /CURRENTUSER /DIR=%TEMP%\kassa-test`, so'ng `unins000.exe /VERYSILENT`.
+- Drift jonli oqimini `async*` + `await for (tableUpdates)` bilan yozma: obunani bekor qilish osilib qoladi (test timeout). `customSelect('SELECT 1', readsFrom: {...}).watch().asyncMap(...)` ishlat (`sale_history.dart`).

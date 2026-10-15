@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pos_app/app/scanner/scanner_settings.dart';
+import 'package:pos_app/app/shell/app_sections.dart';
 import 'package:pos_app/app/shell/app_status_bar.dart';
 import 'package:pos_app/app/shell/subscription_banner.dart';
 import 'package:pos_app/app/sync/sales_gate.dart';
@@ -150,7 +151,11 @@ class _CashierViewState extends ConsumerState<CashierView> {
         other != null &&
         !_screenFocus.hasFocus) {
       final route = ModalRoute.of(other);
-      if (route != null && route != ModalRoute.of(context) && route.isCurrent) {
+      // Yashirin bo'limdagi fokus (masalan, "Cheklar") — hisobga olinmaydi.
+      if (route != null &&
+          route != ModalRoute.of(context) &&
+          route.isCurrent &&
+          TickerMode.valuesOf(other).enabled) {
         return;
       }
     }
@@ -671,6 +676,11 @@ class _CashierViewState extends ConsumerState<CashierView> {
     }
     if (key == LogicalKeyboardKey.f8) {
       unawaited(_openRefund());
+      return true;
+    }
+    if (key == LogicalKeyboardKey.f7) {
+      // Cheklar tarixi (T-109).
+      context.go(AppSection.sales.path);
       return true;
     }
     if (key == LogicalKeyboardKey.f9) {

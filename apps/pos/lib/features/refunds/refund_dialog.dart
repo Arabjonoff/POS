@@ -28,17 +28,22 @@ class RefundResult {
 /// F8: qaytarish (`docs/specs/sales-api.md`, T-045). Savdo chek raqami,
 /// chekdagi shtrix-kod yoki oxirgi cheklar ro'yxatidan topiladi; qisman yoki
 /// to'liq, sabab bilan, naqd yoki qarzdan ayirib. Menejer/ega tasdiqlaydi.
-Future<RefundResult?> showRefundDialog(BuildContext context) =>
-    showPosDialog<RefundResult>(
-      context: context,
-      maxWidth: RefundDialog.maxWidth,
-      builder: (context) => const RefundDialog(),
-    );
+/// [saleId] — chek oldindan tanlangan (cheklar tarixidan, T-109).
+Future<RefundResult?> showRefundDialog(
+  BuildContext context, {
+  String? saleId,
+}) => showPosDialog<RefundResult>(
+  context: context,
+  maxWidth: RefundDialog.maxWidth,
+  builder: (context) => RefundDialog(saleId: saleId),
+);
 
 class RefundDialog extends ConsumerStatefulWidget {
-  const RefundDialog({super.key});
+  const RefundDialog({this.saleId, super.key});
 
   static const double maxWidth = 600;
+
+  final String? saleId;
 
   @override
   ConsumerState<RefundDialog> createState() => _RefundDialogState();
@@ -66,7 +71,12 @@ class _RefundDialogState extends ConsumerState<RefundDialog> {
   @override
   void initState() {
     super.initState();
-    unawaited(_loadRecent());
+    final saleId = widget.saleId;
+    if (saleId != null) {
+      unawaited(_openSale(saleId));
+    } else {
+      unawaited(_loadRecent());
+    }
   }
 
   @override

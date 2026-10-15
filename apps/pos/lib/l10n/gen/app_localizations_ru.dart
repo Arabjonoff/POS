@@ -2355,4 +2355,60 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get printerNoUsbHint =>
       'Подключите принтер через OTG-кабель и включите его, затем обновите список.';
+
+  @override
+  String get navSales => 'Чеки';
+
+  @override
+  String get salesSearchHint => 'Номер чека, клиент или товар';
+
+  @override
+  String get salesAllPayments => 'Все';
+
+  @override
+  String salesSummary(int count, String total) {
+    return 'Чеков: $count · $total';
+  }
+
+  @override
+  String salesRefundedTotal(String amount) {
+    return 'Возвращено: $amount';
+  }
+
+  @override
+  String get salesEmptyTitle => 'В этот день чеков нет';
+
+  @override
+  String get salesNotFound => 'Ничего не найдено';
+
+  @override
+  String get salesLocalNote => 'Показаны только чеки этой кассы';
+
+  @override
+  String salesItems(int count) {
+    return 'Позиций: $count';
+  }
+
+  @override
+  String get salesStatusRefunded => 'Возвращён';
+
+  @override
+  String get salesStatusPartial => 'Частично возвращён';
+
+  @override
+  String salesReceiptNotFound(String code) {
+    return 'Чек не найден: $code';
+  }
+
+  @override
+  String get salesSelectHint => 'Выберите чек для просмотра';
+
+  @override
+  String get salesRefunds => 'Возвраты';
+
+  @override
+  String get salesBack => 'Список чеков';
+
+  @override
+  String get salesSetUpPrinter => 'Настроить';
 }
