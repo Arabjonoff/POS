@@ -25,6 +25,18 @@ def _json_safe(value):
     return json.loads(json.dumps(value, default=str))
 
 
+def _without_nul(value):
+    """NUL (`\u0000`) ni olib tashlaydi: Postgres jsonb uni saqlay olmaydi va push 500
+    bilan yiqilib, kassa navbati butunlay to'xtab qolardi (audit PR-P0-2)."""
+    if isinstance(value, str):
+        return value.replace("\x00", "")
+    if isinstance(value, list):
+        return [_without_nul(item) for item in value]
+    if isinstance(value, dict):
+        return {_without_nul(key): _without_nul(item) for key, item in value.items()}
+    return value
+
+
 def _error(code: str, message: str, details=None) -> dict:
     return {"code": code, "message": message, "details": _json_safe(details or {})}
 
@@ -104,7 +116,7 @@ def push(device, events: list[dict]) -> list[dict]:
             tenant_id=device.tenant_id,
             device=device,
             type=item["type"],
-            payload=_json_safe(item["payload"]),
+            payload=_without_nul(_json_safe(item["payload"])),
             client_created_at=item["created_at"],
             status=EventStatus.PENDING,
         )

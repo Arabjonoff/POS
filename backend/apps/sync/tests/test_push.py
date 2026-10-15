@@ -205,6 +205,84 @@ def test_debt_paid(kassa, cashier, tenant):
     assert customer.debt_entries.get(type="payment").shift_id == shift_id
 
 
+def test_waiting_debt_sale_and_payment_survive_shift_close(kassa, cashier, product):
+    """Audit CU-B2/B3: mijoz hodisasi kechiksa, uning nasiya savdosi va to'lovi kutadi
+    va smena yopilgandan keyin ham qo'llanadi (rad etilmaydi), Z-hisobot yangilanadi."""
+    _, client = kassa
+    shift_id = _opened(client, cashier)
+    customer_id = str(new_id())
+    sale = sale_completed(shift_id, cashier, product)
+    sale["payload"]["customer"] = customer_id
+    sale["payload"]["debt_entry_id"] = str(new_id())
+    sale["payload"]["payments"] = [
+        {"id": str(new_id()), "method": "debt", "amount_tiyin": 400_000, "change_tiyin": 0}
+    ]
+    payment = event(
+        "debt.paid",
+        {
+            "id": str(new_id()),
+            "customer": customer_id,
+            "amount_tiyin": 100_000,
+            "method": "cash",
+            "shift": str(shift_id),
+            "by": str(cashier.id),
+            "at": tick(),
+        },
+    )
+    closed = event(
+        "shift.closed",
+        {
+            "id": str(shift_id),
+            "closed_by": str(cashier.id),
+            "counted_cash_tiyin": 100_000,
+            "closed_at": tick(),
+        },
+    )
+    assert statuses(push(client, sale, payment, closed)) == ["pending", "pending", "applied"]
+
+    upserted = event(
+        "customer.upserted", {"id": customer_id, "full_name": "Kech", "by": str(cashier.id)}
+    )
+    assert statuses(push(client, upserted)) == ["applied"]
+    assert SyncEvent.objects.get(pk=sale["id"]).status == "applied"
+    assert SyncEvent.objects.get(pk=payment["id"]).status == "applied"
+    customer = Customer.objects.get(pk=customer_id)
+    assert customer_balance(customer) == 300_000
+    shift = Shift.objects.get(pk=shift_id)
+    assert not shift.is_open
+    assert shift.expected_cash_tiyin == 100_000
+
+
+def test_nul_character_does_not_block_the_queue(kassa, cashier, tenant):
+    """Audit PR-P0-2: `\\u0000` push'ni 500 bilan yiqitib, navbatni to'xtatardi."""
+    _, client = kassa
+    customer_id = str(new_id())
+    upserted = event(
+        "customer.upserted",
+        {"id": customer_id, "full_name": "Ali\u0000 aka", "note": "\u0000", "by": str(cashier.id)},
+    )
+    assert statuses(push(client, upserted)) == ["applied"]
+    assert Customer.objects.get(pk=customer_id).full_name == "Ali aka"
+
+
+def test_event_after_shift_close_time_still_rejected(kassa, cashier, product):
+    _, client = kassa
+    shift_id = _opened(client, cashier)
+    closed = event(
+        "shift.closed",
+        {
+            "id": str(shift_id),
+            "closed_by": str(cashier.id),
+            "counted_cash_tiyin": 0,
+            "closed_at": tick(),
+        },
+    )
+    assert statuses(push(client, closed)) == ["applied"]
+    result = push(client, sale_completed(shift_id, cashier, product))[0]
+    assert result["status"] == "rejected"
+    assert result["error"]["code"] == "shift_closed"
+
+
 def test_debt_paid_for_unknown_customer_is_pending(kassa, cashier):
     _, client = kassa
     payment = event(
