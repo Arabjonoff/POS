@@ -5,24 +5,19 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-106 UI/UX sayqal — PR va merge
-- Branch: feat/T-106-ux-polish
-- Boshlangan: 2026-10-15
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
-- [x] 1. Holat qatori, telefon pastki menyusi
-- [x] 2. Ikki marta bosish / qotish, inventarizatsiya o'chirish tasdig'i
-- [x] 3. Naqd qarz to'lovi faqat smenada; smena bazadan (`openShiftNow`)
-- [x] 4. Qisman tovar tahriri; golden'lar
-- [x] 5. Pul formati, majburiy `*`, ro'yxat xato holati, dublikat nom, o'chirilgan tovar, bo'sh PLU
-- [ ] 6. PR, CI, merge
+- (yo'q)
 
 ## Oxirgi bajarilgan ish
-- Hammasi yashil: backend to'liq, apps/pos 754, packages/ui 141, widgetbook 62; hujjatlar yangilandi.
+- T-100…T-107 (audit, tuzatishlar, yakuniy hisobot) — `main`da. Hisobot: `PROJECT_AUDIT.md` → "Yakuniy hisobot".
 
 ## Keyingi aniq harakat
-- `gh pr create` (T-106), CI yashil bo'lsa squash merge; keyin T-107 regressiya va yakuniy hisobot (foydalanuvchi so'ragan 8 savolga javob).
+- `docs/ROADMAP.md` dan keyingi bajarilmagan vazifa; ochiq savollar `docs/QUESTIONS.md` (javob kelsa — tegishli vazifa).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

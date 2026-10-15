@@ -23,7 +23,7 @@ barcha modullar regressiyasi, testlar, yakuniy hisobot.
 | 5 | Mahsulot rasmi (server + sinx + kassa) | ✅ T-105 |
 | 6 | Chek sozlamalari (preview, logo, 58/80 mm, test cheki) | ✅ T-104a, T-104b |
 | 7 | Vizual uslub va UX sayqali | ✅ T-106 |
-| 8 | Regressiya, yakuniy hisobot | — |
+| 8 | Regressiya, yakuniy hisobot | ✅ T-107 |
 
 ## Jurnal
 ### 2026-10-15
@@ -49,5 +49,7 @@ barcha modullar regressiyasi, testlar, yakuniy hisobot.
 
 - T-106: holat qatori va telefon menyusi, ikki marta bosish/qotish, inventarizatsiya o'chirish tasdig'i, naqd qarz to'lovi faqat smenada, smena bazadan (eskirgan provider qiymati — haqiqiy xato), qisman tovar tahriri, pul maydoni formati, majburiy `*`, ro'yxat xato holati, dublikat nom, o'chirilgan tovar kartasi, bo'sh PLU. Sinab ko'rilgan va voz kechilgan: serverda "qisman tahrir yaratishdan oldin kelsa — kutish" qoidasi (kassa hodisalarni tartib bilan yuboradi; mavjud validatsiya testini buzardi). pos 754, ui 141, backend to'liq.
 
+- T-107: to'liq regressiya (backend, kassa, dizayn tizimi, widgetbook, admin unit + e2e) — yashil; yakuniy hisobot `PROJECT_AUDIT.md` da.
+
 ## Keyingi qadam
-- T-107 regressiya va yakuniy hisobot.
+- Foydalanuvchi qarorlari: `docs/QUESTIONS.md` (Q-003…Q-007, Q-009…Q-011), RC-B4; jismoniy printer va mobil qurilmada sinov.
