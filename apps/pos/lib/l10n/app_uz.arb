@@ -2409,5 +2409,53 @@
         "type": "String"
       }
     }
+  },
+  "statusUpdate": "Yangi versiya {version}",
+  "@statusUpdate": {
+    "description": "Holat qatori: yangi versiya bor",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsAbout": "Ilova haqida",
+  "@settingsAbout": {
+    "description": "Sozlamalar bo'limi"
+  },
+  "settingsVersion": "Versiya: {version}",
+  "@settingsVersion": {
+    "description": "O'rnatilgan versiya",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsUpdateAvailable": "Yangi versiya mavjud: {version}",
+  "@settingsUpdateAvailable": {
+    "description": "Yangi versiya",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsUpdateDownload": "Yuklab olish: {url}",
+  "@settingsUpdateDownload": {
+    "description": "Yuklab olish havolasi",
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsUpdateAskAdmin": "O'rnatish uchun administrator bilan bog'laning",
+  "@settingsUpdateAskAdmin": {
+    "description": "Havola yo'q"
+  },
+  "settingsUpToDate": "Eng so'nggi versiya o'rnatilgan",
+  "@settingsUpToDate": {
+    "description": "Yangilash kerak emas"
   }
 }

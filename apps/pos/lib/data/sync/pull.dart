@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:clock/clock.dart';
 import 'package:drift/drift.dart';
 import 'package:pos_api_client/pos_api_client.dart';
+import 'package:pos_app/app/update/app_update.dart';
 import 'package:pos_app/core/text/search_key.dart';
 import 'package:pos_app/data/db/app_database.dart';
 
@@ -240,6 +241,11 @@ class PullApplier {
             ),
           ),
         );
+    // Yangi versiya e'loni (T-093); eski server — maydon yo'q (null).
+    await _db.writeSetting(
+      appReleaseSettingKey,
+      encodeRelease(page.app?.latestVersion, page.app?.downloadUrl),
+    );
   }
 
   static String _s(Object? v) => v is String ? v : (v?.toString() ?? '');

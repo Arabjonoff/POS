@@ -505,5 +505,12 @@
   "salesHelpReadonly": "Кўриш, ҳисоботлар ва синхрон ишлайди. Савдони тиклаш учун обунани тўланг.",
   "salesHelpBlocked": "Кўриш, ҳисоботлар ва синхрон ишлайди.",
   "salesHelpOffline": "Интернетга уланинг — синхрондан кейин савдо давом этади. Ҳамма маълумот сақланган.",
-  "salesBlockedAction": "Ҳозир тасдиқлаб бўлмайди: {reason}"
+  "salesBlockedAction": "Ҳозир тасдиқлаб бўлмайди: {reason}",
+  "statusUpdate": "Янги версия {version}",
+  "settingsAbout": "Илова ҳақида",
+  "settingsVersion": "Версия: {version}",
+  "settingsUpdateAvailable": "Янги версия мавжуд: {version}",
+  "settingsUpdateDownload": "Юклаб олиш: {url}",
+  "settingsUpdateAskAdmin": "Ўрнатиш учун администратор билан боғланинг",
+  "settingsUpToDate": "Энг сўнгги версия ўрнатилган"
 }

@@ -1771,6 +1771,36 @@ class AppLocalizationsUz extends AppLocalizations {
   String salesBlockedAction(String reason) {
     return 'Hozir tasdiqlab bo\'lmaydi: $reason';
   }
+
+  @override
+  String statusUpdate(String version) {
+    return 'Yangi versiya $version';
+  }
+
+  @override
+  String get settingsAbout => 'Ilova haqida';
+
+  @override
+  String settingsVersion(String version) {
+    return 'Versiya: $version';
+  }
+
+  @override
+  String settingsUpdateAvailable(String version) {
+    return 'Yangi versiya mavjud: $version';
+  }
+
+  @override
+  String settingsUpdateDownload(String url) {
+    return 'Yuklab olish: $url';
+  }
+
+  @override
+  String get settingsUpdateAskAdmin =>
+      'O\'rnatish uchun administrator bilan bog\'laning';
+
+  @override
+  String get settingsUpToDate => 'Eng so\'nggi versiya o\'rnatilgan';
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -3531,4 +3561,34 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
   String salesBlockedAction(String reason) {
     return 'Ҳозир тасдиқлаб бўлмайди: $reason';
   }
+
+  @override
+  String statusUpdate(String version) {
+    return 'Янги версия $version';
+  }
+
+  @override
+  String get settingsAbout => 'Илова ҳақида';
+
+  @override
+  String settingsVersion(String version) {
+    return 'Версия: $version';
+  }
+
+  @override
+  String settingsUpdateAvailable(String version) {
+    return 'Янги версия мавжуд: $version';
+  }
+
+  @override
+  String settingsUpdateDownload(String url) {
+    return 'Юклаб олиш: $url';
+  }
+
+  @override
+  String get settingsUpdateAskAdmin =>
+      'Ўрнатиш учун администратор билан боғланинг';
+
+  @override
+  String get settingsUpToDate => 'Энг сўнгги версия ўрнатилган';
 }
