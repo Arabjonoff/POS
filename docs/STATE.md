@@ -15,15 +15,15 @@
 - [x] 1. Server tomoni (Next): `src/lib/auth/` (cookie nomlari, Django manzili, `login`/`refresh`/`me`), route handler'lar `POST /api/auth/login`, `POST /api/auth/logout` (httpOnly cookie, faqat `platform_admin`)
 - [x] 2. `src/proxy.ts`: kirmagan — `/login?next=`; access eskirgan, refresh bor — yangilab cookie qo'yadi
 - [x] 3. Route guruhlari: `(auth)/login` (qobiqsiz), `(app)/layout.tsx` (qobiq + `getCurrentAdmin()` DAL); header'da admin ismi va "Chiqish"
-- [ ] 4. Kirish sahifasi (telefon, parol, xatolar: noto'g'ri parol, admin emas, tarmoq), tarjimalar uz/ru, Vitest
+- [x] 4. Kirish sahifasi (telefon, parol, xatolar: noto'g'ri parol, admin emas, tarmoq), tarjimalar uz/ru, Vitest
 - [ ] 5. Playwright: soxta Django API (`e2e/mock-api.mjs`, webServer), noto'g'ri parol, kirish, chiqish, himoyalangan sahifa; eski smoke testlar kirish bilan
 - [ ] 6. Spec (admin-dashboard.md), skrinshotlar, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- 1–3: `src/lib/auth/{config,django,cookies,session}.ts`, `api/auth/login|logout` route handler'lar, `src/proxy.ts`, `(app)/layout.tsx` + `(auth)/login/page.tsx`, `LoginForm`, `UserMenu`, tarjimalar. typecheck + lint toza.
+- 4: Vitest — login route handler (4), proxy (4), safeNext, LoginForm (5); jami 21 test.
 
 ## Keyingi aniq harakat
-- 4-qadam: Vitest — `src/app/api/auth/login/route.test.ts` (node muhit, fetch mock), `src/proxy.test.ts`, `src/components/__tests__/login-form.test.tsx`, `safeNext`.
+- 5-qadam: `apps/admin/e2e/mock-api.mjs` (soxta Django: login/refresh/me), `playwright.config.ts` webServer massiv (+ `API_URL_INTERNAL`), `e2e/auth.spec.ts`, smoke testlarga kirish. Lokal: `E2E_PORT=3150` (3100 docker admin).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
