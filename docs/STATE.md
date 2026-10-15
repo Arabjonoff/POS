@@ -5,24 +5,19 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-070 Bosh sahifa va hisobotlar
-- Branch: feat/T-070-reports
-- Boshlangan: 2026-10-15
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [x] 1. Umumiy vektorlar `testdata/report_vectors.json` + backend testi; kassa uchun `GET /api/v1/sync/reports/` (qurilma tokeni, barcha hisobotlar bitta javobda); klientlar
-- [x] 2. Kassa: `data/reports/local_reports.dart` — shu formulalar lokal bazada (summary, by-day, by-hour, top, kassirlar, qarzlar, ombor) + vektor testi (`apps/pos/test/data/local_reports_test.dart`)
-- [x] 3. `reportsProvider`: onlayn — server, xato — lokal ("faqat shu kassa" belgisi)
-- [ ] 4. "Hisobotlar" bo'limi (Ctrl+5, ega/menejer): davr tanlash, KPI (tushum ↑↓%, foyda, cheklar, o'rtacha chek), kunlar/soatlar grafigi, top tovarlar, kassirlar, to'lov turlari, qarzlar, kam qolganlar; kassirga — ruxsat yo'q
-- [ ] 5. Widget testlari + golden + skrinshotlar; spec, PR, merge
 
 ## Oxirgi bajarilgan ish
-- 4-qadam (yarim): `lib/features/reports/reports_screen.dart` (davr tugmalari, KPI, grafik, to'lov turlari, top, kassirlar, qarzlar, ombor; kassirga — menejer PIN), router ulandi, `ComingSoonPage` olib tashlandi, tarjimalar.
+- T-070 tugadi (PR, merge).
 
 ## Keyingi aniq harakat
-- `flutter test test/app/shell_test.dart`; keyin `test/features/reports_test.dart` (menejer sessiyasi, vektor ma'lumotlari, davr almashishi, oflayn belgi) va `test/goldens/reports_golden_test.dart`.
+- ROADMAP'dan keyingi vazifa: T-080 Admin: kirish va layout.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
@@ -42,3 +37,4 @@
 - Dialog ichidagi TextEditingController'larni `showPosDialog` qaytgach darhol dispose qilma (yopilish animatsiyasi hali ishlatadi) — controller'lar dialogning o'z State'ida bo'lsin.
 - Widget testi teardown'ida drift yozuvini kutma (`await notifier.flush()` addTearDown ichida) — test osilib qoladi (timeout ham ishlamaydi). Test tanasida kutish mumkin.
 - To'lov oynasida skaner ro'yxatdan o'tgan: Flutter `HardwareKeyboard` ishlovchisi `true` qaytarsa ham hodisa `Focus.onKeyEvent` ga baribir yetadi. Shuning uchun oynada raqamlar faqat `onTyping` orqali (`MoneyInput(hardwareDigits: false)`), skaner Enter'i `_swallowEnter` bilan yutiladi.
+- Generatsiya qilingan Dart klient `DateTime` query'ni to'liq ISO vaqt qilib yuboradi; server `DateField` (`YYYY-MM-DD`) bo'lsa — Dio bilan to'g'ridan-to'g'ri chaqir (`reports_provider.dart` misoli).

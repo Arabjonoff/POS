@@ -296,3 +296,13 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-060 (squash merge)
 - Qoldi / keyingi qadam: T-070 Bosh sahifa va hisobotlar. Qo'lda tuzatish (`adjustment`, faqat ega) kassada yo'q.
 - Muammo yoki qaror: widget testi "yangi mijoz" oynasidagi xatoni ushladi — controller'lar oyna yopilish animatsiyasidan oldin dispose qilinardi; endi ular oynaning o'z State'ida. Telefonda "Jami qarz" alohida qatorga tushirildi.
+
+## 2026-10-15 — T-070 Bosh sahifa va hisobotlar
+- Qilindi:
+  - Umumiy vektorlar `testdata/report_vectors.json` (savdo, chek chegirmasi, qisman qaytarish, oldingi kun); server `services` va kassa `LocalReports` ikkalasi shu raqamlarni beradi.
+  - Server: `GET /api/v1/sync/reports/` (qurilma tokeni, barcha hisobotlar bitta javobda), OpenAPI + TS/Dart klientlar.
+  - Kassa: `reportsProvider` — onlayn server, xato bo'lsa lokal ("faqat shu kassa" belgisi); "Hisobotlar" bo'limi (davr tugmalari, KPI ↑↓%, soat/kun grafigi, to'lov turlari, top tovarlar, kassirlar, qarzlar, ombor); kassirga — menejer PIN.
+- Testlar: backend +5 (vektorlar, endpoint, tenant, davr validatsiyasi, JWT yetmaydi); apps/pos 545 (+23): lokal vektorlar, provider (onlayn/oflayn/500), 4 widget testi, golden `reports` today/week × 3 o'lcham × 2 mavzu. Skrinshotlar: `docs/screenshots/T-070/`.
+- PR: T-070 (squash merge)
+- Qoldi / keyingi qadam: kalendar bilan ixtiyoriy oraliq, xlsx eksport, foyda/miqdor bo'yicha saralash. Keyingi: T-080.
+- Muammo yoki qaror: generatsiya qilingan Dart klient `date` query'ni to'liq ISO vaqt qilib yuboradi (server `YYYY-MM-DD` kutadi) — kassa bu endpointni Dio orqali to'g'ridan-to'g'ri chaqiradi, javobni `DeviceReport.fromJson` bilan o'qiydi. `ComingSoonPage` olib tashlandi (bo'sh bo'lim qolmadi).
