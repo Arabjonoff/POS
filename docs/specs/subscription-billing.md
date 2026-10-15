@@ -31,3 +31,9 @@ Sanalar bo'yicha parametrlangan: sinov ichida, sinov tugagan, to'langan, 3 kun q
 - To'lov: `period_from = max(paid_until, trial_ends_at, bugun)` (Q-002: B, tasdiqlangan), `period_to = period_from + oylar` (oy oxiri qisqartiriladi: 31-yanvar + 1 oy = 28/29-fevral).
 - Bekor qilish: faqat oxirgi bekor qilinmagan to'lov; teskari yozuv (manfiy summa va oy), `paid_until` to'lovdan oldingi qiymatga qaytadi.
 - `Subscription.status` — kesh (admin ro'yxati va filtrlash uchun); manba — `compute_status`. Kunlik `manage.py update_subscriptions` keshni yangilaydi.
+
+## Kassada (T-085)
+- Manba — oxirgi pull'dagi `subscription {status, days_left, offline_days}` (`sync_state`). Oflaynda kunlar o'tadi: `days_left − (bugun − pull kuni)` do'kon sanasi (Toshkent) bo'yicha, server vaqt farqi bilan. Sinov/faol/grace muddati oflaynda tugab qolsa — "To'lov muddati o'tdi — to'lov qiling va internetga ulaning" (aniq holatni keyingi sinxron beradi).
+- **Banner** (barcha bo'limlar tepasida, `SubscriptionBanner`): sinov — ko'k "Sinov davri: yana N kun"; faol va ≤ 3 kun — sariq "Obunaga N kun qoldi / Obuna bugun tugaydi — to'lovni unutmang"; grace — qizil "To'lov muddati o'tdi — N kun ichida to'lang, aks holda savdo to'xtaydi". Sariq va qizilda — aloqa.
+- **Savdo to'xtaganda** (`readonly`, `blocked`, oflayn muddati, qurilma bloki) — kassa ekranida qizil banner: sabab, nima ishlaydi ("Ko'rish, hisobotlar va sinxron ishlaydi…"), aloqa (oflaynda — "Internetga ulaning — sinxrondan keyin savdo davom etadi"). To'lash (F12) o'chiq; **kirim va inventarizatsiyani tasdiqlash ham o'chiq** (sababi tugma ustida). Qoralama yozish, ko'rish, hisobotlar ishlaydi.
+- Aloqa raqami — `--dart-define=SUPPORT_PHONE=...` (Q-008); berilmasa "Administrator bilan bog'laning".

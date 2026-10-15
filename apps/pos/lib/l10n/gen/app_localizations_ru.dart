@@ -1728,4 +1728,70 @@ class AppLocalizationsRu extends AppLocalizations {
   String reportsCashierLine(String checks, String refunds) {
     return '$checks · $refunds';
   }
+
+  @override
+  String subTrial(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Пробный период: ещё $days дней',
+      few: 'Пробный период: ещё $days дня',
+      one: 'Пробный период: ещё $days день',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String subExpiring(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Подписка закончится через $days дней — не забудьте оплатить',
+      few: 'Подписка закончится через $days дня — не забудьте оплатить',
+      one: 'Подписка заканчивается сегодня — не забудьте оплатить',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String subGrace(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other:
+          'Срок оплаты прошёл — оплатите в течение $days дней, иначе продажи остановятся',
+      few:
+          'Срок оплаты прошёл — оплатите в течение $days дней, иначе продажи остановятся',
+      one: 'Срок оплаты прошёл — оплатите сегодня, иначе продажи остановятся',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get subGraceUnknown =>
+      'Срок оплаты прошёл — оплатите и подключитесь к интернету';
+
+  @override
+  String subContact(String phone) {
+    return 'Связь: $phone';
+  }
+
+  @override
+  String get subContactAdmin => 'Свяжитесь с администратором';
+
+  @override
+  String get salesHelpReadonly =>
+      'Просмотр, отчёты и синхронизация работают. Чтобы возобновить продажи, оплатите подписку.';
+
+  @override
+  String get salesHelpBlocked => 'Просмотр, отчёты и синхронизация работают.';
+
+  @override
+  String get salesHelpOffline =>
+      'Подключитесь к интернету — после синхронизации продажи продолжатся. Все данные сохранены.';
+
+  @override
+  String salesBlockedAction(String reason) {
+    return 'Сейчас нельзя провести: $reason';
+  }
 }

@@ -6,7 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pos_app/app/scanner/scanner_settings.dart';
 import 'package:pos_app/app/shell/app_status_bar.dart';
+import 'package:pos_app/app/shell/subscription_banner.dart';
 import 'package:pos_app/app/sync/sales_gate.dart';
+import 'package:pos_app/app/sync/subscription_notice.dart';
 import 'package:pos_app/core/barcode/barcode.dart';
 import 'package:pos_app/core/barcode/scanner_service.dart';
 import 'package:pos_app/core/format/app_format.dart';
@@ -646,25 +648,20 @@ class _CashierViewState extends ConsumerState<CashierView> {
 
   Widget? _banner(SalesBlock block) {
     if (block == SalesBlock.none) return null;
-    final p = PosPalette.of(context);
-    return Container(
-      padding: const EdgeInsets.all(PosSpacing.m),
-      decoration: BoxDecoration(
-        color: p.dangerSoft,
-        borderRadius: PosRadius.controlAll,
-      ),
-      child: Row(
-        children: [
-          Icon(Icons.block, color: p.onDangerSoft),
-          const SizedBox(width: PosSpacing.s),
-          Expanded(
-            child: Text(
-              salesBlockLabel(AppLocalizations.of(context), block),
-              style: PosTypography.bodyStrong.copyWith(color: p.onDangerSoft),
-            ),
-          ),
-        ],
-      ),
+    final l10n = AppLocalizations.of(context);
+    final help = salesBlockHelp(l10n, block);
+    // Oflaynda — internetga ulanish kifoya; boshqalarida — kim bilan bog'lanish.
+    final contact = block == SalesBlock.offlineTooLong
+        ? null
+        : contactLine(l10n, ref.watch(supportPhoneProvider));
+    return NoticeBar(
+      key: const ValueKey('sales-block-banner'),
+      tone: PosTone.danger,
+      icon: Icons.block,
+      rounded: true,
+      text: salesBlockLabel(l10n, block),
+      detail: help,
+      extra: contact,
     );
   }
 

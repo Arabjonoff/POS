@@ -495,5 +495,15 @@
   "reportsUnlock": "Менежер PIN",
   "reportsUnlockReason": "Ҳисоботларни кўриш",
   "reportsLoadFailed": "Ҳисоботни очиб бўлмади",
-  "reportsCashierLine": "{checks} · {refunds}"
+  "reportsCashierLine": "{checks} · {refunds}",
+  "subTrial": "{days, plural, other{Синов даври: яна {days} кун}}",
+  "subExpiring": "{days, plural, =1{Обуна бугун тугайди — тўловни унутманг} other{Обунага {days} кун қолди — тўловни унутманг}}",
+  "subGrace": "{days, plural, =1{Тўлов муддати ўтди — бугун тўланг, акс ҳолда савдо тўхтайди} other{Тўлов муддати ўтди — {days} кун ичида тўланг, акс ҳолда савдо тўхтайди}}",
+  "subGraceUnknown": "Тўлов муддати ўтди — тўлов қилинг ва интернетга уланинг",
+  "subContact": "Алоқа: {phone}",
+  "subContactAdmin": "Администратор билан боғланинг",
+  "salesHelpReadonly": "Кўриш, ҳисоботлар ва синхрон ишлайди. Савдони тиклаш учун обунани тўланг.",
+  "salesHelpBlocked": "Кўриш, ҳисоботлар ва синхрон ишлайди.",
+  "salesHelpOffline": "Интернетга уланинг — синхрондан кейин савдо давом этади. Ҳамма маълумот сақланган.",
+  "salesBlockedAction": "Ҳозир тасдиқлаб бўлмайди: {reason}"
 }

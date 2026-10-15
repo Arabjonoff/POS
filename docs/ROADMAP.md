@@ -258,7 +258,7 @@ Spec'lar: `admin-dashboard.md`, `subscription-billing.md`.
 - **Qabul:** Playwright testlari.
 - **Bog'liq:** T-082
 
-### [ ] T-085 Obuna nazorati ilovada
+### [x] T-085 Obuna nazorati ilovada
 - **Bajarish:** muddat tugashiga 3 kun qolganda ogohlantirish banneri; grace — banner; readonly — savdo tugmalari o'chadi, aniq xabar va aloqa raqami; oflayn muddat (7 kun) qoidasi.
 - **Qabul:** har holat uchun widget testlari.
 - **Bog'liq:** T-035, T-013
