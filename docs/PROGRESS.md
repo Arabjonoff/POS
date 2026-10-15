@@ -324,4 +324,4 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - Testlar: Vitest 32 (+11: dashboard 4, platform 3, format 4), Playwright 11 (+3: KPI/ro'yxat/grafik, ruscha, server xatosi). Soxta API'ga `/platform/stats/` qo'shildi. Skrinshotlar: `docs/screenshots/T-081/`.
 - PR: T-081 (squash merge)
 - Qoldi / keyingi qadam: T-082 Admin: mijozlar (tenantlar).
-- Muammo yoki qaror: `recharts` qo'shildi (spec'dagi grafik kutubxonasi). npm Windows'da lock fayldan `@emnapi/*` optional yozuvlarini olib tashladi — CI'da `npm ci` tekshiradi. Planshetda o'ng ustun tor bo'lgani uchun 3 ustunli joylashuv faqat ≥ 1280 px'da.
+- Muammo yoki qaror: `recharts` qo'shildi (spec'dagi grafik kutubxonasi). npm (Windows) lock fayldan `@emnapi/*` optional yozuvlarini olib tashlagan edi — CI `npm ci` yiqildi; yozuvlar main'dagi lock'dan qaytarildi. Planshetda o'ng ustun tor bo'lgani uchun 3 ustunli joylashuv faqat ≥ 1280 px'da.
