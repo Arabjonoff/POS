@@ -5,7 +5,6 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
 
-import { AppShell } from "@/components/app-shell";
 import { Providers } from "@/components/providers";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -20,7 +19,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full">
         <NextIntlClientProvider>
           <Providers>
-            <AppShell>{children}</AppShell>
+            {children}
           </Providers>
         </NextIntlClientProvider>
       </body>

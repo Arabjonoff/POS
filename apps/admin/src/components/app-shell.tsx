@@ -7,9 +7,12 @@ import { useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
+import type { Admin } from "@/lib/auth/config";
+
 import { AppNav } from "./app-nav";
 import { LocaleSwitcher } from "./locale-switcher";
 import { ThemeToggle } from "./theme-toggle";
+import { UserMenu } from "./user-menu";
 
 function Brand() {
   const t = useTranslations("app");
@@ -23,7 +26,7 @@ function Brand() {
   );
 }
 
-export function AppShell({ children }: { children: ReactNode }) {
+export function AppShell({ admin, children }: { admin: Admin; children: ReactNode }) {
   const t = useTranslations("nav");
   const [open, setOpen] = useState(false);
 
@@ -53,6 +56,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <div className="flex-1" />
           <LocaleSwitcher />
           <ThemeToggle />
+          <UserMenu admin={admin} />
         </header>
         <main className="flex-1 px-4 py-6 lg:px-8">{children}</main>
       </div>

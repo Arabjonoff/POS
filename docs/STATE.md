@@ -12,18 +12,18 @@
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [ ] 1. Server tomoni (Next): `src/lib/auth/` (cookie nomlari, Django manzili, `login`/`refresh`/`me`), route handler'lar `POST /api/auth/login`, `POST /api/auth/logout` (httpOnly cookie, faqat `platform_admin`)
-- [ ] 2. `src/proxy.ts`: kirmagan — `/login?next=`; access eskirgan, refresh bor — yangilab cookie qo'yadi
-- [ ] 3. Route guruhlari: `(auth)/login` (qobiqsiz), `(app)/layout.tsx` (qobiq + `getCurrentAdmin()` DAL); header'da admin ismi va "Chiqish"
+- [x] 1. Server tomoni (Next): `src/lib/auth/` (cookie nomlari, Django manzili, `login`/`refresh`/`me`), route handler'lar `POST /api/auth/login`, `POST /api/auth/logout` (httpOnly cookie, faqat `platform_admin`)
+- [x] 2. `src/proxy.ts`: kirmagan — `/login?next=`; access eskirgan, refresh bor — yangilab cookie qo'yadi
+- [x] 3. Route guruhlari: `(auth)/login` (qobiqsiz), `(app)/layout.tsx` (qobiq + `getCurrentAdmin()` DAL); header'da admin ismi va "Chiqish"
 - [ ] 4. Kirish sahifasi (telefon, parol, xatolar: noto'g'ri parol, admin emas, tarmoq), tarjimalar uz/ru, Vitest
 - [ ] 5. Playwright: soxta Django API (`e2e/mock-api.mjs`, webServer), noto'g'ri parol, kirish, chiqish, himoyalangan sahifa; eski smoke testlar kirish bilan
 - [ ] 6. Spec (admin-dashboard.md), skrinshotlar, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- Reja yozildi.
+- 1–3: `src/lib/auth/{config,django,cookies,session}.ts`, `api/auth/login|logout` route handler'lar, `src/proxy.ts`, `(app)/layout.tsx` + `(auth)/login/page.tsx`, `LoginForm`, `UserMenu`, tarjimalar. typecheck + lint toza.
 
 ## Keyingi aniq harakat
-- 1-qadam: `apps/admin/src/lib/auth/server.ts` va `src/app/api/auth/login/route.ts`.
+- 4-qadam: Vitest — `src/app/api/auth/login/route.test.ts` (node muhit, fetch mock), `src/proxy.test.ts`, `src/components/__tests__/login-form.test.tsx`, `safeNext`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
