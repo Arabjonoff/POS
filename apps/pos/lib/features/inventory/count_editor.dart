@@ -6,6 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show StreamProviderFamily;
 import 'package:pos_app/app/scanner/scanner_settings.dart';
 import 'package:pos_app/app/session/session.dart';
+import 'package:pos_app/app/shell/subscription_banner.dart';
+import 'package:pos_app/app/sync/sales_gate.dart';
 import 'package:pos_app/core/barcode/barcode.dart';
 import 'package:pos_app/core/barcode/scanner_service.dart';
 import 'package:pos_app/core/format/app_format.dart';
@@ -279,6 +281,7 @@ class _CountEditorState extends ConsumerState<CountEditor> {
                   ],
                 ),
               ),
+              if (draft) const SalesBlockedNote(),
               if (draft)
                 DecoratedBox(
                   decoration: BoxDecoration(
@@ -308,7 +311,7 @@ class _CountEditorState extends ConsumerState<CountEditor> {
                             icon: Icons.check,
                             expand: true,
                             loading: _busy,
-                            onPressed: _busy
+                            onPressed: _busy || !ref.watch(salesAllowedProvider)
                                 ? null
                                 : () => unawaited(_post(doc)),
                           ),

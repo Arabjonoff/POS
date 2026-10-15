@@ -2344,5 +2344,70 @@
         "type": "String"
       }
     }
+  },
+  "subTrial": "{days, plural, other{Sinov davri: yana {days} kun}}",
+  "@subTrial": {
+    "description": "Sinov davri banneri",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "subExpiring": "{days, plural, =1{Obuna bugun tugaydi — to'lovni unutmang} other{Obunaga {days} kun qoldi — to'lovni unutmang}}",
+  "@subExpiring": {
+    "description": "Obuna tugashiga oz qoldi",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "subGrace": "{days, plural, =1{To'lov muddati o'tdi — bugun to'lang, aks holda savdo to'xtaydi} other{To'lov muddati o'tdi — {days} kun ichida to'lang, aks holda savdo to'xtaydi}}",
+  "@subGrace": {
+    "description": "Imtiyozli kunlar banneri",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "subGraceUnknown": "To'lov muddati o'tdi — to'lov qiling va internetga ulaning",
+  "@subGraceUnknown": {
+    "description": "Oflaynda muddat tugagan"
+  },
+  "subContact": "Aloqa: {phone}",
+  "@subContact": {
+    "description": "Qo'llab-quvvatlash telefoni",
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "subContactAdmin": "Administrator bilan bog'laning",
+  "@subContactAdmin": {
+    "description": "Telefon sozlanmagan"
+  },
+  "salesHelpReadonly": "Ko'rish, hisobotlar va sinxron ishlaydi. Savdoni tiklash uchun obunani to'lang.",
+  "@salesHelpReadonly": {
+    "description": "Savdo to'xtagan: obuna tugagan"
+  },
+  "salesHelpBlocked": "Ko'rish, hisobotlar va sinxron ishlaydi.",
+  "@salesHelpBlocked": {
+    "description": "Savdo to'xtagan: bloklangan"
+  },
+  "salesHelpOffline": "Internetga ulaning — sinxrondan keyin savdo davom etadi. Hamma ma'lumot saqlangan.",
+  "@salesHelpOffline": {
+    "description": "Savdo to'xtagan: uzoq oflayn"
+  },
+  "salesBlockedAction": "Hozir tasdiqlab bo'lmaydi: {reason}",
+  "@salesBlockedAction": {
+    "description": "Kirim/inventarizatsiya tasdiqlash o'chiq",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
   }
 }

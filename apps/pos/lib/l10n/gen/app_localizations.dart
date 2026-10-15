@@ -3074,6 +3074,66 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'{checks} · {refunds}'**
   String reportsCashierLine(String checks, String refunds);
+
+  /// Sinov davri banneri
+  ///
+  /// In uz, this message translates to:
+  /// **'{days, plural, other{Sinov davri: yana {days} kun}}'**
+  String subTrial(int days);
+
+  /// Obuna tugashiga oz qoldi
+  ///
+  /// In uz, this message translates to:
+  /// **'{days, plural, =1{Obuna bugun tugaydi — to\'lovni unutmang} other{Obunaga {days} kun qoldi — to\'lovni unutmang}}'**
+  String subExpiring(int days);
+
+  /// Imtiyozli kunlar banneri
+  ///
+  /// In uz, this message translates to:
+  /// **'{days, plural, =1{To\'lov muddati o\'tdi — bugun to\'lang, aks holda savdo to\'xtaydi} other{To\'lov muddati o\'tdi — {days} kun ichida to\'lang, aks holda savdo to\'xtaydi}}'**
+  String subGrace(int days);
+
+  /// Oflaynda muddat tugagan
+  ///
+  /// In uz, this message translates to:
+  /// **'To\'lov muddati o\'tdi — to\'lov qiling va internetga ulaning'**
+  String get subGraceUnknown;
+
+  /// Qo'llab-quvvatlash telefoni
+  ///
+  /// In uz, this message translates to:
+  /// **'Aloqa: {phone}'**
+  String subContact(String phone);
+
+  /// Telefon sozlanmagan
+  ///
+  /// In uz, this message translates to:
+  /// **'Administrator bilan bog\'laning'**
+  String get subContactAdmin;
+
+  /// Savdo to'xtagan: obuna tugagan
+  ///
+  /// In uz, this message translates to:
+  /// **'Ko\'rish, hisobotlar va sinxron ishlaydi. Savdoni tiklash uchun obunani to\'lang.'**
+  String get salesHelpReadonly;
+
+  /// Savdo to'xtagan: bloklangan
+  ///
+  /// In uz, this message translates to:
+  /// **'Ko\'rish, hisobotlar va sinxron ishlaydi.'**
+  String get salesHelpBlocked;
+
+  /// Savdo to'xtagan: uzoq oflayn
+  ///
+  /// In uz, this message translates to:
+  /// **'Internetga ulaning — sinxrondan keyin savdo davom etadi. Hamma ma\'lumot saqlangan.'**
+  String get salesHelpOffline;
+
+  /// Kirim/inventarizatsiya tasdiqlash o'chiq
+  ///
+  /// In uz, this message translates to:
+  /// **'Hozir tasdiqlab bo\'lmaydi: {reason}'**
+  String salesBlockedAction(String reason);
 }
 
 class _AppLocalizationsDelegate

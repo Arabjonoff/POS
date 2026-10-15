@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:pos_app/app/session/session.dart';
 import 'package:pos_app/app/shell/app_sections.dart';
 import 'package:pos_app/app/shell/app_status_bar.dart';
+import 'package:pos_app/app/shell/subscription_banner.dart';
 import 'package:pos_app/features/auth/lock_screen.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
 import 'package:pos_ui/pos_ui.dart';
@@ -67,7 +68,13 @@ class AppShell extends ConsumerWidget {
                     onPressed: () => ref.read(sessionProvider.notifier).lock(),
                   ),
                 ),
-          body: navigationShell,
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SubscriptionBanner(),
+              Expanded(child: navigationShell),
+            ],
+          ),
         ),
       ),
     );
