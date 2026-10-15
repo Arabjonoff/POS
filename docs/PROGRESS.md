@@ -356,3 +356,13 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-084 (squash merge)
 - Qoldi / keyingi qadam: T-085 Obuna nazorati kassa ilovasida (bannerlar, readonly).
 - Muammo yoki qaror: (1) `"use client"` moduldan eksport qilingan massiv server sahifada ishlamaydi (client reference) — konstantalar oddiy modulda. (2) Mijozlar filtrida yuklama ostida qidiruv debounce va holat tanlovi bir-birini bekor qilardi — kutilayotgan URL `ref` da saqlanadi.
+
+## 2026-10-15 — T-085 Obuna nazorati ilovada
+- Qilindi:
+  - `subscription_notice.dart`: oxirgi pull'dagi obuna holati + oflaynda o'tgan kunlar → sinov / tugashiga ≤ 3 kun / grace ogohlantirishi; `supportPhoneProvider`.
+  - `SubscriptionBanner` qobiqda (barcha bo'limlar tepasida, ohang bo'yicha); kassa ekranidagi savdo to'xtagan banneri — sabab, nima ishlaydi, aloqa.
+  - Kirim va inventarizatsiyani tasdiqlash ham `salesAllowedProvider` ga bog'landi (sync.md shuni talab qilardi).
+- Testlar: apps/pos 571 (+26): sof funksiya 5 (oflayn kunlar ham), widget 9 (sinov, tugash, ko'p kun, oflayn sanash, grace, readonly, blocked, oflayn muddati, kirim tasdiqlash o'chiq), golden `subscription` grace/readonly × 3 o'lcham × 2 mavzu. Skrinshotlar: `docs/screenshots/T-085/`.
+- PR: T-085 (squash merge)
+- Qoldi / keyingi qadam: T-090 Chidamlilik testlari. Aloqa raqami — Q-008.
+- Muammo yoki qaror: 7-bosqich (admin dashboard va obuna nazorati) yopildi.

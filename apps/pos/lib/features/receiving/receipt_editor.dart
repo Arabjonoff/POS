@@ -6,6 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show StreamProviderFamily;
 import 'package:pos_app/app/scanner/scanner_settings.dart';
 import 'package:pos_app/app/session/session.dart';
+import 'package:pos_app/app/shell/subscription_banner.dart';
+import 'package:pos_app/app/sync/sales_gate.dart';
 import 'package:pos_app/core/barcode/barcode.dart';
 import 'package:pos_app/core/barcode/scanner_service.dart';
 import 'package:pos_app/core/format/app_format.dart';
@@ -182,12 +184,14 @@ class _ReceiptEditorState extends ConsumerState<ReceiptEditor> {
     icon: Icons.check,
     loading: _busy,
     expand: expand,
-    onPressed: _busy ? null : () => unawaited(_post(doc)),
+    onPressed: _busy || !ref.watch(salesAllowedProvider)
+        ? null
+        : () => unawaited(_post(doc)),
   );
 
   Widget _wideFooter(ReceiptDoc doc) {
     final l10n = AppLocalizations.of(context);
-    return Row(
+    final row = Row(
       children: [
         Expanded(child: _totals(doc)),
         if (doc.isDraft) ...[
@@ -202,6 +206,11 @@ class _ReceiptEditorState extends ConsumerState<ReceiptEditor> {
         ],
       ],
     );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: [if (doc.isDraft) const SalesBlockedNote(), row],
+    );
   }
 
   /// Telefon: jami, ostida — o'chirish ikoni va to'liq kenglikdagi tasdiqlash.
@@ -214,6 +223,7 @@ class _ReceiptEditorState extends ConsumerState<ReceiptEditor> {
         _totals(doc),
         if (doc.isDraft) ...[
           const SizedBox(height: PosSpacing.s),
+          const SalesBlockedNote(),
           Row(
             children: [
               PosIconButton(

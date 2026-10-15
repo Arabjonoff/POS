@@ -16,7 +16,7 @@
 - [x] 2. 2 qurilma bir tovar: ikki lokal baza, soxta server; pull'dagi server qoldig'i + yuborilmagan harakatlar
 - [ ] 3. 10 000 tovar: katalog yuklash va kassa ekrani ochilish vaqti, qidiruv
 - [ ] 4. 500 savdo oflayn + push uzilishi (mavjud: sync_engine_test 5, 6) — natijalar jadvali `docs/resilience.md`, PROGRESS
-- [ ] 5. PR, merge (T-085 bilan docs konflikti — main'ni qo'shish)
+- [ ] 5. PR, merge
 
 ## Oxirgi bajarilgan ish
 - 2: `two_devices_test.dart` (2): oflayn sotuv → ikkalasi server qoldig'iga yaqinlashadi; javob yo'qolsa ikki marta ayirilmaydi. `FakeSyncServer.stock` qo'shildi.

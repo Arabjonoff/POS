@@ -63,3 +63,10 @@ Format:
 - Agentning tavsiyasi: T-047 ni haqiqiy qurilmada sinov imkoni paydo bo'lguncha keyinga qoldirish. Hozircha Android'da Wi-Fi/LAN printer ishlaydi (T-044). Sunmi kabi ichki printerli qurilmalar uchun alohida transport kerak bo'lishi mumkin.
 - Hozircha tanlangan: T-047 o'tkazib yuborildi, keyingi mustaqil vazifa (T-050) olindi.
 - Javob:
+
+### Q-008 (T-085) Obuna to'lovi uchun aloqa raqami qaysi?
+- Kontekst: obuna tugaganda (`readonly`), bloklanganda yoki muddat o'tganda (`grace`) kassa "to'lang / bog'laning" deydi. Spec "aniq xabar va aloqa raqami" talab qiladi, lekin raqam berilmagan.
+- Savol: do'kon egalari to'lov va yordam uchun qaysi telefon (yoki Telegram) bilan bog'lanadi?
+- Agentning tavsiyasi: bitta qo'llab-quvvatlash raqami, ilova build paytida beriladi (`--dart-define=SUPPORT_PHONE=+998...`); keyinchalik serverdan (`/devices/me/` javobida) olish mumkin — raqam o'zgarsa ilovani qayta chiqarmaslik uchun.
+- Hozircha tanlangan: `SUPPORT_PHONE` build parametri; berilmasa matn "Administrator bilan bog'laning".
+- Javob:

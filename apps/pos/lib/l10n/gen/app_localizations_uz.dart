@@ -1709,6 +1709,68 @@ class AppLocalizationsUz extends AppLocalizations {
   String reportsCashierLine(String checks, String refunds) {
     return '$checks · $refunds';
   }
+
+  @override
+  String subTrial(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Sinov davri: yana $days kun',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String subExpiring(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Obunaga $days kun qoldi — to\'lovni unutmang',
+      one: 'Obuna bugun tugaydi — to\'lovni unutmang',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String subGrace(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other:
+          'To\'lov muddati o\'tdi — $days kun ichida to\'lang, aks holda savdo to\'xtaydi',
+      one:
+          'To\'lov muddati o\'tdi — bugun to\'lang, aks holda savdo to\'xtaydi',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get subGraceUnknown =>
+      'To\'lov muddati o\'tdi — to\'lov qiling va internetga ulaning';
+
+  @override
+  String subContact(String phone) {
+    return 'Aloqa: $phone';
+  }
+
+  @override
+  String get subContactAdmin => 'Administrator bilan bog\'laning';
+
+  @override
+  String get salesHelpReadonly =>
+      'Ko\'rish, hisobotlar va sinxron ishlaydi. Savdoni tiklash uchun obunani to\'lang.';
+
+  @override
+  String get salesHelpBlocked => 'Ko\'rish, hisobotlar va sinxron ishlaydi.';
+
+  @override
+  String get salesHelpOffline =>
+      'Internetga ulaning — sinxrondan keyin savdo davom etadi. Hamma ma\'lumot saqlangan.';
+
+  @override
+  String salesBlockedAction(String reason) {
+    return 'Hozir tasdiqlab bo\'lmaydi: $reason';
+  }
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -3407,5 +3469,66 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
   @override
   String reportsCashierLine(String checks, String refunds) {
     return '$checks · $refunds';
+  }
+
+  @override
+  String subTrial(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Синов даври: яна $days кун',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String subExpiring(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Обунага $days кун қолди — тўловни унутманг',
+      one: 'Обуна бугун тугайди — тўловни унутманг',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String subGrace(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other:
+          'Тўлов муддати ўтди — $days кун ичида тўланг, акс ҳолда савдо тўхтайди',
+      one: 'Тўлов муддати ўтди — бугун тўланг, акс ҳолда савдо тўхтайди',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get subGraceUnknown =>
+      'Тўлов муддати ўтди — тўлов қилинг ва интернетга уланинг';
+
+  @override
+  String subContact(String phone) {
+    return 'Алоқа: $phone';
+  }
+
+  @override
+  String get subContactAdmin => 'Администратор билан боғланинг';
+
+  @override
+  String get salesHelpReadonly =>
+      'Кўриш, ҳисоботлар ва синхрон ишлайди. Савдони тиклаш учун обунани тўланг.';
+
+  @override
+  String get salesHelpBlocked => 'Кўриш, ҳисоботлар ва синхрон ишлайди.';
+
+  @override
+  String get salesHelpOffline =>
+      'Интернетга уланинг — синхрондан кейин савдо давом этади. Ҳамма маълумот сақланган.';
+
+  @override
+  String salesBlockedAction(String reason) {
+    return 'Ҳозир тасдиқлаб бўлмайди: $reason';
   }
 }
