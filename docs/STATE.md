@@ -14,16 +14,16 @@
 - [x] 1. Dart: `PrinterConnection.bluetooth/usb`, `android_printer_channel.dart` (MethodChannel `uz.zellypos.pos/printer`), `AndroidPrinterTransport`, factory
 - [x] 2. Kotlin: `PrinterChannel.kt` (SPP RFCOMM, USB bulk OUT, ruxsatlar) + MainActivity + AndroidManifest
 - [x] 3. Sozlamalar paneli: Bluetooth/USB tanlovi, qurilmalar ro'yxati, bo'sh/ruxsat/o'chiq holatlari, yangilash
-- [~] 4. l10n (uz/uz-Cyrl/ru), unit testlar (`test/printing/android_printer_test.dart`), widget testlar (`test/features/android_printing_test.dart`) — yashil; golden qoldi
+- [x] 4. l10n (uz/uz-Cyrl/ru), unit testlar (`test/printing/android_printer_test.dart`), widget testlar (`test/features/android_printing_test.dart`) — yashil; golden `printing/settings_bluetooth`
 - [x] 5. `flutter build apk --debug` — muvaffaqiyatli (Kotlin kompilyatsiya bo'ldi)
-- [ ] 6. Hujjatlar: printing.md, qo'lda sinov ro'yxati `docs/printing-android-checklist.md`, qaror 0008 izohi, Q-007, user guide
+- [x] 6. Hujjatlar: printing.md, qo'lda sinov ro'yxati `docs/printing-android-checklist.md`, qaror 0008 izohi, Q-007, user guide
 - [ ] 7. Tekshiruvlar, PR, merge, ROADMAP/PROGRESS
 
 ## Oxirgi bajarilgan ish
-- Kod, testlar, APK tayyor. Golden (Bluetooth ro'yxati) va hujjatlar qoldi.
+- Kod, testlar, golden, hujjatlar tayyor. Ishlab turgan: to'liq `flutter analyze` + `flutter test` (apps/pos).
 
 ## Keyingi aniq harakat
-- `test/goldens/printing_golden_test.dart` ga `settings_bluetooth` golden, so'ng 6-qadam hujjatlar.
+- Testlar yashil bo'lsa: commit, PR `feat(pos): T-047 ...`, CI, merge; ROADMAP [x], PROGRESS yozuvi, STATE shablon.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

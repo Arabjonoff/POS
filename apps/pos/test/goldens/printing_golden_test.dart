@@ -7,12 +7,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:pos_app/app/status/app_status.dart';
 import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/data/sync/server_features.dart';
+import 'package:pos_app/features/printing/android_printer_channel.dart';
 import 'package:pos_app/features/printing/mono_bitmap.dart';
 import 'package:pos_app/features/printing/printer_service.dart';
 import 'package:pos_app/features/printing/printer_settings.dart';
 import 'package:pos_app/features/printing/receipt.dart';
 import 'package:pos_app/features/settings/settings_screen.dart';
 
+import '../helpers/fake_android_printer.dart';
 import '../helpers/fake_printer.dart';
 import '../helpers/pump_app.dart';
 import '../helpers/sqlite.dart';
@@ -22,6 +24,7 @@ Future<void> _open(
   WidgetTester tester,
   Size size, {
   PaperWidth width = PaperWidth.mm80,
+  PrinterConnection connection = PrinterConnection.network,
 }) async {
   final db = openTestDatabase();
   addTearDown(db.close);
@@ -60,8 +63,11 @@ Future<void> _open(
     PrinterSettings.settingKey,
     jsonEncode(
       PrinterSettings(
-        connection: PrinterConnection.network,
-        address: '192.168.1.50',
+        connection: connection,
+        address: connection == PrinterConnection.bluetooth
+            ? '66:22:B3:01:9A:10'
+            : '192.168.1.50',
+        deviceName: connection == PrinterConnection.bluetooth ? 'XP-P323B' : '',
         width: width,
         copies: 2,
         openDrawer: true,
@@ -82,6 +88,9 @@ Future<void> _open(
       ),
       windowsPrintingProvider.overrideWithValue(true),
       systemPrintersProvider.overrideWithValue(const ['XP-80C']),
+      androidPrintingProvider.overrideWithValue(
+        connection == PrinterConnection.bluetooth,
+      ),
     ],
   );
   await tester.sendKeyDownEvent(LogicalKeyboardKey.controlLeft);
@@ -120,6 +129,18 @@ void main() {
   goldenAcrossDevices('printing', 'preview_58', (tester, size) async {
     await _open(tester, size, width: PaperWidth.mm58);
     await _scrollTo(tester, find.byKey(const ValueKey('receipt-preview')));
+  });
+
+  // T-047: Android — juftlangan Bluetooth printerlar ro'yxati.
+  goldenAcrossDevices('printing', 'settings_bluetooth', (tester, size) async {
+    FakeAndroidPrinter()
+      ..bluetooth = [
+        {'id': '66:22:B3:01:9A:10', 'name': 'XP-P323B'},
+        {'id': '00:11:22:33:44:55', 'name': 'MTP-II'},
+      ]
+      ..install();
+    await _open(tester, size, connection: PrinterConnection.bluetooth);
+    await _scrollTo(tester, find.text('Ulanish'));
   });
 
   // T-104b: rekvizitlar formasi (o'ng/pastda — jonli chek).

@@ -10,3 +10,7 @@ Android Bluetooth (SPP) va USB alohida vazifa bo'ldi: **T-047**. Chek matni (`Re
 **Nima uchun.** Bluetooth/USB uchun native plagin tanlash kerak (ruxsatlar, Android 12+ `BLUETOOTH_CONNECT`, USB host). Ularni haqiqiy qurilma va printersiz sinab bo'lmaydi, CI esa Windows'da ishlaydi. Tarmoq va Windows yo'llari unit va widget testlarida (soxta transport, lokal `ServerSocket`, haqiqiy `EnumPrinters`) to'liq tekshiriladi. `win32` 6.x ning API'si katta va tez o'zgaradi — kerakli 8 funksiyani o'zimiz bog'lash barqarorroq.
 
 **Oqibat.** Android kassalarda hozircha faqat Wi-Fi/LAN printer ishlaydi. Printer bo'lmasa yoki xato bersa ham savdo to'xtamaydi: chek fonda chiqariladi, xato bo'lsa "Chek chiqmadi" xabari va "Qayta chop etish" tugmasi chiqadi. CP866 da yo'q o'zbek kirill harflari (ў қ ғ ҳ) chekda у к г х bo'lib chiqadi. To'liq kirill kerak bo'lsa, sozlamada UTF-8 tanlanadi (printer qo'llasa).
+
+**Yangilanish (T-047, 2026-10-15).** Android Bluetooth (SPP) va USB host ham **tashqi plaginsiz** qo'shildi: o'z `MethodChannel`imiz va
+`PrinterChannel.kt` (~300 qator Kotlin). Faqat juftlangan Bluetooth qurilmalar ishlatiladi (qidiruv va joylashuv ruxsati kerak emas).
+Soxta kanal bilan testlangan, haqiqiy printerda — `docs/printing-android-checklist.md` (Q-007). Sunmi kabi ichki printerlar — keyin.
