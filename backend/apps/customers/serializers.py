@@ -14,7 +14,7 @@ class CustomerSerializer(ClientIdMixin, serializers.ModelSerializer):
     id = serializers.UUIDField(required=False)
     debt_limit_tiyin = StrictIntegerField(min_value=0, allow_null=True, required=False)
     # Model validatori faqat `+998XXXXXXXXX` ni qabul qiladi; `validate_phone` avval keltiradi.
-    phone = serializers.CharField(required=False, allow_blank=True, max_length=32)
+    phone = serializers.CharField(required=False, allow_blank=True, max_length=32, label="Telefon")
     balance_tiyin = serializers.SerializerMethodField()
 
     class Meta:
