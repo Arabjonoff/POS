@@ -4,8 +4,10 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pos_app/app/session/session.dart';
 import 'package:pos_app/app/status/app_status.dart';
+import 'package:pos_app/data/catalog/product_images.dart';
 import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/data/remote/api.dart';
+import 'package:pos_app/data/sync/image_sync.dart';
 import 'package:pos_app/data/sync/sync_engine.dart';
 
 /// Fon sinxroni holati.
@@ -50,10 +52,21 @@ final syncEngineProvider = Provider<SyncEngine>((ref) {
   final db = ref.watch(appDatabaseProvider);
   final tokens = ref.watch(deviceTokenStoreProvider);
   final dio = ref.watch(dioFactoryProvider);
-  return SyncEngine(db, () async {
-    final token = await tokens.read();
-    return token == null ? null : deviceApi(dio, token);
-  });
+  return SyncEngine(
+    db,
+    () async {
+      final token = await tokens.read();
+      return token == null ? null : deviceApi(dio, token);
+    },
+    images: ProductImageSync(
+      db,
+      ref.watch(productImageStoreProvider),
+      () async {
+        final token = await tokens.read();
+        return token == null ? null : dio('Device $token');
+      },
+    ),
+  );
 });
 
 /// Fon sinxroni (`docs/specs/sync.md`): har 10 s push (va yangi hodisa

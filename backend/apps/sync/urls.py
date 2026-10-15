@@ -2,6 +2,7 @@ from django.urls import path
 
 from apps.reports.views import DeviceReportView
 
+from .images import ProductImageView
 from .imports import ImportApplyView, ImportCheckView, ImportTemplateView, ImportUploadView
 from .views import SyncPriceHistoryView, SyncPullView, SyncPushView, SyncStockMovementsView
 
@@ -17,6 +18,11 @@ urlpatterns = [
         name="sync-product-import-template",
     ),
     path("sync/product-imports/", ImportUploadView.as_view(), name="sync-product-imports"),
+    path(
+        "sync/product-images/<uuid:pk>/",
+        ProductImageView.as_view(),
+        name="sync-product-image",
+    ),
     path(
         "sync/product-imports/<uuid:pk>/check/",
         ImportCheckView.as_view(),

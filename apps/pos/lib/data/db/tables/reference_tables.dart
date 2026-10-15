@@ -97,6 +97,9 @@ class Products extends Table {
   DateTimeColumn get updatedAt => dateTime().nullable()();
   DateTimeColumn get deletedAt => dateTime().nullable()();
 
+  /// Joriy rasm (T-105): fayl — ilova papkasida `<imageId>.jpg`.
+  TextColumn get imageId => text().nullable()();
+
   @override
   Set<Column<Object>> get primaryKey => {id};
 }

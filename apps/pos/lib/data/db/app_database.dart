@@ -47,6 +47,7 @@ part 'app_database.g.dart';
     SyncState,
     CartDrafts,
     DocCounters,
+    ProductImages,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -56,7 +57,7 @@ class AppDatabase extends _$AppDatabase {
   factory AppDatabase.open() => AppDatabase(driftDatabase(name: 'pos'));
 
   @override
-  int get schemaVersion => 5;
+  int get schemaVersion => 6;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -110,6 +111,11 @@ extension _Migrations on GeneratedDatabase {
       await m.addColumn(schema.stores, schema.stores.tin);
       await m.addColumn(schema.stores, schema.stores.receiptLogo);
       await m.addColumn(schema.stores, schema.stores.receiptOptions);
+    },
+    // v6: tovar rasmlari (T-105).
+    from5To6: (m, schema) async {
+      await m.addColumn(schema.products, schema.products.imageId);
+      await m.create(schema.productImages);
     },
   );
 }

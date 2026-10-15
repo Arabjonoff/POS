@@ -19,6 +19,10 @@
 
 {$API_DOMAIN} {
 	import common
+	# Tovar rasmini yuklash (T-105): kassa ~1 MB yuboradi, server 5 MB gacha qabul qiladi.
+	request_body {
+		max_size 8MB
+	}
 	handle_path /static/* {
 		root * /srv/static
 		file_server

@@ -5,24 +5,23 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-104b Chek rekvizitlari, ko'rsat/yashir, logotip (T-104a merge #54)
-- Branch: feat/T-104b-store-requisites
+- Vazifa: T-105 Mahsulot rasmi (reja — `docs/audit/audit_products.md` "Product images"); T-104 merge (#54, #55)
+- Branch: feat/T-105-product-images
 - Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
-- [x] 1. Server: `Store.legal_name/tin/receipt_logo/receipt_options` (migratsiya tenants 0002), `StoreSettingsSerializer`, `store.upserted` (ega/menejer, tenant), pull, `features: store_settings`; testlar 11
-- [x] 2. Kassa: drift v5 (stores ustunlari), pull; `mono_bitmap.dart` (kulrang PNG, 1 bit, `GS v 0`); `ReceiptOptions`, `ReceiptRow.image`, rekvizitlar chekda; `StoreSettingsStore`; `ReceiptSettingsSection` (forma + jonli preview)
-- [x] 3. Testlar: mono_bitmap 8, store_settings 2
-- [x] 4. Widget testlari, golden'lar
-- [x] 5. Hujjatlar
-- [ ] 6. PR, merge
+- [x] 1. Server: Pillow, `ProductImage` + `Product.image` (catalog 0004), `apps/catalog/images.py` (tekshirish, JPEG 800 + 200), `PUT/GET/DELETE /sync/product-images/{id}/` (qurilma, tenant), `ProductSerializer.image` (faqat o'qish), MEDIA sozlamalari, prod `media` volume, zaxira/tiklash, Caddy 8 MB; testlar 11
+- [x] 2. Kassa: `image` paketi, drift v6 (`products.image_id`, `product_images`), `product_images.dart` (tayyorlash isolate, saqlash, olib tashlash), `image_sync.dart` (yuklash/o'chirish/yuklab olish), SyncEngine va pull ulanishi
+- [ ] 3. UI: `PosThumbnail` (packages/ui), tovar kartasida rasm (qo'shish/almashtirish/olib tashlash, "yuklanmagan"), ro'yxatda, kassa qidiruvida
+- [ ] 4. Testlar (data, sync, widget), golden'lar, OpenAPI/klientlar
+- [ ] 5. Hujjatlar (`docs/specs/product-images.md`, qaror 0013), PR, merge
 
 ## Oxirgi bajarilgan ish
-- T-104b tayyor, PR ochilmoqda.
+- T-105 server va kassa ma'lumot qatlami.
 
 ## Keyingi aniq harakat
-- T-104b PR CI yashil bo'lsa merge; keyin T-105 mahsulot rasmi (`docs/audit/audit_products.md` reja).
+- 3-qadam: `packages/ui/lib/src/components/pos_thumbnail.dart`, keyin `apps/pos/lib/features/products/product_card.dart` rasm bloki.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

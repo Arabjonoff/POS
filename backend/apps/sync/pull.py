@@ -47,7 +47,9 @@ class SyncStoreSerializer(serializers.ModelSerializer):
 
 def _products():
     barcodes = ProductBarcode.objects.filter(deleted_at__isnull=True)
-    return Product.objects.prefetch_related(Prefetch("barcodes", queryset=barcodes))
+    return Product.objects.select_related("image").prefetch_related(
+        Prefetch("barcodes", queryset=barcodes)
+    )
 
 
 # entity → (queryset yasovchi, serializer, qidiruv maydoni)

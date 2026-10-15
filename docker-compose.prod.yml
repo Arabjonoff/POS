@@ -67,6 +67,8 @@ services:
              --workers ${GUNICORN_WORKERS:-3} --timeout 60 --access-logfile -"
     volumes:
       - static:/app/staticfiles
+      # Tovar rasmlari (T-105) — zaxira nusxaga kiradi.
+      - media:/app/media
     depends_on:
       postgres:
         condition: service_healthy
@@ -132,11 +134,13 @@ services:
     volumes:
       - ./deploy:/deploy:ro
       - ${BACKUP_DIR:-./backups}:/backups
+      - media:/media
     depends_on:
       postgres:
         condition: service_healthy
 
 volumes:
+  media:
   pgdata:
   redisdata:
   static:
