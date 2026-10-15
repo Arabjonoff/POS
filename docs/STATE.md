@@ -5,19 +5,25 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-082 Admin: mijozlar (tenantlar)
+- Branch: feat/T-082-admin-tenants
+- Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
+- [ ] 1. UI komponentlar (shadcn: dialog, table, tabs, label, textarea, select) + `src/lib/platform.ts` ga tenant funksiyalari, Server Actions (`src/app/(app)/tenants/actions.ts`: onboard, block, unblock, reset-password)
+- [ ] 2. `/tenants` ro'yxati: qidiruv, holat filtri (URL), jadval, sahifalash, bo'sh/xato holatlari, CSV eksport
+- [ ] 3. `/tenants/new` 3 qadamli usta (do'kon → ega (vaqtinchalik parol) → tarif + sinov) va natija kartasi (nusxa olish)
+- [ ] 4. `/tenants/[id]`: tablar Umumiy (obuna, bloklash/blokdan chiqarish — sabab bilan), To'lovlar, Qurilmalar, Foydalanuvchilar (parol tiklash), Faollik
+- [ ] 5. Soxta API (tenantlar, tariflar, qurilmalar, to'lovlar, foydalanuvchilar, hodisalar — xotirada) + Vitest + Playwright (yaratish → ro'yxatda → ega API orqali kira oladi; bloklash)
+- [ ] 6. Spec, skrinshotlar, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- T-081 tugadi (PR, merge).
+- Reja yozildi.
 
 ## Keyingi aniq harakat
-- ROADMAP'dan keyingi vazifa: T-082 Admin: mijozlar (tenantlar).
+- 1-qadam: `cd apps/admin && npx shadcn add dialog table tabs label textarea select`, so'ng `src/lib/platform.ts`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
