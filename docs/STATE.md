@@ -14,14 +14,14 @@
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 - [x] 1. Server ma'lumot qatlami: `src/lib/platform.ts` (`platformApi()` — cookie'dagi access bilan, 401 → `/login`), `getStats()`; `src/lib/format.ts` (pul tiyin → `1 250 000 so'm`, sana) + Vitest
 - [x] 2. Bosh sahifa: KPI kartalari (faol, sinovda, MRR, shu oy tushum), muddati tugaydiganlar ro'yxati ("To'lov kiritish"), eski qurilmalar, oylik tushum grafigi (Recharts); `loading.tsx`, `error.tsx`
-- [ ] 3. Testlar: komponent (Vitest), soxta API'ga `/platform/stats/`, Playwright `e2e/dashboard.spec.ts`
+- [x] 3. Testlar: komponent (Vitest), soxta API'ga `/platform/stats/`, Playwright `e2e/dashboard.spec.ts`
 - [ ] 4. Spec, skrinshotlar, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- 1–2: `src/lib/platform.ts` (`platformApi`, `getStats`), `src/lib/format.ts` (+test), `components/dashboard/{dashboard,revenue-chart}.tsx` (Recharts), `(app)/{page,loading,error}.tsx`, tarjimalar.
+- 3: Vitest 32 (dashboard 4, platform 3, format 4 …), mock API `/platform/stats/` (+ 500 qaytaruvchi admin 91 111 11 11), `e2e/dashboard.spec.ts` (3) — jami e2e 11 o'tdi.
 
 ## Keyingi aniq harakat
-- 3-qadam: Vitest `components/__tests__/dashboard.test.tsx` (RevenueChart mock), `src/lib/platform.test.ts` (next/headers mock); `e2e/mock-api.mjs` ga `GET /api/v1/platform/stats/`; `e2e/dashboard.spec.ts`.
+- 4-qadam: skrinshotlar `docs/screenshots/T-081/` (scratchpad `shots80.cjs` naqshi), spec, PROGRESS, ROADMAP, PR.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
