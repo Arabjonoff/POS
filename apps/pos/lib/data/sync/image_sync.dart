@@ -107,8 +107,10 @@ class ProductImageSync {
         await dio.put<Object?>(
           _path(row.id),
           data: FormData.fromMap({
-            'file': await MultipartFile.fromFile(
-              file.path,
+            // Baytlar xotirada (~100 KB): fayl oqimi tarmoq xatosida ochiq
+            // qolib, Windows'da faylni band qilmasin.
+            'file': MultipartFile.fromBytes(
+              file.readAsBytesSync(),
               filename: '${row.id}.jpg',
               contentType: DioMediaType('image', 'jpeg'),
             ),
@@ -149,7 +151,7 @@ class ProductImageSync {
         _db.productImages,
       )..where((i) => i.id.equals(row.id))).go();
       final file = await _images.fileFor(row.id);
-      if (file.existsSync()) await file.delete();
+      if (file.existsSync()) file.deleteSync();
     }
   }
 

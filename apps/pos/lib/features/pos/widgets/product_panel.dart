@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pos_app/core/format/app_format.dart';
 import 'package:pos_app/data/catalog/product_catalog.dart';
+import 'package:pos_app/features/products/product_thumbnail.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
 import 'package:pos_ui/pos_ui.dart';
 
@@ -33,11 +34,13 @@ class SearchResults extends StatelessWidget {
           title: product.name,
           subtitle: code,
           selected: i == highlighted,
-          leading: Icon(
-            product.isWeighted
-                ? Icons.scale_outlined
-                : Icons.inventory_2_outlined,
-          ),
+          leading: product.imageId != null
+              ? ProductThumbnail(imageId: product.imageId)
+              : Icon(
+                  product.isWeighted
+                      ? Icons.scale_outlined
+                      : Icons.inventory_2_outlined,
+                ),
           trailing: PosMoneyText(
             amount: product.priceTiyin,
             currency: fmt.currency,

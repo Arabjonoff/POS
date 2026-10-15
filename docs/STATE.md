@@ -13,15 +13,16 @@
 ## Qadamlar (vazifa ichida)
 - [x] 1. Server: Pillow, `ProductImage` + `Product.image` (catalog 0004), `apps/catalog/images.py` (tekshirish, JPEG 800 + 200), `PUT/GET/DELETE /sync/product-images/{id}/` (qurilma, tenant), `ProductSerializer.image` (faqat o'qish), MEDIA sozlamalari, prod `media` volume, zaxira/tiklash, Caddy 8 MB; testlar 11
 - [x] 2. Kassa: `image` paketi, drift v6 (`products.image_id`, `product_images`), `product_images.dart` (tayyorlash isolate, saqlash, olib tashlash), `image_sync.dart` (yuklash/o'chirish/yuklab olish), SyncEngine va pull ulanishi
-- [ ] 3. UI: `PosThumbnail` (packages/ui), tovar kartasida rasm (qo'shish/almashtirish/olib tashlash, "yuklanmagan"), ro'yxatda, kassa qidiruvida
-- [ ] 4. Testlar (data, sync, widget), golden'lar, OpenAPI/klientlar
-- [ ] 5. Hujjatlar (`docs/specs/product-images.md`, qaror 0013), PR, merge
+- [x] 3. UI: `PosThumbnail` (packages/ui), tovar kartasida rasm (qo'shish/almashtirish/olib tashlash, "yuklanmagan"), ro'yxatda, kassa qidiruvida
+- [x] 4. Testlar (data, sync, widget), golden'lar, OpenAPI/klientlar
+- [x] 5. Hujjatlar
+- [ ] 6. PR, merge
 
 ## Oxirgi bajarilgan ish
-- T-105 server va kassa ma'lumot qatlami.
+- T-105 tayyor, PR ochilmoqda.
 
 ## Keyingi aniq harakat
-- 3-qadam: `packages/ui/lib/src/components/pos_thumbnail.dart`, keyin `apps/pos/lib/features/products/product_card.dart` rasm bloki.
+- T-105 PR CI yashil bo'lsa merge; keyin T-106 UI/UX sayqal (`PROJECT_AUDIT.md` ⏳ T-106 qatorlari).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
@@ -45,6 +46,7 @@
 - Push'dan oldin: `dart format apps/pos/lib apps/pos/test packages/ui/lib packages/ui/test packages/ui/widgetbook/lib packages/ui/widgetbook/test` (CI tekshiradi); backend serializer o'zgarsa — `make schema` (openapi.yaml diff CI'da).
 - Windows'da Python bilan fayl yozganda `newline=''` ishlat (aks holda CRLF); `\n`/`\u02bb` kabi escape'lar heredoc ichida buziladi — Edit vositasi yoki skript fayl ishlat. Ruff RUF001: o'zbek `ʻ` uchun `# noqa: RUF001`.
 - Chek ko'rinishi (preview) mavzudan `letterSpacing` olsa oxirgi belgini kesadi — `PosTypography.receipt` da 0 (test: `receipt_preview_test.dart`).
+- Widget/golden testda haqiqiy rasm (FileImage) yuklash `runAsync` + drift bilan osiladi — golden'da placeholder, rasm mavjudligi `PosThumbnail.image != null` bilan tekshiriladi. Fayl IO (rasm) sinxron — fake async'da osilmasin.
 - Admin e2e lokal: `cd apps/admin && npm run build && E2E_PORT=3150 npx playwright test` (3100 — docker admin bo'lishi mumkin; reuseExistingServer uni qayta ishlatib yuboradi). Soxta Django API: `e2e/mock-api.mjs` (3199).
 - Admin'ga npm paket qo'shilsa: Windows'dagi npm lock'dan `@emnapi/core|runtime` (optional, wasm) yozuvlarini o'chiradi va CI `npm ci` yiqiladi. Yechim: yozuvlarni main'dagi lock'dan qaytarish, `npm ci --dry-run` bilan tekshirish.
 - Admin skrinshotlari: scratchpad'dagi `shots8x.cjs` naqshi — `node e2e/mock-api.mjs` + `API_URL_INTERNAL=http://127.0.0.1:3199 npx next start -p 3150`, keyin Playwright skript (`require(<apps/admin>/node_modules/playwright)`). Bash'da murakkab `node -e` / heredoc'ga `${...}` va qo'shtirnoq aralashsa buziladi — Write vositasi bilan fayl yoz.

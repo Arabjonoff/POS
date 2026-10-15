@@ -56,6 +56,11 @@ abstract final class PosSizes {
 
   /// Holat qatori balandligi.
   static const double statusBarHeight = 40;
+
+  /// Tovar rasmi: ro'yxat qatori, kassa qidiruvi, karta.
+  static const double thumbS = 40;
+  static const double thumbM = 56;
+  static const double thumbL = 120;
 }
 
 /// Harakat: bosish 120 ms, oyna 200 ms. Animatsiya 200 ms dan oshmaydi.

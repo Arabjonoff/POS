@@ -15,9 +15,11 @@ import '../models/check_request_request.dart';
 import '../models/check_response.dart';
 import '../models/device_report.dart';
 import '../models/price_history.dart';
+import '../models/product_image.dart';
 import '../models/pull_response.dart';
 import '../models/push_request_request.dart';
 import '../models/push_response.dart';
+import '../models/size.dart';
 import '../models/stock_movement_entry.dart';
 import '../models/upload_response.dart';
 
@@ -32,6 +34,27 @@ abstract class SyncClient {
   @GET('/api/v1/sync/price-history/')
   Future<List<PriceHistory>> syncPriceHistoryList({
     @Query('product') required String product,
+  });
+
+  @GET('/api/v1/sync/product-images/{id}/')
+  @DioResponseType(ResponseType.stream)
+  Stream<String> syncProductImagesRetrieve({
+    @Path('id') required String id,
+    @Query('size') Size? size,
+  });
+
+  @MultiPart()
+  @PUT('/api/v1/sync/product-images/{id}/')
+  Future<ProductImage> syncProductImagesUpdate({
+    @Path('id') required String id,
+    @Part(name: 'file') required File file,
+    @Part(name: 'product') required String product,
+    @Part(name: 'by') required String by,
+  });
+
+  @DELETE('/api/v1/sync/product-images/{id}/')
+  Future<void> syncProductImagesDestroy({
+    @Path('id') required String id,
   });
 
   @GET('/api/v1/sync/product-import/template/')

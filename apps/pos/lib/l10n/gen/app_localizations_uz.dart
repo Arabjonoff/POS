@@ -834,6 +834,35 @@ class AppLocalizationsUz extends AppLocalizations {
       'Rekvizitlarni o\'zgartirish server yangilangach ishlaydi (internetga ulaning).';
 
   @override
+  String get productImage => 'Rasm';
+
+  @override
+  String get productImageHint =>
+      'Ro\'yxatda va kassa qidiruvida ko\'rinadi. Internet bo\'lmasa ham saqlanadi.';
+
+  @override
+  String get productImageAdd => 'Rasm qo\'shish';
+
+  @override
+  String get productImageReplace => 'Almashtirish';
+
+  @override
+  String get productImageRemove => 'Olib tashlash';
+
+  @override
+  String get productImageNotUploaded => 'Internetga hali yuklanmagan';
+
+  @override
+  String get productImageUnsupported =>
+      'Rasmni o\'qib bo\'lmadi. JPG yoki PNG tanlang.';
+
+  @override
+  String get productImageTooLarge => 'Rasm juda katta (20 MB dan ortiq).';
+
+  @override
+  String get productSaveFailed => 'Saqlab bo\'lmadi. Qayta urinib ko\'ring.';
+
+  @override
   String get receiptDebtNow => 'Joriy qarz';
 
   @override
@@ -2959,6 +2988,35 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
   @override
   String get storeUnavailable =>
       'Реквизитларни ўзгартириш сервер янгилангач ишлайди (интернетга уланинг).';
+
+  @override
+  String get productImage => 'Расм';
+
+  @override
+  String get productImageHint =>
+      'Рўйхатда ва касса қидирувида кўринади. Интернет бўлмаса ҳам сақланади.';
+
+  @override
+  String get productImageAdd => 'Расм қўшиш';
+
+  @override
+  String get productImageReplace => 'Алмаштириш';
+
+  @override
+  String get productImageRemove => 'Олиб ташлаш';
+
+  @override
+  String get productImageNotUploaded => 'Интернетга ҳали юкланмаган';
+
+  @override
+  String get productImageUnsupported =>
+      'Расмни ўқиб бўлмади. JPG ёки PNG танланг.';
+
+  @override
+  String get productImageTooLarge => 'Расм жуда катта (20 МБ дан ортиқ).';
+
+  @override
+  String get productSaveFailed => 'Сақлаб бўлмади. Қайта уриниб кўринг.';
 
   @override
   String get receiptDebtNow => 'Жорий қарз';

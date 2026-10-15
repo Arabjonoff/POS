@@ -3,8 +3,10 @@ import 'dart:isolate';
 
 import 'package:clock/clock.dart';
 import 'package:drift/drift.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/misc.dart' show FutureProviderFamily;
+import 'package:flutter_riverpod/misc.dart'
+    show FutureProviderFamily, StreamProviderFamily;
 import 'package:image/image.dart' as img;
 import 'package:path_provider/path_provider.dart';
 import 'package:pos_app/data/db/app_database.dart';
@@ -114,12 +116,12 @@ class ProductImageStore {
   }
 
   /// Faylni xavfsiz yozish: vaqtinchalik fayl → nomini o'zgartirish
-  /// (elektr o'chsa yarim fayl qolmaydi).
+  /// (elektr o'chsa yarim fayl qolmaydi). Rasm kichik (~100 KB) — sinxron.
   Future<void> writeFile(String imageId, Uint8List bytes) async {
     final file = await fileFor(imageId);
-    final tmp = File('${file.path}.tmp');
-    await tmp.writeAsBytes(bytes, flush: true);
-    await tmp.rename(file.path);
+    File('${file.path}.tmp')
+      ..writeAsBytesSync(bytes, flush: true)
+      ..renameSync(file.path);
   }
 
   /// Tovarga yangi rasm ([jpeg] — [prepareProductImage] natijasi). Fayl,
@@ -179,7 +181,7 @@ class ProductImageStore {
         _db.productImages,
       )..where((i) => i.id.equals(old))).go();
       final file = await fileFor(old);
-      if (file.existsSync()) await file.delete();
+      if (file.existsSync()) file.deleteSync();
       return;
     }
     if (!keepRemote) {
@@ -213,6 +215,35 @@ final productImageStoreProvider = Provider<ProductImageStore>(
     ref.watch(imageDirectoryProvider),
   ),
 );
+
+/// Rasm manbasi (fayl tanlash; testlarda almashtiriladi). `null` — bekor.
+typedef ImageSourcePicker = Future<Uint8List?> Function();
+
+Future<Uint8List?> _pickImageFile() async {
+  final files = await FilePicker.pickFiles(type: FileType.image);
+  if (files.isEmpty) return null;
+  return files.first.readAsBytes();
+}
+
+final imageSourcePickerProvider = Provider<ImageSourcePicker>(
+  (ref) => _pickImageFile,
+);
+
+/// Rasmni tayyorlash (isolate'da JPEG; testlarda almashtiriladi).
+typedef ImagePreparer = Future<Uint8List> Function(Uint8List source);
+
+final imagePreparerProvider = Provider<ImagePreparer>(
+  (ref) => prepareProductImage,
+);
+
+/// Rasm sinxron holati (kartadagi "yuklanmagan" belgisi uchun).
+final StreamProviderFamily<String?, String> productImageStateProvider =
+    StreamProvider.autoDispose.family<String?, String>((ref, imageId) {
+      final db = ref.watch(appDatabaseProvider);
+      return (db.select(db.productImages)..where((i) => i.id.equals(imageId)))
+          .watchSingleOrNull()
+          .map((row) => row?.state);
+    });
 
 /// Rasm fayli (ko'rsatish uchun): bor bo'lsa — fayl, yo'q bo'lsa — `null`
 /// (placeholder). Yuklab olingach qayta so'raladi.

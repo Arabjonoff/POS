@@ -52,6 +52,105 @@ class _SyncClient implements SyncClient {
   }
 
   @override
+  Stream<String> syncProductImagesRetrieve({
+    required String id,
+    Size? size,
+  }) async* {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'size': size};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<String>(
+      Options(
+            method: 'GET',
+            headers: _headers,
+            extra: _extra,
+            responseType: ResponseType.stream,
+          )
+          .compose(
+            _dio.options,
+            '/api/v1/sync/product-images/${id}/',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = _dio.fetch<ResponseBody>(_options);
+    final _value = _result.asStream().asyncExpand(
+      (response) => utf8.decoder.bind(response.data!.stream),
+    );
+    yield* _value;
+  }
+
+  @override
+  Future<ProductImage> syncProductImagesUpdate({
+    required String id,
+    required File file,
+    required String product,
+    required String by,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.files.add(
+      MapEntry(
+        'file',
+        MultipartFile.fromFileSync(
+          file.path,
+          filename: file.path.split(Platform.pathSeparator).last,
+        ),
+      ),
+    );
+    _data.fields.add(MapEntry('product', product));
+    _data.fields.add(MapEntry('by', by));
+    final _options = _setStreamType<ProductImage>(
+      Options(
+            method: 'PUT',
+            headers: _headers,
+            extra: _extra,
+            contentType: 'multipart/form-data',
+          )
+          .compose(
+            _dio.options,
+            '/api/v1/sync/product-images/${id}/',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, Object?>>(_options);
+    late ProductImage _value;
+    try {
+      _value = ProductImage.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<void> syncProductImagesDestroy({required String id}) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<void>(
+      Options(method: 'DELETE', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/api/v1/sync/product-images/${id}/',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    await _dio.fetch<void>(_options);
+  }
+
+  @override
   Stream<String> syncProductImportTemplateRetrieve() async* {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

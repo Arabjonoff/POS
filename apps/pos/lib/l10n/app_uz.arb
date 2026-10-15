@@ -1051,6 +1051,42 @@
   "@storeUnavailable": {
     "description": "Izoh"
   },
+  "productImage": "Rasm",
+  "@productImage": {
+    "description": "Tovar rasmi bo'limi"
+  },
+  "productImageHint": "Ro'yxatda va kassa qidiruvida ko'rinadi. Internet bo'lmasa ham saqlanadi.",
+  "@productImageHint": {
+    "description": "Izoh"
+  },
+  "productImageAdd": "Rasm qo'shish",
+  "@productImageAdd": {
+    "description": "Tugma"
+  },
+  "productImageReplace": "Almashtirish",
+  "@productImageReplace": {
+    "description": "Tugma"
+  },
+  "productImageRemove": "Olib tashlash",
+  "@productImageRemove": {
+    "description": "Tugma"
+  },
+  "productImageNotUploaded": "Internetga hali yuklanmagan",
+  "@productImageNotUploaded": {
+    "description": "Belgi: rasm serverga yetmagan"
+  },
+  "productImageUnsupported": "Rasmni o'qib bo'lmadi. JPG yoki PNG tanlang.",
+  "@productImageUnsupported": {
+    "description": "Xato"
+  },
+  "productImageTooLarge": "Rasm juda katta (20 MB dan ortiq).",
+  "@productImageTooLarge": {
+    "description": "Xato"
+  },
+  "productSaveFailed": "Saqlab bo'lmadi. Qayta urinib ko'ring.",
+  "@productSaveFailed": {
+    "description": "Kutilmagan xato"
+  },
   "receiptDebtNow": "Joriy qarz",
   "@receiptDebtNow": {
     "description": "Chekda: mijozning savdodan keyingi qarzi"

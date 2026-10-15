@@ -9,11 +9,13 @@ import 'package:pos_app/core/format/app_format.dart';
 import 'package:pos_app/core/format/unit_code.dart';
 import 'package:pos_app/data/catalog/price_history.dart';
 import 'package:pos_app/data/catalog/product_editor.dart';
+import 'package:pos_app/data/catalog/product_images.dart';
 import 'package:pos_app/data/catalog/stock_history.dart';
 import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/features/common/manager_approval.dart';
 import 'package:pos_app/features/pos/cart/discount_policy.dart';
 import 'package:pos_app/features/products/product_list.dart';
+import 'package:pos_app/features/products/product_thumbnail.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
 import 'package:pos_ui/pos_ui.dart';
 
@@ -105,8 +107,20 @@ class _ProductCardState extends ConsumerState<ProductCard> {
   /// Kiritish xatolari (raqam emas): narx va minimal qoldiq.
   bool _badPrice = false;
   bool _badMinStock = false;
+
+  /// Saqlash jarayoni (qayta bosishdan himoya — darhol yoqiladi).
   bool _busy = false;
+
+  /// Haqiqiy yozish (tugmada spinner) — menejer PIN kutilayotganda emas.
+  bool _saving = false;
   bool _subDialog = false;
+
+  /// Rasm (T-105): joriy rasm id, yangi tanlangan (tayyorlangan JPEG) yoki
+  /// olib tashlash — tovar saqlangandan keyin qo'llanadi.
+  String? _imageId;
+  Uint8List? _newImage;
+  bool _removeImage = false;
+  bool _imageBusy = false;
   bool _showHistory = false;
   bool _showMoves = false;
 
@@ -143,6 +157,11 @@ class _ProductCardState extends ConsumerState<ProductCard> {
         barcodes: [if (widget.barcode != null) widget.barcode!.trim()],
       );
     }
+    final imageId = id == null
+        ? null
+        : (await (db.select(
+            db.products,
+          )..where((p) => p.id.equals(id))).getSingleOrNull())?.imageId;
     if (!mounted) return;
     final units = await db.select(db.units).get();
     final fractional =
@@ -150,6 +169,7 @@ class _ProductCardState extends ConsumerState<ProductCard> {
         false;
     setState(() {
       _draft = draft;
+      _imageId = imageId;
       _name.text = draft.name;
       _sell.text = formatMoneyInput(draft.sellPriceTiyin);
       _cost.text = formatMoneyInput(draft.costPriceTiyin);
@@ -228,8 +248,77 @@ class _ProductCardState extends ConsumerState<ProductCard> {
     );
   }
 
+  Future<void> _pickImage() async {
+    if (_imageBusy) return;
+    final l10n = AppLocalizations.of(context);
+    setState(() => _imageBusy = true);
+    try {
+      final source = await ref.read(imageSourcePickerProvider)();
+      if (source == null || !mounted) return;
+      final jpeg = await ref.read(imagePreparerProvider)(source);
+      if (!mounted) return;
+      setState(() {
+        _newImage = jpeg;
+        _removeImage = false;
+      });
+    } on ProductImageException catch (e) {
+      if (mounted) {
+        showPosToast(
+          context,
+          message: e.reason == 'too_large'
+              ? l10n.productImageTooLarge
+              : l10n.productImageUnsupported,
+          tone: PosTone.danger,
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _imageBusy = false);
+    }
+  }
+
+  void _dropImage() => setState(() {
+    _newImage = null;
+    _removeImage = _imageId != null;
+  });
+
+  Future<void> _applyImage(String productId, {required String by}) async {
+    final images = ref.read(productImageStoreProvider);
+    final fresh = _newImage;
+    if (fresh != null) {
+      await images.setImage(productId, fresh, by: by);
+    } else if (_removeImage) {
+      await images.removeImage(productId, by: by);
+    }
+  }
+
   Future<void> _save({bool? active}) async {
+    // Darhol band: tez ikki bosish yoki Enter ikki tovar yaratmasin
+    // (audit UI-P1-2 — avval tekshiruv va ruxsatdan keyin band bo'lardi).
     if (_busy || _subDialog) return;
+    setState(() => _busy = true);
+    try {
+      await _saveGuarded(active: active);
+    } on Object catch (_) {
+      // Kutilmagan xato (masalan, fon pull bilan to'qnashuv) — tugma
+      // qotib qolmasin, foydalanuvchi bilsin (audit PR-P1-6).
+      if (mounted) {
+        showPosToast(
+          context,
+          message: AppLocalizations.of(context).productSaveFailed,
+          tone: PosTone.danger,
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _busy = false;
+          _saving = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _saveGuarded({bool? active}) async {
     final l10n = AppLocalizations.of(context);
     final units = ref.read(_unitsProvider).value ?? const <Unit>[];
     final fractional =
@@ -259,17 +348,13 @@ class _ProductCardState extends ConsumerState<ProductCard> {
       setState(() => _subDialog = false);
       if (by == null) return;
     }
-    setState(() => _busy = true);
+    setState(() => _saving = true);
     try {
       final id = await editor.save(draft, by: by);
+      await _applyImage(id, by: by);
       if (mounted) Navigator.of(context).pop(id);
     } on InvalidProductException catch (e) {
-      if (mounted) {
-        setState(() {
-          _busy = false;
-          _problems = e.problems;
-        });
-      }
+      if (mounted) setState(() => _problems = e.problems);
     }
   }
 
@@ -391,6 +476,14 @@ class _ProductCardState extends ConsumerState<ProductCard> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            _ImageSlot(
+              imageId: _removeImage ? null : _imageId,
+              fresh: _newImage,
+              busy: _imageBusy,
+              onPick: () => unawaited(_pickImage()),
+              onRemove: _dropImage,
+            ),
+            const SizedBox(height: PosSpacing.m),
             PosTextField(
               key: const ValueKey('product-name'),
               controller: _name,
@@ -626,7 +719,7 @@ class _ProductCardState extends ConsumerState<ProductCard> {
             key: const ValueKey('product-save'),
             label: l10n.actionSave,
             icon: Icons.check,
-            loading: _busy,
+            loading: _saving,
             onPressed: _busy ? null : () => unawaited(_save()),
           ),
         ],
@@ -835,6 +928,101 @@ class _StockHistoryList extends ConsumerWidget {
           if (history.offline) Text(l10n.stockHistoryOffline, style: style),
         ],
       ),
+    );
+  }
+}
+
+/// Tovar rasmi: katta ko'rinish, qo'shish/almashtirish/olib tashlash va
+/// serverga hali yuklanmagan bo'lsa — belgi.
+class _ImageSlot extends ConsumerWidget {
+  const _ImageSlot({
+    required this.imageId,
+    required this.fresh,
+    required this.busy,
+    required this.onPick,
+    required this.onRemove,
+  });
+
+  final String? imageId;
+  final Uint8List? fresh;
+  final bool busy;
+  final VoidCallback onPick;
+  final VoidCallback onRemove;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final p = PosPalette.of(context);
+    final id = imageId;
+    final hasImage = fresh != null || id != null;
+    final state = id == null
+        ? null
+        : ref.watch(productImageStateProvider(id)).value;
+    final pending =
+        fresh != null ||
+        state == ImageState.local ||
+        state == ImageState.failed;
+    final freshBytes = fresh;
+    return Row(
+      key: const ValueKey('product-image'),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (freshBytes != null)
+          PosThumbnail(image: MemoryImage(freshBytes), size: PosSizes.thumbL)
+        else
+          ProductThumbnail(imageId: id, size: PosSizes.thumbL),
+        const SizedBox(width: PosSpacing.m),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                l10n.fieldOptional(l10n.productImage),
+                style: PosTypography.smallStrong.copyWith(color: p.text),
+              ),
+              const SizedBox(height: PosSpacing.xs),
+              Text(
+                l10n.productImageHint,
+                style: PosTypography.small.copyWith(color: p.textSecondary),
+              ),
+              if (hasImage && pending) ...[
+                const SizedBox(height: PosSpacing.xs),
+                PosBadge(
+                  label: l10n.productImageNotUploaded,
+                  tone: PosTone.warning,
+                ),
+              ],
+              const SizedBox(height: PosSpacing.s),
+              Wrap(
+                spacing: PosSpacing.s,
+                runSpacing: PosSpacing.s,
+                children: [
+                  PosButton(
+                    key: const ValueKey('product-image-pick'),
+                    label: hasImage
+                        ? l10n.productImageReplace
+                        : l10n.productImageAdd,
+                    icon: Icons.image_outlined,
+                    size: PosButtonSize.s,
+                    variant: PosButtonVariant.secondary,
+                    loading: busy,
+                    onPressed: busy ? null : onPick,
+                  ),
+                  if (hasImage)
+                    PosButton(
+                      key: const ValueKey('product-image-remove'),
+                      label: l10n.productImageRemove,
+                      icon: Icons.delete_outline,
+                      size: PosButtonSize.s,
+                      variant: PosButtonVariant.ghost,
+                      onPressed: busy ? null : onRemove,
+                    ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
