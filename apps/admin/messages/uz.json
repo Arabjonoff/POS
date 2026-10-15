@@ -19,7 +19,8 @@
     "themeLight": "Yorug'",
     "themeDark": "Qorong'i",
     "themeSystem": "Tizim bo'yicha",
-    "language": "Til"
+    "language": "Til",
+    "logout": "Chiqish"
   },
   "home": {
     "title": "Bosh sahifa",
@@ -31,5 +32,25 @@
     "title": "Sahifa topilmadi",
     "text": "Bu bo'lim hali tayyor emas yoki manzil noto'g'ri.",
     "back": "Bosh sahifaga qaytish"
+  },
+  "login": {
+    "title": "Kirish",
+    "subtitle": "{app} — platforma admini",
+    "phone": "Telefon",
+    "phonePlaceholder": "90 123 45 67",
+    "password": "Parol",
+    "submit": "Kirish",
+    "submitting": "Kirilmoqda…",
+    "errors": {
+      "invalidCredentials": "Telefon yoki parol noto'g'ri",
+      "notAdmin": "Bu hisob admin paneli uchun emas",
+      "tooMany": "Urinishlar ko'p. Bir daqiqadan keyin qayta urining",
+      "required": "Telefon va parolni kiriting",
+      "unavailable": "Server javob bermadi. Keyinroq qayta urining"
+    }
+  },
+  "section": {
+    "soonTitle": "Bo'lim tayyorlanmoqda",
+    "soonText": "Bu bo'lim keyingi yangilanishlarda qo'shiladi."
   }
 }

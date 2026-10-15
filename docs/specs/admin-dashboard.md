@@ -22,3 +22,13 @@ Next.js App Router, TypeScript (strict), Tailwind, shadcn/ui, TanStack Query + T
 - Har jadvalda: bo'sh holat, yuklanish skeletoni, xato holati, sahifalash.
 - Xavfli amallar (bloklash, to'lovni bekor qilish) — tasdiqlash oynasi, sabab maydoni.
 - Har amal audit jurnaliga yoziladi.
+
+## Kirish va sessiya (T-080)
+- `/login` — telefon + parol (qobiqsiz sahifa, til va mavzu tugmalari bilan). Xatolar oddiy tilda: noto'g'ri telefon/parol, "Bu hisob admin paneli uchun emas" (owner/manager), urinishlar ko'p (429), server javob bermadi.
+- `POST /api/auth/login` (Next route handler) → Django `POST /api/v1/auth/login/`; faqat `role = platform_admin`. JWT'lar httpOnly cookie'larda: `pos_access` (29 daqiqa), `pos_refresh` (30 kun), `SameSite=Lax`, production'da `Secure` (`COOKIE_INSECURE=1` — faqat HTTP sinov muhiti uchun). Brauzer JavaScript'i tokenni ko'rmaydi.
+- `POST /api/auth/logout` — cookie'larni o'chiradi.
+- `src/proxy.ts` (Next 16 "Proxy", sobiq middleware): cookie yo'q — `/login?next=<yo'l>`; access eskirgan, refresh bor — Django'da yangilaydi (rotatsiya) va shu so'rovning o'ziga ham yangi token beradi; refresh yaroqsiz — cookie'lar o'chadi. Faqat optimistik tekshiruv.
+- Haqiqiy tekshiruv — `(app)/layout.tsx` dagi `getCurrentAdmin()` (Django `auth/me/`, rol `platform_admin`); aks holda `/login`. `next` faqat ichki yo'l (`safeNext`).
+- Django manzili serverda: `API_URL_INTERNAL` (Docker: `http://backend:8000`), bo'lmasa `NEXT_PUBLIC_API_URL`.
+- Qobiq: chapda menyu (planshet/telefonda — sheet), tepada til, mavzu, admin ismi va "Chiqish". Hali qurilmagan bo'limlar — "Bo'lim tayyorlanmoqda" (`(app)/[section]`).
+- E2E: `e2e/mock-api.mjs` — soxta Django auth API (Playwright `webServer`), haqiqiy backend kerak emas.

@@ -306,3 +306,13 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-070 (squash merge)
 - Qoldi / keyingi qadam: kalendar bilan ixtiyoriy oraliq, xlsx eksport, foyda/miqdor bo'yicha saralash. Keyingi: T-080.
 - Muammo yoki qaror: generatsiya qilingan Dart klient `date` query'ni to'liq ISO vaqt qilib yuboradi (server `YYYY-MM-DD` kutadi) — kassa bu endpointni Dio orqali to'g'ridan-to'g'ri chaqiradi, javobni `DeviceReport.fromJson` bilan o'qiydi. `ComingSoonPage` olib tashlandi (bo'sh bo'lim qolmadi).
+
+## 2026-10-15 — T-080 Admin: kirish va layout
+- Qilindi:
+  - Next route handler'lar `POST /api/auth/login|logout`: Django JWT → httpOnly cookie'lar (`pos_access`, `pos_refresh`), faqat `platform_admin`.
+  - `src/proxy.ts`: kirmaganlar `/login?next=` ga; access eskirsa refresh bilan yangilanadi. `(app)/layout.tsx` — `getCurrentAdmin()` (Django `auth/me/`).
+  - Kirish sahifasi (uz/ru, yorug'/qorong'i), header'da admin ismi va "Chiqish"; menyu bo'limlari uchun "tayyorlanmoqda" sahifasi.
+- Testlar: Vitest 21 (login route handler, proxy, `safeNext`, `LoginForm`), Playwright 8 (himoyalangan sahifa, noto'g'ri parol, ega kira olmaydi, kirish + httpOnly + chiqish, refresh, smoke). Skrinshotlar: `docs/screenshots/T-080/`.
+- PR: T-080 (squash merge)
+- Qoldi / keyingi qadam: T-081 Admin bosh sahifa (KPI). 2FA — keyinroq (spec).
+- Muammo yoki qaror: Next 16 proxy `matcher`ida `\.` saqlanmaydi (kompilyatsiyada `.` bo'lib, hamma yo'lni chiqarib tashlardi) — `favicon.ico` aniq nom bilan. E2E uchun soxta Django API (`e2e/mock-api.mjs`) — CI'da backend ishga tushirilmaydi.
