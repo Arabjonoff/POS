@@ -14,12 +14,13 @@
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 - [x] 1. Backend: (`createsuperuser` = platform_admin — yangi buyruq kerak emas), Sentry (`SENTRY_DSN` bo'lsa), prod sozlamalari tekshiruvi
 - [x] 2. Admin prod Dockerfile (Next standalone), `next.config` `output: standalone`
-- [ ] 3. `docker-compose.prod.yml`: postgres, redis, backend (gunicorn, migrate, collectstatic), admin, caddy (HTTPS, 2 domen), scheduler (`update_subscriptions` kunlik), backup (kunlik `pg_dump`, 14 kun saqlash); `deploy/Caddyfile`, `deploy/backup.sh`, `deploy/restore.sh`, `.env.prod.example`
+- [x] 3. `docker-compose.prod.yml`: postgres, redis, backend (gunicorn, migrate, collectstatic), admin, caddy (HTTPS, 2 domen), scheduler (`update_subscriptions` kunlik), backup (kunlik `pg_dump`, 14 kun saqlash); `deploy/Caddyfile`, `deploy/backup.sh`, `deploy/restore.sh`, `.env.prod.example`
 - [ ] 4. Lokal sinov: prod compose (localhost, ichki TLS), health, admin kirish, backup → yangi bazaga tiklash
 - [ ] 5. `docs/DEPLOY.md`, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- 1–2: `sentry-sdk[django]` + `prod.py` (SENTRY_DSN bo'lsa), admin `Dockerfile` (standalone, `NEXT_OUTPUT=standalone` faqat build'da), `.dockerignore`; image lokal yig'ildi.
+- 3: `docker-compose.prod.yml`, `deploy/{Caddyfile,backup.sh,restore.sh}`, `.env.prod.example`, .gitignore (backups/).
+- Ishlab turgan: `docker compose -f docker-compose.prod.yml --env-file .env.prod.local -p pos-prodtest up -d --build` (lokal sinov, 18080/18443).
 
 ## Keyingi aniq harakat
 - 3-qadam: `docker-compose.prod.yml`, `deploy/Caddyfile`, `deploy/backup.sh`, `deploy/restore.sh`, `.env.prod.example`.
