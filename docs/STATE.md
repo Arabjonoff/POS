@@ -12,17 +12,17 @@
 
 ## Qadamlar (vazifa ichida)
 - [x] 1. ROADMAP T-108a/b/c, qaror 0014, STATE
-- [ ] 2. packages/ui: PosResponsiveScaffold — desktopda 64 px ikon menyu (hover/Ctrl+B ochiladi, ustiga chiqadi), pastda kassir + qulf
-- [ ] 3. Sinov banneri 28 px + yopish (sessiya davomida)
-- [ ] 4. Holat paneli 48 px: bosiladigan yozuvlar (→ Sozlamalar), oflayn qizil "oflayn rejimda ishlayapti", printer sozlanmagan sariq, smena vaqti, kassir
-- [ ] 5. l10n (uz, uz-Cyrl, ru), testlar, golden'lar
+- [x] 2. packages/ui: PosResponsiveScaffold — desktopda 64 px ikon menyu (hover/Ctrl+B ochiladi, ustiga chiqadi), pastda kassir + qulf
+- [x] 3. Sinov banneri 28 px + yopish (sessiya davomida)
+- [x] 4. Holat paneli 48 px: bosiladigan yozuvlar (→ Sozlamalar), oflayn qizil "oflayn rejimda ishlayapti", printer sozlanmagan sariq, smena vaqti, kassir
+- [x] 5. l10n (uz, uz-Cyrl, ru), testlar, golden'lar
 - [ ] 6. Skrinshotlar docs/screenshots/T-108a/, PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-- T-107 `main`da. Eskiz tasdiqlandi: https://claude.ai/artifact/321zbc39k53LuPjnmgrjhT
+- T-108a kodi, testlar va golden'lar tayyor; skrinshotlar `docs/screenshots/T-108a/`.
 
 ## Keyingi aniq harakat
-- 2-qadam: `packages/ui/lib/src/components/pos_responsive_scaffold.dart` — `_SideNav` o'rniga `_CollapsibleNav`.
+- PR ochish (`gh pr create`), CI yashil bo'lsa squash merge; keyin T-108b (tovar kartasi komponenti scratchpad'da tayyor edi — `packages/ui/lib/src/components/pos_product_tile.dart` qayta yoziladi).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

@@ -123,9 +123,7 @@ class _StatusItem extends StatelessWidget {
     final tone = p.tone(item.tone);
     // Katta panelda muammo yumshoq fonda — matn rangi fon ustida AA.
     final soft = !compact && !neutral;
-    final color = neutral
-        ? p.textSecondary
-        : (soft ? tone.onSoft : tone.text);
+    final color = neutral ? p.textSecondary : (soft ? tone.onSoft : tone.text);
     final text = compact && neutral ? item.short : item.label;
     final content = Row(
       mainAxisSize: MainAxisSize.min,

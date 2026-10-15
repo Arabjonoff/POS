@@ -107,7 +107,10 @@ class _AppShellState extends ConsumerState<AppShell> {
                         child: Text(
                           user.fullName.trim().isEmpty
                               ? '?'
-                              : user.fullName.trim().characters.first
+                              : user.fullName
+                                    .trim()
+                                    .characters
+                                    .first
                                     .toUpperCase(),
                           style: PosTypography.bodyStrong.copyWith(
                             color: p.text,

@@ -322,7 +322,7 @@ Audit: `PROJECT_AUDIT.md`, batafsil — `docs/audit/`. Jurnal: `AGENT_WORKLOG.md
 
 ## 11-bosqich. Kassa ekrani yangi dizayni (loyiha egasi talabi, eskiz tasdiqlangan 2026-10-15; qaror 0014)
 
-### [ ] T-108a Qobiq: yig'iladigan menyu, banner, holat paneli
+### [x] T-108a Qobiq: yig'iladigan menyu, banner, holat paneli
 - **Bajarish:** desktopda 64 px ikon menyu (hover / Ctrl+B ochadi, pastda kassir va qulf); sinov banneri 28 px, yopish tugmasi; holat paneli 48 px: internet (oflayn — qizil, "oflayn rejimda ishlayapti"), navbat, printer (sozlanmagan — sariq), smena (qachondan), kassir, soat; bosilsa — Sozlamalar.
 
 ### [ ] T-108b Tovarlar paneli: kartalar, kategoriyalar, topilmadi

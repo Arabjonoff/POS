@@ -55,3 +55,8 @@ Hamma narsa `package:pos_ui/pos_ui.dart` orqali. Ekranlarda rang, o'lcham, shrif
 Komponentlar ichida foydalanuvchi matni yo'q: yorliq, tooltip, xato matni parametr sifatida (tarjimadan) beriladi.
 
 **Katalog va golden testlar.** Har komponent guruhi `packages/ui/widgetbook/lib/galleries/` da galereya (barcha holatlar) — Widgetbook'da "All states", golden testlar ham aynan shularni chizadi: `packages/ui/widgetbook/test/goldens/<galereya>/<phone|tablet|desktop>_<light|dark>.png`. Qayta yaratish: `make ui-goldens` (faqat Windows — CI ham Windows'da, 0005).
+
+## Qobiq: yig'iladigan menyu, banner, holat paneli (T-108a, qaror 0014)
+- **Menyu (desktop, ≥ 900 dp):** `PosResponsiveScaffold(onNavExpandedChanged: …)` — 64 dp ikonlar (48 × 48, nomi va tezkor tugmasi tooltip'da: `Kassa · Ctrl+1`), tepada ochish tugmasi, pastda kassir bosh harfi va qulf (`railFooter`). Sichqoncha 300 ms tursa — 240 dp menyu kontent **ustida** ochiladi (soya bilan), ketsa yopiladi; **Ctrl+B** yoki tugma — doim ochiq (kontent suriladi). Planshet (600–899) — rels, telefon — pastki panel (o'zgarmagan).
+- **Obuna banneri:** bir qator, 28 dp (`PosSizes.noticeBarHeight`), matn va aloqa bir qatorda (sig'masa `…`). Sinov xabarini yopsa bo'ladi (48 × 28 tugma, ilova qayta ochilguncha); muddat tugayotgani/o'tgani yopilmaydi.
+- **Holat paneli (planshet/desktop):** 48 dp yozuvlar (`PosStatusItem.onTap`), muammo — yumshoq fonda: oflayn — qizil "Internet yo'q — oflayn rejimda ishlayapti" (savdo davom etadi), oflayndagi navbat — sariq, printer sozlanmagan — sariq, ulanmagan — qizil. Smena — "Smena ochiq · 08:02 dan" (bosilsa smena sahifasi), o'ngda kassir va soat. Internet/navbat/printer bosilsa — Sozlamalar. Telefonda — 40 dp, ixcham (o'zgarmagan).
