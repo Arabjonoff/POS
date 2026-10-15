@@ -13,16 +13,16 @@
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 - [x] 1. Jarayon o'limi: `test/resilience/crash_child.dart` (alohida `dart run` jarayoni, `exit` COMMIT'siz/bilan) + `crash_test.dart`
-- [ ] 2. 2 qurilma bir tovar: ikki lokal baza, soxta server; pull'dagi server qoldig'i + yuborilmagan harakatlar
+- [x] 2. 2 qurilma bir tovar: ikki lokal baza, soxta server; pull'dagi server qoldig'i + yuborilmagan harakatlar
 - [ ] 3. 10 000 tovar: katalog yuklash va kassa ekrani ochilish vaqti, qidiruv
 - [ ] 4. 500 savdo oflayn + push uzilishi (mavjud: sync_engine_test 5, 6) — natijalar jadvali `docs/resilience.md`, PROGRESS
 - [ ] 5. PR, merge (T-085 bilan docs konflikti — main'ni qo'shish)
 
 ## Oxirgi bajarilgan ish
-- 1: crash testlari (2) yashil.
+- 2: `two_devices_test.dart` (2): oflayn sotuv → ikkalasi server qoldig'iga yaqinlashadi; javob yo'qolsa ikki marta ayirilmaydi. `FakeSyncServer.stock` qo'shildi.
 
 ## Keyingi aniq harakat
-- 2-qadam: `test/resilience/two_devices_test.dart` — `FakeSyncServer` pull'iga product_stock qo'shib.
+- 3-qadam: `test/resilience/large_catalog_test.dart` — 10 000 tovar: `ProductCatalog.load` vaqti, birinchi qidiruv, kassa ekrani ochilishi (pumpPosApp → savat tayyor).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
