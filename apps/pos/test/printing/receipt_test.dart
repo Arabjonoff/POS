@@ -5,6 +5,7 @@ import 'package:pos_app/app/locale.dart';
 import 'package:pos_app/core/format/unit_code.dart';
 import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/data/shifts/shift_service.dart';
+import 'package:pos_app/features/printing/escpos.dart';
 import 'package:pos_app/features/printing/receipt.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
 
@@ -170,6 +171,115 @@ void main() {
 
   test('plain() keeps receipts ASCII-friendly', () {
     expect(ReceiptBuilder.plain('1 250 so’m −1'), "1 250 so'm -1");
+  });
+
+  test('plain(): quotes, ellipsis, accents, emoji, control chars', () {
+    // Qo'shtirnoq, ko'p nuqta, ×, urg'uli harflar — `?` emas (audit PRN-B3).
+    expect(
+      ReceiptBuilder.plain('Yogʻ «Oltin» “Gold” … 2×3 Café Şeker'),
+      'Yog\' "Oltin" "Gold" ... 2x3 Cafe Seker',
+    );
+    // Boshqaruv belgilari va emoji yo'qoladi (ustunlar surilmaydi).
+    expect(ReceiptBuilder.plain('Non\u001b\u0000🍞 issiq'), 'Non issiq');
+  });
+
+  test('every row fits: 32/42/48 columns × 3 languages, odd names', () {
+    final names = [
+      'Kungaboqar yogʻi «Oltin Saxovat» 5 litr, rafinatsiyalangan',
+      'Ўзбекистон қовун ҳосили ғарам — 1-навли',
+      'Сок «Добрый» апельсин 1 л',
+      'Superdupermegauzunsozboʻlingansozboʻlaklarsiz',
+      'Choy 🍵 qora "Ahmad" № 1',
+    ];
+    final data = ReceiptData(
+      storeName: 'Juda uzun nomli doʻkon: «Baraka va hamkorlar» MChJ',
+      storeAddress: 'Toshkent sh., Chilonzor tumani, 7-mavze, 12-uy',
+      storePhone: '+998712000000',
+      header: 'Ochiq 08:00 dan 23:00 gacha\nYetkazib berish bepul',
+      footer: 'Rahmat!\nYana keling',
+      number: 'D3-999999',
+      soldAt: DateTime.utc(2026, 10, 13, 15, 15),
+      cashierName: 'Abdurahmonova Gulnora Shavkat qizi',
+      lines: [
+        for (final name in names)
+          ReceiptLine(
+            name: name,
+            qtyMilli: 99999999,
+            unit: UnitCode.kg,
+            priceTiyin: 9999999999,
+            discountTiyin: 123456,
+            totalTiyin: 9999999999,
+          ),
+      ],
+      discountTiyin: 100000,
+      totalTiyin: 9999999999,
+      payments: const [
+        ReceiptPayment(
+          method: 'cash',
+          amountTiyin: 9999999999,
+          receivedTiyin: 9999999999,
+          changeTiyin: 1,
+        ),
+      ],
+      customerName: 'Olim aka',
+      customerDebtTiyin: 9999999999,
+    );
+    for (final l10n in [
+      uz,
+      lookupAppLocalizations(AppLocales.uzCyrl),
+      lookupAppLocalizations(AppLocales.ru),
+    ]) {
+      for (final width in PaperWidth.values) {
+        final rows = ReceiptBuilder(l10n, width: width).build(data);
+        for (final row in rows.where((r) => !r.barcode)) {
+          expect(
+            row.text.runes.length,
+            lessThanOrEqualTo(width.chars),
+            reason: '${width.chars}: $row',
+          );
+          // CP866 da: o'zbek kirill harflari ham chiqadi, ortiqcha `?` yo'q.
+          final bytes = EscPos.encode(row.text, PrinterEncoding.cp866);
+          expect(
+            bytes.where((b) => b == 0x3f).length,
+            '?'.allMatches(row.text).length,
+            reason: 'unexpected ? in ${width.chars}: $row',
+          );
+        }
+      }
+    }
+  });
+
+  test('empty store name and cashier leave no blank lines', () {
+    final data = ReceiptData(
+      storeName: ' ',
+      number: 'D1-000001',
+      soldAt: DateTime.utc(2026, 10, 13),
+      cashierName: '',
+      lines: const [
+        ReceiptLine(
+          name: 'Tuz',
+          qtyMilli: 250000,
+          unit: UnitCode.g,
+          priceTiyin: 100,
+          totalTiyin: 25,
+        ),
+      ],
+      discountTiyin: 0,
+      totalTiyin: 25,
+      payments: const [ReceiptPayment(method: 'card', amountTiyin: 25)],
+    );
+    final rows = ReceiptBuilder(uz).build(data);
+    expect(rows.first.text, startsWith('---'));
+    expect(rows.where((r) => r.text.startsWith('Kassir')), isEmpty);
+    // Gramm birligi ko'rinadi ("250 x 1" emas).
+    expect(rows.any((r) => r.text.contains('250 g x')), isTrue);
+    // JAMI — baland qator.
+    expect(rows.singleWhere((r) => r.text.startsWith('JAMI')).tall, isTrue);
+  });
+
+  test('store phone is printed readable', () {
+    final rows = ReceiptBuilder(uz).build(cash);
+    expect(rows.any((r) => r.text.trim() == '+998 71 200 00 00'), isTrue);
   });
 
   group('shift report', () {

@@ -451,3 +451,9 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
   - Kassa: `CustomerDirectory.create(opening:)` — mijoz, `opening` yozuvi, `customer.upserted.opening_balance` bitta tranzaksiyada; yangi mijoz oynasi (Yo'q / Mijoz qarzi / Mijoz haqi (avans), summa mingliklar bilan, sana; telefon "(ixtiyoriy)"; Enter+bosish ikki marta yopmaydi); avans — menejer PIN; kartada/ro'yxatda/tanlovchida avans to'g'ri ko'rinadi.
 - Sinov: backend 783+ (opening 17, sinxron, hisobot: tushumga kirmaydi); apps/pos 680; packages/ui 136; golden `customers/card_credit`, `new_opening`.
 - Qoldi: avansni naqd qaytarish oqimi (Q-003 yangilandi).
+
+## 2026-10-15 — T-104a Chek: xatolar, ko'rinish, test cheki
+- Qilindi (`printing.md` "Chek sifati va ko'rinishi"): chek yasovchi (to'lovlar yig'indisi = JAMI, "Berildi (naqd)", oraliq summa, birlik g/qadoq, bo'sh do'kon/kassir qatori yo'q, telefon formati, belgilar xaritasi, emoji/boshqaruv belgilari yo'q, JAMI baland, savdodan keyingi qarz); ESC/POS `EscPosProfile` (`FS .`, `ESC t n`, kesish, surish), Ў/ў CP866; 80 mm 42 belgi; `ReceiptPreview` — printer bilan bir xil qatorlar, Roboto Mono (OFL) va oq qog'oz tokenlari; Sozlamalar → "Chek ko'rinishi"; "Test cheki" namuna chekni ham chiqaradi; qayta urinish NUSXA emas; avto-cheksiz ham pul qutisi; manzil kechiktirib saqlanadi.
+- Sinov: apps/pos 704 (+ 32/42/48 × 3 til "har qator sig'adi, ortiqcha `?` yo'q", ESC/POS profil/baland/printable, preview kesilmasligi, golden preview 58/80); snapshot'lar ko'rib chiqilib yangilandi.
+- Jismoniy printerda sinalmagan (printer yo'q).
+- Qoldi: T-104b (rekvizitlar, ko'rsat/yashir, logotip).

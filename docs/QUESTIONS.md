@@ -87,3 +87,10 @@ Format:
   kirim yangilaydi).
 - Hozircha tanlangan: muddat cheklovi yo'q; inventarizatsiya tekshiruvi yo'q; bekor qilishda narxlar o'zgarmaydi.
 - Javob:
+
+### Q-011 (T-104) Chek rekvizitlari
+- Kontekst: chek sozlamalarida yuridik nom, soliq raqami, logotip va ko'rsat/yashir qo'shilmoqda. Soliq rekvizitlari o'zboshimchalik bilan to'ldirilmaydi.
+- Savollar: (1) Chekda STIR (yuridik shaxs) yoki JShShIR (YaTT) — qaysi nom bilan chiqadi, ikkalasi ham kerakmi? (2) Rekvizitlarni kim o'zgartiradi — faqat egami yoki menejer ham? (3) Logotip do'kon uchun bittami yoki har kassada alohida? (4) Kirill tilidagi do'konlarda қ ғ ҳ to'g'ri chiqishi uchun grafik (sekinroq) rejim kerakmi?
+- Agentning tavsiyasi: (1) uzunlikka qarab: 9 raqam — "STIR", 14 — "JShShIR"; faqat kiritilgan bo'lsa chiqadi. (2) ega va menejer. (3) do'kon uchun bitta, kassada yoqish/o'chirish. (4) hozircha CP866 (к г х), grafik rejim keyin.
+- Hozircha tanlangan: tavsiya bo'yicha.
+- Javob:

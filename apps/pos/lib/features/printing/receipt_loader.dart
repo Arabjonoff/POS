@@ -54,6 +54,22 @@ class ReceiptLoader {
     final customer = hasDebt && customerId != null
         ? await CustomerDirectory(_db).byId(customerId)
         : null;
+    // Qarz — shu savdodan keyingi holat (qayta chop etilsa ham o'sha kundagi
+    // raqam, keyingi to'lov/savdolar emas; audit PRN-B15).
+    final debtAfter = customer == null
+        ? null
+        : (await _db
+                  .customSelect(
+                    'SELECT COALESCE(SUM(amount_tiyin), 0) AS s '
+                    'FROM debt_entries WHERE customer_id = ? AND at <= ?',
+                    variables: [
+                      Variable.withString(customer.id),
+                      Variable.withDateTime(sale.soldAt),
+                    ],
+                    readsFrom: {_db.debtEntries},
+                  )
+                  .getSingle())
+              .read<int>('s');
 
     const order = {'cash': 0, 'card': 1, 'debt': 2};
     payments.sort(
@@ -92,7 +108,7 @@ class ReceiptLoader {
           ),
       ],
       customerName: customer?.name,
-      customerDebtTiyin: customer?.balanceTiyin,
+      customerDebtTiyin: debtAfter,
     );
   }
 }

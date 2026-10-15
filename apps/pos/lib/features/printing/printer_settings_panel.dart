@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pos_app/features/printing/escpos.dart';
 import 'package:pos_app/features/printing/printer_service.dart';
 import 'package:pos_app/features/printing/printer_settings.dart';
 import 'package:pos_app/features/printing/receipt.dart';
+import 'package:pos_app/features/printing/receipt_sample.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
 import 'package:pos_ui/pos_ui.dart';
 
@@ -21,13 +23,28 @@ class PrinterSettingsPanel extends ConsumerStatefulWidget {
 
 class _PrinterSettingsPanelState extends ConsumerState<PrinterSettingsPanel> {
   final _address = TextEditingController();
+  final _codePage = TextEditingController();
   bool _addressLoaded = false;
   bool _busy = false;
+  bool _advanced = false;
+  Timer? _addressSave;
 
   @override
   void dispose() {
+    _addressSave?.cancel();
     _address.dispose();
+    _codePage.dispose();
     super.dispose();
+  }
+
+  /// Manzil har harfda emas, yozish to'xtagach saqlanadi (har saqlash
+  /// printerni qayta tekshiradi; audit PRN-B16).
+  void _addressChanged(PrinterSettings settings, String value) {
+    _addressSave?.cancel();
+    _addressSave = Timer(
+      const Duration(milliseconds: 600),
+      () => unawaited(_save(settings.copyWith(address: value.trim()))),
+    );
   }
 
   Future<void> _save(PrinterSettings settings) =>
@@ -144,8 +161,11 @@ class _PrinterSettingsPanelState extends ConsumerState<PrinterSettingsPanel> {
               label: l10n.printerAddress,
               hint: l10n.printerAddressHint,
               keyboardType: TextInputType.url,
-              onChanged: (v) =>
-                  unawaited(_save(settings.copyWith(address: v.trim()))),
+              onChanged: (v) => _addressChanged(settings, v),
+              onSubmitted: (v) {
+                _addressSave?.cancel();
+                unawaited(_save(settings.copyWith(address: v.trim())));
+              },
             ),
           ),
         ],
@@ -158,8 +178,9 @@ class _PrinterSettingsPanelState extends ConsumerState<PrinterSettingsPanel> {
           label(l10n.printerWidth),
           choices(
             [
-              for (final w in PaperWidth.values)
-                (w, l10n.printerWidthMm(w == PaperWidth.mm58 ? 58 : 80)),
+              (PaperWidth.mm58, l10n.printerWidthMm(58)),
+              (PaperWidth.mm80, l10n.printerWidthMm(80)),
+              (PaperWidth.mm80narrow, l10n.printerWidthNarrow),
             ],
             settings.width,
             (w) => unawaited(_save(settings.copyWith(width: w))),
@@ -195,6 +216,14 @@ class _PrinterSettingsPanelState extends ConsumerState<PrinterSettingsPanel> {
             onChanged: (v) =>
                 unawaited(_save(settings.copyWith(openDrawer: v))),
           ),
+          PosListTile(
+            key: const ValueKey('printer-advanced'),
+            leading: const Icon(Icons.tune),
+            title: l10n.printerAdvanced,
+            trailing: Icon(_advanced ? Icons.expand_less : Icons.expand_more),
+            onTap: () => setState(() => _advanced = !_advanced),
+          ),
+          if (_advanced) ..._advancedSettings(l10n, settings, toggle, choices),
           const SizedBox(height: PosSpacing.s),
           Padding(
             padding: const EdgeInsets.all(PosSpacing.s),
@@ -204,11 +233,19 @@ class _PrinterSettingsPanelState extends ConsumerState<PrinterSettingsPanel> {
               children: [
                 PosButton(
                   key: const ValueKey('printer-test'),
-                  label: l10n.printerTest,
+                  label: l10n.printerTestReceipt,
                   icon: Icons.print_outlined,
                   loading: _busy,
                   onPressed: settings.configured
-                      ? () => unawaited(_run((s) => s.printTest()))
+                      ? () => unawaited(
+                          _run(
+                            (s) async => s.printTest(
+                              sample: (await ref.read(
+                                receiptPreviewDataProvider.future,
+                              )).data,
+                            ),
+                          ),
+                        )
                       : null,
                 ),
                 PosButton(
@@ -225,6 +262,77 @@ class _PrinterSettingsPanelState extends ConsumerState<PrinterSettingsPanel> {
         ],
       ],
     );
+  }
+
+  List<Widget> _advancedSettings(
+    AppLocalizations l10n,
+    PrinterSettings settings,
+    Widget Function(
+      String title,
+      IconData icon, {
+      required bool value,
+      required ValueChanged<bool> onChanged,
+    })
+    toggle,
+    Widget Function<T>(List<(T, String)>, T, ValueChanged<T>) choices,
+  ) {
+    if (_codePage.text.isEmpty) _codePage.text = '${settings.codePage}';
+    return [
+      if (settings.encoding == PrinterEncoding.cp866)
+        Padding(
+          padding: const EdgeInsets.all(PosSpacing.s),
+          child: PosTextField(
+            key: const ValueKey('printer-code-page'),
+            controller: _codePage,
+            label: l10n.printerCodePage,
+            helper: l10n.printerCodePageHint,
+            keyboardType: TextInputType.number,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              LengthLimitingTextInputFormatter(3),
+            ],
+            onChanged: (v) {
+              final n = int.tryParse(v);
+              if (n != null && n <= 255) {
+                unawaited(_save(settings.copyWith(codePage: n)));
+              }
+            },
+          ),
+        ),
+      toggle(
+        l10n.printerCancelKanji,
+        Icons.translate,
+        value: settings.cancelKanji,
+        onChanged: (v) => unawaited(_save(settings.copyWith(cancelKanji: v))),
+      ),
+      toggle(
+        l10n.printerCut,
+        Icons.content_cut,
+        value: settings.cut,
+        onChanged: (v) => unawaited(_save(settings.copyWith(cut: v))),
+      ),
+      Padding(
+        padding: const EdgeInsets.fromLTRB(
+          PosSpacing.s,
+          PosSpacing.s,
+          PosSpacing.s,
+          PosSpacing.xs,
+        ),
+        child: Text(
+          l10n.printerFeed,
+          style: PosTypography.smallStrong.copyWith(
+            color: PosPalette.of(context).textSecondary,
+          ),
+        ),
+      ),
+      choices(
+        [
+          for (final n in const [2, 3, 4, 5, 6]) (n, '$n'),
+        ],
+        settings.feedLines,
+        (n) => unawaited(_save(settings.copyWith(feedLines: n))),
+      ),
+    ];
   }
 
   List<Widget> _systemPrinters(

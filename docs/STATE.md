@@ -15,16 +15,16 @@
 - [x] 2. `receipt.dart`: 42 belgili 80 mm, `ReceiptRow.tall`, bo'sh do'kon/kassir qatori yo'q, birlik (g/qadoq), oraliq summa, aralash to'lov (+ "Berildi"), qarz savdodan keyin, telefon formati, `plain()` kengaytirildi
 - [x] 3. `escpos.dart`: `EscPosProfile` (kod sahifasi, `FS .`, kesish, surish), Ў/ў CP866, `GS !` baland, `printable()`
 - [x] 4. `PrinterSettings`: code_page, cancel_kanji, cut, feed_lines (eski JSON mos)
-- [ ] 5. `printer_service.dart`: profil, test cheki = namuna chek (`receipt_sample.dart`); loader: savdodan keyingi qarz; kassa: qayta urinish NUSXA emas, avto-chop o'chiq bo'lsa ham pul qutisi
-- [ ] 6. `ReceiptPreview` vidjeti + sozlamalar paneli (preview, qo'shimcha sozlamalar, manzil debounce)
-- [ ] 7. Testlar (snapshot'lar, 32/42/48 × 3 til "hamma qator sig'adi", `?` yo'q), golden'lar
+- [x] 5. `printer_service.dart`: profil, test cheki = namuna chek (`receipt_sample.dart`); loader: savdodan keyingi qarz; kassa: qayta urinish NUSXA emas, avto-chop o'chiq bo'lsa ham pul qutisi
+- [x] 6. `ReceiptPreview` vidjeti + sozlamalar paneli (preview, qo'shimcha sozlamalar, manzil debounce)
+- [x] 7. Testlar (snapshot'lar, 32/42/48 × 3 til "hamma qator sig'adi", `?` yo'q), golden'lar
 - [ ] 8. PR 104a; keyin 104b
 
 ## Oxirgi bajarilgan ish
-- T-103 merge (#53). T-104 1–4 qadamlar.
+- T-104a tayyor (PROGRESS). PR ochilmoqda.
 
 ## Keyingi aniq harakat
-- 5-qadam: `apps/pos/lib/features/printing/printer_service.dart` — `EscPos.receipt(..., profile: settings.profile)`, `printTest()` → `sampleReceipt` qatorlari.
+- T-104a PR CI yashil bo'lsa merge; keyin T-104b: `backend/apps/tenants/models.py` Store'ga `legal_name`, `tin`, `receipt_logo`, `receipt_options` (additive migratsiya), pull'da, `store.upserted` hodisasi (ega/menejer, tenant testi), kassa drift `stores` ustunlari, muharrir + ko'rsat/yashir, logotip (`file_picker` → kulrang PNG → `GS v 0`).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
@@ -47,6 +47,7 @@
 - Generatsiya qilingan Dart klient `DateTime` query'ni to'liq ISO vaqt qilib yuboradi; server `DateField` (`YYYY-MM-DD`) bo'lsa — Dio bilan to'g'ridan-to'g'ri chaqir (`reports_provider.dart` misoli).
 - Push'dan oldin: `dart format apps/pos/lib apps/pos/test packages/ui/lib packages/ui/test packages/ui/widgetbook/lib packages/ui/widgetbook/test` (CI tekshiradi); backend serializer o'zgarsa — `make schema` (openapi.yaml diff CI'da).
 - Windows'da Python bilan fayl yozganda `newline=''` ishlat (aks holda CRLF); `\n`/`\u02bb` kabi escape'lar heredoc ichida buziladi — Edit vositasi yoki skript fayl ishlat. Ruff RUF001: o'zbek `ʻ` uchun `# noqa: RUF001`.
+- Chek ko'rinishi (preview) mavzudan `letterSpacing` olsa oxirgi belgini kesadi — `PosTypography.receipt` da 0 (test: `receipt_preview_test.dart`).
 - Admin e2e lokal: `cd apps/admin && npm run build && E2E_PORT=3150 npx playwright test` (3100 — docker admin bo'lishi mumkin; reuseExistingServer uni qayta ishlatib yuboradi). Soxta Django API: `e2e/mock-api.mjs` (3199).
 - Admin'ga npm paket qo'shilsa: Windows'dagi npm lock'dan `@emnapi/core|runtime` (optional, wasm) yozuvlarini o'chiradi va CI `npm ci` yiqiladi. Yechim: yozuvlarni main'dagi lock'dan qaytarish, `npm ci --dry-run` bilan tekshirish.
 - Admin skrinshotlari: scratchpad'dagi `shots8x.cjs` naqshi — `node e2e/mock-api.mjs` + `API_URL_INTERNAL=http://127.0.0.1:3199 npx next start -p 3150`, keyin Playwright skript (`require(<apps/admin>/node_modules/playwright)`). Bash'da murakkab `node -e` / heredoc'ga `${...}` va qo'shtirnoq aralashsa buziladi — Write vositasi bilan fayl yoz.

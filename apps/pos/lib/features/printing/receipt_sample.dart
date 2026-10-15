@@ -1,6 +1,7 @@
 import 'package:clock/clock.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pos_app/app/locale.dart';
+import 'package:pos_app/app/status/app_status.dart';
 import 'package:pos_app/core/format/unit_code.dart';
 import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/features/printing/printer_service.dart';
@@ -65,7 +66,8 @@ ReceiptData sampleReceipt(
 
 /// Chek ko'rinishi uchun ma'lumot: oxirgi savdo (do'kon sozlamalari bilan),
 /// bo'lmasa — namuna. `isSample` — belgi uchun.
-final receiptPreviewDataProvider =
+final FutureProvider<({ReceiptData data, bool isSample})>
+receiptPreviewDataProvider =
     FutureProvider.autoDispose<({ReceiptData data, bool isSample})>((
       ref,
     ) async {
@@ -86,6 +88,7 @@ final receiptPreviewDataProvider =
           storePhone: store?.phone ?? '',
           header: store?.receiptHeader ?? '',
           footer: store?.receiptFooter ?? '',
+          at: ref.watch(clockProvider)(),
         ),
         isSample: true,
       );

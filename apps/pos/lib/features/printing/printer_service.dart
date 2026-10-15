@@ -57,10 +57,21 @@ class PrinterService {
       for (var i = 0; i < copies; i++)
         EscPos.receipt(
           rows,
-          encoding: settings.encoding,
+          profile: settings.profile,
           drawer: drawer && i == 0,
         ),
     ]);
+  }
+
+  /// Chek chiqarilmasa ham (avto-chop o'chiq) naqd savdoda pul qutisi
+  /// ochilsin — sozlamada yoqilgan bo'lsa (audit PRN-B14).
+  Future<PrintOutcome> openDrawerForSale(String saleId) async {
+    if (!settings.openDrawer) return PrintOutcome.notConfigured;
+    final data = await loader.load(saleId);
+    if (data == null || !data.payments.any((p) => p.method == 'cash')) {
+      return PrintOutcome.notConfigured;
+    }
+    return openDrawer();
   }
 
   /// Oxirgi savdo chekini qayta chop etish ("har doim mavjud").
@@ -79,12 +90,12 @@ class PrinterService {
     return last?.id;
   }
 
-  /// Test chek: kenglik chizg'ichi, vaqt va lotin/kirill sinovi.
-  Future<PrintOutcome> printTest() async {
+  /// Test chek sinov qismi: kenglik chizg'ichi, vaqt, lotin/kirill sinovi.
+  List<ReceiptRow> testRows() {
     final w = settings.width.chars;
     ReceiptRow center(String text, {bool bold = false}) =>
         ReceiptRow(text, bold: bold, center: true);
-    final rows = [
+    return [
       center(l10n.printerTestTitle, bold: true),
       ReceiptRow('-' * w),
       ReceiptRow(List.generate(w, (i) => '${(i + 1) % 10}').join()),
@@ -94,7 +105,22 @@ class PrinterService {
         for (final part in ReceiptBuilder.wrap(ReceiptBuilder.plain(text), w))
           center(part),
     ];
-    return _send([EscPos.receipt(rows, encoding: settings.encoding)]);
+  }
+
+  /// Chek ko'rinishidagi qatorlar (preview va test cheki bir manbadan).
+  List<ReceiptRow> previewRows(ReceiptData data) => _builder.build(data);
+
+  /// Test chek: sinov qismi, keyin [sample] (chek ko'rinishidagi chek) —
+  /// ega haqiqiy chek qanday chiqishini qog'ozda ko'radi.
+  Future<PrintOutcome> printTest({ReceiptData? sample}) async {
+    final rows = [
+      ...testRows(),
+      if (sample != null) ...[
+        const ReceiptRow(''),
+        ...previewRows(sample),
+      ],
+    ];
+    return _send([EscPos.receipt(rows, profile: settings.profile)]);
   }
 
   /// X/Z hisobot cheki (do'kon nomi va kassir — bazadan).
@@ -112,7 +138,7 @@ class PrinterService {
       cashierName: cashier?.fullName ?? '',
       printedAt: clock.now(),
     );
-    return _send([EscPos.receipt(rows, encoding: settings.encoding)]);
+    return _send([EscPos.receipt(rows, profile: settings.profile)]);
   }
 
   Future<PrintOutcome> openDrawer() => _send([EscPos.drawerOnly()]);

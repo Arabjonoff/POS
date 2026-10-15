@@ -105,6 +105,8 @@ abstract final class PosTypography {
   /// tekis. O'lcham ko'rinish kengligiga qarab moslashtiriladi.
   static const TextStyle receipt = TextStyle(
     fontFamily: 'RobotoMono',
+    letterSpacing: 0,
+    wordSpacing: 0,
     package: fontPackage,
     fontSize: 13,
     height: 1.3,

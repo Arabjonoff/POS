@@ -52,8 +52,10 @@ class PrinterSettings {
         autoPrint: json['auto_print'] as bool? ?? true,
         copies: ((json['copies'] as int?) ?? 1).clamp(1, maxCopies),
         openDrawer: json['open_drawer'] as bool? ?? false,
-        codePage: ((json['code_page'] as int?) ?? EscPos.defaultCodePage)
-            .clamp(0, 255),
+        codePage: ((json['code_page'] as int?) ?? EscPos.defaultCodePage).clamp(
+          0,
+          255,
+        ),
         cancelKanji: json['cancel_kanji'] as bool? ?? true,
         cut: json['cut'] as bool? ?? true,
         feedLines: ((json['feed_lines'] as int?) ?? 4).clamp(0, maxFeedLines),
