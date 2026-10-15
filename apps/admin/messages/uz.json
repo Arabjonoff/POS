@@ -48,5 +48,9 @@
       "required": "Telefon va parolni kiriting",
       "unavailable": "Server javob bermadi. Keyinroq qayta urining"
     }
+  },
+  "section": {
+    "soonTitle": "Bo'lim tayyorlanmoqda",
+    "soonText": "Bu bo'lim keyingi yangilanishlarda qo'shiladi."
   }
 }

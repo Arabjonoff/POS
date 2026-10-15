@@ -43,6 +43,7 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  // API route'lar, Next fayllari va statik fayllar (nuqtali) — tekshirilmaydi.
-  matcher: ["/((?!api|_next/static|_next/image|.*\..*).*)"],
+  // API route'lar va Next fayllari tekshirilmaydi. Diqqat: matcher'da `\.` saqlanmaydi
+  // (kompilyatsiyada `.` bo'lib qoladi va hamma yo'lni chiqarib tashlaydi).
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };

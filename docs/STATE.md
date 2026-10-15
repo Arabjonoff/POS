@@ -16,14 +16,14 @@
 - [x] 2. `src/proxy.ts`: kirmagan — `/login?next=`; access eskirgan, refresh bor — yangilab cookie qo'yadi
 - [x] 3. Route guruhlari: `(auth)/login` (qobiqsiz), `(app)/layout.tsx` (qobiq + `getCurrentAdmin()` DAL); header'da admin ismi va "Chiqish"
 - [x] 4. Kirish sahifasi (telefon, parol, xatolar: noto'g'ri parol, admin emas, tarmoq), tarjimalar uz/ru, Vitest
-- [ ] 5. Playwright: soxta Django API (`e2e/mock-api.mjs`, webServer), noto'g'ri parol, kirish, chiqish, himoyalangan sahifa; eski smoke testlar kirish bilan
+- [x] 5. Playwright: soxta Django API (`e2e/mock-api.mjs`, webServer), noto'g'ri parol, kirish, chiqish, himoyalangan sahifa; eski smoke testlar kirish bilan
 - [ ] 6. Spec (admin-dashboard.md), skrinshotlar, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- 4: Vitest — login route handler (4), proxy (4), safeNext, LoginForm (5); jami 21 test.
+- 5: `e2e/mock-api.mjs`, playwright webServer massiv, `e2e/auth.spec.ts` (5) + smoke (3) — 8 o'tdi. `(app)/[section]` — menyu bo'limlari uchun "tayyorlanmoqda". Proxy matcher'da `\.` yo'qolishi tuzatildi.
 
 ## Keyingi aniq harakat
-- 5-qadam: `apps/admin/e2e/mock-api.mjs` (soxta Django: login/refresh/me), `playwright.config.ts` webServer massiv (+ `API_URL_INTERNAL`), `e2e/auth.spec.ts`, smoke testlarga kirish. Lokal: `E2E_PORT=3150` (3100 docker admin).
+- 6-qadam: main'ni merge qilish (STATE/ROADMAP/PROGRESS konflikti), skrinshotlar `docs/screenshots/T-080/` (login, bosh sahifa yorug'/qorong'i), spec, PROGRESS, ROADMAP, PR.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
