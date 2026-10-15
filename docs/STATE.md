@@ -14,16 +14,16 @@
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 - [x] 1. UI komponentlar (shadcn: dialog, table, tabs, label, textarea, select) + `src/lib/platform.ts` ga tenant funksiyalari, Server Actions (`src/app/(app)/tenants/actions.ts`: onboard, block, unblock, reset-password)
 - [x] 2. `/tenants` ro'yxati: qidiruv, holat filtri (URL), jadval, sahifalash, bo'sh/xato holatlari, CSV eksport
-- [ ] 3. `/tenants/new` 3 qadamli usta (do'kon → ega (vaqtinchalik parol) → tarif + sinov) va natija kartasi (nusxa olish)
+- [x] 3. `/tenants/new` 3 qadamli usta (do'kon → ega (vaqtinchalik parol) → tarif + sinov) va natija kartasi (nusxa olish)
 - [ ] 4. `/tenants/[id]`: tablar Umumiy (obuna, bloklash/blokdan chiqarish — sabab bilan), To'lovlar, Qurilmalar, Foydalanuvchilar (parol tiklash), Faollik
 - [ ] 5. Soxta API (tenantlar, tariflar, qurilmalar, to'lovlar, foydalanuvchilar, hodisalar — xotirada) + Vitest + Playwright (yaratish → ro'yxatda → ega API orqali kira oladi; bloklash)
 - [ ] 6. Spec, skrinshotlar, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- 2: `/tenants` (server sahifa, qidiruv 300 ms debounce + holat Select URL'da, jadval, sahifalash, CSV — `src/lib/csv.ts`), `StatusBadge`, tarjimalar.
+- 3: `/tenants/new` + `OnboardWizard` (3 qadam, `validateStep`, phone_taken → 2-qadam, natija kartasi + nusxa), tarjimalar `tenants.new`.
 
 ## Keyingi aniq harakat
-- 3-qadam: `src/app/(app)/tenants/new/page.tsx` (listPlans) + `components/tenants/onboard-wizard.tsx` (3 qadam, natija kartasi).
+- 4-qadam: `src/app/(app)/tenants/[id]/page.tsx` (`?tab=overview|payments|devices|users|activity`), `components/tenants/{tenant-tabs,block-dialog,reset-password}.tsx`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
