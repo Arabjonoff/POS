@@ -3181,5 +3181,92 @@
   "printerNoUsbHint": "Printerni OTG kabel bilan ulang va yoqing, keyin ro'yxatni yangilang.",
   "@printerNoUsbHint": {
     "description": "How to attach a USB printer"
+  },
+  "navSales": "Cheklar",
+  "@navSales": {
+    "description": "Navigation: receipt history section"
+  },
+  "salesSearchHint": "Chek raqami, mijoz yoki tovar",
+  "@salesSearchHint": {
+    "description": "Receipt history search hint"
+  },
+  "salesAllPayments": "Hammasi",
+  "@salesAllPayments": {
+    "description": "Payment filter: all"
+  },
+  "salesSummary": "{count} ta chek · {total}",
+  "@salesSummary": {
+    "description": "Receipt count and total",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "salesRefundedTotal": "Qaytarilgan: {amount}",
+  "@salesRefundedTotal": {
+    "description": "Refunded total in filter",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "salesEmptyTitle": "Bu kunda chek yo'q",
+  "@salesEmptyTitle": {
+    "description": "No receipts for the day"
+  },
+  "salesNotFound": "Hech narsa topilmadi",
+  "@salesNotFound": {
+    "description": "Search found nothing"
+  },
+  "salesLocalNote": "Faqat shu kassada sotilgan cheklar ko'rinadi",
+  "@salesLocalNote": {
+    "description": "Only this register's receipts are shown"
+  },
+  "salesItems": "{count} pozitsiya",
+  "@salesItems": {
+    "description": "Number of lines on a receipt",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "salesStatusRefunded": "Qaytarilgan",
+  "@salesStatusRefunded": {
+    "description": "Receipt fully refunded"
+  },
+  "salesStatusPartial": "Qisman qaytarilgan",
+  "@salesStatusPartial": {
+    "description": "Receipt partially refunded"
+  },
+  "salesReceiptNotFound": "Chek topilmadi: {code}",
+  "@salesReceiptNotFound": {
+    "description": "Scanned receipt number not found",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "salesSelectHint": "Ko'rish uchun chekni tanlang",
+  "@salesSelectHint": {
+    "description": "Detail placeholder"
+  },
+  "salesRefunds": "Qaytarishlar",
+  "@salesRefunds": {
+    "description": "Refunds list title in receipt detail"
+  },
+  "salesBack": "Cheklar ro'yxati",
+  "@salesBack": {
+    "description": "Back to receipt list"
+  },
+  "salesSetUpPrinter": "Sozlash",
+  "@salesSetUpPrinter": {
+    "description": "Open printer settings from a toast"
   }
 }

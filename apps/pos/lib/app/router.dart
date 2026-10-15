@@ -12,6 +12,7 @@ import 'package:pos_app/features/pos/pos_screen.dart';
 import 'package:pos_app/features/products/products_screen.dart';
 import 'package:pos_app/features/receiving/receiving_screen.dart';
 import 'package:pos_app/features/reports/reports_screen.dart';
+import 'package:pos_app/features/sales/sales_screen.dart';
 import 'package:pos_app/features/settings/settings_screen.dart';
 import 'package:pos_app/features/shift/shift_screen.dart';
 
@@ -69,6 +70,7 @@ final routerProvider = Provider<GoRouter>((ref) {
                   path: section.path,
                   builder: (context, state) => switch (section) {
                     AppSection.pos => const PosScreen(),
+                    AppSection.sales => const SalesScreen(),
                     AppSection.products => const ProductsScreen(),
                     AppSection.receiving => const ReceivingScreen(),
                     AppSection.customers => const CustomersScreen(),

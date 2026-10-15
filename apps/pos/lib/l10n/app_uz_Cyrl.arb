@@ -666,5 +666,21 @@
   "printerNoBluetooth": "Жуфтланган принтер йўқ",
   "printerNoBluetoothHint": "Принтерни ёқинг ва телефоннинг Bluetooth созламаларида жуфтланг (PIN одатда 0000 ёки 1234), кейин рўйхатни янгиланг.",
   "printerNoUsb": "USB принтер топилмади",
-  "printerNoUsbHint": "Принтерни OTG кабел билан уланг ва ёқинг, кейин рўйхатни янгиланг."
+  "printerNoUsbHint": "Принтерни OTG кабел билан уланг ва ёқинг, кейин рўйхатни янгиланг.",
+  "navSales": "Чеклар",
+  "salesSearchHint": "Чек рақами, мижоз ёки товар",
+  "salesAllPayments": "Ҳаммаси",
+  "salesSummary": "{count} та чек · {total}",
+  "salesRefundedTotal": "Қайтарилган: {amount}",
+  "salesEmptyTitle": "Бу кунда чек йўқ",
+  "salesNotFound": "Ҳеч нарса топилмади",
+  "salesLocalNote": "Фақат шу кассада сотилган чеклар кўринади",
+  "salesItems": "{count} позиция",
+  "salesStatusRefunded": "Қайтарилган",
+  "salesStatusPartial": "Қисман қайтарилган",
+  "salesReceiptNotFound": "Чек топилмади: {code}",
+  "salesSelectHint": "Кўриш учун чекни танланг",
+  "salesRefunds": "Қайтаришлар",
+  "salesBack": "Чеклар рўйхати",
+  "salesSetUpPrinter": "Созлаш"
 }

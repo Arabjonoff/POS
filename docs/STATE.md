@@ -14,17 +14,17 @@
 - [x] 1. Spec `docs/specs/receipt-history.md`, ROADMAP 12-bosqich T-109
 - [x] 2. Ma'lumot: `lib/data/sales/sale_history.dart` (filtr, ro'yxat, jonli)
 - [x] 3. Unit test `test/data/sale_history_test.dart`
-- [ ] 4. Bo'lim: `AppSection.sales` (kassadan keyin, Ctrl+7, kassada F7), router
-- [ ] 5. `lib/features/sales/sales_screen.dart` (filtrlar, ro'yxat, skaner) + `sale_detail.dart` (chek ko'rinishi, qayta chop etish, qaytarish)
-- [ ] 6. `showRefundDialog(saleId:)`; l10n (uz/uz-Cyrl/ru)
+- [x] 4. Bo'lim: `AppSection.sales` (kassadan keyin, Ctrl+7, kassada F7), router
+- [x] 5. `lib/features/sales/sales_screen.dart` (filtrlar, ro'yxat, skaner) + `sale_detail.dart` (chek ko'rinishi, qayta chop etish, qaytarish)
+- [x] 6. `showRefundDialog(saleId:)`; l10n (uz/uz-Cyrl/ru)
 - [ ] 7. Widget testlar `test/features/sales_history_test.dart`, golden `sales/*`, boshqa golden'larni yangilash (menyuda yangi ikon)
 - [ ] 8. Hujjatlar (pos-screen.md klaviatura, user guide), tekshiruvlar, PR, merge
 
 ## Oxirgi bajarilgan ish
-- Spec, ma'lumot qatlami va unit test (6) yashil.
+- Bo'lim (`AppSection.sales`), `features/sales/sales_screen.dart` + `sale_detail.dart`, F7, `showRefundDialog(saleId:)`, l10n — analyze toza.
 
 ## Keyingi aniq harakat
-- 4-qadam: `apps/pos/lib/app/shell/app_sections.dart` ga `sales` (kassadan keyin, aniq Ctrl+7), router, kassada F7.
+- 7-qadam: `apps/pos/test/features/sales_history_test.dart` (seedSaleHistory + clockProvider=historyNow), keyin golden `sales/*` va boshqa golden'larni `--update-goldens`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

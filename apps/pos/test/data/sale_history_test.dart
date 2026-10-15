@@ -53,7 +53,7 @@ void main() {
 
   test('search ignores the date: number part, product, customer', () async {
     SaleHistoryFilter search(String q) =>
-        SaleHistoryFilter(day: DateTime.utc(2026, 1, 1), query: q);
+        SaleHistoryFilter(day: DateTime.utc(2026, 2, 3), query: q);
     expect(await numbers(search('000003')), ['D3-000003']);
     expect(await numbers(search('d3-000001')), ['D3-000001']);
     expect(await numbers(search('olma')), ['D3-000003']);

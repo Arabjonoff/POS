@@ -666,5 +666,21 @@
   "printerNoBluetooth": "Нет сопряжённых принтеров",
   "printerNoBluetoothHint": "Включите принтер и выполните сопряжение в настройках Bluetooth телефона (PIN обычно 0000 или 1234), затем обновите список.",
   "printerNoUsb": "USB-принтер не найден",
-  "printerNoUsbHint": "Подключите принтер через OTG-кабель и включите его, затем обновите список."
+  "printerNoUsbHint": "Подключите принтер через OTG-кабель и включите его, затем обновите список.",
+  "navSales": "Чеки",
+  "salesSearchHint": "Номер чека, клиент или товар",
+  "salesAllPayments": "Все",
+  "salesSummary": "Чеков: {count} · {total}",
+  "salesRefundedTotal": "Возвращено: {amount}",
+  "salesEmptyTitle": "В этот день чеков нет",
+  "salesNotFound": "Ничего не найдено",
+  "salesLocalNote": "Показаны только чеки этой кассы",
+  "salesItems": "Позиций: {count}",
+  "salesStatusRefunded": "Возвращён",
+  "salesStatusPartial": "Частично возвращён",
+  "salesReceiptNotFound": "Чек не найден: {code}",
+  "salesSelectHint": "Выберите чек для просмотра",
+  "salesRefunds": "Возвраты",
+  "salesBack": "Список чеков",
+  "salesSetUpPrinter": "Настроить"
 }

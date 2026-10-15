@@ -4100,6 +4100,102 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Printerni OTG kabel bilan ulang va yoqing, keyin ro\'yxatni yangilang.'**
   String get printerNoUsbHint;
+
+  /// Navigation: receipt history section
+  ///
+  /// In uz, this message translates to:
+  /// **'Cheklar'**
+  String get navSales;
+
+  /// Receipt history search hint
+  ///
+  /// In uz, this message translates to:
+  /// **'Chek raqami, mijoz yoki tovar'**
+  String get salesSearchHint;
+
+  /// Payment filter: all
+  ///
+  /// In uz, this message translates to:
+  /// **'Hammasi'**
+  String get salesAllPayments;
+
+  /// Receipt count and total
+  ///
+  /// In uz, this message translates to:
+  /// **'{count} ta chek · {total}'**
+  String salesSummary(int count, String total);
+
+  /// Refunded total in filter
+  ///
+  /// In uz, this message translates to:
+  /// **'Qaytarilgan: {amount}'**
+  String salesRefundedTotal(String amount);
+
+  /// No receipts for the day
+  ///
+  /// In uz, this message translates to:
+  /// **'Bu kunda chek yo\'q'**
+  String get salesEmptyTitle;
+
+  /// Search found nothing
+  ///
+  /// In uz, this message translates to:
+  /// **'Hech narsa topilmadi'**
+  String get salesNotFound;
+
+  /// Only this register's receipts are shown
+  ///
+  /// In uz, this message translates to:
+  /// **'Faqat shu kassada sotilgan cheklar ko\'rinadi'**
+  String get salesLocalNote;
+
+  /// Number of lines on a receipt
+  ///
+  /// In uz, this message translates to:
+  /// **'{count} pozitsiya'**
+  String salesItems(int count);
+
+  /// Receipt fully refunded
+  ///
+  /// In uz, this message translates to:
+  /// **'Qaytarilgan'**
+  String get salesStatusRefunded;
+
+  /// Receipt partially refunded
+  ///
+  /// In uz, this message translates to:
+  /// **'Qisman qaytarilgan'**
+  String get salesStatusPartial;
+
+  /// Scanned receipt number not found
+  ///
+  /// In uz, this message translates to:
+  /// **'Chek topilmadi: {code}'**
+  String salesReceiptNotFound(String code);
+
+  /// Detail placeholder
+  ///
+  /// In uz, this message translates to:
+  /// **'Ko\'rish uchun chekni tanlang'**
+  String get salesSelectHint;
+
+  /// Refunds list title in receipt detail
+  ///
+  /// In uz, this message translates to:
+  /// **'Qaytarishlar'**
+  String get salesRefunds;
+
+  /// Back to receipt list
+  ///
+  /// In uz, this message translates to:
+  /// **'Cheklar ro\'yxati'**
+  String get salesBack;
+
+  /// Open printer settings from a toast
+  ///
+  /// In uz, this message translates to:
+  /// **'Sozlash'**
+  String get salesSetUpPrinter;
 }
 
 class _AppLocalizationsDelegate
