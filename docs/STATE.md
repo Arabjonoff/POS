@@ -5,19 +5,24 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-084 Admin: qurilmalar va audit jurnali
+- Branch: feat/T-084-admin-devices-audit
+- Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
+- [ ] 1. `platform.ts`: `listDevices` (stale_days, blocked, sahifa), `listAuditLog` (action, target_type, tenant, sahifa); actions `blockDevice`, `unblockDevice`; `src/lib/audit.ts` (o'zgargan maydonlar: before → after) + Vitest
+- [ ] 2. `/devices`: filtr (hammasi / 3 kundan beri sinxronlanmagan / bloklangan — URL), jadval (qurilma, mijoz havolasi, platforma, versiya, oxirgi sinxron — eskisi ajratilgan, holat), bloklash (sabab) / blokdan chiqarish
+- [ ] 3. `/audit`: amal va obyekt turi filtri (URL), jadval (vaqt, kim, amal, obyekt, mijoz, sabab), o'zgarishlar ochiladigan qatorda, sahifalash
+- [ ] 4. Soxta API (qurilmalar filtri/bloklash, audit — har o'zgarish yozadi) + Playwright
+- [ ] 5. Spec, skrinshotlar, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- T-083 tugadi (PR, merge).
+- Reja yozildi.
 
 ## Keyingi aniq harakat
-- ROADMAP'dan keyingi vazifa: T-084 Admin: qurilmalar va audit jurnali.
+- 1-qadam: `apps/admin/src/lib/platform.ts` ga `listDevices`, `listAuditLog`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
