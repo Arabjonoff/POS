@@ -39,7 +39,7 @@ class SyncPushView(APIView):
         return Response(PushResponseSerializer(data).data)
 
 
-SERVER_FEATURES = ["receipt_corrections"]
+SERVER_FEATURES = ["receipt_corrections", "store_settings"]
 
 
 class SyncPullView(APIView):

@@ -1371,6 +1371,186 @@ abstract class AppLocalizations {
   /// **'Test cheki'**
   String get printerTestReceipt;
 
+  /// Chekda: 9 raqamli soliq raqami
+  ///
+  /// In uz, this message translates to:
+  /// **'STIR'**
+  String get receiptTin;
+
+  /// Chekda: 14 raqamli shaxsiy raqam
+  ///
+  /// In uz, this message translates to:
+  /// **'JShShIR'**
+  String get receiptPinfl;
+
+  /// Sozlamalar kartasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Chek rekvizitlari va ko\'rinishi'**
+  String get storeSettingsTitle;
+
+  /// Izoh
+  ///
+  /// In uz, this message translates to:
+  /// **'Hamma kassalarda bir xil. O\'ngdagi chek — printer aynan shunday chiqaradi.'**
+  String get storeSettingsHint;
+
+  /// Maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'Do\'kon nomi'**
+  String get storeName;
+
+  /// Maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'Yuridik nomi'**
+  String get storeLegalName;
+
+  /// Izoh
+  ///
+  /// In uz, this message translates to:
+  /// **'Masalan: \"Baraka\" MChJ yoki YaTT Karimov A.'**
+  String get storeLegalNameHint;
+
+  /// Maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'STIR yoki JShShIR'**
+  String get storeTin;
+
+  /// Izoh
+  ///
+  /// In uz, this message translates to:
+  /// **'9 yoki 14 raqam. Faqat kiritilsa chekda chiqadi.'**
+  String get storeTinHint;
+
+  /// Xato
+  ///
+  /// In uz, this message translates to:
+  /// **'9 raqam (STIR) yoki 14 raqam (JShShIR) kiriting'**
+  String get storeTinError;
+
+  /// Maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'Manzil'**
+  String get storeAddress;
+
+  /// Maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'Telefon'**
+  String get storePhone;
+
+  /// Maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'Chek sarlavhasi'**
+  String get storeHeader;
+
+  /// Izoh
+  ///
+  /// In uz, this message translates to:
+  /// **'Masalan: Har kuni 08:00–23:00'**
+  String get storeHeaderHint;
+
+  /// Maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'Pastki matn'**
+  String get storeFooter;
+
+  /// Izoh
+  ///
+  /// In uz, this message translates to:
+  /// **'Bo\'sh bo\'lsa: Xaridingiz uchun rahmat!'**
+  String get storeFooterHint;
+
+  /// Bo'lim
+  ///
+  /// In uz, this message translates to:
+  /// **'Logotip'**
+  String get storeLogo;
+
+  /// Izoh
+  ///
+  /// In uz, this message translates to:
+  /// **'PNG yoki JPG. Chekda oq-qora chiqadi.'**
+  String get storeLogoHint;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Logotip tanlash'**
+  String get storeLogoPick;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Almashtirish'**
+  String get storeLogoReplace;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Olib tashlash'**
+  String get storeLogoRemove;
+
+  /// Xato
+  ///
+  /// In uz, this message translates to:
+  /// **'Rasmni o\'qib bo\'lmadi. Boshqa PNG yoki JPG tanlang.'**
+  String get storeLogoError;
+
+  /// Xato
+  ///
+  /// In uz, this message translates to:
+  /// **'Logotip juda murakkab. Oddiyroq rasm tanlang.'**
+  String get storeLogoTooLarge;
+
+  /// Bo'lim
+  ///
+  /// In uz, this message translates to:
+  /// **'Chekda ko\'rsatish'**
+  String get storeShowTitle;
+
+  /// Kalit
+  ///
+  /// In uz, this message translates to:
+  /// **'Kassir ismi'**
+  String get storeShowCashier;
+
+  /// Kalit
+  ///
+  /// In uz, this message translates to:
+  /// **'Chek shtrix-kodi (qaytarish uchun)'**
+  String get storeShowBarcode;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Rekvizitlarni saqlash'**
+  String get storeSave;
+
+  /// Xabar
+  ///
+  /// In uz, this message translates to:
+  /// **'Saqlandi — boshqa kassalarda sinxrondan keyin yangilanadi'**
+  String get storeSaved;
+
+  /// Huquq
+  ///
+  /// In uz, this message translates to:
+  /// **'Chek rekvizitlarini menejer yoki ega o\'zgartiradi'**
+  String get storeNeedsApproval;
+
+  /// Izoh
+  ///
+  /// In uz, this message translates to:
+  /// **'Rekvizitlarni o\'zgartirish server yangilangach ishlaydi (internetga ulaning).'**
+  String get storeUnavailable;
+
   /// Chekda: mijozning savdodan keyingi qarzi
   ///
   /// In uz, this message translates to:

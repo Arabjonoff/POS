@@ -3,6 +3,7 @@ import 'package:pos_app/core/format/app_format.dart';
 import 'package:pos_app/core/format/unit_code.dart';
 import 'package:pos_app/core/text/phone.dart';
 import 'package:pos_app/data/shifts/shift_service.dart';
+import 'package:pos_app/features/printing/mono_bitmap.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
 
 /// Chek qatori (savdo qatorining surati).
@@ -41,6 +42,85 @@ class ReceiptPayment {
   final int changeTiyin;
 }
 
+/// Chekda ko'rsat/yashir (do'kon sozlamasi, `stores.receipt_options`).
+/// Yo'q kalit — ko'rsatiladi (standart to'liq chek).
+class ReceiptOptions {
+  const ReceiptOptions({
+    this.showLogo = true,
+    this.showLegalName = true,
+    this.showAddress = true,
+    this.showPhone = true,
+    this.showTin = true,
+    this.showCashier = true,
+    this.showBarcode = true,
+    this.showHeader = true,
+    this.showFooter = true,
+  });
+
+  factory ReceiptOptions.fromJson(Map<String, Object?> json) {
+    bool flag(String key) {
+      final value = json[key];
+      return value is! bool || value;
+    }
+
+    return ReceiptOptions(
+      showLogo: flag('show_logo'),
+      showLegalName: flag('show_legal_name'),
+      showAddress: flag('show_address'),
+      showPhone: flag('show_phone'),
+      showTin: flag('show_tin'),
+      showCashier: flag('show_cashier'),
+      showBarcode: flag('show_barcode'),
+      showHeader: flag('show_header'),
+      showFooter: flag('show_footer'),
+    );
+  }
+
+  final bool showLogo;
+  final bool showLegalName;
+  final bool showAddress;
+  final bool showPhone;
+  final bool showTin;
+  final bool showCashier;
+  final bool showBarcode;
+  final bool showHeader;
+  final bool showFooter;
+
+  Map<String, bool> toJson() => {
+    'show_logo': showLogo,
+    'show_legal_name': showLegalName,
+    'show_address': showAddress,
+    'show_phone': showPhone,
+    'show_tin': showTin,
+    'show_cashier': showCashier,
+    'show_barcode': showBarcode,
+    'show_header': showHeader,
+    'show_footer': showFooter,
+  };
+
+  ReceiptOptions copyWith({
+    bool? showLogo,
+    bool? showLegalName,
+    bool? showAddress,
+    bool? showPhone,
+    bool? showTin,
+    bool? showCashier,
+    bool? showBarcode,
+    bool? showHeader,
+    bool? showFooter,
+  }) => ReceiptOptions(
+    showLogo: showLogo ?? this.showLogo,
+    showLegalName: showLegalName ?? this.showLegalName,
+    showAddress: showAddress ?? this.showAddress,
+    showPhone: showPhone ?? this.showPhone,
+    showTin: showTin ?? this.showTin,
+    showCashier: showCashier ?? this.showCashier,
+    showBarcode: showBarcode ?? this.showBarcode,
+    showHeader: showHeader ?? this.showHeader,
+    showFooter: showFooter ?? this.showFooter,
+  );
+}
+
 /// Chek uchun hamma ma'lumot — bazadan yig'iladi (`ReceiptLoader`).
 class ReceiptData {
   const ReceiptData({
@@ -58,9 +138,21 @@ class ReceiptData {
     this.footer = '',
     this.customerName,
     this.customerDebtTiyin,
+    this.legalName = '',
+    this.tin = '',
+    this.logo,
+    this.options = const ReceiptOptions(),
   });
 
   final String storeName;
+
+  /// Yuridik nomi va STIR/JShShIR — faqat kiritilgan bo'lsa chiqadi.
+  final String legalName;
+  final String tin;
+
+  /// Logotip (kulrang); chop etishda qog'oz kengligiga moslanadi.
+  final GrayImage? logo;
+  final ReceiptOptions options;
   final String storeAddress;
   final String storePhone;
 
@@ -83,6 +175,39 @@ class ReceiptData {
   final int? customerDebtTiyin;
 
   int get changeTiyin => payments.fold(0, (sum, p) => sum + p.changeTiyin);
+
+  /// Do'kon qismi almashtirilgan nusxa (sozlamada saqlanmagan o'zgarishlar
+  /// chek ko'rinishida darhol ko'rinsin).
+  ReceiptData withStore({
+    required String storeName,
+    required String storeAddress,
+    required String storePhone,
+    required String header,
+    required String footer,
+    required String legalName,
+    required String tin,
+    required GrayImage? logo,
+    required ReceiptOptions options,
+  }) => ReceiptData(
+    storeName: storeName,
+    storeAddress: storeAddress,
+    storePhone: storePhone,
+    header: header,
+    footer: footer,
+    legalName: legalName,
+    tin: tin,
+    logo: logo,
+    options: options,
+    number: number,
+    soldAt: soldAt,
+    cashierName: cashierName,
+    lines: lines,
+    discountTiyin: discountTiyin,
+    totalTiyin: totalTiyin,
+    payments: payments,
+    customerName: customerName,
+    customerDebtTiyin: customerDebtTiyin,
+  );
 }
 
 /// Chek kengligi (`printing.md`): 58 mm — 32 belgi, 80 mm — 48 belgi;
@@ -108,14 +233,26 @@ class ReceiptRow {
     this.center = false,
     this.barcode = false,
     this.tall = false,
-  });
+  }) : image = null;
 
   /// Chek raqami shtrix-kodi (CODE128): qaytarishda skanerlanadi.
   const ReceiptRow.barcode(this.text)
     : bold = false,
       center = true,
       barcode = true,
+      tall = false,
+      image = null;
+
+  /// Rasm (logotip): markazda, printer kengligidan oshmaydi.
+  const ReceiptRow.image(MonoBitmap this.image)
+    : text = '',
+      bold = false,
+      center = true,
+      barcode = false,
       tall = false;
+
+  /// Logotip (`GS v 0`) — matn emas.
+  final MonoBitmap? image;
 
   final String text;
   final bool bold;
@@ -132,10 +269,11 @@ class ReceiptRow {
       other.bold == bold &&
       other.center == center &&
       other.barcode == barcode &&
-      other.tall == tall;
+      other.tall == tall &&
+      identical(other.image, image);
 
   @override
-  int get hashCode => Object.hash(text, bold, center, barcode, tall);
+  int get hashCode => Object.hash(text, bold, center, barcode, tall, image);
 
   @override
   String toString() => text;
@@ -153,6 +291,9 @@ class ReceiptBuilder {
   final AppFormat _fmt;
 
   int get _w => width.chars;
+
+  /// Printerning chop etish kengligi (nuqta): 58 mm — 384, 80 mm — 576.
+  int get dots => width.mm == 58 ? 384 : 576;
 
   List<ReceiptRow> build(ReceiptData data, {bool copy = false}) {
     final rows = <ReceiptRow>[];
@@ -176,19 +317,29 @@ class ReceiptBuilder {
       }
     }
 
-    // Sarlavha: bo'sh maydonlar chiqmaydi (bo'sh qalin qator yo'q).
+    // Sarlavha: bo'sh va yashirilgan maydonlar chiqmaydi. Soliq raqami —
+    // faqat kiritilgan bo'lsa (hech qachon taxmin qilinmaydi).
+    final o = data.options;
+    final logo = data.logo;
+    if (o.showLogo && logo != null) {
+      rows.add(ReceiptRow.image(MonoBitmap.fromGray(logo, maxDots: dots)));
+    }
     if (data.storeName.trim().isNotEmpty) center(data.storeName, bold: true);
+    final tin = data.tin.trim();
     for (final extra in [
-      data.storeAddress,
-      displayPhone(data.storePhone),
-      ...data.header.split('\n'),
+      if (o.showLegalName) data.legalName,
+      if (o.showAddress) data.storeAddress,
+      if (o.showPhone) displayPhone(data.storePhone),
+      if (o.showTin && tin.isNotEmpty)
+        '${tin.length == 14 ? l10n.receiptPinfl : l10n.receiptTin}: $tin',
+      if (o.showHeader) ...data.header.split('\n'),
     ]) {
       if (extra.trim().isNotEmpty) center(extra.trim());
     }
     if (copy) center(l10n.receiptCopy, bold: true);
     divider();
     pair('${l10n.receiptCheck}: ${data.number}', _fmt.dateTime(data.soldAt));
-    if (data.cashierName.trim().isNotEmpty) {
+    if (o.showCashier && data.cashierName.trim().isNotEmpty) {
       pair('${l10n.receiptCashier}: ${data.cashierName}', '');
     }
     divider();
@@ -249,11 +400,13 @@ class ReceiptBuilder {
     }
     divider();
 
-    rows.add(ReceiptRow.barcode(data.number));
-    final footer = data.footer.trim().isEmpty
-        ? l10n.receiptThanks
-        : data.footer.trim();
-    footer.split('\n').forEach(center);
+    if (o.showBarcode) rows.add(ReceiptRow.barcode(data.number));
+    if (o.showFooter) {
+      final footer = data.footer.trim().isEmpty
+          ? l10n.receiptThanks
+          : data.footer.trim();
+      footer.split('\n').forEach(center);
+    }
     center(l10n.receiptNotFiscal);
     return rows;
   }

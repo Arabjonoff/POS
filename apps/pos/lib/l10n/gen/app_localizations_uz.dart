@@ -737,6 +737,103 @@ class AppLocalizationsUz extends AppLocalizations {
   String get printerTestReceipt => 'Test cheki';
 
   @override
+  String get receiptTin => 'STIR';
+
+  @override
+  String get receiptPinfl => 'JShShIR';
+
+  @override
+  String get storeSettingsTitle => 'Chek rekvizitlari va ko\'rinishi';
+
+  @override
+  String get storeSettingsHint =>
+      'Hamma kassalarda bir xil. O\'ngdagi chek — printer aynan shunday chiqaradi.';
+
+  @override
+  String get storeName => 'Do\'kon nomi';
+
+  @override
+  String get storeLegalName => 'Yuridik nomi';
+
+  @override
+  String get storeLegalNameHint =>
+      'Masalan: \"Baraka\" MChJ yoki YaTT Karimov A.';
+
+  @override
+  String get storeTin => 'STIR yoki JShShIR';
+
+  @override
+  String get storeTinHint => '9 yoki 14 raqam. Faqat kiritilsa chekda chiqadi.';
+
+  @override
+  String get storeTinError => '9 raqam (STIR) yoki 14 raqam (JShShIR) kiriting';
+
+  @override
+  String get storeAddress => 'Manzil';
+
+  @override
+  String get storePhone => 'Telefon';
+
+  @override
+  String get storeHeader => 'Chek sarlavhasi';
+
+  @override
+  String get storeHeaderHint => 'Masalan: Har kuni 08:00–23:00';
+
+  @override
+  String get storeFooter => 'Pastki matn';
+
+  @override
+  String get storeFooterHint => 'Bo\'sh bo\'lsa: Xaridingiz uchun rahmat!';
+
+  @override
+  String get storeLogo => 'Logotip';
+
+  @override
+  String get storeLogoHint => 'PNG yoki JPG. Chekda oq-qora chiqadi.';
+
+  @override
+  String get storeLogoPick => 'Logotip tanlash';
+
+  @override
+  String get storeLogoReplace => 'Almashtirish';
+
+  @override
+  String get storeLogoRemove => 'Olib tashlash';
+
+  @override
+  String get storeLogoError =>
+      'Rasmni o\'qib bo\'lmadi. Boshqa PNG yoki JPG tanlang.';
+
+  @override
+  String get storeLogoTooLarge =>
+      'Logotip juda murakkab. Oddiyroq rasm tanlang.';
+
+  @override
+  String get storeShowTitle => 'Chekda ko\'rsatish';
+
+  @override
+  String get storeShowCashier => 'Kassir ismi';
+
+  @override
+  String get storeShowBarcode => 'Chek shtrix-kodi (qaytarish uchun)';
+
+  @override
+  String get storeSave => 'Rekvizitlarni saqlash';
+
+  @override
+  String get storeSaved =>
+      'Saqlandi — boshqa kassalarda sinxrondan keyin yangilanadi';
+
+  @override
+  String get storeNeedsApproval =>
+      'Chek rekvizitlarini menejer yoki ega o\'zgartiradi';
+
+  @override
+  String get storeUnavailable =>
+      'Rekvizitlarni o\'zgartirish server yangilangach ishlaydi (internetga ulaning).';
+
+  @override
   String get receiptDebtNow => 'Joriy qarz';
 
   @override
@@ -2766,6 +2863,102 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get printerTestReceipt => 'Тест чеки';
+
+  @override
+  String get receiptTin => 'СТИР';
+
+  @override
+  String get receiptPinfl => 'ЖШШИР';
+
+  @override
+  String get storeSettingsTitle => 'Чек реквизитлари ва кўриниши';
+
+  @override
+  String get storeSettingsHint =>
+      'Ҳамма кассаларда бир хил. Ўнгдаги чек — принтер айнан шундай чиқаради.';
+
+  @override
+  String get storeName => 'Дўкон номи';
+
+  @override
+  String get storeLegalName => 'Юридик номи';
+
+  @override
+  String get storeLegalNameHint => 'Масалан: \"Барака\" МЧЖ ёки ЯТТ Каримов А.';
+
+  @override
+  String get storeTin => 'СТИР ёки ЖШШИР';
+
+  @override
+  String get storeTinHint => '9 ёки 14 рақам. Фақат киритилса чекда чиқади.';
+
+  @override
+  String get storeTinError => '9 рақам (СТИР) ёки 14 рақам (ЖШШИР) киритинг';
+
+  @override
+  String get storeAddress => 'Манзил';
+
+  @override
+  String get storePhone => 'Телефон';
+
+  @override
+  String get storeHeader => 'Чек сарлавҳаси';
+
+  @override
+  String get storeHeaderHint => 'Масалан: Ҳар куни 08:00–23:00';
+
+  @override
+  String get storeFooter => 'Пастки матн';
+
+  @override
+  String get storeFooterHint => 'Бўш бўлса: Харидингиз учун раҳмат!';
+
+  @override
+  String get storeLogo => 'Логотип';
+
+  @override
+  String get storeLogoHint => 'PNG ёки JPG. Чекда оқ-қора чиқади.';
+
+  @override
+  String get storeLogoPick => 'Логотип танлаш';
+
+  @override
+  String get storeLogoReplace => 'Алмаштириш';
+
+  @override
+  String get storeLogoRemove => 'Олиб ташлаш';
+
+  @override
+  String get storeLogoError =>
+      'Расмни ўқиб бўлмади. Бошқа PNG ёки JPG танланг.';
+
+  @override
+  String get storeLogoTooLarge =>
+      'Логотип жуда мураккаб. Оддийроқ расм танланг.';
+
+  @override
+  String get storeShowTitle => 'Чекда кўрсатиш';
+
+  @override
+  String get storeShowCashier => 'Кассир исми';
+
+  @override
+  String get storeShowBarcode => 'Чек штрих-коди (қайтариш учун)';
+
+  @override
+  String get storeSave => 'Реквизитларни сақлаш';
+
+  @override
+  String get storeSaved =>
+      'Сақланди — бошқа кассаларда синхрондан кейин янгиланади';
+
+  @override
+  String get storeNeedsApproval =>
+      'Чек реквизитларини менежер ёки эга ўзгартиради';
+
+  @override
+  String get storeUnavailable =>
+      'Реквизитларни ўзгартириш сервер янгилангач ишлайди (интернетга уланинг).';
 
   @override
   String get receiptDebtNow => 'Жорий қарз';

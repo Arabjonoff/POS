@@ -6,7 +6,15 @@ from .models import Store, Tenant
 class StoreInline(admin.StackedInline):
     model = Store
     extra = 0
-    fields = ["name", "address", "phone", "receipt_header", "receipt_footer"]
+    fields = [
+        "name",
+        "legal_name",
+        "tin",
+        "address",
+        "phone",
+        "receipt_header",
+        "receipt_footer",
+    ]
 
 
 @admin.register(Tenant)

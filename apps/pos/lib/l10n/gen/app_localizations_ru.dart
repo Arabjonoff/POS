@@ -757,6 +757,101 @@ class AppLocalizationsRu extends AppLocalizations {
   String get printerTestReceipt => 'Тестовый чек';
 
   @override
+  String get receiptTin => 'ИНН';
+
+  @override
+  String get receiptPinfl => 'ПИНФЛ';
+
+  @override
+  String get storeSettingsTitle => 'Реквизиты и вид чека';
+
+  @override
+  String get storeSettingsHint =>
+      'Одинаково на всех кассах. Чек справа — именно так напечатает принтер.';
+
+  @override
+  String get storeName => 'Название магазина';
+
+  @override
+  String get storeLegalName => 'Юридическое название';
+
+  @override
+  String get storeLegalNameHint => 'Например: ООО «Барака» или ИП Каримов А.';
+
+  @override
+  String get storeTin => 'ИНН или ПИНФЛ';
+
+  @override
+  String get storeTinHint => '9 или 14 цифр. Печатается, только если указан.';
+
+  @override
+  String get storeTinError => 'Введите 9 цифр (ИНН) или 14 цифр (ПИНФЛ)';
+
+  @override
+  String get storeAddress => 'Адрес';
+
+  @override
+  String get storePhone => 'Телефон';
+
+  @override
+  String get storeHeader => 'Заголовок чека';
+
+  @override
+  String get storeHeaderHint => 'Например: Ежедневно 08:00–23:00';
+
+  @override
+  String get storeFooter => 'Текст внизу';
+
+  @override
+  String get storeFooterHint => 'Если пусто: Спасибо за покупку!';
+
+  @override
+  String get storeLogo => 'Логотип';
+
+  @override
+  String get storeLogoHint => 'PNG или JPG. На чеке будет чёрно-белым.';
+
+  @override
+  String get storeLogoPick => 'Выбрать логотип';
+
+  @override
+  String get storeLogoReplace => 'Заменить';
+
+  @override
+  String get storeLogoRemove => 'Удалить';
+
+  @override
+  String get storeLogoError =>
+      'Не удалось прочитать картинку. Выберите другой PNG или JPG.';
+
+  @override
+  String get storeLogoTooLarge => 'Логотип слишком сложный. Выберите проще.';
+
+  @override
+  String get storeShowTitle => 'Показывать на чеке';
+
+  @override
+  String get storeShowCashier => 'Имя кассира';
+
+  @override
+  String get storeShowBarcode => 'Штрихкод чека (для возврата)';
+
+  @override
+  String get storeSave => 'Сохранить реквизиты';
+
+  @override
+  String get storeSaved =>
+      'Сохранено — на других кассах обновится после синхронизации';
+
+  @override
+  String get storeNeedsApproval =>
+      'Реквизиты чека меняет менеджер или владелец';
+
+  @override
+  String get storeUnavailable =>
+      'Изменение реквизитов заработает после обновления сервера (подключитесь к интернету).';
+
+  @override
   String get receiptDebtNow => 'Текущий долг';
 
   @override

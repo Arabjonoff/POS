@@ -13,6 +13,18 @@ class Stores extends Table {
   TextColumn get receiptHeader => text().withDefault(const Constant(''))();
   TextColumn get receiptFooter => text().withDefault(const Constant(''))();
 
+  // Chek rekvizitlari (T-104b): faqat kiritilgani chekda chiqadi.
+  TextColumn get legalName => text().withDefault(const Constant(''))();
+
+  /// STIR (9 raqam) yoki JShShIR (14 raqam).
+  TextColumn get tin => text().withDefault(const Constant(''))();
+
+  /// Kulrang PNG (base64), chek kengligiga kichraytirilgan.
+  TextColumn get receiptLogo => text().withDefault(const Constant(''))();
+
+  /// Ko'rsat/yashir (JSON: `{"show_tin": false, ...}`).
+  TextColumn get receiptOptions => text().withDefault(const Constant('{}'))();
+
   @override
   Set<Column<Object>> get primaryKey => {id};
 }

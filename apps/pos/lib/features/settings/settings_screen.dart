@@ -8,7 +8,7 @@ import 'package:pos_app/app/session/session.dart';
 import 'package:pos_app/app/update/app_update.dart';
 import 'package:pos_app/features/common/section_page.dart';
 import 'package:pos_app/features/printing/printer_settings_panel.dart';
-import 'package:pos_app/features/printing/receipt_preview_panel.dart';
+import 'package:pos_app/features/printing/receipt_settings_section.dart';
 import 'package:pos_app/features/settings/language_picker.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
 import 'package:pos_ui/pos_ui.dart';
@@ -50,9 +50,9 @@ class SettingsScreen extends ConsumerWidget {
           ),
           const SizedBox(height: PosSpacing.l),
           _SettingsCard(
-            title: l10n.receiptPreviewTitle,
-            subtitle: l10n.receiptPreviewHint,
-            child: const ReceiptPreviewPanel(),
+            title: l10n.storeSettingsTitle,
+            subtitle: l10n.storeSettingsHint,
+            child: const ReceiptSettingsSection(),
           ),
           const SizedBox(height: PosSpacing.l),
           _SettingsCard(title: l10n.settingsAbout, child: const _AboutPanel()),

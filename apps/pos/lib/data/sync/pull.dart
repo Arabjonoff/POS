@@ -110,6 +110,15 @@ class PullApplier {
                 phone: Value(_s(d['phone'])),
                 receiptHeader: Value(_s(d['receipt_header'])),
                 receiptFooter: Value(_s(d['receipt_footer'])),
+                // T-104b; eski server yubormaydi — standart qiymatlar.
+                legalName: Value(_s(d['legal_name'])),
+                tin: Value(_s(d['tin'])),
+                receiptLogo: Value(_s(d['receipt_logo'])),
+                receiptOptions: Value(
+                  d['receipt_options'] is Map
+                      ? jsonEncode(d['receipt_options'])
+                      : '{}',
+                ),
               ),
             );
       case 'debt_entry':

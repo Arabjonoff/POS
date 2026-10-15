@@ -13,6 +13,9 @@ const String serverFeaturesSettingKey = 'server_features';
 abstract final class ServerFeature {
   /// Kirimni tahrirlash va bekor qilish (`receipt.corrected`, `receipt.reversed`).
   static const String receiptCorrections = 'receipt_corrections';
+
+  /// Chek rekvizitlarini kassadan o'zgartirish (`store.upserted`).
+  static const String storeSettings = 'store_settings';
 }
 
 String encodeFeatures(List<String>? features) => jsonEncode(features ?? []);
