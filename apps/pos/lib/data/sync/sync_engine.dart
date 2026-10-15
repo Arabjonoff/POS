@@ -3,6 +3,7 @@ import 'package:drift/drift.dart';
 import 'package:pos_api_client/pos_api_client.dart';
 import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/data/remote/api.dart';
+import 'package:pos_app/data/sync/image_sync.dart';
 import 'package:pos_app/data/sync/outbox.dart';
 import 'package:pos_app/data/sync/pull.dart';
 import 'package:pos_app/data/sync/push.dart';
@@ -42,8 +43,13 @@ class SyncReport {
 /// Bitta sinxron sikli: avval hamma navbat (push, 100 tadan), keyin pull.
 /// Hech qachon tashlamaydi — natija [SyncReport.health] da.
 class SyncEngine {
-  SyncEngine(this._db, this._api, {DateTime Function()? now})
-    : _now = now ?? _clockNow;
+  SyncEngine(
+    this._db,
+    this._api, {
+    DateTime Function()? now,
+    ProductImageSync? images,
+  }) : _now = now ?? _clockNow,
+       _images = images;
 
   static const String deviceBlockedKey = 'device_blocked';
 
@@ -52,6 +58,9 @@ class SyncEngine {
   static const int maxBatches = 100;
 
   final AppDatabase _db;
+
+  /// Tovar rasmlari (T-105) — push/pull'dan keyin, ularni to'xtatmaydi.
+  final ProductImageSync? _images;
 
   /// Qurilma tokeni bilan API; token yo'q bo'lsa `null`.
   final Future<PosApi?> Function() _api;
@@ -85,6 +94,11 @@ class SyncEngine {
         ).pullAll();
       }
       await _db.writeSetting(deviceBlockedKey, '0');
+      try {
+        await _images?.run();
+      } on Object {
+        // Rasm xatosi sinxron holatiga ta'sir qilmaydi (keyingi siklda).
+      }
       return SyncReport(
         health: SyncHealth.online,
         pushed: pushed,

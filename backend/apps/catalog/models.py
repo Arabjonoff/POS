@@ -114,6 +114,16 @@ class Product(TenantScopedModel, SoftDeleteModel):
     )
     ikpu_code = models.CharField(_("IKPU"), max_length=17, blank=True, validators=[ikpu_validator])
     quick_button = models.BooleanField(_("tez tugma"), default=False)
+    # Joriy rasm (T-105): faqat rasm yuklash endpoint'i o'zgartiradi — tovar
+    # hodisasi (`product.upserted`) unga tegmaydi, eski snapshot rasmni o'chirmaydi.
+    image = models.ForeignKey(
+        "ProductImage",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="+",
+        verbose_name=_("rasm"),
+    )
     is_active = models.BooleanField(_("faol"), default=True)
 
     class Meta:
@@ -215,3 +225,41 @@ class ProductImport(TenantScopedModel):
     class Meta:
         verbose_name = _("tovar importi")
         verbose_name_plural = _("tovar importlari")
+
+
+def _image_path(instance, filename: str) -> str:
+    return f"t/{instance.tenant_id}/p/{instance.pk}.jpg"
+
+
+def _thumb_path(instance, filename: str) -> str:
+    return f"t/{instance.tenant_id}/p/{instance.pk}_t.jpg"
+
+
+class ProductImage(TenantScopedModel, SoftDeleteModel):
+    """Mahsulot rasmi (T-105). O'zgarmas obyekt: almashtirish — yangi id (kassada
+    yaratilgan UUIDv7), shuning uchun fayl va keshni abadiy saqlash mumkin."""
+
+    tenant = models.ForeignKey(
+        "tenants.Tenant", on_delete=models.PROTECT, related_name="+", verbose_name=_("tenant")
+    )
+    product = models.ForeignKey(
+        Product, on_delete=models.PROTECT, related_name="images", verbose_name=_("tovar")
+    )
+    file = models.ImageField(_("rasm"), upload_to=_image_path)
+    thumb = models.ImageField(_("kichik rasm"), upload_to=_thumb_path)
+    sha256 = models.CharField(_("sha256"), max_length=64)
+    width = models.PositiveIntegerField(_("kenglik"))
+    height = models.PositiveIntegerField(_("balandlik"))
+    bytes = models.PositiveIntegerField(_("hajm"))
+    uploaded_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="+",
+        verbose_name=_("yuklagan"),
+    )
+
+    class Meta:
+        verbose_name = _("tovar rasmi")
+        verbose_name_plural = _("tovar rasmlari")

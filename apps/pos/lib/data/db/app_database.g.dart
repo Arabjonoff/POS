@@ -2183,6 +2183,17 @@ class $ProductsTable extends Products with TableInfo<$ProductsTable, Product> {
     type: DriftSqlType.dateTime,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _imageIdMeta = const VerificationMeta(
+    'imageId',
+  );
+  @override
+  late final GeneratedColumn<String> imageId = GeneratedColumn<String>(
+    'image_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -2200,6 +2211,7 @@ class $ProductsTable extends Products with TableInfo<$ProductsTable, Product> {
     isActive,
     updatedAt,
     deletedAt,
+    imageId,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -2320,6 +2332,12 @@ class $ProductsTable extends Products with TableInfo<$ProductsTable, Product> {
         deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
       );
     }
+    if (data.containsKey('image_id')) {
+      context.handle(
+        _imageIdMeta,
+        imageId.isAcceptableOrUnknown(data['image_id']!, _imageIdMeta),
+      );
+    }
     return context;
   }
 
@@ -2389,6 +2407,10 @@ class $ProductsTable extends Products with TableInfo<$ProductsTable, Product> {
         DriftSqlType.dateTime,
         data['${effectivePrefix}deleted_at'],
       ),
+      imageId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}image_id'],
+      ),
     );
   }
 
@@ -2418,6 +2440,9 @@ class Product extends DataClass implements Insertable<Product> {
   final bool isActive;
   final DateTime? updatedAt;
   final DateTime? deletedAt;
+
+  /// Joriy rasm (T-105): fayl — ilova papkasida `<imageId>.jpg`.
+  final String? imageId;
   const Product({
     required this.id,
     required this.name,
@@ -2434,6 +2459,7 @@ class Product extends DataClass implements Insertable<Product> {
     required this.isActive,
     this.updatedAt,
     this.deletedAt,
+    this.imageId,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -2462,6 +2488,9 @@ class Product extends DataClass implements Insertable<Product> {
     }
     if (!nullToAbsent || deletedAt != null) {
       map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    if (!nullToAbsent || imageId != null) {
+      map['image_id'] = Variable<String>(imageId);
     }
     return map;
   }
@@ -2493,6 +2522,9 @@ class Product extends DataClass implements Insertable<Product> {
       deletedAt: deletedAt == null && nullToAbsent
           ? const Value.absent()
           : Value(deletedAt),
+      imageId: imageId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(imageId),
     );
   }
 
@@ -2517,6 +2549,7 @@ class Product extends DataClass implements Insertable<Product> {
       isActive: serializer.fromJson<bool>(json['isActive']),
       updatedAt: serializer.fromJson<DateTime?>(json['updatedAt']),
       deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      imageId: serializer.fromJson<String?>(json['imageId']),
     );
   }
   @override
@@ -2538,6 +2571,7 @@ class Product extends DataClass implements Insertable<Product> {
       'isActive': serializer.toJson<bool>(isActive),
       'updatedAt': serializer.toJson<DateTime?>(updatedAt),
       'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'imageId': serializer.toJson<String?>(imageId),
     };
   }
 
@@ -2557,6 +2591,7 @@ class Product extends DataClass implements Insertable<Product> {
     bool? isActive,
     Value<DateTime?> updatedAt = const Value.absent(),
     Value<DateTime?> deletedAt = const Value.absent(),
+    Value<String?> imageId = const Value.absent(),
   }) => Product(
     id: id ?? this.id,
     name: name ?? this.name,
@@ -2573,6 +2608,7 @@ class Product extends DataClass implements Insertable<Product> {
     isActive: isActive ?? this.isActive,
     updatedAt: updatedAt.present ? updatedAt.value : this.updatedAt,
     deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    imageId: imageId.present ? imageId.value : this.imageId,
   );
   Product copyWithCompanion(ProductsCompanion data) {
     return Product(
@@ -2603,6 +2639,7 @@ class Product extends DataClass implements Insertable<Product> {
       isActive: data.isActive.present ? data.isActive.value : this.isActive,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
       deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      imageId: data.imageId.present ? data.imageId.value : this.imageId,
     );
   }
 
@@ -2623,7 +2660,8 @@ class Product extends DataClass implements Insertable<Product> {
           ..write('quickButton: $quickButton, ')
           ..write('isActive: $isActive, ')
           ..write('updatedAt: $updatedAt, ')
-          ..write('deletedAt: $deletedAt')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('imageId: $imageId')
           ..write(')'))
         .toString();
   }
@@ -2645,6 +2683,7 @@ class Product extends DataClass implements Insertable<Product> {
     isActive,
     updatedAt,
     deletedAt,
+    imageId,
   );
   @override
   bool operator ==(Object other) =>
@@ -2664,7 +2703,8 @@ class Product extends DataClass implements Insertable<Product> {
           other.quickButton == this.quickButton &&
           other.isActive == this.isActive &&
           other.updatedAt == this.updatedAt &&
-          other.deletedAt == this.deletedAt);
+          other.deletedAt == this.deletedAt &&
+          other.imageId == this.imageId);
 }
 
 class ProductsCompanion extends UpdateCompanion<Product> {
@@ -2683,6 +2723,7 @@ class ProductsCompanion extends UpdateCompanion<Product> {
   final Value<bool> isActive;
   final Value<DateTime?> updatedAt;
   final Value<DateTime?> deletedAt;
+  final Value<String?> imageId;
   final Value<int> rowid;
   const ProductsCompanion({
     this.id = const Value.absent(),
@@ -2700,6 +2741,7 @@ class ProductsCompanion extends UpdateCompanion<Product> {
     this.isActive = const Value.absent(),
     this.updatedAt = const Value.absent(),
     this.deletedAt = const Value.absent(),
+    this.imageId = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   ProductsCompanion.insert({
@@ -2718,6 +2760,7 @@ class ProductsCompanion extends UpdateCompanion<Product> {
     this.isActive = const Value.absent(),
     this.updatedAt = const Value.absent(),
     this.deletedAt = const Value.absent(),
+    this.imageId = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        name = Value(name),
@@ -2739,6 +2782,7 @@ class ProductsCompanion extends UpdateCompanion<Product> {
     Expression<bool>? isActive,
     Expression<DateTime>? updatedAt,
     Expression<DateTime>? deletedAt,
+    Expression<String>? imageId,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -2757,6 +2801,7 @@ class ProductsCompanion extends UpdateCompanion<Product> {
       if (isActive != null) 'is_active': isActive,
       if (updatedAt != null) 'updated_at': updatedAt,
       if (deletedAt != null) 'deleted_at': deletedAt,
+      if (imageId != null) 'image_id': imageId,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -2777,6 +2822,7 @@ class ProductsCompanion extends UpdateCompanion<Product> {
     Value<bool>? isActive,
     Value<DateTime?>? updatedAt,
     Value<DateTime?>? deletedAt,
+    Value<String?>? imageId,
     Value<int>? rowid,
   }) {
     return ProductsCompanion(
@@ -2795,6 +2841,7 @@ class ProductsCompanion extends UpdateCompanion<Product> {
       isActive: isActive ?? this.isActive,
       updatedAt: updatedAt ?? this.updatedAt,
       deletedAt: deletedAt ?? this.deletedAt,
+      imageId: imageId ?? this.imageId,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -2847,6 +2894,9 @@ class ProductsCompanion extends UpdateCompanion<Product> {
     if (deletedAt.present) {
       map['deleted_at'] = Variable<DateTime>(deletedAt.value);
     }
+    if (imageId.present) {
+      map['image_id'] = Variable<String>(imageId.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -2871,6 +2921,7 @@ class ProductsCompanion extends UpdateCompanion<Product> {
           ..write('isActive: $isActive, ')
           ..write('updatedAt: $updatedAt, ')
           ..write('deletedAt: $deletedAt, ')
+          ..write('imageId: $imageId, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -13353,6 +13404,527 @@ class DocCountersCompanion extends UpdateCompanion<DocCounter> {
   }
 }
 
+class $ProductImagesTable extends ProductImages
+    with TableInfo<$ProductImagesTable, ProductImage> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ProductImagesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _productIdMeta = const VerificationMeta(
+    'productId',
+  );
+  @override
+  late final GeneratedColumn<String> productId = GeneratedColumn<String>(
+    'product_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _stateMeta = const VerificationMeta('state');
+  @override
+  late final GeneratedColumn<String> state = GeneratedColumn<String>(
+    'state',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _byUserIdMeta = const VerificationMeta(
+    'byUserId',
+  );
+  @override
+  late final GeneratedColumn<String> byUserId = GeneratedColumn<String>(
+    'by_user_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _attemptsMeta = const VerificationMeta(
+    'attempts',
+  );
+  @override
+  late final GeneratedColumn<int> attempts = GeneratedColumn<int>(
+    'attempts',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _nextAttemptAtMeta = const VerificationMeta(
+    'nextAttemptAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> nextAttemptAt =
+      GeneratedColumn<DateTime>(
+        'next_attempt_at',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _lastErrorMeta = const VerificationMeta(
+    'lastError',
+  );
+  @override
+  late final GeneratedColumn<String> lastError = GeneratedColumn<String>(
+    'last_error',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    productId,
+    state,
+    byUserId,
+    attempts,
+    nextAttemptAt,
+    lastError,
+    createdAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'product_images';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ProductImage> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('product_id')) {
+      context.handle(
+        _productIdMeta,
+        productId.isAcceptableOrUnknown(data['product_id']!, _productIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_productIdMeta);
+    }
+    if (data.containsKey('state')) {
+      context.handle(
+        _stateMeta,
+        state.isAcceptableOrUnknown(data['state']!, _stateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_stateMeta);
+    }
+    if (data.containsKey('by_user_id')) {
+      context.handle(
+        _byUserIdMeta,
+        byUserId.isAcceptableOrUnknown(data['by_user_id']!, _byUserIdMeta),
+      );
+    }
+    if (data.containsKey('attempts')) {
+      context.handle(
+        _attemptsMeta,
+        attempts.isAcceptableOrUnknown(data['attempts']!, _attemptsMeta),
+      );
+    }
+    if (data.containsKey('next_attempt_at')) {
+      context.handle(
+        _nextAttemptAtMeta,
+        nextAttemptAt.isAcceptableOrUnknown(
+          data['next_attempt_at']!,
+          _nextAttemptAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('last_error')) {
+      context.handle(
+        _lastErrorMeta,
+        lastError.isAcceptableOrUnknown(data['last_error']!, _lastErrorMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ProductImage map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ProductImage(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      productId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}product_id'],
+      )!,
+      state: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}state'],
+      )!,
+      byUserId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}by_user_id'],
+      ),
+      attempts: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}attempts'],
+      )!,
+      nextAttemptAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}next_attempt_at'],
+      ),
+      lastError: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}last_error'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $ProductImagesTable createAlias(String alias) {
+    return $ProductImagesTable(attachedDatabase, alias);
+  }
+}
+
+class ProductImage extends DataClass implements Insertable<ProductImage> {
+  final String id;
+  final String productId;
+  final String state;
+
+  /// Yuklagan ega/menejer (server huquqni tekshiradi).
+  final String? byUserId;
+  final int attempts;
+  final DateTime? nextAttemptAt;
+  final String? lastError;
+  final DateTime createdAt;
+  const ProductImage({
+    required this.id,
+    required this.productId,
+    required this.state,
+    this.byUserId,
+    required this.attempts,
+    this.nextAttemptAt,
+    this.lastError,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['product_id'] = Variable<String>(productId);
+    map['state'] = Variable<String>(state);
+    if (!nullToAbsent || byUserId != null) {
+      map['by_user_id'] = Variable<String>(byUserId);
+    }
+    map['attempts'] = Variable<int>(attempts);
+    if (!nullToAbsent || nextAttemptAt != null) {
+      map['next_attempt_at'] = Variable<DateTime>(nextAttemptAt);
+    }
+    if (!nullToAbsent || lastError != null) {
+      map['last_error'] = Variable<String>(lastError);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  ProductImagesCompanion toCompanion(bool nullToAbsent) {
+    return ProductImagesCompanion(
+      id: Value(id),
+      productId: Value(productId),
+      state: Value(state),
+      byUserId: byUserId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(byUserId),
+      attempts: Value(attempts),
+      nextAttemptAt: nextAttemptAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(nextAttemptAt),
+      lastError: lastError == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastError),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory ProductImage.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ProductImage(
+      id: serializer.fromJson<String>(json['id']),
+      productId: serializer.fromJson<String>(json['productId']),
+      state: serializer.fromJson<String>(json['state']),
+      byUserId: serializer.fromJson<String?>(json['byUserId']),
+      attempts: serializer.fromJson<int>(json['attempts']),
+      nextAttemptAt: serializer.fromJson<DateTime?>(json['nextAttemptAt']),
+      lastError: serializer.fromJson<String?>(json['lastError']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'productId': serializer.toJson<String>(productId),
+      'state': serializer.toJson<String>(state),
+      'byUserId': serializer.toJson<String?>(byUserId),
+      'attempts': serializer.toJson<int>(attempts),
+      'nextAttemptAt': serializer.toJson<DateTime?>(nextAttemptAt),
+      'lastError': serializer.toJson<String?>(lastError),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  ProductImage copyWith({
+    String? id,
+    String? productId,
+    String? state,
+    Value<String?> byUserId = const Value.absent(),
+    int? attempts,
+    Value<DateTime?> nextAttemptAt = const Value.absent(),
+    Value<String?> lastError = const Value.absent(),
+    DateTime? createdAt,
+  }) => ProductImage(
+    id: id ?? this.id,
+    productId: productId ?? this.productId,
+    state: state ?? this.state,
+    byUserId: byUserId.present ? byUserId.value : this.byUserId,
+    attempts: attempts ?? this.attempts,
+    nextAttemptAt: nextAttemptAt.present
+        ? nextAttemptAt.value
+        : this.nextAttemptAt,
+    lastError: lastError.present ? lastError.value : this.lastError,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  ProductImage copyWithCompanion(ProductImagesCompanion data) {
+    return ProductImage(
+      id: data.id.present ? data.id.value : this.id,
+      productId: data.productId.present ? data.productId.value : this.productId,
+      state: data.state.present ? data.state.value : this.state,
+      byUserId: data.byUserId.present ? data.byUserId.value : this.byUserId,
+      attempts: data.attempts.present ? data.attempts.value : this.attempts,
+      nextAttemptAt: data.nextAttemptAt.present
+          ? data.nextAttemptAt.value
+          : this.nextAttemptAt,
+      lastError: data.lastError.present ? data.lastError.value : this.lastError,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ProductImage(')
+          ..write('id: $id, ')
+          ..write('productId: $productId, ')
+          ..write('state: $state, ')
+          ..write('byUserId: $byUserId, ')
+          ..write('attempts: $attempts, ')
+          ..write('nextAttemptAt: $nextAttemptAt, ')
+          ..write('lastError: $lastError, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    productId,
+    state,
+    byUserId,
+    attempts,
+    nextAttemptAt,
+    lastError,
+    createdAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ProductImage &&
+          other.id == this.id &&
+          other.productId == this.productId &&
+          other.state == this.state &&
+          other.byUserId == this.byUserId &&
+          other.attempts == this.attempts &&
+          other.nextAttemptAt == this.nextAttemptAt &&
+          other.lastError == this.lastError &&
+          other.createdAt == this.createdAt);
+}
+
+class ProductImagesCompanion extends UpdateCompanion<ProductImage> {
+  final Value<String> id;
+  final Value<String> productId;
+  final Value<String> state;
+  final Value<String?> byUserId;
+  final Value<int> attempts;
+  final Value<DateTime?> nextAttemptAt;
+  final Value<String?> lastError;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const ProductImagesCompanion({
+    this.id = const Value.absent(),
+    this.productId = const Value.absent(),
+    this.state = const Value.absent(),
+    this.byUserId = const Value.absent(),
+    this.attempts = const Value.absent(),
+    this.nextAttemptAt = const Value.absent(),
+    this.lastError = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ProductImagesCompanion.insert({
+    required String id,
+    required String productId,
+    required String state,
+    this.byUserId = const Value.absent(),
+    this.attempts = const Value.absent(),
+    this.nextAttemptAt = const Value.absent(),
+    this.lastError = const Value.absent(),
+    required DateTime createdAt,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       productId = Value(productId),
+       state = Value(state),
+       createdAt = Value(createdAt);
+  static Insertable<ProductImage> custom({
+    Expression<String>? id,
+    Expression<String>? productId,
+    Expression<String>? state,
+    Expression<String>? byUserId,
+    Expression<int>? attempts,
+    Expression<DateTime>? nextAttemptAt,
+    Expression<String>? lastError,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (productId != null) 'product_id': productId,
+      if (state != null) 'state': state,
+      if (byUserId != null) 'by_user_id': byUserId,
+      if (attempts != null) 'attempts': attempts,
+      if (nextAttemptAt != null) 'next_attempt_at': nextAttemptAt,
+      if (lastError != null) 'last_error': lastError,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ProductImagesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? productId,
+    Value<String>? state,
+    Value<String?>? byUserId,
+    Value<int>? attempts,
+    Value<DateTime?>? nextAttemptAt,
+    Value<String?>? lastError,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return ProductImagesCompanion(
+      id: id ?? this.id,
+      productId: productId ?? this.productId,
+      state: state ?? this.state,
+      byUserId: byUserId ?? this.byUserId,
+      attempts: attempts ?? this.attempts,
+      nextAttemptAt: nextAttemptAt ?? this.nextAttemptAt,
+      lastError: lastError ?? this.lastError,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (productId.present) {
+      map['product_id'] = Variable<String>(productId.value);
+    }
+    if (state.present) {
+      map['state'] = Variable<String>(state.value);
+    }
+    if (byUserId.present) {
+      map['by_user_id'] = Variable<String>(byUserId.value);
+    }
+    if (attempts.present) {
+      map['attempts'] = Variable<int>(attempts.value);
+    }
+    if (nextAttemptAt.present) {
+      map['next_attempt_at'] = Variable<DateTime>(nextAttemptAt.value);
+    }
+    if (lastError.present) {
+      map['last_error'] = Variable<String>(lastError.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ProductImagesCompanion(')
+          ..write('id: $id, ')
+          ..write('productId: $productId, ')
+          ..write('state: $state, ')
+          ..write('byUserId: $byUserId, ')
+          ..write('attempts: $attempts, ')
+          ..write('nextAttemptAt: $nextAttemptAt, ')
+          ..write('lastError: $lastError, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -13389,6 +13961,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $SyncStateTable syncState = $SyncStateTable(this);
   late final $CartDraftsTable cartDrafts = $CartDraftsTable(this);
   late final $DocCountersTable docCounters = $DocCountersTable(this);
+  late final $ProductImagesTable productImages = $ProductImagesTable(this);
   late final Index productsPlu = Index(
     'products_plu',
     'CREATE INDEX products_plu ON products (plu_code)',
@@ -13481,6 +14054,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     syncState,
     cartDrafts,
     docCounters,
+    productImages,
     productsPlu,
     productsSearch,
     productsQuick,
@@ -14580,6 +15154,7 @@ typedef $$ProductsTableCreateCompanionBuilder =
       Value<bool> isActive,
       Value<DateTime?> updatedAt,
       Value<DateTime?> deletedAt,
+      Value<String?> imageId,
       Value<int> rowid,
     });
 typedef $$ProductsTableUpdateCompanionBuilder =
@@ -14599,6 +15174,7 @@ typedef $$ProductsTableUpdateCompanionBuilder =
       Value<bool> isActive,
       Value<DateTime?> updatedAt,
       Value<DateTime?> deletedAt,
+      Value<String?> imageId,
       Value<int> rowid,
     });
 
@@ -14683,6 +15259,11 @@ class $$ProductsTableFilterComposer
 
   ColumnFilters<DateTime> get deletedAt => $composableBuilder(
     column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get imageId => $composableBuilder(
+    column: $table.imageId,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -14770,6 +15351,11 @@ class $$ProductsTableOrderingComposer
     column: $table.deletedAt,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get imageId => $composableBuilder(
+    column: $table.imageId,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$ProductsTableAnnotationComposer
@@ -14837,6 +15423,9 @@ class $$ProductsTableAnnotationComposer
 
   GeneratedColumn<DateTime> get deletedAt =>
       $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get imageId =>
+      $composableBuilder(column: $table.imageId, builder: (column) => column);
 }
 
 class $$ProductsTableTableManager
@@ -14882,6 +15471,7 @@ class $$ProductsTableTableManager
                 Value<bool> isActive = const Value.absent(),
                 Value<DateTime?> updatedAt = const Value.absent(),
                 Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> imageId = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => ProductsCompanion(
                 id: id,
@@ -14899,6 +15489,7 @@ class $$ProductsTableTableManager
                 isActive: isActive,
                 updatedAt: updatedAt,
                 deletedAt: deletedAt,
+                imageId: imageId,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -14918,6 +15509,7 @@ class $$ProductsTableTableManager
                 Value<bool> isActive = const Value.absent(),
                 Value<DateTime?> updatedAt = const Value.absent(),
                 Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> imageId = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => ProductsCompanion.insert(
                 id: id,
@@ -14935,6 +15527,7 @@ class $$ProductsTableTableManager
                 isActive: isActive,
                 updatedAt: updatedAt,
                 deletedAt: deletedAt,
+                imageId: imageId,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -22045,6 +22638,265 @@ typedef $$DocCountersTableProcessedTableManager =
       DocCounter,
       PrefetchHooks Function()
     >;
+typedef $$ProductImagesTableCreateCompanionBuilder =
+    ProductImagesCompanion Function({
+      required String id,
+      required String productId,
+      required String state,
+      Value<String?> byUserId,
+      Value<int> attempts,
+      Value<DateTime?> nextAttemptAt,
+      Value<String?> lastError,
+      required DateTime createdAt,
+      Value<int> rowid,
+    });
+typedef $$ProductImagesTableUpdateCompanionBuilder =
+    ProductImagesCompanion Function({
+      Value<String> id,
+      Value<String> productId,
+      Value<String> state,
+      Value<String?> byUserId,
+      Value<int> attempts,
+      Value<DateTime?> nextAttemptAt,
+      Value<String?> lastError,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+class $$ProductImagesTableFilterComposer
+    extends Composer<_$AppDatabase, $ProductImagesTable> {
+  $$ProductImagesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get productId => $composableBuilder(
+    column: $table.productId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get state => $composableBuilder(
+    column: $table.state,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get byUserId => $composableBuilder(
+    column: $table.byUserId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get attempts => $composableBuilder(
+    column: $table.attempts,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get nextAttemptAt => $composableBuilder(
+    column: $table.nextAttemptAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get lastError => $composableBuilder(
+    column: $table.lastError,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ProductImagesTableOrderingComposer
+    extends Composer<_$AppDatabase, $ProductImagesTable> {
+  $$ProductImagesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get productId => $composableBuilder(
+    column: $table.productId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get state => $composableBuilder(
+    column: $table.state,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get byUserId => $composableBuilder(
+    column: $table.byUserId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get attempts => $composableBuilder(
+    column: $table.attempts,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get nextAttemptAt => $composableBuilder(
+    column: $table.nextAttemptAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get lastError => $composableBuilder(
+    column: $table.lastError,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ProductImagesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ProductImagesTable> {
+  $$ProductImagesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get productId =>
+      $composableBuilder(column: $table.productId, builder: (column) => column);
+
+  GeneratedColumn<String> get state =>
+      $composableBuilder(column: $table.state, builder: (column) => column);
+
+  GeneratedColumn<String> get byUserId =>
+      $composableBuilder(column: $table.byUserId, builder: (column) => column);
+
+  GeneratedColumn<int> get attempts =>
+      $composableBuilder(column: $table.attempts, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get nextAttemptAt => $composableBuilder(
+    column: $table.nextAttemptAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get lastError =>
+      $composableBuilder(column: $table.lastError, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$ProductImagesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ProductImagesTable,
+          ProductImage,
+          $$ProductImagesTableFilterComposer,
+          $$ProductImagesTableOrderingComposer,
+          $$ProductImagesTableAnnotationComposer,
+          $$ProductImagesTableCreateCompanionBuilder,
+          $$ProductImagesTableUpdateCompanionBuilder,
+          (
+            ProductImage,
+            BaseReferences<_$AppDatabase, $ProductImagesTable, ProductImage>,
+          ),
+          ProductImage,
+          PrefetchHooks Function()
+        > {
+  $$ProductImagesTableTableManager(_$AppDatabase db, $ProductImagesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ProductImagesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ProductImagesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ProductImagesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> productId = const Value.absent(),
+                Value<String> state = const Value.absent(),
+                Value<String?> byUserId = const Value.absent(),
+                Value<int> attempts = const Value.absent(),
+                Value<DateTime?> nextAttemptAt = const Value.absent(),
+                Value<String?> lastError = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ProductImagesCompanion(
+                id: id,
+                productId: productId,
+                state: state,
+                byUserId: byUserId,
+                attempts: attempts,
+                nextAttemptAt: nextAttemptAt,
+                lastError: lastError,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String productId,
+                required String state,
+                Value<String?> byUserId = const Value.absent(),
+                Value<int> attempts = const Value.absent(),
+                Value<DateTime?> nextAttemptAt = const Value.absent(),
+                Value<String?> lastError = const Value.absent(),
+                required DateTime createdAt,
+                Value<int> rowid = const Value.absent(),
+              }) => ProductImagesCompanion.insert(
+                id: id,
+                productId: productId,
+                state: state,
+                byUserId: byUserId,
+                attempts: attempts,
+                nextAttemptAt: nextAttemptAt,
+                lastError: lastError,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ProductImagesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ProductImagesTable,
+      ProductImage,
+      $$ProductImagesTableFilterComposer,
+      $$ProductImagesTableOrderingComposer,
+      $$ProductImagesTableAnnotationComposer,
+      $$ProductImagesTableCreateCompanionBuilder,
+      $$ProductImagesTableUpdateCompanionBuilder,
+      (
+        ProductImage,
+        BaseReferences<_$AppDatabase, $ProductImagesTable, ProductImage>,
+      ),
+      ProductImage,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -22103,4 +22955,6 @@ class $AppDatabaseManager {
       $$CartDraftsTableTableManager(_db, _db.cartDrafts);
   $$DocCountersTableTableManager get docCounters =>
       $$DocCountersTableTableManager(_db, _db.docCounters);
+  $$ProductImagesTableTableManager get productImages =>
+      $$ProductImagesTableTableManager(_db, _db.productImages);
 }

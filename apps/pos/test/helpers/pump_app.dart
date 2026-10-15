@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
@@ -5,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:pos_app/app/app.dart';
 import 'package:pos_app/app/session/session.dart';
 import 'package:pos_app/app/sync/sync_runner.dart';
+import 'package:pos_app/data/catalog/product_images.dart';
 import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/data/device/device_info.dart';
 import 'package:pos_app/data/remote/api.dart';
@@ -81,6 +84,10 @@ Future<(ProviderContainer, AppDatabase)> pumpPosApp(
       initialSessionProvider.overrideWithValue(session),
       // Fon sinxroni standartda o'chiq (testda haqiqiy tarmoq yo'q).
       syncEnabledProvider.overrideWithValue(syncEnabled),
+      // Tovar rasmlari — testning vaqtinchalik papkasida.
+      imageDirectoryProvider.overrideWithValue(
+        () async => testImageDirectory(),
+      ),
       ...overrides,
     ],
   );
@@ -95,3 +102,9 @@ Future<(ProviderContainer, AppDatabase)> pumpPosApp(
   }
   return (container, database);
 }
+
+Directory? _images;
+
+/// Testlar uchun rasm papkasi (bir marta yaratiladi, jarayon oxirida o'chadi).
+Directory testImageDirectory() =>
+    _images ??= Directory.systemTemp.createTempSync('pos_images_');

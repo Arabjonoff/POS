@@ -21,6 +21,7 @@ class ProductRow {
     this.pluCode,
     this.minStockMilli = 0,
     this.stockMilli = 0,
+    this.imageId,
   });
 
   final String id;
@@ -38,6 +39,7 @@ class ProductRow {
   final String? pluCode;
   final int minStockMilli;
   final int stockMilli;
+  final String? imageId;
 
   bool get negative => stockMilli < 0;
 
@@ -58,6 +60,7 @@ class ProductRow {
     pluCode: pluCode,
     minStockMilli: minStockMilli,
     stockMilli: stock,
+    imageId: imageId,
   );
 }
 
@@ -128,7 +131,7 @@ final _productBaseProvider = StreamProvider<List<ProductRow>>((ref) {
       .customSelect(
         'SELECT p.id, p.name, p.search_key, p.category_id, c.name AS category, '
         'u.code AS unit, p.sell_price_tiyin, p.cost_price_tiyin, p.is_active, '
-        'p.plu_code, p.min_stock_milli, '
+        'p.plu_code, p.min_stock_milli, p.image_id, '
         "(SELECT group_concat(barcode, ' ') FROM ( "
         'SELECT b.barcode FROM product_barcodes b WHERE b.product_id = p.id '
         'ORDER BY b.is_primary DESC, b.barcode)) AS barcodes '
@@ -156,6 +159,7 @@ final _productBaseProvider = StreamProvider<List<ProductRow>>((ref) {
               isActive: r.read<bool>('is_active'),
               pluCode: r.readNullable<String>('plu_code'),
               minStockMilli: r.read<int>('min_stock_milli'),
+              imageId: r.readNullable<String>('image_id'),
               barcodes: (r.readNullable<String>('barcodes') ?? '')
                   .split(' ')
                   .where((b) => b.isNotEmpty)

@@ -1551,6 +1551,60 @@ abstract class AppLocalizations {
   /// **'Rekvizitlarni o\'zgartirish server yangilangach ishlaydi (internetga ulaning).'**
   String get storeUnavailable;
 
+  /// Tovar rasmi bo'limi
+  ///
+  /// In uz, this message translates to:
+  /// **'Rasm'**
+  String get productImage;
+
+  /// Izoh
+  ///
+  /// In uz, this message translates to:
+  /// **'Ro\'yxatda va kassa qidiruvida ko\'rinadi. Internet bo\'lmasa ham saqlanadi.'**
+  String get productImageHint;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Rasm qo\'shish'**
+  String get productImageAdd;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Almashtirish'**
+  String get productImageReplace;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Olib tashlash'**
+  String get productImageRemove;
+
+  /// Belgi: rasm serverga yetmagan
+  ///
+  /// In uz, this message translates to:
+  /// **'Internetga hali yuklanmagan'**
+  String get productImageNotUploaded;
+
+  /// Xato
+  ///
+  /// In uz, this message translates to:
+  /// **'Rasmni o\'qib bo\'lmadi. JPG yoki PNG tanlang.'**
+  String get productImageUnsupported;
+
+  /// Xato
+  ///
+  /// In uz, this message translates to:
+  /// **'Rasm juda katta (20 MB dan ortiq).'**
+  String get productImageTooLarge;
+
+  /// Kutilmagan xato
+  ///
+  /// In uz, this message translates to:
+  /// **'Saqlab bo\'lmadi. Qayta urinib ko\'ring.'**
+  String get productSaveFailed;
+
   /// Chekda: mijozning savdodan keyingi qarzi
   ///
   /// In uz, this message translates to:

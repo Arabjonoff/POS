@@ -63,9 +63,11 @@ Yangilashdan oldin qo'lda zaxira: `pos exec backup sh /deploy/backup.sh once`.
 - **Tiklash** (joriy ma'lumot almashtiriladi):
   ```sh
   pos stop backend scheduler admin
-  pos run --rm --entrypoint sh backup /deploy/restore.sh /backups/pos-20261015-0300.dump
+  pos run --rm --entrypoint sh backup /deploy/restore.sh /backups/pos-20261015-0300.dump     /backups/media-20261015-0300.tar.gz   # ixtiyoriy: tovar rasmlari
   pos up -d
   ```
+- **Tovar rasmlari** (T-105) — `media` volume'ida; zaxira har safar `media-*.tar.gz` ham yaratadi (bazaning `pos-*.dump` bilan bir vaqtda).
+  Rasmlar ochiq URL orqali berilmaydi — faqat API orqali, tenant tekshiruvi bilan. Caddy so'rov hajmi chegarasi — 8 MB.
 - Tiklash sinovi (oyiga bir marta tavsiya): zaxirani alohida bo'sh bazaga tiklab, `docs/DEPLOY.md` dagi "Tiklash sinovi" kabi tekshiring — lokal natija pastda.
 
 ## 4. Monitoring

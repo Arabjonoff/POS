@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
+import 'package:image/image.dart' as img;
 import 'package:pos_app/app/session/pin_gate.dart';
 import 'package:pos_app/app/session/session.dart';
 import 'package:pos_app/data/catalog/price_history.dart';
+import 'package:pos_app/data/catalog/product_images.dart';
 import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/data/remote/api.dart';
 import 'package:pos_app/data/sync/outbox.dart';
@@ -41,6 +43,7 @@ Future<void> open(
   bool asManager = false,
   PriceHistoryFetcher? history,
   Size size = const Size(1440, 900),
+  List<Override> extra = const [],
 }) async {
   _db = openTestDatabase();
   addTearDown(_db.close);
@@ -61,6 +64,7 @@ Future<void> open(
       fakePin,
       if (history != null)
         priceHistoryFetcherProvider.overrideWithValue(history),
+      ...extra,
     ],
   );
   await tester.sendKeyDownEvent(LogicalKeyboardKey.controlLeft);
@@ -92,7 +96,83 @@ Future<void> approve(WidgetTester tester) async {
 Future<Product> product(String id) =>
     (_db.select(_db.products)..where((p) => p.id.equals(id))).getSingle();
 
+/// Rasm tanlash va tayyorlash (testda: tayyor kichik JPEG).
+final List<Override> fakeImages = [
+  imageSourcePickerProvider.overrideWithValue(
+    () async => Uint8List.fromList([1, 2, 3]),
+  ),
+  imagePreparerProvider.overrideWithValue(
+    (_) async =>
+        Uint8List.fromList(img.encodeJpg(img.Image(width: 8, height: 8))),
+  ),
+];
+
 void main() {
+  group('image (T-105)', () {
+    bool hasImage(Widget w) => w is PosThumbnail && w.image != null;
+
+    testWidgets('add an image: shown at once, saved with the product', (
+      tester,
+    ) async {
+      await open(tester, asManager: true, extra: fakeImages);
+      await tap(tester, find.text('Non issiq'));
+      expect(find.byWidgetPredicate(hasImage), findsNothing);
+      await tap(tester, find.byKey(const ValueKey('product-image-pick')));
+      expect(
+        find.descendant(of: card, matching: find.byWidgetPredicate(hasImage)),
+        findsOneWidget,
+      );
+      expect(inCard('Internetga hali yuklanmagan'), findsOneWidget);
+
+      await tap(tester, find.byKey(const ValueKey('product-save')));
+      final saved = (await product('p-non')).imageId;
+      expect(saved, isNotNull);
+      // Ro'yxatda kichik rasm.
+      await tester.pumpAndSettle();
+      expect(find.byWidgetPredicate(hasImage), findsWidgets);
+
+      // Olib tashlash.
+      await tap(tester, find.text('Non issiq'));
+      await tap(tester, find.byKey(const ValueKey('product-image-remove')));
+      await tap(tester, find.byKey(const ValueKey('product-save')));
+      expect((await product('p-non')).imageId, isNull);
+    });
+
+    testWidgets('cancel keeps the old image', (tester) async {
+      await open(tester, asManager: true, extra: fakeImages);
+      await tap(tester, find.text('Non issiq'));
+      await tap(tester, find.byKey(const ValueKey('product-image-pick')));
+      await tester.sendKeyEvent(LogicalKeyboardKey.escape);
+      await tester.pumpAndSettle();
+      expect((await product('p-non')).imageId, isNull);
+    });
+
+    testWidgets('double tap on save creates one product (UI-P1-2)', (
+      tester,
+    ) async {
+      await open(tester, asManager: true);
+      await tap(tester, find.byKey(const ValueKey('products-add')));
+      await tester.enterText(
+        find.byKey(const ValueKey('product-name')),
+        'Ikki marta',
+      );
+      await tester.enterText(
+        find.byKey(const ValueKey('product-sell')),
+        '1000',
+      );
+      await tester.pumpAndSettle();
+      final save = find.byKey(const ValueKey('product-save'));
+      await tester.ensureVisible(save);
+      await tester.tap(save);
+      await tester.tap(save, warnIfMissed: false);
+      await tester.pumpAndSettle();
+      final rows = await (_db.select(
+        _db.products,
+      )..where((p) => p.name.equals('Ikki marta'))).get();
+      expect(rows, hasLength(1));
+    });
+  });
+
   group('list', () {
     testWidgets('active products; search; category; inactive filter', (
       tester,

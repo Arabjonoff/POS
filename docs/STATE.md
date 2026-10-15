@@ -5,24 +5,24 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-104b Chek rekvizitlari, ko'rsat/yashir, logotip (T-104a merge #54)
-- Branch: feat/T-104b-store-requisites
+- Vazifa: T-105 Mahsulot rasmi (reja — `docs/audit/audit_products.md` "Product images"); T-104 merge (#54, #55)
+- Branch: feat/T-105-product-images
 - Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
-- [x] 1. Server: `Store.legal_name/tin/receipt_logo/receipt_options` (migratsiya tenants 0002), `StoreSettingsSerializer`, `store.upserted` (ega/menejer, tenant), pull, `features: store_settings`; testlar 11
-- [x] 2. Kassa: drift v5 (stores ustunlari), pull; `mono_bitmap.dart` (kulrang PNG, 1 bit, `GS v 0`); `ReceiptOptions`, `ReceiptRow.image`, rekvizitlar chekda; `StoreSettingsStore`; `ReceiptSettingsSection` (forma + jonli preview)
-- [x] 3. Testlar: mono_bitmap 8, store_settings 2
-- [x] 4. Widget testlari, golden'lar
+- [x] 1. Server: Pillow, `ProductImage` + `Product.image` (catalog 0004), `apps/catalog/images.py` (tekshirish, JPEG 800 + 200), `PUT/GET/DELETE /sync/product-images/{id}/` (qurilma, tenant), `ProductSerializer.image` (faqat o'qish), MEDIA sozlamalari, prod `media` volume, zaxira/tiklash, Caddy 8 MB; testlar 11
+- [x] 2. Kassa: `image` paketi, drift v6 (`products.image_id`, `product_images`), `product_images.dart` (tayyorlash isolate, saqlash, olib tashlash), `image_sync.dart` (yuklash/o'chirish/yuklab olish), SyncEngine va pull ulanishi
+- [x] 3. UI: `PosThumbnail` (packages/ui), tovar kartasida rasm (qo'shish/almashtirish/olib tashlash, "yuklanmagan"), ro'yxatda, kassa qidiruvida
+- [x] 4. Testlar (data, sync, widget), golden'lar, OpenAPI/klientlar
 - [x] 5. Hujjatlar
 - [ ] 6. PR, merge
 
 ## Oxirgi bajarilgan ish
-- T-104b tayyor, PR ochilmoqda.
+- T-105 tayyor, PR ochilmoqda.
 
 ## Keyingi aniq harakat
-- T-104b PR CI yashil bo'lsa merge; keyin T-105 mahsulot rasmi (`docs/audit/audit_products.md` reja).
+- T-105 PR CI yashil bo'lsa merge; keyin T-106 UI/UX sayqal (`PROJECT_AUDIT.md` ⏳ T-106 qatorlari).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
@@ -46,6 +46,7 @@
 - Push'dan oldin: `dart format apps/pos/lib apps/pos/test packages/ui/lib packages/ui/test packages/ui/widgetbook/lib packages/ui/widgetbook/test` (CI tekshiradi); backend serializer o'zgarsa — `make schema` (openapi.yaml diff CI'da).
 - Windows'da Python bilan fayl yozganda `newline=''` ishlat (aks holda CRLF); `\n`/`\u02bb` kabi escape'lar heredoc ichida buziladi — Edit vositasi yoki skript fayl ishlat. Ruff RUF001: o'zbek `ʻ` uchun `# noqa: RUF001`.
 - Chek ko'rinishi (preview) mavzudan `letterSpacing` olsa oxirgi belgini kesadi — `PosTypography.receipt` da 0 (test: `receipt_preview_test.dart`).
+- Widget/golden testda haqiqiy rasm (FileImage) yuklash `runAsync` + drift bilan osiladi — golden'da placeholder, rasm mavjudligi `PosThumbnail.image != null` bilan tekshiriladi. Fayl IO (rasm) sinxron — fake async'da osilmasin.
 - Admin e2e lokal: `cd apps/admin && npm run build && E2E_PORT=3150 npx playwright test` (3100 — docker admin bo'lishi mumkin; reuseExistingServer uni qayta ishlatib yuboradi). Soxta Django API: `e2e/mock-api.mjs` (3199).
 - Admin'ga npm paket qo'shilsa: Windows'dagi npm lock'dan `@emnapi/core|runtime` (optional, wasm) yozuvlarini o'chiradi va CI `npm ci` yiqiladi. Yechim: yozuvlarni main'dagi lock'dan qaytarish, `npm ci --dry-run` bilan tekshirish.
 - Admin skrinshotlari: scratchpad'dagi `shots8x.cjs` naqshi — `node e2e/mock-api.mjs` + `API_URL_INTERNAL=http://127.0.0.1:3199 npx next start -p 3150`, keyin Playwright skript (`require(<apps/admin>/node_modules/playwright)`). Bash'da murakkab `node -e` / heredoc'ga `${...}` va qo'shtirnoq aralashsa buziladi — Write vositasi bilan fayl yoz.

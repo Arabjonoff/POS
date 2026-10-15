@@ -87,3 +87,24 @@ class DocCounters extends Table {
   @override
   Set<Column<Object>> get primaryKey => {name};
 }
+
+/// Tovar rasmlari (T-105): yuklash navbati va lokal kesh ro'yxati. Rasm JSON
+/// outbox'dan o'tmaydi (outbox kichik va tez qolsin). Holat:
+/// `local` — yuklanishi kerak, `uploaded` — serverda, `remote` — serverdan
+/// yuklab olingan, `delete` — serverdan o'chirilishi kerak, `failed` — server
+/// qabul qilmadi (rasm buzuq).
+class ProductImages extends Table {
+  TextColumn get id => text()();
+  TextColumn get productId => text()();
+  TextColumn get state => text()();
+
+  /// Yuklagan ega/menejer (server huquqni tekshiradi).
+  TextColumn get byUserId => text().nullable()();
+  IntColumn get attempts => integer().withDefault(const Constant(0))();
+  DateTimeColumn get nextAttemptAt => dateTime().nullable()();
+  TextColumn get lastError => text().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}

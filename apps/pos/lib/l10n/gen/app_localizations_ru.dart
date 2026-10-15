@@ -852,6 +852,35 @@ class AppLocalizationsRu extends AppLocalizations {
       'Изменение реквизитов заработает после обновления сервера (подключитесь к интернету).';
 
   @override
+  String get productImage => 'Фото';
+
+  @override
+  String get productImageHint =>
+      'Видно в списке и в поиске на кассе. Сохраняется и без интернета.';
+
+  @override
+  String get productImageAdd => 'Добавить фото';
+
+  @override
+  String get productImageReplace => 'Заменить';
+
+  @override
+  String get productImageRemove => 'Удалить';
+
+  @override
+  String get productImageNotUploaded => 'Ещё не загружено';
+
+  @override
+  String get productImageUnsupported =>
+      'Не удалось прочитать фото. Выберите JPG или PNG.';
+
+  @override
+  String get productImageTooLarge => 'Фото слишком большое (больше 20 МБ).';
+
+  @override
+  String get productSaveFailed => 'Не удалось сохранить. Попробуйте ещё раз.';
+
+  @override
   String get receiptDebtNow => 'Текущий долг';
 
   @override

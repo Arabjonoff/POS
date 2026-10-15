@@ -1167,6 +1167,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/sync/product-images/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["sync_product_images_retrieve"];
+        put: operations["sync_product_images_update"];
+        post?: never;
+        delete: operations["sync_product_images_destroy"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/sync/product-import/template/": {
         parameters: {
             query?: never;
@@ -1749,6 +1765,14 @@ export interface components {
             hour: number;
             revenue_tiyin: number;
             sales_count: number;
+        };
+        ImageUploadRequest: {
+            /** Format: binary */
+            file: string;
+            /** Format: uuid */
+            product: string;
+            /** Format: uuid */
+            by: string;
         };
         /** @description `id` klientda yaratilishi mumkin (UUIDv7); keyin o'zgarmaydi. */
         InventoryCount: {
@@ -2594,10 +2618,34 @@ export interface components {
             is_active?: boolean;
             barcodes?: string[];
             readonly markup_bp: number | null;
+            readonly image: components["schemas"]["ProductImageRef"] | null;
             /** Format: date-time */
             readonly created_at: string;
             /** Format: date-time */
             readonly updated_at: string;
+        };
+        ProductImage: {
+            /** Format: uuid */
+            id?: string;
+            /**
+             * Tovar
+             * Format: uuid
+             */
+            product: string;
+            sha256: string;
+            /** Kenglik */
+            width: number;
+            /** Balandlik */
+            height: number;
+            /** Hajm */
+            bytes: number;
+        };
+        ProductImageRef: {
+            /** Format: uuid */
+            id: string;
+            sha256: string;
+            width: number;
+            height: number;
         };
         ProductRequest: {
             /** Format: uuid */
@@ -5695,6 +5743,82 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["PriceHistory"][];
                 };
+            };
+        };
+    };
+    sync_product_images_retrieve: {
+        parameters: {
+            query?: {
+                size?: "full" | "thumb";
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "image/jpeg": string;
+                };
+            };
+        };
+    };
+    sync_product_images_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["ImageUploadRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductImage"];
+                };
+            };
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductImage"];
+                };
+            };
+        };
+    };
+    sync_product_images_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

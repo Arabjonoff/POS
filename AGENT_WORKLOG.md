@@ -20,7 +20,7 @@ barcha modullar regressiyasi, testlar, yakuniy hisobot.
 | 2 | P0: yashil chaqnash, overflow, mijoz telefoni, noma'lum mijoz (T-100); sinxron yaxlitligi (T-101) | ✅ T-100, T-101 |
 | 3 | Kirimni tahrirlash (teskari yozuv + yangi kirim, atomar) | ✅ T-102 |
 | 4 | Mijoz boshlang'ich balansi | ✅ T-103 |
-| 5 | Mahsulot rasmi (server + sinx + kassa) | — |
+| 5 | Mahsulot rasmi (server + sinx + kassa) | ✅ T-105 |
 | 6 | Chek sozlamalari (preview, logo, 58/80 mm, test cheki) | ✅ T-104a, T-104b |
 | 7 | Vizual uslub va UX sayqali | — |
 | 8 | Regressiya, yakuniy hisobot | — |
@@ -45,5 +45,7 @@ barcha modullar regressiyasi, testlar, yakuniy hisobot.
 
 - T-104b: `Store` rekvizitlari (yuridik nom, STIR/JShShIR, logotip, ko'rsat/yashir), `store.upserted`, drift v5, o'z PNG/1-bit/`GS v 0`, muharrir + jonli chek. Golden'da topildi: logotip kengligi yaxlitlanish bilan 380 (384 o'rniga) — tuzatildi; desktop'da forma va chek yonma-yon emas edi — keng karta. pos 728, backend to'liq.
 
+- T-105: server `ProductImage` (Pillow, JPEG 800/200, tenant view, media volume, zaxira), kassa drift v6, `product_images` navbati/kesh, `ProductImageSync` (outbox'dan alohida), tovar kartasi/ro'yxat/kassa qidiruvida rasm, `PosThumbnail`. Topilgan: tarmoq xatosida multipart fayl oqimi Windows'da faylni band qilardi — xotiradagi baytlarga o'tildi; saqlash tugmasi PIN kutilayotganda spinner ko'rsatardi — ajratildi. Backend to'liq, pos 743.
+
 ## Keyingi qadam
-- T-105 Mahsulot rasmi — reja: `docs/audit/audit_products.md` "Product images: implementation plan".
+- T-106 UI/UX sayqal (`PROJECT_AUDIT.md` P1/P2 qolganlari).

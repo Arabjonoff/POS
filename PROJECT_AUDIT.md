@@ -49,11 +49,11 @@ Holat: ✅ tuzatildi · 🔧 ishlanmoqda · ⏳ rejada · ❓ biznes savoli (`do
 | PRN-B12 | Aralash to'lovda chekda naqd *berilgan* summa to'lov sifatida chiqadi (to'lovlar yig'indisi JAMI dan katta) | ✅ T-104a |
 | PRN-B13 | Birinchi chop etish xato bo'lsa, qayta urinish mijozga "NUSXA" belgili chek chiqaradi | ✅ T-104a |
 | PRN-B14 | Avto-chop o'chiq bo'lsa naqd savdoda pul qutisi ochilmaydi | ✅ T-104a |
-| IMG-0 | Mahsulot rasmi umuman yo'q | ⏳ T-105 |
+| IMG-0 | Mahsulot rasmi umuman yo'q | ✅ T-105 (qaror 0013) |
 | PR-P1-3 | Kassada nom ≤ 200 va ≤ 20 shtrix-kod cheklovi yo'q → server rad etadi (P0-1 ga olib keladi) | ✅ T-101 |
 | PR-P1-4 | Oflayn eski tahrir serverdagi yangi narxni qaytarib yozadi (to'liq snapshot) | ⏳ T-106 (o\'zgargan maydonlar — kassa formati o\'zgaradi) |
-| PR-P1-6, UI-P1-3 | Saqlashda kutilmagan xato — tugma "yuklanmoqda"da qotadi, xabar yo'q (tovar kartasi, mijoz kartasi, smena yopish) | ⏳ T-106 |
-| UI-P1-2, UI-P1-4 | Ikki marta bosish: tovar kartasi ikki tovar, kirim ikki qoralama, yetkazib beruvchi ikki marta yaratadi | ⏳ T-106 |
+| PR-P1-6, UI-P1-3 | Saqlashda kutilmagan xato — tugma "yuklanmoqda"da qotadi, xabar yo'q (tovar kartasi, mijoz kartasi, smena yopish) | tovar kartasi ✅ T-105; mijoz kartasi, smena ⏳ T-106 |
+| UI-P1-2, UI-P1-4 | Ikki marta bosish: tovar kartasi ikki tovar, kirim ikki qoralama, yetkazib beruvchi ikki marta yaratadi | tovar kartasi ✅ T-105, kirim ✅ T-102; yetkazib beruvchi ⏳ T-106 |
 | UI-P1-1 | Kirim/inventarizatsiya qoralamasi tasdiqsiz va qaytarishsiz o'chadi (tugma "Tasdiqlash" yonida) | kirim ✅ T-102 (`showPosConfirm`); inventarizatsiya ⏳ T-106 |
 | UI-P1-5 | Telefonda holat qatori kesiladi ("Prin…"), smena va xato ko'rinmaydi | ⏳ T-106 |
 | CU-B3 | Qayta yuborilgan qarz to'lovi smena yopilgach rad etiladi | ✅ T-101 |

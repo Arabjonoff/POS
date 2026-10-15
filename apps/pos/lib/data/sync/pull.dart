@@ -5,6 +5,7 @@ import 'package:drift/drift.dart';
 import 'package:pos_api_client/pos_api_client.dart';
 import 'package:pos_app/app/update/app_update.dart';
 import 'package:pos_app/core/text/search_key.dart';
+import 'package:pos_app/data/catalog/product_images.dart';
 import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/data/sync/server_features.dart';
 
@@ -154,6 +155,23 @@ class PullApplier {
   Future<void> _upsertProduct(Map<String, dynamic> d) async {
     final id = _s(d['id']);
     final name = _s(d['name']);
+    // Rasm (T-105): eski server — kalit yo'q, tegilmaydi; kassada hali
+    // yuklanmagan yoki o'chirilishi kutilayotgan rasm bo'lsa — lokal holat
+    // ustun (pull uni bosib ketmasin).
+    final image = d['image'];
+    var imageId = const Value<String?>.absent();
+    if (d.containsKey('image')) {
+      final pending =
+          await (_db.select(_db.productImages)..where(
+                (i) =>
+                    i.productId.equals(id) &
+                    i.state.isIn([ImageState.local, ImageState.delete]),
+              ))
+              .get();
+      if (pending.isEmpty) {
+        imageId = Value(image is Map ? image['id'] as String? : null);
+      }
+    }
     await _db
         .into(_db.products)
         .insertOnConflictUpdate(
@@ -173,6 +191,7 @@ class PullApplier {
             isActive: Value(d['is_active'] != false),
             updatedAt: Value(_dt(d['updated_at'])),
             deletedAt: const Value(null),
+            imageId: imageId,
           ),
         );
     // Shtrix-kodlar ro'yxati to'liq almashtiriladi (birinchisi — asosiy).

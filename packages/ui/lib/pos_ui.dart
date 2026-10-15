@@ -22,6 +22,7 @@ export 'src/components/pos_skeleton.dart';
 export 'src/components/pos_status_bar.dart';
 export 'src/components/pos_status_dot.dart';
 export 'src/components/pos_text_field.dart';
+export 'src/components/pos_thumbnail.dart';
 export 'src/components/pos_toast.dart';
 export 'src/format/pos_format.dart';
 export 'src/theme/pos_theme.dart';

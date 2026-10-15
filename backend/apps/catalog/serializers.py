@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
 from apps.core.exceptions import DomainError
@@ -68,6 +69,13 @@ def _barcode_taken(barcode, product):
     )
 
 
+class ProductImageRefSerializer(serializers.Serializer):
+    id = serializers.UUIDField()
+    sha256 = serializers.CharField()
+    width = serializers.IntegerField()
+    height = serializers.IntegerField()
+
+
 class ProductSerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(required=False)
     category = TenantPKField(queryset=Category.objects.all(), allow_null=True, required=False)
@@ -79,6 +87,8 @@ class ProductSerializer(serializers.ModelSerializer):
         child=serializers.CharField(trim_whitespace=False), required=False, max_length=20
     )
     markup_bp = serializers.SerializerMethodField()
+    # Faqat o'qish (T-105): rasm alohida endpoint orqali biriktiriladi.
+    image = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
@@ -97,10 +107,23 @@ class ProductSerializer(serializers.ModelSerializer):
             "is_active",
             "barcodes",
             "markup_bp",
+            "image",
             "created_at",
             "updated_at",
         ]
         read_only_fields = ["created_at", "updated_at"]
+
+    @extend_schema_field(ProductImageRefSerializer(allow_null=True))
+    def get_image(self, product):
+        image = product.image
+        if image is None or image.deleted_at is not None:
+            return None
+        return {
+            "id": str(image.pk),
+            "sha256": image.sha256,
+            "width": image.width,
+            "height": image.height,
+        }
 
     def get_markup_bp(self, product) -> int | None:
         if not product.cost_price_tiyin:

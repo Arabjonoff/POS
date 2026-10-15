@@ -18,9 +18,13 @@ class CatalogProduct {
     this.categoryId,
     this.pluCode,
     this.barcodes = const [],
+    this.imageId,
   });
 
   final String id;
+
+  /// Rasm (T-105): lokal fayl `product_images`.
+  final String? imageId;
   final String name;
   final int priceTiyin;
   final int costTiyin;
@@ -223,6 +227,7 @@ class ProductCatalog {
             categoryId: r.categoryId,
             pluCode: r.pluCode,
             barcodes: barcodes[r.id] ?? const [],
+            imageId: r.imageId,
           ),
       ],
       categories: [

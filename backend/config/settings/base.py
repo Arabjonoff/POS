@@ -95,6 +95,13 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+# Tovar rasmlari (T-105): ochiq URL yo'q — faqat tenant tekshiruvi bilan view orqali.
+MEDIA_ROOT = Path(env_str("MEDIA_ROOT", str(BASE_DIR / "media")))
+MEDIA_URL = "/media/"
+# Rasm yuklash: kassa ≤ 1 MB yuboradi; zaxira bilan.
+DATA_UPLOAD_MAX_MEMORY_SIZE = 8 * 1024 * 1024
+FILE_UPLOAD_MAX_MEMORY_SIZE = 8 * 1024 * 1024
+
 CORS_ALLOWED_ORIGINS = env_list("CORS_ALLOWED_ORIGINS", "http://localhost:3000")
 
 REST_FRAMEWORK = {

@@ -2630,6 +2630,83 @@ paths:
                 items:
                   $ref: '#/components/schemas/PriceHistory'
           description: ''
+  /api/v1/sync/product-images/{id}/:
+    get:
+      operationId: sync_product_images_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      - in: query
+        name: size
+        schema:
+          type: string
+          enum:
+          - full
+          - thumb
+      tags:
+      - sync
+      security:
+      - deviceToken: []
+      responses:
+        '200':
+          content:
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+          description: ''
+    put:
+      operationId: sync_product_images_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - sync
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ImageUploadRequest'
+        required: true
+      security:
+      - deviceToken: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImage'
+          description: ''
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImage'
+          description: ''
+    delete:
+      operationId: sync_product_images_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      tags:
+      - sync
+      security:
+      - deviceToken: []
+      responses:
+        '204':
+          description: No response body
   /api/v1/sync/product-import/template/:
     get:
       operationId: sync_product_import_template_retrieve
@@ -3778,6 +3855,22 @@ components:
       - hour
       - revenue_tiyin
       - sales_count
+    ImageUploadRequest:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+        product:
+          type: string
+          format: uuid
+        by:
+          type: string
+          format: uuid
+      required:
+      - by
+      - file
+      - product
     InventoryCount:
       type: object
       description: '`id` klientda yaratilishi mumkin (UUIDv7); keyin o''zgarmaydi.'
@@ -5356,6 +5449,11 @@ components:
           type: integer
           nullable: true
           readOnly: true
+        image:
+          allOf:
+          - $ref: '#/components/schemas/ProductImageRef'
+          nullable: true
+          readOnly: true
         created_at:
           type: string
           format: date-time
@@ -5366,11 +5464,63 @@ components:
           readOnly: true
       required:
       - created_at
+      - image
       - markup_bp
       - name
       - sell_price_tiyin
       - unit
       - updated_at
+    ProductImage:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        product:
+          type: string
+          format: uuid
+          title: Tovar
+        sha256:
+          type: string
+          maxLength: 64
+        width:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Kenglik
+        height:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Balandlik
+        bytes:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          title: Hajm
+      required:
+      - bytes
+      - height
+      - product
+      - sha256
+      - width
+    ProductImageRef:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        sha256:
+          type: string
+        width:
+          type: integer
+        height:
+          type: integer
+      required:
+      - height
+      - id
+      - sha256
+      - width
     ProductRequest:
       type: object
       properties:

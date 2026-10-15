@@ -39,6 +39,7 @@ export 'models/period.dart';
 export 'models/platform_enum.dart';
 export 'models/previous.dart';
 export 'models/price_history.dart';
+export 'models/product_image.dart';
 export 'models/product_row.dart';
 export 'models/pull_response.dart';
 export 'models/push_request_request.dart';
@@ -56,6 +57,7 @@ export 'models/tenant_brief.dart';
 export 'models/token_refresh.dart';
 export 'models/token_refresh_request.dart';
 export 'models/upload_response.dart';
+export 'models/size.dart';
 // Root client
 export 'pos_api.dart';
 

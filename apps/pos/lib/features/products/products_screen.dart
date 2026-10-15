@@ -12,6 +12,7 @@ import 'package:pos_app/features/common/section_page.dart';
 import 'package:pos_app/features/products/import_dialog.dart';
 import 'package:pos_app/features/products/product_card.dart';
 import 'package:pos_app/features/products/product_list.dart';
+import 'package:pos_app/features/products/product_thumbnail.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
 import 'package:pos_ui/pos_ui.dart';
 
@@ -401,13 +402,21 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
           flex: 3,
           sortable: true,
           minWidth: 200,
-          cell: (context, r) => Text(
-            r.name,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: PosTypography.bodyStrong.copyWith(
-              color: r.isActive ? p.text : p.textMuted,
-            ),
+          cell: (context, r) => Row(
+            children: [
+              ProductThumbnail(imageId: r.imageId),
+              const SizedBox(width: PosSpacing.s),
+              Expanded(
+                child: Text(
+                  r.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: PosTypography.bodyStrong.copyWith(
+                    color: r.isActive ? p.text : p.textMuted,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         if (full)
@@ -485,6 +494,8 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
           onTap: () => unawaited(_open(productId: r.id)),
           child: Row(
             children: [
+              ProductThumbnail(imageId: r.imageId, size: PosSizes.thumbM),
+              const SizedBox(width: PosSpacing.m),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

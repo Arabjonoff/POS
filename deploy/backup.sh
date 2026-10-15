@@ -16,7 +16,13 @@ backup() {
 	# Butunligini tekshirish: arxiv o'qilmasa — zaxira yo'q deb hisoblanadi.
 	pg_restore --list "$tmp" >/dev/null
 	mv "$tmp" "$out"
-	find "$DIR" -name 'pos-*.dump' -mtime +"$KEEP_DAYS" -delete
+	# Tovar rasmlari (T-105): /media bo'lsa — alohida arxiv.
+	if [ -d /media ]; then
+		mtmp="$DIR/.media-$stamp.tar.gz.tmp"
+		tar -czf "$mtmp" -C /media .
+		mv "$mtmp" "$DIR/media-$stamp.tar.gz"
+	fi
+	find "$DIR" \( -name 'pos-*.dump' -o -name 'media-*.tar.gz' \) -mtime +"$KEEP_DAYS" -delete
 	echo "backup ok: $out ($(du -h "$out" | cut -f1))"
 }
 

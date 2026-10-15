@@ -312,7 +312,7 @@ Audit: `PROJECT_AUDIT.md`, batafsil — `docs/audit/`. Jurnal: `AGENT_WORKLOG.md
 ### [x] T-104 Chek sozlamalari
 - **Bajarish:** do'kon rekvizitlari (nom, manzil, telefon, STIR — faqat kiritilsa), sarlavha, pastki matn, logotip, ko'rsat/yashir; 58/80 mm; jonli preview (printer bilan bir model); test cheki; chek xatolari (kodlash, aralash to'lov, NUSXA, pul qutisi).
 
-### [ ] T-105 Mahsulot rasmi
+### [x] T-105 Mahsulot rasmi
 - **Bajarish:** rasm qo'shish/almashtirish/olib tashlash; serverda saqlash (tenant tekshiruvi bilan); kassada kesh (oflayn); ro'yxatda kichik rasm, kartada katta; placeholder.
 
 ### [ ] T-106 UI/UX sayqal (audit P1/P2)
