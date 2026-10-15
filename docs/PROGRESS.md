@@ -473,3 +473,8 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - Golden testda topildi: telefonda "tovar kartasi" golden'i aslida "Kirim" ekranini olardi (tovar ekrandan pastda, bosish menyuga tushardi) — `ensureVisible`.
 - Sinov: backend to'liq (~807), apps/pos 754, packages/ui 141, widgetbook 62.
 - Qoldi (P2): skeleton, yuklanayotgan tugmada fokus, qator o'chirishda undo, savat tanlangan qatori rangi, filtr yorliqlari; RC-B4 va P2-17 — qaror kerak.
+
+## 2026-10-15 — T-107 Regressiya va yakuniy hisobot
+- To'liq regressiya `main`da (T-106 dan keyin): backend ~807 yashil + ruff + migratsiya tekshiruvi + OpenAPI; apps/pos 754; packages/ui 141; widgetbook 62; admin lint, typecheck, 60 unit, 25 Playwright e2e; CI yashil.
+- Yakuniy hisobot — `PROJECT_AUDIT.md` boshida ("Yakuniy hisobot"): topilgan/tuzatilgan muammolar, UI/UX, backend/DB, testlar, qolgan bo'shliqlar, ishga tushirish.
+- Qoldi: jismoniy printer va Android/iOS qurilmada sinov; RC-B4 va P2-17 qarori; P2 sayqal qoldiqlari; ochiq savollar Q-003…Q-007, Q-009…Q-011.

@@ -318,7 +318,7 @@ Audit: `PROJECT_AUDIT.md`, batafsil — `docs/audit/`. Jurnal: `AGENT_WORKLOG.md
 ### [x] T-106 UI/UX sayqal (audit P1/P2)
 - **Bajarish:** ikki marta bosishdan himoya, kutilmagan xatoda xabar, o'chirishni tasdiqlash, holat qatori (neytral ranglar, telefon), majburiy maydon belgisi, pul maydoni formati, xato holatlari.
 
-### [ ] T-107 Regressiya va yakuniy hisobot
+### [x] T-107 Regressiya va yakuniy hisobot
 
 ---
 

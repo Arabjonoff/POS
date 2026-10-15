@@ -13,6 +13,55 @@ Batafsil hisobotlar — har bir topilma uchun **joy (fayl:qator), asl sabab, ta'
 
 Ish jarayoni va holat: [AGENT_WORKLOG.md](AGENT_WORKLOG.md).
 
+## Yakuniy hisobot (T-107, 2026-10-15)
+
+Ish 8 ta PR bilan bajarildi va `main`ga birlashtirildi: #50 T-100, #51 T-101, #52 T-102, #53 T-103, #54 T-104a, #55 T-104b, #56 T-105, #57 T-106.
+
+### 1. Qanday muammolar topildi
+5 yo'nalishli audit (`docs/audit/`): yashil chaqnash (skaner effekti oddiy bosishda ham, butun panelga); server rad etgan tovar/mijoz
+**savdolarni ham** yo'qotardi; NUL belgisi sinxronni butunlay to'xtatardi; o'chirilgan tovar/yetkazib beruvchiga oflayn kirim rad etilardi;
+kirimni tahrirlash/bekor qilish, mijoz boshlang'ich balansi, mahsulot rasmi, chek sozlamalari (preview, logo, STIR) **yo'q edi**;
+chekda aralash to'lov summasi noto'g'ri, "NUSXA" xato chiqishi, kirillcha kodlash; ikki marta bosishda dublikatlar; smenasiz naqd qarz
+to'lovi Z-hisobotga tushmasdi; eski oflayn tovar tahriri yangi narxni bosardi; telefonda holat qatori va menyu kesilardi; pul maydonlari
+guruhlanmagan; ro'yxat xatosida cheksiz spinner; to'lov oynalari eskirgan smena qiymatini o'qishi mumkin edi. To'liq jadval — quyida ("Topilmalar").
+
+### 2. Nimalar tuzatildi
+Quyidagi jadvalda ✅ belgili hamma band (P0 — 8 tadan 7 tasi (RC-B4 qaror kutmoqda), P1 — hammasi, P2 — asosiy qismi).
+
+### 3. UI/UX o'zgarishlari
+Chaqnash faqat skanerda (2 px chegara, 200 ms); neytral holat qatori, telefonda ixcham; telefon menyusi; kirim tahrirlash/bekor qilish
+oqimi (eski→yangi jadval, tasdiq, PIN); `PosSegmentedControl`, `PosDateField`, `PosThumbnail`, `showPosConfirm`, `dangerGhost`,
+`PosTextField.required`; mijoz formasi (balans yo'nalishi aniq: "mijoz qarzi" / "mijoz haqi (avans)"); chek sozlamalari — forma + jonli chek,
+test cheki; mahsulot rasmi (karta, ro'yxat, kassa qidiruvi); pul maydonlari `1 500 000,50`; xato xabarlari va "Qayta urinish".
+
+### 4. Backend va DB o'zgarishlari (hammasi qo'shimcha, ma'lumot o'chirmaydi)
+Migratsiyalar: `inventory 0002` (kirim `corrects`/`conflict`), `customers 0003` (`opening` qarz turi, bitta mijozga bitta),
+`tenants 0002` (do'kon rekvizitlari, logo, chek sozlamalari), `catalog 0004` (`ProductImage`), `catalog 0005` (bo'sh PLU → NULL).
+Yangi hodisalar: `receipt.corrected`, `receipt.reversed`, `store.upserted`; endpoint `/api/v1/sync/product-images/{id}/`.
+Kassa SQLite (drift) v3 → v6 bosqichma-bosqich migratsiya. Qarorlar: `docs/decisions/0010…0013`.
+
+### 5. Testlar va natijalar
+- backend (pytest): ~807, hammasi yashil; ruff, `makemigrations --check`, OpenAPI validatsiyasi.
+- kassa (flutter test): 754 (unit, widget, integratsiya, golden telefon/planshet/desktop × yorug'/qorong'i, 10 000 tovar va 500 oflayn savdo sinovlari).
+- dizayn tizimi: 141, widgetbook golden: 62.
+- admin: lint, typecheck, 60 unit, 25 Playwright e2e.
+- CI (GitHub Actions) har PR'da yashil.
+
+### 6. Qolgan bo'shliqlar
+- **Jismoniy printerda sinalmagan** (printer ulanmagan): chek formati unit/golden testlar va preview bilan tekshirilgan.
+- Android/iOS qurilmada sinalmagan; Android printer (T-047) — Q-007 kutmoqda. Kamera bilan rasm olish — keyinroq.
+- RC-B4 (inventarizatsiya "kutilgan" qiymati server vaqtida) va lokal qoldiqdagi rad etilgan harakatlar — biznes qarori kerak.
+- P2: skeleton, yuklanayotgan tugmada fokus, qator o'chirishda undo, savat tanlangan qatori rangi, filtr yorliqlari.
+- Ochiq savollar (`docs/QUESTIONS.md`): Q-003…Q-007, Q-009…Q-011.
+
+### 7. Qanday ishga tushirish va sinash
+`make up` (docker: postgres, redis, backend, admin); kassa: `cd apps/pos && flutter run -d windows --dart-define=POS_API_URL=http://127.0.0.1:8100`.
+Testlar: `make backend-test backend-lint`, `make pos-analyze pos-test`, `make ui-test`, `make admin-lint admin-test admin-e2e`.
+Foydalanuvchi qo'llanmasi: `docs/user-guide/`.
+
+### 8. Hujjatlar
+`PROJECT_AUDIT.md` (shu fayl) va `AGENT_WORKLOG.md` — repo ildizida; batafsil audit — `docs/audit/`; skrinshotlar — `docs/screenshots/T-102…T-106/`.
+
 ## Mahsulot doirasi (audit natijasi)
 - **Kassa ilovasi (Flutter, `apps/pos`)** — do'kon ishlatadigan yagona ilova: kassa, tovarlar, kirim, inventarizatsiya, mijozlar/nasiya,
   smena, hisobotlar, sozlamalar, printer. Oflayn-birinchi: lokal SQLite + outbox → server.
