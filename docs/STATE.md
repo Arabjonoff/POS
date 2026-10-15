@@ -5,19 +5,24 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-085 Obuna nazorati ilovada
+- Branch: feat/T-085-subscription-banners
+- Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
+- [ ] 1. `lib/app/sync/subscription_notice.dart`: oxirgi pull'dagi `subscription` + o'tgan kunlar (Toshkent, server farqi bilan) → sinov / tugashiga ≤ 3 kun / grace ogohlantirishi; `supportPhoneProvider` (`--dart-define=SUPPORT_PHONE`) + unit testlar
+- [ ] 2. `SubscriptionBanner` qobiqda (barcha bo'limlar tepasida): sinov — ko'k, tugash — sariq, grace — qizil; aloqa raqami
+- [ ] 3. Savdo to'xtaganda (readonly/blocked/oflayn/qurilma): kassa banneri — sabab + nima ishlaydi + aloqa; kirim va inventarizatsiyani tasdiqlash ham o'chadi (sync.md)
+- [ ] 4. Widget testlari (har holat), golden, skrinshotlar; Q-008 (aloqa raqami) QUESTIONS.md
+- [ ] 5. Spec, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- T-084 tugadi (PR, merge).
+- Reja yozildi.
 
 ## Keyingi aniq harakat
-- ROADMAP'dan keyingi vazifa: T-085 Obuna nazorati ilovada.
+- 1-qadam: `apps/pos/lib/app/sync/subscription_notice.dart` + `test/app/subscription_notice_test.dart`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
