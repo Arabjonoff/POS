@@ -5,25 +5,24 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-108b Tovarlar paneli: kartalar, kategoriyalar, topilmadi (qaror 0014)
-- Branch: feat/T-108b-product-grid (T-108a ustiga; T-108a PR #59 merge bo'lgach `git rebase --onto main feat/T-108a-kassa-shell`)
+- Vazifa: T-108c Chek paneli va to'lov (qaror 0014)
+- Branch: feat/T-108c-cart-payment (T-108b ustiga; #60 merge bo'lgach `git rebase --onto origin/main feat/T-108b-product-grid`)
 - Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
-- [x] 1. packages/ui: PosProductTile + kategoriya ranglari (AA test), widgetbook display galereyasi
-- [x] 2. Katalog: active/categories/accentIndex, minStock; topSellersProvider (30 kun)
-- [x] 3. ProductGrid (Sevimlilar/Hammasi/kategoriya, qidiruv natijasi, ↑/↓), StockView (kam/yo'q)
-- [x] 4. Topilmadi: qizil xabar + "Yangi tovar qo'shish" (tovar kartasi, saqlansa chekka)
-- [x] 5. Testlar (pos_screen, product_catalog)
-- [x] 6. To'liq testlar, golden'lar, skrinshotlar, hujjat
-- [ ] 7. main ga rebase, PR, CI, merge
+- [ ] 1. QQS to'lovchi: server `receipt_options.vat_payer` (+test), kassa `ReceiptOptions.vatPayer` (standart yo'q), Sozlamalar → chek rekvizitlari belgisi
+- [ ] 2. Chek tablari (pozitsiyalar soni), qator №|nom·narx|miqdor tugmasi|summa|o'chirish, sarlavha, 1 s yashil
+- [ ] 3. Pastki qism: Mijoz (F4, qarz) | Chegirma (F3), tafsilot (pozitsiyalar, oraliq, chegirma, QQS), JAMI, Naqd F9 / Karta F10 / Nasiya F11, TO'LASH F12 (yashil)
+- [ ] 4. Bir bosishli to'lov (naqd aniq, karta), F11 → oyna nasiyada, oynada F9/F10/F11, Ctrl+F9 pul kiritish/chiqarish, "Chek yopildi"
+- [ ] 5. Klaviatura: + / − / *, Ctrl+Z; o'ng panel 40% (≥ 420, ≤ 760)
+- [ ] 6. Testlar (qabul: 3 tovar faqat skaner+klaviatura; 1366×768 kesilmaydi), golden'lar 1366×768, skrinshotlar, hujjat, PR
 
 ## Oxirgi bajarilgan ish
-- T-108b kodi va testlari; to'liq test to'plami ishlab turibdi.
+- T-108a #59 merge; T-108b PR #60 (CI kutilmoqda).
 
 ## Keyingi aniq harakat
-- `git rebase --onto origin/main feat/T-108a-kassa-shell` (T-108a #59 merge bo'ldi), push --force-with-lease, PR, CI, merge; keyin T-108c.
+- 1-qadam: `backend/apps/tenants/serializers.py` RECEIPT_OPTION_KEYS ga `vat_payer`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

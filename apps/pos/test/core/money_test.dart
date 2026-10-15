@@ -29,6 +29,14 @@ void main() {
     expect(Money.percentOf(1000000, 250), 25000);
   });
 
+  test('VAT included in the price: total × 12 / 112, half up', () {
+    // 44 500 so'm → 4 767,857… → 4 768 so'm (eskizdagi misol).
+    expect(Money.vatIncluded(4450000), 476800);
+    expect(Money.vatIncluded(1120000), 120000);
+    expect(Money.vatIncluded(1000), 100);
+    expect(Money.vatIncluded(0), 0);
+  });
+
   test('no 64-bit overflow in the intermediate product', () {
     // 10 mlrd so'm × 1 mln dona.
     expect(

@@ -33,4 +33,12 @@ abstract final class Money {
   /// Summaning foizi; foiz bazis punktlarda (1% = 100).
   static int percentOf(int amountTiyin, int percentBp) =>
       mulDivHalfUp(amountTiyin, percentBp, 10000);
+
+  /// O'zbekistonda QQS stavkasi (bazis punkt): 12%.
+  static const int vatRateBp = 1200;
+
+  /// Narx ichidagi QQS: `jami × 12 / 112`, butun so'mgacha (yarmidan
+  /// yuqoriga) — faqat ko'rsatish uchun, savdo yozuviga tushmaydi.
+  static int vatIncluded(int totalTiyin, {int rateBp = vatRateBp}) =>
+      mulDivHalfUp(totalTiyin, rateBp, (10000 + rateBp) * 100) * 100;
 }

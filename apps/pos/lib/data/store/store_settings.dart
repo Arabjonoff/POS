@@ -180,3 +180,12 @@ Future<GrayImage> decodeLogo(Uint8List bytes) async {
 }
 
 final logoPickerProvider = Provider<LogoPicker>((ref) => _pickPlatformLogo);
+
+/// Do'kon QQS to'lovchimi (`receipt_options.vat_payer`, qaror 0014) — kassa
+/// ekranida "QQS (12%, ichida)" qatori.
+final vatPayerProvider = StreamProvider<bool>(
+  (ref) => ref
+      .watch(storeSettingsProvider)
+      .watch()
+      .map((row) => row != null && StoreDraft.fromRow(row).options.vatPayer),
+);
