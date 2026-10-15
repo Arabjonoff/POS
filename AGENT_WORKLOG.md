@@ -16,8 +16,8 @@ barcha modullar regressiyasi, testlar, yakuniy hisobot.
 ## Reja (bosqichlar)
 | # | Bosqich | Holat |
 |---|---|---|
-| 1 | Audit (5 yo'nalish: UI/UX, mahsulotlar, kirim, mijozlar, chek/printer) → `PROJECT_AUDIT.md` | ishlanmoqda |
-| 2 | P0 tuzatishlar: yashil chaqnash, layout overflow, mahsulot nomi xatolari | — |
+| 1 | Audit (5 yo'nalish) → `PROJECT_AUDIT.md`, `docs/audit/` | ✅ T-100 |
+| 2 | P0: yashil chaqnash, overflow, mijoz telefoni, noma'lum mijoz (T-100); sinxron yaxlitligi (T-101) | T-100 ✅, T-101 — |
 | 3 | Kirimni tahrirlash (teskari yozuv + yangi kirim, atomar) | — |
 | 4 | Mijoz boshlang'ich balansi | — |
 | 5 | Mahsulot rasmi (server + sinx + kassa) | — |
@@ -32,5 +32,8 @@ barcha modullar regressiyasi, testlar, yakuniy hisobot.
 - Kassa ilovasi Windows'da ishga tushirildi. Logda: `RenderFlex overflowed by 4.0 pixels` — `apps/pos/lib/features/pos/widgets/product_panel.dart:147` (tez tugma kartasi, 2 qatorli nom + narx 88 px ga sig'maydi).
 - 5 ta audit subagenti ishga tushirildi (faqat o'qish).
 
+- Audit tugadi (5 hisobot `docs/audit/`). Asosiy topilmalar: yashil chaqnash sababi `PosScanFeedback` (oddiy bosishda ham, butun panel, fon bo'yalgan); server rad etgan tovar/mijoz savdolarni yo'qotadi; NUL belgisi sinxronni to'xtatadi; kirimni tahrirlash/bekor qilish yo'q; chekda preview/logo/STIR yo'q; rasm yo'q.
+- T-100 tuzatishlari: chaqnash, overflow, telefon normallashtirish, noma'lum mijoz → pending. Testlar: backend to'liq yashil, pos 627, ui 134.
+
 ## Keyingi qadam
-- Audit natijalarini `PROJECT_AUDIT.md` ga jamlash, ROADMAP'ga T-100… vazifalarini qo'shish, 2-bosqichdan boshlash.
+- T-101 Sinxron yaxlitligi (`docs/audit/audit_products.md` P0-1, P0-2; `audit_receipts.md` B1; `audit_customers.md` B3).
