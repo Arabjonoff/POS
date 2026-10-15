@@ -421,7 +421,7 @@
   "customerOpeningNoneHint": "Янги мижоз — қарзи ҳам, аванси ҳам йўқ.",
   "customerOpeningDebtHint": "Мижоз дўконга шу суммани қарздор (масалан, эски дафтардан).",
   "customerOpeningCreditHint": "Дўкон мижозга шу суммани қарздор: мижоз олдиндан тўлаган. Кейинги насия савдолар шундан айрилади.",
-  "customerOpeningAmount": "Сумма",
+  "customerOpeningAmount": "Сумма, {currency}",
   "customerOpeningDate": "Қайси санадаги ҳолат",
   "customerOpeningAmountRequired": "Суммани киритинг (0 дан катта)",
   "customerOpeningNeedsApproval": "Мижоз авансини менежер ёки эга киритади",

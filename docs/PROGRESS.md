@@ -443,3 +443,11 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
   - UI: kirim kartasida "Tahrirlash"/"Bekor qilish", tuzatish qoralamasi banneri, saqlashdan oldin `eski → yangi` va manfiy qoldiq ogohlantirishi, so'ng ruxsat; ro'yxatda holat belgilari; qoralamani o'chirish tasdiq bilan; "Yangi kirim" ikki marta bosilmaydi. Dizayn tizimiga `showPosConfirm`.
 - Sinov: backend 764 (+10 tuzatish ssenariysi: 10 → 7 = −3, takror, ikki kassa, bekor qilish, tannarx, huquq, tenant); apps/pos 661 (+data 7, widget 3, golden 18); skrinshotlar `docs/screenshots/T-102/`.
 - Qoldi: boshqa kassadagi kirimlar ko'rinmaydi (pull entity — keyinroq); RC-B4 inventarizatsiya; Q-010.
+
+## 2026-10-15 — T-103 Mijoz boshlang'ich balansi
+- Qilindi (qaror 0011, `customers-api.md`, `debts.md`):
+  - Server: `DebtType.OPENING` (±), cheklovlar (bitta mijozga bitta — qisman unique indeks; savdo/smenasiz), migratsiya 0003; `record_opening_balance`; `CustomerSerializer.opening_balance` (faqat yaratishda, tahrirda rad; avans — ega/menejer; sana kelajak emas); qarzlar hisobotida `total_credit_tiyin`, `creditors_count` (ixtiyoriy).
+  - Dizayn tizimi: `PosSegmentedControl`, `PosDateField`, `PosTextField.onTap`.
+  - Kassa: `CustomerDirectory.create(opening:)` — mijoz, `opening` yozuvi, `customer.upserted.opening_balance` bitta tranzaksiyada; yangi mijoz oynasi (Yo'q / Mijoz qarzi / Mijoz haqi (avans), summa mingliklar bilan, sana; telefon "(ixtiyoriy)"; Enter+bosish ikki marta yopmaydi); avans — menejer PIN; kartada/ro'yxatda/tanlovchida avans to'g'ri ko'rinadi.
+- Sinov: backend 783+ (opening 17, sinxron, hisobot: tushumga kirmaydi); apps/pos 680; packages/ui 136; golden `customers/card_credit`, `new_opening`.
+- Qoldi: avansni naqd qaytarish oqimi (Q-003 yangilandi).

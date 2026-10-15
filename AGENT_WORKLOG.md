@@ -19,7 +19,7 @@ barcha modullar regressiyasi, testlar, yakuniy hisobot.
 | 1 | Audit (5 yo'nalish) → `PROJECT_AUDIT.md`, `docs/audit/` | ✅ T-100 |
 | 2 | P0: yashil chaqnash, overflow, mijoz telefoni, noma'lum mijoz (T-100); sinxron yaxlitligi (T-101) | ✅ T-100, T-101 |
 | 3 | Kirimni tahrirlash (teskari yozuv + yangi kirim, atomar) | ✅ T-102 |
-| 4 | Mijoz boshlang'ich balansi | — |
+| 4 | Mijoz boshlang'ich balansi | ✅ T-103 |
 | 5 | Mahsulot rasmi (server + sinx + kassa) | — |
 | 6 | Chek sozlamalari (preview, logo, 58/80 mm, test cheki) | — |
 | 7 | Vizual uslub va UX sayqali | — |
@@ -39,5 +39,7 @@ barcha modullar regressiyasi, testlar, yakuniy hisobot.
 
 - T-102: kirimni tahrirlash/bekor qilish (server `correct_receipt`/`cancel_receipt`, hodisalar, pull `features`; kassa drift v4, `ReceiptStore`, UI, tasdiqlash oynasi `showPosConfirm`). Golden'da topilgan xato: tasdiqlash oynasi qoldiqni yuklanmagan provider'dan olib "manfiy qoldiq" ko'rsatardi — bazadan o'qishga o'tkazildi. Backend 764, pos 661.
 
+- T-103: `opening` qarz turi (± , bitta mijozga bitta, smenasiz), mijoz bilan bitta tranzaksiya/hodisada; avans — ega/menejer; hisobotda avans alohida; dizayn tizimiga `PosSegmentedControl`, `PosDateField`; kassada forma, kartada "Mijoz haqi (avans)". Tarjima-qoida testi qattiq yozilgan yorliqni ushladi — tuzatildi. Backend to'liq, pos 680.
+
 ## Keyingi qadam
-- T-103 Mijoz boshlang'ich balansi — dizayn: `docs/audit/audit_customers.md` 2-bo'lim.
+- T-104 Chek sozlamalari — dizayn: `docs/audit/audit_printing.md` 3-bo'lim.

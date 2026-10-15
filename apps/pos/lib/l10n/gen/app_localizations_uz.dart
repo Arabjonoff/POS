@@ -1451,7 +1451,9 @@ class AppLocalizationsUz extends AppLocalizations {
       'Do\'kon mijozga shu summani qarzdor: mijoz oldindan to\'lagan. Keyingi nasiya savdolar shundan ayriladi.';
 
   @override
-  String get customerOpeningAmount => 'Summa';
+  String customerOpeningAmount(String currency) {
+    return 'Summa, $currency';
+  }
 
   @override
   String get customerOpeningDate => 'Qaysi sanadagi holat';
@@ -3417,7 +3419,9 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
       'Дўкон мижозга шу суммани қарздор: мижоз олдиндан тўлаган. Кейинги насия савдолар шундан айрилади.';
 
   @override
-  String get customerOpeningAmount => 'Сумма';
+  String customerOpeningAmount(String currency) {
+    return 'Сумма, $currency';
+  }
 
   @override
   String get customerOpeningDate => 'Қайси санадаги ҳолат';

@@ -423,7 +423,7 @@ class _NewCustomerDialogState extends State<_NewCustomerDialog> {
                   child: PosTextField(
                     key: const ValueKey('new-customer-opening-amount'),
                     controller: _amount,
-                    label: '${l10n.customerOpeningAmount}, ${fmt.currency}',
+                    label: l10n.customerOpeningAmount(fmt.currency),
                     keyboardType: TextInputType.number,
                     textAlign: TextAlign.end,
                     inputFormatters: const [GroupedMoneyFormatter()],

@@ -1559,6 +1559,7 @@ export interface components {
             /** Izoh */
             note?: string;
             debt_limit_tiyin?: number | null;
+            opening_balance?: components["schemas"]["OpeningBalanceRequest"] | null;
         };
         DayRow: {
             /** Format: date */
@@ -1611,9 +1612,10 @@ export interface components {
          *     * `payment` - to'lov
          *     * `refund` - qaytarish
          *     * `adjustment` - tuzatish
+         *     * `opening` - boshlang'ich balans
          * @enum {string}
          */
-        DebtEntryTypeEnum: "sale" | "payment" | "refund" | "adjustment";
+        DebtEntryTypeEnum: "sale" | "payment" | "refund" | "adjustment" | "opening";
         Debtor: {
             /** Format: uuid */
             customer: string;
@@ -1624,6 +1626,8 @@ export interface components {
         Debts: {
             total_debt_tiyin: number;
             debtors_count: number;
+            total_credit_tiyin?: number;
+            creditors_count?: number;
             top: components["schemas"]["Debtor"][];
         };
         /**
@@ -1695,6 +1699,12 @@ export interface components {
             debts: components["schemas"]["Debts"];
             stock: components["schemas"]["StockReport"];
         };
+        /**
+         * @description * `debt` - debt
+         *     * `credit` - credit
+         * @enum {string}
+         */
+        DirectionEnum: "debt" | "credit";
         EventError: {
             code: string;
             message: string;
@@ -1868,6 +1878,28 @@ export interface components {
          * @enum {string}
          */
         OpEnum: "upsert" | "delete";
+        /** @description Mijoz yaratishda boshlang'ich balans (T-103): yo'nalish aniq, summa musbat. */
+        OpeningBalance: {
+            /** Format: uuid */
+            id?: string;
+            direction: components["schemas"]["DirectionEnum"];
+            amount_tiyin: number;
+            /** Format: date-time */
+            at?: string;
+            /** @default  */
+            note: string;
+        };
+        /** @description Mijoz yaratishda boshlang'ich balans (T-103): yo'nalish aniq, summa musbat. */
+        OpeningBalanceRequest: {
+            /** Format: uuid */
+            id?: string;
+            direction: components["schemas"]["DirectionEnum"];
+            amount_tiyin: number;
+            /** Format: date-time */
+            at?: string;
+            /** @default  */
+            note: string;
+        };
         OptionalReasonRequest: {
             /** @default  */
             reason: string;
@@ -2263,6 +2295,7 @@ export interface components {
             /** Izoh */
             note?: string;
             debt_limit_tiyin?: number | null;
+            opening_balance?: components["schemas"]["OpeningBalanceRequest"] | null;
         };
         /** @description `id` klientda yaratilishi mumkin (UUIDv7); keyin o'zgarmaydi. */
         PatchedInventoryCountRequest: {

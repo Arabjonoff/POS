@@ -23,3 +23,12 @@
 - **Tahrirlash**: ism, telefon va izohni istalgan xodim o'zgartiradi. Qarz limiti (bo'sh — cheklovsiz, 0 — nasiya yo'q) — faqat ega/menejer; kassir o'zgartirsa PIN so'raladi. `customer.upserted` da `debt_limit_tiyin` faqat o'zgarganda yuboriladi.
 - Kassada mijozni tez tanlash — T-043 (F4 va to'lov oynasidagi "Nasiya").
 - Hali yo'q: `adjustment` (faqat ega) kassada — admin/keyin; SMS/Telegram eslatma.
+
+## Boshlang'ich balans (T-103)
+- **Yangi mijoz** oynasi: ism (majburiy), telefon (ixtiyoriy), **"Boshlang'ich balans"**: `Yo'q` (standart) / `Mijoz qarzi` / `Mijoz haqi (avans)` —
+  har variant ostida ma'nosi yoziladi. Tanlansa: summa (mingliklar bo'shliq bilan, majburiy, > 0) va sana ("Qaysi sanadagi holat", bugungi
+  sanadan keyin emas).
+- Avansni kassir kiritsa — menejer PIN (`by` = menejer). Mijoz, `opening` yozuvi va hodisa bitta tranzaksiyada (`CustomerDirectory.create`).
+- Kartada: manfiy balans — "Mijoz haqi (avans)" va musbat summa (yashil), "Qarzni to'lash" ko'rinmaydi; tarixda "Boshlang'ich qarz" /
+  "Boshlang'ich avans". Ro'yxat va to'lov oynasidagi tanlovchida — "Avans: 50 000 so'm".
+- To'lov oynasidagi tez yaratish — faqat ism va telefon (savdo 3 harakatda qoladi).

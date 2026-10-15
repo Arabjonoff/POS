@@ -98,8 +98,8 @@ class DebtsSerializer(serializers.Serializer):
     total_debt_tiyin = serializers.IntegerField()
     debtors_count = serializers.IntegerField()
     # Mijozlar avansi (musbat son) — do'konning mijozlar oldidagi qarzi.
-    total_credit_tiyin = serializers.IntegerField()
-    creditors_count = serializers.IntegerField()
+    total_credit_tiyin = serializers.IntegerField(required=False)
+    creditors_count = serializers.IntegerField(required=False)
     top = DebtorSerializer(many=True)
 
 

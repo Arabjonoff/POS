@@ -421,7 +421,7 @@
   "customerOpeningNoneHint": "Новый клиент — нет ни долга, ни аванса.",
   "customerOpeningDebtHint": "Клиент должен магазину эту сумму (например, из старой тетради).",
   "customerOpeningCreditHint": "Магазин должен клиенту эту сумму: клиент заплатил заранее. Следующие покупки в долг вычитаются из неё.",
-  "customerOpeningAmount": "Сумма",
+  "customerOpeningAmount": "Сумма, {currency}",
   "customerOpeningDate": "На какую дату",
   "customerOpeningAmountRequired": "Введите сумму (больше 0)",
   "customerOpeningNeedsApproval": "Аванс клиента вносит менеджер или владелец",

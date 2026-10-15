@@ -16,14 +16,15 @@
 - [x] 3. Dizayn tizimi: `PosSegmentedControl`, `PosDateField`, `PosTextField.onTap` (+ testlar)
 - [x] 4. Kassa: `OpeningBalanceInput`, `CustomerDirectory.create(opening:)`; yangi mijoz formasi (balans bo'limi, `GroupedMoneyFormatter`); kartada/ro'yxatda avans
 - [x] 5. Kassa data testlari
-- [ ] 6. Widget testlari, golden/skrinshot, OpenAPI + klientlar
-- [ ] 7. Spec (`customers-api.md`, `debts.md`, `sync-api.md`), qaror 0011, PR, merge
+- [x] 6. Widget testlari, golden/skrinshot, OpenAPI + klientlar
+- [x] 7. Spec (`customers-api.md`, `debts.md`, `sync-api.md`), qaror 0011
+- [ ] 8. PR, CI, merge
 
 ## Oxirgi bajarilgan ish
 - T-102 merge (#52). T-103 1–5 qadamlar tayyor (commit qilinmagan edi — endi branch'da).
 
 ## Keyingi aniq harakat
-- 6-qadam: `apps/pos/test/features/customers_test.dart` — boshlang'ich qarz bilan yangi mijoz, avans uchun PIN; golden `customers` new dialog.
+- T-103 PR CI yashil bo'lsa merge; keyin T-104 (`docs/audit/audit_printing.md` 3-bo'lim).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

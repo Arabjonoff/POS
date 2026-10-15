@@ -3517,10 +3517,8 @@ components:
           items:
             $ref: '#/components/schemas/Debtor'
       required:
-      - creditors_count
       - debtors_count
       - top
-      - total_credit_tiyin
       - total_debt_tiyin
     DefaultLocaleEnum:
       enum:

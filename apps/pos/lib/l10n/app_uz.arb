@@ -1939,9 +1939,14 @@
   "@customerOpeningCreditHint": {
     "description": "Izoh"
   },
-  "customerOpeningAmount": "Summa",
+  "customerOpeningAmount": "Summa, {currency}",
   "@customerOpeningAmount": {
-    "description": "Maydon"
+    "description": "Maydon",
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
   },
   "customerOpeningDate": "Qaysi sanadagi holat",
   "@customerOpeningDate": {

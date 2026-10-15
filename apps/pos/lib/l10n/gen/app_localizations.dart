@@ -2628,8 +2628,8 @@ abstract class AppLocalizations {
   /// Maydon
   ///
   /// In uz, this message translates to:
-  /// **'Summa'**
-  String get customerOpeningAmount;
+  /// **'Summa, {currency}'**
+  String customerOpeningAmount(String currency);
 
   /// Maydon
   ///

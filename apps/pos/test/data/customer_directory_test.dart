@@ -152,7 +152,7 @@ void main() {
         createdBy: 'cashier-1',
         opening: OpeningBalanceInput(
           amountTiyin: 5000000,
-          at: DateTime.utc(2026, 10, 1),
+          at: DateTime.utc(2026, 10),
           credit: true,
           approvedBy: 'manager-1',
         ),
@@ -162,7 +162,7 @@ void main() {
           jsonDecode((await db.select(db.outboxEvents).getSingle()).payload)
               as Map<String, Object?>;
       expect(payload['by'], 'manager-1');
-      expect((payload['opening_balance'] as Map)['direction'], 'credit');
+      expect((payload['opening_balance']! as Map)['direction'], 'credit');
     });
 
     test('editing never adds the opening balance again', () async {
@@ -171,7 +171,7 @@ void main() {
         createdBy: 'cashier-1',
         opening: OpeningBalanceInput(
           amountTiyin: 100000,
-          at: DateTime.utc(2026, 10, 1),
+          at: DateTime.utc(2026, 10),
         ),
       );
       await customers.update(id: created.id, name: 'Yangi ism', by: 'm');

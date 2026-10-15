@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart' show Value;
-import 'package:flutter/material.dart' show ValueKey;
+import 'package:flutter/material.dart' show TextField, ValueKey;
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pos_app/app/status/app_status.dart';
@@ -28,6 +28,8 @@ Future<AppDatabase> _seed() async {
         ),
         CustomersCompanion.insert(id: 'c3', fullName: 'Aziz Rahimov'),
         CustomersCompanion.insert(id: 'c4', fullName: 'Zarina opa'),
+        // T-103: boshlang'ich avans — do'kon mijozga qarzdor.
+        CustomersCompanion.insert(id: 'c5', fullName: 'Avansli mijoz'),
       ])
       ..insert(
         db.staffUsers,
@@ -38,6 +40,13 @@ Future<AppDatabase> _seed() async {
         ),
       )
       ..insertAll(db.debtEntries, [
+        DebtEntriesCompanion.insert(
+          id: 'o5',
+          customerId: 'c5',
+          amountTiyin: -5000000,
+          type: 'opening',
+          at: DateTime.utc(2026, 10, 1, 7),
+        ),
         DebtEntriesCompanion.insert(
           id: 'd1',
           customerId: 'c1',
@@ -106,6 +115,36 @@ void main() {
   goldenAcrossDevices('customers', 'card', (tester, size) async {
     await _open(tester, size);
     await tester.tap(find.byKey(const ValueKey('customer-c1')));
+    await tester.pumpAndSettle();
+  });
+
+  // T-103: avansli mijoz kartasi — "Mijoz haqi (avans)", to'lov tugmasi yo'q.
+  goldenAcrossDevices('customers', 'card_credit', (tester, size) async {
+    await _open(tester, size);
+    await tester.ensureVisible(find.byKey(const ValueKey('customer-c5')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('customer-c5')));
+    await tester.pumpAndSettle();
+  });
+
+  // T-103: yangi mijoz — boshlang'ich qarz bilan.
+  goldenAcrossDevices('customers', 'new_opening', (tester, size) async {
+    await _open(tester, size);
+    await tester.tap(find.byKey(const ValueKey('customers-add')));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(const ValueKey('new-customer-name')),
+      'Eski qarzdor',
+    );
+    await tester.tap(find.byKey(const ValueKey('opening-debt')));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.descendant(
+        of: find.byKey(const ValueKey('new-customer-opening-amount')),
+        matching: find.byType(TextField),
+      ),
+      '1500000',
+    );
     await tester.pumpAndSettle();
   });
 }

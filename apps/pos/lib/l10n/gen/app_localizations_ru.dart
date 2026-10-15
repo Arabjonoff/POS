@@ -1468,7 +1468,9 @@ class AppLocalizationsRu extends AppLocalizations {
       'Магазин должен клиенту эту сумму: клиент заплатил заранее. Следующие покупки в долг вычитаются из неё.';
 
   @override
-  String get customerOpeningAmount => 'Сумма';
+  String customerOpeningAmount(String currency) {
+    return 'Сумма, $currency';
+  }
 
   @override
   String get customerOpeningDate => 'На какую дату';
