@@ -5,19 +5,25 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-047 Android: Bluetooth va USB chek printeri
+- Branch: feat/T-047-android-printer
+- Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
-- (yo'q)
+- [ ] 1. Dart: `PrinterConnection.bluetooth/usb`, `android_printer_channel.dart` (MethodChannel `uz.zellypos.pos/printer`), `BluetoothPrinterTransport`, `UsbPrinterTransport`, factory
+- [ ] 2. Kotlin: `PrinterChannel.kt` (SPP RFCOMM, USB bulk OUT, ruxsatlar) + MainActivity + AndroidManifest
+- [ ] 3. Sozlamalar paneli: Bluetooth/USB tanlovi, qurilmalar ro'yxati, bo'sh/ruxsat/o'chiq holatlari, yangilash
+- [ ] 4. l10n (uz/uz-Cyrl/ru), unit testlar (soxta kanal), widget testlar, golden
+- [ ] 5. `flutter build apk --debug` bilan Kotlin kompilyatsiyasini tekshirish
+- [ ] 6. Hujjatlar: printing.md, qo'lda sinov ro'yxati `docs/printing-android-checklist.md`, qaror 0008 izohi, Q-007, user guide
+- [ ] 7. Tekshiruvlar, PR, merge, ROADMAP/PROGRESS
 
 ## Oxirgi bajarilgan ish
-- T-108a/b/c — kassa ekrani yangi dizayni (qaror 0014, eskiz https://claude.ai/artifact/321zbc39k53LuPjnmgrjhT). T-108c PR CI'dan keyin merge.
+- Vazifa boshlandi, reja yozildi.
 
 ## Keyingi aniq harakat
-- `docs/ROADMAP.md` dan keyingi bajarilmagan vazifa; ochiq savollar `docs/QUESTIONS.md`.
+- 1-qadam: `apps/pos/lib/features/printing/android_printer_channel.dart` yozish.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
