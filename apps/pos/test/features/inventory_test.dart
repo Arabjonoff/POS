@@ -158,6 +158,9 @@ void main() {
     await tap(tester, find.byKey(const ValueKey('count-post')));
     expect(find.text('Hech narsa sanalmagan'), findsOneWidget);
     await tap(tester, find.byKey(const ValueKey('count-delete')));
+    // O'chirish tasdiq so'raydi (audit UI-P1-1).
+    expect(find.text("Sanoqni o'chirasizmi?"), findsOneWidget);
+    await tap(tester, find.byKey(const ValueKey('pos-confirm-ok')));
     expect(find.text("Hali inventarizatsiya yo'q"), findsOneWidget);
   });
 }

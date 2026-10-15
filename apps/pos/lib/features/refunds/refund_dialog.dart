@@ -194,7 +194,8 @@ class _RefundDialogState extends ConsumerState<RefundDialog> {
         ? RefundMethod.debt
         : RefundMethod.cash;
     final user = ref.read(sessionProvider).user;
-    final shift = ref.read(currentShiftProvider).value;
+    final shift = await openShiftNow(ref);
+    if (!mounted) return;
     if (user == null || shift == null) {
       setState(() => _notice = l10n.refundFailed);
       return;

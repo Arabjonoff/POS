@@ -347,6 +347,25 @@ class ProductEditor {
   Future<String> save(ProductDraft d, {required String by}) async {
     final problems = await validate(d);
     if (problems.isNotEmpty) throw InvalidProductException(problems);
+    final existing = d.id == null ? null : await load(d.id!);
+    final before = existing == null
+        ? null
+        : <String, Object?>{
+            'name': cleanLine(existing.name),
+            'category': existing.categoryId,
+            'unit': existing.unitId,
+            'sell_price_tiyin': existing.sellPriceTiyin,
+            'cost_price_tiyin': existing.costPriceTiyin,
+            'is_weighted': existing.isWeighted,
+            'plu_code': existing.pluCode.trim().isEmpty
+                ? null
+                : existing.pluCode.trim(),
+            'min_stock_milli': existing.minStockMilli,
+            'ikpu_code': existing.ikpuCode.trim(),
+            'quick_button': existing.quickButton,
+            'is_active': existing.isActive,
+            'barcodes': [for (final b in existing.barcodes) b.trim()],
+          };
     final id = d.id ?? _newId();
     final now = _now();
     final name = cleanLine(d.name);
@@ -389,30 +408,49 @@ class ProductEditor {
               ),
             );
       }
+      final fields = <String, Object?>{
+        'name': name,
+        'category': d.categoryId,
+        'unit': d.unitId,
+        'sell_price_tiyin': d.sellPriceTiyin,
+        'cost_price_tiyin': d.costPriceTiyin,
+        'is_weighted': d.isWeighted,
+        'plu_code': plu.isEmpty ? null : plu,
+        'min_stock_milli': d.minStockMilli,
+        'ikpu_code': ikpu,
+        'quick_button': d.quickButton,
+        'is_active': d.isActive,
+        'barcodes': barcodes,
+      };
+      // Tahrirda faqat o'zgargan maydonlar: oflayn kassadagi eski tahrir
+      // serverdagi yangiroq narx yoki shtrix-kodni qaytarib yozmasin (audit
+      // PR-P1-4). Yangi tovar — to'liq.
+      final previous = before;
+      if (previous != null) {
+        fields.removeWhere(
+          (key, value) => _same(previous[key], value),
+        );
+      }
       await _db.enqueueEvent(
         id: _newId(),
         type: OutboxEventType.productUpserted,
         createdAt: now,
-        payload: {
-          'id': id,
-          'name': name,
-          'category': d.categoryId,
-          'unit': d.unitId,
-          'sell_price_tiyin': d.sellPriceTiyin,
-          'cost_price_tiyin': d.costPriceTiyin,
-          'is_weighted': d.isWeighted,
-          'plu_code': plu.isEmpty ? null : plu,
-          'min_stock_milli': d.minStockMilli,
-          'ikpu_code': ikpu,
-          'quick_button': d.quickButton,
-          'is_active': d.isActive,
-          'barcodes': barcodes,
-          'by': by,
-        },
+        payload: {'id': id, ...fields, 'by': by},
       );
     });
     return id;
   }
+}
+
+bool _same(Object? a, Object? b) {
+  if (a is List && b is List) {
+    if (a.length != b.length) return false;
+    for (var i = 0; i < a.length; i++) {
+      if (a[i] != b[i]) return false;
+    }
+    return true;
+  }
+  return a == b;
 }
 
 final productEditorProvider = Provider<ProductEditor>(

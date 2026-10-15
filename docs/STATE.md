@@ -5,24 +5,24 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-105 Mahsulot rasmi (reja — `docs/audit/audit_products.md` "Product images"); T-104 merge (#54, #55)
-- Branch: feat/T-105-product-images
+- Vazifa: T-106 UI/UX sayqal (audit P1/P2 — `PROJECT_AUDIT.md` ⏳ T-106 qatorlari)
+- Branch: feat/T-106-ux-polish
 - Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
-- [x] 1. Server: Pillow, `ProductImage` + `Product.image` (catalog 0004), `apps/catalog/images.py` (tekshirish, JPEG 800 + 200), `PUT/GET/DELETE /sync/product-images/{id}/` (qurilma, tenant), `ProductSerializer.image` (faqat o'qish), MEDIA sozlamalari, prod `media` volume, zaxira/tiklash, Caddy 8 MB; testlar 11
-- [x] 2. Kassa: `image` paketi, drift v6 (`products.image_id`, `product_images`), `product_images.dart` (tayyorlash isolate, saqlash, olib tashlash), `image_sync.dart` (yuklash/o'chirish/yuklab olish), SyncEngine va pull ulanishi
-- [x] 3. UI: `PosThumbnail` (packages/ui), tovar kartasida rasm (qo'shish/almashtirish/olib tashlash, "yuklanmagan"), ro'yxatda, kassa qidiruvida
-- [x] 4. Testlar (data, sync, widget), golden'lar, OpenAPI/klientlar
-- [x] 5. Hujjatlar
-- [ ] 6. PR, merge
+- [x] 1. Holat qatori: neytral ranglar (yashil yo'q), telefonda ixcham (ikon + tooltip, muammo birinchi); pastki menyu >5 bo'limda faqat tanlangan yozuv
+- [x] 2. Ikki marta bosish / qotish: yetkazib beruvchi, inventarizatsiya yaratish, smena yopish, mijoz kartasi; inventarizatsiya o'chirishni tasdiqlash
+- [x] 3. Qarz to'lovi naqd — faqat ochiq smenada (CU-B4); ochiq smena bazadan o'qiladi (`openShiftNow`) — sotuv, qaytarish, kassa harakati ham
+- [x] 4. Tovar tahriri faqat o'zgargan maydonlarni yuboradi (PR-P1-4) + testlar; golden'lar yangilandi
+- [ ] 5. Pul maydoni formati (guruhlash), majburiy maydon belgisi, ro'yxat xato holatlari
+- [ ] 6. To'liq testlar, hujjatlar (audit, ROADMAP, PROGRESS, worklog, skrinshotlar), PR, merge
 
 ## Oxirgi bajarilgan ish
-- T-105 tayyor, PR ochilmoqda.
+- 1–4 qadamlar; backend to'liq yashil, apps/pos to'liq (shell testi yangilandi), packages/ui 138, widgetbook 62.
 
 ## Keyingi aniq harakat
-- T-105 PR CI yashil bo'lsa merge; keyin T-106 UI/UX sayqal (`PROJECT_AUDIT.md` ⏳ T-106 qatorlari).
+- 5-qadam: kirim/tovar kartasidagi pul maydonlari (`PosMoneyField`?) — guruhlash formatlovchisi; ro'yxatlarda `AsyncValue.error` holati (cheksiz spinner o'rniga xabar).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

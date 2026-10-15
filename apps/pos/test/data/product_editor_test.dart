@@ -101,6 +101,19 @@ void main() {
     expect((await editor.ownerOf('NON-1'))!.productId, 'p-non');
   });
 
+  test('edit sends only the changed fields (audit PR-P1-4)', () async {
+    final draft = (await editor.load('p-non'))!;
+    await editor.save(draft.copyWith(name: 'Non yangi'), by: 'owner-1');
+    final event = await db.select(db.outboxEvents).getSingle();
+    // Narx, shtrix-kodlar va boshqalar yuborilmaydi — serverdagi yangiroq
+    // qiymatlarni eski oflayn tahrir bosib ketmaydi.
+    expect(jsonDecode(event.payload), {
+      'id': 'p-non',
+      'name': 'Non yangi',
+      'by': 'owner-1',
+    });
+  });
+
   test('validation: required, price, barcode rules, PLU, IKPU', () async {
     expect(await codes(const ProductDraft()), [
       ProductProblemCode.required,

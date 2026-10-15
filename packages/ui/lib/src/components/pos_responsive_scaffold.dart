@@ -356,6 +356,9 @@ class _BottomNav extends StatelessWidget {
                     destination: d,
                     selected: i == selectedIndex,
                     onTap: () => onSelected(i),
+                    // 5 tadan ko'p bo'limda yozuvlar siqilib, kesilardi
+                    // ("Настройки") — faqat tanlanganning yozuvi.
+                    showLabel: destinations.length <= 5 || i == selectedIndex,
                   ),
                 ),
             ],
@@ -372,11 +375,13 @@ class _NavTile extends StatelessWidget {
     required this.destination,
     required this.selected,
     required this.onTap,
+    this.showLabel = true,
   });
 
   final PosDestination destination;
   final bool selected;
   final VoidCallback onTap;
+  final bool showLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -417,21 +422,25 @@ class _NavTile extends StatelessWidget {
                   destination.badgeCount,
                 ),
               ),
-              const SizedBox(height: PosSpacing.xs),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 2),
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    destination.label,
-                    maxLines: 1,
-                    style: PosTypography.caption.copyWith(
-                      color: fg,
-                      fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
+              if (showLabel) ...[
+                const SizedBox(height: PosSpacing.xs),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 2),
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      destination.label,
+                      maxLines: 1,
+                      style: PosTypography.caption.copyWith(
+                        color: fg,
+                        fontWeight: selected
+                            ? FontWeight.w600
+                            : FontWeight.w500,
+                      ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ],
           ),
         ),

@@ -309,6 +309,18 @@ class _CountEditorState extends ConsumerState<CountEditor> {
                           onPressed: _busy
                               ? null
                               : () async {
+                                  // Tasdiq bilan: tugma "Tasdiqlash" yonida —
+                                  // bitta bosishda sanoq yo'qolardi (UI-P1-1).
+                                  final ok = await showPosConfirm(
+                                    context: context,
+                                    title: l10n.inventoryDeleteTitle,
+                                    message: l10n.receivingDeleteDraftMessage,
+                                    confirmLabel: l10n.inventoryDelete,
+                                    cancelLabel: l10n.actionKeep,
+                                    icon: Icons.delete_outline,
+                                    danger: true,
+                                  );
+                                  if (!ok || !mounted) return;
                                   await _store.deleteDraft(widget.countId);
                                   widget.onClose();
                                 },

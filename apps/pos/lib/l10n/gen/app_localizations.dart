@@ -1605,6 +1605,24 @@ abstract class AppLocalizations {
   /// **'Saqlab bo\'lmadi. Qayta urinib ko\'ring.'**
   String get productSaveFailed;
 
+  /// Kutilmagan xato
+  ///
+  /// In uz, this message translates to:
+  /// **'Bajarib bo\'lmadi. Qayta urinib ko\'ring.'**
+  String get actionFailed;
+
+  /// Xato: smenasiz naqd qarz to'lovi
+  ///
+  /// In uz, this message translates to:
+  /// **'Naqd to\'lovni qabul qilish uchun smenani oching (kassa puli hisobi to\'g\'ri bo\'lsin)'**
+  String get payDebtNeedsShift;
+
+  /// Oyna sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Sanoqni o\'chirasizmi?'**
+  String get inventoryDeleteTitle;
+
   /// Chekda: mijozning savdodan keyingi qarzi
   ///
   /// In uz, this message translates to:

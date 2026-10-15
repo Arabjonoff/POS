@@ -27,6 +27,9 @@ class InventoryScreen extends ConsumerStatefulWidget {
 class _InventoryScreenState extends ConsumerState<InventoryScreen> {
   String? _openId;
 
+  /// Ikki marta bosish ikki sanoq yaratmasin (UI-P1-4).
+  bool _creating = false;
+
   /// Qamrov: hamma tovarlar yoki bitta kategoriya.
   Future<void> _new() async {
     final l10n = AppLocalizations.of(context);
@@ -66,9 +69,16 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen> {
         ],
       ),
     );
-    if (choice == null || !mounted) return;
-    final id = await ref.read(countStoreProvider).create(categoryId: choice.$1);
-    if (mounted) setState(() => _openId = id);
+    if (choice == null || !mounted || _creating) return;
+    _creating = true;
+    try {
+      final id = await ref
+          .read(countStoreProvider)
+          .create(categoryId: choice.$1);
+      if (mounted) setState(() => _openId = id);
+    } finally {
+      _creating = false;
+    }
   }
 
   @override

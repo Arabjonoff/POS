@@ -27,3 +27,12 @@ final StreamProviderFamily<List<CashMovement>, String> cashMovementsProvider =
     StreamProvider.autoDispose.family<List<CashMovement>, String>(
       (ref, shiftId) => ref.watch(shiftServiceProvider).watchMovements(shiftId),
     );
+
+/// Ochiq smena — **bazadan, hozir** (yozishdan oldin). `currentShiftProvider`
+/// ni `ref.read` qilish tinglovchisiz paytda eskirgan qiymat berishi mumkin
+/// (Riverpod pauza qiladi): yopilgan smenaga savdo/to'lov yozilmasin.
+Future<Shift?> openShiftNow(WidgetRef ref) async {
+  final device = ref.read(sessionProvider).device;
+  if (device == null) return null;
+  return ref.read(shiftServiceProvider).currentShift(device.id);
+}

@@ -91,9 +91,9 @@ Future<void> _open(WidgetTester tester, Size size) async {
   await tester.sendKeyEvent(LogicalKeyboardKey.digit5);
   await tester.sendKeyUpEvent(LogicalKeyboardKey.controlLeft);
   await tester.pumpAndSettle();
-  final nav = find.text('Hisobotlar');
-  if (size.width < 600 && nav.evaluate().length == 1) {
-    await tester.tap(nav);
+  final nav = find.byTooltip('Hisobotlar');
+  if (size.width < 600 && nav.evaluate().isNotEmpty) {
+    await tester.tap(nav.last);
     await tester.pumpAndSettle();
   }
 }

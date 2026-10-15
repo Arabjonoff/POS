@@ -881,6 +881,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get productSaveFailed => 'Не удалось сохранить. Попробуйте ещё раз.';
 
   @override
+  String get actionFailed => 'Не удалось выполнить. Попробуйте ещё раз.';
+
+  @override
+  String get payDebtNeedsShift =>
+      'Чтобы принять наличные, откройте смену (для верного учёта кассы)';
+
+  @override
+  String get inventoryDeleteTitle => 'Удалить пересчёт?';
+
+  @override
   String get receiptDebtNow => 'Текущий долг';
 
   @override

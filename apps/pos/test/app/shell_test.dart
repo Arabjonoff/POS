@@ -122,7 +122,14 @@ void main() {
     testWidgets('phone: bottom navigation', (tester) async {
       await pumpPosApp(tester, size: phone);
       // Pastki panel ekran pastida.
-      expect(tester.getRect(find.text('Tovarlar')).top, greaterThan(760));
+      expect(
+        tester.getRect(find.byIcon(Icons.inventory_2_outlined)).top,
+        greaterThan(760),
+      );
+      // 6 bo'lim: yozuv faqat tanlanganda (siqilib kesilmasin), qolganlari —
+      // ikon + tooltip/ekran o'quvchi nomi.
+      expect(find.text('Tovarlar'), findsNothing);
+      expect(find.bySemanticsLabel('Tovarlar'), findsOneWidget);
       await tester.tap(find.byIcon(Icons.settings_outlined));
       await tester.pumpAndSettle();
       expect(find.text('Til'), findsOneWidget);

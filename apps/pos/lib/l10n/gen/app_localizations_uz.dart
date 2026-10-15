@@ -863,6 +863,16 @@ class AppLocalizationsUz extends AppLocalizations {
   String get productSaveFailed => 'Saqlab bo\'lmadi. Qayta urinib ko\'ring.';
 
   @override
+  String get actionFailed => 'Bajarib bo\'lmadi. Qayta urinib ko\'ring.';
+
+  @override
+  String get payDebtNeedsShift =>
+      'Naqd to\'lovni qabul qilish uchun smenani oching (kassa puli hisobi to\'g\'ri bo\'lsin)';
+
+  @override
+  String get inventoryDeleteTitle => 'Sanoqni o\'chirasizmi?';
+
+  @override
   String get receiptDebtNow => 'Joriy qarz';
 
   @override
@@ -3017,6 +3027,16 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get productSaveFailed => 'Сақлаб бўлмади. Қайта уриниб кўринг.';
+
+  @override
+  String get actionFailed => 'Бажариб бўлмади. Қайта уриниб кўринг.';
+
+  @override
+  String get payDebtNeedsShift =>
+      'Нақд тўловни қабул қилиш учун сменани очинг (касса пули ҳисоби тўғри бўлсин)';
+
+  @override
+  String get inventoryDeleteTitle => 'Саноқни ўчирасизми?';
 
   @override
   String get receiptDebtNow => 'Жорий қарз';

@@ -581,3 +581,16 @@ def test_blocked_device(kassa, cashier):
     device.save()
     response = client.post(PUSH, {"events": [shift_opened(cashier)]}, format="json")
     assert response.status_code == 403
+
+
+def test_partial_product_edit_keeps_newer_server_fields(kassa, manager, product):
+    """Audit PR-P1-4: oflayn kassa faqat nomni o'zgartirdi — serverdagi yangi narx qoladi."""
+    _, client = kassa
+    product.sell_price_tiyin = 500_000
+    product.save()
+    rename = event(
+        "product.upserted", {"id": str(product.id), "name": "Non yangi", "by": str(manager.id)}
+    )
+    assert statuses(push(client, rename)) == ["applied"]
+    product.refresh_from_db()
+    assert (product.name, product.sell_price_tiyin) == ("Non yangi", 500_000)

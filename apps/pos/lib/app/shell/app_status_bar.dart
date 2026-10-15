@@ -28,10 +28,10 @@ class AppStatusBar extends ConsumerWidget {
         icon: Icons.wifi_find,
         label: l10n.statusConnectionUnknown,
       ),
+      // Hammasi joyida — neytral (doimiy yashil ko'zni charchatadi).
       ConnectionStatus.online => PosStatusItem(
         icon: Icons.wifi,
         label: l10n.statusOnline,
-        tone: PosTone.success,
       ),
       ConnectionStatus.offline => PosStatusItem(
         icon: Icons.wifi_off,
@@ -60,6 +60,7 @@ class AppStatusBar extends ConsumerWidget {
       PosStatusItem(
         icon: queued > 0 ? Icons.sync : Icons.cloud_done_outlined,
         label: l10n.statusQueued(queued),
+        short: queued > 0 ? '$queued' : null,
       ),
       switch (printer) {
         PrinterStatus.unknown => PosStatusItem(
@@ -73,7 +74,6 @@ class AppStatusBar extends ConsumerWidget {
         PrinterStatus.ready => PosStatusItem(
           icon: Icons.print_outlined,
           label: l10n.statusPrinterReady,
-          tone: PosTone.success,
         ),
         PrinterStatus.missing => PosStatusItem(
           icon: Icons.print_disabled_outlined,
@@ -94,11 +94,7 @@ class AppStatusBar extends ConsumerWidget {
           tone: PosTone.warning,
         ),
       if (shiftOpen)
-        PosStatusItem(
-          icon: Icons.schedule,
-          label: l10n.statusShiftOpen,
-          tone: PosTone.success,
-        )
+        PosStatusItem(icon: Icons.schedule, label: l10n.statusShiftOpen)
       else
         PosStatusItem(
           icon: Icons.schedule,
@@ -116,6 +112,7 @@ class AppStatusBar extends ConsumerWidget {
 
     return PosStatusBar(
       atTop: compact,
+      compact: compact,
       items: items,
       trailing: compact ? null : const _Clock(),
     );
