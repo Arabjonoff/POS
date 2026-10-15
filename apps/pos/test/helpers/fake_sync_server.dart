@@ -34,6 +34,11 @@ class FakeSyncServer {
   String serverTime = '2026-10-14T10:00:00Z';
   int pulls = 0;
 
+  /// Server qoldig'i (`product → qty_milli`): bo'sh bo'lmasa — qabul qilingan
+  /// `sale.completed` uni kamaytiradi va pull har safar `stock` qatorlarini
+  /// beradi (2 qurilma testi, T-090).
+  final Map<String, int> stock = {};
+
   (int, Object?)? _push(RecordedRequest r) {
     if (offline) return null;
     if (forcedError != null) return forcedError;
@@ -58,6 +63,7 @@ class FakeSyncServer {
         results.add({'id': id, 'status': 'duplicate'});
       } else {
         applied[id] = type;
+        _applyStock(type, e['payload']);
         results.add({'id': id, 'status': 'applied'});
       }
     }
@@ -75,7 +81,20 @@ class FakeSyncServer {
     return (
       200,
       {
-        'changes': <Object>[],
+        'changes': [
+          for (final MapEntry(key: product, value: qty) in stock.entries)
+            {
+              'entity': 'stock',
+              'op': 'upsert',
+              'id': product,
+              'data': {
+                'product': product,
+                'store': 'store-1',
+                'qty_milli': qty,
+                'updated_at': serverTime,
+              },
+            },
+        ],
         'next_cursor': 'c$pulls',
         'has_more': false,
         'subscription': {
@@ -87,5 +106,16 @@ class FakeSyncServer {
         'server_time': serverTime,
       },
     );
+  }
+
+  void _applyStock(String type, Object? payload) {
+    if (stock.isEmpty || type != 'sale.completed' || payload is! Map) return;
+    for (final item in (payload['items'] as List? ?? const [])) {
+      final line = item as Map;
+      final product = line['product'] as String;
+      if (stock.containsKey(product)) {
+        stock[product] = stock[product]! - (line['qty_milli'] as int);
+      }
+    }
   }
 }
