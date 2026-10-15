@@ -11,11 +11,16 @@ import 'package:pos_app/app/sync/sales_gate.dart';
 import 'package:pos_app/core/barcode/barcode.dart';
 import 'package:pos_app/core/barcode/scanner_service.dart';
 import 'package:pos_app/core/format/app_format.dart';
+import 'package:pos_app/core/format/unit_code.dart';
 import 'package:pos_app/data/catalog/product_catalog.dart';
+import 'package:pos_app/data/catalog/product_editor.dart';
+import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/data/receipts/receipt_store.dart';
+import 'package:pos_app/data/sync/server_features.dart';
 import 'package:pos_app/features/common/manager_approval.dart';
 import 'package:pos_app/features/pos/cart/discount_policy.dart';
 import 'package:pos_app/features/products/product_card.dart';
+import 'package:pos_app/features/receiving/receipt_badges.dart';
 import 'package:pos_app/features/receiving/supplier_picker.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
 import 'package:pos_ui/pos_ui.dart';
@@ -33,11 +38,15 @@ class ReceiptEditor extends ConsumerStatefulWidget {
   const ReceiptEditor({
     required this.receiptId,
     required this.onClose,
+    this.onOpen,
     super.key,
   });
 
   final String receiptId;
   final VoidCallback onClose;
+
+  /// Boshqa kirimni ochish (tuzatish qoralamasi, yangi versiya).
+  final ValueChanged<String>? onOpen;
 
   @override
   ConsumerState<ReceiptEditor> createState() => _ReceiptEditorState();
@@ -143,14 +152,12 @@ class _ReceiptEditorState extends ConsumerState<ReceiptEditor> {
       );
       return;
     }
+    if (doc.isCorrection) {
+      await _postCorrection(doc);
+      return;
+    }
     final session = ref.read(sessionProvider);
-    final user = session.user;
-    if (user == null) return;
-    var by = DiscountPolicy.canApprove(user.role) ? user.id : null;
-    by ??= await _dialog(
-      () =>
-          requestManagerApproval(context, reason: l10n.receivingNeedsApproval),
-    );
+    final by = await _approver(l10n.receivingNeedsApproval);
     if (by == null || !mounted) return;
     setState(() => _busy = true);
     try {
@@ -171,9 +178,257 @@ class _ReceiptEditorState extends ConsumerState<ReceiptEditor> {
     }
   }
 
-  Future<void> _deleteDraft() async {
+  /// Ega/menejer — o'zi; kassir — menejer PIN'i bilan.
+  Future<String?> _approver(String reason) async {
+    final user = ref.read(sessionProvider).user;
+    if (user == null) return null;
+    if (DiscountPolicy.canApprove(user.role)) return user.id;
+    return _dialog(() => requestManagerApproval(context, reason: reason));
+  }
+
+  /// Qoralamani o'chirish — tasdiq bilan (audit UI-P1-1: tugma "Tasdiqlash"
+  /// yonida, bitta bosishda butun kirim yo'qolardi).
+  Future<void> _deleteDraft(ReceiptDoc doc) async {
+    if (_busy) return;
+    final l10n = AppLocalizations.of(context);
+    if (doc.lines.isNotEmpty || doc.isCorrection) {
+      final ok = await _dialog(
+        () => showPosConfirm(
+          context: context,
+          title: doc.isCorrection
+              ? l10n.receivingDiscardCorrection
+              : l10n.receivingDeleteDraftTitle,
+          message: doc.isCorrection
+              ? l10n.receivingDiscardCorrectionMessage
+              : l10n.receivingDeleteDraftMessage,
+          confirmLabel: doc.isCorrection
+              ? l10n.receivingDiscardCorrection
+              : l10n.receivingDelete,
+          cancelLabel: l10n.actionKeep,
+          icon: Icons.delete_outline,
+          danger: true,
+        ),
+      );
+      if (ok != true || !mounted) return;
+    }
     await _store.deleteDraft(widget.receiptId);
-    widget.onClose();
+    final original = doc.correctsId;
+    if (original != null && widget.onOpen != null) {
+      widget.onOpen!(original);
+    } else {
+      widget.onClose();
+    }
+  }
+
+  // ---- Tahrirlash va bekor qilish (T-102) ---------------------------------
+
+  Future<void> _edit(ReceiptDoc doc) async {
+    if (_busy) return;
+    final l10n = AppLocalizations.of(context);
+    final draft = doc.correctionDraftId;
+    if (draft != null) {
+      widget.onOpen?.call(draft);
+      return;
+    }
+    // Qoralama qoldiq va narxga ta'sir qilmaydi — ruxsat saqlashda so'raladi.
+    try {
+      final id = await _store.startCorrection(doc.id);
+      if (mounted) widget.onOpen?.call(id);
+    } on ReceiptNotEditableException {
+      if (mounted) _toast(l10n.receivingNotEditable, PosTone.warning);
+    }
+  }
+
+  Future<void> _cancel(ReceiptDoc doc) async {
+    if (_busy) return;
+    final l10n = AppLocalizations.of(context);
+    final ok = await _dialog(
+      () => showPosConfirm(
+        context: context,
+        title: l10n.receivingCancelTitle,
+        message: l10n.receivingCancelMessage,
+        confirmLabel: l10n.receivingCancelReceipt,
+        cancelLabel: l10n.actionKeep,
+        icon: Icons.undo,
+        danger: true,
+      ),
+    );
+    if (ok != true || !mounted) return;
+    // Avval nima bo'lishini ko'rsatamiz, keyin ruxsat (kassir — menejer PIN).
+    final by = await _approver(l10n.receivingEditNeedsApproval);
+    if (by == null || !mounted) return;
+    setState(() => _busy = true);
+    try {
+      await _store.cancel(
+        doc.id,
+        by: by,
+        storeId: ref.read(sessionProvider).device?.storeId,
+      );
+      if (mounted) _toast(l10n.receivingCancelledToast, PosTone.success);
+    } on ReceiptNotEditableException {
+      if (mounted) _toast(l10n.receivingNotEditable, PosTone.warning);
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  Future<void> _postCorrection(ReceiptDoc doc) async {
+    final l10n = AppLocalizations.of(context);
+    final originalId = doc.correctsId!;
+    final original = await _store.load(originalId);
+    if (original == null || !mounted) return;
+    // Bazadan to'g'ridan-to'g'ri: provider tinglanmagan bo'lsa bo'sh qaytarardi
+    // va ogohlantirish noto'g'ri "manfiy qoldiq" ko'rsatardi.
+    final stock = Map.fromEntries(
+      await stockQuery(ref.read(appDatabaseProvider)).get(),
+    );
+    final changes = correctionChanges(original, doc, stock);
+    final ok = await _dialog(
+      () => showPosConfirm(
+        context: context,
+        title: l10n.receivingConfirmCorrectionTitle,
+        message: changes.isEmpty
+            ? l10n.receivingNoChanges
+            : l10n.receivingConfirmCorrectionMessage,
+        content: changes.isEmpty ? null : _CorrectionTable(changes: changes),
+        confirmLabel: l10n.receivingSaveCorrection,
+        cancelLabel: l10n.actionKeep,
+        icon: Icons.edit_note,
+      ),
+    );
+    if (ok != true || !mounted) return;
+    final by = await _approver(l10n.receivingEditNeedsApproval);
+    if (by == null || !mounted) return;
+    setState(() => _busy = true);
+    try {
+      await _store.postCorrection(
+        widget.receiptId,
+        by: by,
+        storeId: ref.read(sessionProvider).device?.storeId,
+      );
+      if (!mounted) return;
+      _toast(l10n.receivingCorrectedToast, PosTone.success);
+      widget.onClose();
+    } on ReceiptEmptyException {
+      if (mounted) _toast(l10n.receivingCorrectionEmpty, PosTone.warning);
+    } on ReceiptNotEditableException {
+      if (mounted) _toast(l10n.receivingNotEditable, PosTone.warning);
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  void _toast(String message, PosTone tone) =>
+      showPosToast(context, message: message, tone: tone);
+
+  /// Holat banneri: tuzatish qoralamasi, tuzatilgan, bekor qilingan.
+  Widget? _banner(ReceiptDoc doc) {
+    final l10n = AppLocalizations.of(context);
+    Widget withAction(NoticeBar bar, String label, String id, Key key) =>
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            bar,
+            const SizedBox(height: PosSpacing.xs),
+            Align(
+              alignment: Alignment.centerRight,
+              child: PosButton(
+                key: key,
+                label: label,
+                size: PosButtonSize.s,
+                variant: PosButtonVariant.secondary,
+                onPressed: () => widget.onOpen?.call(id),
+              ),
+            ),
+          ],
+        );
+    if (doc.isDraft && doc.isCorrection) {
+      return NoticeBar(
+        key: const ValueKey('receipt-correction-banner'),
+        tone: PosTone.primary,
+        icon: Icons.edit_note,
+        text: l10n.receivingCorrectionBanner,
+        rounded: true,
+      );
+    }
+    if (doc.isCorrected) {
+      return withAction(
+        NoticeBar(
+          tone: PosTone.neutral,
+          icon: Icons.history,
+          text: l10n.receivingCorrectedBanner,
+          rounded: true,
+        ),
+        l10n.receivingOpenNewVersion,
+        doc.correctedById!,
+        const ValueKey('receipt-open-new-version'),
+      );
+    }
+    if (doc.cancelled) {
+      return NoticeBar(
+        key: const ValueKey('receipt-cancelled-banner'),
+        tone: PosTone.danger,
+        icon: Icons.block,
+        text: l10n.receivingCancelledBanner,
+        rounded: true,
+      );
+    }
+    final draft = doc.correctionDraftId;
+    if (draft != null) {
+      return withAction(
+        NoticeBar(
+          tone: PosTone.warning,
+          icon: Icons.edit_note,
+          text: l10n.receivingDraftExistsBanner,
+          rounded: true,
+        ),
+        l10n.receivingContinueCorrection,
+        draft,
+        const ValueKey('receipt-continue-correction'),
+      );
+    }
+    return null;
+  }
+
+  /// Tasdiqlangan amaldagi kirim: "Bekor qilish" va "Tahrirlash". Server
+  /// bu imkoniyatni e'lon qilmagan bo'lsa (eski server) — izoh.
+  List<Widget> _postedActions(ReceiptDoc doc, {bool expand = false}) {
+    if (!doc.isActiveVersion) return const [];
+    final l10n = AppLocalizations.of(context);
+    final features = ref.watch(serverFeaturesProvider).value ?? const {};
+    if (!features.contains(ServerFeature.receiptCorrections)) {
+      return [
+        Flexible(
+          child: Text(
+            l10n.receivingCorrectionUnavailable,
+            style: PosTypography.small.copyWith(
+              color: PosPalette.of(context).textSecondary,
+            ),
+          ),
+        ),
+      ];
+    }
+    final allowed = ref.watch(salesAllowedProvider) && !_busy;
+    final cancel = PosButton(
+      key: const ValueKey('receipt-cancel'),
+      label: l10n.receivingCancelReceipt,
+      icon: Icons.undo,
+      variant: PosButtonVariant.ghost,
+      onPressed: allowed ? () => unawaited(_cancel(doc)) : null,
+    );
+    final edit = PosButton(
+      key: const ValueKey('receipt-edit'),
+      label: l10n.receivingEdit,
+      icon: Icons.edit_outlined,
+      loading: _busy,
+      expand: expand,
+      onPressed: allowed ? () => unawaited(_edit(doc)) : null,
+    );
+    return [
+      cancel,
+      const SizedBox(width: PosSpacing.s),
+      if (expand) Expanded(child: edit) else edit,
+    ];
   }
 
   Widget _totals(ReceiptDoc doc) {
@@ -190,7 +445,9 @@ class _ReceiptEditorState extends ConsumerState<ReceiptEditor> {
 
   PosButton _postButton(ReceiptDoc doc, {bool expand = false}) => PosButton(
     key: const ValueKey('receipt-post'),
-    label: AppLocalizations.of(context).receivingPost,
+    label: doc.isCorrection
+        ? AppLocalizations.of(context).receivingSaveCorrection
+        : AppLocalizations.of(context).receivingPost,
     icon: Icons.check,
     loading: _busy,
     expand: expand,
@@ -207,13 +464,16 @@ class _ReceiptEditorState extends ConsumerState<ReceiptEditor> {
         if (doc.isDraft) ...[
           PosButton(
             key: const ValueKey('receipt-delete'),
-            label: l10n.receivingDelete,
+            label: doc.isCorrection
+                ? l10n.receivingDiscardCorrection
+                : l10n.receivingDelete,
             variant: PosButtonVariant.ghost,
-            onPressed: _busy ? null : () => unawaited(_deleteDraft()),
+            onPressed: _busy ? null : () => unawaited(_deleteDraft(doc)),
           ),
           const SizedBox(width: PosSpacing.s),
           _postButton(doc),
-        ],
+        ] else
+          ..._postedActions(doc),
       ],
     );
     return Column(
@@ -241,12 +501,15 @@ class _ReceiptEditorState extends ConsumerState<ReceiptEditor> {
                 icon: Icons.delete_outline,
                 tooltip: l10n.receivingDelete,
                 variant: PosIconButtonVariant.outlined,
-                onPressed: _busy ? null : () => unawaited(_deleteDraft()),
+                onPressed: _busy ? null : () => unawaited(_deleteDraft(doc)),
               ),
               const SizedBox(width: PosSpacing.s),
               Expanded(child: _postButton(doc, expand: true)),
             ],
           ),
+        ] else if (doc.isActiveVersion) ...[
+          const SizedBox(height: PosSpacing.s),
+          Row(children: _postedActions(doc, expand: true)),
         ],
       ],
     );
@@ -305,14 +568,16 @@ class _ReceiptEditorState extends ConsumerState<ReceiptEditor> {
                           .copyWith(color: p.text),
                     ),
                   ),
-                  PosBadge(
-                    label: draft
-                        ? l10n.receivingDraft
-                        : l10n.receivingPostedBadge,
-                    tone: draft ? PosTone.warning : PosTone.success,
+                  ReceiptBadges(
+                    state: receiptStateOf(doc),
+                    isCorrection: doc.isCorrection,
                   ),
                 ],
               ),
+              if (_banner(doc) case final banner?) ...[
+                const SizedBox(height: PosSpacing.m),
+                banner,
+              ],
               const SizedBox(height: PosSpacing.m),
               Wrap(
                 spacing: PosSpacing.s,
@@ -581,6 +846,111 @@ class _LineRowState extends ConsumerState<_LineRow> {
             ),
         ],
       ),
+    );
+  }
+}
+
+/// Tuzatishdagi bitta tovar: eski → yangi miqdor, qoldiq keyin.
+class CorrectionChange {
+  const CorrectionChange({
+    required this.name,
+    required this.unit,
+    required this.oldMilli,
+    required this.newMilli,
+    required this.stockAfterMilli,
+  });
+
+  final String name;
+  final UnitCode unit;
+  final int oldMilli;
+  final int newMilli;
+  final int stockAfterMilli;
+
+  int get deltaMilli => newMilli - oldMilli;
+}
+
+/// Miqdori o'zgargan tovarlar (asl → tuzatish). [stock] — hozirgi qoldiq.
+List<CorrectionChange> correctionChanges(
+  ReceiptDoc original,
+  ReceiptDoc draft,
+  Map<String, int> stock,
+) {
+  final names = <String, (String, UnitCode)>{};
+  final before = <String, int>{};
+  final after = <String, int>{};
+  for (final l in original.lines) {
+    names[l.productId] = (l.name, l.unit);
+    before.update(
+      l.productId,
+      (v) => v + l.qtyMilli,
+      ifAbsent: () => l.qtyMilli,
+    );
+  }
+  for (final l in draft.lines) {
+    names[l.productId] = (l.name, l.unit);
+    after.update(
+      l.productId,
+      (v) => v + l.qtyMilli,
+      ifAbsent: () => l.qtyMilli,
+    );
+  }
+  return [
+    for (final id in names.keys)
+      if ((before[id] ?? 0) != (after[id] ?? 0))
+        CorrectionChange(
+          name: names[id]!.$1,
+          unit: names[id]!.$2,
+          oldMilli: before[id] ?? 0,
+          newMilli: after[id] ?? 0,
+          stockAfterMilli:
+              (stock[id] ?? 0) + (after[id] ?? 0) - (before[id] ?? 0),
+        ),
+  ];
+}
+
+class _CorrectionTable extends StatelessWidget {
+  const _CorrectionTable({required this.changes});
+
+  final List<CorrectionChange> changes;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final fmt = context.fmt;
+    final p = PosPalette.of(context);
+    return Column(
+      key: const ValueKey('correction-table'),
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        for (final c in changes) ...[
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Text(
+                  c.name,
+                  style: PosTypography.bodyStrong.copyWith(color: p.text),
+                ),
+              ),
+              const SizedBox(width: PosSpacing.s),
+              Text(
+                '${fmt.qtyValue(c.oldMilli, c.unit)} → '
+                '${fmt.qty(c.newMilli, c.unit)}',
+                style: PosTypography.body.copyWith(color: p.text),
+              ),
+            ],
+          ),
+          if (c.stockAfterMilli < 0)
+            Text(
+              l10n.receivingNegativeStock(
+                c.name,
+                fmt.qty(c.stockAfterMilli, c.unit),
+              ),
+              style: PosTypography.small.copyWith(color: p.warningText),
+            ),
+          const SizedBox(height: PosSpacing.s),
+        ],
+      ],
     );
   }
 }

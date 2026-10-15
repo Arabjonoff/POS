@@ -11,19 +11,14 @@
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
-- [x] 1. Server: `StockReceipt.corrects/conflict` (migratsiya 0002), `correct_receipt`, `cancel_receipt`, `post_receipt(at, cost_since, document_at)`; hodisalar `receipt.corrected`/`receipt.reversed`; pull `features`
-- [x] 2. Server testlari (`apps/sync/tests/test_receipt_corrections.py`, 10 ta)
-- [x] 3. Kassa: drift v4 (`corrects_id`, `reverses_id`), `server_features.dart`, `ReceiptStore.startCorrection/postCorrection/cancel`
-- [ ] 4. Kassa data testlari (`test/data/receipt_store_test.dart`)
-- [ ] 5. UI: ro'yxat belgilari, kirim kartasida "Tahrirlash"/"Bekor qilish" (menejer PIN), tuzatish qoralamasi banneri, tasdiqlash oynasi (eski → yangi), l10n
-- [ ] 6. Widget testlari, golden/skrinshotlar
-- [ ] 7. Spec (`stock-receipt.md`, `sync-api.md`), QUESTIONS (Q-010), PR, merge
+- [x] 1–7. Server, testlar, kassa data, UI, testlar/golden, hujjatlar
+- [ ] 8. PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-- T-101 merge (#51). T-102 server qismi va kassa data qatlami yozildi.
+- T-102 tayyor (`docs/PROGRESS.md`).
 
 ## Keyingi aniq harakat
-- 4-qadam: `apps/pos/test/data/receipt_store_test.dart` ga tuzatish/bekor qilish testlari (10 → 7, outbox bitta hodisa, qoldiq −3).
+- T-102 PR CI yashil bo'lsa merge; keyin T-103 (`docs/audit/audit_customers.md` 2-bo'lim).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

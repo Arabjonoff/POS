@@ -1322,6 +1322,111 @@ class AppLocalizationsUz extends AppLocalizations {
   String get receivingPost => 'Tasdiqlash';
 
   @override
+  String get receivingStateCorrected => 'Tuzatilgan';
+
+  @override
+  String get receivingStateCancelled => 'Bekor qilingan';
+
+  @override
+  String get receivingCorrectionBadge => 'Tuzatish';
+
+  @override
+  String get receivingCorrectionDraft => 'Tuzatish qoralamasi';
+
+  @override
+  String get receivingEdit => 'Tahrirlash';
+
+  @override
+  String get receivingCancelReceipt => 'Bekor qilish';
+
+  @override
+  String get receivingEditNeedsApproval =>
+      'Kirimni o\'zgartirish uchun menejer yoki ega ruxsati kerak';
+
+  @override
+  String get receivingCorrectionBanner =>
+      'Kirim tuzatilmoqda. Saqlaganingizda eski kirim bekor qilinadi va shu versiya kuchga kiradi — qoldiq farq bo\'yicha o\'zgaradi.';
+
+  @override
+  String get receivingCorrectedBanner =>
+      'Bu kirim tuzatilgan — amaldagisi yangi versiya.';
+
+  @override
+  String get receivingOpenNewVersion => 'Yangi versiyani ochish';
+
+  @override
+  String get receivingCancelledBanner =>
+      'Bu kirim bekor qilingan — qoldiqqa ta\'siri olib tashlangan.';
+
+  @override
+  String get receivingDraftExistsBanner =>
+      'Bu kirimning saqlanmagan tuzatishi bor.';
+
+  @override
+  String get receivingContinueCorrection => 'Davom ettirish';
+
+  @override
+  String get receivingSaveCorrection => 'Tuzatishni saqlash';
+
+  @override
+  String get receivingDiscardCorrection => 'Tuzatishdan voz kechish';
+
+  @override
+  String get receivingConfirmCorrectionTitle => 'Tuzatishni saqlaysizmi?';
+
+  @override
+  String get receivingConfirmCorrectionMessage =>
+      'Qoldiq quyidagicha o\'zgaradi. Eski kirim tarixda qoladi.';
+
+  @override
+  String get receivingNoChanges =>
+      'Miqdorlar o\'zgarmadi — faqat narx yoki izoh yangilanadi.';
+
+  @override
+  String receivingNegativeStock(String name, String qty) {
+    return 'Qoldiq manfiy bo\'ladi: $name ($qty)';
+  }
+
+  @override
+  String get receivingCancelTitle => 'Kirimni bekor qilasizmi?';
+
+  @override
+  String get receivingCancelMessage =>
+      'Kirimdagi tovarlar qoldiqdan ayiriladi. Hujjat tarixda «Bekor qilingan» bo\'lib qoladi, narxlar o\'zgarmaydi.';
+
+  @override
+  String get receivingCancelledToast => 'Kirim bekor qilindi';
+
+  @override
+  String get receivingCorrectedToast => 'Kirim tuzatildi';
+
+  @override
+  String get receivingDeleteDraftTitle => 'Qoralamani o\'chirasizmi?';
+
+  @override
+  String get receivingDeleteDraftMessage =>
+      'Qoralamadagi qatorlar o\'chadi. Qoldiq o\'zgarmaydi.';
+
+  @override
+  String get receivingDiscardCorrectionMessage =>
+      'Tuzatish saqlanmaydi, asl kirim o\'zgarishsiz qoladi.';
+
+  @override
+  String get receivingNotEditable =>
+      'Bu kirimni o\'zgartirib bo\'lmaydi — u allaqachon tuzatilgan yoki bekor qilingan.';
+
+  @override
+  String get receivingCorrectionEmpty =>
+      'Tuzatishda tovar qolmadi. Kirimni butunlay olib tashlash uchun «Bekor qilish»dan foydalaning.';
+
+  @override
+  String get receivingCorrectionUnavailable =>
+      'Kirimni o\'zgartirish server yangilangach ishlaydi (internetga ulaning).';
+
+  @override
+  String get actionKeep => 'Qaytish';
+
+  @override
   String get receivingDelete => 'Qoralamani o\'chirish';
 
   @override
@@ -3125,6 +3230,111 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get receivingPost => 'Тасдиқлаш';
+
+  @override
+  String get receivingStateCorrected => 'Тузатилган';
+
+  @override
+  String get receivingStateCancelled => 'Бекор қилинган';
+
+  @override
+  String get receivingCorrectionBadge => 'Тузатиш';
+
+  @override
+  String get receivingCorrectionDraft => 'Тузатиш қораламаси';
+
+  @override
+  String get receivingEdit => 'Таҳрирлаш';
+
+  @override
+  String get receivingCancelReceipt => 'Бекор қилиш';
+
+  @override
+  String get receivingEditNeedsApproval =>
+      'Киримни ўзгартириш учун менежер ёки эга рухсати керак';
+
+  @override
+  String get receivingCorrectionBanner =>
+      'Кирим тузатилмоқда. Сақлаганингизда эски кирим бекор қилинади ва шу версия кучга киради — қолдиқ фарқ бўйича ўзгаради.';
+
+  @override
+  String get receivingCorrectedBanner =>
+      'Бу кирим тузатилган — амалдагиси янги версия.';
+
+  @override
+  String get receivingOpenNewVersion => 'Янги версияни очиш';
+
+  @override
+  String get receivingCancelledBanner =>
+      'Бу кирим бекор қилинган — қолдиққа таъсири олиб ташланган.';
+
+  @override
+  String get receivingDraftExistsBanner =>
+      'Бу киримнинг сақланмаган тузатиши бор.';
+
+  @override
+  String get receivingContinueCorrection => 'Давом эттириш';
+
+  @override
+  String get receivingSaveCorrection => 'Тузатишни сақлаш';
+
+  @override
+  String get receivingDiscardCorrection => 'Тузатишдан воз кечиш';
+
+  @override
+  String get receivingConfirmCorrectionTitle => 'Тузатишни сақлайсизми?';
+
+  @override
+  String get receivingConfirmCorrectionMessage =>
+      'Қолдиқ қуйидагича ўзгаради. Эски кирим тарихда қолади.';
+
+  @override
+  String get receivingNoChanges =>
+      'Миқдорлар ўзгармади — фақат нарх ёки изоҳ янгиланади.';
+
+  @override
+  String receivingNegativeStock(String name, String qty) {
+    return 'Қолдиқ манфий бўлади: $name ($qty)';
+  }
+
+  @override
+  String get receivingCancelTitle => 'Киримни бекор қиласизми?';
+
+  @override
+  String get receivingCancelMessage =>
+      'Киримдаги товарлар қолдиқдан айирилади. Ҳужжат тарихда «Бекор қилинган» бўлиб қолади, нархлар ўзгармайди.';
+
+  @override
+  String get receivingCancelledToast => 'Кирим бекор қилинди';
+
+  @override
+  String get receivingCorrectedToast => 'Кирим тузатилди';
+
+  @override
+  String get receivingDeleteDraftTitle => 'Қораламани ўчирасизми?';
+
+  @override
+  String get receivingDeleteDraftMessage =>
+      'Қораламадаги қаторлар ўчади. Қолдиқ ўзгармайди.';
+
+  @override
+  String get receivingDiscardCorrectionMessage =>
+      'Тузатиш сақланмайди, асл кирим ўзгаришсиз қолади.';
+
+  @override
+  String get receivingNotEditable =>
+      'Бу киримни ўзгартириб бўлмайди — у аллақачон тузатилган ёки бекор қилинган.';
+
+  @override
+  String get receivingCorrectionEmpty =>
+      'Тузатишда товар қолмади. Киримни бутунлай олиб ташлаш учун «Бекор қилиш»дан фойдаланинг.';
+
+  @override
+  String get receivingCorrectionUnavailable =>
+      'Киримни ўзгартириш сервер янгилангач ишлайди (интернетга уланинг).';
+
+  @override
+  String get actionKeep => 'Қайтиш';
 
   @override
   String get receivingDelete => 'Қораламани ўчириш';

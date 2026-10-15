@@ -435,3 +435,11 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
   - Kassa: javobi yo'qolgan paket qayta yuborilishini kutayotganda pull qilinmaydi (qoldiq ikki marta hisoblanmaydi).
 - Sinov: backend to'liq yashil (+10 test), apps/pos 630.
 - Qoldi: T-102 (kirimni tahrirlash, inventarizatsiya "kutilgan" vaqti — RC-B4).
+
+## 2026-10-15 — T-102 Kirimni tahrirlash va bekor qilish
+- Qilindi (qaror 0010, `stock-receipt.md` "Tahrirlash va bekor qilish"):
+  - Server: `StockReceipt.corrects`, `conflict` (additive migratsiya 0002); `correct_receipt` (zanjir boshi teskari yozuv + yangi versiya, ziddiyatda rad etmaydi), `cancel_receipt`; hodisalar `receipt.corrected`, `receipt.reversed`; `receipt.posted` ixtiyoriy `at`; pull `features: ["receipt_corrections"]`.
+  - Kassa: drift v4 (`corrects_id`, `reverses_id`); `ReceiptStore.startCorrection/postCorrection/cancel` (bitta tranzaksiya, bitta hodisa); `addProduct` dublikat qatorlarda yiqilmaydi.
+  - UI: kirim kartasida "Tahrirlash"/"Bekor qilish", tuzatish qoralamasi banneri, saqlashdan oldin `eski → yangi` va manfiy qoldiq ogohlantirishi, so'ng ruxsat; ro'yxatda holat belgilari; qoralamani o'chirish tasdiq bilan; "Yangi kirim" ikki marta bosilmaydi. Dizayn tizimiga `showPosConfirm`.
+- Sinov: backend 764 (+10 tuzatish ssenariysi: 10 → 7 = −3, takror, ikki kassa, bekor qilish, tannarx, huquq, tenant); apps/pos 661 (+data 7, widget 3, golden 18); skrinshotlar `docs/screenshots/T-102/`.
+- Qoldi: boshqa kassadagi kirimlar ko'rinmaydi (pull entity — keyinroq); RC-B4 inventarizatsiya; Q-010.

@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:pos_app/app/status/app_status.dart';
 import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/data/receipts/receipt_store.dart';
+import 'package:pos_app/data/sync/server_features.dart';
 
 import '../helpers/catalog_seed.dart';
 import '../helpers/pump_app.dart';
@@ -11,7 +12,8 @@ import '../helpers/sqlite.dart';
 import 'golden_helpers.dart';
 
 /// Tasdiqlangan kirim va qoralama (narx tannarxdan past qatori bilan).
-Future<(AppDatabase, String)> _seed() async {
+/// [correction] — tasdiqlangan kirimning tuzatish qoralamasi ham (T-102).
+Future<(AppDatabase, String, String)> _seed({bool correction = false}) async {
   final db = openTestDatabase();
   await seedCatalog(db);
   var minute = 0;
@@ -35,11 +37,25 @@ Future<(AppDatabase, String)> _seed() async {
   await store.setCost(doc.lines[0].id, 1100000);
   await store.setCost(doc.lines[1].id, 1100000);
   await store.setCost(doc.lines[2].id, 2400000); // narxdan qimmat
-  return (db, draft);
+  await db.writeSetting(
+    serverFeaturesSettingKey,
+    encodeFeatures([ServerFeature.receiptCorrections]),
+  );
+  var open = draft;
+  if (correction) {
+    open = await store.startCorrection(posted);
+    final fix = (await store.load(open))!;
+    await store.setQty(fix.lines.first.id, 36000);
+  }
+  return (db, open, posted);
 }
 
-Future<String> _open(WidgetTester tester, Size size) async {
-  final (db, draft) = await _seed();
+Future<(String, String)> _open(
+  WidgetTester tester,
+  Size size, {
+  bool correction = false,
+}) async {
+  final (db, draft, posted) = await _seed(correction: correction);
   addTearDown(db.close);
   await pumpPosApp(
     tester,
@@ -61,7 +77,14 @@ Future<String> _open(WidgetTester tester, Size size) async {
     await tester.tap(nav.last);
     await tester.pumpAndSettle();
   }
-  return draft;
+  return (draft, posted);
+}
+
+Future<void> _tap(WidgetTester tester, Finder finder) async {
+  await tester.ensureVisible(finder);
+  await tester.pumpAndSettle();
+  await tester.tap(finder);
+  await tester.pumpAndSettle();
 }
 
 void main() {
@@ -70,8 +93,26 @@ void main() {
   });
 
   goldenAcrossDevices('receiving', 'editor', (tester, size) async {
-    final draft = await _open(tester, size);
+    final (draft, _) = await _open(tester, size);
     await tester.tap(find.byKey(ValueKey('receipt-$draft')));
     await tester.pumpAndSettle();
+  });
+
+  // T-102: tasdiqlangan kirim — "Tahrirlash" va "Bekor qilish".
+  goldenAcrossDevices('receiving', 'posted', (tester, size) async {
+    final (_, posted) = await _open(tester, size);
+    await _tap(tester, find.byKey(ValueKey('receipt-$posted')));
+  });
+
+  // T-102: tuzatish qoralamasi (banner) va saqlash oldidan tasdiqlash oynasi.
+  goldenAcrossDevices('receiving', 'correction', (tester, size) async {
+    final (draft, _) = await _open(tester, size, correction: true);
+    await _tap(tester, find.byKey(ValueKey('receipt-$draft')));
+  });
+
+  goldenAcrossDevices('receiving', 'correction_confirm', (tester, size) async {
+    final (draft, _) = await _open(tester, size, correction: true);
+    await _tap(tester, find.byKey(ValueKey('receipt-$draft')));
+    await _tap(tester, find.byKey(const ValueKey('receipt-post')));
   });
 }

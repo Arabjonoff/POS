@@ -2403,6 +2403,186 @@ abstract class AppLocalizations {
   /// **'Tasdiqlash'**
   String get receivingPost;
 
+  /// Holat: kirimning yangi versiyasi bor
+  ///
+  /// In uz, this message translates to:
+  /// **'Tuzatilgan'**
+  String get receivingStateCorrected;
+
+  /// Holat
+  ///
+  /// In uz, this message translates to:
+  /// **'Bekor qilingan'**
+  String get receivingStateCancelled;
+
+  /// Belgi: boshqa kirimning yangi versiyasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Tuzatish'**
+  String get receivingCorrectionBadge;
+
+  /// Holat
+  ///
+  /// In uz, this message translates to:
+  /// **'Tuzatish qoralamasi'**
+  String get receivingCorrectionDraft;
+
+  /// Tugma: tasdiqlangan kirimni tuzatish
+  ///
+  /// In uz, this message translates to:
+  /// **'Tahrirlash'**
+  String get receivingEdit;
+
+  /// Tugma: kirimni bekor qilish
+  ///
+  /// In uz, this message translates to:
+  /// **'Bekor qilish'**
+  String get receivingCancelReceipt;
+
+  /// Huquq
+  ///
+  /// In uz, this message translates to:
+  /// **'Kirimni o\'zgartirish uchun menejer yoki ega ruxsati kerak'**
+  String get receivingEditNeedsApproval;
+
+  /// Tuzatish qoralamasi banneri
+  ///
+  /// In uz, this message translates to:
+  /// **'Kirim tuzatilmoqda. Saqlaganingizda eski kirim bekor qilinadi va shu versiya kuchga kiradi — qoldiq farq bo\'yicha o\'zgaradi.'**
+  String get receivingCorrectionBanner;
+
+  /// Banner
+  ///
+  /// In uz, this message translates to:
+  /// **'Bu kirim tuzatilgan — amaldagisi yangi versiya.'**
+  String get receivingCorrectedBanner;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Yangi versiyani ochish'**
+  String get receivingOpenNewVersion;
+
+  /// Banner
+  ///
+  /// In uz, this message translates to:
+  /// **'Bu kirim bekor qilingan — qoldiqqa ta\'siri olib tashlangan.'**
+  String get receivingCancelledBanner;
+
+  /// Banner
+  ///
+  /// In uz, this message translates to:
+  /// **'Bu kirimning saqlanmagan tuzatishi bor.'**
+  String get receivingDraftExistsBanner;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Davom ettirish'**
+  String get receivingContinueCorrection;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Tuzatishni saqlash'**
+  String get receivingSaveCorrection;
+
+  /// Tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'Tuzatishdan voz kechish'**
+  String get receivingDiscardCorrection;
+
+  /// Oyna sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Tuzatishni saqlaysizmi?'**
+  String get receivingConfirmCorrectionTitle;
+
+  /// Oyna matni
+  ///
+  /// In uz, this message translates to:
+  /// **'Qoldiq quyidagicha o\'zgaradi. Eski kirim tarixda qoladi.'**
+  String get receivingConfirmCorrectionMessage;
+
+  /// Oyna matni
+  ///
+  /// In uz, this message translates to:
+  /// **'Miqdorlar o\'zgarmadi — faqat narx yoki izoh yangilanadi.'**
+  String get receivingNoChanges;
+
+  /// Ogohlantirish
+  ///
+  /// In uz, this message translates to:
+  /// **'Qoldiq manfiy bo\'ladi: {name} ({qty})'**
+  String receivingNegativeStock(String name, String qty);
+
+  /// Oyna sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Kirimni bekor qilasizmi?'**
+  String get receivingCancelTitle;
+
+  /// Oyna matni
+  ///
+  /// In uz, this message translates to:
+  /// **'Kirimdagi tovarlar qoldiqdan ayiriladi. Hujjat tarixda «Bekor qilingan» bo\'lib qoladi, narxlar o\'zgarmaydi.'**
+  String get receivingCancelMessage;
+
+  /// Xabar
+  ///
+  /// In uz, this message translates to:
+  /// **'Kirim bekor qilindi'**
+  String get receivingCancelledToast;
+
+  /// Xabar
+  ///
+  /// In uz, this message translates to:
+  /// **'Kirim tuzatildi'**
+  String get receivingCorrectedToast;
+
+  /// Oyna sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Qoralamani o\'chirasizmi?'**
+  String get receivingDeleteDraftTitle;
+
+  /// Oyna matni
+  ///
+  /// In uz, this message translates to:
+  /// **'Qoralamadagi qatorlar o\'chadi. Qoldiq o\'zgarmaydi.'**
+  String get receivingDeleteDraftMessage;
+
+  /// Oyna matni
+  ///
+  /// In uz, this message translates to:
+  /// **'Tuzatish saqlanmaydi, asl kirim o\'zgarishsiz qoladi.'**
+  String get receivingDiscardCorrectionMessage;
+
+  /// Xato
+  ///
+  /// In uz, this message translates to:
+  /// **'Bu kirimni o\'zgartirib bo\'lmaydi — u allaqachon tuzatilgan yoki bekor qilingan.'**
+  String get receivingNotEditable;
+
+  /// Xato
+  ///
+  /// In uz, this message translates to:
+  /// **'Tuzatishda tovar qolmadi. Kirimni butunlay olib tashlash uchun «Bekor qilish»dan foydalaning.'**
+  String get receivingCorrectionEmpty;
+
+  /// Izoh
+  ///
+  /// In uz, this message translates to:
+  /// **'Kirimni o\'zgartirish server yangilangach ishlaydi (internetga ulaning).'**
+  String get receivingCorrectionUnavailable;
+
+  /// Tasdiqlash oynasida rad etish tugmasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Qaytish'**
+  String get actionKeep;
+
   /// Tugma
   ///
   /// In uz, this message translates to:

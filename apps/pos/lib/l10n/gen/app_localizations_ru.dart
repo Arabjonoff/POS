@@ -1339,6 +1339,111 @@ class AppLocalizationsRu extends AppLocalizations {
   String get receivingPost => 'Провести';
 
   @override
+  String get receivingStateCorrected => 'Исправлен';
+
+  @override
+  String get receivingStateCancelled => 'Отменён';
+
+  @override
+  String get receivingCorrectionBadge => 'Исправление';
+
+  @override
+  String get receivingCorrectionDraft => 'Черновик исправления';
+
+  @override
+  String get receivingEdit => 'Изменить';
+
+  @override
+  String get receivingCancelReceipt => 'Отменить приход';
+
+  @override
+  String get receivingEditNeedsApproval =>
+      'Изменить приход может менеджер или владелец';
+
+  @override
+  String get receivingCorrectionBanner =>
+      'Приход исправляется. При сохранении старый приход отменяется и действует эта версия — остаток изменится на разницу.';
+
+  @override
+  String get receivingCorrectedBanner =>
+      'Этот приход исправлен — действует новая версия.';
+
+  @override
+  String get receivingOpenNewVersion => 'Открыть новую версию';
+
+  @override
+  String get receivingCancelledBanner =>
+      'Этот приход отменён — его влияние на остаток снято.';
+
+  @override
+  String get receivingDraftExistsBanner =>
+      'У этого прихода есть несохранённое исправление.';
+
+  @override
+  String get receivingContinueCorrection => 'Продолжить';
+
+  @override
+  String get receivingSaveCorrection => 'Сохранить исправление';
+
+  @override
+  String get receivingDiscardCorrection => 'Отказаться от исправления';
+
+  @override
+  String get receivingConfirmCorrectionTitle => 'Сохранить исправление?';
+
+  @override
+  String get receivingConfirmCorrectionMessage =>
+      'Остаток изменится так. Старый приход останется в истории.';
+
+  @override
+  String get receivingNoChanges =>
+      'Количество не изменилось — обновятся только цены или комментарий.';
+
+  @override
+  String receivingNegativeStock(String name, String qty) {
+    return 'Остаток станет отрицательным: $name ($qty)';
+  }
+
+  @override
+  String get receivingCancelTitle => 'Отменить приход?';
+
+  @override
+  String get receivingCancelMessage =>
+      'Товары прихода будут списаны с остатка. Документ останется в истории как «Отменён», цены не изменятся.';
+
+  @override
+  String get receivingCancelledToast => 'Приход отменён';
+
+  @override
+  String get receivingCorrectedToast => 'Приход исправлен';
+
+  @override
+  String get receivingDeleteDraftTitle => 'Удалить черновик?';
+
+  @override
+  String get receivingDeleteDraftMessage =>
+      'Строки черновика будут удалены. Остаток не изменится.';
+
+  @override
+  String get receivingDiscardCorrectionMessage =>
+      'Исправление не сохранится, исходный приход останется без изменений.';
+
+  @override
+  String get receivingNotEditable =>
+      'Этот приход нельзя изменить — он уже исправлен или отменён.';
+
+  @override
+  String get receivingCorrectionEmpty =>
+      'В исправлении нет товаров. Чтобы убрать приход целиком, используйте «Отменить приход».';
+
+  @override
+  String get receivingCorrectionUnavailable =>
+      'Изменение прихода заработает после обновления сервера (подключитесь к интернету).';
+
+  @override
+  String get actionKeep => 'Назад';
+
+  @override
   String get receivingDelete => 'Удалить черновик';
 
   @override

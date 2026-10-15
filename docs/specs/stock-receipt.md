@@ -36,4 +36,32 @@ Yetkazib beruvchidan kelgan tovarni skaner bilan tez qabul qilish va qoldiqni os
   - Qoldiq kassada darhol oshadi (oflaynda ham).
   - Kassir bo'lsa menejer/ega PIN so'raladi.
   - Bo'sh kirimni tasdiqlab bo'lmaydi.
-  - Tasdiqlangan kirim faqat o'qish uchun ochiladi (teskari kirim — keyin).
+  - Tasdiqlangan kirim faqat o'qish uchun ochiladi; o'zgartirish — "Tuzatish" orqali (pastda).
+  - Payloadda ixtiyoriy `at` (kassadagi vaqt) — server hujjat va harakat vaqtini shundan oladi.
+
+## Tahrirlash va bekor qilish (T-102, qaror 0010)
+Tasdiqlangan kirim **o'zgarmaydi** (CLAUDE.md 3-qoida). Tahrirlash = **tuzatish**: eski versiya teskari yozuv bilan bekor qilinadi va yangi
+versiya kuchga kiradi — bitta tranzaksiyada, bitta outbox hodisasida.
+
+- **Kirim kartasi** (tasdiqlangan, amaldagi versiya): "Tahrirlash" va "Bekor qilish". Server `features` da `receipt_corrections` ni e'lon
+  qilmagan bo'lsa (eski server) — tugmalar o'rniga izoh.
+- **Tahrirlash** → tuzatish qoralamasi (`corrects_id` = asl kirim): asl qatorlar nusxasi (bir tovar — bitta qator), yangi sotish narxisiz.
+  Qoralama qoldiq va narxga ta'sir qilmaydi; "Tuzatishdan voz kechish" — o'chiradi. Banner: "Kirim tuzatilmoqda…".
+- **Tuzatishni saqlash** → tasdiqlash oynasi: o'zgargan tovarlar `eski → yangi` va qoldiq manfiy bo'lsa ogohlantirish (bloklamaydi);
+  keyin ruxsat (ega/menejer yoki menejer PIN). `ReceiptStore.postCorrection` bitta tranzaksiyada:
+  1. teskari yozuv R (`reverses_id` = asl, qatorlar manfiy) va `stock_movements` (−qty);
+  2. yangi versiya harakatlari (+qty), holat `posted`, hujjat sanasi — **asl kirimniki**;
+  3. tannarx — faqat bu kirimdan keyin shu tovar bilan boshqa amaldagi kirim bo'lmasa (eski kirimni tuzatish yangi tannarxni bosmaydi);
+     sotish narxi — tuzatishda kiritilgan bo'lsa;
+  4. outbox `receipt.corrected {id, corrects, reversal_id, supplier, note, items, by, at}`.
+  Qoldiq: **−eski + yangi** (10 → 7 = −10 + 7 = −3). Har harakat bir marta hisoblanadi: hammasi bitta hodisaga bog'langan va yuborilgach
+  server qoldig'iga almashadi.
+- **Bekor qilish** → tasdiqlash oynasi → ruxsat → teskari yozuv va `receipt.reversed {id, reverses, note, by, at}`. Narxlar o'zgarmaydi.
+  Ochiq tuzatish qoralamasi o'chadi.
+- **Ro'yxat:** teskari yozuvlar ko'rinmaydi; belgilar: "Qoralama", "Tuzatish qoralamasi", "Tasdiqlangan", "Tuzatish" (yangi versiya),
+  "Tuzatilgan" (eski versiya, kartada "Yangi versiyani ochish"), "Bekor qilingan".
+- **Server** (`correct_receipt`, `cancel_receipt`): asl kirim hali kelmagan — `pending`; takroriy — o'zgarishsiz. Ikki kassa bir kirimni
+  oflayn tuzatsa — **rad etilmaydi**: oxirgi kelgan versiya amalda, `conflict = true` (ega ko'rib chiqadi). Bekor qilingan kirimni tuzatish ham
+  shunday. Teskari yozuvni tuzatib/bekor qilib bo'lmaydi. Boshqa tenant kirimi — rad.
+- Oldingi savdolarning tannarxi (`SaleItem.cost_tiyin`) qayta hisoblanmaydi — foyda hisobotlari o'zgarmaydi.
+- Ochiq savollar: Q-010 (tahrirlash muddati, inventarizatsiyadan keyingi tuzatish, bekor qilishda tannarx).
