@@ -141,7 +141,10 @@ class SaleHistory {
       final like = '%${_escape(query)}%';
       final byItem = _db.selectOnly(_db.saleItems)
         ..addColumns([_db.saleItems.saleId])
-        ..where(_db.saleItems.nameSnapshot.like(like, escapeChar: r'\'));
+        ..where(
+          _db.saleItems.nameSnapshot.like(like, escapeChar: r'\') |
+              _db.saleItems.barcodeSnapshot.equals(query),
+        );
       final byCustomer = _db.selectOnly(_db.customers)
         ..addColumns([_db.customers.id])
         ..where(_db.customers.fullName.like(like, escapeChar: r'\'));

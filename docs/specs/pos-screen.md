@@ -33,7 +33,7 @@
 - Printer ulanmagan → savdo davom etadi, holat qatorida qizil nuqta, yakunlashda "Chek chiqmadi, qayta chop etish" tugmasi.
 
 ## Klaviatura (Windows)
-F1 qidiruv · F2 yoki `*` miqdor · `+`/`−` tanlangan qator ±1 · F3 chegirma · F4 mijoz · F6 kechiktirish/yangi chek · F8 qaytarish · **F9 naqd · F10 karta · F11 nasiya** · F12 to'lash · Ctrl+F9 pul kiritish/chiqarish · Ctrl+Z o'chirilgan qatorni qaytarish · Ctrl+B menyu · Esc bekor/yopish · Enter tasdiq · Delete qatorni o'chirish · ↑/↓ savat qatorlari (qidiruvda — kartalar).
+F1 qidiruv · F2 yoki `*` miqdor · `+`/`−` tanlangan qator ±1 · F3 chegirma · F4 mijoz · F6 kechiktirish/yangi chek · F7 cheklar tarixi · F8 qaytarish · **F9 naqd · F10 karta · F11 nasiya** · F12 to'lash · Ctrl+F9 pul kiritish/chiqarish · Ctrl+Z o'chirilgan qatorni qaytarish · Ctrl+B menyu · Esc bekor/yopish · Enter tasdiq · Delete qatorni o'chirish · ↑/↓ savat qatorlari (qidiruvda — kartalar).
 (T-108c, qaror 0014: F9 avval pul kiritish/chiqarish edi.)
 Tezkor tugmalar ekranda kichik yorliq sifatida ko'rinadi (desktopda).
 

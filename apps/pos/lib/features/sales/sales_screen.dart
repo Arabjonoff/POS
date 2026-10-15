@@ -23,7 +23,7 @@ class SalesScreen extends ConsumerStatefulWidget {
   const SalesScreen({super.key});
 
   /// Keng ekranda o'ngdagi chek paneli.
-  static const double detailWidth = 420;
+  static const double detailWidth = 440;
 
   @override
   ConsumerState<SalesScreen> createState() => _SalesScreenState();

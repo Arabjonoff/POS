@@ -19,22 +19,23 @@ Loyiha egasi talabi (2026-10-15): yakunlangan cheklarni ko'rish va qayta chop et
 - **Sana:** "Bugun" (standart), "Kecha", "Sana" (tanlash; 1 kun). Kun — Toshkent vaqti bo'yicha 00:00–24:00.
 - **Qidiruv:** chek raqami (qismi ham: `123`), mijoz ismi yoki tovar nomi. Qidiruvda matn bo'lsa sana filtri **qo'llanmaydi**
   (eski chekni raqami bilan topish), natija — oxirgi 200 ta.
-- **Skaner:** chekdagi shtrix-kod (chek raqami) skanerlansa — o'sha chek darhol ochiladi; topilmasa — "Chek topilmadi" xabari.
-  Boshqa kod (tovar) — qidiruvga tushadi (shu tovar bor cheklar).
+- **Skaner:** chekdagi shtrix-kod (chek raqami) skanerlansa — o'sha chek darhol ochiladi; chek raqamiga o'xshash (`-` bor), lekin yo'q —
+  "Chek topilmadi: …" xabari. Boshqa kod — qidiruvga tushadi. Tovar shtrix-kodi — shu tovar sotilgan cheklar (chekdagi kod bo'yicha).
 - **To'lov turi:** Hammasi / Naqd / Karta / Nasiya (aralash to'lovli chek har bir turida ko'rinadi).
 
 ## Chek tafsiloti
-- Desktop/planshet (≥ 900 dp) — o'ngda panel; telefon va tor ekranda — ro'yxat o'rnida (orqaga tugmasi, Esc).
+- Keng ekranda (bo'lim kengligi ≥ 2 × 440 dp + oraliq; planshet 1024 va desktop) — o'ngda 440 dp panel; telefon va tor ekranda — ro'yxat
+  o'rnida (orqaga tugmasi, Esc).
 - Sarlavha: raqam, sana-vaqt, holat belgisi. **Chek ko'rinishi** — printerdagi chek bilan bir xil (`ReceiptPreview`, printer kengligi
-  sozlamadan; sozlanmagan bo'lsa 80 mm). Qaytarishlar bo'lsa — ro'yxat: vaqt, summa, usul (naqd/qarzdan), sabab.
+  sozlamadan; sozlanmagan bo'lsa — standart 58 mm). Qaytarishlar bo'lsa — ro'yxat: vaqt, summa, usul (naqd/qarzdan), sabab.
 - **"Qayta chop etish"** (asosiy tugma) — `printSale(copy: true)`: chekda "NUSXA". Natija xabari: "Printerga yuborildi" /
-  "Chek chiqmadi" + "Qayta urinish" / printer sozlanmagan — "Printer sozlanmagan" + "Sozlash" (Sozlamalar ochiladi). Ikki marta bosishdan
+  "Chek chiqmadi" + "Qayta chop etish" / printer sozlanmagan — "Avval printerni sozlang" + "Sozlash" (Sozlamalar ochiladi). Ikki marta bosishdan
   himoya (yuborilayotganda tugma band).
 - **"Qaytarish"** — qaytarish oynasi (F8) shu chek bilan ochiladi; to'liq qaytarilgan chekda tugma o'chiq.
-- Klaviatura: ↑/↓ — ro'yxatda tanlash, Enter — ochish, Ctrl+P — qayta chop etish, Esc — tafsilotni yopish / qidiruvni tozalash.
+- Klaviatura: Ctrl+P — qayta chop etish, Esc — tafsilotni yopish / qidiruvni tozalash. Yashirin bo'lim fokusni ushlab qolmaydi (kassa F-tugmalari ishlayveradi).
 
 ## Amalga oshirilishi
-- `apps/pos/lib/data/sales/sale_history.dart` — `SaleHistory.watch(filter)` (bitta SQL: savdo + kassir + mijoz + to'lov turlari +
-  pozitsiyalar + qaytarilgan summa), `SaleHistoryFilter`, `saleHistoryProvider`.
+- `apps/pos/lib/data/sales/sale_history.dart` — `SaleHistory.watch(filter)` (savdolar, keyin bir so'rovda to'lov turlari, pozitsiyalar,
+  qaytarilgan summa, kassir va mijoz nomlari; `sales`/`refunds`/`sale_payments` o'zgarsa qayta o'qiladi), `SaleHistoryFilter`, `saleHistoryProvider`.
 - `apps/pos/lib/features/sales/sales_screen.dart` — bo'lim; `sale_detail.dart` — tafsilot.
 - Testlar: `test/data/sale_history_test.dart`, `test/features/sales_history_test.dart`; golden `sales/*`.

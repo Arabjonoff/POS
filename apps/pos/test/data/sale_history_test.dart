@@ -57,6 +57,7 @@ void main() {
     expect(await numbers(search('000003')), ['D3-000003']);
     expect(await numbers(search('d3-000001')), ['D3-000001']);
     expect(await numbers(search('olma')), ['D3-000003']);
+    expect(await numbers(search(olmaBarcode)), ['D3-000003']);
     expect(await numbers(search('karimova')), ['D3-000002']);
     expect(await numbers(search('100%')), isEmpty);
   });

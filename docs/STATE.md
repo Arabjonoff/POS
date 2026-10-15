@@ -22,6 +22,7 @@
 
 ## Oxirgi bajarilgan ish
 - Bo'lim (`AppSection.sales`), `features/sales/sales_screen.dart` + `sale_detail.dart`, F7, `showRefundDialog(saleId:)`, l10n — analyze toza.
+- Widget testlar (10) yashil. Ishlab turgan: `flutter test --update-goldens test/goldens` (menyuga ikon qo'shildi).
 
 ## Keyingi aniq harakat
 - 7-qadam: `apps/pos/test/features/sales_history_test.dart` (seedSaleHistory + clockProvider=historyNow), keyin golden `sales/*` va boshqa golden'larni `--update-goldens`.

@@ -10,6 +10,10 @@
 ## Kassaga pul kiritish / olish (Ctrl+F9)
 Maydalash uchun pul kiritish yoki inkassatsiya — summa va sabab bilan. Smena hisobotida ko'rinadi.
 
+## Cheklar tarixi (Ctrl+7)
+Har bir yopilgan chek: vaqt, kassir, mijoz, to'lov turi, summa, qaytarilganmi. Kun, to'lov turi yoki qidiruv (chek raqami, mijoz, tovar)
+bo'yicha topiladi; chekni qayta chop etish (NUSXA) va qaytarish shu yerdan. Faqat shu kassaning cheklari ko'rinadi.
+
 ## Hisobotlar (Ctrl+5) — ega va menejer
 Davr: **Bugun, Kecha, 7 kun, Shu oy, O'tgan oy**.
 - **Tushum** (savdo − qaytarishlar), **foyda**, cheklar soni, o'rtacha chek — oldingi davrga nisbatan ↑/↓ %.

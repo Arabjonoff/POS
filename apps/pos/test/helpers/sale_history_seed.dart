@@ -1,6 +1,9 @@
 import 'package:drift/drift.dart';
 import 'package:pos_app/data/db/app_database.dart';
 
+/// Seed'dagi Olma shtrix-kodi (chekda saqlangan).
+const String olmaBarcode = '4780000000099';
+
 /// Cheklar tarixi uchun "hozir": 15.10.2026 15:00 Toshkent.
 final DateTime historyNow = DateTime.utc(2026, 10, 15, 10);
 
@@ -76,6 +79,9 @@ Future<void> seedSaleHistory(AppDatabase db) async {
               position: i,
               productId: productId,
               nameSnapshot: name,
+              barcodeSnapshot: Value(
+                productId == 'p-olma' ? olmaBarcode : null,
+              ),
               qtyMilli: qty,
               priceTiyin: sum * 1000 ~/ qty,
               costTiyin: 0,

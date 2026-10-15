@@ -97,7 +97,7 @@ void main() {
       findsOneWidget,
     );
     expect(
-      find.text('Faqat shu kassada sotilgan cheklar ko\'rinadi'),
+      find.text("Faqat shu kassada sotilgan cheklar ko'rinadi"),
       findsOneWidget,
     );
   });
@@ -154,6 +154,15 @@ void main() {
 
     await scanCode(tester, 'd3-999999');
     expect(find.text('Chek topilmadi: D3-999999'), findsOneWidget);
+  });
+
+  testWidgets('scanning a product finds the receipts it was sold on', (
+    tester,
+  ) async {
+    await open(tester);
+    await scanCode(tester, olmaBarcode);
+    expect(sale('D3-000003'), findsOneWidget);
+    expect(sale('D3-000001'), findsNothing);
   });
 
   testWidgets('reprint sends a COPY of the chosen receipt', (tester) async {
