@@ -75,5 +75,39 @@
     "loadTitle": "Ma'lumotni yuklab bo'lmadi",
     "loadText": "Server javob bermadi. Internetni tekshirib, qayta urining.",
     "retry": "Qayta urinish"
+  },
+  "tenants": {
+    "title": "Mijozlar",
+    "subtitle": "{count, plural, =0 {Hali mijoz yo'q} other {Jami # ta do'kon}}",
+    "add": "Yangi mijoz",
+    "searchPlaceholder": "Do'kon nomi yoki telefon",
+    "statusFilter": "Holat",
+    "statusAll": "Barcha holatlar",
+    "status": {
+      "trial": "Sinovda",
+      "active": "Faol",
+      "grace": "Muddati o'tgan",
+      "readonly": "Faqat o'qish",
+      "blocked": "Bloklangan"
+    },
+    "columns": {
+      "name": "Do'kon",
+      "owner": "Ega",
+      "phone": "Telefon",
+      "plan": "Tarif",
+      "status": "Holat",
+      "paidUntil": "Muddat",
+      "devices": "Qurilmalar",
+      "lastActivity": "Oxirgi faollik"
+    },
+    "never": "Hali yo'q",
+    "empty": "Hali mijoz yo'q",
+    "emptyText": "Birinchi do'konni \"Yangi mijoz\" tugmasi bilan qo'shing.",
+    "emptyFiltered": "Hech narsa topilmadi",
+    "exportCsv": "CSV yuklab olish",
+    "pagination": "Sahifalar",
+    "pageInfo": "{from}–{to} / {total}",
+    "prev": "Oldingi",
+    "next": "Keyingi"
   }
 }
