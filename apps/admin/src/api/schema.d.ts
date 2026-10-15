@@ -1265,6 +1265,27 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/sync/reports/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * @description Kassa (qurilma tokeni) uchun barcha hisobotlar bitta javobda (T-070).
+         *
+         *     Kim ko'rishi (ega/menejer) — kassada lokal rol bilan cheklanadi.
+         */
+        get: operations["sync_reports_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/sync/stock-movements/": {
         parameters: {
             query?: never;
@@ -1658,6 +1679,16 @@ export interface components {
         DeviceRegisterResponse: {
             device: components["schemas"]["Device"];
             token: string;
+        };
+        /** @description Kassa uchun bitta so'rovda hamma hisobotlar (T-070). */
+        DeviceReport: {
+            summary: components["schemas"]["Summary"];
+            by_day: components["schemas"]["DayRow"][];
+            by_hour: components["schemas"]["HourRow"][];
+            top_products: components["schemas"]["ProductRow"][];
+            cashiers: components["schemas"]["CashierRow"][];
+            debts: components["schemas"]["Debts"];
+            stock: components["schemas"]["StockReport"];
         };
         EventError: {
             code: string;
@@ -5783,6 +5814,30 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PushResponse"];
+                };
+            };
+        };
+    };
+    sync_reports_retrieve: {
+        parameters: {
+            query?: {
+                /** @description Do'kon vaqt zonasida */
+                date_from?: string;
+                /** @description Shu kun ham kiradi; ≤ 366 kun */
+                date_to?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DeviceReport"];
                 };
             };
         };

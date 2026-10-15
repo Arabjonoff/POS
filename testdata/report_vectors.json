@@ -1,0 +1,101 @@
+{
+  "description": "Hisobot formulalari (reports-api.md): server (apps/reports) va kassa (data/reports) bir xil natija berishi shart. Vaqt zonasi Asia/Tashkent (+05:00). Raqamlar qo'lda hisoblangan.",
+  "period": {"date_from": "2026-10-15", "date_to": "2026-10-15"},
+  "cashiers": [
+    {"id": "01890000-0000-7000-8000-000000000001", "name": "Aziza"},
+    {"id": "01890000-0000-7000-8000-000000000002", "name": "Bobur"}
+  ],
+  "products": [
+    {"id": "01890000-0000-7000-8000-0000000000a1", "name": "Non", "unit": "pcs", "price": 400000, "cost": 300000},
+    {"id": "01890000-0000-7000-8000-0000000000a2", "name": "Olma", "unit": "kg", "price": 1500000, "cost": 1000333},
+    {"id": "01890000-0000-7000-8000-0000000000a3", "name": "Sut", "unit": "pcs", "price": 1200000, "cost": 950000}
+  ],
+  "sales": [
+    {
+      "id": "01890000-0000-7000-8000-0000000000b1",
+      "number": "D1-000001",
+      "cashier": "01890000-0000-7000-8000-000000000001",
+      "sold_at": "2026-10-15T03:10:00Z",
+      "subtotal": 1200000,
+      "discount": 0,
+      "total": 1200000,
+      "items": [
+        {"id": "01890000-0000-7000-8000-0000000000c1", "product": "01890000-0000-7000-8000-0000000000a1", "name": "Non", "qty": 3000, "price": 400000, "cost": 300000, "discount": 0, "total": 1200000}
+      ],
+      "payments": [{"id": "01890000-0000-7000-8000-0000000000d1", "method": "cash", "amount": 1200000}]
+    },
+    {
+      "id": "01890000-0000-7000-8000-0000000000b2",
+      "number": "D1-000002",
+      "cashier": "01890000-0000-7000-8000-000000000002",
+      "sold_at": "2026-10-15T07:45:00Z",
+      "subtotal": 4155000,
+      "discount": 50000,
+      "total": 4105000,
+      "items": [
+        {"id": "01890000-0000-7000-8000-0000000000c2", "product": "01890000-0000-7000-8000-0000000000a2", "name": "Olma", "qty": 1250, "price": 1500000, "cost": 1000333, "discount": 0, "total": 1875000},
+        {"id": "01890000-0000-7000-8000-0000000000c3", "product": "01890000-0000-7000-8000-0000000000a3", "name": "Sut", "qty": 2000, "price": 1200000, "cost": 950000, "discount": 120000, "total": 2280000}
+      ],
+      "payments": [
+        {"id": "01890000-0000-7000-8000-0000000000d2", "method": "card", "amount": 3000000},
+        {"id": "01890000-0000-7000-8000-0000000000d3", "method": "cash", "amount": 1105000}
+      ]
+    },
+    {
+      "id": "01890000-0000-7000-8000-0000000000b3",
+      "number": "D1-000003",
+      "cashier": "01890000-0000-7000-8000-000000000001",
+      "sold_at": "2026-10-14T06:00:00Z",
+      "subtotal": 400000,
+      "discount": 0,
+      "total": 400000,
+      "items": [
+        {"id": "01890000-0000-7000-8000-0000000000c4", "product": "01890000-0000-7000-8000-0000000000a1", "name": "Non", "qty": 1000, "price": 400000, "cost": 300000, "discount": 0, "total": 400000}
+      ],
+      "payments": [{"id": "01890000-0000-7000-8000-0000000000d4", "method": "cash", "amount": 400000}]
+    }
+  ],
+  "refunds": [
+    {
+      "id": "01890000-0000-7000-8000-0000000000e1",
+      "sale": "01890000-0000-7000-8000-0000000000b2",
+      "cashier": "01890000-0000-7000-8000-000000000001",
+      "at": "2026-10-15T10:00:00Z",
+      "method": "cash",
+      "total": 1126282,
+      "items": [
+        {"id": "01890000-0000-7000-8000-0000000000f1", "sale_item": "01890000-0000-7000-8000-0000000000c3", "qty": 1000, "total": 1140000}
+      ]
+    }
+  ],
+  "expected": {
+    "summary": {
+      "sales_total_tiyin": 5305000,
+      "refunds_total_tiyin": 1126282,
+      "revenue_tiyin": 4178718,
+      "profit_tiyin": 1078302,
+      "sales_count": 2,
+      "average_check_tiyin": 2652500,
+      "payments_tiyin": {"cash": 2305000, "card": 3000000, "debt": 0},
+      "refunds_tiyin": {"cash": 1126282, "debt": 0},
+      "previous": {"revenue_tiyin": 400000, "profit_tiyin": 100000, "sales_count": 1},
+      "revenue_change_bp": 94468,
+      "profit_change_bp": 97830
+    },
+    "by_day": [{"date": "2026-10-15", "revenue_tiyin": 4178718, "sales_count": 2, "profit_tiyin": 1078302}],
+    "by_hour_nonzero": [
+      {"hour": 8, "revenue_tiyin": 1200000, "sales_count": 1},
+      {"hour": 12, "revenue_tiyin": 4105000, "sales_count": 1},
+      {"hour": 15, "revenue_tiyin": -1126282, "sales_count": 0}
+    ],
+    "top_products": [
+      {"name": "Olma", "qty_milli": 1250, "revenue_tiyin": 1875000, "profit_tiyin": 624584},
+      {"name": "Non", "qty_milli": 3000, "revenue_tiyin": 1200000, "profit_tiyin": 300000},
+      {"name": "Sut", "qty_milli": 1000, "revenue_tiyin": 1140000, "profit_tiyin": 190000}
+    ],
+    "cashiers": [
+      {"full_name": "Bobur", "sales_count": 1, "sales_total_tiyin": 4105000, "refunds_count": 0, "refunds_total_tiyin": 0},
+      {"full_name": "Aziza", "sales_count": 1, "sales_total_tiyin": 1200000, "refunds_count": 1, "refunds_total_tiyin": 1126282}
+    ]
+  }
+}

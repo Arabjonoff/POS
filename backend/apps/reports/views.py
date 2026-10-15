@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apps.accounts.permissions import IsManagerOrOwner
+from apps.devices.authentication import DeviceTokenAuthentication
+from apps.devices.permissions import IsDevice
 from apps.tenants.models import Tenant
 
 from . import services
@@ -11,6 +13,7 @@ from .serializers import (
     CashierRowSerializer,
     DayRowSerializer,
     DebtsSerializer,
+    DeviceReportSerializer,
     HourRowSerializer,
     LimitQuerySerializer,
     PeriodQuerySerializer,
@@ -106,3 +109,31 @@ class DebtsReportView(ReportView):
 class StockReportView(ReportView):
     def get(self, request):
         return Response(StockReportSerializer(services.stock(self.tenant())).data)
+
+
+@extend_schema(tags=["sync"], parameters=[PeriodQuerySerializer], responses=DeviceReportSerializer)
+class DeviceReportView(ReportView):
+    """Kassa (qurilma tokeni) uchun barcha hisobotlar bitta javobda (T-070).
+
+    Kim ko'rishi (ega/menejer) — kassada lokal rol bilan cheklanadi.
+    """
+
+    authentication_classes = [DeviceTokenAuthentication]
+    permission_classes = [IsDevice]
+
+    def tenant(self) -> Tenant:
+        return self.request.auth.tenant
+
+    def get(self, request):
+        tenant = self.tenant()
+        period = self.period(self.query())
+        data = {
+            "summary": services.summary(tenant, period),
+            "by_day": services.by_day(tenant, period),
+            "by_hour": services.by_hour(tenant, period),
+            "top_products": services.top_products(tenant, period),
+            "cashiers": services.cashiers(tenant, period),
+            "debts": services.debts(tenant, limit=10),
+            "stock": services.stock(tenant),
+        }
+        return Response(DeviceReportSerializer(data).data)

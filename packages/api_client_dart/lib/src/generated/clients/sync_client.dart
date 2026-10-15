@@ -13,6 +13,7 @@ import '../models/apply_request_request.dart';
 import '../models/apply_response.dart';
 import '../models/check_request_request.dart';
 import '../models/check_response.dart';
+import '../models/device_report.dart';
 import '../models/price_history.dart';
 import '../models/pull_response.dart';
 import '../models/push_request_request.dart';
@@ -66,6 +67,19 @@ abstract class SyncClient {
   @POST('/api/v1/sync/push/')
   Future<PushResponse> syncPushCreate({
     @Body() required PushRequestRequest body,
+  });
+
+  /// Kassa (qurilma tokeni) uchun barcha hisobotlar bitta javobda (T-070).
+  ///
+  /// Kim ko'rishi (ega/menejer) — kassada lokal rol bilan cheklanadi.
+  ///
+  /// [dateFrom] - Do'kon vaqt zonasida.
+  ///
+  /// [dateTo] - Shu kun ham kiradi; ≤ 366 kun.
+  @GET('/api/v1/sync/reports/')
+  Future<DeviceReport> syncReportsRetrieve({
+    @Query('date_from') DateTime? dateFrom,
+    @Query('date_to') DateTime? dateTo,
   });
 
   /// Kassa uchun tovar qoldiq harakatlari (onlayn, T-054): barcha kassalar,.

@@ -5,13 +5,24 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-070 Bosh sahifa va hisobotlar
+- Branch: feat/T-070-reports
+- Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
+- [x] 1. Umumiy vektorlar `testdata/report_vectors.json` + backend testi; kassa uchun `GET /api/v1/sync/reports/` (qurilma tokeni, barcha hisobotlar bitta javobda); klientlar
+- [ ] 2. Kassa: `data/reports/local_reports.dart` — shu formulalar lokal bazada (summary, by-day, by-hour, top, kassirlar, qarzlar, ombor) + vektor testi (`apps/pos/test/data/local_reports_test.dart`)
+- [ ] 3. `reportsProvider`: onlayn — server, xato — lokal ("faqat shu kassa" belgisi)
+- [ ] 4. "Hisobotlar" bo'limi (Ctrl+5, ega/menejer): davr tanlash, KPI (tushum ↑↓%, foyda, cheklar, o'rtacha chek), kunlar/soatlar grafigi, top tovarlar, kassirlar, to'lov turlari, qarzlar, kam qolganlar; kassirga — ruxsat yo'q
+- [ ] 5. Widget testlari + golden + skrinshotlar; spec, PR, merge
+
+## Oxirgi bajarilgan ish
+- 1-qadam: vektorlar va `apps/reports/tests/test_shared_vectors.py` (5 test), `DeviceReportView` (`/api/v1/sync/reports/`), OpenAPI + klientlar (`syncReportsRetrieve`).
+
+## Keyingi aniq harakat
+- 2-qadam: `apps/pos/lib/data/reports/local_reports.dart`; vektorlarni `../../testdata/report_vectors.json` dan o'qib lokal bazaga yozuvchi test.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

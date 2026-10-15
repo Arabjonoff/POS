@@ -111,3 +111,15 @@ class StockReportSerializer(serializers.Serializer):
     stock_value_tiyin = serializers.IntegerField()
     low = StockRowSerializer(many=True)
     negative = StockRowSerializer(many=True)
+
+
+class DeviceReportSerializer(serializers.Serializer):
+    """Kassa uchun bitta so'rovda hamma hisobotlar (T-070)."""
+
+    summary = SummarySerializer()
+    by_day = DayRowSerializer(many=True)
+    by_hour = HourRowSerializer(many=True)
+    top_products = ProductRowSerializer(many=True)
+    cashiers = CashierRowSerializer(many=True)
+    debts = DebtsSerializer()
+    stock = StockReportSerializer()

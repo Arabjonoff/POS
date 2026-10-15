@@ -247,6 +247,40 @@ class _SyncClient implements SyncClient {
   }
 
   @override
+  Future<DeviceReport> syncReportsRetrieve({
+    DateTime? dateFrom,
+    DateTime? dateTo,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'date_from': dateFrom?.toIso8601String(),
+      r'date_to': dateTo?.toIso8601String(),
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<DeviceReport>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/api/v1/sync/reports/',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, Object?>>(_options);
+    late DeviceReport _value;
+    try {
+      _value = DeviceReport.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<List<StockMovementEntry>> syncStockMovementsList({
     required String product,
   }) async {

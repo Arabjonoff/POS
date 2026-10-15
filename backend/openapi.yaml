@@ -2770,6 +2770,37 @@ paths:
               schema:
                 $ref: '#/components/schemas/PushResponse'
           description: ''
+  /api/v1/sync/reports/:
+    get:
+      operationId: sync_reports_retrieve
+      description: |-
+        Kassa (qurilma tokeni) uchun barcha hisobotlar bitta javobda (T-070).
+
+        Kim ko'rishi (ega/menejer) — kassada lokal rol bilan cheklanadi.
+      parameters:
+      - in: query
+        name: date_from
+        schema:
+          type: string
+          format: date
+        description: Do'kon vaqt zonasida
+      - in: query
+        name: date_to
+        schema:
+          type: string
+          format: date
+        description: Shu kun ham kiradi; ≤ 366 kun
+      tags:
+      - sync
+      security:
+      - deviceToken: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceReport'
+          description: ''
   /api/v1/sync/stock-movements/:
     get:
       operationId: sync_stock_movements_list
@@ -3587,6 +3618,40 @@ components:
       required:
       - device
       - token
+    DeviceReport:
+      type: object
+      description: Kassa uchun bitta so'rovda hamma hisobotlar (T-070).
+      properties:
+        summary:
+          $ref: '#/components/schemas/Summary'
+        by_day:
+          type: array
+          items:
+            $ref: '#/components/schemas/DayRow'
+        by_hour:
+          type: array
+          items:
+            $ref: '#/components/schemas/HourRow'
+        top_products:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductRow'
+        cashiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/CashierRow'
+        debts:
+          $ref: '#/components/schemas/Debts'
+        stock:
+          $ref: '#/components/schemas/StockReport'
+      required:
+      - by_day
+      - by_hour
+      - cashiers
+      - debts
+      - stock
+      - summary
+      - top_products
     EventError:
       type: object
       properties:

@@ -1,11 +1,14 @@
 from django.urls import path
 
+from apps.reports.views import DeviceReportView
+
 from .imports import ImportApplyView, ImportCheckView, ImportTemplateView, ImportUploadView
 from .views import SyncPriceHistoryView, SyncPullView, SyncPushView, SyncStockMovementsView
 
 urlpatterns = [
     path("sync/push/", SyncPushView.as_view(), name="sync-push"),
     path("sync/pull/", SyncPullView.as_view(), name="sync-pull"),
+    path("sync/reports/", DeviceReportView.as_view(), name="sync-reports"),
     path("sync/price-history/", SyncPriceHistoryView.as_view(), name="sync-price-history"),
     path("sync/stock-movements/", SyncStockMovementsView.as_view(), name="sync-stock-movements"),
     path(
