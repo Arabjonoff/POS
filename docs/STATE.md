@@ -5,19 +5,24 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-092 Production deploy
+- Branch: feat/T-092-prod-deploy
+- Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
+- [ ] 1. Backend: `create_platform_admin` buyrug'i (+test), Sentry (`SENTRY_DSN` bo'lsa), prod sozlamalari tekshiruvi
+- [ ] 2. Admin prod Dockerfile (Next standalone), `next.config` `output: standalone`
+- [ ] 3. `docker-compose.prod.yml`: postgres, redis, backend (gunicorn, migrate, collectstatic), admin, caddy (HTTPS, 2 domen), scheduler (`update_subscriptions` kunlik), backup (kunlik `pg_dump`, 14 kun saqlash); `deploy/Caddyfile`, `deploy/backup.sh`, `deploy/restore.sh`, `.env.prod.example`
+- [ ] 4. Lokal sinov: prod compose (localhost, ichki TLS), health, admin kirish, backup → yangi bazaga tiklash
+- [ ] 5. `docs/DEPLOY.md`, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- T-090 tugadi (PR, merge).
+- Reja yozildi.
 
 ## Keyingi aniq harakat
-- ROADMAP'dan keyingi vazifa: T-091 UI/UX sayqal (`prompts/03-ui-review.md`).
+- 1-qadam: `backend/apps/accounts/management/commands/create_platform_admin.py`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
