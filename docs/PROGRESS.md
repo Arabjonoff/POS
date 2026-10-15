@@ -393,3 +393,14 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - **Topilgan og'ir xato:** admin server tomoni Django'ga `chunked` tana yuborardi → prod'da kirish va barcha o'zgartirishlar ishlamas edi. `fetchWithLength` bilan tuzatildi; soxta API endi Content-Length'siz tanani qabul qilmaydi (regressiyani e2e ushlaydi).
 - PR: T-092 (squash merge)
 - Qoldi / keyingi qadam: haqiqiy toza serverda (DNS, Let's Encrypt) sinov — birinchi chiqarishda. Keyingi: T-093 ilovani chiqarish.
+
+## 2026-10-15 — T-093 Ilovani chiqarish
+- Qilindi:
+  - Windows o'rnatuvchi: `apps/pos/windows/installer/pos.iss` (Inno Setup: joriy foydalanuvchi yoki hamma uchun, yorliqlar, yangilash ustiga, VC++ runtime ilova yonida, ma'lumot o'chirilmaydi), `apps/pos/tool/build-windows-installer.ps1`; oyna va mahsulot nomi "Kassa".
+  - Android: release imzo `key.properties` orqali (bo'lmasa — debug), nomi "Kassa".
+  - Versiya 1.0.0 (pubspec — yagona manba); `.github/workflows/release.yml` (teg `v*` → o'rnatuvchi + APK → GitHub Release).
+  - Ilova ichida yangi versiya xabari: server pull javobida `app {latest_version, download_url}` (env `APP_LATEST_*`), kassa holat qatorida "Yangi versiya X", Sozlamalar → "Ilova haqida" (versiya, havola).
+  - `docs/RELEASE.md`; Q-009 (imzo sertifikati, Play Store, kalit saqlash).
+- Sinov: lokal o'rnatuvchi 24 MB → jim o'rnatish → ilova ishga tushdi (oyna "Kassa", javob beradi) → jim o'chirish ✅; APK 77,9 MB ✅; backend +1 test, apps/pos +5 test.
+- PR: T-093 (squash merge)
+- Qoldi / keyingi qadam: toza Windows'da va haqiqiy planshetda sinov — birinchi chiqarishda; GitHub sirlari (POS_API_URL, Android kalit). Keyingi: T-094 foydalanuvchi qo'llanmasi.

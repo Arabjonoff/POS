@@ -70,3 +70,10 @@ Format:
 - Agentning tavsiyasi: bitta qo'llab-quvvatlash raqami, ilova build paytida beriladi (`--dart-define=SUPPORT_PHONE=+998...`); keyinchalik serverdan (`/devices/me/` javobida) olish mumkin — raqam o'zgarsa ilovani qayta chiqarmaslik uchun.
 - Hozircha tanlangan: `SUPPORT_PHONE` build parametri; berilmasa matn "Administrator bilan bog'laning".
 - Javob:
+
+### Q-009 (T-093) Ilovani imzolash va tarqatish
+- Kontekst: Windows o'rnatuvchi hozir imzolanmagan — SmartScreen "noma'lum nashriyotchi" ogohlantirishini ko'rsatadi. Android APK yangilanishlari uchun bitta imzo kaliti kerak (yo'qolsa, yangi versiya eski ustiga o'rnatilmaydi).
+- Savollar: (1) Windows uchun kod imzolash sertifikati (OV/EV, yiliga ~$200–500) olinadimi va kim nomiga? (2) Android: Google Play'ga chiqariladimi yoki APK to'g'ridan-to'g'ri (sayt/Telegram) tarqatiladimi? (3) Imzo kalitini kim va qayerda saqlaydi?
+- Agentning tavsiyasi: dastlab APK va imzolanmagan o'rnatuvchi (sinov do'konlari), keyin — OV sertifikat va Google Play (ichki test kanali). Kalit — parol menejerida + oflayn nusxa.
+- Hozircha tanlangan: imzosiz Windows o'rnatuvchi; Android — `key.properties` bo'lsa release kalit, bo'lmasa debug (faqat sinov). Yo'riqnoma: `docs/RELEASE.md`.
+- Javob:

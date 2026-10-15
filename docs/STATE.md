@@ -5,24 +5,19 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-093 Ilovani chiqarish
-- Branch: feat/T-093-release
-- Boshlangan: 2026-10-15
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [x] 1. Backend: pull javobida `app {latest_version, download_url}` (platforma bo'yicha, env) + test, OpenAPI, Dart klient
-- [x] 2. Kassa: pull'dan saqlash, versiya solishtirish, holat qatori va Sozlamalar → "Ilova haqida" (versiya, yangi versiya, havola)
-- [ ] 3. Windows o'rnatuvchi: `apps/pos/windows/installer/pos.iss` (Inno Setup, VC++ runtime DLL'lar, ma'lumot o'chirilmaydi), `apps/pos/tool/build-windows-installer.ps1`; lokal yig'ish, jim o'rnatish → ishga tushirish → o'chirish
-- [ ] 4. Android APK: imzo (key.properties, repoga tushmaydi), lokal build
-- [ ] 5. CI `release.yml` (tag v* → o'rnatuvchi va APK artefakt), versiya 1.0.0, `docs/RELEASE.md`, PR, merge
 
 ## Oxirgi bajarilgan ish
-- 2: `lib/app/update/app_update.dart` (semver, `appUpdateProvider`, `installedVersionProvider`), pull `app_release` sozlamasini yozadi, holat qatori "Yangi versiya X", Sozlamalar → "Ilova haqida"; testlar (app_update_test 4, pull_test +1), golden'lar yangilandi.
+- T-093 tugadi (PR, merge).
 
 ## Keyingi aniq harakat
-- 3-qadam: `apps/pos/windows/installer/pos.iss` + `apps/pos/tool/build-windows-installer.ps1`; ISCC: `C:\Program Files (x86)\Inno Setup 6\ISCC.exe`.
+- ROADMAP'dan keyingi vazifa: T-094 Foydalanuvchi qo'llanmasi (`docs/user-guide/`).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
@@ -49,3 +44,4 @@
 - Next (admin): `"use client"` fayldan eksport qilingan qiymat (massiv, obyekt) server komponentda client reference bo'ladi — umumiy konstantalarni oddiy modulga qo'y.
 - Flutter: bo'lim (StatefulShellRoute) almashganda fokus yo'qoladi — qaytganda ekran o'zi fokusni olishi kerak (`TickerMode.valuesOf` o'zgarishi, kassa misoli). Oyna mazmuni suriladi — testda pastdagi elementni bosishdan oldin `ensureVisible`.
 - Prod stack lokal sinovi: `.env.prod.local` (CADDY_TLS=tls internal, 18080\/18443) + `docker compose -f docker-compose.prod.yml --env-file .env.prod.local -p pos-prodtest up -d --build`; curl `--resolve api.localhost:18443:127.0.0.1`. Git Bash'da `docker ... /deploy/x.sh` uchun `MSYS_NO_PATHCONV=1`. Admin→Django so'rovlari Content-Length bilan bo'lishi shart (WSGI chunked'ni o'qimaydi).
+- Windows o'rnatuvchi lokal: `powershell -ExecutionPolicy Bypass -File apps/pos/tool/build-windows-installer.ps1 -ApiUrl ...`; jim sinov: `dist\kassa-setup-X.exe /VERYSILENT /CURRENTUSER /DIR=%TEMP%\kassa-test`, so'ng `unins000.exe /VERYSILENT`.

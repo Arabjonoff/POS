@@ -1,7 +1,7 @@
 name: pos_app
 description: POS kassa ilovasi — Windows, Android, iOS. Oflayn-birinchi.
 publish_to: none
-version: 0.1.0+1
+version: 1.0.0+1
 
 environment:
   sdk: ^3.11.0
