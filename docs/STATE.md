@@ -14,15 +14,15 @@
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 - [x] 1. Umumiy vektorlar `testdata/report_vectors.json` + backend testi; kassa uchun `GET /api/v1/sync/reports/` (qurilma tokeni, barcha hisobotlar bitta javobda); klientlar
 - [x] 2. Kassa: `data/reports/local_reports.dart` — shu formulalar lokal bazada (summary, by-day, by-hour, top, kassirlar, qarzlar, ombor) + vektor testi (`apps/pos/test/data/local_reports_test.dart`)
-- [ ] 3. `reportsProvider`: onlayn — server, xato — lokal ("faqat shu kassa" belgisi)
+- [x] 3. `reportsProvider`: onlayn — server, xato — lokal ("faqat shu kassa" belgisi)
 - [ ] 4. "Hisobotlar" bo'limi (Ctrl+5, ega/menejer): davr tanlash, KPI (tushum ↑↓%, foyda, cheklar, o'rtacha chek), kunlar/soatlar grafigi, top tovarlar, kassirlar, to'lov turlari, qarzlar, kam qolganlar; kassirga — ruxsat yo'q
 - [ ] 5. Widget testlari + golden + skrinshotlar; spec, PR, merge
 
 ## Oxirgi bajarilgan ish
-- 2-qadam: `lib/data/reports/reports.dart` (modellar, `ReportPeriod`), `local_reports.dart` (`LocalReports.build`), `test/data/local_reports_test.dart` (4 test, vektorlar mos).
+- 3-qadam: `lib/data/reports/reports_provider.dart` (`reportsFetcherProvider` — dio to'g'ridan, sana `YYYY-MM-DD`; `reportsProvider` family — ApiFailure → `LocalReports`), `test/data/reports_provider_test.dart` (3 test).
 
 ## Keyingi aniq harakat
-- 3-qadam: `lib/data/reports/reports_provider.dart` — server javobi (`PosApi.sync.syncReportsRetrieve`, `DeviceReport`) → `Reports`; fetcher override qilinadigan (`price_history.dart` naqshi); `ApiFailure` → `LocalReports`.
+- 4-qadam: `lib/features/reports/reports_screen.dart` + router.dart (`AppSection.reports` → ekran o'rniga `_comingSoon`), tarjimalar (addkeys.mjs), `test/app/shell_test.dart` Ctrl+5 kutilmasini yangilash.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

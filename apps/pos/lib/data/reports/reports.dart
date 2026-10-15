@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart' show immutable;
 import 'package:pos_app/core/time/store_time_zone.dart';
 
 /// Hisobot davri: do'kon kunlari (devor soati, `DateTime.utc(y, m, d)`),
 /// ikkalasi ham kiradi (`reports-api.md`).
+@immutable
 class ReportPeriod {
   ReportPeriod(this.from, this.to, {this.zone = StoreTimeZone.tashkent})
     : assert(!from.isAfter(to), 'from > to');
@@ -27,6 +29,16 @@ class ReportPeriod {
     final length = Duration(days: dayCount);
     return ReportPeriod(from.subtract(length), to.subtract(length), zone: zone);
   }
+
+  @override
+  bool operator ==(Object other) =>
+      other is ReportPeriod &&
+      other.from == from &&
+      other.to == to &&
+      other.zone == zone;
+
+  @override
+  int get hashCode => Object.hash(from, to, zone);
 
   String get fromIso => _iso(from);
   String get toIso => _iso(to);
