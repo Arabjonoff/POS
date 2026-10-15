@@ -1,6 +1,7 @@
 import 'package:clock/clock.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pos_app/core/text/phone.dart';
 import 'package:pos_app/core/text/search_key.dart';
 import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/data/ids.dart';
@@ -172,6 +173,8 @@ ORDER BY c.full_name
     required String createdBy,
     String phone = '',
   }) async {
+    final normalized = normalizePhone(phone);
+    if (normalized == null) throw ArgumentError.value(phone, 'phone');
     final id = _newId();
     final now = _now();
     await _db.transaction(() async {
@@ -181,7 +184,7 @@ ORDER BY c.full_name
             CustomersCompanion.insert(
               id: id,
               fullName: name.trim(),
-              phone: Value(phone.trim()),
+              phone: Value(normalized),
               updatedAt: Value(now),
             ),
           );
@@ -192,7 +195,7 @@ ORDER BY c.full_name
         payload: {
           'id': id,
           'full_name': name.trim(),
-          'phone': phone.trim(),
+          'phone': normalized,
           'note': '',
           'by': createdBy,
         },
@@ -201,7 +204,7 @@ ORDER BY c.full_name
     return CustomerEntry(
       id: id,
       name: name.trim(),
-      phone: phone.trim(),
+      phone: normalized,
       balanceTiyin: 0,
     );
   }
@@ -333,6 +336,8 @@ ORDER BY c.full_name
     int? limitTiyin,
   }) async {
     if (name.trim().isEmpty) throw ArgumentError.value(name, 'name');
+    final normalized = normalizePhone(phone);
+    if (normalized == null) throw ArgumentError.value(phone, 'phone');
     if (limitTiyin != null && limitTiyin < 0) {
       throw ArgumentError.value(limitTiyin);
     }
@@ -341,7 +346,7 @@ ORDER BY c.full_name
       await (_db.update(_db.customers)..where((c) => c.id.equals(id))).write(
         CustomersCompanion(
           fullName: Value(name.trim()),
-          phone: Value(phone.trim()),
+          phone: Value(normalized),
           note: Value(note.trim()),
           debtLimitTiyin: changeLimit
               ? Value(limitTiyin)
@@ -356,7 +361,7 @@ ORDER BY c.full_name
         payload: {
           'id': id,
           'full_name': name.trim(),
-          'phone': phone.trim(),
+          'phone': normalized,
           'note': note.trim(),
           if (changeLimit) 'debt_limit_tiyin': limitTiyin,
           'by': by,

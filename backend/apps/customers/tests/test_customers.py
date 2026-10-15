@@ -37,7 +37,8 @@ def test_client_id_accepted(client_as, cashier):
     "payload",
     [
         {"phone": "+99890"},
-        {"phone": "901234567"},
+        {"phone": "12345"},
+        {"phone": "+7 901 234 56 78"},
         {"full_name": ""},
         {"debt_limit_tiyin": -1},
         {"debt_limit_tiyin": 100.0},
@@ -47,6 +48,24 @@ def test_client_id_accepted(client_as, cashier):
 def test_invalid_payload_rejected(client_as, manager, payload):
     body = {"full_name": "Ali"} | payload
     assert client_as(manager).post(CUSTOMERS, body, format="json").status_code == 400
+
+
+@pytest.mark.parametrize(
+    "raw", ["90 123 45 67", "901234567", "+998 (90) 123-45-67", "998901234567"]
+)
+def test_phone_is_normalized(client_as, cashier, raw):
+    # Kassa raqamni yozilganicha yuboradi — server bir ko'rinishga keltiradi (audit B1).
+    payload = {"full_name": "Ali", "phone": raw}
+    response = client_as(cashier).post(CUSTOMERS, payload, format="json")
+    assert response.status_code == 201, response.json()
+    assert response.json()["phone"] == "+998901234567"
+
+
+def test_blank_phone_allowed(client_as, cashier):
+    payload = {"full_name": "Ali", "phone": "  "}
+    response = client_as(cashier).post(CUSTOMERS, payload, format="json")
+    assert response.status_code == 201
+    assert response.json()["phone"] == ""
 
 
 def test_phone_not_unique(client_as, manager):

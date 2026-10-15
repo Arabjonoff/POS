@@ -275,6 +275,10 @@
   "@setupErrorUnknown": {
     "description": "Ulash xatosi"
   },
+  "phoneInvalid": "Raqam noto'g'ri. Masalan: 90 123 45 67",
+  "@phoneInvalid": {
+    "description": "Telefon raqami noto'g'ri"
+  },
   "fieldRequired": "To'ldiring",
   "@fieldRequired": {
     "description": "Bo'sh majburiy maydon"

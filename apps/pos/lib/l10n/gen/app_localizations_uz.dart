@@ -229,6 +229,9 @@ class AppLocalizationsUz extends AppLocalizations {
   String get setupErrorUnknown => 'Nimadir xato ketdi. Qayta urinib ko\'ring.';
 
   @override
+  String get phoneInvalid => 'Raqam noto\'g\'ri. Masalan: 90 123 45 67';
+
+  @override
   String get fieldRequired => 'To\'ldiring';
 
   @override
@@ -2025,6 +2028,9 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get setupErrorUnknown => 'Нимадир хато кетди. Қайта уриниб кўринг.';
+
+  @override
+  String get phoneInvalid => 'Рақам нотўғри. Масалан: 90 123 45 67';
 
   @override
   String get fieldRequired => 'Тўлдиринг';
