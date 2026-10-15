@@ -6,7 +6,14 @@ import 'package:pos_ui/src/tokens/pos_typography.dart';
 /// `dangerGhost` — matnli xavfli amal (masalan, "Qoralamani o'chirish"):
 /// asosiy tugma yonida qizil, lekin fonsiz — e'tiborni tortib olmaydi.
 /// `success` — yashil: yakunlovchi pul amali (kassada TO'LASH).
-enum PosButtonVariant { primary, success, secondary, danger, ghost, dangerGhost }
+enum PosButtonVariant {
+  primary,
+  success,
+  secondary,
+  danger,
+  ghost,
+  dangerGhost,
+}
 
 /// Balandlik: s 48, m 56 (kassa asosiy), l 64, xl 80 (To'lash).
 enum PosButtonSize {
