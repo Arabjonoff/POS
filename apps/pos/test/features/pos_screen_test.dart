@@ -280,7 +280,7 @@ void main() {
       await open(tester, db: db);
 
       expect(
-        find.text(PosFormat.qtyWithUnit(24000, unit: 'dona', weighted: false)),
+        find.text(PosFormat.qtyWithUnit(24000, unit: 'dona')),
         findsOneWidget,
       );
       expect(find.text('Kam'), findsOneWidget);
