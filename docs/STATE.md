@@ -5,24 +5,19 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-085 Obuna nazorati ilovada
-- Branch: feat/T-085-subscription-banners
-- Boshlangan: 2026-10-15
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [x] 1. `lib/app/sync/subscription_notice.dart`: oxirgi pull'dagi `subscription` + o'tgan kunlar (Toshkent, server farqi bilan) → sinov / tugashiga ≤ 3 kun / grace ogohlantirishi; `supportPhoneProvider` (`--dart-define=SUPPORT_PHONE`) + unit testlar
-- [x] 2. `SubscriptionBanner` qobiqda (barcha bo'limlar tepasida): sinov — ko'k, tugash — sariq, grace — qizil; aloqa raqami
-- [x] 3. Savdo to'xtaganda (readonly/blocked/oflayn/qurilma): kassa banneri — sabab + nima ishlaydi + aloqa; kirim va inventarizatsiyani tasdiqlash ham o'chadi (sync.md)
-- [ ] 4. Widget testlari (har holat), golden, skrinshotlar; Q-008 (aloqa raqami) QUESTIONS.md
-- [ ] 5. Spec, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- 2–3: `subscription_banner.dart` (`SubscriptionBanner` qobiqda, `NoticeBar`, `contactLine`, `salesBlockHelp`, `SalesBlockedNote`), kassa banneri sabab + nima ishlaydi + aloqa; kirim/inventarizatsiya tasdiqlash `salesAllowedProvider` ga bog'landi; tarjimalar.
+- T-085 tugadi (PR, merge).
 
 ## Keyingi aniq harakat
-- 4-qadam: `test/features/subscription_test.dart` (sync_state ga subscriptionJson yozib: trial, expiring, active, grace, readonly, blocked, oflayn; kirim tasdiqlash o'chiq), golden, Q-008.
+- ROADMAP'dan keyingi vazifa: T-090 Chidamlilik testlari.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
