@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import { createApiClient } from "@/api/client";
 import type { components } from "@/api/schema";
@@ -40,4 +40,96 @@ export async function getStats(): Promise<Stats> {
   const { data, response } = await api.GET("/api/v1/platform/stats/", { cache: "no-store" });
   if (!data) throw new PlatformApiError(response.status);
   return data;
+}
+
+export type TenantRow = components["schemas"]["TenantList"];
+export type TenantDetail = components["schemas"]["TenantDetail"];
+export type Plan = components["schemas"]["Plan"];
+export type StaffUser = components["schemas"]["UserBrief"];
+export type PlatformDevice = components["schemas"]["PlatformDevice"];
+export type Payment = components["schemas"]["Payment"];
+export type SyncEvent = components["schemas"]["SyncEvent"];
+export type TenantStatus = "trial" | "active" | "grace" | "readonly" | "blocked";
+
+export const TENANT_STATUSES: TenantStatus[] = ["trial", "active", "grace", "readonly", "blocked"];
+export const PAGE_SIZE = 25;
+
+function ensure<T>(data: T | undefined, response: Response): T {
+  if (data === undefined) {
+    if (response.status === 404) notFound();
+    throw new PlatformApiError(response.status);
+  }
+  return data;
+}
+
+/** `GET /platform/tenants/` — qidiruv (nom/telefon), holat, sahifa. */
+export async function listTenants(query: { search?: string; status?: TenantStatus; page?: number }) {
+  const api = await platformApi();
+  const { data, response } = await api.GET("/api/v1/platform/tenants/", {
+    params: {
+      query: {
+        search: query.search || undefined,
+        status: query.status,
+        page: query.page && query.page > 1 ? query.page : undefined,
+        page_size: PAGE_SIZE,
+      },
+    },
+    cache: "no-store",
+  });
+  return ensure(data, response);
+}
+
+export async function getTenant(id: string): Promise<TenantDetail> {
+  const api = await platformApi();
+  const { data, response } = await api.GET("/api/v1/platform/tenants/{id}/", {
+    params: { path: { id } },
+    cache: "no-store",
+  });
+  return ensure(data, response);
+}
+
+/** Faol tariflar (yangi mijoz ustasi uchun). */
+export async function listPlans(): Promise<Plan[]> {
+  const api = await platformApi();
+  const { data, response } = await api.GET("/api/v1/platform/plans/", {
+    params: { query: { page_size: 100 } },
+    cache: "no-store",
+  });
+  return ensure(data, response).results.filter((p) => p.is_active !== false);
+}
+
+export async function tenantUsers(id: string): Promise<StaffUser[]> {
+  const api = await platformApi();
+  const { data, response } = await api.GET("/api/v1/platform/tenants/{id}/users/", {
+    params: { path: { id }, query: { page_size: 100 } },
+    cache: "no-store",
+  });
+  return ensure(data, response).results;
+}
+
+export async function tenantDevices(id: string): Promise<PlatformDevice[]> {
+  const api = await platformApi();
+  const { data, response } = await api.GET("/api/v1/platform/devices/", {
+    params: { query: { tenant: id, page_size: 100 } },
+    cache: "no-store",
+  });
+  return ensure(data, response).results;
+}
+
+export async function tenantPayments(id: string) {
+  const api = await platformApi();
+  const { data, response } = await api.GET("/api/v1/platform/payments/", {
+    params: { query: { tenant: id, page_size: 100 } },
+    cache: "no-store",
+  });
+  return ensure(data, response);
+}
+
+export async function tenantSyncEvents(id: string): Promise<SyncEvent[]> {
+  const api = await platformApi();
+  const { data, response } = await api.GET("/api/v1/platform/tenants/{id}/sync-events/", {
+    params: { path: { id }, query: { page_size: 50 } },
+    cache: "no-store",
+  });
+  return ensure(data, response).results;
 }
