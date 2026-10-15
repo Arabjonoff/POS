@@ -253,7 +253,7 @@ Spec'lar: `admin-dashboard.md`, `subscription-billing.md`.
 - **Qabul:** to'lov kiritilganda muddat to'g'ri hisoblanadi (testlar).
 - **Bog'liq:** T-082
 
-### [ ] T-084 Admin: qurilmalar va audit jurnali
+### [x] T-084 Admin: qurilmalar va audit jurnali
 - **Bajarish:** barcha qurilmalar (versiya, oxirgi sinxron, bloklash), audit jurnali (filtr bilan).
 - **Qabul:** Playwright testlari.
 - **Bog'liq:** T-082

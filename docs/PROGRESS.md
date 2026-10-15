@@ -346,3 +346,13 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-083 (squash merge)
 - Qoldi / keyingi qadam: T-084 qurilmalar va audit jurnali.
 - Muammo yoki qaror: e2e refresh testi parallel so'rovlarda yiqildi — soxta API refresh'ni bir martalik qilgan edi, Django esa blacklist'siz; mock Django'ga moslandi (spec'ga eslatma).
+
+## 2026-10-15 — T-084 Admin: qurilmalar va audit jurnali
+- Qilindi:
+  - `/devices`: barcha qurilmalar, filtrlar (3 kundan beri sinxronlanmagan, bloklangan), eski sinxron ajratilgan, bloklash (sabab bilan) / blokdan chiqarish.
+  - `/audit`: amal va obyekt turi filtri, mijoz bo'yicha (`?tenant=`), o'zgargan maydonlar (`before → after`) ochiladigan qatorda, sahifalash.
+  - `BlockDialog` mijoz va qurilma uchun umumiy; `src/lib/audit.ts` (amallar, obyekt turlari, farq).
+- Testlar: Vitest 58 (+3 audit farqi), Playwright 23 (+2: qurilmalar filtrlari va bloklash → auditda; mijoz audit yozuvlari, o'zgarishlar, amal filtri). 5 marta ketma-ket barqaror. Skrinshotlar: `docs/screenshots/T-084/`.
+- PR: T-084 (squash merge)
+- Qoldi / keyingi qadam: T-085 Obuna nazorati kassa ilovasida (bannerlar, readonly).
+- Muammo yoki qaror: (1) `"use client"` moduldan eksport qilingan massiv server sahifada ishlamaydi (client reference) — konstantalar oddiy modulda. (2) Mijozlar filtrida yuklama ostida qidiruv debounce va holat tanlovi bir-birini bekor qilardi — kutilayotgan URL `ref` da saqlanadi.
