@@ -99,8 +99,8 @@ export function Dashboard({ stats }: { stats: Stats }) {
         />
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-3">
-        <Card className="lg:col-span-2">
+      <div className="grid gap-4 xl:grid-cols-3">
+        <Card className="xl:col-span-2">
           <CardHeader>
             <CardTitle>
               <h2>{t("revenueChart")}</h2>
@@ -108,11 +108,11 @@ export function Dashboard({ stats }: { stats: Stats }) {
             <CardDescription>{t("revenueChartHint")}</CardDescription>
           </CardHeader>
           <CardContent>
-            <RevenueChart data={chart} currency={currency} />
+            <RevenueChart data={chart} currency={currency} seriesLabel={t("revenueSeries")} />
           </CardContent>
         </Card>
 
-        <div className="flex flex-col gap-4">
+        <div className="grid content-start gap-4 md:grid-cols-2 xl:grid-cols-1">
           <Card data-testid="expiring">
             <CardHeader>
               <CardTitle>
@@ -125,8 +125,11 @@ export function Dashboard({ stats }: { stats: Stats }) {
               ) : (
                 <ul className="flex flex-col divide-y">
                   {stats.expiring_soon.map((row) => (
-                    <li key={row.tenant} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0">
-                      <div className="min-w-0 flex-1">
+                    <li
+                      key={row.tenant}
+                      className="flex flex-wrap items-center gap-x-3 gap-y-2 py-3 first:pt-0 last:pb-0"
+                    >
+                      <div className="min-w-40 flex-1">
                         <Link
                           href={`/tenants/${row.tenant}`}
                           className="block truncate font-medium hover:underline"

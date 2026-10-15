@@ -40,7 +40,8 @@
     "addPayment": "To'lov kiritish",
     "staleTitle": "{count, plural, =0 {Barcha qurilmalar sinxronlangan} other {# ta qurilma sinxronlanmagan}}",
     "staleText": "3 kundan beri ma'lumot yubormagan qurilmalar",
-    "staleView": "Ko'rish"
+    "staleView": "Ko'rish",
+    "revenueSeries": "Tushum"
   },
   "notFound": {
     "title": "Sahifa topilmadi",

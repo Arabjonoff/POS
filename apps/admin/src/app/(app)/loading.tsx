@@ -13,8 +13,8 @@ export default function Loading() {
           <Skeleton key={i} className="h-28 rounded-xl" />
         ))}
       </div>
-      <div className="grid gap-4 lg:grid-cols-3">
-        <Skeleton className="h-80 rounded-xl lg:col-span-2" />
+      <div className="grid gap-4 xl:grid-cols-3">
+        <Skeleton className="h-80 rounded-xl xl:col-span-2" />
         <Skeleton className="h-80 rounded-xl" />
       </div>
     </div>

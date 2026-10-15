@@ -5,23 +5,19 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-081 Admin: bosh sahifa (KPI)
-- Branch: feat/T-081-admin-dashboard
-- Boshlangan: 2026-10-15
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [x] 1. Server ma'lumot qatlami: `src/lib/platform.ts` (`platformApi()` — cookie'dagi access bilan, 401 → `/login`), `getStats()`; `src/lib/format.ts` (pul tiyin → `1 250 000 so'm`, sana) + Vitest
-- [x] 2. Bosh sahifa: KPI kartalari (faol, sinovda, MRR, shu oy tushum), muddati tugaydiganlar ro'yxati ("To'lov kiritish"), eski qurilmalar, oylik tushum grafigi (Recharts); `loading.tsx`, `error.tsx`
-- [x] 3. Testlar: komponent (Vitest), soxta API'ga `/platform/stats/`, Playwright `e2e/dashboard.spec.ts`
-- [ ] 4. Spec, skrinshotlar, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- 3: Vitest 32 (dashboard 4, platform 3, format 4 …), mock API `/platform/stats/` (+ 500 qaytaruvchi admin 91 111 11 11), `e2e/dashboard.spec.ts` (3) — jami e2e 11 o'tdi.
+- T-081 tugadi (PR, merge).
 
 ## Keyingi aniq harakat
-- 4-qadam: skrinshotlar `docs/screenshots/T-081/` (scratchpad `shots80.cjs` naqshi), spec, PROGRESS, ROADMAP, PR.
+- ROADMAP'dan keyingi vazifa: T-082 Admin: mijozlar (tenantlar).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

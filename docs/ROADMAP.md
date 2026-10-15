@@ -238,7 +238,7 @@ Spec'lar: `admin-dashboard.md`, `subscription-billing.md`.
 - **Qabul:** Playwright: noto'g'ri parol xatosi, to'g'ri kirish, chiqish.
 - **Bog'liq:** T-005, T-020
 
-### [ ] T-081 Admin: bosh sahifa (KPI)
+### [x] T-081 Admin: bosh sahifa (KPI)
 - **Bajarish:** faol mijozlar, sinovdagilar, MRR, shu oy to'lovlar, 7 kunda muddati tugaydiganlar, oxirgi sinxronlashi 3 kundan eski qurilmalar.
 - **Qabul:** Playwright + API mock testlari.
 - **Bog'liq:** T-080

@@ -7,7 +7,16 @@ import { formatMoney, formatMoneyAmount } from "@/lib/format";
 export type RevenuePoint = { label: string; revenueTiyin: number };
 
 /** Oylik tushum ustunlari (pul — tiyin; o'qda so'm). */
-export function RevenueChart({ data, currency }: { data: RevenuePoint[]; currency: string }) {
+export function RevenueChart({
+  data,
+  currency,
+  seriesLabel,
+}: {
+  data: RevenuePoint[];
+  currency: string;
+  /** Tooltip'dagi nom (tarjimadan). */
+  seriesLabel: string;
+}) {
   return (
     <div className="h-64 w-full" data-testid="revenue-chart">
       <ResponsiveContainer width="100%" height="100%">
@@ -28,7 +37,7 @@ export function RevenueChart({ data, currency }: { data: RevenuePoint[]; currenc
           />
           <Tooltip
             cursor={{ fill: "var(--muted)" }}
-            formatter={(value) => formatMoney(Number(value), currency)}
+            formatter={(value) => [formatMoney(Number(value), currency), seriesLabel]}
             contentStyle={{
               background: "var(--popover)",
               color: "var(--popover-foreground)",

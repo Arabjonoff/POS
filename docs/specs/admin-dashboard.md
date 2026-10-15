@@ -32,3 +32,11 @@ Next.js App Router, TypeScript (strict), Tailwind, shadcn/ui, TanStack Query + T
 - Django manzili serverda: `API_URL_INTERNAL` (Docker: `http://backend:8000`), bo'lmasa `NEXT_PUBLIC_API_URL`.
 - Qobiq: chapda menyu (planshet/telefonda — sheet), tepada til, mavzu, admin ismi va "Chiqish". Hali qurilmagan bo'limlar — "Bo'lim tayyorlanmoqda" (`(app)/[section]`).
 - E2E: `e2e/mock-api.mjs` — soxta Django auth API (Playwright `webServer`), haqiqiy backend kerak emas.
+
+## Bosh sahifa (T-081)
+- Ma'lumot: `GET /api/v1/platform/stats/` (server komponent, admin access tokeni bilan; `401` → `/login`, boshqa xato → "Ma'lumotni yuklab bo'lmadi" + "Qayta urinish"). Yuklanishda — kartalar shaklidagi skelet.
+- KPI kartalari: **Faol mijozlar** (`active`; ostida jami, muddati o'tgan, faqat o'qish, bloklangan), **Sinovdagilar**, **Oylik tushum (MRR)**, **Shu oy to'lovlar**. Pul — tiyindan `1 350 000 so'm` (`src/lib/format.ts`, butun son).
+- **Oylik tushum** grafigi (Recharts, ustunlar): oxirgi 12 oy, oy nomi tilga qarab (`noy, 25` / `нояб. 25`), tooltip — summa.
+- **Muddati 7 kunda tugaydi**: nom (mijoz sahifasiga havola), "… gacha to'langan", qolgan kun (≤ 2 — qizil), **To'lov kiritish** → `/tenants/{id}?payment=1` (to'lov oynasi — T-083).
+- **Sinxronlanmagan qurilmalar** (3 kundan ortiq) soni → `/devices?stale_days=3`.
+- Joylashuv: desktop (≥ 1280) — 4 KPI, grafik + o'ngda ro'yxatlar; planshet — 2×2 KPI, grafik to'liq kenglikda, ostida ikki karta; telefon — bir ustun.
