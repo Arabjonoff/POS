@@ -5,19 +5,26 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-109 Cheklar tarixi va qayta chop etish (loyiha egasi talabi)
+- Branch: feat/T-109-receipt-history
+- Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
-- (yo'q)
+- [x] 1. Spec `docs/specs/receipt-history.md`, ROADMAP 12-bosqich T-109
+- [x] 2. Ma'lumot: `lib/data/sales/sale_history.dart` (filtr, ro'yxat, jonli)
+- [ ] 3. Unit test `test/data/sale_history_test.dart`
+- [ ] 4. Bo'lim: `AppSection.sales` (kassadan keyin, Ctrl+7, kassada F7), router
+- [ ] 5. `lib/features/sales/sales_screen.dart` (filtrlar, ro'yxat, skaner) + `sale_detail.dart` (chek ko'rinishi, qayta chop etish, qaytarish)
+- [ ] 6. `showRefundDialog(saleId:)`; l10n (uz/uz-Cyrl/ru)
+- [ ] 7. Widget testlar `test/features/sales_history_test.dart`, golden `sales/*`, boshqa golden'larni yangilash (menyuda yangi ikon)
+- [ ] 8. Hujjatlar (pos-screen.md klaviatura, user guide), tekshiruvlar, PR, merge
 
 ## Oxirgi bajarilgan ish
-- T-047 Android Bluetooth/USB chek printeri (PR #62). Haqiqiy qurilmada sinov — `docs/printing-android-checklist.md`.
+- Spec va ma'lumot qatlami yozildi.
 
 ## Keyingi aniq harakat
-- ROADMAP'da bajarilmagan vazifa qolmadi; ochiq savollar `docs/QUESTIONS.md` (Q-001…Q-007, Q-009…Q-011). Loyiha egasidan yangi vazifa kutiladi.
+- 3-qadam: `apps/pos/test/data/sale_history_test.dart` (sana, qidiruv raqam/tovar/mijoz, to'lov filtri, qaytarilgan summa).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
