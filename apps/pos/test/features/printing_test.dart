@@ -76,7 +76,7 @@ void main() {
     expect(find.text('Savdo yakunlandi'), findsOneWidget);
   });
 
-  testWidgets('printer off: the sale stays, retry prints a copy', (
+  testWidgets('printer off: the sale stays, retry prints the original', (
     tester,
   ) async {
     await open(tester);
@@ -91,8 +91,22 @@ void main() {
     await tester.tap(find.text('Qayta chop etish'));
     await tester.pumpAndSettle();
     expect(printer.jobs, hasLength(1));
-    expect(printed(printer.jobs.single, 'NUSXA'), isTrue);
+    // Mijoz birinchi chekini oladi — "NUSXA" emas (audit PRN-B13).
+    expect(printed(printer.jobs.single, 'NUSXA'), isFalse);
+    expect(printed(printer.jobs.single, 'D3-000001'), isTrue);
     expect(find.text('Printer ulangan'), findsOneWidget);
+  });
+
+  testWidgets('auto print off: cash sale still opens the drawer', (
+    tester,
+  ) async {
+    await open(
+      tester,
+      settings: network.copyWith(autoPrint: false, openDrawer: true),
+    );
+    await sell(tester);
+    // Chek yo'q, faqat pul qutisi buyrug'i (audit PRN-B14).
+    expect(printer.jobs.single, EscPos.drawerOnly());
   });
 
   testWidgets('auto print off → no receipt; "last receipt" prints it', (
@@ -152,6 +166,8 @@ void main() {
         find.byKey(const ValueKey('printer-address')),
         '192.168.1.77:9100',
       );
+      // Manzil yozish to'xtagach saqlanadi (har harfda printer tekshirilmaydi).
+      await tester.pump(const Duration(seconds: 1));
       await tester.pumpAndSettle();
       await tapVisible(tester, find.text('80 mm'));
       await tapVisible(tester, find.text('2'));

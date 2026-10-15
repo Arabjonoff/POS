@@ -5,26 +5,26 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-103 Mijoz boshlang'ich balansi (dizayn — `docs/audit/audit_customers.md` 2-bo'lim)
-- Branch: feat/T-103-opening-balance
+- Vazifa: T-104 Chek sozlamalari (reja — `docs/audit/audit_printing.md` 3-bo'lim). Ikki PR: 104a (xatolar, preview, qurilma sozlamalari), 104b (do'kon rekvizitlari, ko'rsat/yashir, logotip, server)
+- Branch: feat/T-104-receipt-settings
 - Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
-- [x] 1. Server: `DebtType.OPENING`, cheklovlar (bitta mijozga bitta, smena/savdosiz) — migratsiya 0003; `record_opening_balance`; `CustomerSerializer.opening_balance` (faqat yaratishda; avans — ega/menejer); qarzlar hisobotida `total_credit_tiyin`, `creditors_count`
-- [x] 2. Server testlari (`test_opening.py` 17, sinxron, hisobot)
-- [x] 3. Dizayn tizimi: `PosSegmentedControl`, `PosDateField`, `PosTextField.onTap` (+ testlar)
-- [x] 4. Kassa: `OpeningBalanceInput`, `CustomerDirectory.create(opening:)`; yangi mijoz formasi (balans bo'limi, `GroupedMoneyFormatter`); kartada/ro'yxatda avans
-- [x] 5. Kassa data testlari
-- [x] 6. Widget testlari, golden/skrinshot, OpenAPI + klientlar
-- [x] 7. Spec (`customers-api.md`, `debts.md`, `sync-api.md`), qaror 0011
-- [ ] 8. PR, CI, merge
+- [x] 1. Dizayn tizimi: Roboto Mono (OFL), `PosTypography.receipt`, `PosColors.receiptPaper/receiptInk`
+- [x] 2. `receipt.dart`: 42 belgili 80 mm, `ReceiptRow.tall`, bo'sh do'kon/kassir qatori yo'q, birlik (g/qadoq), oraliq summa, aralash to'lov (+ "Berildi"), qarz savdodan keyin, telefon formati, `plain()` kengaytirildi
+- [x] 3. `escpos.dart`: `EscPosProfile` (kod sahifasi, `FS .`, kesish, surish), Ў/ў CP866, `GS !` baland, `printable()`
+- [x] 4. `PrinterSettings`: code_page, cancel_kanji, cut, feed_lines (eski JSON mos)
+- [x] 5. `printer_service.dart`: profil, test cheki = namuna chek (`receipt_sample.dart`); loader: savdodan keyingi qarz; kassa: qayta urinish NUSXA emas, avto-chop o'chiq bo'lsa ham pul qutisi
+- [x] 6. `ReceiptPreview` vidjeti + sozlamalar paneli (preview, qo'shimcha sozlamalar, manzil debounce)
+- [x] 7. Testlar (snapshot'lar, 32/42/48 × 3 til "hamma qator sig'adi", `?` yo'q), golden'lar
+- [ ] 8. PR 104a; keyin 104b
 
 ## Oxirgi bajarilgan ish
-- T-102 merge (#52). T-103 1–5 qadamlar tayyor (commit qilinmagan edi — endi branch'da).
+- T-104a tayyor (PROGRESS). PR ochilmoqda.
 
 ## Keyingi aniq harakat
-- T-103 PR CI yashil bo'lsa merge; keyin T-104 (`docs/audit/audit_printing.md` 3-bo'lim).
+- T-104a PR CI yashil bo'lsa merge; keyin T-104b: `backend/apps/tenants/models.py` Store'ga `legal_name`, `tin`, `receipt_logo`, `receipt_options` (additive migratsiya), pull'da, `store.upserted` hodisasi (ega/menejer, tenant testi), kassa drift `stores` ustunlari, muharrir + ko'rsat/yashir, logotip (`file_picker` → kulrang PNG → `GS v 0`).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
@@ -47,6 +47,7 @@
 - Generatsiya qilingan Dart klient `DateTime` query'ni to'liq ISO vaqt qilib yuboradi; server `DateField` (`YYYY-MM-DD`) bo'lsa — Dio bilan to'g'ridan-to'g'ri chaqir (`reports_provider.dart` misoli).
 - Push'dan oldin: `dart format apps/pos/lib apps/pos/test packages/ui/lib packages/ui/test packages/ui/widgetbook/lib packages/ui/widgetbook/test` (CI tekshiradi); backend serializer o'zgarsa — `make schema` (openapi.yaml diff CI'da).
 - Windows'da Python bilan fayl yozganda `newline=''` ishlat (aks holda CRLF); `\n`/`\u02bb` kabi escape'lar heredoc ichida buziladi — Edit vositasi yoki skript fayl ishlat. Ruff RUF001: o'zbek `ʻ` uchun `# noqa: RUF001`.
+- Chek ko'rinishi (preview) mavzudan `letterSpacing` olsa oxirgi belgini kesadi — `PosTypography.receipt` da 0 (test: `receipt_preview_test.dart`).
 - Admin e2e lokal: `cd apps/admin && npm run build && E2E_PORT=3150 npx playwright test` (3100 — docker admin bo'lishi mumkin; reuseExistingServer uni qayta ishlatib yuboradi). Soxta Django API: `e2e/mock-api.mjs` (3199).
 - Admin'ga npm paket qo'shilsa: Windows'dagi npm lock'dan `@emnapi/core|runtime` (optional, wasm) yozuvlarini o'chiradi va CI `npm ci` yiqiladi. Yechim: yozuvlarni main'dagi lock'dan qaytarish, `npm ci --dry-run` bilan tekshirish.
 - Admin skrinshotlari: scratchpad'dagi `shots8x.cjs` naqshi — `node e2e/mock-api.mjs` + `API_URL_INTERNAL=http://127.0.0.1:3199 npx next start -p 3150`, keyin Playwright skript (`require(<apps/admin>/node_modules/playwright)`). Bash'da murakkab `node -e` / heredoc'ga `${...}` va qo'shtirnoq aralashsa buziladi — Write vositasi bilan fayl yoz.

@@ -21,10 +21,11 @@ void main() {
       0xf0,
       0xf1,
     ]);
-    // Ўзбек → Узбек; қ ғ ҳ → к г х.
+    // Ў ў — CP866 da bor (0xF6/0xF7; audit PRN-B1); қ ғ ҳ → к г х.
+    expect(EscPos.encode('Ўў', PrinterEncoding.cp866), [0xf6, 0xf7]);
     expect(
-      EscPos.encode('Ўқғҳ', PrinterEncoding.cp866),
-      EscPos.encode('Укгх', PrinterEncoding.cp866),
+      EscPos.encode('қғҳ', PrinterEncoding.cp866),
+      EscPos.encode('кгх', PrinterEncoding.cp866),
     );
     expect(EscPos.encode('€', PrinterEncoding.cp866), [0x3f]);
   });
@@ -40,6 +41,7 @@ void main() {
     ]);
     expect(bytes, [
       ...EscPos.init,
+      ...EscPos.cancelKanji,
       ...EscPos.codePage866,
       ...EscPos.alignCenter,
       ...EscPos.boldOn,
@@ -60,7 +62,17 @@ void main() {
       drawer: true,
       cut: false,
     );
-    expect(bytes, [...EscPos.init, ...EscPos.openDrawer, 0x78, 0x0a]);
+    // Kesuvchisiz printer: faqat qog'oz suriladi.
+    expect(bytes, [
+      ...EscPos.init,
+      ...EscPos.cancelKanji,
+      ...EscPos.openDrawer,
+      0x78,
+      0x0a,
+      0x1b,
+      0x64,
+      4,
+    ]);
     expect(EscPos.drawerOnly(), [...EscPos.init, ...EscPos.openDrawer]);
   });
 
@@ -77,6 +89,7 @@ void main() {
     ], cut: false);
     expect(bytes, [
       ...EscPos.init,
+      ...EscPos.cancelKanji,
       ...EscPos.codePage866,
       ...EscPos.alignCenter,
       0x1d,
@@ -97,6 +110,47 @@ void main() {
       ...ascii.encode('D3-000123'),
       0x0a,
       ...EscPos.alignLeft,
+      0x1b,
+      0x64,
+      4,
     ]);
+  });
+
+  test('profile: code page, no Kanji cancel, feed without cut', () {
+    final bytes = EscPos.receipt(
+      const [ReceiptRow('x')],
+      profile: const EscPosProfile(
+        codePage: 7,
+        cancelKanji: false,
+        cut: false,
+        feedLines: 2,
+      ),
+    );
+    expect(bytes, [...EscPos.init, 0x1b, 0x74, 7, 0x78, 0x0a, 0x1b, 0x64, 2]);
+  });
+
+  test('tall row (JAMI) — GS ! 1, then back to normal', () {
+    final bytes = EscPos.receipt(const [
+      ReceiptRow('JAMI', bold: true, tall: true),
+      ReceiptRow('x'),
+    ], profile: const EscPosProfile(cancelKanji: false, cut: false));
+    final text = bytes.toList();
+    final on = text.indexOf(0x21); // GS ! n
+    expect(text.sublist(on - 1, on + 2), EscPos.tallOn);
+    expect(
+      String.fromCharCodes(
+        bytes,
+      ).contains(String.fromCharCodes(EscPos.tallOff)),
+      isTrue,
+    );
+  });
+
+  test('printable(): what the printer will really show', () {
+    expect(
+      EscPos.printable('Ўзбек қовун', PrinterEncoding.cp866),
+      'Ўзбек ковун',
+    );
+    expect(EscPos.printable('€ 5', PrinterEncoding.cp866), '? 5');
+    expect(EscPos.printable('қовун €', PrinterEncoding.utf8), 'қовун €');
   });
 }

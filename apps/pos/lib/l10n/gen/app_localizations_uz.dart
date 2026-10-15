@@ -678,6 +678,65 @@ class AppLocalizationsUz extends AppLocalizations {
   String get receiptCustomer => 'Mijoz';
 
   @override
+  String get receiptSubtotal => 'Summa';
+
+  @override
+  String get receiptReceived => 'Berildi (naqd)';
+
+  @override
+  String get receiptDebtAfter => 'Qarz (savdodan keyin)';
+
+  @override
+  String get printerWidthNarrow => '80 mm (42 belgi)';
+
+  @override
+  String get printerAdvanced => 'Qo\'shimcha sozlamalar';
+
+  @override
+  String get printerCodePage => 'Kirill jadvali raqami (ESC t)';
+
+  @override
+  String get printerCodePageHint =>
+      'Odatda 17. Kirill noto\'g\'ri chiqsa — printer qo\'llanmasidan PC866 raqamini qarang.';
+
+  @override
+  String get printerCancelKanji => 'Xitoycha rejimni o\'chirish';
+
+  @override
+  String get printerCut => 'Qog\'ozni kesish';
+
+  @override
+  String get printerFeed => 'Kesishdan oldin bo\'sh qatorlar';
+
+  @override
+  String get receiptPreviewTitle => 'Chek ko\'rinishi';
+
+  @override
+  String get receiptPreviewHint =>
+      'Printer aynan shunday chiqaradi: kenglik, harflar va ustunlar bir xil.';
+
+  @override
+  String get receiptPreviewSample => 'Namuna (hali savdo yo\'q)';
+
+  @override
+  String get receiptPreviewLast => 'Oxirgi savdo';
+
+  @override
+  String get receiptSampleItem1 => 'Kungaboqar yog\'i «Oltin» 5 litr';
+
+  @override
+  String get receiptSampleItem2 => 'Olma qizil';
+
+  @override
+  String get receiptSampleItem3 => 'Non';
+
+  @override
+  String get receiptSampleStore => 'Do\'kon nomi';
+
+  @override
+  String get printerTestReceipt => 'Test cheki';
+
+  @override
   String get receiptDebtNow => 'Joriy qarz';
 
   @override
@@ -2648,6 +2707,65 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get receiptCustomer => 'Мижоз';
+
+  @override
+  String get receiptSubtotal => 'Сумма';
+
+  @override
+  String get receiptReceived => 'Берилди (нақд)';
+
+  @override
+  String get receiptDebtAfter => 'Қарз (савдодан кейин)';
+
+  @override
+  String get printerWidthNarrow => '80 мм (42 белги)';
+
+  @override
+  String get printerAdvanced => 'Қўшимча созламалар';
+
+  @override
+  String get printerCodePage => 'Кирилл жадвали рақами (ESC t)';
+
+  @override
+  String get printerCodePageHint =>
+      'Одатда 17. Кирилл нотўғри чиқса — принтер қўлланмасидан PC866 рақамини қаранг.';
+
+  @override
+  String get printerCancelKanji => 'Хитойча режимни ўчириш';
+
+  @override
+  String get printerCut => 'Қоғозни кесиш';
+
+  @override
+  String get printerFeed => 'Кесишдан олдин бўш қаторлар';
+
+  @override
+  String get receiptPreviewTitle => 'Чек кўриниши';
+
+  @override
+  String get receiptPreviewHint =>
+      'Принтер айнан шундай чиқаради: кенглик, ҳарфлар ва устунлар бир хил.';
+
+  @override
+  String get receiptPreviewSample => 'Намуна (ҳали савдо йўқ)';
+
+  @override
+  String get receiptPreviewLast => 'Охирги савдо';
+
+  @override
+  String get receiptSampleItem1 => 'Кунгабоқар ёғи «Олтин» 5 литр';
+
+  @override
+  String get receiptSampleItem2 => 'Олма қизил';
+
+  @override
+  String get receiptSampleItem3 => 'Нон';
+
+  @override
+  String get receiptSampleStore => 'Дўкон номи';
+
+  @override
+  String get printerTestReceipt => 'Тест чеки';
 
   @override
   String get receiptDebtNow => 'Жорий қарз';

@@ -349,6 +349,11 @@ class _CashierViewState extends ConsumerState<CashierView> {
     if (printer != null && printer.configured && printer.autoPrint) {
       // Chek fonda: savdo uni kutmaydi, xato savdoni to'xtatmaydi.
       unawaited(_printReceipt(result.sale.id, done: done));
+    } else if (printer != null && printer.configured && printer.openDrawer) {
+      // Chek chiqmasa ham naqd savdoda pul qutisi ochiladi (audit PRN-B14).
+      unawaited(
+        ref.read(printerServiceProvider).openDrawerForSale(result.sale.id),
+      );
     }
   }
 
@@ -362,8 +367,10 @@ class _CashierViewState extends ConsumerState<CashierView> {
         .read(printerServiceProvider)
         .printSale(saleId, copy: copy);
     if (!mounted || outcome == PrintOutcome.printed) return;
+    // Qayta urinish — o'sha chek (birinchi chop etish xato bo'lsa, mijozga
+    // "NUSXA" belgili chek chiqmasin; audit PRN-B13).
     _receiptFailed(
-      () => unawaited(_printReceipt(saleId, copy: true)),
+      () => unawaited(_printReceipt(saleId, copy: copy)),
       done: done,
     );
   }

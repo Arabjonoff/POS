@@ -698,6 +698,65 @@ class AppLocalizationsRu extends AppLocalizations {
   String get receiptCustomer => 'Клиент';
 
   @override
+  String get receiptSubtotal => 'Сумма';
+
+  @override
+  String get receiptReceived => 'Получено наличными';
+
+  @override
+  String get receiptDebtAfter => 'Долг после покупки';
+
+  @override
+  String get printerWidthNarrow => '80 мм (42 символа)';
+
+  @override
+  String get printerAdvanced => 'Дополнительно';
+
+  @override
+  String get printerCodePage => 'Номер кодовой страницы (ESC t)';
+
+  @override
+  String get printerCodePageHint =>
+      'Обычно 17. Если кириллица печатается неверно — найдите номер PC866 в инструкции принтера.';
+
+  @override
+  String get printerCancelKanji => 'Отключать китайский режим';
+
+  @override
+  String get printerCut => 'Отрезать бумагу';
+
+  @override
+  String get printerFeed => 'Пустых строк перед отрезом';
+
+  @override
+  String get receiptPreviewTitle => 'Вид чека';
+
+  @override
+  String get receiptPreviewHint =>
+      'Принтер напечатает именно так: ширина, буквы и столбцы совпадают.';
+
+  @override
+  String get receiptPreviewSample => 'Образец (продаж ещё нет)';
+
+  @override
+  String get receiptPreviewLast => 'Последняя продажа';
+
+  @override
+  String get receiptSampleItem1 => 'Подсолнечное масло «Олтин» 5 л';
+
+  @override
+  String get receiptSampleItem2 => 'Яблоки красные';
+
+  @override
+  String get receiptSampleItem3 => 'Хлеб';
+
+  @override
+  String get receiptSampleStore => 'Название магазина';
+
+  @override
+  String get printerTestReceipt => 'Тестовый чек';
+
+  @override
   String get receiptDebtNow => 'Текущий долг';
 
   @override

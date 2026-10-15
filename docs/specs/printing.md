@@ -41,3 +41,23 @@ Qaytim                  15 000
 - **Sozlamalar** — har kassada o'zi (`local_settings`, kalit `printer`): ulanish, manzil yoki printer nomi, 58/80 mm, harflar jadvali, avtomatik chek, 1–3 nusxa, naqd to'lovda pul qutisi. Sozlamalar → Chek printeri sahifasida "Test chek" (chizg'ich, vaqt, lotin/kirill sinovi) va "Pul qutisini ochish" tugmalari bor.
 - **Kassada** — yakunlangandan keyin chek fonda chiqadi, savdo uni kutmaydi. Xato bo'lsa "Savdo yakunlandi · Qaytim … . Chek chiqmadi" xabari va "Qayta chop etish" (NUSXA) tugmasi chiqadi. Printer sozlangan bo'lsa, qidiruv qatorida "Oxirgi chek" tugmasi turadi.
 - **Holat qatori** — sozlanmagan / tekshirilmoqda (ochilganda ulanish sinovi) / ulangan / ulanmagan; holat har chop etishdan keyin yangilanadi.
+
+## Chek sifati va ko'rinishi (T-104a, audit `docs/audit/audit_printing.md`)
+- **Bitta manba:** printer va ekrandagi **chek ko'rinishi** (`receipt_preview.dart`) bir xil `ReceiptRow` ro'yxatini ishlatadi —
+  ustunlar, o'ralish, qalin/baland qatorlar farq qilmaydi. Ko'rinishda kodlash jadvalida yo'q harflar printerdagidek (`EscPos.printable`:
+  CP866 da қ→к, umuman yo'q belgi — `?`). Qog'oz doim oq (`PosColors.receiptPaper`), shrift — Roboto Mono (`PosTypography.receipt`).
+- **Sozlamalar → Chek ko'rinishi:** oxirgi savdo cheki, savdo bo'lmasa — namuna (uzun nom qo'shtirnoq bilan, vaznli tovar, qator
+  chegirmasi, aralash to'lov va qaytim). "Test cheki" — sinov qismi (chizg'ich, lotin/kirill) + shu chek.
+- **Kenglik:** 58 mm (32 belgi), 80 mm (48), 80 mm 42 belgi (512 nuqtali printerlar).
+- **Qo'shimcha sozlamalar** (har kassada): kirill jadvali raqami `ESC t n` (standart 17), xitoycha rejimni o'chirish `FS .` (standart yoqiq —
+  Xprinter kabi printerlarda kirill xitoycha chiqmasin), kesish (yo'q bo'lsa faqat suriladi), kesishdan oldingi bo'sh qatorlar (2–6).
+- **Chek tarkibi:** bo'sh do'kon nomi/kassir qatori chiqmaydi; telefon `+998 71 200 00 00` ko'rinishida; donadan boshqa birlik har doim
+  ko'rinadi (`250 g x 100`); chegirma bo'lsa avval **Summa**; **JAMI** — qalin va ikki barobar baland (`GS ! 1`); to'lovlar — chekka tushgan
+  summa (yig'indisi = JAMI), so'ng **Berildi (naqd)** va **Qaytim**; nasiyada **Qarz (savdodan keyin)** — qayta chop etilsa ham o'sha savdo
+  paytidagi qarz.
+- **Belgilar:** `ʻ ʼ ‘ ’ ´` → `'`, `« » “ ”` → `"`, `…` → `...`, `×` → `x`, urg'uli lotin harflari → asosiy harf, boshqaruv belgilari
+  va emoji olib tashlanadi; Ў/ў CP866 da o'z o'rnida (0xF6/0xF7).
+- **Kassada:** chop etish xato bo'lsa "Qayta chop etish" o'sha chekni chiqaradi (NUSXA emas); avto-chek o'chiq bo'lsa ham naqd savdoda pul
+  qutisi ochiladi (sozlamada yoqilgan bo'lsa); manzil har harfda emas, yozish to'xtagach saqlanadi.
+- **Jismoniy printerda sinalmagan** (agent muhitida printer yo'q): baytlar unit testlarda, ko'rinish golden testlarda tekshirilgan.
+  Birinchi o'rnatishda tekshirish: test cheki (Ў ў Қ Ғ Ҳ, oʻ gʻ, 48 belgili chizg'ich, kesish) — Xprinter 58/80, Epson, Windows, LAN.

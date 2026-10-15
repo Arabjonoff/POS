@@ -101,6 +101,18 @@ abstract final class PosTypography {
     fontWeight: FontWeight.w500,
   );
 
+  /// Chek ko'rinishi (preview): monospace — printer ustunlari ekranda ham
+  /// tekis. O'lcham ko'rinish kengligiga qarab moslashtiriladi.
+  static const TextStyle receipt = TextStyle(
+    fontFamily: 'RobotoMono',
+    letterSpacing: 0,
+    wordSpacing: 0,
+    package: fontPackage,
+    fontSize: 13,
+    height: 1.3,
+    fontWeight: FontWeight.w400,
+  );
+
   /// Tugma yozuvi (o'lchamga qarab `fontSize` almashtiriladi).
   static const TextStyle label = TextStyle(
     fontFamily: fontFamily,

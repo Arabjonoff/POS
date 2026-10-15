@@ -855,6 +855,82 @@
   "@receiptCustomer": {
     "description": "Chekda: nasiya mijozi"
   },
+  "receiptSubtotal": "Summa",
+  "@receiptSubtotal": {
+    "description": "Chekda: chegirmadan oldingi summa"
+  },
+  "receiptReceived": "Berildi (naqd)",
+  "@receiptReceived": {
+    "description": "Chekda: mijoz bergan naqd pul"
+  },
+  "receiptDebtAfter": "Qarz (savdodan keyin)",
+  "@receiptDebtAfter": {
+    "description": "Chekda: mijozning shu savdodan keyingi qarzi"
+  },
+  "printerWidthNarrow": "80 mm (42 belgi)",
+  "@printerWidthNarrow": {
+    "description": "Qog'oz varianti: 512 nuqtali 80 mm printer"
+  },
+  "printerAdvanced": "Qo'shimcha sozlamalar",
+  "@printerAdvanced": {
+    "description": "Bo'lim"
+  },
+  "printerCodePage": "Kirill jadvali raqami (ESC t)",
+  "@printerCodePage": {
+    "description": "Maydon"
+  },
+  "printerCodePageHint": "Odatda 17. Kirill noto'g'ri chiqsa — printer qo'llanmasidan PC866 raqamini qarang.",
+  "@printerCodePageHint": {
+    "description": "Izoh"
+  },
+  "printerCancelKanji": "Xitoycha rejimni o'chirish",
+  "@printerCancelKanji": {
+    "description": "Kalit: FS ."
+  },
+  "printerCut": "Qog'ozni kesish",
+  "@printerCut": {
+    "description": "Kalit"
+  },
+  "printerFeed": "Kesishdan oldin bo'sh qatorlar",
+  "@printerFeed": {
+    "description": "Maydon"
+  },
+  "receiptPreviewTitle": "Chek ko'rinishi",
+  "@receiptPreviewTitle": {
+    "description": "Sarlavha"
+  },
+  "receiptPreviewHint": "Printer aynan shunday chiqaradi: kenglik, harflar va ustunlar bir xil.",
+  "@receiptPreviewHint": {
+    "description": "Izoh"
+  },
+  "receiptPreviewSample": "Namuna (hali savdo yo'q)",
+  "@receiptPreviewSample": {
+    "description": "Belgi"
+  },
+  "receiptPreviewLast": "Oxirgi savdo",
+  "@receiptPreviewLast": {
+    "description": "Belgi"
+  },
+  "receiptSampleItem1": "Kungaboqar yog'i «Oltin» 5 litr",
+  "@receiptSampleItem1": {
+    "description": "Namuna chek tovari"
+  },
+  "receiptSampleItem2": "Olma qizil",
+  "@receiptSampleItem2": {
+    "description": "Namuna chek tovari"
+  },
+  "receiptSampleItem3": "Non",
+  "@receiptSampleItem3": {
+    "description": "Namuna chek tovari"
+  },
+  "receiptSampleStore": "Do'kon nomi",
+  "@receiptSampleStore": {
+    "description": "Namuna chek: do'kon nomi yo'q bo'lsa"
+  },
+  "printerTestReceipt": "Test cheki",
+  "@printerTestReceipt": {
+    "description": "Tugma: ko'rinishdagi chekni chop etish"
+  },
   "receiptDebtNow": "Joriy qarz",
   "@receiptDebtNow": {
     "description": "Chekda: mijozning savdodan keyingi qarzi"
