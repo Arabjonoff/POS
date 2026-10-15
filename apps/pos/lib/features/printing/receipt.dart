@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:pos_app/core/format/app_format.dart';
 import 'package:pos_app/core/format/unit_code.dart';
+import 'package:pos_app/core/text/phone.dart';
 import 'package:pos_app/data/shifts/shift_service.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
 
@@ -84,15 +85,18 @@ class ReceiptData {
   int get changeTiyin => payments.fold(0, (sum, p) => sum + p.changeTiyin);
 }
 
-/// Chek kengligi: 58 mm — 32 belgi, 80 mm — 48 belgi (`printing.md`).
+/// Chek kengligi (`printing.md`): 58 mm — 32 belgi, 80 mm — 48 belgi;
+/// ba'zi 80 mm printerlar (512 nuqta) 42 belgi sig'diradi.
 enum PaperWidth {
-  mm58(32),
-  mm80(48)
+  mm58(32, 58),
+  mm80(48, 80),
+  mm80narrow(42, 80)
   ;
 
-  const PaperWidth(this.chars);
+  const PaperWidth(this.chars, this.mm);
 
   final int chars;
+  final int mm;
 }
 
 /// Chek qatori va uning ko'rinishi (ESC/POS kodlovchi uchun).
@@ -103,18 +107,23 @@ class ReceiptRow {
     this.bold = false,
     this.center = false,
     this.barcode = false,
+    this.tall = false,
   });
 
   /// Chek raqami shtrix-kodi (CODE128): qaytarishda skanerlanadi.
   const ReceiptRow.barcode(this.text)
     : bold = false,
       center = true,
-      barcode = true;
+      barcode = true,
+      tall = false;
 
   final String text;
   final bool bold;
   final bool center;
   final bool barcode;
+
+  /// Ikki barobar baland (JAMI) — kenglik o'zgarmaydi, ustunlar buzilmaydi.
+  final bool tall;
 
   @override
   bool operator ==(Object other) =>
@@ -122,10 +131,11 @@ class ReceiptRow {
       other.text == text &&
       other.bold == bold &&
       other.center == center &&
-      other.barcode == barcode;
+      other.barcode == barcode &&
+      other.tall == tall;
 
   @override
-  int get hashCode => Object.hash(text, bold, center, barcode);
+  int get hashCode => Object.hash(text, bold, center, barcode, tall);
 
   @override
   String toString() => text;
@@ -152,20 +162,25 @@ class ReceiptBuilder {
       }
     }
 
-    void line(String text, {bool bold = false}) =>
-        rows.add(ReceiptRow(text, bold: bold));
+    void line(String text, {bool bold = false, bool tall = false}) =>
+        rows.add(ReceiptRow(text, bold: bold, tall: tall));
     void divider() => line('-' * _w);
-    void pair(String left, String right, {bool bold = false}) {
+    void pair(
+      String left,
+      String right, {
+      bool bold = false,
+      bool tall = false,
+    }) {
       for (final text in _pair(plain(left), plain(right))) {
-        line(text, bold: bold);
+        line(text, bold: bold, tall: tall);
       }
     }
 
-    // Sarlavha.
-    center(data.storeName, bold: true);
+    // Sarlavha: bo'sh maydonlar chiqmaydi (bo'sh qalin qator yo'q).
+    if (data.storeName.trim().isNotEmpty) center(data.storeName, bold: true);
     for (final extra in [
       data.storeAddress,
-      data.storePhone,
+      displayPhone(data.storePhone),
       ...data.header.split('\n'),
     ]) {
       if (extra.trim().isNotEmpty) center(extra.trim());
@@ -173,12 +188,15 @@ class ReceiptBuilder {
     if (copy) center(l10n.receiptCopy, bold: true);
     divider();
     pair('${l10n.receiptCheck}: ${data.number}', _fmt.dateTime(data.soldAt));
-    pair('${l10n.receiptCashier}: ${data.cashierName}', '');
+    if (data.cashierName.trim().isNotEmpty) {
+      pair('${l10n.receiptCashier}: ${data.cashierName}', '');
+    }
     divider();
 
-    // Qatorlar: nom va "miqdor x narx", keyingi qatorda — jami.
+    // Qatorlar: nom va "miqdor x narx", keyingi qatorda — jami. Birlik —
+    // donadan boshqa hamma birlikda (kg, g, l, qadoq): "250 x 100" emas.
     for (final item in data.lines) {
-      final qty = item.unit.fractional || item.qtyMilli % 1000 != 0
+      final qty = item.unit != UnitCode.pcs || item.qtyMilli % 1000 != 0
           ? _fmt.qty(item.qtyMilli, item.unit)
           : _fmt.qtyValue(item.qtyMilli, item.unit);
       pair(item.name, '$qty x ${_fmt.moneyAmount(item.priceTiyin)}');
@@ -190,16 +208,34 @@ class ReceiptBuilder {
     divider();
 
     if (data.discountTiyin > 0) {
+      // Chegirmadan oldingi summa — xaridor hisobni tekshira olsin.
+      pair(
+        l10n.receiptSubtotal,
+        _amount(data.totalTiyin + data.discountTiyin),
+      );
       pair(l10n.receiptDiscount, _amount(-data.discountTiyin));
     }
-    pair(l10n.receiptTotal, _amount(data.totalTiyin), bold: true);
+    pair(
+      l10n.receiptTotal,
+      _amount(data.totalTiyin),
+      bold: true,
+      tall: true,
+    );
+    // To'lovlar — chekka tushgan summa (yig'indisi JAMI ga teng); naqd
+    // berilgan pul va qaytim — alohida.
     for (final p in data.payments) {
-      final (label, amount) = switch (p.method) {
-        'cash' => (l10n.payCash, p.receivedTiyin ?? p.amountTiyin),
-        'card' => (l10n.payCard, p.amountTiyin),
-        _ => (l10n.payDebt, p.amountTiyin),
+      final label = switch (p.method) {
+        'cash' => l10n.payCash,
+        'card' => l10n.payCard,
+        _ => l10n.payDebt,
       };
-      pair(label, _amount(amount));
+      pair(label, _amount(p.amountTiyin));
+    }
+    final received = data.payments
+        .where((p) => p.method == 'cash' && p.receivedTiyin != null)
+        .fold(0, (sum, p) => sum + p.receivedTiyin!);
+    if (data.changeTiyin > 0 && received > 0) {
+      pair(l10n.receiptReceived, _amount(received));
     }
     if (data.changeTiyin > 0) {
       pair(l10n.changeLabel, _amount(data.changeTiyin));
@@ -209,7 +245,7 @@ class ReceiptBuilder {
       divider();
       pair('${l10n.receiptCustomer}: $customer', '');
       final debt = data.customerDebtTiyin;
-      if (debt != null) pair(l10n.receiptDebtNow, _amount(debt));
+      if (debt != null) pair(l10n.receiptDebtAfter, _amount(debt));
     }
     divider();
 
@@ -315,11 +351,89 @@ class ReceiptBuilder {
       )
       .join('\n');
 
-  /// Oddiy matn: chekda faqat ASCII bo'shliq/defis/tutuq belgisi.
-  static String plain(String text) => text
-      .replaceAll(RegExp('[   ]'), ' ')
-      .replaceAll(RegExp('[−–—]'), '-')
-      .replaceAll(RegExp('[ʻʼ‘’`]'), "'");
+  /// Oddiy matn — printer jadvalida bor belgilar: bo'shliq, defis, tutuq
+  /// belgisi; qo'shtirnoq, ko'p nuqta, ×, urg'uli lotin harflari — eng
+  /// yaqiniga (aks holda qog'ozda `?`); boshqaruv belgilari va emoji
+  /// olib tashlanadi (ustunlar surilmasin, printer buyrug'iga aylanmasin).
+  static String plain(String text) {
+    final out = StringBuffer();
+    for (final rune in text.runes) {
+      if (rune < 0x20 || (rune >= 0x7f && rune < 0xa0) || rune > 0xffff) {
+        continue;
+      }
+      final ch = String.fromCharCode(rune);
+      out.write(_plainMap[ch] ?? ch);
+    }
+    return out.toString();
+  }
+
+  static const Map<String, String> _plainMap = {
+    '\u00a0': ' ',
+    '\u202f': ' ',
+    '\u2007': ' ',
+    '\u2009': ' ',
+    '\u2212': '-',
+    '\u2013': '-',
+    '\u2014': '-',
+    '\u00b7': '-',
+    '\u2022': '-',
+    '\u02bb': "'",
+    '\u02bc': "'",
+    '\u2018': "'",
+    '\u2019': "'",
+    '`': "'",
+    '\u00b4': "'",
+    '\u201b': "'",
+    '\u00ab': '"',
+    '\u00bb': '"',
+    '\u201c': '"',
+    '\u201d': '"',
+    '\u201e': '"',
+    '\u2033': '"',
+    '\u2026': '...',
+    '\u00d7': 'x',
+    '\u00e0': 'a',
+    '\u00e1': 'a',
+    '\u00e2': 'a',
+    '\u00e3': 'a',
+    '\u00e4': 'a',
+    '\u00e5': 'a',
+    '\u00e8': 'e',
+    '\u00e9': 'e',
+    '\u00ea': 'e',
+    '\u00eb': 'e',
+    '\u00ec': 'i',
+    '\u00ed': 'i',
+    '\u00ee': 'i',
+    '\u00ef': 'i',
+    '\u0131': 'i',
+    '\u00f2': 'o',
+    '\u00f3': 'o',
+    '\u00f4': 'o',
+    '\u00f5': 'o',
+    '\u00f6': 'o',
+    '\u00f9': 'u',
+    '\u00fa': 'u',
+    '\u00fb': 'u',
+    '\u00fc': 'u',
+    '\u00e7': 'c',
+    '\u00f1': 'n',
+    '\u015f': 's',
+    '\u011f': 'g',
+    '\u00c0': 'A',
+    '\u00c1': 'A',
+    '\u00c2': 'A',
+    '\u00c4': 'A',
+    '\u00c9': 'E',
+    '\u00c8': 'E',
+    '\u00d6': 'O',
+    '\u00dc': 'U',
+    '\u00c7': 'C',
+    '\u015e': 'S',
+    '\u011e': 'G',
+    '\u0130': 'I',
+    '\u00d1': 'N',
+  };
 
   String _amount(int tiyin) => plain(_fmt.moneyAmount(tiyin));
 

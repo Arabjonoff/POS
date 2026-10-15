@@ -12,3 +12,13 @@ String? normalizePhone(String raw) {
   if (!RegExp(r'^998\d{9}$').hasMatch(value)) return null;
   return '+$value';
 }
+
+/// Chek va ekranda o'qish oson ko'rinish: `+998712000000` →
+/// `+998 71 200 00 00`. Boshqa ko'rinishdagi matn o'zgarishsiz.
+String displayPhone(String phone) {
+  final normalized = normalizePhone(phone);
+  if (normalized == null || normalized.isEmpty) return phone.trim();
+  final d = normalized.substring(4);
+  return '+998 ${d.substring(0, 2)} ${d.substring(2, 5)} '
+      '${d.substring(5, 7)} ${d.substring(7)}';
+}

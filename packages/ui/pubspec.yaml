@@ -32,3 +32,11 @@ flutter:
           weight: 600
         - asset: assets/fonts/Inter-Bold.ttf
           weight: 700
+    # Roboto Mono (SIL OFL 1.1, assets/fonts/RobotoMono-OFL.txt) — chek
+    # ko'rinishi: har belgi bir xil kenglikda, printer ustunlari bilan bir xil.
+    - family: RobotoMono
+      fonts:
+        - asset: assets/fonts/RobotoMono-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/RobotoMono-Bold.ttf
+          weight: 700

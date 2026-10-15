@@ -6,6 +6,10 @@ import 'package:flutter/painting.dart';
 /// `PosPalette` orqali olinadi (`PosPalette.of(context)`). Kodning boshqa
 /// joyida rang yozilmaydi.
 abstract final class PosColors {
+  // Chek qog'ozi — qorong'i mavzuda ham oq (haqiqiy chekdek ko'rinsin).
+  static const Color receiptPaper = Color(0xFFFFFFFF);
+  static const Color receiptInk = Color(0xFF111827);
+
   // Neytral (slate)
   static const Color slate50 = Color(0xFFF8FAFC);
   static const Color slate100 = Color(0xFFF1F5F9);

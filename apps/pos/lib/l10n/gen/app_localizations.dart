@@ -1257,6 +1257,120 @@ abstract class AppLocalizations {
   /// **'Mijoz'**
   String get receiptCustomer;
 
+  /// Chekda: chegirmadan oldingi summa
+  ///
+  /// In uz, this message translates to:
+  /// **'Summa'**
+  String get receiptSubtotal;
+
+  /// Chekda: mijoz bergan naqd pul
+  ///
+  /// In uz, this message translates to:
+  /// **'Berildi (naqd)'**
+  String get receiptReceived;
+
+  /// Chekda: mijozning shu savdodan keyingi qarzi
+  ///
+  /// In uz, this message translates to:
+  /// **'Qarz (savdodan keyin)'**
+  String get receiptDebtAfter;
+
+  /// Qog'oz varianti: 512 nuqtali 80 mm printer
+  ///
+  /// In uz, this message translates to:
+  /// **'80 mm (42 belgi)'**
+  String get printerWidthNarrow;
+
+  /// Bo'lim
+  ///
+  /// In uz, this message translates to:
+  /// **'Qo\'shimcha sozlamalar'**
+  String get printerAdvanced;
+
+  /// Maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'Kirill jadvali raqami (ESC t)'**
+  String get printerCodePage;
+
+  /// Izoh
+  ///
+  /// In uz, this message translates to:
+  /// **'Odatda 17. Kirill noto\'g\'ri chiqsa — printer qo\'llanmasidan PC866 raqamini qarang.'**
+  String get printerCodePageHint;
+
+  /// Kalit: FS .
+  ///
+  /// In uz, this message translates to:
+  /// **'Xitoycha rejimni o\'chirish'**
+  String get printerCancelKanji;
+
+  /// Kalit
+  ///
+  /// In uz, this message translates to:
+  /// **'Qog\'ozni kesish'**
+  String get printerCut;
+
+  /// Maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'Kesishdan oldin bo\'sh qatorlar'**
+  String get printerFeed;
+
+  /// Sarlavha
+  ///
+  /// In uz, this message translates to:
+  /// **'Chek ko\'rinishi'**
+  String get receiptPreviewTitle;
+
+  /// Izoh
+  ///
+  /// In uz, this message translates to:
+  /// **'Printer aynan shunday chiqaradi: kenglik, harflar va ustunlar bir xil.'**
+  String get receiptPreviewHint;
+
+  /// Belgi
+  ///
+  /// In uz, this message translates to:
+  /// **'Namuna (hali savdo yo\'q)'**
+  String get receiptPreviewSample;
+
+  /// Belgi
+  ///
+  /// In uz, this message translates to:
+  /// **'Oxirgi savdo'**
+  String get receiptPreviewLast;
+
+  /// Namuna chek tovari
+  ///
+  /// In uz, this message translates to:
+  /// **'Kungaboqar yog\'i «Oltin» 5 litr'**
+  String get receiptSampleItem1;
+
+  /// Namuna chek tovari
+  ///
+  /// In uz, this message translates to:
+  /// **'Olma qizil'**
+  String get receiptSampleItem2;
+
+  /// Namuna chek tovari
+  ///
+  /// In uz, this message translates to:
+  /// **'Non'**
+  String get receiptSampleItem3;
+
+  /// Namuna chek: do'kon nomi yo'q bo'lsa
+  ///
+  /// In uz, this message translates to:
+  /// **'Do\'kon nomi'**
+  String get receiptSampleStore;
+
+  /// Tugma: ko'rinishdagi chekni chop etish
+  ///
+  /// In uz, this message translates to:
+  /// **'Test cheki'**
+  String get printerTestReceipt;
+
   /// Chekda: mijozning savdodan keyingi qarzi
   ///
   /// In uz, this message translates to:
