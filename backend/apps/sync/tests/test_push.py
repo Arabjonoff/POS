@@ -283,6 +283,50 @@ def test_event_after_shift_close_time_still_rejected(kassa, cashier, product):
     assert result["error"]["code"] == "shift_closed"
 
 
+def test_customer_with_opening_balance_over_sync(kassa, cashier, manager):
+    """T-103: mijoz va boshlang'ich balans bitta hodisada; avans — faqat ega/menejer."""
+    _, client = kassa
+    debtor_id, opening_id = str(new_id()), str(new_id())
+    created = event(
+        "customer.upserted",
+        {
+            "id": debtor_id,
+            "full_name": "Eski qarzdor",
+            "by": str(cashier.id),
+            "opening_balance": {
+                "id": opening_id,
+                "direction": "debt",
+                "amount_tiyin": 1_500_000,
+                "at": tick(),
+            },
+        },
+    )
+    assert statuses(push(client, created)) == ["applied"]
+    debtor = Customer.objects.get(pk=debtor_id)
+    assert customer_balance(debtor) == 1_500_000
+    assert str(debtor.debt_entries.get().id) == opening_id
+
+    # Tahrir (keyingi upsert) balansni qayta qo'shmaydi.
+    renamed = event(
+        "customer.upserted", {"id": debtor_id, "full_name": "Yangi ism", "by": str(cashier.id)}
+    )
+    assert statuses(push(client, renamed)) == ["applied"]
+    assert customer_balance(debtor) == 1_500_000
+
+    credit = {"direction": "credit", "amount_tiyin": 100_000, "at": tick()}
+    by_cashier = event(
+        "customer.upserted",
+        {"id": str(new_id()), "full_name": "A", "by": str(cashier.id), "opening_balance": credit},
+    )
+    result = push(client, by_cashier)[0]
+    assert (result["status"], result["error"]["code"]) == ("rejected", "permission_denied")
+    by_manager = event(
+        "customer.upserted",
+        {"id": str(new_id()), "full_name": "B", "by": str(manager.id), "opening_balance": credit},
+    )
+    assert statuses(push(client, by_manager)) == ["applied"]
+
+
 def test_debt_paid_for_unknown_customer_is_pending(kassa, cashier):
     _, client = kassa
     payment = event(

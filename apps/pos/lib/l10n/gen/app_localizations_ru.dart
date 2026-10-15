@@ -1444,6 +1444,62 @@ class AppLocalizationsRu extends AppLocalizations {
   String get actionKeep => 'Назад';
 
   @override
+  String get customerOpeningSection => 'Начальный баланс';
+
+  @override
+  String get customerOpeningNone => 'Нет';
+
+  @override
+  String get customerOpeningDebt => 'Долг клиента';
+
+  @override
+  String get customerOpeningCredit => 'Аванс клиента';
+
+  @override
+  String get customerOpeningNoneHint =>
+      'Новый клиент — нет ни долга, ни аванса.';
+
+  @override
+  String get customerOpeningDebtHint =>
+      'Клиент должен магазину эту сумму (например, из старой тетради).';
+
+  @override
+  String get customerOpeningCreditHint =>
+      'Магазин должен клиенту эту сумму: клиент заплатил заранее. Следующие покупки в долг вычитаются из неё.';
+
+  @override
+  String get customerOpeningAmount => 'Сумма';
+
+  @override
+  String get customerOpeningDate => 'На какую дату';
+
+  @override
+  String get customerOpeningAmountRequired => 'Введите сумму (больше 0)';
+
+  @override
+  String get customerOpeningNeedsApproval =>
+      'Аванс клиента вносит менеджер или владелец';
+
+  @override
+  String get debtOpeningDebt => 'Начальный долг';
+
+  @override
+  String get debtOpeningCredit => 'Начальный аванс';
+
+  @override
+  String get customerCredit => 'Аванс клиента';
+
+  @override
+  String customerCreditShort(String amount) {
+    return 'Аванс: $amount';
+  }
+
+  @override
+  String fieldOptional(String label) {
+    return '$label (необязательно)';
+  }
+
+  @override
   String get receivingDelete => 'Удалить черновик';
 
   @override

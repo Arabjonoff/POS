@@ -1427,6 +1427,62 @@ class AppLocalizationsUz extends AppLocalizations {
   String get actionKeep => 'Qaytish';
 
   @override
+  String get customerOpeningSection => 'Boshlang\'ich balans';
+
+  @override
+  String get customerOpeningNone => 'Yo\'q';
+
+  @override
+  String get customerOpeningDebt => 'Mijoz qarzi';
+
+  @override
+  String get customerOpeningCredit => 'Mijoz haqi (avans)';
+
+  @override
+  String get customerOpeningNoneHint =>
+      'Yangi mijoz — qarzi ham, avansi ham yo\'q.';
+
+  @override
+  String get customerOpeningDebtHint =>
+      'Mijoz do\'konga shu summani qarzdor (masalan, eski daftardan).';
+
+  @override
+  String get customerOpeningCreditHint =>
+      'Do\'kon mijozga shu summani qarzdor: mijoz oldindan to\'lagan. Keyingi nasiya savdolar shundan ayriladi.';
+
+  @override
+  String get customerOpeningAmount => 'Summa';
+
+  @override
+  String get customerOpeningDate => 'Qaysi sanadagi holat';
+
+  @override
+  String get customerOpeningAmountRequired => 'Summani kiriting (0 dan katta)';
+
+  @override
+  String get customerOpeningNeedsApproval =>
+      'Mijoz avansini menejer yoki ega kiritadi';
+
+  @override
+  String get debtOpeningDebt => 'Boshlang\'ich qarz';
+
+  @override
+  String get debtOpeningCredit => 'Boshlang\'ich avans';
+
+  @override
+  String get customerCredit => 'Mijoz haqi (avans)';
+
+  @override
+  String customerCreditShort(String amount) {
+    return 'Avans: $amount';
+  }
+
+  @override
+  String fieldOptional(String label) {
+    return '$label (ixtiyoriy)';
+  }
+
+  @override
   String get receivingDelete => 'Qoralamani o\'chirish';
 
   @override
@@ -3335,6 +3391,62 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get actionKeep => 'Қайтиш';
+
+  @override
+  String get customerOpeningSection => 'Бошланғич баланс';
+
+  @override
+  String get customerOpeningNone => 'Йўқ';
+
+  @override
+  String get customerOpeningDebt => 'Мижоз қарзи';
+
+  @override
+  String get customerOpeningCredit => 'Мижоз ҳақи (аванс)';
+
+  @override
+  String get customerOpeningNoneHint =>
+      'Янги мижоз — қарзи ҳам, аванси ҳам йўқ.';
+
+  @override
+  String get customerOpeningDebtHint =>
+      'Мижоз дўконга шу суммани қарздор (масалан, эски дафтардан).';
+
+  @override
+  String get customerOpeningCreditHint =>
+      'Дўкон мижозга шу суммани қарздор: мижоз олдиндан тўлаган. Кейинги насия савдолар шундан айрилади.';
+
+  @override
+  String get customerOpeningAmount => 'Сумма';
+
+  @override
+  String get customerOpeningDate => 'Қайси санадаги ҳолат';
+
+  @override
+  String get customerOpeningAmountRequired => 'Суммани киритинг (0 дан катта)';
+
+  @override
+  String get customerOpeningNeedsApproval =>
+      'Мижоз авансини менежер ёки эга киритади';
+
+  @override
+  String get debtOpeningDebt => 'Бошланғич қарз';
+
+  @override
+  String get debtOpeningCredit => 'Бошланғич аванс';
+
+  @override
+  String get customerCredit => 'Мижоз ҳақи (аванс)';
+
+  @override
+  String customerCreditShort(String amount) {
+    return 'Аванс: $amount';
+  }
+
+  @override
+  String fieldOptional(String label) {
+    return '$label (ихтиёрий)';
+  }
 
   @override
   String get receivingDelete => 'Қораламани ўчириш';

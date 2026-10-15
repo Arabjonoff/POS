@@ -101,6 +101,23 @@ class PaymentExceedsDebtException implements Exception {
   final int balanceTiyin;
 }
 
+/// Boshlang'ich balans (T-103): [credit] — do'kon mijozga qarzdor (avans),
+/// aks holda mijoz do'konga qarzdor. [amountTiyin] > 0. [approvedBy] — avansni
+/// tasdiqlagan menejer/ega (kassir kiritsa).
+class OpeningBalanceInput {
+  const OpeningBalanceInput({
+    required this.amountTiyin,
+    required this.at,
+    this.credit = false,
+    this.approvedBy,
+  });
+
+  final int amountTiyin;
+  final DateTime at;
+  final bool credit;
+  final String? approvedBy;
+}
+
 /// Lokal mijozlar ro'yxati. Balans = qarz daftari yozuvlari yig'indisi
 /// (`debts.md`): pull'dan kelganlar + shu kassada oflayn yozilganlar bir
 /// jadvalda. Yozuvi umuman yo'q mijozda — serverdagi balans (tarix hali
@@ -169,15 +186,27 @@ ORDER BY c.full_name
 
   /// Tez yaratish (kassada): mijoz + `customer.upserted` hodisasi bitta
   /// tranzaksiyada. Limit — cheklovsiz (`null`), egasi keyin belgilaydi.
+  ///
+  /// [opening] — boshlang'ich balans (T-103): `opening` qarz yozuvi shu
+  /// tranzaksiyada va shu hodisada (`opening_balance`). Faqat yaratishda —
+  /// [update] uni hech qachon yozmaydi (balans ikki marta qo'shilmaydi).
   Future<CustomerEntry> create({
     required String name,
     required String createdBy,
     String phone = '',
+    OpeningBalanceInput? opening,
   }) async {
     final normalized = normalizePhone(phone);
     if (normalized == null) throw ArgumentError.value(phone, 'phone');
+    if (opening != null && opening.amountTiyin <= 0) {
+      throw ArgumentError.value(opening.amountTiyin, 'opening.amountTiyin');
+    }
     final id = _newId();
     final now = _now();
+    final openingId = opening == null ? null : _newId();
+    final signed = opening == null
+        ? 0
+        : (opening.credit ? -opening.amountTiyin : opening.amountTiyin);
     await _db.transaction(() async {
       await _db
           .into(_db.customers)
@@ -189,6 +218,20 @@ ORDER BY c.full_name
               updatedAt: Value(now),
             ),
           );
+      if (opening != null) {
+        await _db
+            .into(_db.debtEntries)
+            .insert(
+              DebtEntriesCompanion.insert(
+                id: openingId!,
+                customerId: id,
+                amountTiyin: signed,
+                type: 'opening',
+                byUserId: Value(opening.approvedBy ?? createdBy),
+                at: opening.at,
+              ),
+            );
+      }
       await _db.enqueueEvent(
         id: _newId(),
         type: OutboxEventType.customerUpserted,
@@ -198,7 +241,15 @@ ORDER BY c.full_name
           'full_name': cleanLine(name),
           'phone': normalized,
           'note': '',
-          'by': createdBy,
+          // Avansni kassir emas, ruxsat bergan menejer kiritgan bo'ladi.
+          'by': opening?.approvedBy ?? createdBy,
+          if (opening != null)
+            'opening_balance': {
+              'id': openingId,
+              'direction': opening.credit ? 'credit' : 'debt',
+              'amount_tiyin': opening.amountTiyin,
+              'at': isoUtc(opening.at),
+            },
         },
       );
     });
@@ -206,7 +257,7 @@ ORDER BY c.full_name
       id: id,
       name: cleanLine(name),
       phone: normalized,
-      balanceTiyin: 0,
+      balanceTiyin: signed,
     );
   }
 

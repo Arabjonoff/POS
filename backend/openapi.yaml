@@ -3390,6 +3390,11 @@ components:
           type: integer
           minimum: 0
           nullable: true
+        opening_balance:
+          allOf:
+          - $ref: '#/components/schemas/OpeningBalanceRequest'
+          writeOnly: true
+          nullable: true
       required:
       - full_name
     DayRow:
@@ -3471,12 +3476,14 @@ components:
       - payment
       - refund
       - adjustment
+      - opening
       type: string
       description: |-
         * `sale` - savdo
         * `payment` - to'lov
         * `refund` - qaytarish
         * `adjustment` - tuzatish
+        * `opening` - boshlang'ich balans
     Debtor:
       type: object
       properties:
@@ -3501,13 +3508,19 @@ components:
           type: integer
         debtors_count:
           type: integer
+        total_credit_tiyin:
+          type: integer
+        creditors_count:
+          type: integer
         top:
           type: array
           items:
             $ref: '#/components/schemas/Debtor'
       required:
+      - creditors_count
       - debtors_count
       - top
+      - total_credit_tiyin
       - total_debt_tiyin
     DefaultLocaleEnum:
       enum:
@@ -3663,6 +3676,14 @@ components:
       - stock
       - summary
       - top_products
+    DirectionEnum:
+      enum:
+      - debt
+      - credit
+      type: string
+      description: |-
+        * `debt` - debt
+        * `credit` - credit
     EventError:
       type: object
       properties:
@@ -4066,6 +4087,52 @@ components:
       description: |-
         * `upsert` - upsert
         * `delete` - delete
+    OpeningBalance:
+      type: object
+      description: 'Mijoz yaratishda boshlang''ich balans (T-103): yo''nalish aniq,
+        summa musbat.'
+      properties:
+        id:
+          type: string
+          format: uuid
+        direction:
+          $ref: '#/components/schemas/DirectionEnum'
+        amount_tiyin:
+          type: integer
+          minimum: 1
+        at:
+          type: string
+          format: date-time
+        note:
+          type: string
+          default: ''
+          maxLength: 500
+      required:
+      - amount_tiyin
+      - direction
+    OpeningBalanceRequest:
+      type: object
+      description: 'Mijoz yaratishda boshlang''ich balans (T-103): yo''nalish aniq,
+        summa musbat.'
+      properties:
+        id:
+          type: string
+          format: uuid
+        direction:
+          $ref: '#/components/schemas/DirectionEnum'
+        amount_tiyin:
+          type: integer
+          minimum: 1
+        at:
+          type: string
+          format: date-time
+        note:
+          type: string
+          default: ''
+          maxLength: 500
+      required:
+      - amount_tiyin
+      - direction
     OptionalReasonRequest:
       type: object
       properties:
@@ -4699,6 +4766,11 @@ components:
         debt_limit_tiyin:
           type: integer
           minimum: 0
+          nullable: true
+        opening_balance:
+          allOf:
+          - $ref: '#/components/schemas/OpeningBalanceRequest'
+          writeOnly: true
           nullable: true
     PatchedInventoryCountRequest:
       type: object

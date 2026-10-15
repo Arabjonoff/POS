@@ -286,18 +286,20 @@ def cashiers(tenant, period: Period) -> list[dict]:
 
 
 def debts(tenant, *, limit=20) -> dict:
-    balances = (
+    per_customer = (
         DebtEntry.objects.filter(tenant_id=tenant.pk, customer__deleted_at__isnull=True)
         .values("customer")
         .annotate(balance=Sum("amount_tiyin"))
-        .filter(balance__gt=0)
-        .order_by("-balance", "customer")
     )
-    rows = list(balances)
+    rows = list(per_customer.filter(balance__gt=0).order_by("-balance", "customer"))
+    # Avans (do'kon mijozga qarzdor, T-103) — qarzdorlar ro'yxatiga aralashtirilmaydi.
+    credits = [row["balance"] for row in per_customer.filter(balance__lt=0)]
     customers = Customer.objects.in_bulk([row["customer"] for row in rows[:limit]])
     return {
         "total_debt_tiyin": sum(row["balance"] for row in rows),
         "debtors_count": len(rows),
+        "total_credit_tiyin": -sum(credits),
+        "creditors_count": len(credits),
         "top": [
             {
                 "customer": row["customer"],

@@ -156,3 +156,36 @@ def search_customers(queryset, term: str):
     if not term:
         return queryset
     return queryset.filter(Q(full_name__icontains=term) | Q(phone__icontains=term))
+
+
+class OpeningDirection:
+    DEBT = "debt"  # mijoz do'konga qarzdor (+)
+    CREDIT = "credit"  # do'kon mijozga qarzdor — avans (−)
+
+
+@transaction.atomic
+def record_opening_balance(
+    customer, *, direction: str, amount_tiyin: int, user=None, at=None, note: str = "", id=None
+) -> DebtEntry:
+    """Boshlang'ich balans (T-103): mijoz tizimga qo'shilgandagi mavjud qarz yoki avans.
+
+    Bitta mijozga bitta (DB indeks ham himoya qiladi) — tahrirda ikki marta qo'shilmaydi.
+    Savdo va smenaga bog'lanmaydi: tushum, foyda va Z-hisobotdagi naqdga kirmaydi."""
+    _positive(amount_tiyin)
+    if direction not in (OpeningDirection.DEBT, OpeningDirection.CREDIT):
+        raise ValueError("direction must be debt or credit")
+    customer = _lock(customer)
+    if DebtEntry.objects.filter(customer=customer, type=DebtType.OPENING).exists():
+        raise DomainError(
+            "opening_balance_exists", "Opening balance is already set.", status_code=409
+        )
+    sign = 1 if direction == OpeningDirection.DEBT else -1
+    return _create(
+        customer,
+        **({"id": id} if id else {}),
+        amount_tiyin=sign * amount_tiyin,
+        type=DebtType.OPENING,
+        note=note,
+        created_by=user,
+        at=at,
+    )

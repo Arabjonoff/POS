@@ -45,6 +45,8 @@ class DebtType(models.TextChoices):
     PAYMENT = "payment", _("to'lov")
     REFUND = "refund", _("qaytarish")
     ADJUSTMENT = "adjustment", _("tuzatish")
+    # Mijoz tizimga qo'shilgandagi mavjud qarz (+) yoki avans (−) — T-103.
+    OPENING = "opening", _("boshlang'ich balans")
 
 
 class PaymentMethod(models.TextChoices):
@@ -99,7 +101,7 @@ class DebtEntry(AppendOnlyModel, TenantScopedModel):
                 name="debt_sign_matches_type",
                 condition=Q(type="sale", amount_tiyin__gt=0)
                 | Q(type__in=["payment", "refund"], amount_tiyin__lt=0)
-                | Q(type="adjustment"),
+                | Q(type__in=["adjustment", "opening"]),
             ),
             models.CheckConstraint(
                 name="debt_method_only_for_payment",
@@ -109,7 +111,18 @@ class DebtEntry(AppendOnlyModel, TenantScopedModel):
             models.CheckConstraint(
                 name="debt_sale_id_for_sale_and_refund",
                 condition=Q(type__in=["sale", "refund"], sale_id__isnull=False)
-                | Q(type__in=["payment", "adjustment"]),
+                | Q(type__in=["payment", "adjustment", "opening"]),
+            ),
+            # Boshlang'ich balans savdo ham, smena puli ham emas (Z-hisobot va tushumga kirmaydi).
+            models.CheckConstraint(
+                name="debt_opening_no_sale_no_shift",
+                condition=~Q(type="opening") | Q(sale_id__isnull=True, shift__isnull=True),
+            ),
+            # Bitta mijozga bitta boshlang'ich balans — tahrirda ikki marta qo'shilmaydi.
+            models.UniqueConstraint(
+                fields=["customer"],
+                condition=Q(type="opening"),
+                name="debt_one_opening_per_customer",
             ),
         ]
 

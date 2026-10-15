@@ -21,6 +21,7 @@ class PosTextField extends StatelessWidget {
     this.inputFormatters,
     this.onChanged,
     this.onSubmitted,
+    this.onTap,
     this.obscureText = false,
     this.enabled = true,
     this.readOnly = false,
@@ -46,6 +47,9 @@ class PosTextField extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onSubmitted;
+
+  /// Bosilganda (masalan, `readOnly` sana maydoni tanlovchini ochadi).
+  final VoidCallback? onTap;
   final bool obscureText;
   final bool enabled;
   final bool readOnly;
@@ -72,6 +76,7 @@ class PosTextField extends StatelessWidget {
       inputFormatters: inputFormatters,
       onChanged: onChanged,
       onSubmitted: onSubmitted,
+      onTap: onTap,
       obscureText: obscureText,
       enabled: enabled,
       readOnly: readOnly,
