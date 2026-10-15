@@ -243,7 +243,7 @@ void main() {
     await tap(tester, find.byKey(const ValueKey('new-customer-save')));
     final saved = await (_db.select(
       _db.customers,
-    )..where((c) => c.fullName.equals("Telefonli"))).getSingle();
+    )..where((c) => c.fullName.equals('Telefonli'))).getSingle();
     expect(saved.phone, '+998901234567');
   });
 }
