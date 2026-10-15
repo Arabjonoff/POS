@@ -655,5 +655,16 @@
   "posCustomerDebt": "Долг: {amount}",
   "posCustomerAdvance": "Аванс: {amount}",
   "posCartTabItems": "{label}, позиций: {count}",
-  "storeVatPayer": "Магазин — плательщик НДС (на кассе показывается НДС 12%)"
+  "storeVatPayer": "Магазин — плательщик НДС (на кассе показывается НДС 12%)",
+  "printerBluetooth": "Bluetooth",
+  "printerUsb": "USB",
+  "printerDevicesRefresh": "Обновить список",
+  "printerDeviceMissing": "Сейчас не найден — включите или переподключите принтер",
+  "printerBluetoothOff": "Bluetooth выключен — включите в настройках телефона",
+  "printerPermissionDenied": "Разрешите подключение к принтеру",
+  "printerDevicesFailed": "Не удалось получить список устройств",
+  "printerNoBluetooth": "Нет сопряжённых принтеров",
+  "printerNoBluetoothHint": "Включите принтер и выполните сопряжение в настройках Bluetooth телефона (PIN обычно 0000 или 1234), затем обновите список.",
+  "printerNoUsb": "USB-принтер не найден",
+  "printerNoUsbHint": "Подключите принтер через OTG-кабель и включите его, затем обновите список."
 }

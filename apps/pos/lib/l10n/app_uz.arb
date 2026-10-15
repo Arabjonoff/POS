@@ -3137,5 +3137,49 @@
   "storeVatPayer": "Do'kon QQS to'lovchi (kassada QQS 12% ko'rsatiladi)",
   "@storeVatPayer": {
     "description": "Chek sozlamasi: QQS to'lovchi belgisi"
+  },
+  "printerBluetooth": "Bluetooth",
+  "@printerBluetooth": {
+    "description": "Printer connection: Bluetooth (Android)"
+  },
+  "printerUsb": "USB",
+  "@printerUsb": {
+    "description": "Printer connection: USB (Android)"
+  },
+  "printerDevicesRefresh": "Ro'yxatni yangilash",
+  "@printerDevicesRefresh": {
+    "description": "Reload Bluetooth/USB printer list"
+  },
+  "printerDeviceMissing": "Hozir topilmadi — printerni yoqing yoki qayta ulang",
+  "@printerDeviceMissing": {
+    "description": "Saved printer is not in the current device list"
+  },
+  "printerBluetoothOff": "Bluetooth o'chiq — telefon sozlamalarida yoqing",
+  "@printerBluetoothOff": {
+    "description": "Bluetooth adapter is off"
+  },
+  "printerPermissionDenied": "Printerga ulanish uchun ruxsat bering",
+  "@printerPermissionDenied": {
+    "description": "Android permission for printer denied"
+  },
+  "printerDevicesFailed": "Qurilmalar ro'yxatini olib bo'lmadi",
+  "@printerDevicesFailed": {
+    "description": "Failed to list printer devices"
+  },
+  "printerNoBluetooth": "Juftlangan printer yo'q",
+  "@printerNoBluetooth": {
+    "description": "No paired Bluetooth printers"
+  },
+  "printerNoBluetoothHint": "Printerni yoqing va telefonning Bluetooth sozlamalarida juftlang (PIN odatda 0000 yoki 1234), keyin ro'yxatni yangilang.",
+  "@printerNoBluetoothHint": {
+    "description": "How to pair a Bluetooth printer"
+  },
+  "printerNoUsb": "USB printer topilmadi",
+  "@printerNoUsb": {
+    "description": "No USB printers attached"
+  },
+  "printerNoUsbHint": "Printerni OTG kabel bilan ulang va yoqing, keyin ro'yxatni yangilang.",
+  "@printerNoUsbHint": {
+    "description": "How to attach a USB printer"
   }
 }

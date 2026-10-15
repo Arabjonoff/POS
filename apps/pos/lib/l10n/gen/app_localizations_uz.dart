@@ -2298,6 +2298,43 @@ class AppLocalizationsUz extends AppLocalizations {
   @override
   String get storeVatPayer =>
       'Do\'kon QQS to\'lovchi (kassada QQS 12% ko\'rsatiladi)';
+
+  @override
+  String get printerBluetooth => 'Bluetooth';
+
+  @override
+  String get printerUsb => 'USB';
+
+  @override
+  String get printerDevicesRefresh => 'Ro\'yxatni yangilash';
+
+  @override
+  String get printerDeviceMissing =>
+      'Hozir topilmadi — printerni yoqing yoki qayta ulang';
+
+  @override
+  String get printerBluetoothOff =>
+      'Bluetooth o\'chiq — telefon sozlamalarida yoqing';
+
+  @override
+  String get printerPermissionDenied => 'Printerga ulanish uchun ruxsat bering';
+
+  @override
+  String get printerDevicesFailed => 'Qurilmalar ro\'yxatini olib bo\'lmadi';
+
+  @override
+  String get printerNoBluetooth => 'Juftlangan printer yo\'q';
+
+  @override
+  String get printerNoBluetoothHint =>
+      'Printerni yoqing va telefonning Bluetooth sozlamalarida juftlang (PIN odatda 0000 yoki 1234), keyin ro\'yxatni yangilang.';
+
+  @override
+  String get printerNoUsb => 'USB printer topilmadi';
+
+  @override
+  String get printerNoUsbHint =>
+      'Printerni OTG kabel bilan ulang va yoqing, keyin ro\'yxatni yangilang.';
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -4582,4 +4619,41 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get storeVatPayer => 'Дўкон ҚҚС тўловчи (кассада ҚҚС 12% кўрсатилади)';
+
+  @override
+  String get printerBluetooth => 'Bluetooth';
+
+  @override
+  String get printerUsb => 'USB';
+
+  @override
+  String get printerDevicesRefresh => 'Рўйхатни янгилаш';
+
+  @override
+  String get printerDeviceMissing =>
+      'Ҳозир топилмади — принтерни ёқинг ёки қайта уланг';
+
+  @override
+  String get printerBluetoothOff =>
+      'Bluetooth ўчиқ — телефон созламаларида ёқинг';
+
+  @override
+  String get printerPermissionDenied => 'Принтерга уланиш учун рухсат беринг';
+
+  @override
+  String get printerDevicesFailed => 'Қурилмалар рўйхатини олиб бўлмади';
+
+  @override
+  String get printerNoBluetooth => 'Жуфтланган принтер йўқ';
+
+  @override
+  String get printerNoBluetoothHint =>
+      'Принтерни ёқинг ва телефоннинг Bluetooth созламаларида жуфтланг (PIN одатда 0000 ёки 1234), кейин рўйхатни янгиланг.';
+
+  @override
+  String get printerNoUsb => 'USB принтер топилмади';
+
+  @override
+  String get printerNoUsbHint =>
+      'Принтерни OTG кабел билан уланг ва ёқинг, кейин рўйхатни янгиланг.';
 }
