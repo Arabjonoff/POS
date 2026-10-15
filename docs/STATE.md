@@ -5,19 +5,24 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-090 Chidamlilik testlari
+- Branch: feat/T-090-resilience
+- Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
+- [x] 1. Jarayon o'limi: `test/resilience/crash_child.dart` (alohida `dart run` jarayoni, `exit` COMMIT'siz/bilan) + `crash_test.dart`
+- [ ] 2. 2 qurilma bir tovar: ikki lokal baza, soxta server; pull'dagi server qoldig'i + yuborilmagan harakatlar
+- [ ] 3. 10 000 tovar: katalog yuklash va kassa ekrani ochilish vaqti, qidiruv
+- [ ] 4. 500 savdo oflayn + push uzilishi (mavjud: sync_engine_test 5, 6) — natijalar jadvali `docs/resilience.md`, PROGRESS
+- [ ] 5. PR, merge (T-085 bilan docs konflikti — main'ni qo'shish)
 
 ## Oxirgi bajarilgan ish
-- T-084 tugadi (PR, merge).
+- 1: crash testlari (2) yashil.
 
 ## Keyingi aniq harakat
-- ROADMAP'dan keyingi vazifa: T-085 Obuna nazorati ilovada.
+- 2-qadam: `test/resilience/two_devices_test.dart` — `FakeSyncServer` pull'iga product_stock qo'shib.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
