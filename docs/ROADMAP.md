@@ -287,7 +287,7 @@ Spec'lar: `admin-dashboard.md`, `subscription-billing.md`.
 - **Qabul:** toza Windows kompyuterga o'rnatiladi va ishga tushadi.
 - **Bog'liq:** T-090
 
-### [ ] T-094 Foydalanuvchi qo'llanmasi
+### [x] T-094 Foydalanuvchi qo'llanmasi
 - **Bajarish:** `docs/user-guide/` — kassir uchun 1 sahifa, ega uchun 3–5 sahifa, skrinshotlar bilan (o'zbekcha).
 - **Bog'liq:** T-091
 

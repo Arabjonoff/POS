@@ -404,3 +404,8 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - Sinov: lokal o'rnatuvchi 24 MB → jim o'rnatish → ilova ishga tushdi (oyna "Kassa", javob beradi) → jim o'chirish ✅; APK 77,9 MB ✅; backend +1 test, apps/pos +5 test.
 - PR: T-093 (squash merge)
 - Qoldi / keyingi qadam: toza Windows'da va haqiqiy planshetda sinov — birinchi chiqarishda; GitHub sirlari (POS_API_URL, Android kalit). Keyingi: T-094 foydalanuvchi qo'llanmasi.
+
+## 2026-10-15 — T-094 Foydalanuvchi qo'llanmasi
+- Qilindi: `docs/user-guide/` — kassir uchun bir sahifa (`kassir.md`: kirish, smena, 3 harakatda savdo, savat, qaytarish, internet yo'qligi, xabarlar) va ega uchun 5 sahifa (`ega/`: o'rnatish va ulash, rollar, sozlamalar; tovarlar, import, kirim, inventarizatsiya; mijozlar va nasiya; smena, kassa puli, hisobotlar; obuna, internet, yangi versiya, yordam). Skrinshotlar — `docs/screenshots/` dagi golden'lar; barcha havolalar tekshirildi. README'ga hujjatlar ro'yxati qo'shildi.
+- PR: T-094 (squash merge)
+- Qoldi: ROADMAP'da faqat T-047 (Android Bluetooth/USB printer — Q-007, haqiqiy qurilma kerak). Ochiq savollar: Q-001…Q-009 (`docs/QUESTIONS.md`).
