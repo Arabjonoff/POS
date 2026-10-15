@@ -25,3 +25,9 @@ Mahsulot talablari: `reports.md`. Kassa hisobotlarni lokal ma'lumotdan hisoblayd
 | `debts/?limit=` (standart 20) | `{total_debt_tiyin, debtors_count, top: [{customer, full_name, phone, balance_tiyin}]}` — davrsiz, joriy holat |
 | `stock/` | `{stock_value_tiyin, low: [...], negative: [...]}` — davrsiz; qiymat = Σ musbat qoldiq × tannarx; `low` — `min_stock_milli > 0` va qoldiq undan kam (qoldiq qatori bo'lmasa ham 0 deb), `negative` — qoldiq < 0. Qator: `{product, name, qty_milli, min_stock_milli}` |
 - Eksport (xlsx) — klientda (kassa va admin), server faqat JSON beradi.
+
+## Kassa uchun — `GET /api/v1/sync/reports/?date_from&date_to` (T-070)
+- Autentifikatsiya: qurilma tokeni (`Authorization: Device <token>`); xodim JWT'si yetmaydi. Kim ko'rishi (ega/menejer) kassada lokal rol bilan cheklanadi.
+- Javob bitta obyektda: `{summary, by_day, by_hour, top_products (20), cashiers, debts (top 10), stock}` — yuqoridagi endpointlar bilan bir xil formulalar.
+- Sanalar `YYYY-MM-DD` (do'kon kuni). Tenant bo'yicha cheklangan.
+- Umumiy test vektorlari: `testdata/report_vectors.json` — server (`apps/reports/tests/test_shared_vectors.py`) va kassa (`apps/pos/test/data/local_reports_test.dart`) bir xil raqam beradi.

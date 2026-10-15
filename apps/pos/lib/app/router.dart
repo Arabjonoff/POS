@@ -6,26 +6,20 @@ import 'package:pos_app/app/shell/app_sections.dart';
 import 'package:pos_app/app/shell/app_shell.dart';
 import 'package:pos_app/features/auth/lock_screen.dart';
 import 'package:pos_app/features/auth/setup_screen.dart';
-import 'package:pos_app/features/common/section_page.dart';
 import 'package:pos_app/features/customers/customers_screen.dart';
 import 'package:pos_app/features/inventory/inventory_screen.dart';
 import 'package:pos_app/features/pos/pos_screen.dart';
 import 'package:pos_app/features/products/products_screen.dart';
 import 'package:pos_app/features/receiving/receiving_screen.dart';
+import 'package:pos_app/features/reports/reports_screen.dart';
 import 'package:pos_app/features/settings/settings_screen.dart';
 import 'package:pos_app/features/shift/shift_screen.dart';
-import 'package:pos_app/l10n/gen/app_localizations.dart';
 
 abstract final class AppRoutes {
   static final String pos = AppSection.pos.path;
   static const String setup = '/setup';
   static const String lock = '/lock';
 }
-
-Widget _comingSoon(BuildContext context, AppSection section) => ComingSoonPage(
-  title: section.label(AppLocalizations.of(context)),
-  icon: section.icon,
-);
 
 /// Sessiya bosqichiga qarab: ulash → qulf (PIN) → kassa. PIN'dan keyin
 /// darhol kassa ekrani (CLAUDE.md).
@@ -78,8 +72,8 @@ final routerProvider = Provider<GoRouter>((ref) {
                     AppSection.products => const ProductsScreen(),
                     AppSection.receiving => const ReceivingScreen(),
                     AppSection.customers => const CustomersScreen(),
+                    AppSection.reports => const ReportsScreen(),
                     AppSection.settings => const SettingsScreen(),
-                    _ => _comingSoon(context, section),
                   },
                   routes: [
                     if (section == AppSection.pos)

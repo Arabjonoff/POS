@@ -151,13 +151,6 @@ class AppLocalizationsUz extends AppLocalizations {
   String get statusPrinterUnknown => 'Printer sozlanmagan';
 
   @override
-  String get sectionComingSoonTitle => 'Bo\'lim tayyorlanmoqda';
-
-  @override
-  String get sectionComingSoonMessage =>
-      'Bu bo\'lim keyingi yangilanishda qo\'shiladi';
-
-  @override
   String get setupTitle => 'Kassani ulash';
 
   @override
@@ -1584,6 +1577,138 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get customerBack => 'Mijozlar';
+
+  @override
+  String get reportsToday => 'Bugun';
+
+  @override
+  String get reportsYesterday => 'Kecha';
+
+  @override
+  String get reportsLast7Days => '7 kun';
+
+  @override
+  String get reportsThisMonth => 'Shu oy';
+
+  @override
+  String get reportsLastMonth => 'O\'tgan oy';
+
+  @override
+  String reportsPeriodRange(String from, String to) {
+    return '$from – $to';
+  }
+
+  @override
+  String get reportsRevenue => 'Tushum';
+
+  @override
+  String get reportsProfit => 'Foyda';
+
+  @override
+  String get reportsChecks => 'Cheklar';
+
+  @override
+  String get reportsAverageCheck => 'O\'rtacha chek';
+
+  @override
+  String reportsChangeUp(String percent) {
+    return '↑ $percent';
+  }
+
+  @override
+  String reportsChangeDown(String percent) {
+    return '↓ $percent';
+  }
+
+  @override
+  String reportsPrevious(String amount) {
+    return 'Oldin: $amount';
+  }
+
+  @override
+  String get reportsByHour => 'Soatlar bo\'yicha';
+
+  @override
+  String get reportsByDay => 'Kunlar bo\'yicha';
+
+  @override
+  String get reportsPayments => 'To\'lov turlari';
+
+  @override
+  String get reportsTopProducts => 'Ko\'p sotilgan tovarlar';
+
+  @override
+  String get reportsCashiers => 'Kassirlar';
+
+  @override
+  String reportsCashierRefunds(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ta qaytarish',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reportsDebts => 'Qarzlar';
+
+  @override
+  String reportsDebtors(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ta qarzdor',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reportsStock => 'Ombor';
+
+  @override
+  String get reportsStockValue => 'Ombor qiymati (tannarx)';
+
+  @override
+  String get reportsLowStock => 'Kam qolganlar';
+
+  @override
+  String get reportsNegativeStock => 'Manfiy qoldiq';
+
+  @override
+  String reportsStockLine(String qty, String min) {
+    return '$qty · eng kami $min';
+  }
+
+  @override
+  String get reportsNothing => 'Yo\'q';
+
+  @override
+  String get reportsNoSales => 'Bu davrda savdo yo\'q';
+
+  @override
+  String get reportsLocalOnly => 'Internet yo\'q — faqat shu kassa ma\'lumoti';
+
+  @override
+  String get reportsNoAccessTitle => 'Hisobotlar ega va menejer uchun';
+
+  @override
+  String get reportsNoAccessMessage =>
+      'Ko\'rish uchun menejer PIN kodini kiritsin';
+
+  @override
+  String get reportsUnlock => 'Menejer PIN';
+
+  @override
+  String get reportsUnlockReason => 'Hisobotlarni ko\'rish';
+
+  @override
+  String get reportsLoadFailed => 'Hisobotni ochib bo\'lmadi';
+
+  @override
+  String reportsCashierLine(String checks, String refunds) {
+    return '$checks · $refunds';
+  }
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -1731,13 +1856,6 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get statusPrinterUnknown => 'Принтер созланмаган';
-
-  @override
-  String get sectionComingSoonTitle => 'Бўлим тайёрланмоқда';
-
-  @override
-  String get sectionComingSoonMessage =>
-      'Бу бўлим кейинги янгиланишда қўшилади';
 
   @override
   String get setupTitle => 'Кассани улаш';
@@ -3159,4 +3277,135 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get customerBack => 'Мижозлар';
+
+  @override
+  String get reportsToday => 'Бугун';
+
+  @override
+  String get reportsYesterday => 'Кеча';
+
+  @override
+  String get reportsLast7Days => '7 кун';
+
+  @override
+  String get reportsThisMonth => 'Шу ой';
+
+  @override
+  String get reportsLastMonth => 'Ўтган ой';
+
+  @override
+  String reportsPeriodRange(String from, String to) {
+    return '$from – $to';
+  }
+
+  @override
+  String get reportsRevenue => 'Тушум';
+
+  @override
+  String get reportsProfit => 'Фойда';
+
+  @override
+  String get reportsChecks => 'Чеклар';
+
+  @override
+  String get reportsAverageCheck => 'Ўртача чек';
+
+  @override
+  String reportsChangeUp(String percent) {
+    return '↑ $percent';
+  }
+
+  @override
+  String reportsChangeDown(String percent) {
+    return '↓ $percent';
+  }
+
+  @override
+  String reportsPrevious(String amount) {
+    return 'Олдин: $amount';
+  }
+
+  @override
+  String get reportsByHour => 'Соатлар бўйича';
+
+  @override
+  String get reportsByDay => 'Кунлар бўйича';
+
+  @override
+  String get reportsPayments => 'Тўлов турлари';
+
+  @override
+  String get reportsTopProducts => 'Кўп сотилган товарлар';
+
+  @override
+  String get reportsCashiers => 'Кассирлар';
+
+  @override
+  String reportsCashierRefunds(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count та қайтариш',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reportsDebts => 'Қарзлар';
+
+  @override
+  String reportsDebtors(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count та қарздор',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reportsStock => 'Омбор';
+
+  @override
+  String get reportsStockValue => 'Омбор қиймати (таннарх)';
+
+  @override
+  String get reportsLowStock => 'Кам қолганлар';
+
+  @override
+  String get reportsNegativeStock => 'Манфий қолдиқ';
+
+  @override
+  String reportsStockLine(String qty, String min) {
+    return '$qty · энг ками $min';
+  }
+
+  @override
+  String get reportsNothing => 'Йўқ';
+
+  @override
+  String get reportsNoSales => 'Бу даврда савдо йўқ';
+
+  @override
+  String get reportsLocalOnly => 'Интернет йўқ — фақат шу касса маълумоти';
+
+  @override
+  String get reportsNoAccessTitle => 'Ҳисоботлар эга ва менежер учун';
+
+  @override
+  String get reportsNoAccessMessage => 'Кўриш учун менежер PIN кодини киритсин';
+
+  @override
+  String get reportsUnlock => 'Менежер PIN';
+
+  @override
+  String get reportsUnlockReason => 'Ҳисоботларни кўриш';
+
+  @override
+  String get reportsLoadFailed => 'Ҳисоботни очиб бўлмади';
+
+  @override
+  String reportsCashierLine(String checks, String refunds) {
+    return '$checks · $refunds';
+  }
 }

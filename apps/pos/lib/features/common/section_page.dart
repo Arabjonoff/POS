@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pos_app/l10n/gen/app_localizations.dart';
 import 'package:pos_ui/pos_ui.dart';
 
 /// Bo'lim sahifasi karkasi: sarlavha + mazmun.
@@ -31,27 +30,6 @@ class SectionPage extends StatelessWidget {
         ),
         Expanded(child: child),
       ],
-    );
-  }
-}
-
-/// Hali qurilmagan bo'lim (keyingi vazifalarda to'ldiriladi).
-class ComingSoonPage extends StatelessWidget {
-  const ComingSoonPage({required this.title, required this.icon, super.key});
-
-  final String title;
-  final IconData icon;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return SectionPage(
-      title: title,
-      child: PosEmptyState(
-        icon: icon,
-        title: l10n.sectionComingSoonTitle,
-        message: l10n.sectionComingSoonMessage,
-      ),
     );
   }
 }
