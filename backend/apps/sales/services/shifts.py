@@ -54,6 +54,14 @@ def expected_cash(shift: Shift) -> int:
     )
 
 
+def refresh_closed_shift(shift: Shift) -> None:
+    """Yopilgan smenaga kechikib qo'shilgan yozuvdan keyin kutilgan naqdni yangilash."""
+    if shift.is_open:
+        return
+    shift.expected_cash_tiyin = expected_cash(shift)
+    shift.save(update_fields=["expected_cash_tiyin", "updated_at"])
+
+
 @transaction.atomic
 def close_shift(device, payload: dict) -> Shift:
     code = "invalid_shift"
@@ -81,11 +89,12 @@ def close_shift(device, payload: dict) -> Shift:
 @transaction.atomic
 def record_cash_movement(device, payload: dict) -> CashMovement:
     code = "invalid_cash_movement"
-    shift = device_shift(device, as_uuid(payload, "shift", code=code), lock=True)
+    at = as_datetime(payload, "at", code=code)
+    shift = device_shift(device, as_uuid(payload, "shift", code=code), lock=True, at=at)
     movement_type = payload.get("type")
     if movement_type not in CashMovementType.values:
         raise invalid(code, "type must be in or out.", field="type")
-    return CashMovement.objects.create(
+    movement = CashMovement.objects.create(
         id=as_uuid(payload, "id", code=code),
         tenant_id=device.tenant_id,
         shift=shift,
@@ -93,8 +102,10 @@ def record_cash_movement(device, payload: dict) -> CashMovement:
         amount_tiyin=as_int(payload, "amount_tiyin", code=code, min_value=1),
         reason=str(payload.get("reason") or ""),
         created_by=tenant_user(device.tenant_id, as_uuid(payload, "by", code=code), code=code),
-        at=as_datetime(payload, "at", code=code),
+        at=at,
     )
+    refresh_closed_shift(shift)
+    return movement
 
 
 def shift_report(shift: Shift) -> dict:

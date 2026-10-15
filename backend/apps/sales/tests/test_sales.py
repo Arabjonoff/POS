@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 import pytest
 from django.utils import timezone
 
@@ -134,7 +136,6 @@ def _mutations():
         "change_mismatch": payment(received_tiyin=500_000, change_tiyin=1),
         "card_with_change": payment(method="card", change_tiyin=10),
         "debt_without_customer": payment(method="debt"),
-        "unknown_product": item("product", str(new_id())),
         "bad_uuid": top("cashier", "abc"),
         "unknown_cashier": top("cashier", str(new_id())),
         "naive_datetime": top("sold_at", "2026-10-14T10:00:00"),
@@ -177,6 +178,16 @@ def test_unknown_shift_is_missing_dependency(device, cashier, product, sale_payl
     assert exc.value.entity == "shift"
 
 
+def test_unknown_product_is_missing_dependency(device, shift, cashier, product, sale_payload):
+    # Tovar kassada yaratilgan, hodisasi hali qo'llanmagan — savdo kutadi (audit PR-P0-1).
+    payload = sale_payload(shift, cashier, [(product, 1_000, 400_000)])
+    payload["items"][0]["product"] = str(new_id())
+    with pytest.raises(MissingDependency) as exc:
+        record_sale(device, payload)
+    assert exc.value.entity == "product"
+    assert not Sale.objects.exists()
+
+
 def test_unknown_customer_is_missing_dependency(device, shift, cashier, product, sale_payload):
     # Mijoz kassada oflayn yaratilgan, hodisasi hali qo'llanmagan — savdo kutadi (audit B2).
     payload = sale_payload(
@@ -205,8 +216,7 @@ def test_foreign_customer_never_applied(
         debt_entry_id=str(new_id()),
     )
     payload["customer"] = str(foreign.id)
-    with pytest.raises(MissingDependency):
-        record_sale(device, payload)
+    assert _error(payload, device).code == "invalid_sale"
     assert not Sale.objects.exists()
 
 
@@ -231,6 +241,29 @@ def test_closed_shift_rejected(device, shift, cashier, product, sale_payload):
     )
     payload = sale_payload(shift, cashier, [(product, 1_000, 400_000)])
     assert _error(payload, device).code == "shift_closed"
+
+
+def test_late_sale_inside_closed_shift_is_applied(device, shift, cashier, product, sale_payload):
+    # Savdo smena ochiq paytda bo'lgan, lekin serverga smena yopilgandan keyin yetdi
+    # (masalan, mijoz hodisasini kutib pending bo'lgan) — rad etilmaydi (audit CU-B3).
+    sold_at = timezone.now() - timedelta(minutes=5)
+    close_shift(
+        device,
+        {
+            "id": str(shift.id),
+            "closed_by": str(cashier.id),
+            "counted_cash_tiyin": 0,
+            "closed_at": timezone.now().isoformat(),
+        },
+    )
+    shift.refresh_from_db()
+    before = shift.expected_cash_tiyin
+    payload = sale_payload(shift, cashier, [(product, 1_000, 400_000)])
+    payload["sold_at"] = sold_at.isoformat()
+    record_sale(device, payload)
+    shift.refresh_from_db()
+    # Z-hisobotdagi kutilgan naqd kechikkan savdoni ham hisobga oladi.
+    assert shift.expected_cash_tiyin == before + 400_000
 
 
 def test_duplicate_id_and_number(device, shift, cashier, product, sale_payload):

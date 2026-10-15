@@ -2,13 +2,16 @@ from rest_framework import serializers
 
 
 class TenantPKField(serializers.PrimaryKeyRelatedField):
-    """Faqat joriy tenant obyektlari (yumshoq o'chirilganlar ham emas); boshqasi — "topilmadi"."""
+    """Faqat joriy tenant obyektlari (yumshoq o'chirilganlar ham emas); boshqasi — "topilmadi".
+
+    Kontekstda `allow_deleted` bo'lsa o'chirilganlar ham qabul qilinadi: kassada oflayn
+    bo'lgan hujjat (kirim, inventarizatsiya) o'shanda mavjud bo'lgan tovarga tayanadi."""
 
     def get_queryset(self):
         tenant_id = self.context["request"].user.tenant_id
         queryset = super().get_queryset().filter(tenant_id=tenant_id)
         model_fields = {f.name for f in queryset.model._meta.get_fields()}
-        if "deleted_at" in model_fields:
+        if "deleted_at" in model_fields and not self.context.get("allow_deleted"):
             queryset = queryset.filter(deleted_at__isnull=True)
         return queryset
 

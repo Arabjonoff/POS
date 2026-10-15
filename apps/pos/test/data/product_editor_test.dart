@@ -148,6 +148,38 @@ void main() {
     expect(await editor.validate(olma), isEmpty);
   });
 
+  test(
+    'name ≤ 200 chars, ≤ 20 barcodes (server limits, audit PR-P1-3)',
+    () async {
+      expect(await codes(base.copyWith(name: 'a' * 200)), isEmpty);
+      expect(await codes(base.copyWith(name: 'a' * 201)), [
+        ProductProblemCode.tooLong,
+      ]);
+      // Emoji — bitta belgi (server kod nuqtalarini sanaydi).
+      expect(await codes(base.copyWith(name: '🍎' * 200)), isEmpty);
+      final many = [for (var i = 0; i < 21; i++) 'CODE-$i'];
+      expect(await codes(base.copyWith(barcodes: many)), [
+        ProductProblemCode.tooManyBarcodes,
+      ]);
+    },
+  );
+
+  test('name: control characters and extra spaces are removed', () async {
+    final id = await editor.save(
+      base.copyWith(name: "  Yog'\n 1\u0000 l\t "),
+      by: 'manager-1',
+    );
+    final p = await (db.select(
+      db.products,
+    )..where((t) => t.id.equals(id))).getSingle();
+    expect(p.name, "Yog' 1 l");
+    final event = await db.select(db.outboxEvents).getSingle();
+    expect((jsonDecode(event.payload) as Map)['name'], "Yog' 1 l");
+    expect(await codes(base.copyWith(name: '\n\t')), [
+      ProductProblemCode.required,
+    ]);
+  });
+
   test('invalid draft is not saved', () async {
     await expectLater(
       editor.save(const ProductDraft(name: 'X'), by: 'm'),

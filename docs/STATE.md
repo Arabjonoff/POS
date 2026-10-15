@@ -5,26 +5,20 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-100 To'liq audit va professional darajaga olib chiqish (ko'p bosqichli; batafsil — `AGENT_WORKLOG.md`)
-- Branch: feat/T-100-audit
+- Vazifa: T-101 Sinxron yaxlitligi (umumiy reja — `AGENT_WORKLOG.md`, audit — `PROJECT_AUDIT.md`)
+- Branch: feat/T-101-sync-integrity
 - Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
-- [x] 1. Audit (UI/UX, mahsulotlar, kirim, mijozlar, chek) → `PROJECT_AUDIT.md`
-- [~] 2. P0: yashil chaqnash, overflow, telefon, noma'lum mijoz (T-100 ✅); sinxron yaxlitligi (T-101)
-- [ ] 3. Kirimni tahrirlash
-- [ ] 4. Mijoz boshlang'ich balansi
-- [ ] 5. Mahsulot rasmi
-- [ ] 6. Chek sozlamalari
-- [ ] 7. Vizual uslub va UX
-- [ ] 8. Regressiya va yakuniy hisobot
+- [x] 1–7. Barcha qadamlar bajarildi (`docs/PROGRESS.md` T-101)
+- [ ] 8. PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-- T-100: audit (`PROJECT_AUDIT.md`, `docs/audit/`), yashil chaqnash, overflow, telefon normallashtirish, noma'lum mijoz → pending. PR ochildi.
+- T-101 kodi va testlari tayyor, hujjatlar yangilandi.
 
 ## Keyingi aniq harakat
-- T-100 PR merge → branch `feat/T-101-sync-integrity`: `docs/audit/audit_products.md` P0-1 (noma'lum tovar → `MissingDependency`; ziddiyatli shtrix-kod/PLU tushirib qo'llash), P0-2 (NUL → `backend/apps/sync/services.py` tozalash), `audit_receipts.md` B1, `audit_customers.md` B3.
+- T-101 PR CI yashil bo'lsa merge; keyin T-102 (`docs/audit/audit_receipts.md` 2-bo'lim dizayni).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
@@ -45,6 +39,8 @@
 - Widget testi teardown'ida drift yozuvini kutma (`await notifier.flush()` addTearDown ichida) — test osilib qoladi (timeout ham ishlamaydi). Test tanasida kutish mumkin.
 - To'lov oynasida skaner ro'yxatdan o'tgan: Flutter `HardwareKeyboard` ishlovchisi `true` qaytarsa ham hodisa `Focus.onKeyEvent` ga baribir yetadi. Shuning uchun oynada raqamlar faqat `onTyping` orqali (`MoneyInput(hardwareDigits: false)`), skaner Enter'i `_swallowEnter` bilan yutiladi.
 - Generatsiya qilingan Dart klient `DateTime` query'ni to'liq ISO vaqt qilib yuboradi; server `DateField` (`YYYY-MM-DD`) bo'lsa — Dio bilan to'g'ridan-to'g'ri chaqir (`reports_provider.dart` misoli).
+- Push'dan oldin: `dart format apps/pos/lib apps/pos/test packages/ui/lib packages/ui/test packages/ui/widgetbook/lib packages/ui/widgetbook/test` (CI tekshiradi); backend serializer o'zgarsa — `make schema` (openapi.yaml diff CI'da).
+- Windows'da Python bilan fayl yozganda `newline=''` ishlat (aks holda CRLF); `\n`/`\u02bb` kabi escape'lar heredoc ichida buziladi — Edit vositasi yoki skript fayl ishlat. Ruff RUF001: o'zbek `ʻ` uchun `# noqa: RUF001`.
 - Admin e2e lokal: `cd apps/admin && npm run build && E2E_PORT=3150 npx playwright test` (3100 — docker admin bo'lishi mumkin; reuseExistingServer uni qayta ishlatib yuboradi). Soxta Django API: `e2e/mock-api.mjs` (3199).
 - Admin'ga npm paket qo'shilsa: Windows'dagi npm lock'dan `@emnapi/core|runtime` (optional, wasm) yozuvlarini o'chiradi va CI `npm ci` yiqiladi. Yechim: yozuvlarni main'dagi lock'dan qaytarish, `npm ci --dry-run` bilan tekshirish.
 - Admin skrinshotlari: scratchpad'dagi `shots8x.cjs` naqshi — `node e2e/mock-api.mjs` + `API_URL_INTERNAL=http://127.0.0.1:3199 npx next start -p 3150`, keyin Playwright skript (`require(<apps/admin>/node_modules/playwright)`). Bash'da murakkab `node -e` / heredoc'ga `${...}` va qo'shtirnoq aralashsa buziladi — Write vositasi bilan fayl yoz.

@@ -323,6 +323,8 @@
   "productPriceHistoryEmpty": "Цена ещё не менялась",
   "productPriceHistoryRow": "Цена {sell} · Себестоимость {cost}",
   "productStockNow": "Остаток: {qty}",
+  "productErrNameTooLong": "Название — не длиннее {max} символов",
+  "productErrTooManyBarcodes": "Не больше {max} штрихкодов",
   "productErrPrice": "Цена должна быть больше 0",
   "productErrBarcodeFormat": "«{code}» — неверный штрихкод",
   "productErrBarcodeCheck": "«{code}» — код считан с ошибкой, отсканируйте снова",

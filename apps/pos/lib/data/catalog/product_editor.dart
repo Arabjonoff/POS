@@ -2,6 +2,7 @@ import 'package:clock/clock.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pos_app/core/barcode/barcode.dart';
+import 'package:pos_app/core/text/clean_text.dart';
 import 'package:pos_app/core/text/search_key.dart';
 import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/data/ids.dart';
@@ -92,6 +93,8 @@ enum ProductField { name, unit, price, barcodes, plu, ikpu }
 enum ProductProblemCode {
   required,
   notPositive,
+  tooLong,
+  tooManyBarcodes,
   barcodeFormat,
   barcodeCheckDigit,
   barcodeRepeated,
@@ -117,6 +120,10 @@ class ProductProblem {
   final String? barcode;
   final String? otherProduct;
 }
+
+/// Server cheklovlari (`catalog-api.md`): nom ≤ 200 belgi, ≤ 20 shtrix-kod.
+const maxNameLength = 200;
+const maxBarcodes = 20;
 
 class InvalidProductException implements Exception {
   const InvalidProductException(this.problems);
@@ -202,9 +209,24 @@ class ProductEditor {
 
   Future<List<ProductProblem>> validate(ProductDraft d) async {
     final problems = <ProductProblem>[];
-    if (d.name.trim().isEmpty) {
+    final name = cleanLine(d.name);
+    if (name.isEmpty) {
       problems.add(
         const ProductProblem(ProductField.name, ProductProblemCode.required),
+      );
+    } else if (codePointLength(name) > maxNameLength) {
+      // Server 200 dan uzun nomni rad etadi — tovar va uning savdolari serverga
+      // yetmay qolardi (audit PR-P1-3).
+      problems.add(
+        const ProductProblem(ProductField.name, ProductProblemCode.tooLong),
+      );
+    }
+    if (d.barcodes.length > maxBarcodes) {
+      problems.add(
+        const ProductProblem(
+          ProductField.barcodes,
+          ProductProblemCode.tooManyBarcodes,
+        ),
       );
     }
     final unit = d.unitId == null
@@ -287,7 +309,9 @@ class ProductEditor {
           const ProductProblem(ProductField.plu, ProductProblemCode.pluFormat),
         );
       } else if (d.isActive) {
-        final other =
+        // `.get()` — oflayn poygadan keyin ikki tovarda bir PLU bo'lishi mumkin;
+        // `getSingleOrNull` bunda xato tashlardi (audit PR-P1-7).
+        final others =
             await (_db.select(_db.products)..where(
                   (p) =>
                       p.pluCode.equals(plu) &
@@ -297,7 +321,8 @@ class ProductEditor {
                           ? const Constant(true)
                           : p.id.equals(d.id!).not()),
                 ))
-                .getSingleOrNull();
+                .get();
+        final other = others.isEmpty ? null : others.first;
         if (other != null) {
           problems.add(
             ProductProblem(
@@ -324,7 +349,7 @@ class ProductEditor {
     if (problems.isNotEmpty) throw InvalidProductException(problems);
     final id = d.id ?? _newId();
     final now = _now();
-    final name = d.name.trim();
+    final name = cleanLine(d.name);
     final plu = d.pluCode.trim();
     final ikpu = d.ikpuCode.trim();
     final barcodes = [for (final b in d.barcodes) b.trim()];

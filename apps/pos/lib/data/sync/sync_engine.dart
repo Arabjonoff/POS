@@ -1,7 +1,9 @@
 import 'package:clock/clock.dart';
+import 'package:drift/drift.dart';
 import 'package:pos_api_client/pos_api_client.dart';
 import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/data/remote/api.dart';
+import 'package:pos_app/data/sync/outbox.dart';
 import 'package:pos_app/data/sync/pull.dart';
 import 'package:pos_app/data/sync/push.dart';
 
@@ -70,7 +72,12 @@ class SyncEngine {
         rejected += result.rejected;
         if (!result.remaining) break;
       }
-      if (pull) {
+      // Javobi yo'qolgan paket qayta yuborilishini kutayotgan bo'lsa — pull
+      // qilinmaydi: server ularni allaqachon qo'llagan bo'lishi mumkin, u holda
+      // pull qoldig'i ularni o'z ichiga oladi, kassa esa ularni hali yuborilmagan
+      // deb yana qo'shadi (qoldiq ikki marta) va kirim narxini eski narx bosadi
+      // (audit RC-B5/B6). Navbat bo'shagach pull odatdagidek.
+      if (pull && !await _awaitingRetry()) {
         pulled = await SyncPuller(
           _db,
           api,
@@ -101,6 +108,21 @@ class SyncEngine {
         pulled: pulled,
       );
     }
+  }
+}
+
+extension on SyncEngine {
+  Future<bool> _awaitingRetry() async {
+    final row =
+        await (_db.select(_db.outboxEvents)
+              ..where(
+                (e) =>
+                    e.status.equals(OutboxStatus.pending) &
+                    e.attempts.isBiggerThanValue(0),
+              )
+              ..limit(1))
+            .getSingleOrNull();
+    return row != null;
   }
 }
 

@@ -228,3 +228,24 @@ def test_markup_null_without_cost(client_as, manager, product_payload):
         client_as(manager).post(PRODUCTS, product_payload(cost_price_tiyin=0), format="json").json()
     )
     assert body["markup_bp"] is None
+
+
+@pytest.mark.parametrize(
+    ("raw", "saved"),
+    [
+        ("  Yog'  1 l ", "Yog' 1 l"),
+        ("Non\nissiq", "Non issiq"),
+        ("Sut\t\x1b2%", "Sut 2%"),
+        ("Oʻrik «Samarqand»", "Oʻrik «Samarqand»"),  # noqa: RUF001 (o'zbek harfi ataylab)
+    ],
+)
+def test_name_is_cleaned_but_unicode_kept(client_as, manager, product_payload, raw, saved):
+    # Audit P2-12: boshqaruv belgilari chekda printer buyrug'iga aylanadi.
+    response = client_as(manager).post(PRODUCTS, product_payload(name=raw), format="json")
+    assert response.status_code == 201, response.json()
+    assert response.json()["name"] == saved
+
+
+def test_name_of_only_control_chars_rejected(client_as, manager, product_payload):
+    response = client_as(manager).post(PRODUCTS, product_payload(name="\n\t "), format="json")
+    assert response.status_code == 400

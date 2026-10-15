@@ -423,3 +423,15 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
   - Server hali olmagan mijozli savdo → `MissingDependency` (pending), rad etilmaydi.
 - Sinov: backend 205 (customers/sales/sync) + to'liq; apps/pos 627; packages/ui 134; golden'lar yangilandi.
 - Qoldi: T-101…T-107.
+
+## 2026-10-15 — T-101 Sinxron yaxlitligi
+- Qilindi (audit P0/P1, `docs/specs/sync-api.md` "Ma'lumot yo'qolmasligi qoidalari"):
+  - Server hali olmagan tovar savdo/kirim/inventarizatsiyada → `pending` (avval rad etilardi va savdo yo'qolardi); boshqa tenant id'si — darhol rad.
+  - `product.upserted` ziddiyatda butunlay rad etilmaydi: band shtrix-kod/PLU va o'chirilgan kategoriya tushiriladi.
+  - Kirim/inventarizatsiya o'chirilgan tovar va yetkazib beruvchini qabul qiladi (`TenantPKField` `allow_deleted`).
+  - Yopilgan smenaga smena ichidagi vaqtli kechikkan savdo/qaytarish/kassa puli/qarz to'lovi qabul qilinadi, `expected_cash_tiyin` qayta hisoblanadi.
+  - Push payloadidan NUL olib tashlanadi (ilgari 500 va navbat abadiy to'xtardi).
+  - Nom: server va kassa boshqaruv belgilarini, ortiqcha bo'shliqlarni tozalaydi (Excel import ham); kassada nom ≤ 200 belgi, ≤ 20 shtrix-kod; qidiruvda `´` apostrof.
+  - Kassa: javobi yo'qolgan paket qayta yuborilishini kutayotganda pull qilinmaydi (qoldiq ikki marta hisoblanmaydi).
+- Sinov: backend to'liq yashil (+10 test), apps/pos 630.
+- Qoldi: T-102 (kirimni tahrirlash, inventarizatsiya "kutilgan" vaqti — RC-B4).

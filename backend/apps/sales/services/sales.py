@@ -19,6 +19,7 @@ from .common import (
     invalid,
     tenant_user,
 )
+from .shifts import refresh_closed_shift
 
 CODE = "invalid_sale"
 
@@ -30,9 +31,13 @@ def _items(tenant_id, raw_items) -> list[dict]:
     products = Product.objects.filter(tenant_id=tenant_id, pk__in=product_ids).in_bulk()
     items = []
     for index, raw in enumerate(raw_items):
-        product = products.get(as_uuid(raw, "product", code=CODE))
+        product_id = as_uuid(raw, "product", code=CODE)
+        product = products.get(product_id)
         if product is None:
-            raise invalid(CODE, "Unknown product.", item=index, field="product")
+            if Product.objects.filter(pk=product_id).exists():  # boshqa tenant tovari
+                raise invalid(CODE, "Unknown product.", item=index, field="product")
+            # Tovar kassada yaratilgan, hodisasi hali qo'llanmagan — savdo kutadi (audit PR-P0-1).
+            raise MissingDependency("product", product_id)
         item = {
             "id": as_uuid(raw, "id", code=CODE),
             "product": product,
@@ -83,7 +88,8 @@ def _payments(raw_payments, total: int) -> list[dict]:
 @transaction.atomic
 def record_sale(device, payload: dict) -> Sale:
     tenant_id = device.tenant_id
-    shift = device_shift(device, as_uuid(payload, "shift", code=CODE), lock=True)
+    sold_at = as_datetime(payload, "sold_at", code=CODE)
+    shift = device_shift(device, as_uuid(payload, "shift", code=CODE), lock=True, at=sold_at)
     cashier = tenant_user(tenant_id, as_uuid(payload, "cashier", code=CODE), code=CODE)
     approved_id = as_uuid(payload, "approved_by", code=CODE, required=False)
     approved_by = (
@@ -93,6 +99,8 @@ def record_sale(device, payload: dict) -> Sale:
     if (customer_id := as_uuid(payload, "customer", code=CODE, required=False)) is not None:
         customer = Customer.objects.filter(tenant_id=tenant_id, pk=customer_id).first()
         if customer is None:
+            if Customer.objects.filter(pk=customer_id).exists():  # boshqa tenant mijozi
+                raise invalid(CODE, "Unknown customer.", field="customer")
             # Mijoz kassada oflayn yaratilgan va uning hodisasi hali qo'llanmagan
             # bo'lishi mumkin — rad etmaymiz, keyinroq qayta urinamiz (pending).
             raise MissingDependency("customer", customer_id)
@@ -113,7 +121,6 @@ def record_sale(device, payload: dict) -> Sale:
     number = str(payload.get("number") or "").strip()
     if not number:
         raise invalid(CODE, "number is required.", field="number")
-    sold_at = as_datetime(payload, "sold_at", code=CODE)
     sale_id = as_uuid(payload, "id", code=CODE)
     if Sale.objects.filter(pk=sale_id).exists():
         raise invalid("duplicate_sale", "Sale with this id already exists.", sale=str(sale_id))
@@ -162,4 +169,5 @@ def record_sale(device, payload: dict) -> Sale:
             id=as_uuid(payload, "debt_entry_id", code=CODE, required=False),
             shift=shift,
         )
+    refresh_closed_shift(shift)
     return sale

@@ -323,6 +323,8 @@
   "productPriceHistoryEmpty": "Нарх ҳали ўзгармаган",
   "productPriceHistoryRow": "Нарх {sell} · Таннарх {cost}",
   "productStockNow": "Қолдиқ: {qty}",
+  "productErrNameTooLong": "Ном {max} белгидан ошмасин",
+  "productErrTooManyBarcodes": "Кўпи билан {max} та штрих-код",
   "productErrPrice": "Нарх 0 дан катта бўлиши керак",
   "productErrBarcodeFormat": "«{code}» — нотўғри штрих-код",
   "productErrBarcodeCheck": "«{code}» — код нотўғри ўқилди, қайта сканерланг",

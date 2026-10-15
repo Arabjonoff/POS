@@ -17,7 +17,7 @@ barcha modullar regressiyasi, testlar, yakuniy hisobot.
 | # | Bosqich | Holat |
 |---|---|---|
 | 1 | Audit (5 yo'nalish) → `PROJECT_AUDIT.md`, `docs/audit/` | ✅ T-100 |
-| 2 | P0: yashil chaqnash, overflow, mijoz telefoni, noma'lum mijoz (T-100); sinxron yaxlitligi (T-101) | T-100 ✅, T-101 — |
+| 2 | P0: yashil chaqnash, overflow, mijoz telefoni, noma'lum mijoz (T-100); sinxron yaxlitligi (T-101) | ✅ T-100, T-101 |
 | 3 | Kirimni tahrirlash (teskari yozuv + yangi kirim, atomar) | — |
 | 4 | Mijoz boshlang'ich balansi | — |
 | 5 | Mahsulot rasmi (server + sinx + kassa) | — |
@@ -35,5 +35,7 @@ barcha modullar regressiyasi, testlar, yakuniy hisobot.
 - Audit tugadi (5 hisobot `docs/audit/`). Asosiy topilmalar: yashil chaqnash sababi `PosScanFeedback` (oddiy bosishda ham, butun panel, fon bo'yalgan); server rad etgan tovar/mijoz savdolarni yo'qotadi; NUL belgisi sinxronni to'xtatadi; kirimni tahrirlash/bekor qilish yo'q; chekda preview/logo/STIR yo'q; rasm yo'q.
 - T-100 tuzatishlari: chaqnash, overflow, telefon normallashtirish, noma'lum mijoz → pending. Testlar: backend to'liq yashil, pos 627, ui 134.
 
+- T-101: noma'lum tovar → pending, ziddiyatli shtrix-kod tushiriladi, o'chirilgan bog'liqliklar qabul, yopiq smenaga kechikkan hodisa, NUL, nom tozalash/cheklovlar, qayta yuborish paytida pull yo'q. Backend to'liq yashil, pos 630.
+
 ## Keyingi qadam
-- T-101 Sinxron yaxlitligi (`docs/audit/audit_products.md` P0-1, P0-2; `audit_receipts.md` B1; `audit_customers.md` B3).
+- T-102 Kirimni tahrirlash va bekor qilish — dizayn: `docs/audit/audit_receipts.md` 2-bo'lim.

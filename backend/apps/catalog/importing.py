@@ -22,6 +22,7 @@ from django.utils import timezone
 from apps.core.exceptions import DomainError
 from apps.core.ids import new_id
 from apps.core.money import line_total
+from apps.core.text import clean_line
 from apps.sync.models import ChangeLog, ChangeOp
 
 from .barcodes import BarcodeError, normalize_barcode
@@ -268,7 +269,7 @@ def analyze(product_import: ProductImport, mapping: dict[str, int | None]) -> An
     for offset, row in enumerate(product_import.rows[1:]):
         number = offset + 2
         problems: list[tuple[str, str]] = []
-        name = value(row, "name")
+        name = clean_line(value(row, "name"))
         if not name:
             problems.append(("name", "required"))
         elif len(name) > 200:

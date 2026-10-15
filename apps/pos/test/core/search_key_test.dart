@@ -20,7 +20,15 @@ void main() {
   });
 
   test('apostrophe variants are ignored', () {
-    for (final s in ["o'rik", 'oʻrik', 'oʼrik', 'o‘rik', 'o’rik', 'o`rik']) {
+    for (final s in [
+      "o'rik",
+      'oʻrik',
+      'oʼrik',
+      'o‘rik',
+      'o’rik',
+      'o`rik',
+      'o´rik',
+    ]) {
       expect(SearchKey.of(s), 'orik');
     }
   });

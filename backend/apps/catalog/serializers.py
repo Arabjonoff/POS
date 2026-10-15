@@ -4,6 +4,7 @@ from apps.core.exceptions import DomainError
 from apps.core.fields import StrictIntegerField, money_field
 from apps.core.money import mul_div_half_up
 from apps.core.serializers import TenantPKField
+from apps.core.text import clean_line
 
 from .barcodes import BarcodeError, normalize_barcode
 from .models import STANDARD_UNITS, Category, PriceHistory, Product, ProductBarcode, Unit
@@ -113,6 +114,14 @@ class ProductSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Id cannot be changed.")
         if self.instance is None and Product.objects.filter(pk=value).exists():
             raise serializers.ValidationError("Product with this id already exists.", code="unique")
+        return value
+
+    def validate_name(self, value):
+        # Import/REST'dan yangi qator va tab kelishi mumkin — chekda va qidiruvda
+        # buziladi (audit P2-12).
+        value = clean_line(value)
+        if not value:
+            raise serializers.ValidationError("This field may not be blank.", code="blank")
         return value
 
     def validate_barcodes(self, codes):

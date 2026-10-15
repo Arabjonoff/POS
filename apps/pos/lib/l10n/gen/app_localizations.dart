@@ -2040,6 +2040,18 @@ abstract class AppLocalizations {
   /// Xato
   ///
   /// In uz, this message translates to:
+  /// **'Nom {max} belgidan oshmasin'**
+  String productErrNameTooLong(int max);
+
+  /// Xato
+  ///
+  /// In uz, this message translates to:
+  /// **'Ko\'pi bilan {max} ta shtrix-kod'**
+  String productErrTooManyBarcodes(int max);
+
+  /// Xato
+  ///
+  /// In uz, this message translates to:
   /// **'Narx 0 dan katta bo\'lishi kerak'**
   String get productErrPrice;
 

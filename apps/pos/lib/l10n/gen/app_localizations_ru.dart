@@ -1121,6 +1121,16 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String productErrNameTooLong(int max) {
+    return 'Название — не длиннее $max символов';
+  }
+
+  @override
+  String productErrTooManyBarcodes(int max) {
+    return 'Не больше $max штрихкодов';
+  }
+
+  @override
   String get productErrPrice => 'Цена должна быть больше 0';
 
   @override

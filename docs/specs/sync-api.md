@@ -12,6 +12,17 @@ Umumiy tamoyillar: `sync.md`. Hodisa payloadlari va qo'llash qoidalari: `sales-a
   - `pending` — bog'liq obyekt (smena, savdo, mijoz) hali serverda yo'q. Server hodisani saqlaydi va **shu qurilmaning har keyingi push'ida** (yangi hodisalardan oldin va keyin) qayta urinadi. Kassa uni yuborilgan deb belgilaydi.
   - `rejected` — biznes yoki format xatosi; `error: {code, message, details}`. Kassa qayta yubormaydi, holat qatorida ogohlantiradi; admin `SyncEvent` jurnalida ko'radi.
 - `pending` hodisa **7 kun** ichida qo'llanmasa — `rejected` (`missing_dependency`).
+
+### Ma'lumot yo'qolmasligi qoidalari (T-101, audit)
+- **Bog'liq obyekt hali kelmagan** — `pending`, rad etilmaydi: smena, savdo, mijoz, **tovar** (savdo, kirim, inventarizatsiya qatorida).
+  Bu id **boshqa tenantda** mavjud bo'lsa — darhol `rejected` (izolyatsiya; hech qachon qo'llanmaydi).
+- **Yopilgan smena:** savdo, qaytarish, kassa puli, qarz to'lovi vaqti (`sold_at`/`at`) smena yopilishidan oldin bo'lsa — qabul qilinadi
+  (kechikkan yoki kutib turgan hodisa), smenaning `expected_cash_tiyin` qayta hisoblanadi. Yopilgandan keyingi vaqt — `shift_closed`.
+- **`product.upserted` butunlay rad etilmaydi** ziddiyat tufayli: boshqa tovarga tegishli shtrix-kod va PLU, o'chirilgan kategoriya tushirib
+  qoldiriladi (server logida ogohlantirish); tovarning server holati keyingi pull'da kassaga qaytadi. Aks holda shu tovar bilan bo'lgan barcha
+  savdolar ham rad etilardi.
+- **Kirim va inventarizatsiya** o'chirilgan tovar va yetkazib beruvchini qabul qiladi (hujjat oflaynda, ular hali mavjud paytda yaratilgan).
+- **NUL (`\u0000`)** payload satrlaridan olib tashlanadi (Postgres jsonb saqlay olmaydi; ilgari push 500 berib, navbat to'xtab qolardi).
 - Boshqa qurilma yoki tenantga tegishli `id` bilan hodisa — `rejected` (`id_conflict`); mavjud hodisa o'zgarmaydi.
 - Noma'lum `type` — `rejected` (`unknown_event`).
 - Har push'da `Device.last_sync_at` va `last_seen_at` yangilanadi.
