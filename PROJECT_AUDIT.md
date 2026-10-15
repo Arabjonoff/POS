@@ -33,10 +33,10 @@ Holat: ✅ tuzatildi · 🔧 ishlanmoqda · ⏳ rejada · ❓ biznes savoli (`do
 | UI-2 | Kassa tez tugmasida `RenderFlex overflowed by 4 px` (ilova logida) | Plitka balandligi 88 px, 2 qatorli nom + narx 92 px talab qiladi | Narx kesiladi, sariq-qora chiziq (debug) | ✅ 96 px |
 | CU-B1 | Telefon formatsiz yozilsa ("90 123 45 67") mijoz serverga yetmaydi, uning **nasiya savdolari ham rad etiladi** | Server faqat `+998XXXXXXXXX` qabul qiladi, kassa yozilganicha yuboradi | Qarz yozuvlari serverda yo'q — hisobot va boshqa kassalarda noto'g'ri qarz | ✅ server va kassa bir xil normallashtiradi, kassada xato xabari |
 | CU-B2 | Server hali olmagan mijozga nasiya savdosi — rad etiladi | `record_sale` "Unknown customer" → `invalid` (kutish o'rniga) | Savdo serverda yo'qoladi | ✅ `MissingDependency` → pending |
-| PR-P0-1 | Server rad etgan tovar (masalan, ikki kassada bir xil shtrix-kod) — shu tovar bor **barcha savdolar ham rad etiladi** | Savdo/kirim noma'lum tovarni `invalid` qiladi; tovar hodisasi to'liq rad etiladi | Savdolar, to'lovlar, qarzlar serverga yetmaydi | ⏳ T-101 |
-| PR-P0-2 | Matnda NUL (`\u0000`) belgisi — kassa sinxroni **butunlay to'xtaydi** | `SyncEvent.save` try'dan tashqarida; Postgres jsonb NUL saqlay olmaydi → 500 | Kassa "oflayn", hech narsa yuborilmaydi | ⏳ T-101 |
-| RC-B1 | Serverda o'chirilgan tovar/yetkazib beruvchiga oflayn kirim — rad etiladi | Sinxron handler o'chirilgan qatorlarni topmaydi | Kirim serverda yo'q, kassa qoldig'i esa uni hisoblaydi | ⏳ T-101 |
-| RC-B4 | Inventarizatsiya "kutilgan"ni server qo'llash paytida hisoblaydi | Kechikkan savdolar ikki marta ayiriladi yoki o'chib ketadi | Qoldiq noto'g'ri | ⏳ T-101 |
+| PR-P0-1 | Server rad etgan tovar (masalan, ikki kassada bir xil shtrix-kod) — shu tovar bor **barcha savdolar ham rad etiladi** | Savdo/kirim noma'lum tovarni `invalid` qiladi; tovar hodisasi to'liq rad etiladi | Savdolar, to'lovlar, qarzlar serverga yetmaydi | ✅ T-101 |
+| PR-P0-2 | Matnda NUL (`\u0000`) belgisi — kassa sinxroni **butunlay to'xtaydi** | `SyncEvent.save` try'dan tashqarida; Postgres jsonb NUL saqlay olmaydi → 500 | Kassa "oflayn", hech narsa yuborilmaydi | ✅ T-101 |
+| RC-B1 | Serverda o'chirilgan tovar/yetkazib beruvchiga oflayn kirim — rad etiladi | Sinxron handler o'chirilgan qatorlarni topmaydi | Kirim serverda yo'q, kassa qoldig'i esa uni hisoblaydi | ✅ T-101 |
+| RC-B4 | Inventarizatsiya "kutilgan"ni server qo'llash paytida hisoblaydi | Kechikkan savdolar ikki marta ayiriladi yoki o'chib ketadi | Qoldiq noto'g'ri | ⏳ T-102 |
 
 ### P1 — asosiy funksiya yo'q yoki noto'g'ri
 
@@ -50,15 +50,15 @@ Holat: ✅ tuzatildi · 🔧 ishlanmoqda · ⏳ rejada · ❓ biznes savoli (`do
 | PRN-B13 | Birinchi chop etish xato bo'lsa, qayta urinish mijozga "NUSXA" belgili chek chiqaradi | ⏳ T-104 |
 | PRN-B14 | Avto-chop o'chiq bo'lsa naqd savdoda pul qutisi ochilmaydi | ⏳ T-104 |
 | IMG-0 | Mahsulot rasmi umuman yo'q | ⏳ T-105 |
-| PR-P1-3 | Kassada nom ≤ 200 va ≤ 20 shtrix-kod cheklovi yo'q → server rad etadi (P0-1 ga olib keladi) | ⏳ T-101 |
-| PR-P1-4 | Oflayn eski tahrir serverdagi yangi narxni qaytarib yozadi (to'liq snapshot) | ⏳ T-101 |
+| PR-P1-3 | Kassada nom ≤ 200 va ≤ 20 shtrix-kod cheklovi yo'q → server rad etadi (P0-1 ga olib keladi) | ✅ T-101 |
+| PR-P1-4 | Oflayn eski tahrir serverdagi yangi narxni qaytarib yozadi (to'liq snapshot) | ⏳ T-106 (o\'zgargan maydonlar — kassa formati o\'zgaradi) |
 | PR-P1-6, UI-P1-3 | Saqlashda kutilmagan xato — tugma "yuklanmoqda"da qotadi, xabar yo'q (tovar kartasi, mijoz kartasi, smena yopish) | ⏳ T-106 |
 | UI-P1-2, UI-P1-4 | Ikki marta bosish: tovar kartasi ikki tovar, kirim ikki qoralama, yetkazib beruvchi ikki marta yaratadi | ⏳ T-106 |
 | UI-P1-1 | Kirim/inventarizatsiya qoralamasi tasdiqsiz va qaytarishsiz o'chadi (tugma "Tasdiqlash" yonida) | ⏳ T-106 |
 | UI-P1-5 | Telefonda holat qatori kesiladi ("Prin…"), smena va xato ko'rinmaydi | ⏳ T-106 |
-| CU-B3 | Qayta yuborilgan qarz to'lovi smena yopilgach rad etiladi | ⏳ T-101 |
+| CU-B3 | Qayta yuborilgan qarz to'lovi smena yopilgach rad etiladi | ✅ T-101 |
 | CU-B4 | Smena ochilmasdan qarz to'lovi qabul qilinadi — naqd hech bir Z-hisobotga tushmaydi | ⏳ T-103 |
-| RC-B5/B6 | Javob yo'qolib qayta yuborish kutilayotganda pull qoldiqni ikki marta hisoblaydi va kirim narxini eskisi bilan almashtiradi (≤ 5 daqiqa) | ⏳ T-101 |
+| RC-B5/B6 | Javob yo'qolib qayta yuborish kutilayotganda pull qoldiqni ikki marta hisoblaydi va kirim narxini eskisi bilan almashtiradi (≤ 5 daqiqa) | ✅ T-101 |
 
 ### P2 — sifat, izchillik
 

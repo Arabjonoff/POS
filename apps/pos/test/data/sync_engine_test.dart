@@ -209,6 +209,28 @@ void main() {
       );
     });
 
+    test(
+      'no pull while a lost batch waits for its retry (no double stock)',
+      () async {
+        await sellOffline(3);
+        server.loseNextResponse = true;
+        await engine.syncOnce();
+        expect(server.applied.length, 3);
+        // Kutish vaqti kelmagan: push hech narsa yubormaydi — pull ham yo'q.
+        final pullsBefore = server.pulls;
+        await engine.syncOnce();
+        expect(server.pulls, pullsBefore);
+
+        now = now.add(const Duration(minutes: 1));
+        await engine.syncOnce();
+        expect(server.pulls, pullsBefore + 1);
+        expect(
+          (await outbox()).every((e) => e.status == OutboxStatus.sent),
+          isTrue,
+        );
+      },
+    );
+
     test('8: readonly subscription stops sales, sync keeps working', () async {
       final container = ProviderContainer(
         overrides: [

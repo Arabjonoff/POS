@@ -298,7 +298,7 @@ Audit: `PROJECT_AUDIT.md`, batafsil — `docs/audit/`. Jurnal: `AGENT_WORKLOG.md
 - **Bajarish:** 5 yo'nalishda audit; yashil chaqnash (faqat skaner, faqat chegara, ≤ 200 ms); tez tugma overflow; mijoz telefoni normallashtirish (server + kassa); noma'lum mijozli savdo → pending.
 - **Qabul:** `PROJECT_AUDIT.md`; regressiya testlari; barcha tekshiruvlar yashil.
 
-### [ ] T-101 Sinxron yaxlitligi
+### [x] T-101 Sinxron yaxlitligi
 - **Bajarish:** rad etilgan tovar savdolarni yo'qotmasin (noma'lum tovar → pending; ziddiyatli shtrix-kod/PLU tushirib, tovar qo'llanadi); NUL belgisi 500 bermasin; o'chirilgan tovar/yetkazib beruvchiga kirim qabul qilinsin; qayta yuborilgan qarz to'lovi yopiq smenada ham qabul qilinsin; kassada nom ≤ 200, ≤ 20 shtrix-kod; boshqaruv belgilarini tozalash.
 - **Bog'liq:** T-100
 
