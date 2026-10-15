@@ -931,6 +931,126 @@
   "@printerTestReceipt": {
     "description": "Tugma: ko'rinishdagi chekni chop etish"
   },
+  "receiptTin": "STIR",
+  "@receiptTin": {
+    "description": "Chekda: 9 raqamli soliq raqami"
+  },
+  "receiptPinfl": "JShShIR",
+  "@receiptPinfl": {
+    "description": "Chekda: 14 raqamli shaxsiy raqam"
+  },
+  "storeSettingsTitle": "Chek rekvizitlari va ko'rinishi",
+  "@storeSettingsTitle": {
+    "description": "Sozlamalar kartasi"
+  },
+  "storeSettingsHint": "Hamma kassalarda bir xil. O'ngdagi chek — printer aynan shunday chiqaradi.",
+  "@storeSettingsHint": {
+    "description": "Izoh"
+  },
+  "storeName": "Do'kon nomi",
+  "@storeName": {
+    "description": "Maydon"
+  },
+  "storeLegalName": "Yuridik nomi",
+  "@storeLegalName": {
+    "description": "Maydon"
+  },
+  "storeLegalNameHint": "Masalan: \"Baraka\" MChJ yoki YaTT Karimov A.",
+  "@storeLegalNameHint": {
+    "description": "Izoh"
+  },
+  "storeTin": "STIR yoki JShShIR",
+  "@storeTin": {
+    "description": "Maydon"
+  },
+  "storeTinHint": "9 yoki 14 raqam. Faqat kiritilsa chekda chiqadi.",
+  "@storeTinHint": {
+    "description": "Izoh"
+  },
+  "storeTinError": "9 raqam (STIR) yoki 14 raqam (JShShIR) kiriting",
+  "@storeTinError": {
+    "description": "Xato"
+  },
+  "storeAddress": "Manzil",
+  "@storeAddress": {
+    "description": "Maydon"
+  },
+  "storePhone": "Telefon",
+  "@storePhone": {
+    "description": "Maydon"
+  },
+  "storeHeader": "Chek sarlavhasi",
+  "@storeHeader": {
+    "description": "Maydon"
+  },
+  "storeHeaderHint": "Masalan: Har kuni 08:00–23:00",
+  "@storeHeaderHint": {
+    "description": "Izoh"
+  },
+  "storeFooter": "Pastki matn",
+  "@storeFooter": {
+    "description": "Maydon"
+  },
+  "storeFooterHint": "Bo'sh bo'lsa: Xaridingiz uchun rahmat!",
+  "@storeFooterHint": {
+    "description": "Izoh"
+  },
+  "storeLogo": "Logotip",
+  "@storeLogo": {
+    "description": "Bo'lim"
+  },
+  "storeLogoHint": "PNG yoki JPG. Chekda oq-qora chiqadi.",
+  "@storeLogoHint": {
+    "description": "Izoh"
+  },
+  "storeLogoPick": "Logotip tanlash",
+  "@storeLogoPick": {
+    "description": "Tugma"
+  },
+  "storeLogoReplace": "Almashtirish",
+  "@storeLogoReplace": {
+    "description": "Tugma"
+  },
+  "storeLogoRemove": "Olib tashlash",
+  "@storeLogoRemove": {
+    "description": "Tugma"
+  },
+  "storeLogoError": "Rasmni o'qib bo'lmadi. Boshqa PNG yoki JPG tanlang.",
+  "@storeLogoError": {
+    "description": "Xato"
+  },
+  "storeLogoTooLarge": "Logotip juda murakkab. Oddiyroq rasm tanlang.",
+  "@storeLogoTooLarge": {
+    "description": "Xato"
+  },
+  "storeShowTitle": "Chekda ko'rsatish",
+  "@storeShowTitle": {
+    "description": "Bo'lim"
+  },
+  "storeShowCashier": "Kassir ismi",
+  "@storeShowCashier": {
+    "description": "Kalit"
+  },
+  "storeShowBarcode": "Chek shtrix-kodi (qaytarish uchun)",
+  "@storeShowBarcode": {
+    "description": "Kalit"
+  },
+  "storeSave": "Rekvizitlarni saqlash",
+  "@storeSave": {
+    "description": "Tugma"
+  },
+  "storeSaved": "Saqlandi — boshqa kassalarda sinxrondan keyin yangilanadi",
+  "@storeSaved": {
+    "description": "Xabar"
+  },
+  "storeNeedsApproval": "Chek rekvizitlarini menejer yoki ega o'zgartiradi",
+  "@storeNeedsApproval": {
+    "description": "Huquq"
+  },
+  "storeUnavailable": "Rekvizitlarni o'zgartirish server yangilangach ishlaydi (internetga ulaning).",
+  "@storeUnavailable": {
+    "description": "Izoh"
+  },
   "receiptDebtNow": "Joriy qarz",
   "@receiptDebtNow": {
     "description": "Chekda: mijozning savdodan keyingi qarzi"

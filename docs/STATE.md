@@ -5,26 +5,24 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-104 Chek sozlamalari (reja — `docs/audit/audit_printing.md` 3-bo'lim). Ikki PR: 104a (xatolar, preview, qurilma sozlamalari), 104b (do'kon rekvizitlari, ko'rsat/yashir, logotip, server)
-- Branch: feat/T-104-receipt-settings
+- Vazifa: T-104b Chek rekvizitlari, ko'rsat/yashir, logotip (T-104a merge #54)
+- Branch: feat/T-104b-store-requisites
 - Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
-- [x] 1. Dizayn tizimi: Roboto Mono (OFL), `PosTypography.receipt`, `PosColors.receiptPaper/receiptInk`
-- [x] 2. `receipt.dart`: 42 belgili 80 mm, `ReceiptRow.tall`, bo'sh do'kon/kassir qatori yo'q, birlik (g/qadoq), oraliq summa, aralash to'lov (+ "Berildi"), qarz savdodan keyin, telefon formati, `plain()` kengaytirildi
-- [x] 3. `escpos.dart`: `EscPosProfile` (kod sahifasi, `FS .`, kesish, surish), Ў/ў CP866, `GS !` baland, `printable()`
-- [x] 4. `PrinterSettings`: code_page, cancel_kanji, cut, feed_lines (eski JSON mos)
-- [x] 5. `printer_service.dart`: profil, test cheki = namuna chek (`receipt_sample.dart`); loader: savdodan keyingi qarz; kassa: qayta urinish NUSXA emas, avto-chop o'chiq bo'lsa ham pul qutisi
-- [x] 6. `ReceiptPreview` vidjeti + sozlamalar paneli (preview, qo'shimcha sozlamalar, manzil debounce)
-- [x] 7. Testlar (snapshot'lar, 32/42/48 × 3 til "hamma qator sig'adi", `?` yo'q), golden'lar
-- [ ] 8. PR 104a; keyin 104b
+- [x] 1. Server: `Store.legal_name/tin/receipt_logo/receipt_options` (migratsiya tenants 0002), `StoreSettingsSerializer`, `store.upserted` (ega/menejer, tenant), pull, `features: store_settings`; testlar 11
+- [x] 2. Kassa: drift v5 (stores ustunlari), pull; `mono_bitmap.dart` (kulrang PNG, 1 bit, `GS v 0`); `ReceiptOptions`, `ReceiptRow.image`, rekvizitlar chekda; `StoreSettingsStore`; `ReceiptSettingsSection` (forma + jonli preview)
+- [x] 3. Testlar: mono_bitmap 8, store_settings 2
+- [x] 4. Widget testlari, golden'lar
+- [x] 5. Hujjatlar
+- [ ] 6. PR, merge
 
 ## Oxirgi bajarilgan ish
-- T-104a tayyor (PROGRESS). PR ochilmoqda.
+- T-104b tayyor, PR ochilmoqda.
 
 ## Keyingi aniq harakat
-- T-104a PR CI yashil bo'lsa merge; keyin T-104b: `backend/apps/tenants/models.py` Store'ga `legal_name`, `tin`, `receipt_logo`, `receipt_options` (additive migratsiya), pull'da, `store.upserted` hodisasi (ega/menejer, tenant testi), kassa drift `stores` ustunlari, muharrir + ko'rsat/yashir, logotip (`file_picker` → kulrang PNG → `GS v 0`).
+- T-104b PR CI yashil bo'lsa merge; keyin T-105 mahsulot rasmi (`docs/audit/audit_products.md` reja).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

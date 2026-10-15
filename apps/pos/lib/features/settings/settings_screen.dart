@@ -8,7 +8,7 @@ import 'package:pos_app/app/session/session.dart';
 import 'package:pos_app/app/update/app_update.dart';
 import 'package:pos_app/features/common/section_page.dart';
 import 'package:pos_app/features/printing/printer_settings_panel.dart';
-import 'package:pos_app/features/printing/receipt_preview_panel.dart';
+import 'package:pos_app/features/printing/receipt_settings_section.dart';
 import 'package:pos_app/features/settings/language_picker.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
 import 'package:pos_ui/pos_ui.dart';
@@ -50,9 +50,10 @@ class SettingsScreen extends ConsumerWidget {
           ),
           const SizedBox(height: PosSpacing.l),
           _SettingsCard(
-            title: l10n.receiptPreviewTitle,
-            subtitle: l10n.receiptPreviewHint,
-            child: const ReceiptPreviewPanel(),
+            title: l10n.storeSettingsTitle,
+            subtitle: l10n.storeSettingsHint,
+            wide: true,
+            child: const ReceiptSettingsSection(),
           ),
           const SizedBox(height: PosSpacing.l),
           _SettingsCard(title: l10n.settingsAbout, child: const _AboutPanel()),
@@ -77,11 +78,15 @@ class _SettingsCard extends StatelessWidget {
     required this.title,
     required this.child,
     this.subtitle,
+    this.wide = false,
   });
 
   final String title;
   final String? subtitle;
   final Widget child;
+
+  /// Keng karta (forma + chek ko'rinishi yonma-yon).
+  final bool wide;
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +94,7 @@ class _SettingsCard extends StatelessWidget {
     return Align(
       alignment: Alignment.topLeft,
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 560),
+        constraints: BoxConstraints(maxWidth: wide ? 1080 : 560),
         child: PosCard(
           padding: const EdgeInsets.all(PosSpacing.s),
           child: Column(

@@ -280,6 +280,52 @@ class $StoresTable extends Stores with TableInfo<$StoresTable, Store> {
     requiredDuringInsert: false,
     defaultValue: const Constant(''),
   );
+  static const VerificationMeta _legalNameMeta = const VerificationMeta(
+    'legalName',
+  );
+  @override
+  late final GeneratedColumn<String> legalName = GeneratedColumn<String>(
+    'legal_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _tinMeta = const VerificationMeta('tin');
+  @override
+  late final GeneratedColumn<String> tin = GeneratedColumn<String>(
+    'tin',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _receiptLogoMeta = const VerificationMeta(
+    'receiptLogo',
+  );
+  @override
+  late final GeneratedColumn<String> receiptLogo = GeneratedColumn<String>(
+    'receipt_logo',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(''),
+  );
+  static const VerificationMeta _receiptOptionsMeta = const VerificationMeta(
+    'receiptOptions',
+  );
+  @override
+  late final GeneratedColumn<String> receiptOptions = GeneratedColumn<String>(
+    'receipt_options',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('{}'),
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -288,6 +334,10 @@ class $StoresTable extends Stores with TableInfo<$StoresTable, Store> {
     phone,
     receiptHeader,
     receiptFooter,
+    legalName,
+    tin,
+    receiptLogo,
+    receiptOptions,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -344,6 +394,36 @@ class $StoresTable extends Stores with TableInfo<$StoresTable, Store> {
         ),
       );
     }
+    if (data.containsKey('legal_name')) {
+      context.handle(
+        _legalNameMeta,
+        legalName.isAcceptableOrUnknown(data['legal_name']!, _legalNameMeta),
+      );
+    }
+    if (data.containsKey('tin')) {
+      context.handle(
+        _tinMeta,
+        tin.isAcceptableOrUnknown(data['tin']!, _tinMeta),
+      );
+    }
+    if (data.containsKey('receipt_logo')) {
+      context.handle(
+        _receiptLogoMeta,
+        receiptLogo.isAcceptableOrUnknown(
+          data['receipt_logo']!,
+          _receiptLogoMeta,
+        ),
+      );
+    }
+    if (data.containsKey('receipt_options')) {
+      context.handle(
+        _receiptOptionsMeta,
+        receiptOptions.isAcceptableOrUnknown(
+          data['receipt_options']!,
+          _receiptOptionsMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -377,6 +457,22 @@ class $StoresTable extends Stores with TableInfo<$StoresTable, Store> {
         DriftSqlType.string,
         data['${effectivePrefix}receipt_footer'],
       )!,
+      legalName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}legal_name'],
+      )!,
+      tin: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tin'],
+      )!,
+      receiptLogo: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}receipt_logo'],
+      )!,
+      receiptOptions: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}receipt_options'],
+      )!,
     );
   }
 
@@ -393,6 +489,16 @@ class Store extends DataClass implements Insertable<Store> {
   final String phone;
   final String receiptHeader;
   final String receiptFooter;
+  final String legalName;
+
+  /// STIR (9 raqam) yoki JShShIR (14 raqam).
+  final String tin;
+
+  /// Kulrang PNG (base64), chek kengligiga kichraytirilgan.
+  final String receiptLogo;
+
+  /// Ko'rsat/yashir (JSON: `{"show_tin": false, ...}`).
+  final String receiptOptions;
   const Store({
     required this.id,
     required this.name,
@@ -400,6 +506,10 @@ class Store extends DataClass implements Insertable<Store> {
     required this.phone,
     required this.receiptHeader,
     required this.receiptFooter,
+    required this.legalName,
+    required this.tin,
+    required this.receiptLogo,
+    required this.receiptOptions,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -410,6 +520,10 @@ class Store extends DataClass implements Insertable<Store> {
     map['phone'] = Variable<String>(phone);
     map['receipt_header'] = Variable<String>(receiptHeader);
     map['receipt_footer'] = Variable<String>(receiptFooter);
+    map['legal_name'] = Variable<String>(legalName);
+    map['tin'] = Variable<String>(tin);
+    map['receipt_logo'] = Variable<String>(receiptLogo);
+    map['receipt_options'] = Variable<String>(receiptOptions);
     return map;
   }
 
@@ -421,6 +535,10 @@ class Store extends DataClass implements Insertable<Store> {
       phone: Value(phone),
       receiptHeader: Value(receiptHeader),
       receiptFooter: Value(receiptFooter),
+      legalName: Value(legalName),
+      tin: Value(tin),
+      receiptLogo: Value(receiptLogo),
+      receiptOptions: Value(receiptOptions),
     );
   }
 
@@ -436,6 +554,10 @@ class Store extends DataClass implements Insertable<Store> {
       phone: serializer.fromJson<String>(json['phone']),
       receiptHeader: serializer.fromJson<String>(json['receiptHeader']),
       receiptFooter: serializer.fromJson<String>(json['receiptFooter']),
+      legalName: serializer.fromJson<String>(json['legalName']),
+      tin: serializer.fromJson<String>(json['tin']),
+      receiptLogo: serializer.fromJson<String>(json['receiptLogo']),
+      receiptOptions: serializer.fromJson<String>(json['receiptOptions']),
     );
   }
   @override
@@ -448,6 +570,10 @@ class Store extends DataClass implements Insertable<Store> {
       'phone': serializer.toJson<String>(phone),
       'receiptHeader': serializer.toJson<String>(receiptHeader),
       'receiptFooter': serializer.toJson<String>(receiptFooter),
+      'legalName': serializer.toJson<String>(legalName),
+      'tin': serializer.toJson<String>(tin),
+      'receiptLogo': serializer.toJson<String>(receiptLogo),
+      'receiptOptions': serializer.toJson<String>(receiptOptions),
     };
   }
 
@@ -458,6 +584,10 @@ class Store extends DataClass implements Insertable<Store> {
     String? phone,
     String? receiptHeader,
     String? receiptFooter,
+    String? legalName,
+    String? tin,
+    String? receiptLogo,
+    String? receiptOptions,
   }) => Store(
     id: id ?? this.id,
     name: name ?? this.name,
@@ -465,6 +595,10 @@ class Store extends DataClass implements Insertable<Store> {
     phone: phone ?? this.phone,
     receiptHeader: receiptHeader ?? this.receiptHeader,
     receiptFooter: receiptFooter ?? this.receiptFooter,
+    legalName: legalName ?? this.legalName,
+    tin: tin ?? this.tin,
+    receiptLogo: receiptLogo ?? this.receiptLogo,
+    receiptOptions: receiptOptions ?? this.receiptOptions,
   );
   Store copyWithCompanion(StoresCompanion data) {
     return Store(
@@ -478,6 +612,14 @@ class Store extends DataClass implements Insertable<Store> {
       receiptFooter: data.receiptFooter.present
           ? data.receiptFooter.value
           : this.receiptFooter,
+      legalName: data.legalName.present ? data.legalName.value : this.legalName,
+      tin: data.tin.present ? data.tin.value : this.tin,
+      receiptLogo: data.receiptLogo.present
+          ? data.receiptLogo.value
+          : this.receiptLogo,
+      receiptOptions: data.receiptOptions.present
+          ? data.receiptOptions.value
+          : this.receiptOptions,
     );
   }
 
@@ -489,14 +631,28 @@ class Store extends DataClass implements Insertable<Store> {
           ..write('address: $address, ')
           ..write('phone: $phone, ')
           ..write('receiptHeader: $receiptHeader, ')
-          ..write('receiptFooter: $receiptFooter')
+          ..write('receiptFooter: $receiptFooter, ')
+          ..write('legalName: $legalName, ')
+          ..write('tin: $tin, ')
+          ..write('receiptLogo: $receiptLogo, ')
+          ..write('receiptOptions: $receiptOptions')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, name, address, phone, receiptHeader, receiptFooter);
+  int get hashCode => Object.hash(
+    id,
+    name,
+    address,
+    phone,
+    receiptHeader,
+    receiptFooter,
+    legalName,
+    tin,
+    receiptLogo,
+    receiptOptions,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -506,7 +662,11 @@ class Store extends DataClass implements Insertable<Store> {
           other.address == this.address &&
           other.phone == this.phone &&
           other.receiptHeader == this.receiptHeader &&
-          other.receiptFooter == this.receiptFooter);
+          other.receiptFooter == this.receiptFooter &&
+          other.legalName == this.legalName &&
+          other.tin == this.tin &&
+          other.receiptLogo == this.receiptLogo &&
+          other.receiptOptions == this.receiptOptions);
 }
 
 class StoresCompanion extends UpdateCompanion<Store> {
@@ -516,6 +676,10 @@ class StoresCompanion extends UpdateCompanion<Store> {
   final Value<String> phone;
   final Value<String> receiptHeader;
   final Value<String> receiptFooter;
+  final Value<String> legalName;
+  final Value<String> tin;
+  final Value<String> receiptLogo;
+  final Value<String> receiptOptions;
   final Value<int> rowid;
   const StoresCompanion({
     this.id = const Value.absent(),
@@ -524,6 +688,10 @@ class StoresCompanion extends UpdateCompanion<Store> {
     this.phone = const Value.absent(),
     this.receiptHeader = const Value.absent(),
     this.receiptFooter = const Value.absent(),
+    this.legalName = const Value.absent(),
+    this.tin = const Value.absent(),
+    this.receiptLogo = const Value.absent(),
+    this.receiptOptions = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   StoresCompanion.insert({
@@ -533,6 +701,10 @@ class StoresCompanion extends UpdateCompanion<Store> {
     this.phone = const Value.absent(),
     this.receiptHeader = const Value.absent(),
     this.receiptFooter = const Value.absent(),
+    this.legalName = const Value.absent(),
+    this.tin = const Value.absent(),
+    this.receiptLogo = const Value.absent(),
+    this.receiptOptions = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        name = Value(name);
@@ -543,6 +715,10 @@ class StoresCompanion extends UpdateCompanion<Store> {
     Expression<String>? phone,
     Expression<String>? receiptHeader,
     Expression<String>? receiptFooter,
+    Expression<String>? legalName,
+    Expression<String>? tin,
+    Expression<String>? receiptLogo,
+    Expression<String>? receiptOptions,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -552,6 +728,10 @@ class StoresCompanion extends UpdateCompanion<Store> {
       if (phone != null) 'phone': phone,
       if (receiptHeader != null) 'receipt_header': receiptHeader,
       if (receiptFooter != null) 'receipt_footer': receiptFooter,
+      if (legalName != null) 'legal_name': legalName,
+      if (tin != null) 'tin': tin,
+      if (receiptLogo != null) 'receipt_logo': receiptLogo,
+      if (receiptOptions != null) 'receipt_options': receiptOptions,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -563,6 +743,10 @@ class StoresCompanion extends UpdateCompanion<Store> {
     Value<String>? phone,
     Value<String>? receiptHeader,
     Value<String>? receiptFooter,
+    Value<String>? legalName,
+    Value<String>? tin,
+    Value<String>? receiptLogo,
+    Value<String>? receiptOptions,
     Value<int>? rowid,
   }) {
     return StoresCompanion(
@@ -572,6 +756,10 @@ class StoresCompanion extends UpdateCompanion<Store> {
       phone: phone ?? this.phone,
       receiptHeader: receiptHeader ?? this.receiptHeader,
       receiptFooter: receiptFooter ?? this.receiptFooter,
+      legalName: legalName ?? this.legalName,
+      tin: tin ?? this.tin,
+      receiptLogo: receiptLogo ?? this.receiptLogo,
+      receiptOptions: receiptOptions ?? this.receiptOptions,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -597,6 +785,18 @@ class StoresCompanion extends UpdateCompanion<Store> {
     if (receiptFooter.present) {
       map['receipt_footer'] = Variable<String>(receiptFooter.value);
     }
+    if (legalName.present) {
+      map['legal_name'] = Variable<String>(legalName.value);
+    }
+    if (tin.present) {
+      map['tin'] = Variable<String>(tin.value);
+    }
+    if (receiptLogo.present) {
+      map['receipt_logo'] = Variable<String>(receiptLogo.value);
+    }
+    if (receiptOptions.present) {
+      map['receipt_options'] = Variable<String>(receiptOptions.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -612,6 +812,10 @@ class StoresCompanion extends UpdateCompanion<Store> {
           ..write('phone: $phone, ')
           ..write('receiptHeader: $receiptHeader, ')
           ..write('receiptFooter: $receiptFooter, ')
+          ..write('legalName: $legalName, ')
+          ..write('tin: $tin, ')
+          ..write('receiptLogo: $receiptLogo, ')
+          ..write('receiptOptions: $receiptOptions, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -13446,6 +13650,10 @@ typedef $$StoresTableCreateCompanionBuilder =
       Value<String> phone,
       Value<String> receiptHeader,
       Value<String> receiptFooter,
+      Value<String> legalName,
+      Value<String> tin,
+      Value<String> receiptLogo,
+      Value<String> receiptOptions,
       Value<int> rowid,
     });
 typedef $$StoresTableUpdateCompanionBuilder =
@@ -13456,6 +13664,10 @@ typedef $$StoresTableUpdateCompanionBuilder =
       Value<String> phone,
       Value<String> receiptHeader,
       Value<String> receiptFooter,
+      Value<String> legalName,
+      Value<String> tin,
+      Value<String> receiptLogo,
+      Value<String> receiptOptions,
       Value<int> rowid,
     });
 
@@ -13495,6 +13707,26 @@ class $$StoresTableFilterComposer
 
   ColumnFilters<String> get receiptFooter => $composableBuilder(
     column: $table.receiptFooter,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get legalName => $composableBuilder(
+    column: $table.legalName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get tin => $composableBuilder(
+    column: $table.tin,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get receiptLogo => $composableBuilder(
+    column: $table.receiptLogo,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get receiptOptions => $composableBuilder(
+    column: $table.receiptOptions,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -13537,6 +13769,26 @@ class $$StoresTableOrderingComposer
     column: $table.receiptFooter,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get legalName => $composableBuilder(
+    column: $table.legalName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get tin => $composableBuilder(
+    column: $table.tin,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get receiptLogo => $composableBuilder(
+    column: $table.receiptLogo,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get receiptOptions => $composableBuilder(
+    column: $table.receiptOptions,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$StoresTableAnnotationComposer
@@ -13567,6 +13819,22 @@ class $$StoresTableAnnotationComposer
 
   GeneratedColumn<String> get receiptFooter => $composableBuilder(
     column: $table.receiptFooter,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get legalName =>
+      $composableBuilder(column: $table.legalName, builder: (column) => column);
+
+  GeneratedColumn<String> get tin =>
+      $composableBuilder(column: $table.tin, builder: (column) => column);
+
+  GeneratedColumn<String> get receiptLogo => $composableBuilder(
+    column: $table.receiptLogo,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get receiptOptions => $composableBuilder(
+    column: $table.receiptOptions,
     builder: (column) => column,
   );
 }
@@ -13605,6 +13873,10 @@ class $$StoresTableTableManager
                 Value<String> phone = const Value.absent(),
                 Value<String> receiptHeader = const Value.absent(),
                 Value<String> receiptFooter = const Value.absent(),
+                Value<String> legalName = const Value.absent(),
+                Value<String> tin = const Value.absent(),
+                Value<String> receiptLogo = const Value.absent(),
+                Value<String> receiptOptions = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => StoresCompanion(
                 id: id,
@@ -13613,6 +13885,10 @@ class $$StoresTableTableManager
                 phone: phone,
                 receiptHeader: receiptHeader,
                 receiptFooter: receiptFooter,
+                legalName: legalName,
+                tin: tin,
+                receiptLogo: receiptLogo,
+                receiptOptions: receiptOptions,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -13623,6 +13899,10 @@ class $$StoresTableTableManager
                 Value<String> phone = const Value.absent(),
                 Value<String> receiptHeader = const Value.absent(),
                 Value<String> receiptFooter = const Value.absent(),
+                Value<String> legalName = const Value.absent(),
+                Value<String> tin = const Value.absent(),
+                Value<String> receiptLogo = const Value.absent(),
+                Value<String> receiptOptions = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => StoresCompanion.insert(
                 id: id,
@@ -13631,6 +13911,10 @@ class $$StoresTableTableManager
                 phone: phone,
                 receiptHeader: receiptHeader,
                 receiptFooter: receiptFooter,
+                legalName: legalName,
+                tin: tin,
+                receiptLogo: receiptLogo,
+                receiptOptions: receiptOptions,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0

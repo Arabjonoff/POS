@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:drift/drift.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pos_app/core/format/unit_code.dart';
 import 'package:pos_app/data/customers/customer_directory.dart';
 import 'package:pos_app/data/db/app_database.dart';
+import 'package:pos_app/features/printing/mono_bitmap.dart';
 import 'package:pos_app/features/printing/receipt.dart';
 
 /// Yozilgan savdodan chek ma'lumotini yig'adi (do'kon, kassir, qatorlar,
@@ -82,6 +85,10 @@ class ReceiptLoader {
       storePhone: store?.phone ?? '',
       header: store?.receiptHeader ?? '',
       footer: store?.receiptFooter ?? '',
+      legalName: store?.legalName ?? '',
+      tin: store?.tin ?? '',
+      logo: decodeStoreLogo(store?.receiptLogo),
+      options: decodeReceiptOptions(store?.receiptOptions),
       number: sale.number,
       soldAt: sale.soldAt,
       cashierName: cashier?.fullName ?? '',
@@ -116,3 +123,26 @@ class ReceiptLoader {
 final receiptLoaderProvider = Provider<ReceiptLoader>(
   (ref) => ReceiptLoader(ref.watch(appDatabaseProvider)),
 );
+
+/// `stores.receipt_logo` (base64 kulrang PNG) → rasm; buzuq — `null`.
+GrayImage? decodeStoreLogo(String? base64Png) {
+  if (base64Png == null || base64Png.isEmpty) return null;
+  try {
+    return GrayImage.fromPng(base64Decode(base64Png));
+  } on FormatException {
+    return null;
+  }
+}
+
+/// `stores.receipt_options` (JSON) → ko'rsat/yashir; buzuq — standart.
+ReceiptOptions decodeReceiptOptions(String? json) {
+  if (json == null || json.isEmpty) return const ReceiptOptions();
+  try {
+    final value = jsonDecode(json);
+    return value is Map<String, Object?>
+        ? ReceiptOptions.fromJson(value)
+        : const ReceiptOptions();
+  } on FormatException {
+    return const ReceiptOptions();
+  }
+}

@@ -457,3 +457,8 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - Sinov: apps/pos 704 (+ 32/42/48 × 3 til "har qator sig'adi, ortiqcha `?` yo'q", ESC/POS profil/baland/printable, preview kesilmasligi, golden preview 58/80); snapshot'lar ko'rib chiqilib yangilandi.
 - Jismoniy printerda sinalmagan (printer yo'q).
 - Qoldi: T-104b (rekvizitlar, ko'rsat/yashir, logotip).
+
+## 2026-10-15 — T-104b Chek rekvizitlari, ko'rsat/yashir, logotip
+- Qilindi (qaror 0012, `printing.md`): server `Store.legal_name/tin/receipt_logo/receipt_options` (additive migratsiya), `StoreSettingsSerializer` (STIR 9/14 raqam, PNG imzosi va ≤ 96 KB, noma'lum kalitlar tashlanadi), `store.upserted` (ega/menejer, faqat o'z do'koni), pull, `features: store_settings`; kassa drift v5; `mono_bitmap.dart` (kulrang PNG kodlash/dekodlash, 1 bit, `GS v 0` 128 qatorli bo'laklar); chekda rekvizitlar va ko'rsat/yashir (soliq raqami faqat kiritilsa); Sozlamalar → "Chek rekvizitlari va ko'rinishi" (forma + jonli chek, logotip tanlash/olib tashlash, saqlash — ega/menejer yoki PIN).
+- Sinov: backend +11 (`test_store_settings.py`), apps/pos 728 (+8 logotip/rekvizit, +2 saqlash, +4 widget, golden `requisites`).
+- Jismoniy printerda sinalmagan.

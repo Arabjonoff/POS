@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:pos_app/features/printing/mono_bitmap.dart';
 import 'package:pos_app/features/printing/receipt.dart';
 
 /// Printer kodlash jadvali (`printing.md`: CP866 yoki UTF-8).
@@ -124,6 +125,11 @@ abstract final class EscPos {
         tall = row.tall;
         out.add(tall ? tallOn : tallOff);
       }
+      final image = row.image;
+      if (image != null) {
+        out.add(raster(image));
+        continue;
+      }
       out
         ..add(row.barcode ? code128(row.text) : encode(row.text, p.encoding))
         ..addByte(_lf);
@@ -134,6 +140,29 @@ abstract final class EscPos {
     out.add([0x1b, 0x64, p.feedLines.clamp(0, 10)]);
     if (p.cut) out.add([0x1d, 0x56, 66, 0]);
     return out.takeBytes();
+  }
+
+  /// Rasm: `GS v 0` — 128 qatorli bo'laklarda (arzon printerlar buferi
+  /// katta buyruqda to'lib qoladi).
+  static List<int> raster(MonoBitmap image, {int band = 128}) {
+    final out = <int>[];
+    final w = image.bytesPerRow;
+    for (var top = 0; top < image.height; top += band) {
+      final rows = (image.height - top).clamp(0, band);
+      out
+        ..addAll([
+          0x1d,
+          0x76,
+          0x30,
+          0,
+          w & 0xff,
+          w >> 8,
+          rows & 0xff,
+          rows >> 8,
+        ])
+        ..addAll(image.bits.sublist(top * w, (top + rows) * w));
+    }
+    return out;
   }
 
   /// Faqat pul qutisini ochish (chek chiqarmasdan).

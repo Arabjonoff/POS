@@ -44,7 +44,7 @@ Holat: ✅ tuzatildi · 🔧 ishlanmoqda · ⏳ rejada · ❓ biznes savoli (`do
 |---|---|---|
 | RC-0 | Tasdiqlangan **kirimni tahrirlash va bekor qilish imkoni yo'q** (serverda bekor qilish endpoint'i bor, lekin kassa ishlatmaydi) | ✅ T-102 (teskari yozuv + yangi versiya, atomar; qaror 0010) |
 | CU-0 | Mijoz yaratishda **boshlang'ich balans** yo'q | ✅ T-103 (qaror 0011) |
-| PRN-0 | Chek sozlamalari bo'limi yo'q: preview, logotip, STIR, ko'rsat/yashir; do'kon ma'lumotini faqat Django admin o'zgartiradi | preview, test cheki, qurilma sozlamalari ✅ T-104a; rekvizitlar, ko'rsat/yashir, logotip ⏳ T-104b |
+| PRN-0 | Chek sozlamalari bo'limi yo'q: preview, logotip, STIR, ko'rsat/yashir; do'kon ma'lumotini faqat Django admin o'zgartiradi | ✅ T-104a (preview, test cheki, qurilma) + T-104b (rekvizitlar, ko'rsat/yashir, logotip; qaror 0012) |
 | PRN-B4 | Xprinter turidagi printerlarda kirillcha xitoycha belgilar bo'lib chiqishi mumkin (`FS .` yuborilmaydi) | ✅ T-104a |
 | PRN-B12 | Aralash to'lovda chekda naqd *berilgan* summa to'lov sifatida chiqadi (to'lovlar yig'indisi JAMI dan katta) | ✅ T-104a |
 | PRN-B13 | Birinchi chop etish xato bo'lsa, qayta urinish mijozga "NUSXA" belgili chek chiqaradi | ✅ T-104a |

@@ -30,7 +30,19 @@ class SyncUserSerializer(serializers.ModelSerializer):
 class SyncStoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Store
-        fields = ["id", "name", "address", "phone", "receipt_header", "receipt_footer"]
+        fields = [
+            "id",
+            "name",
+            "address",
+            "phone",
+            "receipt_header",
+            "receipt_footer",
+            # T-104b — eski kassa e'tibor bermaydi.
+            "legal_name",
+            "tin",
+            "receipt_logo",
+            "receipt_options",
+        ]
 
 
 def _products():

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pos_app/features/printing/escpos.dart';
+import 'package:pos_app/features/printing/mono_bitmap.dart';
 import 'package:pos_app/features/printing/receipt.dart';
 import 'package:pos_ui/pos_ui.dart';
 
@@ -73,6 +74,10 @@ class ReceiptPreview extends StatelessWidget {
   }
 
   Widget _row(ReceiptRow row, TextStyle style) {
+    final image = row.image;
+    if (image != null) {
+      return _Logo(image: image, dots: width.mm == 58 ? 384 : 576);
+    }
     if (row.barcode) return _Barcode(text: row.text, style: style);
     final text = Text(
       EscPos.printable(row.text, encoding),
@@ -96,6 +101,54 @@ class ReceiptPreview extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Logotip: printerga yuboriladigan 1 bitli nuqtalar (qog'oz kengligiga
+/// nisbatan o'sha o'lchamda).
+class _Logo extends StatelessWidget {
+  const _Logo({required this.image, required this.dots});
+
+  final MonoBitmap image;
+  final int dots;
+
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.only(bottom: PosSpacing.xs),
+    child: LayoutBuilder(
+      builder: (context, constraints) {
+        final scale = constraints.maxWidth / dots;
+        return Center(
+          child: SizedBox(
+            width: image.width * scale,
+            height: image.height * scale,
+            child: CustomPaint(painter: _LogoPainter(image)),
+          ),
+        );
+      },
+    ),
+  );
+}
+
+class _LogoPainter extends CustomPainter {
+  _LogoPainter(this.image);
+
+  final MonoBitmap image;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final dot = size.width / image.width;
+    final paint = Paint()..color = PosColors.receiptInk;
+    for (var y = 0; y < image.height; y++) {
+      for (var x = 0; x < image.width; x++) {
+        if (image.isBlack(x, y)) {
+          canvas.drawRect(Rect.fromLTWH(x * dot, y * dot, dot, dot), paint);
+        }
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(_LogoPainter old) => !identical(old.image, image);
 }
 
 /// Chek raqami shtrix-kodi (ko'rinish uchun chiziqlar; printer CODE128

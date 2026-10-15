@@ -1,9 +1,13 @@
 import 'dart:convert';
 
+import 'package:drift/drift.dart' show Value;
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pos_app/app/status/app_status.dart';
+import 'package:pos_app/data/db/app_database.dart';
+import 'package:pos_app/data/sync/server_features.dart';
+import 'package:pos_app/features/printing/mono_bitmap.dart';
 import 'package:pos_app/features/printing/printer_service.dart';
 import 'package:pos_app/features/printing/printer_settings.dart';
 import 'package:pos_app/features/printing/receipt.dart';
@@ -21,6 +25,37 @@ Future<void> _open(
 }) async {
   final db = openTestDatabase();
   addTearDown(db.close);
+  // Do'kon rekvizitlari va logotip (T-104b): oddiy geometrik belgi.
+  final logo = GrayImage(
+    160,
+    60,
+    Uint8List.fromList([
+      for (var y = 0; y < 60; y++)
+        for (var x = 0; x < 160; x++)
+          (x - 30) * (x - 30) + (y - 30) * (y - 30) < 700 ||
+                  (x > 70 && y > 18 && y < 42)
+              ? 0
+              : 255,
+    ]),
+  );
+  await db
+      .into(db.stores)
+      .insert(
+        StoresCompanion.insert(
+          id: 'store-1',
+          name: 'Baraka market',
+          legalName: const Value('"Baraka" MChJ'),
+          tin: const Value('123456789'),
+          address: const Value('Chilonzor 7, 12-uy'),
+          phone: const Value('+998712000000'),
+          receiptFooter: const Value('Xaridingiz uchun rahmat!'),
+          receiptLogo: Value(base64Encode(logo.toPng())),
+        ),
+      );
+  await db.writeSetting(
+    serverFeaturesSettingKey,
+    encodeFeatures([ServerFeature.storeSettings]),
+  );
   await db.writeSetting(
     PrinterSettings.settingKey,
     jsonEncode(
@@ -85,5 +120,11 @@ void main() {
   goldenAcrossDevices('printing', 'preview_58', (tester, size) async {
     await _open(tester, size, width: PaperWidth.mm58);
     await _scrollTo(tester, find.byKey(const ValueKey('receipt-preview')));
+  });
+
+  // T-104b: rekvizitlar formasi (o'ng/pastda — jonli chek).
+  goldenAcrossDevices('printing', 'requisites', (tester, size) async {
+    await _open(tester, size);
+    await _scrollTo(tester, find.byKey(const ValueKey('store-name')));
   });
 }

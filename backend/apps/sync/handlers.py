@@ -35,6 +35,8 @@ from apps.sales.services.common import (
     invalid,
     tenant_user,
 )
+from apps.tenants.models import Store
+from apps.tenants.serializers import StoreSettingsSerializer
 
 logger = logging.getLogger(__name__)
 
@@ -153,6 +155,23 @@ def _clean_product(tenant_id, payload) -> dict:
         logger.warning("product %s: PLU %s belongs to another product", object_id, plu)
         payload["plu_code"] = None
     return payload
+
+
+def store_upserted(device, payload):
+    """Do'kon nomi va chek rekvizitlari (T-104b): faqat ega/menejer, faqat o'z do'koni."""
+    user = _actor(device, payload, managers_only=True)
+    store_id = as_uuid(payload, "id", code="invalid_store")
+    store = Store.objects.filter(tenant_id=device.tenant_id, pk=store_id).first()
+    if store is None:
+        raise invalid("invalid_store", "Unknown store.", field="id")
+    serializer = StoreSettingsSerializer(
+        store,
+        data=_data({k: v for k, v in payload.items() if k != "id"}),
+        partial=True,
+        context={"request": SimpleNamespace(user=user)},
+    )
+    serializer.is_valid(raise_exception=True)
+    return serializer.save()
 
 
 def product_upserted(device, payload):
@@ -279,6 +298,7 @@ HANDLERS = {
     "customer.upserted": customer_upserted,
     "supplier.upserted": supplier_upserted,
     "product.upserted": product_upserted,
+    "store.upserted": store_upserted,
     "receipt.posted": receipt_posted,
     "receipt.corrected": receipt_corrected,
     "receipt.reversed": receipt_reversed,

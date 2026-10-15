@@ -4,6 +4,7 @@ Obuna holati (trial/active/grace/readonly) saqlanmaydi — Subscription'dan hiso
 Bu yerda faqat platforma admini qo'lda qo'yadigan bloklash bor.
 """
 
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -42,6 +43,12 @@ class Tenant(TimeStampedModel):
         return self.name
 
 
+def validate_tin(value: str) -> None:
+    """STIR — 9 raqam (yuridik shaxs), JShShIR — 14 raqam (YaTT)."""
+    if value and not (value.isascii() and value.isdigit() and len(value) in (9, 14)):
+        raise ValidationError(_("STIR 9 raqam yoki JShShIR 14 raqam bo'lishi kerak."))
+
+
 class Store(TenantScopedModel):
     """Do'kon. MVP'da har tenantda bittasi (qaror 0004), model kelajak filiallari uchun."""
 
@@ -56,6 +63,17 @@ class Store(TenantScopedModel):
     phone = models.CharField(_("telefon"), max_length=13, blank=True, validators=[validate_phone])
     receipt_header = models.TextField(_("chek sarlavhasi"), blank=True)
     receipt_footer = models.TextField(_("chek pastki matni"), blank=True)
+    # Chek rekvizitlari (T-104b). Faqat kiritilgani chekda chiqadi — soliq
+    # raqami hech qachon taxmin qilinmaydi va o'zidan to'ldirilmaydi.
+    legal_name = models.CharField(_("yuridik nomi"), max_length=200, blank=True)
+    tin = models.CharField(
+        _("STIR / JShShIR"), max_length=14, blank=True, validators=[validate_tin]
+    )
+    # Logotip: kichraytirilgan kulrang PNG (base64), kassada chop etish uchun.
+    receipt_logo = models.TextField(_("chek logotipi"), blank=True)
+    # Ko'rsat/yashir: {"show_logo": true, ...}. Noma'lum kalitlar e'tiborsiz,
+    # yo'qlari — standart (migratsiyasiz kengayadi).
+    receipt_options = models.JSONField(_("chek ko'rinishi"), default=dict, blank=True)
 
     class Meta:
         verbose_name = _("do'kon")
