@@ -13,6 +13,7 @@ export 'src/components/pos_list_tile.dart';
 export 'src/components/pos_money_text.dart';
 export 'src/components/pos_numeric_keypad.dart';
 export 'src/components/pos_pin_pad.dart';
+export 'src/components/pos_product_tile.dart';
 export 'src/components/pos_qty_stepper.dart';
 export 'src/components/pos_responsive_scaffold.dart';
 export 'src/components/pos_scan_feedback.dart';

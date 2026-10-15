@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pos_ui/pos_ui.dart';
 import 'package:pos_ui_widgetbook/galleries/gallery.dart';
 
-/// MoneyText, Badge, StatusDot, Card, ListTile.
+/// MoneyText, Badge, StatusDot, ProductTile, Card, ListTile.
 class DisplayGallery extends StatelessWidget {
   const DisplayGallery({super.key});
 
@@ -71,6 +71,78 @@ class DisplayGallery extends StatelessWidget {
           children: [
             for (final tone in PosTone.values)
               PosStatusDot(label: _toneLabel(tone), tone: tone),
+          ],
+        ),
+        GallerySection(
+          title: 'ProductTile',
+          children: [
+            for (final (i, name, price, unit, stock, low, out, selected) in [
+              (
+                0,
+                'Non issiq',
+                '4 000',
+                "so'm/dona",
+                '24 dona',
+                false,
+                false,
+                false,
+              ),
+              (
+                1,
+                'Sut 1 L',
+                '9 500',
+                "so'm/dona",
+                '3 dona',
+                true,
+                false,
+                false,
+              ),
+              (
+                3,
+                'Kartoshka',
+                '6 500',
+                "so'm/kg",
+                '52,500 kg',
+                false,
+                false,
+                true,
+              ),
+              (
+                4,
+                'Guruch lazer',
+                '18 000',
+                "so'm/kg",
+                "Qoldiq yo'q",
+                false,
+                true,
+                false,
+              ),
+              (
+                2,
+                'Shokolad Alpen Gold 90 g',
+                '12 000',
+                "so'm/dona",
+                null,
+                false,
+                false,
+                false,
+              ),
+            ])
+              SizedBox(
+                width: 180,
+                height: PosProductTile.height,
+                child: PosProductTile(
+                  name: name,
+                  price: price,
+                  unit: unit,
+                  accent: p.categoryAccent(i),
+                  stock: stock,
+                  lowLabel: low ? 'Kam' : null,
+                  out: out,
+                  selected: selected,
+                  onTap: noop,
+                ),
+              ),
           ],
         ),
         GallerySection(

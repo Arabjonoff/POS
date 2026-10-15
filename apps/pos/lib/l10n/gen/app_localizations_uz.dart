@@ -2205,6 +2205,33 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get navCollapse => 'Menyuni yig\'ish · Ctrl+B';
+
+  @override
+  String get posFavorites => 'Sevimlilar';
+
+  @override
+  String posCodeNotFoundCode(String code) {
+    return 'Tovar topilmadi: $code';
+  }
+
+  @override
+  String get posAddNewProduct => 'Yangi tovar qo\'shish';
+
+  @override
+  String get posStockLow => 'Kam';
+
+  @override
+  String get posOutOfStock => 'Qoldiq yo\'q';
+
+  @override
+  String posOutOfStockAdded(String name) {
+    return '«$name» qoldiqda yo\'q — chekka qo\'shildi. Qoldiqni tekshiring';
+  }
+
+  @override
+  String posProductTileLabel(String name, String price) {
+    return '$name, $price';
+  }
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -4397,4 +4424,31 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get navCollapse => 'Менюни йиғиш · Ctrl+B';
+
+  @override
+  String get posFavorites => 'Севимлилар';
+
+  @override
+  String posCodeNotFoundCode(String code) {
+    return 'Товар топилмади: $code';
+  }
+
+  @override
+  String get posAddNewProduct => 'Янги товар қўшиш';
+
+  @override
+  String get posStockLow => 'Кам';
+
+  @override
+  String get posOutOfStock => 'Қолдиқ йўқ';
+
+  @override
+  String posOutOfStockAdded(String name) {
+    return '«$name» қолдиқда йўқ — чекка қўшилди. Қолдиқни текширинг';
+  }
+
+  @override
+  String posProductTileLabel(String name, String price) {
+    return '$name, $price';
+  }
 }

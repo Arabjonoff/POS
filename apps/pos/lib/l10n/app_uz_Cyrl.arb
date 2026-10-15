@@ -631,5 +631,12 @@
   "statusShiftOpenSince": "Смена очиқ · {time} дан",
   "actionCloseBanner": "Хабарни ёпиш",
   "navExpand": "Менюни очиш · Ctrl+B",
-  "navCollapse": "Менюни йиғиш · Ctrl+B"
+  "navCollapse": "Менюни йиғиш · Ctrl+B",
+  "posFavorites": "Севимлилар",
+  "posCodeNotFoundCode": "Товар топилмади: {code}",
+  "posAddNewProduct": "Янги товар қўшиш",
+  "posStockLow": "Кам",
+  "posOutOfStock": "Қолдиқ йўқ",
+  "posOutOfStockAdded": "«{name}» қолдиқда йўқ — чекка қўшилди. Қолдиқни текширинг",
+  "posProductTileLabel": "{name}, {price}"
 }

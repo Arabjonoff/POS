@@ -115,7 +115,7 @@ final List<WidgetbookNode> catalog = [
     name: 'Display',
     children: [
       WidgetbookComponent(
-        name: 'MoneyText, Badge, StatusDot, Card, ListTile',
+        name: 'MoneyText, Badge, StatusDot, ProductTile, Card, ListTile',
         useCases: [
           _all('display'),
           WidgetbookUseCase(

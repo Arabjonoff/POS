@@ -631,5 +631,12 @@
   "statusShiftOpenSince": "Смена открыта с {time}",
   "actionCloseBanner": "Закрыть сообщение",
   "navExpand": "Развернуть меню · Ctrl+B",
-  "navCollapse": "Свернуть меню · Ctrl+B"
+  "navCollapse": "Свернуть меню · Ctrl+B",
+  "posFavorites": "Избранное",
+  "posCodeNotFoundCode": "Товар не найден: {code}",
+  "posAddNewProduct": "Добавить товар",
+  "posStockLow": "Мало",
+  "posOutOfStock": "Нет в наличии",
+  "posOutOfStockAdded": "«{name}» нет в наличии — добавлено в чек. Проверьте остаток",
+  "posProductTileLabel": "{name}, {price}"
 }

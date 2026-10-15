@@ -86,8 +86,12 @@ void main() {
     ) async {
       await open(tester);
       await scanCode(tester, '4780000000038');
-      expect(find.text("Bu kod bazada yo'q"), findsOneWidget);
+      // Qizil xabar kod bilan va "Yangi tovar qo'shish".
+      expect(find.text('Tovar topilmadi: 4780000000038'), findsOneWidget);
+      expect(find.byKey(const ValueKey('pos-add-product')), findsOneWidget);
       await scanCode(tester, '4780000000021');
+      // Yangi skan — eski xabar yo'qoladi.
+      expect(find.byKey(const ValueKey('pos-not-found')), findsNothing);
       expect(
         find.text("Bu tovarni sotib bo'lmaydi: nofaol yoki narxi yo'q"),
         findsOneWidget,
@@ -168,6 +172,174 @@ void main() {
 
       await scanCode(tester, '4780000000014');
       expect(find.byType(PosScanFeedbackOverlay), findsOneWidget);
+    });
+  });
+
+  group('product grid', () {
+    Future<void> setStock(AppDatabase db, Map<String, int> qty) async {
+      for (final MapEntry(key: id, value: q) in qty.entries) {
+        await db
+            .into(db.productStock)
+            .insert(
+              ProductStockCompanion.insert(
+                productId: id,
+                storeId: testDevice.storeId,
+                qtyMilli: q,
+                updatedAt: DateTime.utc(2026, 10, 15),
+              ),
+            );
+      }
+    }
+
+    testWidgets('favorites first; tabs filter; every card is ≥ 160 × 112', (
+      tester,
+    ) async {
+      await open(tester);
+      // Tez tugmali tovarlar bor — "Sevimlilar" birinchi va tanlangan.
+      final favorites = find.byKey(const ValueKey('tab-favorites'));
+      final all = find.byKey(const ValueKey('tab-all'));
+      expect(favorites, findsOneWidget);
+      expect(
+        tester.getRect(favorites).left,
+        lessThan(tester.getRect(all).left),
+      );
+      expect(find.text('Tuxum'), findsOneWidget);
+      // Tez tugmasiz tovar faqat "Hammasi" da.
+      expect(find.text('Choy Ahmad 100 g'), findsNothing);
+      await tester.tap(all);
+      await tester.pumpAndSettle();
+      expect(find.text('Choy Ahmad 100 g'), findsOneWidget);
+
+      await tester.tap(find.byKey(const ValueKey('tab-c-veg')));
+      await tester.pumpAndSettle();
+      expect(find.text('Kartoshka'), findsOneWidget);
+      expect(find.text('Tuxum'), findsNothing);
+
+      for (final tile in tester.widgetList<PosProductTile>(
+        find.byType(PosProductTile),
+      )) {
+        final size = tester.getSize(find.byWidget(tile));
+        expect(size.width, greaterThanOrEqualTo(PosProductTile.minWidth));
+        expect(size.height, PosProductTile.height);
+      }
+    });
+
+    testWidgets('top sellers join favorites after a sale', (tester) async {
+      await open(tester);
+      expect(find.text('Choy Ahmad 100 g'), findsNothing);
+      await typeSlowly(tester, 'choy');
+      await press(tester, LogicalKeyboardKey.enter);
+      await press(tester, LogicalKeyboardKey.f12);
+      await press(tester, LogicalKeyboardKey.enter);
+      expect(cart.cart.lines, isEmpty);
+      // Endi "Sevimlilar" da (so'nggi 30 kunda sotilgan).
+      expect(find.text('Choy Ahmad 100 g'), findsOneWidget);
+    });
+
+    testWidgets('search filters the grid; ↑/↓ highlights a card', (
+      tester,
+    ) async {
+      await open(tester);
+      await typeSlowly(tester, 'non');
+      // Natija hamma tovardan (tez tugmasizlar ham), tab tanlanmagan.
+      expect(find.text('Nonvoy pechenyesi'), findsOneWidget);
+      expect(find.text('Tuxum'), findsNothing);
+      bool selected(String name) => tester
+          .widget<PosProductTile>(
+            find.ancestor(
+              of: find.text(name),
+              matching: find.byType(PosProductTile),
+            ),
+          )
+          .selected;
+      expect(selected('Non issiq'), isTrue);
+      await press(tester, LogicalKeyboardKey.arrowDown);
+      expect(selected('Non issiq'), isFalse);
+      // Tab bosilsa — qidiruv tozalanadi.
+      await tester.tap(find.byKey(const ValueKey('tab-all')));
+      await tester.pumpAndSettle();
+      expect(find.text('Choy Ahmad 100 g'), findsOneWidget);
+    });
+
+    testWidgets('stock: low badge, out-of-stock card warns but adds', (
+      tester,
+    ) async {
+      final db = openTestDatabase();
+      addTearDown(db.close);
+      await seedCatalog(db);
+      await db
+          .update(db.products)
+          .replace(
+            (await (db.select(
+              db.products,
+            )..where((p) => p.id.equals('p-sut'))).getSingle()).copyWith(
+              minStockMilli: 5000,
+            ),
+          );
+      await setStock(db, {'p-non': 24000, 'p-sut': 3000, 'p-tuxum': 0});
+      await open(tester, db: db);
+
+      expect(
+        find.text(PosFormat.qtyWithUnit(24000, unit: 'dona', weighted: false)),
+        findsOneWidget,
+      );
+      expect(find.text('Kam'), findsOneWidget);
+      final out = tester.widget<PosProductTile>(
+        find.ancestor(
+          of: find.text('Tuxum'),
+          matching: find.byType(PosProductTile),
+        ),
+      );
+      expect(out.out, isTrue);
+      expect(out.stock, "Qoldiq yo'q");
+
+      await tester.tap(find.text('Tuxum'));
+      await tester.pumpAndSettle();
+      expect(lines, [('p-tuxum', 1000)]);
+      expect(
+        find.text(
+          "«Tuxum» qoldiqda yo'q — chekka qo'shildi. Qoldiqni tekshiring",
+        ),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('no stock kept at all → no stock lines, nothing grey', (
+      tester,
+    ) async {
+      final db = openTestDatabase();
+      addTearDown(db.close);
+      await seedCatalog(db);
+      await setStock(db, {'p-non': 0});
+      await open(tester, db: db);
+      expect(find.text("Qoldiq yo'q"), findsNothing);
+      expect(
+        tester
+            .widgetList<PosProductTile>(find.byType(PosProductTile))
+            .where((t) => t.out || t.stock != null),
+        isEmpty,
+      );
+    });
+
+    testWidgets('not found: "add product" opens the card with the code', (
+      tester,
+    ) async {
+      await open(tester);
+      await scanCode(tester, '4780000000038');
+      await tester.tap(find.byKey(const ValueKey('pos-add-product')));
+      await tester.pumpAndSettle();
+      expect(find.text('4780000000038'), findsWidgets);
+      await press(tester, LogicalKeyboardKey.escape);
+      // Bekor qilindi — xabar ham yopiladi, savat bo'sh.
+      expect(find.byKey(const ValueKey('pos-not-found')), findsNothing);
+      expect(lines, isEmpty);
+    });
+
+    testWidgets('Esc closes the not-found message', (tester) async {
+      await open(tester);
+      await scanCode(tester, '4780000000038');
+      await press(tester, LogicalKeyboardKey.escape);
+      expect(find.byKey(const ValueKey('pos-not-found')), findsNothing);
     });
   });
 
