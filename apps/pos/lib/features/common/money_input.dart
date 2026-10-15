@@ -18,6 +18,8 @@ class MoneyInput extends StatefulWidget {
     this.hardwareDigits = true,
     this.showKeypad = true,
     this.onDisplayTap,
+    this.keypadSide,
+    this.below = const [],
     super.key,
   });
 
@@ -43,6 +45,11 @@ class MoneyInput extends StatefulWidget {
   /// ekran klaviaturani ochadi.
   final bool showKeypad;
   final VoidCallback? onDisplayTap;
+
+  /// Keng oyna: raqamlar paneli o'ngda shu kenglikda, [below] — displey
+  /// ostida (chap ustunda; masalan, qaytim). `null` — panel displey ostida.
+  final double? keypadSide;
+  final List<Widget> below;
 
   /// [valueTiyin] oxiriga so'm raqamlarini qo'shadi (raqam bo'lmaganlar
   /// tashlanadi; [maxDigits] dan oshsa — o'zgarmaydi). Ekran klaviaturani
@@ -121,51 +128,70 @@ class _MoneyInputState extends State<MoneyInput> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final p = PosPalette.of(context);
+    final keypad = PosNumericKeypad(
+      onKey: _append,
+      onBackspace: _backspace,
+      onClear: () => _set(0),
+      backspaceTooltip: l10n.actionBackspace,
+      extraKey: '00',
+    );
+    final display = GestureDetector(
+      onTap: widget.onDisplayTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: PosSpacing.l,
+          vertical: PosSpacing.m,
+        ),
+        decoration: BoxDecoration(
+          color: p.surface,
+          borderRadius: PosRadius.inputAll,
+          border: Border.all(color: p.focus, width: 2),
+        ),
+        child: Semantics(
+          liveRegion: true,
+          child: Text(
+            context.fmt.money(_value),
+            textAlign: TextAlign.right,
+            maxLines: 1,
+            style: PosTypography.h1.copyWith(
+              color: p.text,
+              fontFeatures: PosTypography.tabular,
+            ),
+          ),
+        ),
+      ),
+    );
+    final side = widget.keypadSide;
     return Focus(
       autofocus: widget.autofocus,
       onKeyEvent: _onKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          GestureDetector(
-            onTap: widget.onDisplayTap,
-            child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: PosSpacing.l,
-                vertical: PosSpacing.m,
-              ),
-              decoration: BoxDecoration(
-                color: p.surface,
-                borderRadius: PosRadius.inputAll,
-                border: Border.all(color: p.focus, width: 2),
-              ),
-              child: Semantics(
-                liveRegion: true,
-                child: Text(
-                  context.fmt.money(_value),
-                  textAlign: TextAlign.right,
-                  maxLines: 1,
-                  style: PosTypography.h1.copyWith(
-                    color: p.text,
-                    fontFeatures: PosTypography.tabular,
+      child: side != null && widget.showKeypad
+          ? Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [display, ...widget.below],
                   ),
                 ),
-              ),
+                const SizedBox(width: PosSpacing.l),
+                SizedBox(width: side, child: keypad),
+              ],
+            )
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                display,
+                if (widget.showKeypad) ...[
+                  const SizedBox(height: PosSpacing.m),
+                  keypad,
+                ],
+                ...widget.below,
+              ],
             ),
-          ),
-          if (widget.showKeypad) ...[
-            const SizedBox(height: PosSpacing.m),
-            PosNumericKeypad(
-              onKey: _append,
-              onBackspace: _backspace,
-              onClear: () => _set(0),
-              backspaceTooltip: l10n.actionBackspace,
-              extraKey: '00',
-            ),
-          ],
-        ],
-      ),
     );
   }
 }

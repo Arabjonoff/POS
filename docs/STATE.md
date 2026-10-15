@@ -5,25 +5,19 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-108b Tovarlar paneli: kartalar, kategoriyalar, topilmadi (qaror 0014)
-- Branch: feat/T-108b-product-grid (T-108a ustiga; T-108a PR #59 merge bo'lgach `git rebase --onto main feat/T-108a-kassa-shell`)
-- Boshlangan: 2026-10-15
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
-- [x] 1. packages/ui: PosProductTile + kategoriya ranglari (AA test), widgetbook display galereyasi
-- [x] 2. Katalog: active/categories/accentIndex, minStock; topSellersProvider (30 kun)
-- [x] 3. ProductGrid (Sevimlilar/Hammasi/kategoriya, qidiruv natijasi, ↑/↓), StockView (kam/yo'q)
-- [x] 4. Topilmadi: qizil xabar + "Yangi tovar qo'shish" (tovar kartasi, saqlansa chekka)
-- [x] 5. Testlar (pos_screen, product_catalog)
-- [x] 6. To'liq testlar, golden'lar, skrinshotlar, hujjat
-- [ ] 7. main ga rebase, PR, CI, merge
+- (yo'q)
 
 ## Oxirgi bajarilgan ish
-- T-108b kodi va testlari; to'liq test to'plami ishlab turibdi.
+- T-108a/b/c — kassa ekrani yangi dizayni (qaror 0014, eskiz https://claude.ai/artifact/321zbc39k53LuPjnmgrjhT). T-108c PR CI'dan keyin merge.
 
 ## Keyingi aniq harakat
-- `git rebase --onto origin/main feat/T-108a-kassa-shell` (T-108a #59 merge bo'ldi), push --force-with-lease, PR, CI, merge; keyin T-108c.
+- `docs/ROADMAP.md` dan keyingi bajarilmagan vazifa; ochiq savollar `docs/QUESTIONS.md`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
@@ -37,6 +31,7 @@
 - Flutter widget testida `tester.runAsync` + drift stream osilib qoladi — bazaga yozishni test tanasida to'g'ridan-to'g'ri `await` qil. Osilgan test: `flutter test --timeout 30s -r expanded`.
 - API klient: `make api-clients` (backend sxema → admin TS + Dart: swagger_parser + build_runner `packages/api_client_dart`). Yangi endpoint kerak bo'lsa — `packages/api_client_dart/swagger_parser.yaml` `include_paths` ga qo'sh.
 - Vaqt: ilova kodida `DateTime.now()` emas, `clock.now()` (package:clock) yoki `clockProvider` — widget testlarida soxta vaqt ishlashi uchun.
+- Kassa golden'lari qo'shimcha `hd` (1366×768) va `fhd` (1920×1080) da (`kassaDevices`, `golden_helpers.dart`). Testda menyu bo'limi — `tapNav(tester, 'Sozlamalar')` (desktopda menyu yig'ilgan, nom tooltip'da). Ctrl+tugma — `pressCtrl`.
 - Widget/golden testlarda telefonda (390×844) ekrandan pastdagi tugmani bosishdan oldin `tester.ensureVisible` — aks holda bosish pastki menyuga tushadi (ogohlantirish bilan, xatosiz).
 - Testda `PosFormat.moneyAmount` oddiy probel emas — matnni `PosFormat` bilan yasab izla. `find.byType(TextField).first` orqadagi kassa qidiruvini topadi — `find.descendant(of: dialog, ...)`.
 - OpenAPI: yangi `type` enum qo'shilsa nom to'qnashadi — `backend/config/settings/base.py` ENUM_NAME_OVERRIDES ga qo'sh (aks holda mavjud enum nomi o'zgarib, eski generatsiya fayli qoladi).

@@ -15,8 +15,11 @@ from .models import Store
 MAX_LOGO_BYTES = 96 * 1024
 _PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
 
-# Chekda ko'rsat/yashir kalitlari (qolganlari e'tiborsiz qoldiriladi).
+# Chekda ko'rsat/yashir kalitlari va do'kon belgilari (qolganlari e'tiborsiz
+# qoldiriladi). `vat_payer` — QQS to'lovchi: kassa ekranida "QQS (12%,
+# ichida)" qatori (T-108c, qaror 0014).
 RECEIPT_OPTION_KEYS = {
+    "vat_payer",
     "show_logo",
     "show_legal_name",
     "show_address",

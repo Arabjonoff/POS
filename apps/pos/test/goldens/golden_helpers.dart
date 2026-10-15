@@ -10,15 +10,23 @@ const Map<String, (Size, TargetPlatform)> goldenDevices = {
   'desktop': (Size(1440, 900), TargetPlatform.windows),
 };
 
+/// Kassa ekrani qo'shimcha: kassadagi odatiy monitorlar (eskiz, qaror 0014).
+const Map<String, (Size, TargetPlatform)> kassaDevices = {
+  ...goldenDevices,
+  'hd': (Size(1366, 768), TargetPlatform.windows),
+  'fhd': (Size(1920, 1080), TargetPlatform.windows),
+};
+
 /// Har o'lcham × yorug'/qorong'i uchun test: [body] ilovani ochadi va
 /// kerakli holatga keltiradi, keyin `<dir>/<name>_<device>_<theme>.png`.
 void goldenAcrossDevices(
   String dir,
   String name,
-  Future<void> Function(WidgetTester tester, Size size) body,
-) {
+  Future<void> Function(WidgetTester tester, Size size) body, {
+  Map<String, (Size, TargetPlatform)> devices = goldenDevices,
+}) {
   for (final MapEntry(key: device, value: (size, platform))
-      in goldenDevices.entries) {
+      in devices.entries) {
     for (final dark in [false, true]) {
       final theme = dark ? 'dark' : 'light';
       testWidgets('$name $device $theme', (tester) async {

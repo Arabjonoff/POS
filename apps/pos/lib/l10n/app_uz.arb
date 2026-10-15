@@ -794,13 +794,13 @@
   "@payNoCustomers": {
     "description": "Mijoz qidiruvi bo'sh"
   },
-  "paySaleDone": "Savdo yakunlandi",
+  "paySaleDone": "Chek yopildi",
   "@paySaleDone": {
-    "description": "Yakunlash xabari"
+    "description": "Savdo yakunlandi xabari"
   },
-  "paySaleDoneChange": "Savdo yakunlandi · Qaytim {amount}",
+  "paySaleDoneChange": "Chek yopildi · Qaytim {amount}",
   "@paySaleDoneChange": {
-    "description": "Yakunlash xabari (qaytim bilan)",
+    "description": "Savdo yakunlandi, qaytim bilan",
     "placeholders": {
       "amount": {
         "type": "String"
@@ -1257,9 +1257,9 @@
   "@posLastReceipt": {
     "description": "Kassa: oxirgi chekni qayta chop etish tugmasi"
   },
-  "posSaleDoneReceiptFailed": "{done}. Chek chiqmadi",
+  "posSaleDoneReceiptFailed": "{done} — chop etilmadi",
   "@posSaleDoneReceiptFailed": {
-    "description": "Savdo yakunlandi, lekin chek chop etilmadi",
+    "description": "Savdo yozildi, chek printerdan chiqmadi",
     "placeholders": {
       "done": {
         "type": "String"
@@ -3046,5 +3046,96 @@
         "type": "String"
       }
     }
+  },
+  "posColNo": "№",
+  "@posColNo": {
+    "description": "Chek qatori: tartib raqami ustuni"
+  },
+  "posColName": "Nom · narx",
+  "@posColName": {
+    "description": "Chek qatori: nom ustuni"
+  },
+  "posColQty": "Miqdor",
+  "@posColQty": {
+    "description": "Chek qatori: miqdor ustuni"
+  },
+  "posColSum": "Summa",
+  "@posColSum": {
+    "description": "Chek qatori: summa ustuni"
+  },
+  "posUnitPriceTimes": "{price} × {unit}",
+  "@posUnitPriceTimes": {
+    "description": "Chek qatori: birlik narxi",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "posQtyButton": "Miqdor: {qty}. O'zgartirish",
+  "@posQtyButton": {
+    "description": "Ekran o'quvchi: miqdor tugmasi",
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "posPositions": "Pozitsiyalar",
+  "@posPositions": {
+    "description": "Chek tafsiloti: qatorlar soni"
+  },
+  "posSubtotalShort": "Oraliq summa",
+  "@posSubtotalShort": {
+    "description": "Chek tafsiloti: chegirmagacha"
+  },
+  "posVatIncluded": "QQS (12%, ichida)",
+  "@posVatIncluded": {
+    "description": "Chek tafsiloti: narx ichidagi QQS"
+  },
+  "posTotalCaps": "JAMI",
+  "@posTotalCaps": {
+    "description": "Chek: jami summa yorlig'i"
+  },
+  "actionPayCaps": "TO'LASH",
+  "@actionPayCaps": {
+    "description": "Kassa: asosiy to'lov tugmasi"
+  },
+  "posCustomerDebt": "Qarz: {amount}",
+  "@posCustomerDebt": {
+    "description": "Chek mijozi: joriy qarzi",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "posCustomerAdvance": "Avans: {amount}",
+  "@posCustomerAdvance": {
+    "description": "Chek mijozi: do'kon unga qarzdor",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "posCartTabItems": "{label}, {count} ta pozitsiya",
+  "@posCartTabItems": {
+    "description": "Ekran o'quvchi: chek tabi",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "storeVatPayer": "Do'kon QQS to'lovchi (kassada QQS 12% ko'rsatiladi)",
+  "@storeVatPayer": {
+    "description": "Chek sozlamasi: QQS to'lovchi belgisi"
   }
 }

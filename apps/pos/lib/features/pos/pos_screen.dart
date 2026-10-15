@@ -19,12 +19,15 @@ import 'package:pos_app/data/catalog/product_editor.dart'
 import 'package:pos_app/data/catalog/top_sellers.dart';
 import 'package:pos_app/data/customers/customer_directory.dart';
 import 'package:pos_app/data/refunds/refund_writer.dart';
+import 'package:pos_app/data/store/store_settings.dart' show vatPayerProvider;
 import 'package:pos_app/features/common/manager_approval.dart';
 import 'package:pos_app/features/pos/cart/cart.dart';
 import 'package:pos_app/features/pos/cart/cart_controller.dart';
 import 'package:pos_app/features/pos/cart/discount_policy.dart';
+import 'package:pos_app/features/pos/payment/checkout.dart';
 import 'package:pos_app/features/pos/payment/customer_picker.dart';
 import 'package:pos_app/features/pos/payment/payment_dialog.dart';
+import 'package:pos_app/features/pos/payment/payment_draft.dart';
 import 'package:pos_app/features/pos/widgets/cart_panel.dart';
 import 'package:pos_app/features/pos/widgets/discount_dialog.dart';
 import 'package:pos_app/features/pos/widgets/product_panel.dart';
@@ -85,6 +88,11 @@ class _CashierViewState extends ConsumerState<CashierView> {
   /// Oxirgi skanerlangan, bazada yo'q kod (qizil xabar).
   String? _notFound;
 
+  /// Oxirgi o'chirilgan qator — Ctrl+Z (toast "Bekor qilish" bilan bir xil,
+  /// 5 s).
+  RemovedLine? _lastRemoved;
+  Timer? _undoTimer;
+
   /// Oyna ochiq — tezkor tugmalar va ikkinchi oyna kutadi.
   bool _dialogOpen = false;
 
@@ -106,6 +114,7 @@ class _CashierViewState extends ConsumerState<CashierView> {
 
   @override
   void dispose() {
+    _undoTimer?.cancel();
     HardwareKeyboard.instance.removeHandler(_onKey);
     _screenFocus.dispose();
     _searchFocus.dispose();
@@ -151,6 +160,14 @@ class _CashierViewState extends ConsumerState<CashierView> {
   // ---- Qidiruv ----------------------------------------------------------
 
   void _onQuery(String query) {
+    // Bo'sh qidiruvda `+` / `-` / `*` — tanlangan qator miqdori (yozilmaydi).
+    final command = query.trim();
+    if (command.length == 1 && '+-*'.contains(command)) {
+      _search.clear();
+      setState(() => _results = const []);
+      _qtyCommand(command);
+      return;
+    }
     setState(() {
       _results = _catalog.search(query);
       _highlighted = 0;
@@ -332,16 +349,47 @@ class _CashierViewState extends ConsumerState<CashierView> {
     _focusScreen();
   }
 
+  /// O'chirish — tasdiqsiz; 5 s "Bekor qilish" (yoki Ctrl+Z).
   void _remove(CartLine line) {
     final removed = _cart.remove(line.id);
     if (removed == null) return;
     final l10n = AppLocalizations.of(context);
+    _lastRemoved = removed;
+    _undoTimer?.cancel();
+    _undoTimer = Timer(const Duration(seconds: 5), () => _lastRemoved = null);
     showPosToast(
       context,
       message: l10n.posLineRemoved(line.name),
       actionLabel: l10n.actionUndo,
-      onAction: () => _cart.undoRemove(removed),
+      onAction: _undo,
     );
+  }
+
+  void _undo() {
+    final removed = _lastRemoved;
+    if (removed == null) return;
+    _lastRemoved = null;
+    _undoTimer?.cancel();
+    _cart.undoRemove(removed);
+    ScaffoldMessenger.maybeOf(context)?.hideCurrentSnackBar();
+    _focusScreen();
+  }
+
+  /// `+` / `-` — tanlangan (yoki oxirgi) qator ±1 (vaznli — ±0,100 kg),
+  /// `*` — miqdor oynasi (F2 bilan bir xil).
+  void _qtyCommand(String command) {
+    final line = _state.selectedLine ?? _lastLine;
+    if (line == null) return _focusScreen();
+    if (command == '*') {
+      unawaited(_editQty(line));
+      return;
+    }
+    final weighted = line.weighted || UnitCode.fromCode(line.unit).fractional;
+    final step = weighted ? 100 : 1000;
+    final next = line.qtyMilli + (command == '+' ? step : -step);
+    if (next >= (weighted ? 1 : 1000)) _cart.setQty(line.id, next);
+    _cart.select(line.id);
+    _focusScreen();
   }
 
   Future<void> _discount() async {
@@ -402,11 +450,54 @@ class _CashierViewState extends ConsumerState<CashierView> {
 
   /// F12: to'lov oynasi. Yakunlansa — savat bo'shaydi, 3 s xabar (qaytim
   /// bilan), fokus yana skanerga.
-  Future<void> _pay() async {
+  Future<void> _pay({PayMode mode = PayMode.cash}) async {
     final cart = _state.cart;
     if (!ref.read(salesAllowedProvider) || cart.isEmpty || _dialogOpen) return;
-    final result = await _dialog(() => showPaymentDialog(context, cart: cart));
+    final result = await _dialog(
+      () => showPaymentDialog(context, cart: cart, mode: mode),
+    );
     if (result == null || !mounted) return _focusScreen();
+    _finishSale(result);
+  }
+
+  /// Bir bosishda: Naqd (F9) — aniq summa, qaytimsiz; Karta (F10) — butun
+  /// summa. Nasiya (F11) — oyna nasiyada (mijoz va limit tekshiruvi).
+  Future<void> _quickPay(PayMode mode) async {
+    if (mode == PayMode.debt || mode == PayMode.mixed) {
+      return _pay(mode: mode);
+    }
+    final cart = _state.cart;
+    if (!ref.read(salesAllowedProvider) || cart.isEmpty || _dialogOpen) return;
+    final l10n = AppLocalizations.of(context);
+    setState(() => _dialogOpen = true);
+    CheckoutResult? result;
+    try {
+      result = await checkoutNow(
+        ref,
+        cart: cart,
+        payment: PaymentDraft(
+          totalTiyin: cart.totalTiyin,
+          mode: mode,
+          customerId: cart.customerId,
+        ),
+      );
+    } on Exception {
+      result = null;
+    } finally {
+      if (mounted) setState(() => _dialogOpen = false);
+    }
+    if (!mounted) return;
+    if (result == null) {
+      // Savat joyida qoladi.
+      showPosToast(context, message: l10n.payFailed, tone: PosTone.danger);
+      return _focusScreen();
+    }
+    _finishSale(result);
+  }
+
+  /// Savdo yozildi: chek bo'shaydi, 3 s "Chek yopildi" (qaytim bilan), fokus
+  /// yana skanerga, chek — fonda.
+  void _finishSale(CheckoutResult result) {
     _cart.clearActive();
     final l10n = AppLocalizations.of(context);
     final change = result.changeTiyin;
@@ -489,7 +580,7 @@ class _CashierViewState extends ConsumerState<CashierView> {
     _focusScreen();
   }
 
-  /// F9: kassaga pul kiritish/chiqarish.
+  /// Ctrl+F9: kassaga pul kiritish/chiqarish (F9 — naqd to'lov, qaror 0014).
   Future<void> _openCash() async {
     final result = await _dialog(() => showCashMovementDialog(context));
     if (result != null && mounted) showCashMovementDone(context, result);
@@ -543,8 +634,19 @@ class _CashierViewState extends ConsumerState<CashierView> {
     if (!_screenFocus.hasFocus) return false;
     final key = event.logicalKey;
     final keyboard = HardwareKeyboard.instance;
-    if (keyboard.isControlPressed || keyboard.isAltPressed) return false;
     final searching = _searchFocus.hasFocus;
+    if (keyboard.isControlPressed && !keyboard.isAltPressed) {
+      if (key == LogicalKeyboardKey.f9) {
+        unawaited(_openCash());
+        return true;
+      }
+      // Qidiruvda matn bor — Ctrl+Z matnni qaytaradi.
+      if (key == LogicalKeyboardKey.keyZ && !(searching && _hasQuery)) {
+        _undo();
+        return true;
+      }
+    }
+    if (keyboard.isControlPressed || keyboard.isAltPressed) return false;
 
     if (key == LogicalKeyboardKey.f1) {
       _searchFocus.requestFocus();
@@ -572,7 +674,15 @@ class _CashierViewState extends ConsumerState<CashierView> {
       return true;
     }
     if (key == LogicalKeyboardKey.f9) {
-      unawaited(_openCash());
+      unawaited(_quickPay(PayMode.cash));
+      return true;
+    }
+    if (key == LogicalKeyboardKey.f10) {
+      unawaited(_quickPay(PayMode.card));
+      return true;
+    }
+    if (key == LogicalKeyboardKey.f11) {
+      unawaited(_quickPay(PayMode.debt));
       return true;
     }
     if (key == LogicalKeyboardKey.f6) {
@@ -627,12 +737,12 @@ class _CashierViewState extends ConsumerState<CashierView> {
     return false;
   }
 
-  String? _customerName(Cart cart) {
+  CustomerEntry? _customer(Cart cart) {
     final id = cart.customerId;
     if (id == null) return null;
     for (final c
         in ref.watch(customersProvider).value ?? const <CustomerEntry>[]) {
-      if (c.id == id) return c.name;
+      if (c.id == id) return c;
     }
     return null;
   }
@@ -660,7 +770,7 @@ class _CashierViewState extends ConsumerState<CashierView> {
         child: LayoutBuilder(
           builder: (context, constraints) =>
               constraints.maxWidth >= CashierView.twoPaneMinWidth
-              ? _twoPane(state, catalog, block)
+              ? _twoPane(state, catalog, block, width: constraints.maxWidth)
               : _onePane(state, block),
         ),
       ),
@@ -828,7 +938,6 @@ class _CashierViewState extends ConsumerState<CashierView> {
         _cart.select(id);
         _focusScreen();
       },
-      onQtyChanged: (line, qty) => _cart.setQty(line.id, qty),
       onQtyTap: (line) => unawaited(_editQty(line)),
       onRemove: _remove,
     );
@@ -856,8 +965,18 @@ class _CashierViewState extends ConsumerState<CashierView> {
   /// Chap panel shundan tor bo'lsa — qidiruv qatoridagi tugmalar ikon.
   static const double _wideSearchRow = 640;
 
-  Widget _twoPane(CartState state, ProductCatalog catalog, SalesBlock block) {
+  /// Chek paneli: kenglikning 40%, kamida 420, ko'pi 760 dp (eskiz).
+  static double _cartWidth(double total) =>
+      (total * 0.4).clamp(420, 760).toDouble();
+
+  Widget _twoPane(
+    CartState state,
+    ProductCatalog catalog,
+    SalesBlock block, {
+    required double width,
+  }) {
     final p = PosPalette.of(context);
+    final cartWidth = _cartWidth(width);
     final banner = _banner(block);
     final notFound = _notFoundBar();
     final favorites = _favorites(catalog);
@@ -906,8 +1025,8 @@ class _CashierViewState extends ConsumerState<CashierView> {
           ),
         ),
         Container(width: 1, color: p.border),
-        Expanded(
-          flex: 2,
+        SizedBox(
+          width: cartWidth,
           child: ColoredBox(
             color: p.surface,
             child: PosScanFeedback(
@@ -931,11 +1050,12 @@ class _CashierViewState extends ConsumerState<CashierView> {
                     const SizedBox(height: PosSpacing.m),
                     CartSummary(
                       cart: state.cart,
-                      customerName: _customerName(state.cart),
+                      customer: _customer(state.cart),
                       payEnabled: block == SalesBlock.none,
+                      vatPayer: ref.watch(vatPayerProvider).value ?? false,
                       onDiscount: () => unawaited(_discount()),
                       onCustomer: () => unawaited(_chooseCustomer()),
-                      onRemoveCustomer: () => _cart.setCustomer(null),
+                      onQuickPay: (mode) => unawaited(_quickPay(mode)),
                       onPay: () => unawaited(_pay()),
                     ),
                   ],

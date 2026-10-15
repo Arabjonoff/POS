@@ -1173,16 +1173,16 @@ abstract class AppLocalizations {
   /// **'Mijozlar topilmadi'**
   String get payNoCustomers;
 
-  /// Yakunlash xabari
+  /// Savdo yakunlandi xabari
   ///
   /// In uz, this message translates to:
-  /// **'Savdo yakunlandi'**
+  /// **'Chek yopildi'**
   String get paySaleDone;
 
-  /// Yakunlash xabari (qaytim bilan)
+  /// Savdo yakunlandi, qaytim bilan
   ///
   /// In uz, this message translates to:
-  /// **'Savdo yakunlandi · Qaytim {amount}'**
+  /// **'Chek yopildi · Qaytim {amount}'**
   String paySaleDoneChange(String amount);
 
   /// Savdo yozilmadi
@@ -1845,10 +1845,10 @@ abstract class AppLocalizations {
   /// **'Oxirgi chek'**
   String get posLastReceipt;
 
-  /// Savdo yakunlandi, lekin chek chop etilmadi
+  /// Savdo yozildi, chek printerdan chiqmadi
   ///
   /// In uz, this message translates to:
-  /// **'{done}. Chek chiqmadi'**
+  /// **'{done} — chop etilmadi'**
   String posSaleDoneReceiptFailed(String done);
 
   /// Qaytarish oynasi sarlavhasi
@@ -3944,6 +3944,96 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'{label} · {key}'**
   String labelWithShortcut(String label, String key);
+
+  /// Chek qatori: tartib raqami ustuni
+  ///
+  /// In uz, this message translates to:
+  /// **'№'**
+  String get posColNo;
+
+  /// Chek qatori: nom ustuni
+  ///
+  /// In uz, this message translates to:
+  /// **'Nom · narx'**
+  String get posColName;
+
+  /// Chek qatori: miqdor ustuni
+  ///
+  /// In uz, this message translates to:
+  /// **'Miqdor'**
+  String get posColQty;
+
+  /// Chek qatori: summa ustuni
+  ///
+  /// In uz, this message translates to:
+  /// **'Summa'**
+  String get posColSum;
+
+  /// Chek qatori: birlik narxi
+  ///
+  /// In uz, this message translates to:
+  /// **'{price} × {unit}'**
+  String posUnitPriceTimes(String price, String unit);
+
+  /// Ekran o'quvchi: miqdor tugmasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Miqdor: {qty}. O\'zgartirish'**
+  String posQtyButton(String qty);
+
+  /// Chek tafsiloti: qatorlar soni
+  ///
+  /// In uz, this message translates to:
+  /// **'Pozitsiyalar'**
+  String get posPositions;
+
+  /// Chek tafsiloti: chegirmagacha
+  ///
+  /// In uz, this message translates to:
+  /// **'Oraliq summa'**
+  String get posSubtotalShort;
+
+  /// Chek tafsiloti: narx ichidagi QQS
+  ///
+  /// In uz, this message translates to:
+  /// **'QQS (12%, ichida)'**
+  String get posVatIncluded;
+
+  /// Chek: jami summa yorlig'i
+  ///
+  /// In uz, this message translates to:
+  /// **'JAMI'**
+  String get posTotalCaps;
+
+  /// Kassa: asosiy to'lov tugmasi
+  ///
+  /// In uz, this message translates to:
+  /// **'TO\'LASH'**
+  String get actionPayCaps;
+
+  /// Chek mijozi: joriy qarzi
+  ///
+  /// In uz, this message translates to:
+  /// **'Qarz: {amount}'**
+  String posCustomerDebt(String amount);
+
+  /// Chek mijozi: do'kon unga qarzdor
+  ///
+  /// In uz, this message translates to:
+  /// **'Avans: {amount}'**
+  String posCustomerAdvance(String amount);
+
+  /// Ekran o'quvchi: chek tabi
+  ///
+  /// In uz, this message translates to:
+  /// **'{label}, {count} ta pozitsiya'**
+  String posCartTabItems(String label, int count);
+
+  /// Chek sozlamasi: QQS to'lovchi belgisi
+  ///
+  /// In uz, this message translates to:
+  /// **'Do\'kon QQS to\'lovchi (kassada QQS 12% ko\'rsatiladi)'**
+  String get storeVatPayer;
 }
 
 class _AppLocalizationsDelegate

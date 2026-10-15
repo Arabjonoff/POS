@@ -73,7 +73,7 @@ void main() {
     expect(printer.jobs, hasLength(1));
     expect(printed(printer.jobs.single, 'D3-000001'), isTrue);
     expect(printed(printer.jobs.single, 'NUSXA'), isFalse);
-    expect(find.text('Savdo yakunlandi'), findsOneWidget);
+    expect(find.text('Chek yopildi'), findsOneWidget);
   });
 
   testWidgets('printer off: the sale stays, retry prints the original', (
@@ -84,7 +84,7 @@ void main() {
     await sell(tester);
 
     expect(await _db.select(_db.sales).get(), hasLength(1));
-    expect(find.text('Savdo yakunlandi. Chek chiqmadi'), findsOneWidget);
+    expect(find.text('Chek yopildi — chop etilmadi'), findsOneWidget);
     expect(find.text('Printer ulanmagan'), findsOneWidget);
 
     printer.fail = false;
@@ -128,7 +128,7 @@ void main() {
     expect(find.byTooltip('Oxirgi chek'), findsNothing);
     await sell(tester);
     expect(await _db.select(_db.sales).get(), hasLength(1));
-    expect(find.text('Savdo yakunlandi'), findsOneWidget);
+    expect(find.text('Chek yopildi'), findsOneWidget);
     expect(find.text('Printer sozlanmagan'), findsOneWidget);
   });
 

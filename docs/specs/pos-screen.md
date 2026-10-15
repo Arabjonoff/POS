@@ -13,7 +13,8 @@
 1. Skanerlash (yoki qidiruv/tez tugma) → savatga.
 2. F12 / To'lash → to'lov oynasi.
 3. Naqd: olingan summa (tez tugmalar: Aniq, 50 000, 100 000, 200 000, raqamli klaviatura) → qaytim katta yashil raqam → Enter = yakunlash. Karta: bitta bosish. Nasiya: mijoz tanlash → tasdiqlash. Aralash: summalarni bo'lish.
-4. Yakunlash → chek chop etiladi (sozlamaga ko'ra), savat tozalanadi, "Savdo yakunlandi · Qaytim 3 000 so'm" xabari 3 s, fokus yana skanerga.
+4. Yakunlash → chek chop etiladi (sozlamaga ko'ra), savat tozalanadi, "Chek yopildi · Qaytim 3 000 so'm" xabari 3 s, fokus yana skanerga.
+   Bir bosishda (T-108c): **F9 — Naqd** (aniq summa, qaytimsiz), **F10 — Karta**; **F11 — Nasiya** (oyna nasiyada).
 
 ## Savat qatori
 - Miqdor: +/− tugmalari, bosib raqam kiritish (F2 — tanlangan qator miqdori), vaznli tovarda kg kiritish (0,250).
@@ -32,7 +33,8 @@
 - Printer ulanmagan → savdo davom etadi, holat qatorida qizil nuqta, yakunlashda "Chek chiqmadi, qayta chop etish" tugmasi.
 
 ## Klaviatura (Windows)
-F1 qidiruv · F2 miqdor · F3 chegirma · F4 mijoz · F6 kechiktirish/yangi chek · F8 qaytarish · F9 pul kiritish/chiqarish · F12 to'lash · Esc bekor/yopish · Enter tasdiq · Delete qatorni o'chirish · ↑/↓ savat qatorlari.
+F1 qidiruv · F2 yoki `*` miqdor · `+`/`−` tanlangan qator ±1 · F3 chegirma · F4 mijoz · F6 kechiktirish/yangi chek · F8 qaytarish · **F9 naqd · F10 karta · F11 nasiya** · F12 to'lash · Ctrl+F9 pul kiritish/chiqarish · Ctrl+Z o'chirilgan qatorni qaytarish · Ctrl+B menyu · Esc bekor/yopish · Enter tasdiq · Delete qatorni o'chirish · ↑/↓ savat qatorlari (qidiruvda — kartalar).
+(T-108c, qaror 0014: F9 avval pul kiritish/chiqarish edi.)
 Tezkor tugmalar ekranda kichik yorliq sifatida ko'rinadi (desktopda).
 
 ## Kassada amalga oshirilishi (T-042)
@@ -52,7 +54,7 @@ Tezkor tugmalar ekranda kichik yorliq sifatida ko'rinadi (desktopda).
 - **Nasiya** — mijoz qidiruvi (ism lotin/kirill farqsiz, telefon raqamlari) va "Yangi mijoz" (ism + telefon, `customer.upserted` outbox). Mijoz balansi = qarz daftari yig'indisi. `balans + summa > limit` → ogohlantirish; yakunlashda menejer/ega PIN (`requestManagerApproval`), tasdiqlagan → savdoning `approved_by`.
 - **F4** — chek mijozi (`showCustomerDialog`): savat ostida "Mijoz (F4)" tugmasi va olib tashlash; nasiyada shu mijoz oldindan tanlangan.
 - **Skaner** — oyna ochiq paytda o'z `ScanListener` i: skan → "Avval to'lovni yakunlang" (oyna ichida, 3 s) va ovoz; skaner Enter'i savdoni yakunlamaydi. Flutter'da `HardwareKeyboard` ishlovchisi hodisani olsa ham u fokusdagi `Focus.onKeyEvent` ga baribir yetadi — shuning uchun oynada raqamlar faqat skaner xizmatining `onTyping` i orqali kiradi (`MoneyInput(hardwareDigits: false)`).
-- **Natija** — oyna yopiladi, joriy chek bo'shaydi (`CartController.clearActive`), 3 s "Savdo yakunlandi · Qaytim 3 000 so'm", fokus yana skanerga. Chek chop etish — T-044.
+- **Natija** — oyna yopiladi, joriy chek bo'shaydi (`CartController.clearActive`), 3 s "Chek yopildi · Qaytim 3 000 so'm", fokus yana skanerga. Chek chop etish — T-044.
 
 ## Kassada amalga oshirilishi (T-045 — qaytarish)
 - **F8** yoki "Qaytarish" ikoni (desktopda qidiruv qatorida, telefonda chek tablari yonida) → `features/refunds/refund_dialog.dart`.
@@ -70,3 +72,12 @@ Tezkor tugmalar ekranda kichik yorliq sifatida ko'rinadi (desktopda).
 - **Qidiruv** panjarani jonli filtrlaydi (nom/shtrix-kod/PLU, hamma tovardan; tab tanlanmagan), ↑/↓ — kartani tanlaydi (ko'rinishga suriladi), Enter — qo'shadi; tab bosilsa qidiruv tozalanadi.
 - **Topilmadi:** skanerlangan kod bazada yo'q — chap panelda qizil xabar "Tovar topilmadi: 4780001234567", xato ovozi, "Yangi tovar qo'shish" (tovar kartasi shu kod bilan; saqlansa — darhol chekka) va yopish (Esc). Keyingi skan xabarni olib tashlaydi.
 - Telefonda: qidiruv natijasi — ro'yxat; tovar kartalari — varaqda (`ProductGrid`).
+
+## Kassada amalga oshirilishi (T-108c — chek paneli va to'lov, qaror 0014)
+- **Maket:** chek paneli kenglikning 40% i, kamida 420, ko'pi 760 dp (`_cartWidth`); chapda — tovarlar. 1366×768 va 1920×1080 da hech narsa kesilmaydi, TO'LASH doim ko'rinadi (qabul testi `payment_test.dart`, golden `hd`/`fhd`).
+- **Chek tablari:** faol — ko'k; kechiktirilganda pozitsiyalar soni; "+ Yangi chek" (F6).
+- **Qator** (`CartLineTile`): № | nom (1 qator) va `4 000 so'm × dona` (+ chegirma belgisi) | miqdor tugmasi 96 × 48 (bosilsa raqamlar oynasi, kg — 0,500) | summa qalin | o'chirish (kulrang, 48 × 48). Tor panelda (< 460 dp) № yashiriladi. Ustun sarlavhasi tepada. Tanlangan — ko'k chegara (↑/↓); qo'shilgan — 1 s yashil fon, keyin ≤ 200 ms da so'nadi. Telefonda — chapga surib o'chirish. −/+ tugmalari yo'q: `+`/`−` tugmalari va kartani qayta bosish.
+- **O'chirish** tasdiqsiz; 5 s "Bekor qilish" toast'i yoki **Ctrl+Z** (qidiruvda matn bo'lsa — matnniki).
+- **Pastki qism** (`CartSummary`): Mijoz (F4; tanlansa — ism va "Qarz: …"/"Avans: …") | Chegirma (F3; qo'llansa — "Chegirma 5%"), tafsilot ikki ustunda — Pozitsiyalar, Oraliq summa, Chegirma, **QQS (12%, ichida)** — faqat do'kon QQS to'lovchi bo'lsa (`receipt_options.vat_payer`, Sozlamalar → chek rekvizitlari; `Money.vatIncluded` = jami × 12/112, butun so'm, faqat ko'rsatish). JAMI — eng katta matn. Naqd F9 · Karta F10 · Nasiya F11 (56 dp) va yashil **TO'LASH F12** (64 dp, `PosButtonVariant.success`).
+- **Bir bosishli to'lov** (`_quickPay` → `checkoutNow`): naqd — `PaymentDraft(cash)` aniq summa, karta — butun summa; xato bo'lsa savat joyida, "Savdoni saqlab bo'lmadi". Nasiya va mixed — oyna (`showPaymentDialog(mode:)`). Oynada ham F9/F10/F11 turini almashtiradi.
+- **Klaviatura:** `+`/`−`/`*` qidiruv bo'sh bo'lganda buyruq (skaner xizmati ularni matn sifatida beradi — `_onQuery` ushlaydi, qidiruvga yozilmaydi); dona ±1, vaznli ±0,100 kg, kamida 1 dona / 0,001 kg. Ctrl+F9 — pul kiritish/chiqarish.

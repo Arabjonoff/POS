@@ -635,11 +635,11 @@ class AppLocalizationsUz extends AppLocalizations {
   String get payNoCustomers => 'Mijozlar topilmadi';
 
   @override
-  String get paySaleDone => 'Savdo yakunlandi';
+  String get paySaleDone => 'Chek yopildi';
 
   @override
   String paySaleDoneChange(String amount) {
-    return 'Savdo yakunlandi · Qaytim $amount';
+    return 'Chek yopildi · Qaytim $amount';
   }
 
   @override
@@ -992,7 +992,7 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String posSaleDoneReceiptFailed(String done) {
-    return '$done. Chek chiqmadi';
+    return '$done — chop etilmadi';
   }
 
   @override
@@ -2242,6 +2242,62 @@ class AppLocalizationsUz extends AppLocalizations {
   String labelWithShortcut(String label, String key) {
     return '$label · $key';
   }
+
+  @override
+  String get posColNo => '№';
+
+  @override
+  String get posColName => 'Nom · narx';
+
+  @override
+  String get posColQty => 'Miqdor';
+
+  @override
+  String get posColSum => 'Summa';
+
+  @override
+  String posUnitPriceTimes(String price, String unit) {
+    return '$price × $unit';
+  }
+
+  @override
+  String posQtyButton(String qty) {
+    return 'Miqdor: $qty. O\'zgartirish';
+  }
+
+  @override
+  String get posPositions => 'Pozitsiyalar';
+
+  @override
+  String get posSubtotalShort => 'Oraliq summa';
+
+  @override
+  String get posVatIncluded => 'QQS (12%, ichida)';
+
+  @override
+  String get posTotalCaps => 'JAMI';
+
+  @override
+  String get actionPayCaps => 'TO\'LASH';
+
+  @override
+  String posCustomerDebt(String amount) {
+    return 'Qarz: $amount';
+  }
+
+  @override
+  String posCustomerAdvance(String amount) {
+    return 'Avans: $amount';
+  }
+
+  @override
+  String posCartTabItems(String label, int count) {
+    return '$label, $count ta pozitsiya';
+  }
+
+  @override
+  String get storeVatPayer =>
+      'Do\'kon QQS to\'lovchi (kassada QQS 12% ko\'rsatiladi)';
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -2872,11 +2928,11 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
   String get payNoCustomers => 'Мижозлар топилмади';
 
   @override
-  String get paySaleDone => 'Савдо якунланди';
+  String get paySaleDone => 'Чек ёпилди';
 
   @override
   String paySaleDoneChange(String amount) {
-    return 'Савдо якунланди · Қайтим $amount';
+    return 'Чек ёпилди · Қайтим $amount';
   }
 
   @override
@@ -3228,7 +3284,7 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String posSaleDoneReceiptFailed(String done) {
-    return '$done. Чек чиқмади';
+    return '$done — чоп этилмади';
   }
 
   @override
@@ -4471,4 +4527,59 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
   String labelWithShortcut(String label, String key) {
     return '$label · $key';
   }
+
+  @override
+  String get posColNo => '№';
+
+  @override
+  String get posColName => 'Ном · нарх';
+
+  @override
+  String get posColQty => 'Миқдор';
+
+  @override
+  String get posColSum => 'Сумма';
+
+  @override
+  String posUnitPriceTimes(String price, String unit) {
+    return '$price × $unit';
+  }
+
+  @override
+  String posQtyButton(String qty) {
+    return 'Миқдор: $qty. Ўзгартириш';
+  }
+
+  @override
+  String get posPositions => 'Позициялар';
+
+  @override
+  String get posSubtotalShort => 'Оралиқ сумма';
+
+  @override
+  String get posVatIncluded => 'ҚҚС (12%, ичида)';
+
+  @override
+  String get posTotalCaps => 'ЖАМИ';
+
+  @override
+  String get actionPayCaps => 'ТЎЛАШ';
+
+  @override
+  String posCustomerDebt(String amount) {
+    return 'Қарз: $amount';
+  }
+
+  @override
+  String posCustomerAdvance(String amount) {
+    return 'Аванс: $amount';
+  }
+
+  @override
+  String posCartTabItems(String label, int count) {
+    return '$label, $count та позиция';
+  }
+
+  @override
+  String get storeVatPayer => 'Дўкон ҚҚС тўловчи (кассада ҚҚС 12% кўрсатилади)';
 }

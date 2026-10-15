@@ -440,6 +440,12 @@ class _ReceiptSettingsSectionState
           onChanged: (v) => option(o.copyWith(showFooter: v)),
         ),
         const SizedBox(height: PosSpacing.m),
+        toggle(
+          l10n.storeVatPayer,
+          value: o.vatPayer,
+          onChanged: (v) => option(o.copyWith(vatPayer: v)),
+        ),
+        const SizedBox(height: PosSpacing.m),
         Align(
           alignment: Alignment.centerLeft,
           child: PosButton(

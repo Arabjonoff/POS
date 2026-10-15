@@ -55,6 +55,7 @@ class ReceiptOptions {
     this.showBarcode = true,
     this.showHeader = true,
     this.showFooter = true,
+    this.vatPayer = false,
   });
 
   factory ReceiptOptions.fromJson(Map<String, Object?> json) {
@@ -73,6 +74,8 @@ class ReceiptOptions {
       showBarcode: flag('show_barcode'),
       showHeader: flag('show_header'),
       showFooter: flag('show_footer'),
+      // Standart — yo'q (QQS to'lamaydigan do'kon ko'p).
+      vatPayer: json['vat_payer'] == true,
     );
   }
 
@@ -86,6 +89,10 @@ class ReceiptOptions {
   final bool showHeader;
   final bool showFooter;
 
+  /// Do'kon QQS to'lovchi: kassa ekranida "QQS (12%, ichida)" qatori
+  /// (qaror 0014). Chekka hozircha chiqmaydi.
+  final bool vatPayer;
+
   Map<String, bool> toJson() => {
     'show_logo': showLogo,
     'show_legal_name': showLegalName,
@@ -96,6 +103,7 @@ class ReceiptOptions {
     'show_barcode': showBarcode,
     'show_header': showHeader,
     'show_footer': showFooter,
+    'vat_payer': vatPayer,
   };
 
   ReceiptOptions copyWith({
@@ -108,6 +116,7 @@ class ReceiptOptions {
     bool? showBarcode,
     bool? showHeader,
     bool? showFooter,
+    bool? vatPayer,
   }) => ReceiptOptions(
     showLogo: showLogo ?? this.showLogo,
     showLegalName: showLegalName ?? this.showLegalName,
@@ -118,6 +127,7 @@ class ReceiptOptions {
     showBarcode: showBarcode ?? this.showBarcode,
     showHeader: showHeader ?? this.showHeader,
     showFooter: showFooter ?? this.showFooter,
+    vatPayer: vatPayer ?? this.vatPayer,
   );
 }
 

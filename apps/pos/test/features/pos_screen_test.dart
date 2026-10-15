@@ -367,15 +367,76 @@ void main() {
       expect(lines, [('p-non', 3000), ('p-cola', 1000)]);
     });
 
-    testWidgets('stepper changes qty', (tester) async {
+    Future<void> char(WidgetTester tester, String c) async {
+      final key = switch (c) {
+        '+' => LogicalKeyboardKey.numpadAdd,
+        '-' => LogicalKeyboardKey.numpadSubtract,
+        _ => LogicalKeyboardKey.numpadMultiply,
+      };
+      await tester.sendKeyEvent(key, character: c);
+      await tester.pump(const Duration(milliseconds: 150));
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('+ / − / * change the selected line; nothing is typed', (
+      tester,
+    ) async {
       await open(tester);
       await scanCode(tester, '4780000000014');
-      await tester.tap(find.byTooltip("Ko'paytirish"));
-      await tester.pumpAndSettle();
+      await char(tester, '+');
       expect(lines, [('p-non', 2000)]);
-      await tester.tap(find.byTooltip('Kamaytirish'));
-      await tester.pumpAndSettle();
+      await char(tester, '-');
+      await char(tester, '-');
+      // Kamida 1 dona.
       expect(lines, [('p-non', 1000)]);
+      // Qidiruvga `+`/`-` yozilmadi.
+      expect(find.text('+'), findsNothing);
+      await char(tester, '*');
+      expect(find.text('Miqdor'), findsWidgets);
+      await typeSlowly(tester, '4');
+      await press(tester, LogicalKeyboardKey.enter);
+      expect(lines, [('p-non', 4000)]);
+    });
+
+    testWidgets('qty button opens the keypad; weighted ± 0,100 kg', (
+      tester,
+    ) async {
+      await open(tester);
+      await scanCode(tester, '2012345012509');
+      await char(tester, '+');
+      expect(lines, [('p-olma', 1350)]);
+      final qty = find.byWidgetPredicate(
+        (w) =>
+            w.key is ValueKey<String> &&
+            (w.key! as ValueKey<String>).value.startsWith('qty-'),
+      );
+      expect(tester.getSize(qty).height, PosSizes.touchMin);
+      await tester.tap(qty);
+      await tester.pumpAndSettle();
+      expect(find.text('Vazn, kg'), findsOneWidget);
+    });
+
+    testWidgets('Ctrl+Z brings back the removed line', (tester) async {
+      await open(tester);
+      await scanCode(tester, '4780000000014');
+      await scanCode(tester, '5449000000996');
+      await press(tester, LogicalKeyboardKey.delete);
+      expect(lines, [('p-non', 1000)]);
+      await pressCtrl(tester, LogicalKeyboardKey.keyZ);
+      expect(lines, [('p-non', 1000), ('p-cola', 1000)]);
+      // Ikkinchi marta — hech narsa.
+      await pressCtrl(tester, LogicalKeyboardKey.keyZ);
+      expect(lines, hasLength(2));
+    });
+
+    testWidgets('deferred cheque tab shows its positions count', (
+      tester,
+    ) async {
+      await open(tester);
+      await scanCode(tester, '4780000000014');
+      await scanCode(tester, '5449000000996');
+      await press(tester, LogicalKeyboardKey.f6);
+      expect(find.bySemanticsLabel('Chek 1, 2 ta pozitsiya'), findsOneWidget);
     });
 
     testWidgets('F6 defers the check; tabs switch between them', (

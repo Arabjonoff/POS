@@ -143,7 +143,9 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(out);
     } else {
+      await tester.sendKeyDownEvent(LogicalKeyboardKey.controlLeft);
       await tester.sendKeyEvent(LogicalKeyboardKey.f9);
+      await tester.sendKeyUpEvent(LogicalKeyboardKey.controlLeft);
     }
     await tester.pumpAndSettle();
     await _type(tester, const [

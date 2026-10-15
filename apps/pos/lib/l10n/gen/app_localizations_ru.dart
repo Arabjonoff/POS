@@ -655,11 +655,11 @@ class AppLocalizationsRu extends AppLocalizations {
   String get payNoCustomers => 'Клиенты не найдены';
 
   @override
-  String get paySaleDone => 'Продажа завершена';
+  String get paySaleDone => 'Чек закрыт';
 
   @override
   String paySaleDoneChange(String amount) {
-    return 'Продажа завершена · Сдача $amount';
+    return 'Чек закрыт · Сдача $amount';
   }
 
   @override
@@ -1010,7 +1010,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String posSaleDoneReceiptFailed(String done) {
-    return '$done. Чек не напечатан';
+    return '$done — не напечатан';
   }
 
   @override
@@ -2262,4 +2262,60 @@ class AppLocalizationsRu extends AppLocalizations {
   String labelWithShortcut(String label, String key) {
     return '$label · $key';
   }
+
+  @override
+  String get posColNo => '№';
+
+  @override
+  String get posColName => 'Название · цена';
+
+  @override
+  String get posColQty => 'Кол-во';
+
+  @override
+  String get posColSum => 'Сумма';
+
+  @override
+  String posUnitPriceTimes(String price, String unit) {
+    return '$price × $unit';
+  }
+
+  @override
+  String posQtyButton(String qty) {
+    return 'Количество: $qty. Изменить';
+  }
+
+  @override
+  String get posPositions => 'Позиции';
+
+  @override
+  String get posSubtotalShort => 'Подытог';
+
+  @override
+  String get posVatIncluded => 'НДС (12%, в т. ч.)';
+
+  @override
+  String get posTotalCaps => 'ИТОГО';
+
+  @override
+  String get actionPayCaps => 'ОПЛАТА';
+
+  @override
+  String posCustomerDebt(String amount) {
+    return 'Долг: $amount';
+  }
+
+  @override
+  String posCustomerAdvance(String amount) {
+    return 'Аванс: $amount';
+  }
+
+  @override
+  String posCartTabItems(String label, int count) {
+    return '$label, позиций: $count';
+  }
+
+  @override
+  String get storeVatPayer =>
+      'Магазин — плательщик НДС (на кассе показывается НДС 12%)';
 }

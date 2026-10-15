@@ -39,7 +39,7 @@ Qaytim                  15 000
 - **ESC/POS** — `escpos.dart`: `ESC @`, `ESC t 17` (CP866) yoki UTF-8, `ESC a` (markaz), `ESC E` (qalin), qog'oz surish + kesish `GS V 66 0`, pul qutisi `ESC p 0 25 250`. CP866 da yo'q o'zbek kirill harflari (ў қ ғ ҳ) у к г х bo'lib chiqadi.
 - **Ulanish** — `printer_transport.dart`: tarmoq `IP[:port]` (standart 9100), Windows spooler (`winspool.dart`, RAW). Android Bluetooth/USB — T-047 (qaror 0008).
 - **Sozlamalar** — har kassada o'zi (`local_settings`, kalit `printer`): ulanish, manzil yoki printer nomi, 58/80 mm, harflar jadvali, avtomatik chek, 1–3 nusxa, naqd to'lovda pul qutisi. Sozlamalar → Chek printeri sahifasida "Test chek" (chizg'ich, vaqt, lotin/kirill sinovi) va "Pul qutisini ochish" tugmalari bor.
-- **Kassada** — yakunlangandan keyin chek fonda chiqadi, savdo uni kutmaydi. Xato bo'lsa "Savdo yakunlandi · Qaytim … . Chek chiqmadi" xabari va "Qayta chop etish" (NUSXA) tugmasi chiqadi. Printer sozlangan bo'lsa, qidiruv qatorida "Oxirgi chek" tugmasi turadi.
+- **Kassada** — yakunlangandan keyin chek fonda chiqadi, savdo uni kutmaydi. Xato bo'lsa "Chek yopildi · Qaytim … — chop etilmadi" xabari va "Qayta chop etish" (NUSXA) tugmasi chiqadi. Printer sozlangan bo'lsa, qidiruv qatorida "Oxirgi chek" tugmasi turadi.
 - **Holat qatori** — sozlanmagan / tekshirilmoqda (ochilganda ulanish sinovi) / ulangan / ulanmagan; holat har chop etishdan keyin yangilanadi.
 
 ## Chek sifati va ko'rinishi (T-104a, audit `docs/audit/audit_printing.md`)

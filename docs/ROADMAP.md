@@ -329,7 +329,7 @@ Audit: `PROJECT_AUDIT.md`, batafsil — `docs/audit/`. Jurnal: `AGENT_WORKLOG.md
 - **Bajarish:** kartalar panjarasi (≥ 160 px, rasm/bosh harf, nom 2 qator, narx, birlik, qoldiq; kam — sariq belgi, 0 — kulrang + ogohlantirish), kategoriya rangi, "Sevimlilar" birinchi; qidiruv panjarani jonli filtrlaydi; topilmadi — qizil xabar kod bilan + "Yangi tovar qo'shish".
 - **Bog'liq:** T-108a
 
-### [ ] T-108c Chek paneli va to'lov
+### [x] T-108c Chek paneli va to'lov
 - **Bajarish:** chek tablari (pozitsiyalar soni), qator №|nom|narx|miqdor|summa|o'chirish, 1 s yashil, Mijoz (F4, qarz) / Chegirma (F3), tafsilot (pozitsiyalar, oraliq, chegirma, QQS), JAMI; Naqd F9, Karta F10, Nasiya F11 bir bosishda, TO'LASH F12; `+`/`−`/`*`, Ctrl+Z, Ctrl+F9; QQS to'lovchi sozlamasi.
 - **Qabul:** 3 tovarli chek faqat skaner va klaviatura bilan yopiladi; 1366×768 da hech narsa kesilmaydi, TO'LASH doim ko'rinadi.
 - **Bog'liq:** T-108b

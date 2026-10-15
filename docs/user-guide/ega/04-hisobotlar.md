@@ -7,7 +7,7 @@
 
 ![Z hisobot](../../screenshots/T-041/z_report_tablet_light.png)
 
-## Kassaga pul kiritish / olish (F9)
+## Kassaga pul kiritish / olish (Ctrl+F9)
 Maydalash uchun pul kiritish yoki inkassatsiya — summa va sabab bilan. Smena hisobotida ko'rinadi.
 
 ## Hisobotlar (Ctrl+5) — ega va menejer

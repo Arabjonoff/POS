@@ -53,6 +53,21 @@ def test_owner_or_manager_sets_requisites(kassa, manager, tenant):
     assert rows[-1]["data"]["receipt_options"] == {"show_tin": False}
 
 
+def test_vat_payer_flag_round_trips(kassa, manager, tenant):
+    _, client = kassa
+    store = tenant.stores.get()
+    result = push(
+        client,
+        upserted(manager, store, receipt_options={"vat_payer": True, "show_tin": True}),
+    )
+    assert statuses(result) == ["applied"], result
+    store.refresh_from_db()
+    assert store.receipt_options == {"vat_payer": True, "show_tin": True}
+    body = client.get(PULL, {"cursor": "0"}).json()
+    rows = [c for c in body["changes"] if c["entity"] == "store"]
+    assert rows[-1]["data"]["receipt_options"]["vat_payer"] is True
+
+
 def test_cashier_cannot_change_requisites(kassa, cashier, tenant):
     _, client = kassa
     store = tenant.stores.get()
