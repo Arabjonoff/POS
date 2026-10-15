@@ -37,7 +37,7 @@ Qaytim                  15 000
 - **Chek matni** — `apps/pos/lib/features/printing/receipt.dart`: `ReceiptData` → `ReceiptBuilder(l10n, width)` → `ReceiptRow` lar (matn, qalin, markaz). Matn ilova tilida, belgilar ASCII bo'shliq/defis bilan. Uzun nom so'z bo'yicha o'raladi, "miqdor x narx" oxirgi qatorning o'ng chetida turadi. Qayta chop etilgan chekda "NUSXA" yoziladi. Snapshotlar: `apps/pos/test/printing/receipts/*.txt` (yangilash — `UPDATE_RECEIPTS=1`).
 - **Ma'lumot** — `receipt_loader.dart`: do'kon (smena → `stores`: nom, manzil, telefon, sarlavha, pastki matn), kassir, qatorlar (birlik — tovardan), to'lovlar (naqd → karta → nasiya), nasiya mijozi va uning savdodan keyingi qarzi.
 - **ESC/POS** — `escpos.dart`: `ESC @`, `ESC t 17` (CP866) yoki UTF-8, `ESC a` (markaz), `ESC E` (qalin), qog'oz surish + kesish `GS V 66 0`, pul qutisi `ESC p 0 25 250`. CP866 da yo'q o'zbek kirill harflari (ў қ ғ ҳ) у к г х bo'lib chiqadi.
-- **Ulanish** — `printer_transport.dart`: tarmoq `IP[:port]` (standart 9100), Windows spooler (`winspool.dart`, RAW). Android Bluetooth/USB — T-047 (qaror 0008).
+- **Ulanish** — `printer_transport.dart`: tarmoq `IP[:port]` (standart 9100), Windows spooler (`winspool.dart`, RAW), Android Bluetooth/USB (T-047, pastda).
 - **Sozlamalar** — har kassada o'zi (`local_settings`, kalit `printer`): ulanish, manzil yoki printer nomi, 58/80 mm, harflar jadvali, avtomatik chek, 1–3 nusxa, naqd to'lovda pul qutisi. Sozlamalar → Chek printeri sahifasida "Test chek" (chizg'ich, vaqt, lotin/kirill sinovi) va "Pul qutisini ochish" tugmalari bor.
 - **Kassada** — yakunlangandan keyin chek fonda chiqadi, savdo uni kutmaydi. Xato bo'lsa "Chek yopildi · Qaytim … — chop etilmadi" xabari va "Qayta chop etish" (NUSXA) tugmasi chiqadi. Printer sozlangan bo'lsa, qidiruv qatorida "Oxirgi chek" tugmasi turadi.
 - **Holat qatori** — sozlanmagan / tekshirilmoqda (ochilganda ulanish sinovi) / ulangan / ulanmagan; holat har chop etishdan keyin yangilanadi.
@@ -73,3 +73,24 @@ Qaytim                  15 000
 - **Logotip:** fayl (PNG/JPG) → kulrang, kichraytirilgan → PNG (server tekshiradi: PNG imzosi, hajm) → chop etishda printer kengligiga
   (58 mm — 384, 80 mm — 576 nuqta) 1 bitli rasm, `GS v 0`, 128 qatorli bo'laklar. Ko'rinishda — aynan o'sha nuqtalar.
 - **Qurilma darajasi** (har kassada, `local_settings`): ulanish, kenglik, kodlash, kod sahifasi, `FS .`, kesish, surish, nusxalar, pul qutisi.
+
+## Android: Bluetooth va USB printer (T-047, qaror 0008)
+- **Dart:** `android_printer_channel.dart` — `MethodChannel('uz.zellypos.pos/printer')`; `AndroidPrinterTransport(kind, deviceId)`
+  (`printer_transport.dart`). Sozlamada `connection`: `bluetooth` (manzil — MAC) yoki `usb` (manzil — `vendorId:productId`, qayta
+  ulanganda o'zgarmaydi), `device_name` — ro'yxatda ko'rsatish uchun. Tanlov faqat Android'da ko'rinadi.
+- **Native:** `android/app/src/main/kotlin/.../PrinterChannel.kt` (tashqi plagin yo'q). Usullar: `bluetoothDevices`, `bluetoothSend`,
+  `bluetoothAvailable`, `usbDevices`, `usbSend`, `usbAvailable`. Xato kodlari: `bluetooth_off`, `permission_denied`, `not_found`, `io`.
+  - Bluetooth: faqat **juftlangan** qurilmalar (qidiruv yo'q — `BLUETOOTH_SCAN`/joylashuv ruxsati kerak emas), printerlar (IMAGING)
+    ro'yxat boshida. SPP UUID `00001101-…`, avval xavfsiz, bo'lmasa xavfsiz bo'lmagan RFCOMM. 1 KB bo'laklar; yopishdan oldin qisqa
+    kutish (arzon printer buferi to'lib, chek oxiri yo'qolmasin). Android 12+ da `BLUETOOTH_CONNECT` birinchi murojaatda so'raladi.
+  - USB: bulk OUT nuqtasi bor qurilmalar (printer sinfi 7 birinchi; HID skaner/klaviatura ro'yxatga tushmaydi). Ruxsat — tizim oynasi
+    (`UsbManager.requestPermission`, PendingIntent MUTABLE + paket aniq). 16 KB bo'laklar, 5 s timeout.
+  - Hamma yuborish bitta fon oqimida, ketma-ket (nusxalar aralashmaydi); javob asosiy oqimda.
+- **Holat qatori:** "ulangan" — Bluetooth yoqiq va printer juftlangan / USB printer ulangan (ulanish ochilmaydi, tez).
+- **Sozlamalar:** ro'yxat, tanlangan qurilma topilmasa ham ko'rinadi ("Hozir topilmadi — printerni yoqing yoki qayta ulang"); Bluetooth
+  o'chiq / ruxsat yo'q / bo'sh ro'yxat — tushunarli xabar va "Ro'yxatni yangilash".
+- **Savdo to'xtamaydi:** native xato `AndroidPrinterException` (Exception) → "Chek yopildi — chop etilmadi" + "Qayta chop etish".
+- **Testlar:** soxta kanal (`test/helpers/fake_android_printer.dart`): `test/printing/android_printer_test.dart`,
+  `test/features/android_printing_test.dart`, golden `printing/settings_bluetooth`. Kotlin `flutter build apk` bilan kompilyatsiya qilinadi.
+- **Haqiqiy printerda sinalmagan** (agent muhitida Android qurilma va printer yo'q, Q-007): qo'lda sinov ro'yxati —
+  `docs/printing-android-checklist.md`.

@@ -4034,6 +4034,72 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Do\'kon QQS to\'lovchi (kassada QQS 12% ko\'rsatiladi)'**
   String get storeVatPayer;
+
+  /// Printer connection: Bluetooth (Android)
+  ///
+  /// In uz, this message translates to:
+  /// **'Bluetooth'**
+  String get printerBluetooth;
+
+  /// Printer connection: USB (Android)
+  ///
+  /// In uz, this message translates to:
+  /// **'USB'**
+  String get printerUsb;
+
+  /// Reload Bluetooth/USB printer list
+  ///
+  /// In uz, this message translates to:
+  /// **'Ro\'yxatni yangilash'**
+  String get printerDevicesRefresh;
+
+  /// Saved printer is not in the current device list
+  ///
+  /// In uz, this message translates to:
+  /// **'Hozir topilmadi — printerni yoqing yoki qayta ulang'**
+  String get printerDeviceMissing;
+
+  /// Bluetooth adapter is off
+  ///
+  /// In uz, this message translates to:
+  /// **'Bluetooth o\'chiq — telefon sozlamalarida yoqing'**
+  String get printerBluetoothOff;
+
+  /// Android permission for printer denied
+  ///
+  /// In uz, this message translates to:
+  /// **'Printerga ulanish uchun ruxsat bering'**
+  String get printerPermissionDenied;
+
+  /// Failed to list printer devices
+  ///
+  /// In uz, this message translates to:
+  /// **'Qurilmalar ro\'yxatini olib bo\'lmadi'**
+  String get printerDevicesFailed;
+
+  /// No paired Bluetooth printers
+  ///
+  /// In uz, this message translates to:
+  /// **'Juftlangan printer yo\'q'**
+  String get printerNoBluetooth;
+
+  /// How to pair a Bluetooth printer
+  ///
+  /// In uz, this message translates to:
+  /// **'Printerni yoqing va telefonning Bluetooth sozlamalarida juftlang (PIN odatda 0000 yoki 1234), keyin ro\'yxatni yangilang.'**
+  String get printerNoBluetoothHint;
+
+  /// No USB printers attached
+  ///
+  /// In uz, this message translates to:
+  /// **'USB printer topilmadi'**
+  String get printerNoUsb;
+
+  /// How to attach a USB printer
+  ///
+  /// In uz, this message translates to:
+  /// **'Printerni OTG kabel bilan ulang va yoqing, keyin ro\'yxatni yangilang.'**
+  String get printerNoUsbHint;
 }
 
 class _AppLocalizationsDelegate

@@ -6,11 +6,14 @@ import 'package:pos_app/features/printing/escpos.dart';
 import 'package:pos_app/features/printing/receipt.dart';
 import 'package:pos_app/features/printing/winspool.dart';
 
-/// Printer ulanishi. Android Bluetooth/USB — keyinroq (qaror 0008).
+/// Printer ulanishi (qaror 0008): tarmoq — hamma joyda, Windows spooler,
+/// Android'da Bluetooth (SPP) va USB (T-047).
 enum PrinterConnection {
   none('none'),
   network('network'),
-  windows('windows')
+  windows('windows'),
+  bluetooth('bluetooth'),
+  usb('usb')
   ;
 
   const PrinterConnection(this.code);
@@ -27,6 +30,7 @@ class PrinterSettings {
   const PrinterSettings({
     this.connection = PrinterConnection.none,
     this.address = '',
+    this.deviceName = '',
     this.width = PaperWidth.mm58,
     this.encoding = PrinterEncoding.cp866,
     this.autoPrint = true,
@@ -43,6 +47,7 @@ class PrinterSettings {
       PrinterSettings(
         connection: PrinterConnection.fromCode(json['connection'] as String?),
         address: json['address'] as String? ?? '',
+        deviceName: json['device_name'] as String? ?? '',
         width: switch ((json['width'], json['chars'])) {
           (80, 42) => PaperWidth.mm80narrow,
           (80, _) => PaperWidth.mm80,
@@ -67,8 +72,12 @@ class PrinterSettings {
 
   final PrinterConnection connection;
 
-  /// Tarmoq — `IP[:port]`; Windows — printer nomi.
+  /// Tarmoq — `IP[:port]`; Windows — printer nomi; Bluetooth — MAC manzil;
+  /// USB — `vendorId:productId`.
   final String address;
+
+  /// Tanlangan Bluetooth/USB qurilma nomi (sozlamalarda ko'rsatish uchun).
+  final String deviceName;
   final PaperWidth width;
   final PrinterEncoding encoding;
 
@@ -101,6 +110,7 @@ class PrinterSettings {
   Map<String, Object?> toJson() => {
     'connection': connection.code,
     'address': address,
+    'device_name': deviceName,
     'width': width.mm,
     'chars': width.chars,
     'encoding': encoding.code,
@@ -116,6 +126,7 @@ class PrinterSettings {
   PrinterSettings copyWith({
     PrinterConnection? connection,
     String? address,
+    String? deviceName,
     PaperWidth? width,
     PrinterEncoding? encoding,
     bool? autoPrint,
@@ -128,6 +139,7 @@ class PrinterSettings {
   }) => PrinterSettings(
     connection: connection ?? this.connection,
     address: address ?? this.address,
+    deviceName: deviceName ?? this.deviceName,
     width: width ?? this.width,
     encoding: encoding ?? this.encoding,
     autoPrint: autoPrint ?? this.autoPrint,

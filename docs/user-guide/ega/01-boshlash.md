@@ -33,5 +33,8 @@ Yangi xodim qo'shish yoki PIN o'zgartirish uchun hozircha administrator bilan bo
 - **Avtomatik qulflash:** kassa tegilmasa necha daqiqada qulflansin (standart 5).
 - **Shtrix-kod skaneri:** ovoz va tezlik (skaner sekin bo'lsa "sekin").
 - **Chek printeri:** printer turi, qog'oz kengligi (58/80 mm), sinov cheki. Printer bo'lmasa ham savdo ishlaydi.
+  - Kompyuterda — "Kompyuter printeri" (Windows'ga o'rnatilgan) yoki "Tarmoq (IP)".
+  - Android planshet/telefonda — **Bluetooth** (avval printerni telefonning Bluetooth sozlamalarida juftlang, PIN odatda 0000 yoki 1234), **USB** (OTG kabel orqali; birinchi chekda ruxsat so'raladi — "OK" bosing) yoki "Tarmoq (IP)".
+    Ro'yxatdan printerni tanlang va "Test chek" bosing.
 
 ![Sozlamalar](../../screenshots/T-044/settings_tablet_light.png)

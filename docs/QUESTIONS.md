@@ -63,6 +63,9 @@ Format:
 - Savol: do'konlarda qaysi printer modellari ko'p (masalan, Xprinter XP-58/80, MTP-II, Sunmi ichki printeri)? Sinov uchun Android qurilma va printer bormi?
 - Agentning tavsiyasi: T-047 ni haqiqiy qurilmada sinov imkoni paydo bo'lguncha keyinga qoldirish. Hozircha Android'da Wi-Fi/LAN printer ishlaydi (T-044). Sunmi kabi ichki printerli qurilmalar uchun alohida transport kerak bo'lishi mumkin.
 - Hozircha tanlangan: T-047 o'tkazib yuborildi, keyingi mustaqil vazifa (T-050) olindi.
+- Yangilanish (2026-10-15): T-047 qilindi — Bluetooth (juftlangan, SPP) va USB (bulk OUT) umumiy ESC/POS printerlar uchun, soxta kanal
+  bilan testlangan, APK yig'iladi. **Haqiqiy qurilmada sinov hali kerak** — `docs/printing-android-checklist.md`. Savol ochiq: qaysi
+  printer modellari va Sunmi/iMin kabi ichki printerli qurilmalar kerakmi.
 - Javob:
 
 ### Q-008 (T-085) Obuna to'lovi uchun aloqa raqami qaysi?

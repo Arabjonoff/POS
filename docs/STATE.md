@@ -14,10 +14,10 @@
 - (yo'q)
 
 ## Oxirgi bajarilgan ish
-- T-108a/b/c — kassa ekrani yangi dizayni (qaror 0014, eskiz https://claude.ai/artifact/321zbc39k53LuPjnmgrjhT). T-108c PR CI'dan keyin merge.
+- T-047 Android Bluetooth/USB chek printeri (PR #62). Haqiqiy qurilmada sinov — `docs/printing-android-checklist.md`.
 
 ## Keyingi aniq harakat
-- `docs/ROADMAP.md` dan keyingi bajarilmagan vazifa; ochiq savollar `docs/QUESTIONS.md`.
+- ROADMAP'da bajarilmagan vazifa qolmadi; ochiq savollar `docs/QUESTIONS.md` (Q-001…Q-007, Q-009…Q-011). Loyiha egasidan yangi vazifa kutiladi.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

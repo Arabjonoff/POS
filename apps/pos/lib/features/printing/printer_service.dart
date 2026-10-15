@@ -8,6 +8,7 @@ import 'package:pos_app/app/status/app_status.dart';
 import 'package:pos_app/core/format/app_format.dart';
 import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/data/shifts/shift_service.dart';
+import 'package:pos_app/features/printing/android_printer_channel.dart';
 import 'package:pos_app/features/printing/escpos.dart';
 import 'package:pos_app/features/printing/printer_settings.dart';
 import 'package:pos_app/features/printing/printer_transport.dart';
@@ -164,9 +165,9 @@ class PrinterService {
 
 /// Sozlamadan uzatish qatlami (testlarda soxtasi bilan almashtiriladi).
 final printerTransportFactoryProvider =
-    Provider<PrinterTransport? Function(PrinterSettings)>(
-      (ref) =>
-          (settings) => !settings.configured
+    Provider<PrinterTransport? Function(PrinterSettings)>((ref) {
+      final android = ref.watch(androidPrinterChannelProvider);
+      return (settings) => !settings.configured
           ? null
           : switch (settings.connection) {
               PrinterConnection.network => NetworkPrinterTransport.parse(
@@ -175,9 +176,19 @@ final printerTransportFactoryProvider =
               PrinterConnection.windows => WindowsSpoolerTransport(
                 settings.address,
               ),
+              PrinterConnection.bluetooth => AndroidPrinterTransport(
+                AndroidPrinterKind.bluetooth,
+                settings.address,
+                channel: android,
+              ),
+              PrinterConnection.usb => AndroidPrinterTransport(
+                AndroidPrinterKind.usb,
+                settings.address,
+                channel: android,
+              ),
               PrinterConnection.none => null,
-            },
-    );
+            };
+    });
 
 final printerServiceProvider = Provider<PrinterService>((ref) {
   final settings =

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pos_app/features/printing/android_printer_channel.dart';
 import 'package:pos_app/features/printing/escpos.dart';
 import 'package:pos_app/features/printing/printer_service.dart';
 import 'package:pos_app/features/printing/printer_settings.dart';
@@ -131,6 +132,7 @@ class _PrinterSettingsPanelState extends ConsumerState<PrinterSettingsPanel> {
     );
 
     final windows = ref.watch(windowsPrintingProvider);
+    final android = ref.watch(androidPrintingProvider);
     final connection = settings.connection;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -142,13 +144,21 @@ class _PrinterSettingsPanelState extends ConsumerState<PrinterSettingsPanel> {
             (PrinterConnection.network, l10n.printerNetwork),
             if (windows || connection == PrinterConnection.windows)
               (PrinterConnection.windows, l10n.printerWindows),
+            if (android || connection == PrinterConnection.bluetooth)
+              (PrinterConnection.bluetooth, l10n.printerBluetooth),
+            if (android || connection == PrinterConnection.usb)
+              (PrinterConnection.usb, l10n.printerUsb),
           ],
           connection,
           (c) {
             if (c == connection) return;
             _address.clear();
             _addressLoaded = true;
-            unawaited(_save(settings.copyWith(connection: c, address: '')));
+            unawaited(
+              _save(
+                settings.copyWith(connection: c, address: '', deviceName: ''),
+              ),
+            );
           },
         ),
         if (connection == PrinterConnection.network) ...[
@@ -174,6 +184,10 @@ class _PrinterSettingsPanelState extends ConsumerState<PrinterSettingsPanel> {
             l10n,
             settings,
           ),
+        if (connection == PrinterConnection.bluetooth)
+          ..._androidPrinters(l10n, settings, AndroidPrinterKind.bluetooth),
+        if (connection == PrinterConnection.usb)
+          ..._androidPrinters(l10n, settings, AndroidPrinterKind.usb),
         if (connection != PrinterConnection.none) ...[
           label(l10n.printerWidth),
           choices(
@@ -363,6 +377,105 @@ class _PrinterSettingsPanelState extends ConsumerState<PrinterSettingsPanel> {
           selected: name == settings.address,
           onTap: () => unawaited(_save(settings.copyWith(address: name))),
         ),
+    ];
+  }
+
+  /// Android: juftlangan Bluetooth yoki ulangan USB printerlar ro'yxati.
+  /// Tanlangan qurilma ro'yxatda bo'lmasa ham (o'chiq, uzilgan) ko'rinadi.
+  List<Widget> _androidPrinters(
+    AppLocalizations l10n,
+    PrinterSettings settings,
+    AndroidPrinterKind kind,
+  ) {
+    final p = PosPalette.of(context);
+    final devices = ref.watch(androidPrintersProvider(kind));
+    final bluetooth = kind == AndroidPrinterKind.bluetooth;
+    final refresh = PosButton(
+      key: ValueKey('printer-refresh-${kind.name}'),
+      label: l10n.printerDevicesRefresh,
+      icon: Icons.refresh,
+      size: PosButtonSize.s,
+      variant: PosButtonVariant.secondary,
+      onPressed: () => ref.invalidate(androidPrintersProvider(kind)),
+    );
+
+    Widget tile(AndroidPrinterDevice device, {bool missing = false}) {
+      final selected = device.id == settings.address;
+      return PosListTile(
+        key: ValueKey('printer-device-${device.id}'),
+        leading: Icon(
+          selected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
+          color: selected ? p.primaryText : null,
+        ),
+        title: device.name.isEmpty ? device.id : device.name,
+        subtitle: missing
+            ? l10n.printerDeviceMissing
+            : (device.name.isEmpty ? null : device.id),
+        selected: selected,
+        onTap: () => unawaited(
+          _save(
+            settings.copyWith(address: device.id, deviceName: device.name),
+          ),
+        ),
+      );
+    }
+
+    final saved = settings.address.isEmpty
+        ? null
+        : AndroidPrinterDevice(id: settings.address, name: settings.deviceName);
+    return [
+      const SizedBox(height: PosSpacing.s),
+      ...devices.when(
+        loading: () => [
+          const Padding(
+            padding: EdgeInsets.all(PosSpacing.s),
+            child: PosSkeleton(height: PosSizes.touchMin),
+          ),
+        ],
+        error: (error, _) {
+          final problem = error is AndroidPrinterException
+              ? error.problem
+              : AndroidPrinterProblem.other;
+          return [
+            PosEmptyState(
+              key: ValueKey('printer-problem-${problem.code}'),
+              icon: bluetooth
+                  ? Icons.bluetooth_disabled
+                  : Icons.usb_off_outlined,
+              title: switch (problem) {
+                AndroidPrinterProblem.bluetoothOff => l10n.printerBluetoothOff,
+                AndroidPrinterProblem.permissionDenied =>
+                  l10n.printerPermissionDenied,
+                AndroidPrinterProblem.other => l10n.printerDevicesFailed,
+              },
+              tone: PosTone.warning,
+              compact: true,
+              action: refresh,
+            ),
+            if (saved != null) tile(saved),
+          ];
+        },
+        data: (list) => [
+          if (saved != null && !list.any((d) => d.id == saved.id))
+            tile(saved, missing: true),
+          for (final device in list) tile(device),
+          if (list.isEmpty)
+            PosEmptyState(
+              icon: bluetooth ? Icons.bluetooth_searching : Icons.usb,
+              title: bluetooth ? l10n.printerNoBluetooth : l10n.printerNoUsb,
+              message: bluetooth
+                  ? l10n.printerNoBluetoothHint
+                  : l10n.printerNoUsbHint,
+              compact: true,
+              action: refresh,
+            )
+          else
+            Padding(
+              padding: const EdgeInsets.all(PosSpacing.s),
+              child: Align(alignment: Alignment.centerLeft, child: refresh),
+            ),
+        ],
+      ),
     ];
   }
 }

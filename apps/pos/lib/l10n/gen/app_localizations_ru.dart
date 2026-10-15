@@ -2318,4 +2318,41 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get storeVatPayer =>
       'Магазин — плательщик НДС (на кассе показывается НДС 12%)';
+
+  @override
+  String get printerBluetooth => 'Bluetooth';
+
+  @override
+  String get printerUsb => 'USB';
+
+  @override
+  String get printerDevicesRefresh => 'Обновить список';
+
+  @override
+  String get printerDeviceMissing =>
+      'Сейчас не найден — включите или переподключите принтер';
+
+  @override
+  String get printerBluetoothOff =>
+      'Bluetooth выключен — включите в настройках телефона';
+
+  @override
+  String get printerPermissionDenied => 'Разрешите подключение к принтеру';
+
+  @override
+  String get printerDevicesFailed => 'Не удалось получить список устройств';
+
+  @override
+  String get printerNoBluetooth => 'Нет сопряжённых принтеров';
+
+  @override
+  String get printerNoBluetoothHint =>
+      'Включите принтер и выполните сопряжение в настройках Bluetooth телефона (PIN обычно 0000 или 1234), затем обновите список.';
+
+  @override
+  String get printerNoUsb => 'USB-принтер не найден';
+
+  @override
+  String get printerNoUsbHint =>
+      'Подключите принтер через OTG-кабель и включите его, затем обновите список.';
 }

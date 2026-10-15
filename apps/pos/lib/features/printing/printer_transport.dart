@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:pos_app/features/printing/android_printer_channel.dart';
 import 'package:pos_app/features/printing/winspool.dart';
 
 /// Printerga baytlarni yetkazish (ulanish turi bo'yicha). Xato bo'lsa —
@@ -77,4 +78,26 @@ class WindowsSpoolerTransport implements PrinterTransport {
 
   @override
   Future<bool> isReachable() async => Winspool.printers().contains(printerName);
+}
+
+/// Android: juftlangan Bluetooth printer (SPP) yoki USB printer (host).
+/// Ruxsat so'rash va ulanish — native qatlamda (`PrinterChannel.kt`).
+class AndroidPrinterTransport implements PrinterTransport {
+  const AndroidPrinterTransport(
+    this.kind,
+    this.deviceId, {
+    this.channel = const AndroidPrinterChannel(),
+  });
+
+  final AndroidPrinterKind kind;
+
+  /// Bluetooth — MAC manzil; USB — `vendorId:productId`.
+  final String deviceId;
+  final AndroidPrinterChannel channel;
+
+  @override
+  Future<void> send(Uint8List bytes) => channel.send(kind, deviceId, bytes);
+
+  @override
+  Future<bool> isReachable() => channel.isAvailable(kind, deviceId);
 }
