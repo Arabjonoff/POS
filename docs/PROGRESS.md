@@ -498,3 +498,8 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - Qilindi (qaror 0008 yangilanishi, `printing.md`): o'z `MethodChannel`imiz + `PrinterChannel.kt` (plaginsiz) — juftlangan Bluetooth printerlar (SPP, xavfsiz → xavfsiz bo'lmagan RFCOMM), USB bulk OUT (HID skaner ro'yxatga tushmaydi), Android 12+ `BLUETOOTH_CONNECT` va USB ruxsat oynasi, fon oqimi; `AndroidPrinterTransport`; Sozlamalar → Chek printeri: Bluetooth/USB tanlovi (faqat Android), ro'yxat, yangilash, o'chiq/ruxsat/topilmadi xabarlari; manifest ruxsatlari.
 - Sinov: soxta kanal — android_printer_test (7), android_printing_test (6: savdo cheki kanal orqali, printer o'chiq — savdo saqlanadi, sozlamalar); golden `printing/settings_bluetooth`; apps/pos 814 — yashil; `flutter build apk` debug va release yig'iladi.
 - Qoldi: haqiqiy qurilma va printerda sinov — `docs/printing-android-checklist.md` (Q-007); Sunmi/iMin ichki printerlari — alohida transport (kerak bo'lsa). ROADMAP'dagi barcha vazifalar bajarildi.
+
+## 2026-10-15 — T-109 Cheklar tarixi va qayta chop etish (loyiha egasi talabi)
+- Qilindi (`receipt-history.md`): bo'lim "Cheklar" (kassadan keyin, Ctrl+7, kassada F7): shu kassaning cheklari — Bugun/Kecha/sana, to'lov turi, qidiruv (raqam, mijoz, tovar nomi/shtrix-kodi), jami va qaytarilgan; skaner — chek kodi ochadi, tovar kodi qidiradi; tafsilot — printerdagi chek ko'rinishi, qaytarishlar, "Qayta chop etish" (NUSXA, Ctrl+P), "Qaytarish" (F8 oynasi shu chek bilan). Kassa: yashirin bo'lim fokusi F-tugmalarni to'smaydi.
+- Sinov: sale_history (6), sales_history widget (11), golden `sales/*`; menyuga ikon qo'shilgani uchun golden'lar yangilandi; apps/pos 843 — yashil.
+- Qoldi: boshqa kassalarning cheklari ko'rinmaydi (Q-006 bilan bir xil cheklov).

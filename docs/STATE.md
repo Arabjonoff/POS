@@ -5,27 +5,19 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-109 Cheklar tarixi va qayta chop etish (loyiha egasi talabi)
-- Branch: feat/T-109-receipt-history
-- Boshlangan: 2026-10-15
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
-- [x] 1. Spec `docs/specs/receipt-history.md`, ROADMAP 12-bosqich T-109
-- [x] 2. Ma'lumot: `lib/data/sales/sale_history.dart` (filtr, ro'yxat, jonli)
-- [x] 3. Unit test `test/data/sale_history_test.dart`
-- [x] 4. Bo'lim: `AppSection.sales` (kassadan keyin, Ctrl+7, kassada F7), router
-- [x] 5. `lib/features/sales/sales_screen.dart` (filtrlar, ro'yxat, skaner) + `sale_detail.dart` (chek ko'rinishi, qayta chop etish, qaytarish)
-- [x] 6. `showRefundDialog(saleId:)`; l10n (uz/uz-Cyrl/ru)
-- [ ] 7. Widget testlar `test/features/sales_history_test.dart`, golden `sales/*`, boshqa golden'larni yangilash (menyuda yangi ikon)
-- [ ] 8. Hujjatlar (pos-screen.md klaviatura, user guide), tekshiruvlar, PR, merge
+- (yo'q)
 
 ## Oxirgi bajarilgan ish
-- Bo'lim (`AppSection.sales`), `features/sales/sales_screen.dart` + `sale_detail.dart`, F7, `showRefundDialog(saleId:)`, l10n — analyze toza.
-- Widget testlar (10) yashil. Ishlab turgan: `flutter test --update-goldens test/goldens` (menyuga ikon qo'shildi).
+- T-109 Cheklar tarixi va qayta chop etish (loyiha egasi talabi).
 
 ## Keyingi aniq harakat
-- 7-qadam: `apps/pos/test/features/sales_history_test.dart` (seedSaleHistory + clockProvider=historyNow), keyin golden `sales/*` va boshqa golden'larni `--update-goldens`.
+- ROADMAP'da bajarilmagan vazifa yo'q; ochiq savollar `docs/QUESTIONS.md`. Loyiha egasidan yangi talab kutiladi.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
