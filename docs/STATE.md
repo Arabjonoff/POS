@@ -12,7 +12,7 @@
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [ ] 1. `src/lib/billing.ts` (addMonths — oy oxiri qisqartiriladi, `previewPeriod` = max(paid_until, trial_ends_at, bugun)), `parseSom` (matn → tiyin, butun son) + Vitest; `platform.ts` (barcha tariflar, barcha to'lovlar), actions (tarif yaratish/tahrirlash/nofaol, to'lov kiritish, bekor qilish)
+- [x] 1. `src/lib/billing.ts` (addMonths — oy oxiri qisqartiriladi, `previewPeriod` = max(paid_until, trial_ends_at, bugun)), `parseSom` (matn → tiyin, butun son) + Vitest; `platform.ts` (barcha tariflar, barcha to'lovlar), actions (tarif yaratish/tahrirlash/nofaol, to'lov kiritish, bekor qilish)
 - [ ] 2. `/plans`: jadval, yaratish/tahrirlash oynasi, nofaol qilish (tasdiqlash)
 - [ ] 3. Mijoz sahifasida "To'lov kiritish" oynasi (tarif narxi × oy taklif, yangi muddat oldindan ko'rinadi; `?payment=1` ochadi), to'lovlar tabida oxirgi to'lovni bekor qilish (izoh majburiy)
 - [ ] 4. `/payments`: barcha to'lovlar, sana oralig'i filtri, jami, sahifalash, CSV
@@ -20,10 +20,10 @@
 - [ ] 6. Spec, skrinshotlar, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- Reja yozildi.
+- 1: `src/lib/billing.ts` (+13 test), `src/lib/action-result.ts` (umumiy), actions: `recordPayment`, `reversePayment` (tenants), `savePlan`, `deactivatePlan` (plans), `platform.ts`: `listAllPlans`, `listPayments`.
 
 ## Keyingi aniq harakat
-- 1-qadam: `apps/admin/src/lib/billing.ts` + test.
+- 2-qadam: `src/app/(app)/plans/page.tsx` + `components/plans/plan-dialog.tsx` (yaratish/tahrirlash), nofaol qilish tasdiqlash; tarjimalar `plans.*`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
