@@ -5,19 +5,23 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-081 Admin: bosh sahifa (KPI)
+- Branch: feat/T-081-admin-dashboard
+- Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
+- [ ] 1. Server ma'lumot qatlami: `src/lib/platform.ts` (`platformApi()` — cookie'dagi access bilan, 401 → `/login`), `getStats()`; `src/lib/format.ts` (pul tiyin → `1 250 000 so'm`, sana) + Vitest
+- [ ] 2. Bosh sahifa: KPI kartalari (faol, sinovda, MRR, shu oy tushum), muddati tugaydiganlar ro'yxati ("To'lov kiritish"), eski qurilmalar, oylik tushum grafigi (Recharts); `loading.tsx`, `error.tsx`
+- [ ] 3. Testlar: komponent (Vitest), soxta API'ga `/platform/stats/`, Playwright `e2e/dashboard.spec.ts`
+- [ ] 4. Spec, skrinshotlar, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- T-080 tugadi (PR, merge).
+- Reja yozildi.
 
 ## Keyingi aniq harakat
-- ROADMAP'dan keyingi vazifa: T-081 Admin: bosh sahifa (KPI).
+- 1-qadam: `apps/admin/src/lib/platform.ts`, `src/lib/format.ts`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
