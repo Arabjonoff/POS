@@ -48,14 +48,23 @@ abstract final class PosSizes {
   /// Desktop yon navigatsiya kengligi.
   static const double sideNavWidth = 240;
 
+  /// Desktop yig'ilgan menyu (faqat ikonlar) kengligi.
+  static const double navCollapsedWidth = 64;
+
   /// Planshet navigatsiya relsi kengligi.
   static const double railWidth = 88;
 
   /// Oyna (dialog) standart maksimal kengligi.
   static const double dialogMaxWidth = 480;
 
-  /// Holat qatori balandligi.
+  /// Holat qatori balandligi (telefon).
   static const double statusBarHeight = 40;
+
+  /// Holat paneli balandligi (planshet/desktop): yozuvlar bosiladi — 48.
+  static const double statusBarHeightLarge = 48;
+
+  /// Ixcham ogohlantirish qatori (sinov davri banneri).
+  static const double noticeBarHeight = 28;
 
   /// Tovar rasmi: ro'yxat qatori, kassa qidiruvi, karta.
   static const double thumbS = 40;

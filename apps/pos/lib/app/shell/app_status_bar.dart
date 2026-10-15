@@ -2,15 +2,21 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pos_app/app/session/session.dart';
+import 'package:pos_app/app/shell/app_sections.dart';
 import 'package:pos_app/app/status/app_status.dart';
 import 'package:pos_app/app/sync/sales_gate.dart';
 import 'package:pos_app/app/update/app_update.dart';
 import 'package:pos_app/core/format/app_format.dart';
+import 'package:pos_app/features/auth/lock_screen.dart';
+import 'package:pos_app/features/shift/shift_providers.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
 import 'package:pos_ui/pos_ui.dart';
 
-/// Holat qatori: internet, navbatdagi yozuvlar, printer, smena (+ soat
-/// desktopda). Doim ko'rinadi (CLAUDE.md, UI/UX qoidalari).
+/// Holat qatori: internet, navbatdagi yozuvlar, printer, smena (+ kassir va
+/// soat desktopda). Doim ko'rinadi (CLAUDE.md, UI/UX qoidalari). Planshet va
+/// desktopda yozuv bosilsa — tegishli joyga (Sozlamalar, smena).
 class AppStatusBar extends ConsumerWidget {
   const AppStatusBar({super.key});
 
@@ -22,24 +28,29 @@ class AppStatusBar extends ConsumerWidget {
     final printer = ref.watch(printerStatusProvider);
     final queued = ref.watch(pendingEventsProvider).value ?? 0;
     final shiftOpen = ref.watch(shiftOpenProvider).value ?? false;
+    final openedAt = ref.watch(currentShiftProvider).value?.openedAt;
+    VoidCallback? go(String path) =>
+        compact ? null : () => GoRouter.of(context).go(path);
+    final settings = go(AppSection.settings.path);
 
     final connectionItem = switch (connection) {
       ConnectionStatus.unknown => PosStatusItem(
         icon: Icons.wifi_find,
         label: l10n.statusConnectionUnknown,
+        onTap: settings,
       ),
       // Hammasi joyida — neytral (doimiy yashil ko'zni charchatadi).
       ConnectionStatus.online => PosStatusItem(
         icon: Icons.wifi,
         label: l10n.statusOnline,
+        onTap: settings,
       ),
+      // Qizil, lekin xotirjam: savdo to'xtamaydi (navbat — alohida yozuvda).
       ConnectionStatus.offline => PosStatusItem(
         icon: Icons.wifi_off,
-        // Telefonda qisqa: joy tor, navbat soni alohida yozuvda.
-        label: queued > 0 && !compact
-            ? l10n.statusOfflineSaving(queued)
-            : l10n.statusOffline,
-        tone: PosTone.warning,
+        label: compact ? l10n.statusOffline : l10n.statusOfflineWorking,
+        tone: PosTone.danger,
+        onTap: settings,
       ),
     };
 
@@ -61,24 +72,34 @@ class AppStatusBar extends ConsumerWidget {
         icon: queued > 0 ? Icons.sync : Icons.cloud_done_outlined,
         label: l10n.statusQueued(queued),
         short: queued > 0 ? '$queued' : null,
+        // Oflaynda navbat o'sib boradi — sariq; onlaynda bir zumda ketadi.
+        tone: queued > 0 && connection == ConnectionStatus.offline
+            ? PosTone.warning
+            : PosTone.neutral,
+        onTap: settings,
       ),
       switch (printer) {
         PrinterStatus.unknown => PosStatusItem(
           icon: Icons.print_outlined,
           label: l10n.statusPrinterUnknown,
+          tone: PosTone.warning,
+          onTap: settings,
         ),
         PrinterStatus.checking => PosStatusItem(
           icon: Icons.print_outlined,
           label: l10n.statusPrinterChecking,
+          onTap: settings,
         ),
         PrinterStatus.ready => PosStatusItem(
           icon: Icons.print_outlined,
           label: l10n.statusPrinterReady,
+          onTap: settings,
         ),
         PrinterStatus.missing => PosStatusItem(
           icon: Icons.print_disabled_outlined,
           label: l10n.statusPrinterMissing,
           tone: PosTone.danger,
+          onTap: settings,
         ),
       },
       if (rejected > 0)
@@ -96,13 +117,17 @@ class AppStatusBar extends ConsumerWidget {
       if (shiftOpen)
         PosStatusItem(
           icon: Icons.work_history_outlined,
-          label: l10n.statusShiftOpen,
+          label: openedAt == null || compact
+              ? l10n.statusShiftOpen
+              : l10n.statusShiftOpenSince(context.fmt.time(openedAt)),
+          onTap: go('${AppSection.pos.path}/shift'),
         )
       else
         PosStatusItem(
           icon: Icons.work_history_outlined,
           label: l10n.statusShiftClosed,
           tone: PosTone.warning,
+          onTap: go(AppSection.pos.path),
         ),
       // Oxirida: muhim emas, lekin ko'rinib tursin (Sozlamalar → Ilova haqida).
       if (update != null)
@@ -110,14 +135,33 @@ class AppStatusBar extends ConsumerWidget {
           icon: Icons.system_update_alt,
           label: l10n.statusUpdate(update.latestVersion),
           tone: PosTone.primary,
+          onTap: settings,
         ),
     ];
 
+    final user = ref.watch(sessionProvider.select((s) => s.user));
     return PosStatusBar(
       atTop: compact,
       compact: compact,
       items: items,
-      trailing: compact ? null : const _Clock(),
+      trailing: compact
+          ? null
+          : Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (user != null) ...[
+                  const Icon(Icons.person_outline, size: PosSizes.iconM),
+                  const SizedBox(width: PosSpacing.s),
+                  Text(
+                    '${user.fullName} · ${roleLabel(l10n, user.role)}',
+                    style: PosTypography.body,
+                  ),
+                  const SizedBox(width: PosSpacing.xl),
+                ],
+                const _Clock(),
+                const SizedBox(width: PosSpacing.s),
+              ],
+            ),
     );
   }
 }
@@ -153,7 +197,10 @@ class _ClockState extends ConsumerState<_Clock> {
     final now = ref.watch(clockProvider)();
     return Text(
       context.fmt.time(now),
-      style: PosTypography.small.copyWith(fontFeatures: PosTypography.tabular),
+      style: PosTypography.bodyStrong.copyWith(
+        color: PosPalette.of(context).text,
+        fontFeatures: PosTypography.tabular,
+      ),
     );
   }
 }

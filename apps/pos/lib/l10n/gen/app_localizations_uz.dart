@@ -2187,6 +2187,24 @@ class AppLocalizationsUz extends AppLocalizations {
 
   @override
   String get settingsUpToDate => 'Eng so\'nggi versiya o\'rnatilgan';
+
+  @override
+  String get statusOfflineWorking =>
+      'Internet yo\'q — oflayn rejimda ishlayapti';
+
+  @override
+  String statusShiftOpenSince(String time) {
+    return 'Smena ochiq · $time dan';
+  }
+
+  @override
+  String get actionCloseBanner => 'Xabarni yopish';
+
+  @override
+  String get navExpand => 'Menyuni ochish · Ctrl+B';
+
+  @override
+  String get navCollapse => 'Menyuni yig\'ish · Ctrl+B';
 }
 
 /// The translations for Uzbek, using the Cyrillic script (`uz_Cyrl`).
@@ -4362,4 +4380,21 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get settingsUpToDate => 'Энг сўнгги версия ўрнатилган';
+
+  @override
+  String get statusOfflineWorking => 'Интернет йўқ — офлайн режимда ишлаяпти';
+
+  @override
+  String statusShiftOpenSince(String time) {
+    return 'Смена очиқ · $time дан';
+  }
+
+  @override
+  String get actionCloseBanner => 'Хабарни ёпиш';
+
+  @override
+  String get navExpand => 'Менюни очиш · Ctrl+B';
+
+  @override
+  String get navCollapse => 'Менюни йиғиш · Ctrl+B';
 }

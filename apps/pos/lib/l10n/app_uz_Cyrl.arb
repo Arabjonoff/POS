@@ -626,5 +626,10 @@
   "settingsUpdateAvailable": "Янги версия мавжуд: {version}",
   "settingsUpdateDownload": "Юклаб олиш: {url}",
   "settingsUpdateAskAdmin": "Ўрнатиш учун администратор билан боғланинг",
-  "settingsUpToDate": "Энг сўнгги версия ўрнатилган"
+  "settingsUpToDate": "Энг сўнгги версия ўрнатилган",
+  "statusOfflineWorking": "Интернет йўқ — офлайн режимда ишлаяпти",
+  "statusShiftOpenSince": "Смена очиқ · {time} дан",
+  "actionCloseBanner": "Хабарни ёпиш",
+  "navExpand": "Менюни очиш · Ctrl+B",
+  "navCollapse": "Менюни йиғиш · Ctrl+B"
 }

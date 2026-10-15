@@ -1716,12 +1716,20 @@
   "productErrNameTooLong": "Nom {max} belgidan oshmasin",
   "@productErrNameTooLong": {
     "description": "Xato",
-    "placeholders": {"max": {"type": "int"}}
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
   },
   "productErrTooManyBarcodes": "Ko'pi bilan {max} ta shtrix-kod",
   "@productErrTooManyBarcodes": {
     "description": "Xato",
-    "placeholders": {"max": {"type": "int"}}
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
   },
   "productErrPrice": "Narx 0 dan katta bo'lishi kerak",
   "@productErrPrice": {
@@ -2943,5 +2951,30 @@
   "settingsUpToDate": "Eng so'nggi versiya o'rnatilgan",
   "@settingsUpToDate": {
     "description": "Yangilash kerak emas"
+  },
+  "statusOfflineWorking": "Internet yo'q — oflayn rejimda ishlayapti",
+  "@statusOfflineWorking": {
+    "description": "Holat paneli: oflayn (desktop)"
+  },
+  "statusShiftOpenSince": "Smena ochiq · {time} dan",
+  "@statusShiftOpenSince": {
+    "description": "Holat paneli: smena qachondan ochiq",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "actionCloseBanner": "Xabarni yopish",
+  "@actionCloseBanner": {
+    "description": "Banner yopish tugmasi"
+  },
+  "navExpand": "Menyuni ochish · Ctrl+B",
+  "@navExpand": {
+    "description": "Yig'ilgan menyuni ochish"
+  },
+  "navCollapse": "Menyuni yig'ish · Ctrl+B",
+  "@navCollapse": {
+    "description": "Menyuni yig'ish"
   }
 }

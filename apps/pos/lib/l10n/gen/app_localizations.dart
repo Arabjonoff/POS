@@ -3860,6 +3860,36 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Eng so\'nggi versiya o\'rnatilgan'**
   String get settingsUpToDate;
+
+  /// Holat paneli: oflayn (desktop)
+  ///
+  /// In uz, this message translates to:
+  /// **'Internet yo\'q — oflayn rejimda ishlayapti'**
+  String get statusOfflineWorking;
+
+  /// Holat paneli: smena qachondan ochiq
+  ///
+  /// In uz, this message translates to:
+  /// **'Smena ochiq · {time} dan'**
+  String statusShiftOpenSince(String time);
+
+  /// Banner yopish tugmasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Xabarni yopish'**
+  String get actionCloseBanner;
+
+  /// Yig'ilgan menyuni ochish
+  ///
+  /// In uz, this message translates to:
+  /// **'Menyuni ochish · Ctrl+B'**
+  String get navExpand;
+
+  /// Menyuni yig'ish
+  ///
+  /// In uz, this message translates to:
+  /// **'Menyuni yig\'ish · Ctrl+B'**
+  String get navCollapse;
 }
 
 class _AppLocalizationsDelegate
