@@ -380,6 +380,33 @@ class _SyncClient implements SyncClient {
   }
 
   @override
+  Future<DeviceSale> syncSaleByNumber({required String number}) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'number': number};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<DeviceSale>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/api/v1/sync/sales/',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, Object?>>(_options);
+    late DeviceSale _value;
+    try {
+      _value = DeviceSale.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<List<StockMovementEntry>> syncStockMovementsList({
     required String product,
   }) async {

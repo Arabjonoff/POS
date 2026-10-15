@@ -1302,6 +1302,27 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/sync/sales/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * @description Boshqa kassa cheki chek raqami bo'yicha (onlayn, T-110, Q-006 → A):
+         *     ko'rish, qayta chop etish, qaytarish uchun. Qurilma tokeni, faqat o'z
+         *     tenanti; qatorlarda — oldin qaytarilgan miqdor va summa.
+         */
+        get: operations["sync_sale_by_number"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/sync/stock-movements/": {
         parameters: {
             query?: never;
@@ -1714,6 +1735,94 @@ export interface components {
             cashiers: components["schemas"]["CashierRow"][];
             debts: components["schemas"]["Debts"];
             stock: components["schemas"]["StockReport"];
+        };
+        DeviceSale: {
+            /** Format: uuid */
+            readonly id: string;
+            /** Raqam */
+            readonly number: string;
+            /**
+             * Do'kon
+             * Format: uuid
+             */
+            readonly store: string;
+            readonly device_number: number;
+            /**
+             * Kassir
+             * Format: uuid
+             */
+            readonly cashier: string;
+            readonly cashier_name: string;
+            /**
+             * Mijoz
+             * Format: uuid
+             */
+            readonly customer: string | null;
+            readonly customer_name: string | null;
+            /** Oraliq jami (tiyin) */
+            readonly subtotal_tiyin: number;
+            /** Chek chegirmasi (tiyin) */
+            readonly discount_tiyin: number;
+            /** Jami (tiyin) */
+            readonly total_tiyin: number;
+            /** Holat */
+            readonly status: components["schemas"]["SaleStatusEnum"];
+            /**
+             * Sotilgan vaqt
+             * Format: date-time
+             */
+            readonly sold_at: string;
+            readonly items: components["schemas"]["DeviceSaleItem"][];
+            readonly payments: components["schemas"]["DeviceSalePayment"][];
+            readonly refunds: components["schemas"]["DeviceSaleRefund"][];
+        };
+        DeviceSaleItem: {
+            /** Format: uuid */
+            readonly id: string;
+            /**
+             * Tovar
+             * Format: uuid
+             */
+            readonly product: string;
+            /** Nomi (savdo paytida) */
+            readonly name_snapshot: string;
+            /** Shtrix-kod (savdo paytida) */
+            readonly barcode_snapshot: string;
+            /** Miqdor (milli) */
+            readonly qty_milli: number;
+            /** Narx (tiyin) */
+            readonly price_tiyin: number;
+            /** Chegirma (tiyin) */
+            readonly discount_tiyin: number;
+            /** Jami (tiyin) */
+            readonly total_tiyin: number;
+            readonly refunded_qty_milli: number;
+            readonly refunded_tiyin: number;
+        };
+        DeviceSalePayment: {
+            /** Usul */
+            readonly method: components["schemas"]["SalePaymentMethodEnum"];
+            /** Summa (tiyin) */
+            readonly amount_tiyin: number;
+            /** Olingan (tiyin) */
+            readonly received_tiyin: number | null;
+            /** Qaytim (tiyin) */
+            readonly change_tiyin: number;
+        };
+        DeviceSaleRefund: {
+            /** Format: uuid */
+            readonly id: string;
+            /**
+             * Vaqt
+             * Format: date-time
+             */
+            readonly at: string;
+            /** Usul */
+            readonly method: components["schemas"]["RefundMethodEnum"];
+            /** Jami (tiyin) */
+            readonly total_tiyin: number;
+            /** Sabab */
+            readonly reason: string;
         };
         /**
          * @description * `debt` - debt
@@ -5979,6 +6088,27 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["DeviceReport"];
+                };
+            };
+        };
+    };
+    sync_sale_by_number: {
+        parameters: {
+            query: {
+                number: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DeviceSale"];
                 };
             };
         };

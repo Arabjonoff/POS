@@ -341,6 +341,11 @@ Audit: `PROJECT_AUDIT.md`, batafsil — `docs/audit/`. Jurnal: `AGENT_WORKLOG.md
 - **Qabul:** widget testlari: ro'yxat va filtrlar, skaner bilan topish, qayta chop etish (printer bor/yo'q/xato), qaytarish oynasi shu chek bilan ochiladi; golden telefon/planshet/desktop.
 - **Bog'liq:** T-044, T-045
 
+### [~] T-110 Boshqa kassa cheklari (Q-006 → A)
+- **Bajarish:** server `GET /api/v1/sync/sales/?number=` (qurilma tokeni); kassada lokalda yo'q chek raqami (skaner yoki qidiruv) internet bo'lsa serverdan olinadi: "Cheklar" bo'limida ko'rish ("Boshqa kassa" belgisi), qayta chop etish (NUSXA), qaytarish (F8 ham). Oflaynda — tushunarli xabar.
+- **Qabul:** backend testlari (tenant izolyatsiyasi, qaytarilganlar); kassada soxta server bilan widget testlari: topish, chop etish, qisman qaytarish (outbox yozuvi to'g'ri), oflayn xabari.
+- **Bog'liq:** T-109
+
 ---
 
 ## Keyinroq (hozir QILINMAYDI)

@@ -56,7 +56,7 @@ Format:
 - Variantlar: A) internet bo'lsa, chek raqami bo'yicha serverdan savdoni olib (`GET /api/v1/sales/?number=`) qaytarish; oflaynda — faqat o'z savdolari. B) hamma kassaga oxirgi N kunlik savdolarni pull qilish (oflaynda ham ishlaydi, lekin baza kattalashadi). C) faqat sotgan kassada qaytarish.
 - Agentning tavsiyasi: A — oddiy, ma'lumotni ko'paytirmaydi, mahalla do'konida kassalar odatda bir xonada va internet ko'pincha bor.
 - Hozircha tanlangan: C (T-045 ning hozirgi holati). A uchun backend'ga `?number=` filtri va kassada onlayn qidiruv kerak bo'ladi.
-- Javob:
+- Javob: **A** (2026-10-15, loyiha egasi). Internet bo'lsa — boshqa kassa cheki serverdan chek raqami bo'yicha topiladi (ko'rish, qayta chop etish, qaytarish); oflaynda — faqat o'z cheklari. T-110.
 
 ### Q-007 (T-047) Android Bluetooth/USB printer — qaysi printerlar va qurilma?
 - Kontekst: T-047 (qaror 0008) Android uchun Bluetooth (SPP) va USB printer ulanishini qo'shadi. Buning uchun native plagin kerak va uni haqiqiy Android qurilma hamda printerda sinash shart (ruxsatlar: Android 12+ `BLUETOOTH_CONNECT`/`BLUETOOTH_SCAN`, USB host). CI va emulyatorda bunday sinov imkoni yo'q.
