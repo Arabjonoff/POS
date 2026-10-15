@@ -69,7 +69,7 @@ Format:
 - Savol: do'kon egalari to'lov va yordam uchun qaysi telefon (yoki Telegram) bilan bog'lanadi?
 - Agentning tavsiyasi: bitta qo'llab-quvvatlash raqami, ilova build paytida beriladi (`--dart-define=SUPPORT_PHONE=+998...`); keyinchalik serverdan (`/devices/me/` javobida) olish mumkin — raqam o'zgarsa ilovani qayta chiqarmaslik uchun.
 - Hozircha tanlangan: `SUPPORT_PHONE` build parametri; berilmasa matn "Administrator bilan bog'laning".
-- Javob:
+- Javob: **+998 91 498 01 68** (2026-10-15). Kassada standart raqam (`defaultSupportPhone`); build paytida `SUPPORT_PHONE` bilan almashtirish mumkin.
 
 ### Q-009 (T-093) Ilovani imzolash va tarqatish
 - Kontekst: Windows o'rnatuvchi hozir imzolanmagan — SmartScreen "noma'lum nashriyotchi" ogohlantirishini ko'rsatadi. Android APK yangilanishlari uchun bitta imzo kaliti kerak (yo'qolsa, yangi versiya eski ustiga o'rnatilmaydi).

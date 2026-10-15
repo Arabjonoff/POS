@@ -14,10 +14,10 @@
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 
 ## Oxirgi bajarilgan ish
-- T-094 tugadi (PR, merge). ROADMAP'dagi barcha vazifalar bajarildi, faqat T-047 (Q-007 — haqiqiy Android qurilma va printer kerak) qoldi.
+- Q-008 javobi (aloqa raqami +998 91 498 01 68) kassaga standart qiymat qilib qo'shildi. ROADMAP'da faqat T-047 (Q-007 — haqiqiy Android qurilma va printer kerak) qoldi.
 
 ## Keyingi aniq harakat
-- Loyiha egasining javoblarini kutish: `docs/QUESTIONS.md` (Q-001…Q-009). T-047 — Q-007 javobi va qurilma bo'lganda.
+- Loyiha egasining javoblarini kutish: `docs/QUESTIONS.md` (Q-001…Q-007, Q-009; Q-008 javob berildi). T-047 — Q-007 javobi va qurilma bo'lganda.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

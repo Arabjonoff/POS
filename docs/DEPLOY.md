@@ -40,7 +40,7 @@ Talab: Ubuntu 22.04/24.04, 2 vCPU, 4 GB RAM, 40 GB disk; 80 va 443 portlar ochiq
      python manage.py createsuperuser        # telefon, ism, parol
    ```
    `https://admin.<domen>` — shu telefon va parol bilan kiring, tarif yarating, keyin birinchi mijozni.
-7. **Kassa ilovasi** shu API'ga ulanadi: build paytida `--dart-define=POS_API_URL=https://api.<domen>` (va `SUPPORT_PHONE`, Q-008) — `docs/RELEASE.md` (T-093).
+7. **Kassa ilovasi** shu API'ga ulanadi: build paytida `--dart-define=POS_API_URL=https://api.<domen>` (ixtiyoriy `SUPPORT_PHONE`; standart +998 91 498 01 68, Q-008) — `docs/RELEASE.md` (T-093).
 
 Qisqa buyruq uchun: `alias pos='docker compose -f /opt/pos/docker-compose.prod.yml --env-file /opt/pos/.env.prod'`.
 

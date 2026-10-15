@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pos_app/app/sync/subscription_notice.dart';
 
@@ -72,5 +73,11 @@ void main() {
       subscriptionNotice(subscription: null, pulledAt: now, now: now),
       isNull,
     );
+  });
+
+  test('support phone defaults to the support line (Q-008)', () {
+    final container = ProviderContainer();
+    addTearDown(container.dispose);
+    expect(container.read(supportPhoneProvider), '+998 91 498 01 68');
   });
 }

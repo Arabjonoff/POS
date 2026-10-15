@@ -107,8 +107,12 @@ final subscriptionNoticeProvider = Provider<SubscriptionNotice?>((ref) {
   );
 });
 
-/// To'lov va yordam uchun telefon (`--dart-define=SUPPORT_PHONE=...`).
-/// Bo'sh — matnda "administrator bilan bog'laning" (Q-008).
-final supportPhoneProvider = Provider<String>(
-  (ref) => const String.fromEnvironment('SUPPORT_PHONE'),
-);
+/// To'lov va yordam uchun telefon (Q-008). Build paytida
+/// `--dart-define=SUPPORT_PHONE=...` bilan almashtirish mumkin; bo'sh
+/// berilsa ham standart raqam ishlatiladi.
+const defaultSupportPhone = '+998 91 498 01 68';
+
+final supportPhoneProvider = Provider<String>((ref) {
+  const phone = String.fromEnvironment('SUPPORT_PHONE');
+  return phone.isEmpty ? defaultSupportPhone : phone;
+});

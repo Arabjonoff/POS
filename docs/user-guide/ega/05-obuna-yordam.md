@@ -24,4 +24,4 @@ To'lov qilingach, muddat avtomatik uzayadi — kassa keyingi sinxronda (bir daqi
 Pastki qatorda "**Yangi versiya X**" chiqsa: Sozlamalar → **Ilova haqida** — yuklab olish havolasi. Yangi o'rnatuvchini ishga tushiring — eski versiya ustiga o'rnatiladi, ma'lumot saqlanadi. Yangilash majburiy emas.
 
 ## Yordam
-To'lov, xodim qo'shish, parolni tiklash, yangi kassa ulash — administrator (dastur yetkazib beruvchi) bilan bog'laning. Aloqa raqami obuna ogohlantirishlarida va "Obuna muddati tugagan" xabarida ko'rsatiladi.
+To'lov, xodim qo'shish, parolni tiklash, yangi kassa ulash — administrator (dastur yetkazib beruvchi) bilan bog'laning: **+998 91 498 01 68**. Bu raqam obuna ogohlantirishlarida va "Obuna muddati tugagan" xabarida ham ko'rsatiladi.

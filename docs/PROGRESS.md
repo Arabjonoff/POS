@@ -409,3 +409,8 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - Qilindi: `docs/user-guide/` — kassir uchun bir sahifa (`kassir.md`: kirish, smena, 3 harakatda savdo, savat, qaytarish, internet yo'qligi, xabarlar) va ega uchun 5 sahifa (`ega/`: o'rnatish va ulash, rollar, sozlamalar; tovarlar, import, kirim, inventarizatsiya; mijozlar va nasiya; smena, kassa puli, hisobotlar; obuna, internet, yangi versiya, yordam). Skrinshotlar — `docs/screenshots/` dagi golden'lar; barcha havolalar tekshirildi. README'ga hujjatlar ro'yxati qo'shildi.
 - PR: T-094 (squash merge)
 - Qoldi: ROADMAP'da faqat T-047 (Android Bluetooth/USB printer — Q-007, haqiqiy qurilma kerak). Ochiq savollar: Q-001…Q-009 (`docs/QUESTIONS.md`).
+
+## 2026-10-15 — Q-008 Aloqa raqami
+- Qilindi: loyiha egasi javobi — aloqa raqami +998 91 498 01 68. Kassada standart qiymat (`defaultSupportPhone`, `supportPhoneProvider`); build paytida `SUPPORT_PHONE` bilan almashtirish mumkin, bo'sh berilsa ham standart raqam. Spec, RELEASE/DEPLOY, release workflow izohi va foydalanuvchi qo'llanmasi yangilandi.
+- Sinov: apps/pos +1 test (standart raqam), barcha 624 test yashil.
+- Qoldi: ochiq savollar Q-001…Q-007, Q-009; T-047 (Q-007).
