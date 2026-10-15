@@ -19,6 +19,7 @@ class PullResponse {
     required this.subscription,
     required this.serverTime,
     this.app,
+    this.features,
   });
   
   factory PullResponse.fromJson(Map<String, Object?> json) => _$PullResponseFromJson(json);
@@ -30,6 +31,7 @@ class PullResponse {
   final bool hasMore;
   final SubscriptionSnapshot subscription;
   final AppRelease? app;
+  final List<String>? features;
   @JsonKey(name: 'server_time')
   final DateTime serverTime;
 

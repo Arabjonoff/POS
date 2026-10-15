@@ -197,12 +197,22 @@ def _lock(model, pk):
 
 
 @transaction.atomic
-def post_receipt(receipt: StockReceipt, *, user) -> StockReceipt:
+def post_receipt(
+    receipt: StockReceipt, *, user, at=None, cost_since=None, document_at=None
+) -> StockReceipt:
+    """Tasdiqlash: qoldiq harakatlari, tannarx (oxirgi kirim narxi) va berilsa sotish narxi.
+
+    [at] — kassadagi vaqt (oflayn kirim kechikib kelsa ham hujjat vaqti to'g'ri bo'lsin).
+    [cost_since] — tuzatishda: tannarx faqat shu vaqtdan keyin boshqa kirim bo'lmasa
+    yangilanadi (eski kirimni tuzatish yangi kirim narxini bosib ketmasin).
+    [document_at] — tuzatishda hujjat sanasi asl kirimniki qoladi (harakatlar esa tuzatish
+    vaqtida): aks holda eski kirimning tuzatilgan versiyasi "eng yangi" bo'lib ko'rinadi."""
     receipt = _lock(StockReceipt, receipt.pk)
     _ensure_draft(receipt)
     items = list(receipt.items.select_related("product"))
     if not items:
         raise DomainError("receipt_empty", "Receipt has no items.")
+    when = at or timezone.now()
     for item in items:
         record_movement(
             product=item.product,
@@ -212,10 +222,12 @@ def post_receipt(receipt: StockReceipt, *, user) -> StockReceipt:
             ref_type="stock_receipt",
             ref_id=receipt.pk,
             user=user,
+            at=when,
         )
         product = Product.objects.select_for_update().get(pk=item.product_id)
         old = (product.sell_price_tiyin, product.cost_price_tiyin)
-        product.cost_price_tiyin = item.cost_price_tiyin
+        if cost_since is None or not _newer_receipt_exists(item.product_id, cost_since, receipt):
+            product.cost_price_tiyin = item.cost_price_tiyin
         if item.new_sell_price_tiyin is not None:
             product.sell_price_tiyin = item.new_sell_price_tiyin
         if (product.sell_price_tiyin, product.cost_price_tiyin) != old:
@@ -228,24 +240,32 @@ def post_receipt(receipt: StockReceipt, *, user) -> StockReceipt:
                 changed_by=user,
             )
     receipt.status = DocumentStatus.POSTED
-    receipt.posted_at = timezone.now()
+    receipt.posted_at = document_at or when
     receipt.posted_by = user
     receipt.save(update_fields=["status", "posted_at", "posted_by", "updated_at"])
     return receipt
 
 
-@transaction.atomic
-def reverse_receipt(receipt: StockReceipt, *, user, note: str = "") -> StockReceipt:
-    """Teskari kirim: manfiy harakatlar bilan yangi tasdiqlangan hujjat. Narxlar qaytarilmaydi."""
-    receipt = _lock(StockReceipt, receipt.pk)
-    if receipt.reverses_id is not None:
-        raise DomainError("cannot_reverse_reversal", "A reversal cannot be reversed.", 409)
-    if receipt.status != DocumentStatus.POSTED:
-        raise DomainError("receipt_not_posted", "Only a posted receipt can be reversed.", 409)
-    if StockReceipt.objects.filter(reverses=receipt).exists():
-        raise DomainError("already_reversed", "Receipt is already reversed.", status_code=409)
-    now = timezone.now()
+def _newer_receipt_exists(product_id, since, current: StockReceipt) -> bool:
+    """[since] dan keyin shu tovar bilan amaldagi (bekor qilinmagan) boshqa kirim bormi."""
+    return (
+        StockReceiptItem.objects.filter(
+            product_id=product_id,
+            receipt__status=DocumentStatus.POSTED,
+            receipt__reverses__isnull=True,
+            receipt__reversal__isnull=True,
+            receipt__posted_at__gt=since,
+        )
+        .exclude(receipt=current)
+        .exists()
+    )
+
+
+def _write_reversal(receipt: StockReceipt, *, user, note: str, id=None, at=None) -> StockReceipt:
+    when = at or timezone.now()
+    extra = {"id": id} if id is not None else {}
     reversal = StockReceipt.objects.create(
+        **extra,
         tenant_id=receipt.tenant_id,
         store=receipt.store,
         supplier=receipt.supplier,
@@ -255,7 +275,7 @@ def reverse_receipt(receipt: StockReceipt, *, user, note: str = "") -> StockRece
         note=note,
         reverses=receipt,
         created_by=user,
-        posted_at=now,
+        posted_at=when,
         posted_by=user,
     )
     for item in receipt.items.select_related("product"):
@@ -275,9 +295,121 @@ def reverse_receipt(receipt: StockReceipt, *, user, note: str = "") -> StockRece
             ref_type="stock_receipt",
             ref_id=reversal.pk,
             user=user,
-            at=now,
+            at=when,
         )
     return reversal
+
+
+@transaction.atomic
+def reverse_receipt(
+    receipt: StockReceipt, *, user, note: str = "", id=None, at=None
+) -> StockReceipt:
+    """Teskari kirim (bekor qilish): manfiy harakatlar bilan yangi tasdiqlangan hujjat.
+    Narxlar qaytarilmaydi."""
+    receipt = _lock(StockReceipt, receipt.pk)
+    if receipt.reverses_id is not None:
+        raise DomainError("cannot_reverse_reversal", "A reversal cannot be reversed.", 409)
+    if receipt.status != DocumentStatus.POSTED:
+        raise DomainError("receipt_not_posted", "Only a posted receipt can be reversed.", 409)
+    if StockReceipt.objects.filter(reverses=receipt).exists():
+        raise DomainError("already_reversed", "Receipt is already reversed.", status_code=409)
+    return _write_reversal(receipt, user=user, note=note, id=id, at=at)
+
+
+def receipt_head(receipt: StockReceipt) -> StockReceipt:
+    """Tuzatishlar zanjirining oxirgi versiyasi (qulf bilan)."""
+    head = receipt
+    while (
+        nxt := StockReceipt.objects.select_for_update().filter(corrects=head).first()
+    ) is not None:
+        head = nxt
+    return head
+
+
+def _is_reversed(receipt: StockReceipt) -> bool:
+    return StockReceipt.objects.filter(reverses=receipt).exists()
+
+
+@transaction.atomic
+def correct_receipt(
+    original: StockReceipt,
+    *,
+    user,
+    id,
+    items: list[dict],
+    supplier=None,
+    note: str = "",
+    reversal_id=None,
+    at=None,
+) -> StockReceipt:
+    """Tasdiqlangan kirimni tuzatish: joriy versiya teskari yozuv bilan bekor qilinadi va
+    yangi versiya ([id], `corrects` = joriy versiya) tasdiqlanadi — bitta tranzaksiyada.
+
+    Qoldiq: −eski + yangi (10 → 7 = −10 + 7), har harakat bir marta qo'llanadi.
+    Ziddiyat (boshqa kassa allaqachon tuzatgan yoki bekor qilgan) rad etilmaydi: oxirgi
+    kelgan versiya amalda bo'ladi va `conflict` belgilanadi — aks holda kassa qoldig'i
+    server bilan abadiy farq qiladi."""
+    existing = StockReceipt.objects.filter(pk=id).first()
+    if existing is not None:
+        if existing.tenant_id != original.tenant_id or existing.corrects_id is None:
+            raise DomainError("id_conflict", "Receipt id is already used.", 409)
+        return existing  # takroriy so'rov
+    original = _lock(StockReceipt, original.pk)
+    if original.reverses_id is not None:
+        raise DomainError("cannot_correct_reversal", "A reversal cannot be corrected.", 409)
+    if original.status != DocumentStatus.POSTED:
+        raise DomainError("receipt_not_posted", "Only a posted receipt can be corrected.", 409)
+    if not items:
+        raise DomainError("receipt_empty", "Receipt has no items.")
+    head = receipt_head(original)
+    conflict = head.pk != original.pk
+    if _is_reversed(head):
+        conflict = True  # bekor qilingan — ustiga yangi versiya
+    else:
+        _write_reversal(
+            head,
+            user=user,
+            note=note,
+            id=reversal_id if not conflict else None,
+            at=at,
+        )
+    version = StockReceipt.objects.create(
+        id=id,
+        tenant_id=original.tenant_id,
+        store=head.store,
+        supplier=supplier,
+        number=next_receipt_number(original.tenant_id),
+        status=DocumentStatus.DRAFT,
+        note=note,
+        corrects=head,
+        conflict=conflict,
+        created_by=user,
+    )
+    replace_receipt_items(version, items)
+    return post_receipt(
+        version,
+        user=user,
+        at=at,
+        cost_since=original.posted_at,
+        document_at=original.posted_at,
+    )
+
+
+@transaction.atomic
+def cancel_receipt(original: StockReceipt, *, user, id=None, note: str = "", at=None):
+    """Kirimni bekor qilish (kassadan): zanjirning joriy versiyasi teskari yozuv bilan.
+    Allaqachon bekor qilingan bo'lsa — hech narsa (takroriy yoki boshqa kassa)."""
+    original = _lock(StockReceipt, original.pk)
+    if original.reverses_id is not None:
+        raise DomainError("cannot_reverse_reversal", "A reversal cannot be reversed.", 409)
+    if id is not None and StockReceipt.objects.filter(pk=id).exists():
+        return None
+    head = receipt_head(original)
+    if _is_reversed(head):
+        return None
+    return _write_reversal(
+        head, user=user, note=note, id=id if head.pk == original.pk else None, at=at
+    )
 
 
 # --- Inventarizatsiya ---

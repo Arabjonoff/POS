@@ -153,6 +153,13 @@ class StockReceipts extends Table {
   DateTimeColumn get postedAt => dateTime().nullable()();
   TextColumn get postedBy => text().nullable()();
 
+  /// Tuzatish (T-102): bu kirim qaysi kirimning yangi versiyasi. Asl kirim
+  /// o'zgarmaydi — "tuzatilgan" holati shu ustundan topiladi.
+  TextColumn get correctsId => text().nullable()();
+
+  /// Teskari yozuv: qaysi kirimni bekor qiladi (manfiy qatorlar).
+  TextColumn get reversesId => text().nullable()();
+
   @override
   Set<Column<Object>> get primaryKey => {id};
 }

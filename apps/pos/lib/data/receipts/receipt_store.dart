@@ -50,6 +50,10 @@ class ReceiptDoc {
     this.supplierName,
     this.note = '',
     this.postedAt,
+    this.correctsId,
+    this.correctedById,
+    this.correctionDraftId,
+    this.cancelled = false,
   });
 
   final String id;
@@ -63,9 +67,29 @@ class ReceiptDoc {
   final String note;
   final List<ReceiptLine> lines;
 
+  /// Tuzatish (T-102): bu hujjat qaysi kirimning yangi versiyasi.
+  final String? correctsId;
+
+  /// Bu kirimni almashtirgan (tasdiqlangan) yangi versiya.
+  final String? correctedById;
+
+  /// Shu kirimning hali tasdiqlanmagan tuzatish qoralamasi.
+  final String? correctionDraftId;
+
+  /// Bekor qilingan (teskari yozuv bor, yangi versiyasiz).
+  final bool cancelled;
+
   bool get isDraft => status == 'draft';
+  bool get isCorrection => correctsId != null;
+  bool get isCorrected => correctedById != null;
+
+  /// Tahrirlash yoki bekor qilish mumkin: tasdiqlangan, amaldagi versiya.
+  bool get isActiveVersion => !isDraft && !isCorrected && !cancelled;
   int get totalCostTiyin => lines.fold(0, (s, l) => s + l.totalTiyin);
 }
+
+/// Ro'yxatdagi holat belgisi.
+enum ReceiptState { draft, posted, corrected, cancelled }
 
 class ReceiptSummary {
   const ReceiptSummary({
@@ -76,6 +100,8 @@ class ReceiptSummary {
     required this.totalCostTiyin,
     this.postedAt,
     this.supplierName,
+    this.state = ReceiptState.posted,
+    this.isCorrection = false,
   });
 
   final String id;
@@ -85,6 +111,10 @@ class ReceiptSummary {
   final String? supplierName;
   final int lineCount;
   final int totalCostTiyin;
+  final ReceiptState state;
+
+  /// Boshqa kirimning tuzatilgan versiyasi (yoki uning qoralamasi).
+  final bool isCorrection;
 
   bool get isDraft => status == 'draft';
 }
@@ -100,6 +130,12 @@ class SupplierEntry {
 /// Bo'sh kirimni tasdiqlab bo'lmaydi (`receipt_empty`).
 class ReceiptEmptyException implements Exception {
   const ReceiptEmptyException();
+}
+
+/// Kirimni tahrirlab/bekor qilib bo'lmaydi: qoralama, allaqachon tuzatilgan
+/// yoki bekor qilingan, yoki teskari yozuv.
+class ReceiptNotEditableException implements Exception {
+  const ReceiptNotEditableException();
 }
 
 /// Kirim (`docs/specs/stock-receipt.md`): qoralama lokal bazada (har
@@ -126,14 +162,21 @@ class ReceiptStore {
     return id;
   }
 
+  /// Ro'yxat: teskari yozuvlar (bekor qilish hujjatlari) ko'rsatilmaydi —
+  /// ularning ta'siri asl kirimdagi "Bekor qilingan"/"Tuzatilgan" belgisida.
   Stream<List<ReceiptSummary>> watchAll() => _db
       .customSelect(
         'SELECT r.id, r.status, r.created_at, r.posted_at, s.name AS supplier, '
-        'COUNT(i.id) AS lines, r.total_cost_tiyin FROM stock_receipts r '
+        'COUNT(i.id) AS lines, r.total_cost_tiyin, r.corrects_id, '
+        'EXISTS(SELECT 1 FROM stock_receipts c WHERE c.corrects_id = r.id '
+        "AND c.status = 'posted') AS corrected, "
+        'EXISTS(SELECT 1 FROM stock_receipts x WHERE x.reverses_id = r.id) '
+        'AS reversed FROM stock_receipts r '
         'LEFT JOIN suppliers s ON s.id = r.supplier_id '
         'LEFT JOIN stock_receipt_items i ON i.receipt_id = r.id '
+        'WHERE r.reverses_id IS NULL '
         "GROUP BY r.id ORDER BY r.status = 'posted', "
-        'COALESCE(r.posted_at, r.created_at) DESC',
+        'COALESCE(r.posted_at, r.created_at) DESC, r.created_at DESC',
         readsFrom: {_db.stockReceipts, _db.stockReceiptItems, _db.suppliers},
       )
       .watch()
@@ -148,9 +191,26 @@ class ReceiptStore {
               supplierName: r.readNullable<String>('supplier'),
               lineCount: r.read<int>('lines'),
               totalCostTiyin: r.read<int>('total_cost_tiyin'),
+              isCorrection: r.readNullable<String>('corrects_id') != null,
+              state: _state(
+                r.read<String>('status'),
+                corrected: r.read<bool>('corrected'),
+                reversed: r.read<bool>('reversed'),
+              ),
             ),
         ],
       );
+
+  static ReceiptState _state(
+    String status, {
+    required bool corrected,
+    required bool reversed,
+  }) {
+    if (status == 'draft') return ReceiptState.draft;
+    if (corrected) return ReceiptState.corrected;
+    if (reversed) return ReceiptState.cancelled;
+    return ReceiptState.posted;
+  }
 
   Selectable<ReceiptLine> _lines(String receiptId) => _db
       .customSelect(
@@ -185,6 +245,21 @@ class ReceiptStore {
         : await (_db.select(
             _db.suppliers,
           )..where((s) => s.id.equals(r.supplierId!))).getSingleOrNull();
+    final children = await (_db.select(
+      _db.stockReceipts,
+    )..where((c) => c.correctsId.equals(id) | c.reversesId.equals(id))).get();
+    String? correctedBy;
+    String? draft;
+    var reversed = false;
+    for (final c in children) {
+      if (c.reversesId == id) {
+        reversed = true;
+      } else if (c.status == 'posted') {
+        correctedBy = c.id;
+      } else {
+        draft = c.id;
+      }
+    }
     return ReceiptDoc(
       id: r.id,
       status: r.status,
@@ -194,6 +269,10 @@ class ReceiptStore {
       supplierName: supplier?.name,
       note: r.note,
       lines: await _lines(id).get(),
+      correctsId: r.correctsId,
+      correctedById: correctedBy,
+      correctionDraftId: draft,
+      cancelled: reversed && correctedBy == null,
     );
   }
 
@@ -217,12 +296,16 @@ class ReceiptStore {
     String productId, {
     int qtyMilli = 1000,
   }) => _db.transaction(() async {
+    // `.get()` — server/import kirimida bir tovar bir necha qatorda bo'lishi
+    // mumkin; `getSingleOrNull` bunda xato tashlardi (audit RC-B14).
     final existing =
-        await (_db.select(_db.stockReceiptItems)..where(
-              (i) =>
-                  i.receiptId.equals(receiptId) & i.productId.equals(productId),
-            ))
-            .getSingleOrNull();
+        (await (_db.select(_db.stockReceiptItems)..where(
+                  (i) =>
+                      i.receiptId.equals(receiptId) &
+                      i.productId.equals(productId),
+                ))
+                .get())
+            .firstOrNull;
     if (existing != null) {
       await (_db.update(
         _db.stockReceiptItems,
@@ -429,9 +512,330 @@ class ReceiptStore {
                 },
             ],
             'by': by,
+            'at': isoUtc(now),
           },
         );
       });
+
+  // ---- Tuzatish va bekor qilish (T-102, stock-receipt.md) ---------------
+  //
+  // Tasdiqlangan kirim o'zgarmaydi (CLAUDE.md 3-qoida). Tahrirlash = asl
+  // kirimni teskari yozuv bilan bekor qilish + yangi versiya, bitta
+  // tranzaksiyada va bitta outbox hodisasida. Qoldiq: −eski + yangi
+  // (10 → 7 = −10 + 7), har harakat bir marta hisoblanadi.
+
+  Future<StockReceipt> _activeVersion(String receiptId) async {
+    final r = await (_db.select(
+      _db.stockReceipts,
+    )..where((t) => t.id.equals(receiptId))).getSingleOrNull();
+    if (r == null || r.status != 'posted' || r.reversesId != null) {
+      throw const ReceiptNotEditableException();
+    }
+    final replaced =
+        await (_db.select(_db.stockReceipts)..where(
+              (c) =>
+                  c.reversesId.equals(receiptId) |
+                  (c.correctsId.equals(receiptId) & c.status.equals('posted')),
+            ))
+            .get();
+    if (replaced.isNotEmpty) throw const ReceiptNotEditableException();
+    return r;
+  }
+
+  /// Tuzatish qoralamasi: asl kirim nusxasi (bir tovar — bitta qator, yangi
+  /// sotish narxisiz). Qoralama bor bo'lsa — o'sha qaytariladi. Qoralamani
+  /// o'chirish tuzatishdan voz kechish (qoldiqqa ta'sirsiz).
+  Future<String> startCorrection(String originalId) => _db.transaction(
+    () async {
+      final original = await _activeVersion(originalId);
+      final draft =
+          await (_db.select(_db.stockReceipts)..where(
+                (c) =>
+                    c.correctsId.equals(originalId) & c.status.equals('draft'),
+              ))
+              .getSingleOrNull();
+      if (draft != null) return draft.id;
+      final id = _newId();
+      await _db
+          .into(_db.stockReceipts)
+          .insert(
+            StockReceiptsCompanion.insert(
+              id: id,
+              createdAt: _now(),
+              supplierId: Value(original.supplierId),
+              note: Value(original.note),
+              correctsId: Value(originalId),
+            ),
+          );
+      final items =
+          await (_db.select(_db.stockReceiptItems)
+                ..where((i) => i.receiptId.equals(originalId))
+                ..orderBy([(i) => OrderingTerm.asc(i.position)]))
+              .get();
+      final merged = <String, StockReceiptItem>{};
+      for (final item in items) {
+        final seen = merged[item.productId];
+        merged[item.productId] = seen == null
+            ? item
+            : seen.copyWith(qtyMilli: seen.qtyMilli + item.qtyMilli);
+      }
+      var position = 0;
+      for (final item in merged.values) {
+        await _db
+            .into(_db.stockReceiptItems)
+            .insert(
+              StockReceiptItemsCompanion.insert(
+                id: _newId(),
+                receiptId: id,
+                position: position++,
+                productId: item.productId,
+                qtyMilli: item.qtyMilli,
+                costPriceTiyin: item.costPriceTiyin,
+              ),
+            );
+      }
+      await _recalc(id);
+      return id;
+    },
+  );
+
+  /// Teskari yozuv: asl qatorlar manfiy, qoldiq harakatlari (−).
+  Future<void> _writeReversal(
+    StockReceipt original, {
+    required String reversalId,
+    required String eventId,
+    required String by,
+    required DateTime now,
+    String? storeId,
+  }) async {
+    await _db
+        .into(_db.stockReceipts)
+        .insert(
+          StockReceiptsCompanion.insert(
+            id: reversalId,
+            createdAt: now,
+            supplierId: Value(original.supplierId),
+            storeId: Value(storeId ?? original.storeId),
+            status: const Value('posted'),
+            totalCostTiyin: Value(-original.totalCostTiyin),
+            postedAt: Value(now),
+            postedBy: Value(by),
+            reversesId: Value(original.id),
+          ),
+        );
+    final items = await (_db.select(
+      _db.stockReceiptItems,
+    )..where((i) => i.receiptId.equals(original.id))).get();
+    var position = 0;
+    for (final item in items) {
+      await _db
+          .into(_db.stockReceiptItems)
+          .insert(
+            StockReceiptItemsCompanion.insert(
+              id: _newId(),
+              receiptId: reversalId,
+              position: position++,
+              productId: item.productId,
+              qtyMilli: -item.qtyMilli,
+              costPriceTiyin: item.costPriceTiyin,
+            ),
+          );
+      await _db
+          .into(_db.stockMovements)
+          .insert(
+            StockMovementsCompanion.insert(
+              id: _newId(),
+              productId: item.productId,
+              storeId: Value(storeId ?? original.storeId),
+              qtyMilli: -item.qtyMilli,
+              type: 'receipt',
+              refType: 'stock_receipt',
+              refId: reversalId,
+              outboxEventId: Value(eventId),
+              at: now,
+            ),
+          );
+    }
+  }
+
+  /// [since] dan keyin shu tovar bilan amaldagi boshqa kirim bormi (server
+  /// qoidasi: eski kirimni tuzatish yangi kirim tannarxini bosmaydi).
+  Future<bool> _newerReceiptExists(
+    String productId,
+    DateTime since,
+    String exceptId,
+  ) async {
+    final row = await _db
+        .customSelect(
+          'SELECT 1 FROM stock_receipt_items i '
+          'JOIN stock_receipts r ON r.id = i.receipt_id '
+          "WHERE i.product_id = ? AND r.status = 'posted' "
+          'AND r.reverses_id IS NULL AND r.id <> ? AND r.posted_at > ? '
+          'AND NOT EXISTS(SELECT 1 FROM stock_receipts x '
+          'WHERE x.reverses_id = r.id) LIMIT 1',
+          variables: [
+            Variable.withString(productId),
+            Variable.withString(exceptId),
+            Variable.withDateTime(since),
+          ],
+          readsFrom: {_db.stockReceiptItems, _db.stockReceipts},
+        )
+        .getSingleOrNull();
+    return row != null;
+  }
+
+  /// Tuzatishni tasdiqlash — bitta tranzaksiya: teskari yozuv, yangi
+  /// versiya harakatlari, narxlar, bitta `receipt.corrected` hodisasi.
+  /// Yangi versiya hujjat sanasi — asl kirimniki (server bilan bir xil).
+  Future<void> postCorrection(
+    String draftId, {
+    required String by,
+    String? storeId,
+  }) => _db.transaction(() async {
+    final draft = await (_db.select(
+      _db.stockReceipts,
+    )..where((r) => r.id.equals(draftId))).getSingle();
+    final originalId = draft.correctsId;
+    if (draft.status != 'draft' || originalId == null) {
+      throw const ReceiptNotEditableException();
+    }
+    final original = await _activeVersion(originalId);
+    final items =
+        await (_db.select(_db.stockReceiptItems)
+              ..where((i) => i.receiptId.equals(draftId))
+              ..orderBy([(i) => OrderingTerm.asc(i.position)]))
+            .get();
+    if (items.isEmpty) throw const ReceiptEmptyException();
+    final now = _now();
+    final eventId = _newId();
+    final reversalId = _newId();
+    await _writeReversal(
+      original,
+      reversalId: reversalId,
+      eventId: eventId,
+      by: by,
+      now: now,
+      storeId: storeId,
+    );
+    final documentAt = original.postedAt ?? now;
+    for (final item in items) {
+      await _db
+          .into(_db.stockMovements)
+          .insert(
+            StockMovementsCompanion.insert(
+              id: _newId(),
+              productId: item.productId,
+              storeId: Value(storeId ?? original.storeId),
+              qtyMilli: item.qtyMilli,
+              type: 'receipt',
+              refType: 'stock_receipt',
+              refId: draftId,
+              outboxEventId: Value(eventId),
+              at: now,
+            ),
+          );
+      final updateCost = !await _newerReceiptExists(
+        item.productId,
+        documentAt,
+        draftId,
+      );
+      if (updateCost || item.newSellPriceTiyin != null) {
+        await (_db.update(
+          _db.products,
+        )..where((p) => p.id.equals(item.productId))).write(
+          ProductsCompanion(
+            costPriceTiyin: updateCost
+                ? Value(item.costPriceTiyin)
+                : const Value.absent(),
+            sellPriceTiyin: item.newSellPriceTiyin == null
+                ? const Value.absent()
+                : Value(item.newSellPriceTiyin!),
+            updatedAt: Value(now),
+          ),
+        );
+      }
+    }
+    await (_db.update(
+      _db.stockReceipts,
+    )..where((r) => r.id.equals(draftId))).write(
+      StockReceiptsCompanion(
+        status: const Value('posted'),
+        postedAt: Value(documentAt),
+        postedBy: Value(by),
+        storeId: Value(storeId ?? original.storeId),
+      ),
+    );
+    await _db.enqueueEvent(
+      id: eventId,
+      type: OutboxEventType.receiptCorrected,
+      createdAt: now,
+      payload: {
+        'id': draftId,
+        'corrects': originalId,
+        'reversal_id': reversalId,
+        'supplier': draft.supplierId,
+        'note': draft.note,
+        'items': [
+          for (final i in items)
+            {
+              'product': i.productId,
+              'qty_milli': i.qtyMilli,
+              'cost_price_tiyin': i.costPriceTiyin,
+              'new_sell_price_tiyin': ?i.newSellPriceTiyin,
+            },
+        ],
+        'by': by,
+        'at': isoUtc(now),
+      },
+    );
+  });
+
+  /// Kirimni bekor qilish — teskari yozuv va `receipt.reversed` (bitta
+  /// tranzaksiya). Narxlar o'zgarmaydi. Tuzatish qoralamasi bo'lsa o'chadi.
+  Future<void> cancel(
+    String receiptId, {
+    required String by,
+    String? storeId,
+    String note = '',
+  }) => _db.transaction(() async {
+    final original = await _activeVersion(receiptId);
+    final now = _now();
+    final eventId = _newId();
+    final reversalId = _newId();
+    await _writeReversal(
+      original,
+      reversalId: reversalId,
+      eventId: eventId,
+      by: by,
+      now: now,
+      storeId: storeId,
+    );
+    final drafts =
+        await (_db.select(_db.stockReceipts)..where(
+              (c) => c.correctsId.equals(receiptId) & c.status.equals('draft'),
+            ))
+            .get();
+    for (final d in drafts) {
+      await (_db.delete(
+        _db.stockReceiptItems,
+      )..where((i) => i.receiptId.equals(d.id))).go();
+      await (_db.delete(
+        _db.stockReceipts,
+      )..where((t) => t.id.equals(d.id))).go();
+    }
+    await _db.enqueueEvent(
+      id: eventId,
+      type: OutboxEventType.receiptReversed,
+      createdAt: now,
+      payload: {
+        'id': reversalId,
+        'reverses': receiptId,
+        'note': note,
+        'by': by,
+        'at': isoUtc(now),
+      },
+    );
+  });
 
   Stream<List<SupplierEntry>> watchSuppliers() =>
       (_db.select(_db.suppliers)

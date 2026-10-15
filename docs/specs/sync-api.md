@@ -22,6 +22,8 @@ Umumiy tamoyillar: `sync.md`. Hodisa payloadlari va qo'llash qoidalari: `sales-a
   qoldiriladi (server logida ogohlantirish); tovarning server holati keyingi pull'da kassaga qaytadi. Aks holda shu tovar bilan bo'lgan barcha
   savdolar ham rad etilardi.
 - **Kirim va inventarizatsiya** o'chirilgan tovar va yetkazib beruvchini qabul qiladi (hujjat oflaynda, ular hali mavjud paytda yaratilgan).
+- **Pull `features`:** server qo'llab-quvvatlaydigan qo'shimcha hodisalar (`receipt_corrections`). Kassa yangi turdagi hodisani faqat shu
+  ro'yxatda bo'lsa yuboradi (eski server `unknown_event` bilan rad etib, kassa qoldig'i farq qilib qolmasin).
 - **NUL (`\u0000`)** payload satrlaridan olib tashlanadi (Postgres jsonb saqlay olmaydi; ilgari push 500 berib, navbat to'xtab qolardi).
 - Boshqa qurilma yoki tenantga tegishli `id` bilan hodisa — `rejected` (`id_conflict`); mavjud hodisa o'zgarmaydi.
 - Noma'lum `type` — `rejected` (`unknown_event`).
@@ -39,7 +41,9 @@ Umumiy tamoyillar: `sync.md`. Hodisa payloadlari va qo'llash qoidalari: `sales-a
 | `customer.upserted` | `CustomerSerializer` | `{id, full_name, phone, note, debt_limit_tiyin?, by}` |
 | `supplier.upserted` | `SupplierSerializer` | `{id, name, phone, note, by}` (ega/menejer) |
 | `product.upserted` | `ProductSerializer` | `catalog-api.md` mahsulot maydonlari + `by` (ega/menejer) |
-| `receipt.posted` | `StockReceiptSerializer` + `post_receipt` | `inventory-api.md` kirim + `by` (ega/menejer) |
+| `receipt.posted` | `StockReceiptSerializer` + `post_receipt` | `inventory-api.md` kirim + `by` (ega/menejer), ixtiyoriy `at` |
+| `receipt.corrected` | `correct_receipt` | `{id, corrects, reversal_id, supplier?, note, items, by, at}` — `stock-receipt.md` "Tahrirlash" |
+| `receipt.reversed` | `cancel_receipt` | `{id, reverses, note, by, at}` — allaqachon bekor qilingan bo'lsa o'zgarishsiz |
 | `inventory.posted` | `InventoryCountSerializer` + `post_inventory` | `inventory-api.md` inventarizatsiya + `by` (ega/menejer) |
 
 - `by` — amalni bajargan xodim (tenant foydalanuvchisi). Huquq REST bilan bir xil: kassir tovar/kirim/inventarizatsiya yoza olmaydi, mijozga limit qo'ya olmaydi → `rejected` (`permission_denied`).

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pos_app/core/format/app_format.dart';
 import 'package:pos_app/data/receipts/receipt_store.dart';
 import 'package:pos_app/features/common/section_page.dart';
+import 'package:pos_app/features/receiving/receipt_badges.dart';
 import 'package:pos_app/features/receiving/receipt_editor.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
 import 'package:pos_ui/pos_ui.dart';
@@ -24,10 +25,18 @@ class ReceivingScreen extends ConsumerStatefulWidget {
 
 class _ReceivingScreenState extends ConsumerState<ReceivingScreen> {
   String? _openId;
+  bool _creating = false;
 
+  /// Ikki marta bosish ikki qoralama yaratmasin (audit UI-P1-4).
   Future<void> _new() async {
-    final id = await ref.read(receiptStoreProvider).create();
-    if (mounted) setState(() => _openId = id);
+    if (_creating) return;
+    setState(() => _creating = true);
+    try {
+      final id = await ref.read(receiptStoreProvider).create();
+      if (mounted) setState(() => _openId = id);
+    } finally {
+      if (mounted) setState(() => _creating = false);
+    }
   }
 
   @override
@@ -38,6 +47,7 @@ class _ReceivingScreenState extends ConsumerState<ReceivingScreen> {
         key: ValueKey(openId),
         receiptId: openId,
         onClose: () => setState(() => _openId = null),
+        onOpen: (id) => setState(() => _openId = id),
       );
     }
     final l10n = AppLocalizations.of(context);
@@ -50,7 +60,8 @@ class _ReceivingScreenState extends ConsumerState<ReceivingScreen> {
       key: const ValueKey('receiving-new'),
       label: l10n.receivingNew,
       icon: Icons.add,
-      onPressed: () => unawaited(_new()),
+      loading: _creating,
+      onPressed: _creating ? null : () => unawaited(_new()),
     );
 
     final Widget body;
@@ -104,12 +115,7 @@ class _ReceivingScreenState extends ConsumerState<ReceivingScreen> {
                       currency: fmt.currency,
                     ),
                     const SizedBox(height: PosSpacing.xs),
-                    PosBadge(
-                      label: r.isDraft
-                          ? l10n.receivingDraft
-                          : l10n.receivingPostedBadge,
-                      tone: r.isDraft ? PosTone.warning : PosTone.success,
-                    ),
+                    ReceiptBadges(state: r.state, isCorrection: r.isCorrection),
                   ],
                 ),
               ],

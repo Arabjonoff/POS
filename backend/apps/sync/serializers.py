@@ -61,4 +61,6 @@ class PullResponseSerializer(serializers.Serializer):
     subscription = SubscriptionSnapshotSerializer()
     # Eski kassa e'tibor bermaydi (CLAUDE.md, 10-qoida).
     app = AppReleaseSerializer(allow_null=True, required=False)
+    # Server qo'llab-quvvatlaydigan qo'shimcha imkoniyatlar (masalan, `receipt_corrections`).
+    features = serializers.ListField(child=serializers.CharField(), required=False)
     server_time = serializers.DateTimeField()

@@ -1783,6 +1783,134 @@
   "@receivingPost": {
     "description": "Tugma"
   },
+  "receivingStateCorrected": "Tuzatilgan",
+  "@receivingStateCorrected": {
+    "description": "Holat: kirimning yangi versiyasi bor"
+  },
+  "receivingStateCancelled": "Bekor qilingan",
+  "@receivingStateCancelled": {
+    "description": "Holat"
+  },
+  "receivingCorrectionBadge": "Tuzatish",
+  "@receivingCorrectionBadge": {
+    "description": "Belgi: boshqa kirimning yangi versiyasi"
+  },
+  "receivingCorrectionDraft": "Tuzatish qoralamasi",
+  "@receivingCorrectionDraft": {
+    "description": "Holat"
+  },
+  "receivingEdit": "Tahrirlash",
+  "@receivingEdit": {
+    "description": "Tugma: tasdiqlangan kirimni tuzatish"
+  },
+  "receivingCancelReceipt": "Bekor qilish",
+  "@receivingCancelReceipt": {
+    "description": "Tugma: kirimni bekor qilish"
+  },
+  "receivingEditNeedsApproval": "Kirimni o'zgartirish uchun menejer yoki ega ruxsati kerak",
+  "@receivingEditNeedsApproval": {
+    "description": "Huquq"
+  },
+  "receivingCorrectionBanner": "Kirim tuzatilmoqda. Saqlaganingizda eski kirim bekor qilinadi va shu versiya kuchga kiradi — qoldiq farq bo'yicha o'zgaradi.",
+  "@receivingCorrectionBanner": {
+    "description": "Tuzatish qoralamasi banneri"
+  },
+  "receivingCorrectedBanner": "Bu kirim tuzatilgan — amaldagisi yangi versiya.",
+  "@receivingCorrectedBanner": {
+    "description": "Banner"
+  },
+  "receivingOpenNewVersion": "Yangi versiyani ochish",
+  "@receivingOpenNewVersion": {
+    "description": "Tugma"
+  },
+  "receivingCancelledBanner": "Bu kirim bekor qilingan — qoldiqqa ta'siri olib tashlangan.",
+  "@receivingCancelledBanner": {
+    "description": "Banner"
+  },
+  "receivingDraftExistsBanner": "Bu kirimning saqlanmagan tuzatishi bor.",
+  "@receivingDraftExistsBanner": {
+    "description": "Banner"
+  },
+  "receivingContinueCorrection": "Davom ettirish",
+  "@receivingContinueCorrection": {
+    "description": "Tugma"
+  },
+  "receivingSaveCorrection": "Tuzatishni saqlash",
+  "@receivingSaveCorrection": {
+    "description": "Tugma"
+  },
+  "receivingDiscardCorrection": "Tuzatishdan voz kechish",
+  "@receivingDiscardCorrection": {
+    "description": "Tugma"
+  },
+  "receivingConfirmCorrectionTitle": "Tuzatishni saqlaysizmi?",
+  "@receivingConfirmCorrectionTitle": {
+    "description": "Oyna sarlavhasi"
+  },
+  "receivingConfirmCorrectionMessage": "Qoldiq quyidagicha o'zgaradi. Eski kirim tarixda qoladi.",
+  "@receivingConfirmCorrectionMessage": {
+    "description": "Oyna matni"
+  },
+  "receivingNoChanges": "Miqdorlar o'zgarmadi — faqat narx yoki izoh yangilanadi.",
+  "@receivingNoChanges": {
+    "description": "Oyna matni"
+  },
+  "receivingNegativeStock": "Qoldiq manfiy bo'ladi: {name} ({qty})",
+  "@receivingNegativeStock": {
+    "description": "Ogohlantirish",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "qty": {
+        "type": "String"
+      }
+    }
+  },
+  "receivingCancelTitle": "Kirimni bekor qilasizmi?",
+  "@receivingCancelTitle": {
+    "description": "Oyna sarlavhasi"
+  },
+  "receivingCancelMessage": "Kirimdagi tovarlar qoldiqdan ayiriladi. Hujjat tarixda «Bekor qilingan» bo'lib qoladi, narxlar o'zgarmaydi.",
+  "@receivingCancelMessage": {
+    "description": "Oyna matni"
+  },
+  "receivingCancelledToast": "Kirim bekor qilindi",
+  "@receivingCancelledToast": {
+    "description": "Xabar"
+  },
+  "receivingCorrectedToast": "Kirim tuzatildi",
+  "@receivingCorrectedToast": {
+    "description": "Xabar"
+  },
+  "receivingDeleteDraftTitle": "Qoralamani o'chirasizmi?",
+  "@receivingDeleteDraftTitle": {
+    "description": "Oyna sarlavhasi"
+  },
+  "receivingDeleteDraftMessage": "Qoralamadagi qatorlar o'chadi. Qoldiq o'zgarmaydi.",
+  "@receivingDeleteDraftMessage": {
+    "description": "Oyna matni"
+  },
+  "receivingDiscardCorrectionMessage": "Tuzatish saqlanmaydi, asl kirim o'zgarishsiz qoladi.",
+  "@receivingDiscardCorrectionMessage": {
+    "description": "Oyna matni"
+  },
+  "receivingNotEditable": "Bu kirimni o'zgartirib bo'lmaydi — u allaqachon tuzatilgan yoki bekor qilingan.",
+  "@receivingNotEditable": {
+    "description": "Xato"
+  },
+  "receivingCorrectionEmpty": "Tuzatishda tovar qolmadi. Kirimni butunlay olib tashlash uchun «Bekor qilish»dan foydalaning.",
+  "@receivingCorrectionEmpty": {
+    "description": "Xato"
+  },
+  "receivingCorrectionUnavailable": "Kirimni o'zgartirish server yangilangach ishlaydi (internetga ulaning).",
+  "@receivingCorrectionUnavailable": {
+    "description": "Izoh"
+  },
+  "actionKeep": "Qaytish",
+  "@actionKeep": {
+    "description": "Tasdiqlash oynasida rad etish tugmasi"
+  },
   "receivingDelete": "Qoralamani o'chirish",
   "@receivingDelete": {
     "description": "Tugma"

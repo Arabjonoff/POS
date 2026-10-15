@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pos_ui/src/components/pos_button.dart';
 import 'package:pos_ui/src/tokens/pos_breakpoints.dart';
 import 'package:pos_ui/src/tokens/pos_dimens.dart';
 import 'package:pos_ui/src/tokens/pos_palette.dart';
@@ -166,4 +167,45 @@ Future<T?> showPosDialog<T>({
       ),
     ),
   );
+}
+
+/// Tasdiqlash oynasi — qaytarib bo'lmaydigan yoki xavfli amaldan oldin
+/// (o'chirish, bekor qilish). `true` — tasdiqlandi; yopilsa yoki rad etilsa —
+/// `false`. Matnlar chaqiruvchidan (tarjima fayllari ilovada).
+Future<bool> showPosConfirm({
+  required BuildContext context,
+  required String title,
+  required String confirmLabel,
+  required String cancelLabel,
+  String? message,
+  Widget? content,
+  IconData? icon,
+  bool danger = false,
+}) async {
+  final confirmed = await showPosDialog<bool>(
+    context: context,
+    builder: (context) => PosDialog(
+      title: title,
+      message: message,
+      content: content,
+      icon: icon,
+      iconTone: danger ? PosTone.danger : PosTone.primary,
+      actions: [
+        PosButton(
+          key: const ValueKey('pos-confirm-cancel'),
+          label: cancelLabel,
+          variant: PosButtonVariant.secondary,
+          shortcut: 'Esc',
+          onPressed: () => Navigator.of(context).pop(false),
+        ),
+        PosButton(
+          key: const ValueKey('pos-confirm-ok'),
+          label: confirmLabel,
+          variant: danger ? PosButtonVariant.danger : PosButtonVariant.primary,
+          onPressed: () => Navigator.of(context).pop(true),
+        ),
+      ],
+    ),
+  );
+  return confirmed ?? false;
 }

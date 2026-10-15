@@ -8809,6 +8809,28 @@ class $StockReceiptsTable extends StockReceipts
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _correctsIdMeta = const VerificationMeta(
+    'correctsId',
+  );
+  @override
+  late final GeneratedColumn<String> correctsId = GeneratedColumn<String>(
+    'corrects_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _reversesIdMeta = const VerificationMeta(
+    'reversesId',
+  );
+  @override
+  late final GeneratedColumn<String> reversesId = GeneratedColumn<String>(
+    'reverses_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -8821,6 +8843,8 @@ class $StockReceiptsTable extends StockReceipts
     createdAt,
     postedAt,
     postedBy,
+    correctsId,
+    reversesId,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -8898,6 +8922,18 @@ class $StockReceiptsTable extends StockReceipts
         postedBy.isAcceptableOrUnknown(data['posted_by']!, _postedByMeta),
       );
     }
+    if (data.containsKey('corrects_id')) {
+      context.handle(
+        _correctsIdMeta,
+        correctsId.isAcceptableOrUnknown(data['corrects_id']!, _correctsIdMeta),
+      );
+    }
+    if (data.containsKey('reverses_id')) {
+      context.handle(
+        _reversesIdMeta,
+        reversesId.isAcceptableOrUnknown(data['reverses_id']!, _reversesIdMeta),
+      );
+    }
     return context;
   }
 
@@ -8947,6 +8983,14 @@ class $StockReceiptsTable extends StockReceipts
         DriftSqlType.string,
         data['${effectivePrefix}posted_by'],
       ),
+      correctsId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}corrects_id'],
+      ),
+      reversesId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reverses_id'],
+      ),
     );
   }
 
@@ -8971,6 +9015,13 @@ class StockReceipt extends DataClass implements Insertable<StockReceipt> {
   final DateTime createdAt;
   final DateTime? postedAt;
   final String? postedBy;
+
+  /// Tuzatish (T-102): bu kirim qaysi kirimning yangi versiyasi. Asl kirim
+  /// o'zgarmaydi — "tuzatilgan" holati shu ustundan topiladi.
+  final String? correctsId;
+
+  /// Teskari yozuv: qaysi kirimni bekor qiladi (manfiy qatorlar).
+  final String? reversesId;
   const StockReceipt({
     required this.id,
     this.supplierId,
@@ -8982,6 +9033,8 @@ class StockReceipt extends DataClass implements Insertable<StockReceipt> {
     required this.createdAt,
     this.postedAt,
     this.postedBy,
+    this.correctsId,
+    this.reversesId,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -9005,6 +9058,12 @@ class StockReceipt extends DataClass implements Insertable<StockReceipt> {
     }
     if (!nullToAbsent || postedBy != null) {
       map['posted_by'] = Variable<String>(postedBy);
+    }
+    if (!nullToAbsent || correctsId != null) {
+      map['corrects_id'] = Variable<String>(correctsId);
+    }
+    if (!nullToAbsent || reversesId != null) {
+      map['reverses_id'] = Variable<String>(reversesId);
     }
     return map;
   }
@@ -9031,6 +9090,12 @@ class StockReceipt extends DataClass implements Insertable<StockReceipt> {
       postedBy: postedBy == null && nullToAbsent
           ? const Value.absent()
           : Value(postedBy),
+      correctsId: correctsId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(correctsId),
+      reversesId: reversesId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(reversesId),
     );
   }
 
@@ -9050,6 +9115,8 @@ class StockReceipt extends DataClass implements Insertable<StockReceipt> {
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       postedAt: serializer.fromJson<DateTime?>(json['postedAt']),
       postedBy: serializer.fromJson<String?>(json['postedBy']),
+      correctsId: serializer.fromJson<String?>(json['correctsId']),
+      reversesId: serializer.fromJson<String?>(json['reversesId']),
     );
   }
   @override
@@ -9066,6 +9133,8 @@ class StockReceipt extends DataClass implements Insertable<StockReceipt> {
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'postedAt': serializer.toJson<DateTime?>(postedAt),
       'postedBy': serializer.toJson<String?>(postedBy),
+      'correctsId': serializer.toJson<String?>(correctsId),
+      'reversesId': serializer.toJson<String?>(reversesId),
     };
   }
 
@@ -9080,6 +9149,8 @@ class StockReceipt extends DataClass implements Insertable<StockReceipt> {
     DateTime? createdAt,
     Value<DateTime?> postedAt = const Value.absent(),
     Value<String?> postedBy = const Value.absent(),
+    Value<String?> correctsId = const Value.absent(),
+    Value<String?> reversesId = const Value.absent(),
   }) => StockReceipt(
     id: id ?? this.id,
     supplierId: supplierId.present ? supplierId.value : this.supplierId,
@@ -9091,6 +9162,8 @@ class StockReceipt extends DataClass implements Insertable<StockReceipt> {
     createdAt: createdAt ?? this.createdAt,
     postedAt: postedAt.present ? postedAt.value : this.postedAt,
     postedBy: postedBy.present ? postedBy.value : this.postedBy,
+    correctsId: correctsId.present ? correctsId.value : this.correctsId,
+    reversesId: reversesId.present ? reversesId.value : this.reversesId,
   );
   StockReceipt copyWithCompanion(StockReceiptsCompanion data) {
     return StockReceipt(
@@ -9108,6 +9181,12 @@ class StockReceipt extends DataClass implements Insertable<StockReceipt> {
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       postedAt: data.postedAt.present ? data.postedAt.value : this.postedAt,
       postedBy: data.postedBy.present ? data.postedBy.value : this.postedBy,
+      correctsId: data.correctsId.present
+          ? data.correctsId.value
+          : this.correctsId,
+      reversesId: data.reversesId.present
+          ? data.reversesId.value
+          : this.reversesId,
     );
   }
 
@@ -9123,7 +9202,9 @@ class StockReceipt extends DataClass implements Insertable<StockReceipt> {
           ..write('note: $note, ')
           ..write('createdAt: $createdAt, ')
           ..write('postedAt: $postedAt, ')
-          ..write('postedBy: $postedBy')
+          ..write('postedBy: $postedBy, ')
+          ..write('correctsId: $correctsId, ')
+          ..write('reversesId: $reversesId')
           ..write(')'))
         .toString();
   }
@@ -9140,6 +9221,8 @@ class StockReceipt extends DataClass implements Insertable<StockReceipt> {
     createdAt,
     postedAt,
     postedBy,
+    correctsId,
+    reversesId,
   );
   @override
   bool operator ==(Object other) =>
@@ -9154,7 +9237,9 @@ class StockReceipt extends DataClass implements Insertable<StockReceipt> {
           other.note == this.note &&
           other.createdAt == this.createdAt &&
           other.postedAt == this.postedAt &&
-          other.postedBy == this.postedBy);
+          other.postedBy == this.postedBy &&
+          other.correctsId == this.correctsId &&
+          other.reversesId == this.reversesId);
 }
 
 class StockReceiptsCompanion extends UpdateCompanion<StockReceipt> {
@@ -9168,6 +9253,8 @@ class StockReceiptsCompanion extends UpdateCompanion<StockReceipt> {
   final Value<DateTime> createdAt;
   final Value<DateTime?> postedAt;
   final Value<String?> postedBy;
+  final Value<String?> correctsId;
+  final Value<String?> reversesId;
   final Value<int> rowid;
   const StockReceiptsCompanion({
     this.id = const Value.absent(),
@@ -9180,6 +9267,8 @@ class StockReceiptsCompanion extends UpdateCompanion<StockReceipt> {
     this.createdAt = const Value.absent(),
     this.postedAt = const Value.absent(),
     this.postedBy = const Value.absent(),
+    this.correctsId = const Value.absent(),
+    this.reversesId = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   StockReceiptsCompanion.insert({
@@ -9193,6 +9282,8 @@ class StockReceiptsCompanion extends UpdateCompanion<StockReceipt> {
     required DateTime createdAt,
     this.postedAt = const Value.absent(),
     this.postedBy = const Value.absent(),
+    this.correctsId = const Value.absent(),
+    this.reversesId = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        createdAt = Value(createdAt);
@@ -9207,6 +9298,8 @@ class StockReceiptsCompanion extends UpdateCompanion<StockReceipt> {
     Expression<DateTime>? createdAt,
     Expression<DateTime>? postedAt,
     Expression<String>? postedBy,
+    Expression<String>? correctsId,
+    Expression<String>? reversesId,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -9220,6 +9313,8 @@ class StockReceiptsCompanion extends UpdateCompanion<StockReceipt> {
       if (createdAt != null) 'created_at': createdAt,
       if (postedAt != null) 'posted_at': postedAt,
       if (postedBy != null) 'posted_by': postedBy,
+      if (correctsId != null) 'corrects_id': correctsId,
+      if (reversesId != null) 'reverses_id': reversesId,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -9235,6 +9330,8 @@ class StockReceiptsCompanion extends UpdateCompanion<StockReceipt> {
     Value<DateTime>? createdAt,
     Value<DateTime?>? postedAt,
     Value<String?>? postedBy,
+    Value<String?>? correctsId,
+    Value<String?>? reversesId,
     Value<int>? rowid,
   }) {
     return StockReceiptsCompanion(
@@ -9248,6 +9345,8 @@ class StockReceiptsCompanion extends UpdateCompanion<StockReceipt> {
       createdAt: createdAt ?? this.createdAt,
       postedAt: postedAt ?? this.postedAt,
       postedBy: postedBy ?? this.postedBy,
+      correctsId: correctsId ?? this.correctsId,
+      reversesId: reversesId ?? this.reversesId,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -9285,6 +9384,12 @@ class StockReceiptsCompanion extends UpdateCompanion<StockReceipt> {
     if (postedBy.present) {
       map['posted_by'] = Variable<String>(postedBy.value);
     }
+    if (correctsId.present) {
+      map['corrects_id'] = Variable<String>(correctsId.value);
+    }
+    if (reversesId.present) {
+      map['reverses_id'] = Variable<String>(reversesId.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -9304,6 +9409,8 @@ class StockReceiptsCompanion extends UpdateCompanion<StockReceipt> {
           ..write('createdAt: $createdAt, ')
           ..write('postedAt: $postedAt, ')
           ..write('postedBy: $postedBy, ')
+          ..write('correctsId: $correctsId, ')
+          ..write('reversesId: $reversesId, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -18907,6 +19014,8 @@ typedef $$StockReceiptsTableCreateCompanionBuilder =
       required DateTime createdAt,
       Value<DateTime?> postedAt,
       Value<String?> postedBy,
+      Value<String?> correctsId,
+      Value<String?> reversesId,
       Value<int> rowid,
     });
 typedef $$StockReceiptsTableUpdateCompanionBuilder =
@@ -18921,6 +19030,8 @@ typedef $$StockReceiptsTableUpdateCompanionBuilder =
       Value<DateTime> createdAt,
       Value<DateTime?> postedAt,
       Value<String?> postedBy,
+      Value<String?> correctsId,
+      Value<String?> reversesId,
       Value<int> rowid,
     });
 
@@ -19016,6 +19127,16 @@ class $$StockReceiptsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<String> get correctsId => $composableBuilder(
+    column: $table.correctsId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get reversesId => $composableBuilder(
+    column: $table.reversesId,
+    builder: (column) => ColumnFilters(column),
+  );
+
   Expression<bool> stockReceiptItemsRefs(
     Expression<bool> Function($$StockReceiptItemsTableFilterComposer f) f,
   ) {
@@ -19100,6 +19221,16 @@ class $$StockReceiptsTableOrderingComposer
     column: $table.postedBy,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get correctsId => $composableBuilder(
+    column: $table.correctsId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get reversesId => $composableBuilder(
+    column: $table.reversesId,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$StockReceiptsTableAnnotationComposer
@@ -19144,6 +19275,16 @@ class $$StockReceiptsTableAnnotationComposer
 
   GeneratedColumn<String> get postedBy =>
       $composableBuilder(column: $table.postedBy, builder: (column) => column);
+
+  GeneratedColumn<String> get correctsId => $composableBuilder(
+    column: $table.correctsId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get reversesId => $composableBuilder(
+    column: $table.reversesId,
+    builder: (column) => column,
+  );
 
   Expression<T> stockReceiptItemsRefs<T extends Object>(
     Expression<T> Function($$StockReceiptItemsTableAnnotationComposer a) f,
@@ -19210,6 +19351,8 @@ class $$StockReceiptsTableTableManager
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime?> postedAt = const Value.absent(),
                 Value<String?> postedBy = const Value.absent(),
+                Value<String?> correctsId = const Value.absent(),
+                Value<String?> reversesId = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => StockReceiptsCompanion(
                 id: id,
@@ -19222,6 +19365,8 @@ class $$StockReceiptsTableTableManager
                 createdAt: createdAt,
                 postedAt: postedAt,
                 postedBy: postedBy,
+                correctsId: correctsId,
+                reversesId: reversesId,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -19236,6 +19381,8 @@ class $$StockReceiptsTableTableManager
                 required DateTime createdAt,
                 Value<DateTime?> postedAt = const Value.absent(),
                 Value<String?> postedBy = const Value.absent(),
+                Value<String?> correctsId = const Value.absent(),
+                Value<String?> reversesId = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => StockReceiptsCompanion.insert(
                 id: id,
@@ -19248,6 +19395,8 @@ class $$StockReceiptsTableTableManager
                 createdAt: createdAt,
                 postedAt: postedAt,
                 postedBy: postedBy,
+                correctsId: correctsId,
+                reversesId: reversesId,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0

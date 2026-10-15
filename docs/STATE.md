@@ -5,20 +5,20 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-101 Sinxron yaxlitligi (umumiy reja — `AGENT_WORKLOG.md`, audit — `PROJECT_AUDIT.md`)
-- Branch: feat/T-101-sync-integrity
+- Vazifa: T-102 Kirimni tahrirlash va bekor qilish (dizayn — `docs/audit/audit_receipts.md` 2-bo'lim)
+- Branch: feat/T-102-receipt-corrections
 - Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
-- [x] 1–7. Barcha qadamlar bajarildi (`docs/PROGRESS.md` T-101)
+- [x] 1–7. Server, testlar, kassa data, UI, testlar/golden, hujjatlar
 - [ ] 8. PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-- T-101 kodi va testlari tayyor, hujjatlar yangilandi.
+- T-102 tayyor (`docs/PROGRESS.md`).
 
 ## Keyingi aniq harakat
-- T-101 PR CI yashil bo'lsa merge; keyin T-102 (`docs/audit/audit_receipts.md` 2-bo'lim dizayni).
+- T-102 PR CI yashil bo'lsa merge; keyin T-103 (`docs/audit/audit_customers.md` 2-bo'lim).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

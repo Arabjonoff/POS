@@ -12,13 +12,18 @@ from apps.catalog.serializers import ProductSerializer
 from apps.customers.models import Customer, PaymentMethod
 from apps.customers.serializers import CustomerSerializer
 from apps.customers.services import pay_debt
-from apps.inventory.models import Supplier
+from apps.inventory.models import StockReceipt, Supplier
 from apps.inventory.serializers import (
     InventoryCountSerializer,
     StockReceiptSerializer,
     SupplierSerializer,
 )
-from apps.inventory.services import post_inventory, post_receipt
+from apps.inventory.services import (
+    cancel_receipt,
+    correct_receipt,
+    post_inventory,
+    post_receipt,
+)
 from apps.sales import services as sales
 from apps.sales.services import refresh_closed_shift
 from apps.sales.services.common import (
@@ -182,19 +187,82 @@ def _require_products(tenant_id, payload) -> None:
         raise MissingDependency("product", missing[0])
 
 
-def _post_document(device, payload, serializer_class, post):
-    user = _actor(device, payload, managers_only=True)
+def _document(device, payload, serializer_class, user):
     _require_products(device.tenant_id, payload)
     # Oflayn hujjat o'shanda mavjud bo'lgan (endi o'chirilgan) tovar/yetkazib beruvchiga
     # tayanishi mumkin — rad etilsa, kassa qoldig'i server bilan abadiy farq qiladi (RC-B1).
     context = {"request": SimpleNamespace(user=user), "allow_deleted": True}
     serializer = serializer_class(data=_data(payload), context=context)
     serializer.is_valid(raise_exception=True)
-    return post(serializer.save(), user=user)
+    return serializer
+
+
+def _post_document(device, payload, serializer_class, post, **kwargs):
+    user = _actor(device, payload, managers_only=True)
+    serializer = _document(device, payload, serializer_class, user)
+    return post(serializer.save(), user=user, **kwargs)
+
+
+def _event_time(payload, code):
+    """Ixtiyoriy `at` — kassadagi vaqt (eski kassa yubormaydi → server vaqti)."""
+    return as_datetime(payload, "at", code=code) if payload.get("at") else None
 
 
 def receipt_posted(device, payload):
-    return _post_document(device, payload, StockReceiptSerializer, post_receipt)
+    return _post_document(
+        device,
+        payload,
+        StockReceiptSerializer,
+        post_receipt,
+        at=_event_time(payload, "invalid_receipt"),
+    )
+
+
+def _original_receipt(device, payload, key):
+    receipt_id = as_uuid(payload, key, code="invalid_receipt")
+    receipt = StockReceipt.objects.filter(tenant_id=device.tenant_id, pk=receipt_id).first()
+    if receipt is None:
+        if StockReceipt.objects.filter(pk=receipt_id).exists():  # boshqa tenant
+            raise invalid("invalid_receipt", "Unknown receipt.", field=key)
+        # Asl kirim hodisasi hali qo'llanmagan — tuzatish kutadi.
+        raise MissingDependency("stock_receipt", receipt_id)
+    return receipt
+
+
+def receipt_corrected(device, payload):
+    """Kirimni tahrirlash (stock-receipt.md "Tuzatish"): teskari yozuv + yangi versiya."""
+    user = _actor(device, payload, managers_only=True)
+    original = _original_receipt(device, payload, "corrects")
+    version_id = as_uuid(payload, "id", code="invalid_receipt")
+    if StockReceipt.objects.filter(pk=version_id, corrects__isnull=False).exists():
+        return None  # takroriy (boshqa hodisa id bilan qayta yuborilgan)
+    data = {key: payload.get(key) for key in ("id", "supplier", "note", "items")}
+    data["note"] = data["note"] or ""
+    serializer = _document(device, data, StockReceiptSerializer, user)
+    values = serializer.validated_data
+    return correct_receipt(
+        original,
+        user=user,
+        id=version_id,
+        items=values.get("items") or [],
+        supplier=values.get("supplier"),
+        note=values.get("note", ""),
+        reversal_id=as_uuid(payload, "reversal_id", code="invalid_receipt", required=False),
+        at=_event_time(payload, "invalid_receipt"),
+    )
+
+
+def receipt_reversed(device, payload):
+    """Kirimni bekor qilish (kassadan). Allaqachon bekor qilingan — hech narsa."""
+    user = _actor(device, payload, managers_only=True)
+    original = _original_receipt(device, payload, "reverses")
+    return cancel_receipt(
+        original,
+        user=user,
+        id=as_uuid(payload, "id", code="invalid_receipt"),
+        note=str(payload.get("note") or ""),
+        at=_event_time(payload, "invalid_receipt"),
+    )
 
 
 def inventory_posted(device, payload):
@@ -212,5 +280,7 @@ HANDLERS = {
     "supplier.upserted": supplier_upserted,
     "product.upserted": product_upserted,
     "receipt.posted": receipt_posted,
+    "receipt.corrected": receipt_corrected,
+    "receipt.reversed": receipt_reversed,
     "inventory.posted": inventory_posted,
 }

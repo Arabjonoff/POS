@@ -77,3 +77,12 @@ Format:
 - Agentning tavsiyasi: dastlab APK va imzolanmagan o'rnatuvchi (sinov do'konlari), keyin — OV sertifikat va Google Play (ichki test kanali). Kalit — parol menejerida + oflayn nusxa.
 - Hozircha tanlangan: imzosiz Windows o'rnatuvchi; Android — `key.properties` bo'lsa release kalit, bo'lmasa debug (faqat sinov). Yo'riqnoma: `docs/RELEASE.md`.
 - Javob:
+
+### Q-010 (T-102) Kirimni tahrirlash chegaralari
+- Kontekst: tasdiqlangan kirimni endi tahrirlash va bekor qilish mumkin (teskari yozuv + yangi versiya, qaror 0010).
+- Savollar: (1) Tahrirlash muddati cheklanadimi (masalan, faqat joriy oy ichida)? (2) Kirimdan keyin inventarizatsiya o'tkazilgan bo'lsa —
+  tuzatishni bloklashmi yoki faqat ogohlantirishmi? (3) Kirim bekor qilinganda tovar tannarxi oldingi kirimnikiga qaytsinmi?
+- Agentning tavsiyasi: (1) cheklamaslik, lekin tarix to'liq ko'rinadi; (2) ogohlantirish; (3) qaytarmaslik (oxirgi tannarx qoladi, keyingi
+  kirim yangilaydi).
+- Hozircha tanlangan: muddat cheklovi yo'q; inventarizatsiya tekshiruvi yo'q; bekor qilishda narxlar o'zgarmaydi.
+- Javob:

@@ -36,13 +36,13 @@ Holat: ✅ tuzatildi · 🔧 ishlanmoqda · ⏳ rejada · ❓ biznes savoli (`do
 | PR-P0-1 | Server rad etgan tovar (masalan, ikki kassada bir xil shtrix-kod) — shu tovar bor **barcha savdolar ham rad etiladi** | Savdo/kirim noma'lum tovarni `invalid` qiladi; tovar hodisasi to'liq rad etiladi | Savdolar, to'lovlar, qarzlar serverga yetmaydi | ✅ T-101 |
 | PR-P0-2 | Matnda NUL (`\u0000`) belgisi — kassa sinxroni **butunlay to'xtaydi** | `SyncEvent.save` try'dan tashqarida; Postgres jsonb NUL saqlay olmaydi → 500 | Kassa "oflayn", hech narsa yuborilmaydi | ✅ T-101 |
 | RC-B1 | Serverda o'chirilgan tovar/yetkazib beruvchiga oflayn kirim — rad etiladi | Sinxron handler o'chirilgan qatorlarni topmaydi | Kirim serverda yo'q, kassa qoldig'i esa uni hisoblaydi | ✅ T-101 |
-| RC-B4 | Inventarizatsiya "kutilgan"ni server qo'llash paytida hisoblaydi | Kechikkan savdolar ikki marta ayiriladi yoki o'chib ketadi | Qoldiq noto'g'ri | ⏳ T-102 |
+| RC-B4 | Inventarizatsiya "kutilgan"ni server qo'llash paytida hisoblaydi | Kechikkan savdolar ikki marta ayiriladi yoki o'chib ketadi | Qoldiq noto'g'ri | ⏳ keyinroq (inventarizatsiya hodisasiga kassa vaqti/kutilgan qiymat kerak; qaror talab qiladi) |
 
 ### P1 — asosiy funksiya yo'q yoki noto'g'ri
 
 | # | Muammo | Holat |
 |---|---|---|
-| RC-0 | Tasdiqlangan **kirimni tahrirlash va bekor qilish imkoni yo'q** (serverda bekor qilish endpoint'i bor, lekin kassa ishlatmaydi) | ⏳ T-102 (teskari yozuv + yangi versiya, atomar) |
+| RC-0 | Tasdiqlangan **kirimni tahrirlash va bekor qilish imkoni yo'q** (serverda bekor qilish endpoint'i bor, lekin kassa ishlatmaydi) | ✅ T-102 (teskari yozuv + yangi versiya, atomar; qaror 0010) |
 | CU-0 | Mijoz yaratishda **boshlang'ich balans** yo'q | ⏳ T-103 |
 | PRN-0 | Chek sozlamalari bo'limi yo'q: preview, logotip, STIR, ko'rsat/yashir; do'kon ma'lumotini faqat Django admin o'zgartiradi | ⏳ T-104 |
 | PRN-B4 | Xprinter turidagi printerlarda kirillcha xitoycha belgilar bo'lib chiqishi mumkin (`FS .` yuborilmaydi) | ⏳ T-104 |
@@ -54,7 +54,7 @@ Holat: ✅ tuzatildi · 🔧 ishlanmoqda · ⏳ rejada · ❓ biznes savoli (`do
 | PR-P1-4 | Oflayn eski tahrir serverdagi yangi narxni qaytarib yozadi (to'liq snapshot) | ⏳ T-106 (o\'zgargan maydonlar — kassa formati o\'zgaradi) |
 | PR-P1-6, UI-P1-3 | Saqlashda kutilmagan xato — tugma "yuklanmoqda"da qotadi, xabar yo'q (tovar kartasi, mijoz kartasi, smena yopish) | ⏳ T-106 |
 | UI-P1-2, UI-P1-4 | Ikki marta bosish: tovar kartasi ikki tovar, kirim ikki qoralama, yetkazib beruvchi ikki marta yaratadi | ⏳ T-106 |
-| UI-P1-1 | Kirim/inventarizatsiya qoralamasi tasdiqsiz va qaytarishsiz o'chadi (tugma "Tasdiqlash" yonida) | ⏳ T-106 |
+| UI-P1-1 | Kirim/inventarizatsiya qoralamasi tasdiqsiz va qaytarishsiz o'chadi (tugma "Tasdiqlash" yonida) | kirim ✅ T-102 (`showPosConfirm`); inventarizatsiya ⏳ T-106 |
 | UI-P1-5 | Telefonda holat qatori kesiladi ("Prin…"), smena va xato ko'rinmaydi | ⏳ T-106 |
 | CU-B3 | Qayta yuborilgan qarz to'lovi smena yopilgach rad etiladi | ✅ T-101 |
 | CU-B4 | Smena ochilmasdan qarz to'lovi qabul qilinadi — naqd hech bir Z-hisobotga tushmaydi | ⏳ T-103 |

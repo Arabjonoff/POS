@@ -18,7 +18,7 @@ barcha modullar regressiyasi, testlar, yakuniy hisobot.
 |---|---|---|
 | 1 | Audit (5 yo'nalish) → `PROJECT_AUDIT.md`, `docs/audit/` | ✅ T-100 |
 | 2 | P0: yashil chaqnash, overflow, mijoz telefoni, noma'lum mijoz (T-100); sinxron yaxlitligi (T-101) | ✅ T-100, T-101 |
-| 3 | Kirimni tahrirlash (teskari yozuv + yangi kirim, atomar) | — |
+| 3 | Kirimni tahrirlash (teskari yozuv + yangi kirim, atomar) | ✅ T-102 |
 | 4 | Mijoz boshlang'ich balansi | — |
 | 5 | Mahsulot rasmi (server + sinx + kassa) | — |
 | 6 | Chek sozlamalari (preview, logo, 58/80 mm, test cheki) | — |
@@ -37,5 +37,7 @@ barcha modullar regressiyasi, testlar, yakuniy hisobot.
 
 - T-101: noma'lum tovar → pending, ziddiyatli shtrix-kod tushiriladi, o'chirilgan bog'liqliklar qabul, yopiq smenaga kechikkan hodisa, NUL, nom tozalash/cheklovlar, qayta yuborish paytida pull yo'q. Backend to'liq yashil, pos 630.
 
+- T-102: kirimni tahrirlash/bekor qilish (server `correct_receipt`/`cancel_receipt`, hodisalar, pull `features`; kassa drift v4, `ReceiptStore`, UI, tasdiqlash oynasi `showPosConfirm`). Golden'da topilgan xato: tasdiqlash oynasi qoldiqni yuklanmagan provider'dan olib "manfiy qoldiq" ko'rsatardi — bazadan o'qishga o'tkazildi. Backend 764, pos 661.
+
 ## Keyingi qadam
-- T-102 Kirimni tahrirlash va bekor qilish — dizayn: `docs/audit/audit_receipts.md` 2-bo'lim.
+- T-103 Mijoz boshlang'ich balansi — dizayn: `docs/audit/audit_customers.md` 2-bo'lim.

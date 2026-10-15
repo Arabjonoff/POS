@@ -302,7 +302,7 @@ Audit: `PROJECT_AUDIT.md`, batafsil — `docs/audit/`. Jurnal: `AGENT_WORKLOG.md
 - **Bajarish:** rad etilgan tovar savdolarni yo'qotmasin (noma'lum tovar → pending; ziddiyatli shtrix-kod/PLU tushirib, tovar qo'llanadi); NUL belgisi 500 bermasin; o'chirilgan tovar/yetkazib beruvchiga kirim qabul qilinsin; qayta yuborilgan qarz to'lovi yopiq smenada ham qabul qilinsin; kassada nom ≤ 200, ≤ 20 shtrix-kod; boshqaruv belgilarini tozalash.
 - **Bog'liq:** T-100
 
-### [ ] T-102 Kirimni tahrirlash va bekor qilish
+### [x] T-102 Kirimni tahrirlash va bekor qilish
 - **Bajarish:** tasdiqlangan kirim → "Tahrirlash" (teskari yozuv + yangi versiya bitta tranzaksiyada) va "Bekor qilish"; server `receipt.corrected`/`receipt.reversed` hodisalari (idempotent); ro'yxatda holat belgilari; qoldiq va tannarx to'g'ri qayta hisoblanadi.
 - **Qabul:** 10 → 7 o'zgartirilganda qoldiq aniq −3; ikki marta qo'llanmaydi; eski kassa sinxroni buzilmaydi.
 
