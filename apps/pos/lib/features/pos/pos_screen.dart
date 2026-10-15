@@ -151,7 +151,11 @@ class _CashierViewState extends ConsumerState<CashierView> {
         other != null &&
         !_screenFocus.hasFocus) {
       final route = ModalRoute.of(other);
-      if (route != null && route != ModalRoute.of(context) && route.isCurrent) {
+      // Yashirin bo'limdagi fokus (masalan, "Cheklar") — hisobga olinmaydi.
+      if (route != null &&
+          route != ModalRoute.of(context) &&
+          route.isCurrent &&
+          TickerMode.valuesOf(other).enabled) {
         return;
       }
     }

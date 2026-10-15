@@ -83,7 +83,25 @@ class SaleDetail extends ConsumerStatefulWidget {
 }
 
 class _SaleDetailState extends ConsumerState<SaleDetail> {
+  /// Chek ochilganda fokus panelga: Ctrl+P va Esc darhol ishlaydi.
+  final _focus = FocusNode(debugLabel: 'sale-detail');
   bool _printing = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted && TickerMode.valuesOf(context).enabled) {
+        _focus.requestFocus();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _focus.dispose();
+    super.dispose();
+  }
 
   Future<void> _reprint() async {
     if (_printing) return;
@@ -159,102 +177,108 @@ class _SaleDetailState extends ConsumerState<SaleDetail> {
         const SingleActivator(LogicalKeyboardKey.keyP, control: true): () =>
             unawaited(_reprint()),
       },
-      child: ListView(
-        key: const ValueKey('sale-detail'),
-        padding: const EdgeInsets.only(bottom: PosSpacing.l),
-        children: [
-          Row(
-            children: [
-              if (widget.onClose != null) ...[
-                PosIconButton(
-                  key: const ValueKey('sale-detail-back'),
-                  icon: Icons.arrow_back,
-                  tooltip: l10n.labelWithShortcut(l10n.salesBack, 'Esc'),
-                  onPressed: widget.onClose,
-                ),
-                const SizedBox(width: PosSpacing.s),
-              ],
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      receipt.number,
-                      style: PosTypography.h3.copyWith(color: p.text),
-                    ),
-                    Text(
-                      fmt.dateTime(receipt.soldAt),
-                      style: PosTypography.small.copyWith(
-                        color: p.textSecondary,
+      child: Focus(
+        focusNode: _focus,
+        child: ListView(
+          key: const ValueKey('sale-detail'),
+          padding: const EdgeInsets.only(bottom: PosSpacing.l),
+          children: [
+            Row(
+              children: [
+                if (widget.onClose != null) ...[
+                  PosIconButton(
+                    key: const ValueKey('sale-detail-back'),
+                    icon: Icons.arrow_back,
+                    tooltip: l10n.labelWithShortcut(l10n.salesBack, 'Esc'),
+                    onPressed: widget.onClose,
+                  ),
+                  const SizedBox(width: PosSpacing.s),
+                ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        receipt.number,
+                        style: PosTypography.h3.copyWith(color: p.text),
                       ),
-                    ),
-                  ],
+                      Text(
+                        fmt.dateTime(receipt.soldAt),
+                        style: PosTypography.small.copyWith(
+                          color: p.textSecondary,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              if (data.status == 'refunded')
-                PosBadge(label: l10n.salesStatusRefunded, tone: PosTone.danger)
-              else if (data.status == 'partially_refunded')
-                PosBadge(
-                  label: l10n.salesStatusPartial,
-                  tone: PosTone.warning,
-                ),
-            ],
-          ),
-          const SizedBox(height: PosSpacing.m),
-          Wrap(
-            spacing: PosSpacing.s,
-            runSpacing: PosSpacing.s,
-            children: [
-              PosButton(
-                key: const ValueKey('sale-reprint'),
-                label: l10n.posReprint,
-                icon: Icons.print_outlined,
-                shortcut: 'Ctrl+P',
-                loading: _printing,
-                onPressed: () => unawaited(_reprint()),
-              ),
-              PosButton(
-                key: const ValueKey('sale-refund'),
-                label: l10n.refundTitle,
-                icon: Icons.assignment_return_outlined,
-                variant: PosButtonVariant.secondary,
-                onPressed: data.status == 'refunded'
-                    ? null
-                    : () => unawaited(_refund()),
-              ),
-            ],
-          ),
-          if (data.refunds.isNotEmpty) ...[
-            const SizedBox(height: PosSpacing.l),
-            Text(
-              l10n.salesRefunds,
-              style: PosTypography.smallStrong.copyWith(
-                color: p.textSecondary,
-              ),
+                if (data.status == 'refunded')
+                  PosBadge(
+                    label: l10n.salesStatusRefunded,
+                    tone: PosTone.danger,
+                  )
+                else if (data.status == 'partially_refunded')
+                  PosBadge(
+                    label: l10n.salesStatusPartial,
+                    tone: PosTone.warning,
+                  ),
+              ],
             ),
-            const SizedBox(height: PosSpacing.xs),
-            for (final r in data.refunds)
-              PosListTile(
-                leading: const Icon(Icons.assignment_return_outlined),
-                title: fmt.money(r.totalTiyin),
-                subtitle: [
-                  fmt.dateTime(r.at),
-                  if (r.method == 'debt')
-                    l10n.refundMethodDebt
-                  else
-                    l10n.refundMethodCash,
-                  if (r.reason.isNotEmpty) r.reason,
-                ].join(' · '),
+            const SizedBox(height: PosSpacing.m),
+            Wrap(
+              spacing: PosSpacing.s,
+              runSpacing: PosSpacing.s,
+              children: [
+                PosButton(
+                  key: const ValueKey('sale-reprint'),
+                  label: l10n.posReprint,
+                  icon: Icons.print_outlined,
+                  shortcut: 'Ctrl+P',
+                  loading: _printing,
+                  onPressed: () => unawaited(_reprint()),
+                ),
+                PosButton(
+                  key: const ValueKey('sale-refund'),
+                  label: l10n.refundTitle,
+                  icon: Icons.assignment_return_outlined,
+                  variant: PosButtonVariant.secondary,
+                  onPressed: data.status == 'refunded'
+                      ? null
+                      : () => unawaited(_refund()),
+                ),
+              ],
+            ),
+            if (data.refunds.isNotEmpty) ...[
+              const SizedBox(height: PosSpacing.l),
+              Text(
+                l10n.salesRefunds,
+                style: PosTypography.smallStrong.copyWith(
+                  color: p.textSecondary,
+                ),
               ),
+              const SizedBox(height: PosSpacing.xs),
+              for (final r in data.refunds)
+                PosListTile(
+                  leading: const Icon(Icons.assignment_return_outlined),
+                  title: fmt.money(r.totalTiyin),
+                  subtitle: [
+                    fmt.dateTime(r.at),
+                    if (r.method == 'debt')
+                      l10n.refundMethodDebt
+                    else
+                      l10n.refundMethodCash,
+                    if (r.reason.isNotEmpty) r.reason,
+                  ].join(' · '),
+                ),
+            ],
+            const SizedBox(height: PosSpacing.l),
+            ReceiptPreview(
+              key: const ValueKey('sale-receipt-preview'),
+              rows: rows,
+              width: settings.width,
+              encoding: settings.encoding,
+            ),
           ],
-          const SizedBox(height: PosSpacing.l),
-          ReceiptPreview(
-            key: const ValueKey('sale-receipt-preview'),
-            rows: rows,
-            width: settings.width,
-            encoding: settings.encoding,
-          ),
-        ],
+        ),
       ),
     );
   }

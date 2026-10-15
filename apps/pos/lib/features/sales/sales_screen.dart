@@ -31,6 +31,7 @@ class SalesScreen extends ConsumerStatefulWidget {
 
 class _SalesScreenState extends ConsumerState<SalesScreen> {
   final _search = TextEditingController();
+  final _focus = FocusNode(debugLabel: 'sales');
   _Day _day = _Day.today;
   DateTime? _picked;
   SalePaymentFilter _payment = SalePaymentFilter.all;
@@ -39,10 +40,45 @@ class _SalesScreenState extends ConsumerState<SalesScreen> {
   /// Oyna (qaytarish) ochiq — skaner unga tegishli.
   bool _dialogOpen = false;
 
+  bool _wasActive = true;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _focusScreen());
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Bo'lim almashganda fokus yo'qoladi — Esc/Ctrl+P ishlashi uchun qaytaramiz.
+    final active = TickerMode.valuesOf(context).enabled;
+    if (active && !_wasActive) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _focusScreen());
+    } else if (!active && _wasActive && _focus.hasFocus) {
+      // Yashirin bo'lim fokusni ushlab qolmasin (kassa F-tugmalari).
+      _focus.unfocus();
+    }
+    _wasActive = active;
+  }
+
   @override
   void dispose() {
     _search.dispose();
+    _focus.dispose();
     super.dispose();
+  }
+
+  void _focusScreen() {
+    if (!mounted || _dialogOpen || !TickerMode.valuesOf(context).enabled) {
+      return;
+    }
+    _focus.requestFocus();
+  }
+
+  void _open(String? id) {
+    setState(() => _openId = id);
+    if (id == null) _focusScreen();
   }
 
   DateTime get _today =>
@@ -67,13 +103,15 @@ class _SalesScreenState extends ConsumerState<SalesScreen> {
         .idByNumber(event.code);
     if (!mounted) return;
     if (id != null) {
-      setState(() => _openId = id);
+      _open(id);
       return;
     }
     if (event.code.toUpperCase().contains('-')) {
       showPosToast(
         context,
-        message: AppLocalizations.of(context).salesReceiptNotFound(event.code),
+        message: AppLocalizations.of(
+          context,
+        ).salesReceiptNotFound(event.code.toUpperCase()),
         tone: PosTone.warning,
       );
       return;
@@ -92,7 +130,7 @@ class _SalesScreenState extends ConsumerState<SalesScreen> {
 
   void _escape() {
     if (_openId != null) {
-      setState(() => _openId = null);
+      _open(null);
     } else if (_search.text.isNotEmpty) {
       setState(_search.clear);
     }
@@ -110,73 +148,74 @@ class _SalesScreenState extends ConsumerState<SalesScreen> {
       bindings: {
         const SingleActivator(LogicalKeyboardKey.escape): _escape,
       },
-      child: ScanListener(
-        enabled: !_dialogOpen,
-        onScan: (e) => unawaited(_onScan(e)),
-        onTyping: _onTyping,
-        child: SectionPage(
-          title: l10n.navSales,
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final wide =
-                  constraints.maxWidth >=
-                  SalesScreen.detailWidth * 2 + PosSpacing.xl;
-              final openId = _openId;
-              final detail = openId == null
-                  ? null
-                  : SaleDetail(
-                      key: ValueKey('sale-detail-$openId'),
-                      saleId: openId,
-                      onClose: wide
-                          ? null
-                          : () => setState(() => _openId = null),
-                      onDialog: (open) => setState(() => _dialogOpen = open),
-                    );
-              if (!wide && detail != null) {
-                return Padding(
-                  padding: EdgeInsets.fromLTRB(padding, 0, padding, 0),
-                  child: detail,
-                );
-              }
-              final list = Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _filters(l10n),
-                  const SizedBox(height: PosSpacing.m),
-                  if (page != null) _summary(l10n, page),
-                  const SizedBox(height: PosSpacing.s),
-                  Expanded(child: _list(l10n, history, page)),
-                ],
-              );
-              if (!wide) {
-                return Padding(
-                  padding: EdgeInsets.fromLTRB(padding, 0, padding, 0),
-                  child: list,
-                );
-              }
-              return Padding(
-                padding: EdgeInsets.fromLTRB(padding, 0, padding, 0),
-                child: Row(
+      child: Focus(
+        focusNode: _focus,
+        child: ScanListener(
+          enabled: !_dialogOpen,
+          onScan: (e) => unawaited(_onScan(e)),
+          onTyping: _onTyping,
+          child: SectionPage(
+            title: l10n.navSales,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final wide =
+                    constraints.maxWidth >=
+                    SalesScreen.detailWidth * 2 + PosSpacing.xl;
+                final openId = _openId;
+                final detail = openId == null
+                    ? null
+                    : SaleDetail(
+                        key: ValueKey('sale-detail-$openId'),
+                        saleId: openId,
+                        onClose: wide ? null : () => _open(null),
+                        onDialog: (open) => setState(() => _dialogOpen = open),
+                      );
+                if (!wide && detail != null) {
+                  return Padding(
+                    padding: EdgeInsets.fromLTRB(padding, 0, padding, 0),
+                    child: detail,
+                  );
+                }
+                final list = Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Expanded(child: list),
-                    const SizedBox(width: PosSpacing.l),
-                    SizedBox(
-                      width: SalesScreen.detailWidth,
-                      child:
-                          detail ??
-                          Center(
-                            child: PosEmptyState(
-                              icon: Icons.receipt_outlined,
-                              title: l10n.salesSelectHint,
-                              compact: true,
-                            ),
-                          ),
-                    ),
+                    _filters(l10n),
+                    const SizedBox(height: PosSpacing.m),
+                    if (page != null) _summary(l10n, page),
+                    const SizedBox(height: PosSpacing.s),
+                    Expanded(child: _list(l10n, history, page)),
                   ],
-                ),
-              );
-            },
+                );
+                if (!wide) {
+                  return Padding(
+                    padding: EdgeInsets.fromLTRB(padding, 0, padding, 0),
+                    child: list,
+                  );
+                }
+                return Padding(
+                  padding: EdgeInsets.fromLTRB(padding, 0, padding, 0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Expanded(child: list),
+                      const SizedBox(width: PosSpacing.l),
+                      SizedBox(
+                        width: SalesScreen.detailWidth,
+                        child:
+                            detail ??
+                            Center(
+                              child: PosEmptyState(
+                                icon: Icons.receipt_outlined,
+                                title: l10n.salesSelectHint,
+                                compact: true,
+                              ),
+                            ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ),
@@ -318,7 +357,7 @@ class _SalesScreenState extends ConsumerState<SalesScreen> {
           entry: entry,
           showDate: searching,
           selected: entry.id == _openId,
-          onTap: () => setState(() => _openId = entry.id),
+          onTap: () => _open(entry.id),
         );
       },
     );
