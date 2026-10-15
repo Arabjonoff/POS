@@ -61,9 +61,9 @@ Future<void> tap(WidgetTester tester, Finder finder) async {
 Future<List<CashMovement>> movements() => _db.select(_db.cashMovements).get();
 
 void main() {
-  testWidgets('F9: cash in with a reason; Enter saves', (tester) async {
+  testWidgets('Ctrl+F9: cash in with a reason; Enter saves', (tester) async {
     await open(tester);
-    await press(tester, LogicalKeyboardKey.f9);
+    await pressCtrl(tester, LogicalKeyboardKey.f9);
     expect(dialog, findsOneWidget);
     expect(inDialog('Kassada: ${som(0)}'), findsOneWidget);
     await tap(tester, find.byKey(const ValueKey('cash-in')));
@@ -90,7 +90,7 @@ void main() {
     tester,
   ) async {
     await open(tester);
-    await press(tester, LogicalKeyboardKey.f9);
+    await pressCtrl(tester, LogicalKeyboardKey.f9);
     // Standart — chiqarish.
     await typeSlowly(tester, '10000');
     await press(tester, LogicalKeyboardKey.enter);

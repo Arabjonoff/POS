@@ -114,7 +114,7 @@ void main() {
     expect(sale.shiftId, 'shift-test');
     expect(await payments(), {'cash': (400000, 400000, 0)});
     expect(cart.cart.isEmpty, isTrue);
-    expect(find.text('Savdo yakunlandi'), findsOneWidget);
+    expect(find.text('Chek yopildi'), findsOneWidget);
   });
 
   testWidgets('cash: quick 50 000 shows the change; message has it', (
@@ -130,7 +130,7 @@ void main() {
 
     expect(await payments(), {'cash': (1400000, 5000000, 3600000)});
     expect(
-      find.text('Savdo yakunlandi · Qaytim ${som(36000)}'),
+      find.text('Chek yopildi · Qaytim ${som(36000)}'),
       findsOneWidget,
     );
   });
@@ -373,5 +373,153 @@ void main() {
     await tester.tap(complete);
     await tester.pumpAndSettle();
     expect(await payments(), {'cash': (400000, 500000, 100000)});
+  });
+
+  group('one-key payment (T-108c)', () {
+    testWidgets('F9: exact cash closes the cheque in one key', (tester) async {
+      await open(tester);
+      await scanCode(tester, non);
+      await scanCode(tester, cola);
+      await press(tester, LogicalKeyboardKey.f9);
+      expect(dialog, findsNothing);
+      expect((await sales()).single.totalTiyin, 1800000);
+      expect(await payments(), {'cash': (1800000, 1800000, 0)});
+      expect(cart.cart.isEmpty, isTrue);
+      expect(find.text('Chek yopildi'), findsOneWidget);
+    });
+
+    testWidgets('F10 and the "Karta" button pay by card', (tester) async {
+      await open(tester);
+      await scanCode(tester, non);
+      await press(tester, LogicalKeyboardKey.f10);
+      expect(await payments(), {'card': (400000, null, 0)});
+
+      await scanCode(tester, cola);
+      await tapKey(tester, 'quick-pay-card');
+      expect(await sales(), hasLength(2));
+      expect(cart.cart.isEmpty, isTrue);
+    });
+
+    testWidgets('F11 opens payment on Nasiya; F9/F10 switch inside', (
+      tester,
+    ) async {
+      await open(tester);
+      await scanCode(tester, non);
+      await press(tester, LogicalKeyboardKey.f11);
+      expect(dialog, findsOneWidget);
+      expect(inDialog('Mijozni tanlang'), findsWidgets);
+      await press(tester, LogicalKeyboardKey.f10);
+      expect(inDialog('Mijozni tanlang'), findsNothing);
+      await press(tester, LogicalKeyboardKey.f9);
+      await press(tester, LogicalKeyboardKey.enter);
+      expect(await payments(), {'cash': (400000, 400000, 0)});
+    });
+
+    testWidgets('empty cart: pay keys do nothing', (tester) async {
+      await open(tester);
+      for (final key in [
+        LogicalKeyboardKey.f9,
+        LogicalKeyboardKey.f10,
+        LogicalKeyboardKey.f11,
+        LogicalKeyboardKey.f12,
+      ]) {
+        await press(tester, key);
+      }
+      expect(dialog, findsNothing);
+      expect(await sales(), isEmpty);
+    });
+  });
+
+  group('acceptance (T-108c)', () {
+    for (final size in const [Size(1366, 768), Size(1920, 1080)]) {
+      testWidgets('${size.width.toInt()}: 3 items by scanner + keyboard only; '
+          'pay always visible, targets ≥ 48', (tester) async {
+        await open(tester, size: size);
+        // Ko'p qator — TO'LASH baribir ko'rinadi.
+        for (final code in [non, cola, '4600000000015', non, cola]) {
+          await scanCode(tester, code);
+        }
+        for (final key in [
+          'cart-pay',
+          'quick-pay-cash',
+          'quick-pay-card',
+          'quick-pay-debt',
+          'cart-customer',
+          'cart-discount',
+        ]) {
+          final rect = tester.getRect(find.byKey(ValueKey(key)));
+          expect(rect.bottom, lessThanOrEqualTo(size.height), reason: key);
+          expect(rect.top, greaterThanOrEqualTo(0), reason: key);
+          expect(rect.height, greaterThanOrEqualTo(48), reason: key);
+          expect(rect.width, greaterThanOrEqualTo(48), reason: key);
+        }
+        expect(tester.takeException(), isNull);
+
+        // 3 pozitsiya: non × 2, cola × 2, sut — skaner + F12 + Enter.
+        expect(cart.cart.lines, hasLength(3));
+        await press(tester, LogicalKeyboardKey.f12);
+        await typeSlowly(tester, '100000');
+        await press(tester, LogicalKeyboardKey.enter);
+        final sale = (await sales()).single;
+        expect(sale.totalTiyin, 4800000);
+        expect(await payments(), {'cash': (4800000, 10000000, 5200000)});
+        expect(
+          find.text('Chek yopildi · Qaytim ${som(52000)}'),
+          findsOneWidget,
+        );
+      });
+    }
+  });
+
+  testWidgets('customer button shows the debt; VAT line only for VAT payers', (
+    tester,
+  ) async {
+    await open(tester);
+    await scanCode(tester, cola);
+    expect(find.text('QQS (12%, ichida)'), findsNothing);
+
+    await _db
+        .into(_db.debtEntries)
+        .insert(
+          DebtEntriesCompanion.insert(
+            id: 'd1',
+            customerId: 'c1',
+            amountTiyin: 12000000,
+            type: 'adjustment',
+            at: DateTime.utc(2026, 10, 1),
+          ),
+        );
+    await _db
+        .into(_db.stores)
+        .insert(
+          StoresCompanion.insert(
+            id: 'store-1',
+            name: 'Baraka',
+            receiptOptions: const Value('{"vat_payer": true}'),
+          ),
+        );
+    await press(tester, LogicalKeyboardKey.f4);
+    await tapText(tester, 'Karimova Dilnoza');
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('cart-customer')),
+        matching: find.text('Qarz: ${som(120000)}'),
+      ),
+      findsOneWidget,
+    );
+    // 14 000 × 12 / 112 = 1 500.
+    expect(find.text('QQS (12%, ichida)'), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find
+            .ancestor(
+              of: find.text('QQS (12%, ichida)'),
+              matching: find.byType(Row),
+            )
+            .first,
+        matching: find.text(PosFormat.moneyAmount(150000)),
+      ),
+      findsOneWidget,
+    );
   });
 }

@@ -13,7 +13,13 @@ class ButtonsGallery extends StatelessWidget {
         GallerySection(
           title: 'Variantlar',
           children: [
-            PosButton(label: "To'lash", onPressed: noop),
+            PosButton(label: 'Saqlash', onPressed: noop),
+            PosButton(
+              label: "TO'LASH",
+              variant: PosButtonVariant.success,
+              shortcut: 'F12',
+              onPressed: noop,
+            ),
             PosButton(
               label: 'Bekor',
               variant: PosButtonVariant.secondary,

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pos_app/app/scanner/scanner_settings.dart';
-import 'package:pos_app/app/session/session.dart';
 import 'package:pos_app/core/barcode/scanner_service.dart';
 import 'package:pos_app/core/format/app_format.dart';
 import 'package:pos_app/data/customers/customer_directory.dart';
@@ -14,7 +13,6 @@ import 'package:pos_app/features/pos/cart/cart.dart';
 import 'package:pos_app/features/pos/payment/checkout.dart';
 import 'package:pos_app/features/pos/payment/customer_picker.dart';
 import 'package:pos_app/features/pos/payment/payment_draft.dart';
-import 'package:pos_app/features/shift/shift_providers.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
 import 'package:pos_ui/pos_ui.dart';
 
@@ -24,21 +22,29 @@ import 'package:pos_ui/pos_ui.dart';
 Future<CheckoutResult?> showPaymentDialog(
   BuildContext context, {
   required Cart cart,
+  PayMode mode = PayMode.cash,
 }) => showPosDialog<CheckoutResult>(
   context: context,
   maxWidth: PaymentDialog.maxWidth,
-  builder: (context) => PaymentDialog(cart: cart),
+  builder: (context) => PaymentDialog(cart: cart, initialMode: mode),
 );
 
 /// Aralash to'lovda tahrirlanayotgan qism (qolgani — naqd).
 enum _Part { card, debt }
 
 class PaymentDialog extends ConsumerStatefulWidget {
-  const PaymentDialog({required this.cart, super.key});
+  const PaymentDialog({
+    required this.cart,
+    this.initialMode = PayMode.cash,
+    super.key,
+  });
 
   static const double maxWidth = 560;
 
   final Cart cart;
+
+  /// Kassada F11 (Nasiya) — oyna nasiyada ochiladi.
+  final PayMode initialMode;
 
   @override
   ConsumerState<PaymentDialog> createState() => _PaymentDialogState();
@@ -47,8 +53,16 @@ class PaymentDialog extends ConsumerStatefulWidget {
 class _PaymentDialogState extends ConsumerState<PaymentDialog> {
   late PaymentDraft _draft = PaymentDraft(
     totalTiyin: widget.cart.totalTiyin,
+    mode: widget.initialMode,
     customerId: widget.cart.customerId,
   );
+
+  /// Oyna ichida ham kassadagi kabi: F9 naqd, F10 karta, F11 nasiya.
+  static final Map<LogicalKeyboardKey, PayMode> _modeKeys = {
+    LogicalKeyboardKey.f9: PayMode.cash,
+    LogicalKeyboardKey.f10: PayMode.card,
+    LogicalKeyboardKey.f11: PayMode.debt,
+  };
   _Part _part = _Part.card;
 
   /// Oyna klaviaturasi (Enter, Backspace). Matn maydoni yopilgach fokus
@@ -162,6 +176,11 @@ class _PaymentDialogState extends ConsumerState<PaymentDialog> {
   KeyEventResult _onKey(FocusNode node, KeyEvent event) {
     if (event is KeyUpEvent || _inTextField) return KeyEventResult.ignored;
     final key = event.logicalKey;
+    final mode = _modeKeys[key];
+    if (mode != null) {
+      _setMode(mode);
+      return KeyEventResult.handled;
+    }
     if (key == LogicalKeyboardKey.enter ||
         key == LogicalKeyboardKey.numpadEnter) {
       if (_swallowEnter) {
@@ -238,25 +257,21 @@ class _PaymentDialogState extends ConsumerState<PaymentDialog> {
       }
     }
 
-    final shift = await openShiftNow(ref);
-    if (!mounted) return;
-    final user = ref.read(sessionProvider).user;
-    if (shift == null || user == null) {
-      _showNotice(l10n.payFailed, PosTone.danger);
-      return;
-    }
     setState(() => _busy = true);
     try {
-      final result = await ref
-          .read(checkoutProvider)
-          .complete(
-            cart: widget.cart,
-            payment: draft,
-            shiftId: shift.id,
-            cashierId: user.id,
-            debtApprovedBy: approvedBy,
-          );
-      if (mounted) Navigator.of(context).pop(result);
+      final result = await checkoutNow(
+        ref,
+        cart: widget.cart,
+        payment: draft,
+        debtApprovedBy: approvedBy,
+      );
+      if (!mounted) return;
+      if (result == null) {
+        setState(() => _busy = false);
+        _showNotice(l10n.payFailed, PosTone.danger);
+        return;
+      }
+      Navigator.of(context).pop(result);
     } on Exception {
       if (!mounted) return;
       setState(() => _busy = false);
@@ -274,6 +289,7 @@ class _PaymentDialogState extends ConsumerState<PaymentDialog> {
     final customers =
         ref.watch(customersProvider).value ?? const <CustomerEntry>[];
     final notice = _notice;
+    final compact = PosWindowSize.of(context).isCompact;
 
     return ScanListener(
       enabled: !_approving,
@@ -309,16 +325,17 @@ class _PaymentDialogState extends ConsumerState<PaymentDialog> {
               const SizedBox(height: PosSpacing.m),
               _Grid(
                 children: [
-                  for (final (mode, label) in [
-                    (PayMode.cash, l10n.payCash),
-                    (PayMode.card, l10n.payCard),
-                    (PayMode.debt, l10n.payDebt),
-                    (PayMode.mixed, l10n.payMixed),
+                  for (final (mode, label, key) in [
+                    (PayMode.cash, l10n.payCash, 'F9'),
+                    (PayMode.card, l10n.payCard, 'F10'),
+                    (PayMode.debt, l10n.payDebt, 'F11'),
+                    (PayMode.mixed, l10n.payMixed, null),
                   ])
                     PosButton(
                       key: ValueKey('pay-mode-${mode.name}'),
                       label: label,
                       size: PosButtonSize.s,
+                      shortcut: compact ? null : key,
                       expand: true,
                       variant: mode == _draft.mode
                           ? PosButtonVariant.primary

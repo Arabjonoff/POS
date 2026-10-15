@@ -4,6 +4,7 @@ import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/data/sales/sale_writer.dart';
 import 'package:pos_app/features/pos/cart/cart.dart';
 import 'package:pos_app/features/pos/payment/payment_draft.dart';
+import 'package:pos_app/features/shift/shift_providers.dart';
 
 /// Yakunlangan savdo: chek raqami va qaytim (xabar uchun).
 class CheckoutResult {
@@ -49,6 +50,30 @@ class Checkout {
     );
     return CheckoutResult(sale: sale, changeTiyin: payment.changeTiyin);
   }
+}
+
+/// Ochiq smena va kirgan kassir bilan savdoni yozadi (to'lov oynasi va bir
+/// bosishli Naqd/Karta). Smena yoki kassir yo'q — `null` (ekran "saqlab
+/// bo'lmadi" deydi); yozish xatosi — istisno (savat joyida qoladi).
+Future<CheckoutResult?> checkoutNow(
+  WidgetRef ref, {
+  required Cart cart,
+  required PaymentDraft payment,
+  String? debtApprovedBy,
+}) async {
+  // Smena bazadan (kesh eskirgan bo'lishi mumkin, T-106).
+  final shift = await openShiftNow(ref);
+  final user = ref.read(sessionProvider).user;
+  if (shift == null || user == null) return null;
+  return ref
+      .read(checkoutProvider)
+      .complete(
+        cart: cart,
+        payment: payment,
+        shiftId: shift.id,
+        cashierId: user.id,
+        debtApprovedBy: debtApprovedBy,
+      );
 }
 
 final checkoutProvider = Provider<Checkout>((ref) {
