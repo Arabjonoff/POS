@@ -5,13 +5,25 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-080 Admin: kirish va layout
+- Branch: feat/T-080-admin-auth
+- Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
+- [ ] 1. Server tomoni (Next): `src/lib/auth/` (cookie nomlari, Django manzili, `login`/`refresh`/`me`), route handler'lar `POST /api/auth/login`, `POST /api/auth/logout` (httpOnly cookie, faqat `platform_admin`)
+- [ ] 2. `src/proxy.ts`: kirmagan — `/login?next=`; access eskirgan, refresh bor — yangilab cookie qo'yadi
+- [ ] 3. Route guruhlari: `(auth)/login` (qobiqsiz), `(app)/layout.tsx` (qobiq + `getCurrentAdmin()` DAL); header'da admin ismi va "Chiqish"
+- [ ] 4. Kirish sahifasi (telefon, parol, xatolar: noto'g'ri parol, admin emas, tarmoq), tarjimalar uz/ru, Vitest
+- [ ] 5. Playwright: soxta Django API (`e2e/mock-api.mjs`, webServer), noto'g'ri parol, kirish, chiqish, himoyalangan sahifa; eski smoke testlar kirish bilan
+- [ ] 6. Spec (admin-dashboard.md), skrinshotlar, PROGRESS, ROADMAP, PR, merge
+
+## Oxirgi bajarilgan ish
+- Reja yozildi.
+
+## Keyingi aniq harakat
+- 1-qadam: `apps/admin/src/lib/auth/server.ts` va `src/app/api/auth/login/route.ts`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
