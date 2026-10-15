@@ -6,6 +6,7 @@ import 'package:pos_api_client/pos_api_client.dart';
 import 'package:pos_app/app/update/app_update.dart';
 import 'package:pos_app/core/text/search_key.dart';
 import 'package:pos_app/data/db/app_database.dart';
+import 'package:pos_app/data/sync/server_features.dart';
 
 /// Pull sahifasini lokal bazaga qo'llaydi (`docs/specs/sync.md`, `sync-api.md`).
 /// Bitta sahifa — bitta tranzaksiya: o'zgarishlar + kursor + obuna holati
@@ -245,6 +246,11 @@ class PullApplier {
     await _db.writeSetting(
       appReleaseSettingKey,
       encodeRelease(page.app?.latestVersion, page.app?.downloadUrl),
+    );
+    // Server imkoniyatlari (T-102); eski server — maydon yo'q (bo'sh ro'yxat).
+    await _db.writeSetting(
+      serverFeaturesSettingKey,
+      encodeFeatures(page.features),
     );
   }
 

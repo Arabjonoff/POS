@@ -15,6 +15,8 @@ abstract final class OutboxEventType {
   static const String supplierUpserted = 'supplier.upserted';
   static const String productUpserted = 'product.upserted';
   static const String receiptPosted = 'receipt.posted';
+  static const String receiptCorrected = 'receipt.corrected';
+  static const String receiptReversed = 'receipt.reversed';
   static const String inventoryPosted = 'inventory.posted';
 }
 

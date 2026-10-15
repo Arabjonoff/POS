@@ -2604,6 +2604,7 @@ export interface components {
             has_more: boolean;
             subscription: components["schemas"]["SubscriptionSnapshot"];
             app?: components["schemas"]["AppRelease"] | null;
+            features?: string[];
             /** Format: date-time */
             server_time: string;
         };

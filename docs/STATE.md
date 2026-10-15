@@ -5,20 +5,25 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-101 Sinxron yaxlitligi (umumiy reja — `AGENT_WORKLOG.md`, audit — `PROJECT_AUDIT.md`)
-- Branch: feat/T-101-sync-integrity
+- Vazifa: T-102 Kirimni tahrirlash va bekor qilish (dizayn — `docs/audit/audit_receipts.md` 2-bo'lim)
+- Branch: feat/T-102-receipt-corrections
 - Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
-- [x] 1–7. Barcha qadamlar bajarildi (`docs/PROGRESS.md` T-101)
-- [ ] 8. PR, CI, merge
+- [x] 1. Server: `StockReceipt.corrects/conflict` (migratsiya 0002), `correct_receipt`, `cancel_receipt`, `post_receipt(at, cost_since, document_at)`; hodisalar `receipt.corrected`/`receipt.reversed`; pull `features`
+- [x] 2. Server testlari (`apps/sync/tests/test_receipt_corrections.py`, 10 ta)
+- [x] 3. Kassa: drift v4 (`corrects_id`, `reverses_id`), `server_features.dart`, `ReceiptStore.startCorrection/postCorrection/cancel`
+- [ ] 4. Kassa data testlari (`test/data/receipt_store_test.dart`)
+- [ ] 5. UI: ro'yxat belgilari, kirim kartasida "Tahrirlash"/"Bekor qilish" (menejer PIN), tuzatish qoralamasi banneri, tasdiqlash oynasi (eski → yangi), l10n
+- [ ] 6. Widget testlari, golden/skrinshotlar
+- [ ] 7. Spec (`stock-receipt.md`, `sync-api.md`), QUESTIONS (Q-010), PR, merge
 
 ## Oxirgi bajarilgan ish
-- T-101 kodi va testlari tayyor, hujjatlar yangilandi.
+- T-101 merge (#51). T-102 server qismi va kassa data qatlami yozildi.
 
 ## Keyingi aniq harakat
-- T-101 PR CI yashil bo'lsa merge; keyin T-102 (`docs/audit/audit_receipts.md` 2-bo'lim dizayni).
+- 4-qadam: `apps/pos/test/data/receipt_store_test.dart` ga tuzatish/bekor qilish testlari (10 → 7, outbox bitta hodisa, qoldiq −3).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

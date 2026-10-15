@@ -5401,6 +5401,10 @@ components:
           allOf:
           - $ref: '#/components/schemas/AppRelease'
           nullable: true
+        features:
+          type: array
+          items:
+            type: string
         server_time:
           type: string
           format: date-time

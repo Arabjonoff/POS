@@ -143,6 +143,19 @@ class StockReceipt(TenantScopedModel):
         related_name="reversal",
         verbose_name=_("teskari qilingan kirim"),
     )
+    # Tahrirlash = eski versiyani teskari yozuv bilan bekor qilish + yangi versiya
+    # (CLAUDE.md 3-qoida: hujjat o'zgarmaydi). `corrects` — yangi versiya qaysi kirimni
+    # almashtiradi.
+    corrects = models.OneToOneField(
+        "self",
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="correction",
+        verbose_name=_("tuzatilgan kirim"),
+    )
+    # Ikki kassa bir kirimni oflayn tuzatgan: oxirgi kelgani qo'llandi, ega ko'rib chiqsin.
+    conflict = models.BooleanField(_("ziddiyat"), default=False)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.PROTECT,

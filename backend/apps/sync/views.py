@@ -39,6 +39,9 @@ class SyncPushView(APIView):
         return Response(PushResponseSerializer(data).data)
 
 
+SERVER_FEATURES = ["receipt_corrections"]
+
+
 class SyncPullView(APIView):
     """Server o'zgarishlari (ChangeLog) kursor bo'yicha + obuna holati."""
 
@@ -60,6 +63,9 @@ class SyncPullView(APIView):
         data |= {
             "subscription": subscription_snapshot(device.tenant),
             "app": app_release(device.platform),
+            # Kassa yangi hodisani faqat server uni bilsa yuboradi (eski server
+            # `unknown_event` bilan rad etib, kassa qoldig'i farq qilib qolmasin).
+            "features": SERVER_FEATURES,
             "server_time": now,
         }
         return Response(PullResponseSerializer(data).data)

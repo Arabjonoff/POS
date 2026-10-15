@@ -19,6 +19,9 @@ PullResponse _$PullResponseFromJson(Map<String, dynamic> json) => PullResponse(
   app: json['app'] == null
       ? null
       : AppRelease.fromJson(json['app'] as Map<String, dynamic>),
+  features: (json['features'] as List<dynamic>?)
+      ?.map((e) => e as String)
+      .toList(),
 );
 
 Map<String, dynamic> _$PullResponseToJson(PullResponse instance) =>
@@ -28,5 +31,6 @@ Map<String, dynamic> _$PullResponseToJson(PullResponse instance) =>
       'has_more': instance.hasMore,
       'subscription': instance.subscription.toJson(),
       'app': ?instance.app?.toJson(),
+      'features': ?instance.features,
       'server_time': instance.serverTime.toIso8601String(),
     };
