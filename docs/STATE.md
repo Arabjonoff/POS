@@ -5,25 +5,19 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-047 Android: Bluetooth va USB chek printeri
-- Branch: feat/T-047-android-printer
-- Boshlangan: 2026-10-15
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
-- [x] 1. Dart: `PrinterConnection.bluetooth/usb`, `android_printer_channel.dart` (MethodChannel `uz.zellypos.pos/printer`), `AndroidPrinterTransport`, factory
-- [x] 2. Kotlin: `PrinterChannel.kt` (SPP RFCOMM, USB bulk OUT, ruxsatlar) + MainActivity + AndroidManifest
-- [x] 3. Sozlamalar paneli: Bluetooth/USB tanlovi, qurilmalar ro'yxati, bo'sh/ruxsat/o'chiq holatlari, yangilash
-- [x] 4. l10n (uz/uz-Cyrl/ru), unit testlar (`test/printing/android_printer_test.dart`), widget testlar (`test/features/android_printing_test.dart`) — yashil; golden `printing/settings_bluetooth`
-- [x] 5. `flutter build apk --debug` — muvaffaqiyatli (Kotlin kompilyatsiya bo'ldi)
-- [x] 6. Hujjatlar: printing.md, qo'lda sinov ro'yxati `docs/printing-android-checklist.md`, qaror 0008 izohi, Q-007, user guide
-- [ ] 7. Tekshiruvlar, PR, merge, ROADMAP/PROGRESS
+- (yo'q)
 
 ## Oxirgi bajarilgan ish
-- Hammasi tayyor: analyze toza, 814 test yashil, debug va release APK yig'iladi. PR ochildi.
+- T-047 Android Bluetooth/USB chek printeri (PR #62). Haqiqiy qurilmada sinov — `docs/printing-android-checklist.md`.
 
 ## Keyingi aniq harakat
-- CI yashil bo'lsa: merge (squash); keyin `feat(pos): T-047 ...`, CI, merge; ROADMAP [x], PROGRESS yozuvi, STATE shablon.
+- ROADMAP'da bajarilmagan vazifa qolmadi; ochiq savollar `docs/QUESTIONS.md` (Q-001…Q-007, Q-009…Q-011). Loyiha egasidan yangi vazifa kutiladi.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
