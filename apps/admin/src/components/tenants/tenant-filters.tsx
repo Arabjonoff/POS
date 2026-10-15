@@ -24,7 +24,8 @@ export function TenantFilters({ csvRows }: { csvRows: (string | number | null)[]
   const first = useRef(true);
 
   function navigate(changes: Record<string, string | null>) {
-    const next = new URLSearchParams(params.toString());
+    // Joriy URL'dan (debounce paytida holat filtri o'zgargan bo'lishi mumkin).
+    const next = new URLSearchParams(window.location.search);
     for (const [key, value] of Object.entries(changes)) {
       if (value) next.set(key, value);
       else next.delete(key);

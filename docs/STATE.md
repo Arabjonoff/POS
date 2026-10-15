@@ -16,14 +16,14 @@
 - [x] 2. `/tenants` ro'yxati: qidiruv, holat filtri (URL), jadval, sahifalash, bo'sh/xato holatlari, CSV eksport
 - [x] 3. `/tenants/new` 3 qadamli usta (do'kon → ega (vaqtinchalik parol) → tarif + sinov) va natija kartasi (nusxa olish)
 - [x] 4. `/tenants/[id]`: tablar Umumiy (obuna, bloklash/blokdan chiqarish — sabab bilan), To'lovlar, Qurilmalar, Foydalanuvchilar (parol tiklash), Faollik
-- [ ] 5. Soxta API (tenantlar, tariflar, qurilmalar, to'lovlar, foydalanuvchilar, hodisalar — xotirada) + Vitest + Playwright (yaratish → ro'yxatda → ega API orqali kira oladi; bloklash)
+- [x] 5. Soxta API (tenantlar, tariflar, qurilmalar, to'lovlar, foydalanuvchilar, hodisalar — xotirada) + Vitest + Playwright (yaratish → ro'yxatda → ega API orqali kira oladi; bloklash)
 - [ ] 6. Spec, skrinshotlar, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- 4: `/tenants/[id]` (tablar URL'da: Umumiy, To'lovlar, Qurilmalar, Foydalanuvchilar, Faollik), `BlockDialog`, `ResetPassword`; backend: to'lovlar ro'yxati OpenAPI'da ikki marta o'ralgan edi — `PaymentPagination` (total_tiyin sxemada), `PaymentsListSerializer` olib tashlandi; OpenAPI + TS qayta generatsiya.
+- 5: soxta API (xotirada tenant/tarif/qurilma/to'lov/foydalanuvchi/hodisa), Vitest 37 (+wizard 4, csv 1), Playwright 17 (+tenants 6). Topilgan xato: qidiruv debounce eski URL bilan holat filtrini bekor qilardi — endi `window.location.search` dan.
 
 ## Keyingi aniq harakat
-- 5-qadam: `e2e/mock-api.mjs` ga tenantlar/tariflar/qurilmalar/to'lovlar/foydalanuvchilar/hodisalar (xotirada), Vitest (`validateStep`, wizard, block dialog), `e2e/tenants.spec.ts`.
+- 6-qadam: skrinshotlar `docs/screenshots/T-082/` (ro'yxat, usta, mijoz sahifasi), spec, PROGRESS, ROADMAP, PR.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
