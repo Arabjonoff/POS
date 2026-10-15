@@ -1,6 +1,6 @@
 import { ArrowLeft, TriangleAlert } from "lucide-react";
 import Link from "next/link";
-import { getFormatter, getTranslations } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
 import { BlockDialog } from "@/components/tenants/block-dialog";
@@ -8,7 +8,7 @@ import { ResetPassword } from "@/components/tenants/reset-password";
 import { StatusBadge } from "@/components/tenants/status-badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { formatDate, formatMoney } from "@/lib/format";
+import { formatDate, formatDateTime, formatMoney } from "@/lib/format";
 import {
   getTenant,
   tenantDevices,
@@ -42,18 +42,8 @@ export default async function TenantPage({ params, searchParams }: PageProps<"/t
   const t = await getTranslations("tenants.detail");
   const common = await getTranslations("tenants");
   const currency = (await getTranslations("format"))("currency");
-  const format = await getFormatter();
   const tenant = await getTenant(id);
-  const dateTime = (value: string | null | undefined) =>
-    value
-      ? format.dateTime(new Date(value), {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-        })
-      : common("never");
+  const dateTime = (value: string | null | undefined) => (value ? formatDateTime(value) : common("never"));
   const sub = tenant.subscription;
 
   let body: ReactNode;
@@ -89,8 +79,8 @@ export default async function TenantPage({ params, searchParams }: PageProps<"/t
           <CardContent>
             <dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-sm">
               <Row label={common("columns.owner")}>
-                {tenant.owner_name}
-                <span className="text-muted-foreground ml-2 tabular-nums">{tenant.owner_phone}</span>
+                <div>{tenant.owner_name}</div>
+                <div className="text-muted-foreground font-normal tabular-nums">{tenant.owner_phone}</div>
               </Row>
               <Row label={t("address")}>{tenant.address || "—"}</Row>
               <Row label={t("timezone")}>{tenant.timezone ?? "—"}</Row>

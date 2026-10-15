@@ -1,10 +1,10 @@
 import { Store } from "lucide-react";
 import Link from "next/link";
-import { useFormatter, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { formatDate } from "@/lib/format";
+import { formatDate, formatDateTime } from "@/lib/format";
 import type { TenantRow } from "@/lib/platform";
 
 import { StatusBadge } from "./status-badge";
@@ -17,7 +17,6 @@ export function coveredUntil(row: Pick<TenantRow, "status" | "paid_until" | "tri
 
 export function TenantsTable({ rows, filtered }: { rows: TenantRow[]; filtered: boolean }) {
   const t = useTranslations("tenants");
-  const format = useFormatter();
 
   if (rows.length === 0) {
     return (
@@ -68,15 +67,7 @@ export function TenantsTable({ rows, filtered }: { rows: TenantRow[]; filtered: 
                 <TableCell className="tabular-nums">{until ? formatDate(until) : "—"}</TableCell>
                 <TableCell className="text-right tabular-nums">{row.devices_count}</TableCell>
                 <TableCell className="text-muted-foreground pr-4 tabular-nums">
-                  {row.last_activity_at
-                    ? format.dateTime(new Date(row.last_activity_at), {
-                        day: "2-digit",
-                        month: "2-digit",
-                        year: "numeric",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })
-                    : t("never")}
+                  {row.last_activity_at ? formatDateTime(row.last_activity_at) : t("never")}
                 </TableCell>
               </TableRow>
             );

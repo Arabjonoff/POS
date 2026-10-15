@@ -40,3 +40,10 @@ Next.js App Router, TypeScript (strict), Tailwind, shadcn/ui, TanStack Query + T
 - **Muddati 7 kunda tugaydi**: nom (mijoz sahifasiga havola), "… gacha to'langan", qolgan kun (≤ 2 — qizil), **To'lov kiritish** → `/tenants/{id}?payment=1` (to'lov oynasi — T-083).
 - **Sinxronlanmagan qurilmalar** (3 kundan ortiq) soni → `/devices?stale_days=3`.
 - Joylashuv: desktop (≥ 1280) — 4 KPI, grafik + o'ngda ro'yxatlar; planshet — 2×2 KPI, grafik to'liq kenglikda, ostida ikki karta; telefon — bir ustun.
+
+## Mijozlar (T-082)
+- **Ro'yxat** `/tenants`: jadval (do'kon, ega + telefon, tarif, holat badge'i, muddat — sinovda `trial_ends_at`, aks holda `paid_until`, qurilmalar, oxirgi faollik). Qidiruv (nom/telefon, 300 ms kutib) va holat filtri URL'da (`?search=&status=`), sahifalash 25 tadan, bo'sh holat ("Hali mijoz yo'q" / "Hech narsa topilmadi"), **CSV** — joriy sahifa (UTF-8 BOM, Excel ochadi). Saralash — keyinroq (API'da `ordering` yo'q).
+- **Yangi mijoz** `/tenants/new` — 3 qadam: do'kon (nom*, manzil, izoh) → ega (telefon*, ism*, parol: vaqtinchalik yaratilsin yoki o'zi kiritadi ≥ 8 belgi) → tarif (faqat faol, oylik narxi bilan) va sinov kunlari (0–90, standart 14). Har qadam o'zi tekshiriladi; band telefon (`409 phone_taken`) — 2-qadamga qaytadi. Natija kartasi: do'kon, telefon, parol (faqat shu yerda), "Nusxa olish", "Mijoz sahifasi", "Yana qo'shish".
+- **Mijoz sahifasi** `/tenants/{id}` — tablar URL'da (`?tab=`): Umumiy (obuna: holat, tarif, sinov tugashi, to'langan muddat, qolgan/imtiyozli/oflayn kunlar; do'kon ma'lumotlari), To'lovlar (jadval + jami netto), Qurilmalar, Foydalanuvchilar (ega/menejer uchun "Parolni tiklash" — tasdiqlash, yangi vaqtinchalik parol bir marta ko'rinadi; kassirda yo'q — PIN), Faollik (sinxron hodisalari). Bloklash — sabab majburiy, tasdiqlash oynasi; bloklangan mijozda qizil banner + sabab; blokdan chiqarish — izoh ixtiyoriy.
+- O'zgarishlar Server Actions orqali (`(app)/tenants/actions.ts`), Django audit jurnaliga yozadi (T-020).
+- Vaqt — Toshkent bo'yicha `dd.mm.yyyy HH:mm` (`formatDateTime`).

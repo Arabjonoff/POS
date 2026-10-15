@@ -5,25 +5,19 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-082 Admin: mijozlar (tenantlar)
-- Branch: feat/T-082-admin-tenants
-- Boshlangan: 2026-10-15
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [x] 1. UI komponentlar (shadcn: dialog, table, tabs, label, textarea, select) + `src/lib/platform.ts` ga tenant funksiyalari, Server Actions (`src/app/(app)/tenants/actions.ts`: onboard, block, unblock, reset-password)
-- [x] 2. `/tenants` ro'yxati: qidiruv, holat filtri (URL), jadval, sahifalash, bo'sh/xato holatlari, CSV eksport
-- [x] 3. `/tenants/new` 3 qadamli usta (do'kon → ega (vaqtinchalik parol) → tarif + sinov) va natija kartasi (nusxa olish)
-- [x] 4. `/tenants/[id]`: tablar Umumiy (obuna, bloklash/blokdan chiqarish — sabab bilan), To'lovlar, Qurilmalar, Foydalanuvchilar (parol tiklash), Faollik
-- [x] 5. Soxta API (tenantlar, tariflar, qurilmalar, to'lovlar, foydalanuvchilar, hodisalar — xotirada) + Vitest + Playwright (yaratish → ro'yxatda → ega API orqali kira oladi; bloklash)
-- [ ] 6. Spec, skrinshotlar, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- 5: soxta API (xotirada tenant/tarif/qurilma/to'lov/foydalanuvchi/hodisa), Vitest 37 (+wizard 4, csv 1), Playwright 17 (+tenants 6). Topilgan xato: qidiruv debounce eski URL bilan holat filtrini bekor qilardi — endi `window.location.search` dan.
+- T-082 tugadi (PR, merge).
 
 ## Keyingi aniq harakat
-- 6-qadam: skrinshotlar `docs/screenshots/T-082/` (ro'yxat, usta, mijoz sahifasi), spec, PROGRESS, ROADMAP, PR.
+- ROADMAP'dan keyingi vazifa: T-083 Admin: tariflar, obunalar, to'lovlar.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
@@ -46,3 +40,4 @@
 - Generatsiya qilingan Dart klient `DateTime` query'ni to'liq ISO vaqt qilib yuboradi; server `DateField` (`YYYY-MM-DD`) bo'lsa — Dio bilan to'g'ridan-to'g'ri chaqir (`reports_provider.dart` misoli).
 - Admin e2e lokal: `cd apps/admin && npm run build && E2E_PORT=3150 npx playwright test` (3100 — docker admin bo'lishi mumkin; reuseExistingServer uni qayta ishlatib yuboradi). Soxta Django API: `e2e/mock-api.mjs` (3199).
 - Admin'ga npm paket qo'shilsa: Windows'dagi npm lock'dan `@emnapi/core|runtime` (optional, wasm) yozuvlarini o'chiradi va CI `npm ci` yiqiladi. Yechim: yozuvlarni main'dagi lock'dan qaytarish, `npm ci --dry-run` bilan tekshirish.
+- Admin skrinshotlari: scratchpad'dagi `shots8x.cjs` naqshi — `node e2e/mock-api.mjs` + `API_URL_INTERNAL=http://127.0.0.1:3199 npx next start -p 3150`, keyin Playwright skript (`require(<apps/admin>/node_modules/playwright)`). Bash'da murakkab `node -e` / heredoc'ga `${...}` va qo'shtirnoq aralashsa buziladi — Write vositasi bilan fayl yoz.
