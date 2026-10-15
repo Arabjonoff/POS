@@ -82,7 +82,26 @@ void main() {
       findsOneWidget,
     );
     expect(blockBanner, findsNothing);
+    // Bir qator, 28 dp — kassa ekraniga joy qolsin.
+    expect(tester.getSize(banner).height, PosSizes.noticeBarHeight);
     await expectPayWorks(tester, works: true);
+  });
+
+  testWidgets('trial banner can be closed; payment warnings cannot', (
+    tester,
+  ) async {
+    await open(tester, status: 'trial', daysLeft: 12);
+    final close = find.byKey(const ValueKey('notice-close'));
+    expect(tester.getSize(close).width, PosSizes.touchMin);
+    await tester.tap(close);
+    await tester.pumpAndSettle();
+    expect(banner, findsNothing);
+  });
+
+  testWidgets('expiring banner has no close button', (tester) async {
+    await open(tester, status: 'active', daysLeft: 2);
+    expect(banner, findsOneWidget);
+    expect(find.byKey(const ValueKey('notice-close')), findsNothing);
   });
 
   testWidgets('active, 2 days left: yellow warning with the contact', (

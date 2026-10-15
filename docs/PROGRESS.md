@@ -478,3 +478,8 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - To'liq regressiya `main`da (T-106 dan keyin): backend ~807 yashil + ruff + migratsiya tekshiruvi + OpenAPI; apps/pos 754; packages/ui 141; widgetbook 62; admin lint, typecheck, 60 unit, 25 Playwright e2e; CI yashil.
 - Yakuniy hisobot — `PROJECT_AUDIT.md` boshida ("Yakuniy hisobot"): topilgan/tuzatilgan muammolar, UI/UX, backend/DB, testlar, qolgan bo'shliqlar, ishga tushirish.
 - Qoldi: jismoniy printer va Android/iOS qurilmada sinov; RC-B4 va P2-17 qarori; P2 sayqal qoldiqlari; ochiq savollar Q-003…Q-007, Q-009…Q-011.
+
+## 2026-10-15 — T-108a Qobiq: yig'iladigan menyu, banner, holat paneli
+- Qilindi (qaror 0014, eskiz tasdiqlangan): desktopda 64 dp ikon menyu (hover 300 ms — ustida ochiladi, Ctrl+B/tugma — doim ochiq), pastda kassir bosh harfi va qulf; obuna banneri 28 dp, sinov xabari yopiladi; holat paneli 48 dp, yozuvlar bosiladi (Sozlamalar / smena), oflayn — qizil "oflayn rejimda ishlayapti", printer sozlanmagan — sariq, smena "… dan", kassir va soat.
+- Sinov: apps/pos — yangi/yangilangan testlar (menyu hover/Ctrl+B, banner yopish, holat yozuvi 48 dp va bosish), golden'lar yangilandi (184 ta — faqat menyu/holat paneli); packages/ui +2; widgetbook scaffold golden'lari.
+- Qoldi: T-108b (tovar kartalari), T-108c (chek paneli va to'lov).

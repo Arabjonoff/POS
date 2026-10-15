@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:pos_ui/src/components/pos_button.dart';
 import 'package:pos_ui/src/tokens/pos_breakpoints.dart';
@@ -29,7 +31,10 @@ class PosDestination {
 /// Ilova karkasi, ekran kengligiga moslashadi:
 /// - compact (< 600): holat qatori tepada, pastda navigatsiya paneli;
 /// - medium (600–899): chapda ixcham rels (ikon + yozuv), holat qatori pastda;
-/// - expanded (≥ 900): chapda 240 dp yon panel (yozuv + tezkor tugma).
+/// - expanded (≥ 900): chapda 240 dp yon panel (yozuv + tezkor tugma) yoki,
+///   [onNavExpandedChanged] berilsa, 64 dp yig'ilgan menyu: sichqoncha olib
+///   borilsa kontent ustida ochiladi, [navExpanded] — doim ochiq (kontent
+///   suriladi).
 class PosResponsiveScaffold extends StatelessWidget {
   const PosResponsiveScaffold({
     required this.destinations,
@@ -39,6 +44,11 @@ class PosResponsiveScaffold extends StatelessWidget {
     this.statusBar,
     this.header,
     this.footer,
+    this.railFooter,
+    this.navExpanded = false,
+    this.onNavExpandedChanged,
+    this.expandNavTooltip = '',
+    this.collapseNavTooltip = '',
     super.key,
   }) : assert(destinations.length >= 2, 'Kamida 2 bo‘lim');
 
@@ -56,10 +66,65 @@ class PosResponsiveScaffold extends StatelessWidget {
   /// Yon panel pasti (kassir, sozlamalar) — faqat expanded.
   final Widget? footer;
 
+  /// Yig'ilgan menyu pasti (64 dp: kassir bosh harfi, qulf).
+  final Widget? railFooter;
+
+  /// Yig'iladigan menyu doim ochiqmi (Ctrl+B).
+  final bool navExpanded;
+
+  /// Berilsa — desktopda yig'iladigan menyu; ochish/yig'ish tugmasi chaqiradi.
+  final ValueChanged<bool>? onNavExpandedChanged;
+  final String expandNavTooltip;
+  final String collapseNavTooltip;
+
   @override
   Widget build(BuildContext context) {
     final p = PosPalette.of(context);
     final size = PosWindowSize.of(context);
+    final onToggle = onNavExpandedChanged;
+
+    if (size.isExpandedUp && onToggle != null) {
+      final inset = navExpanded
+          ? PosSizes.sideNavWidth
+          : PosSizes.navCollapsedWidth;
+      return Scaffold(
+        body: Column(
+          children: [
+            Expanded(
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    left: inset,
+                    child: SafeArea(left: false, child: body),
+                  ),
+                  Positioned(
+                    left: 0,
+                    top: 0,
+                    bottom: 0,
+                    child: SafeArea(
+                      right: false,
+                      child: _CollapsibleNav(
+                        destinations: destinations,
+                        selectedIndex: selectedIndex,
+                        onSelected: onDestinationSelected,
+                        pinned: navExpanded,
+                        onToggle: () => onToggle(!navExpanded),
+                        expandTooltip: expandNavTooltip,
+                        collapseTooltip: collapseNavTooltip,
+                        header: header,
+                        footer: footer,
+                        railFooter: railFooter,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ?statusBar,
+          ],
+        ),
+      );
+    }
 
     if (size.isCompact) {
       return Scaffold(
@@ -129,6 +194,304 @@ Widget _withBadge(BuildContext context, Widget icon, int? count) {
     textStyle: PosTypography.caption.copyWith(fontWeight: FontWeight.w600),
     child: icon,
   );
+}
+
+/// Desktop yig'iladigan menyu: 64 dp ikonlar; sichqoncha olib borilsa
+/// (300 ms kutib) yoki [pinned] — 240 dp, yozuv va tezkor tugmalar bilan.
+class _CollapsibleNav extends StatefulWidget {
+  const _CollapsibleNav({
+    required this.destinations,
+    required this.selectedIndex,
+    required this.onSelected,
+    required this.pinned,
+    required this.onToggle,
+    required this.expandTooltip,
+    required this.collapseTooltip,
+    this.header,
+    this.footer,
+    this.railFooter,
+  });
+
+  final List<PosDestination> destinations;
+  final int selectedIndex;
+  final ValueChanged<int> onSelected;
+  final bool pinned;
+  final VoidCallback onToggle;
+  final String expandTooltip;
+  final String collapseTooltip;
+  final Widget? header;
+  final Widget? footer;
+  final Widget? railFooter;
+
+  /// Sichqoncha tasodifan o'tib ketganda ochilib-yopilmasin.
+  static const Duration hoverDelay = Duration(milliseconds: 300);
+
+  @override
+  State<_CollapsibleNav> createState() => _CollapsibleNavState();
+}
+
+class _CollapsibleNavState extends State<_CollapsibleNav> {
+  bool _hover = false;
+  Timer? _timer;
+
+  @override
+  void didUpdateWidget(_CollapsibleNav oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Yig'ish tugmasi bosildi — sichqoncha ustida bo'lsa ham yopilsin.
+    if (oldWidget.pinned && !widget.pinned) _close();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  void _enter() {
+    _timer?.cancel();
+    _timer = Timer(_CollapsibleNav.hoverDelay, () {
+      if (mounted) setState(() => _hover = true);
+    });
+  }
+
+  void _close() {
+    _timer?.cancel();
+    if (_hover) setState(() => _hover = false);
+  }
+
+  void _select(int index) {
+    _close();
+    widget.onSelected(index);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final p = PosPalette.of(context);
+    final open = widget.pinned || _hover;
+    // Ustiga chiqqan (vaqtincha) menyu — soya bilan.
+    final floating = _hover && !widget.pinned;
+    return MouseRegion(
+      onEnter: (_) => _enter(),
+      onExit: (_) => _close(),
+      child: AnimatedContainer(
+        duration: PosMotion.overlay,
+        curve: PosMotion.curve,
+        width: open ? PosSizes.sideNavWidth : PosSizes.navCollapsedWidth,
+        decoration: BoxDecoration(
+          color: p.surface,
+          border: Border(right: BorderSide(color: p.border)),
+          boxShadow: floating ? p.overlayShadow : null,
+        ),
+        child: LayoutBuilder(
+          // Ochilish paytida (oraliq kenglikda) — ixcham ko'rinish.
+          builder: (context, constraints) =>
+              constraints.maxWidth >= PosSizes.sideNavWidth - 1
+              ? _wide()
+              : _narrow(),
+        ),
+      ),
+    );
+  }
+
+  Widget _wide() => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      Padding(
+        padding: const EdgeInsets.fromLTRB(
+          PosSpacing.l,
+          PosSpacing.s,
+          PosSpacing.s,
+          PosSpacing.s,
+        ),
+        child: Row(
+          children: [
+            Expanded(child: widget.header ?? const SizedBox.shrink()),
+            _NavToggle(
+              tooltip: widget.pinned
+                  ? widget.collapseTooltip
+                  : widget.expandTooltip,
+              pinned: widget.pinned,
+              onPressed: widget.onToggle,
+            ),
+          ],
+        ),
+      ),
+      Expanded(
+        child: FocusTraversalGroup(
+          child: ListView(
+            padding: const EdgeInsets.all(PosSpacing.m),
+            children: [
+              for (final (i, d) in widget.destinations.indexed)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: PosSpacing.xs),
+                  child: _SideNavItem(
+                    destination: d,
+                    selected: i == widget.selectedIndex,
+                    onTap: () => _select(i),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
+      if (widget.footer != null)
+        Padding(
+          padding: const EdgeInsets.all(PosSpacing.m),
+          child: widget.footer,
+        ),
+    ],
+  );
+
+  Widget _narrow() {
+    final p = PosPalette.of(context);
+    return Column(
+      children: [
+        const SizedBox(height: PosSpacing.s),
+        _NavToggle(
+          tooltip: widget.expandTooltip,
+          pinned: false,
+          onPressed: widget.onToggle,
+        ),
+        Container(
+          width: 32,
+          height: 1,
+          margin: const EdgeInsets.symmetric(vertical: PosSpacing.xs),
+          color: p.border,
+        ),
+        Expanded(
+          child: FocusTraversalGroup(
+            child: ListView(
+              padding: const EdgeInsets.symmetric(vertical: PosSpacing.xs),
+              children: [
+                for (final (i, d) in widget.destinations.indexed)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: PosSpacing.xs),
+                    child: _IconNavItem(
+                      destination: d,
+                      selected: i == widget.selectedIndex,
+                      onTap: () => _select(i),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ),
+        if (widget.railFooter != null)
+          Padding(
+            padding: const EdgeInsets.only(bottom: PosSpacing.s),
+            child: widget.railFooter,
+          ),
+      ],
+    );
+  }
+}
+
+/// Menyuni ochish/yig'ish tugmasi (48 × 48).
+class _NavToggle extends StatelessWidget {
+  const _NavToggle({
+    required this.tooltip,
+    required this.pinned,
+    required this.onPressed,
+  });
+
+  final String tooltip;
+  final bool pinned;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = PosPalette.of(context);
+    return Tooltip(
+      message: tooltip,
+      excludeFromSemantics: true,
+      child: Semantics(
+        button: true,
+        label: tooltip,
+        excludeSemantics: true,
+        child: Material(
+          type: MaterialType.transparency,
+          child: InkWell(
+            key: const ValueKey('nav-toggle'),
+            onTap: onPressed,
+            borderRadius: PosRadius.controlAll,
+            hoverColor: p.text.withValues(alpha: 0.04),
+            focusColor: p.primary.withValues(alpha: 0.12),
+            child: SizedBox.square(
+              dimension: PosSizes.touchMin,
+              child: Icon(
+                pinned
+                    ? Icons.keyboard_double_arrow_left
+                    : Icons.keyboard_double_arrow_right,
+                color: p.textSecondary,
+                size: PosSizes.iconL,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Yig'ilgan menyu elementi: 48 × 48 ikon; yozuv va tezkor tugma — tooltip.
+class _IconNavItem extends StatelessWidget {
+  const _IconNavItem({
+    required this.destination,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final PosDestination destination;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = PosPalette.of(context);
+    final fg = selected ? p.onPrimarySoft : p.textSecondary;
+    final shortcut = destination.shortcut;
+    final tip = shortcut == null
+        ? destination.label
+        : '${destination.label} · $shortcut';
+    return Center(
+      child: Semantics(
+        selected: selected,
+        button: true,
+        label: destination.label,
+        excludeSemantics: true,
+        child: Tooltip(
+          message: tip,
+          excludeFromSemantics: true,
+          child: Material(
+            color: selected ? p.primarySoft : Colors.transparent,
+            borderRadius: PosRadius.controlAll,
+            clipBehavior: Clip.antiAlias,
+            child: InkWell(
+              onTap: onTap,
+              hoverColor: p.text.withValues(alpha: 0.04),
+              focusColor: p.primary.withValues(alpha: 0.12),
+              child: SizedBox.square(
+                dimension: PosSizes.touchMin,
+                child: Center(
+                  child: _withBadge(
+                    context,
+                    Icon(
+                      selected
+                          ? destination.selectedIcon ?? destination.icon
+                          : destination.icon,
+                      color: fg,
+                      size: PosSizes.iconL,
+                    ),
+                    destination.badgeCount,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class _SideNav extends StatelessWidget {

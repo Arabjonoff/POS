@@ -2208,4 +2208,21 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get settingsUpToDate => 'Установлена последняя версия';
+
+  @override
+  String get statusOfflineWorking => 'Нет интернета — работаем офлайн';
+
+  @override
+  String statusShiftOpenSince(String time) {
+    return 'Смена открыта с $time';
+  }
+
+  @override
+  String get actionCloseBanner => 'Закрыть сообщение';
+
+  @override
+  String get navExpand => 'Развернуть меню · Ctrl+B';
+
+  @override
+  String get navCollapse => 'Свернуть меню · Ctrl+B';
 }

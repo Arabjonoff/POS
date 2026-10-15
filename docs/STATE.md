@@ -5,19 +5,24 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-108a Qobiq: yig'iladigan menyu, banner, holat paneli (11-bosqich, qaror 0014)
+- Branch: feat/T-108a-kassa-shell
+- Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
-- (yo'q)
+- [x] 1. ROADMAP T-108a/b/c, qaror 0014, STATE
+- [x] 2. packages/ui: PosResponsiveScaffold — desktopda 64 px ikon menyu (hover/Ctrl+B ochiladi, ustiga chiqadi), pastda kassir + qulf
+- [x] 3. Sinov banneri 28 px + yopish (sessiya davomida)
+- [x] 4. Holat paneli 48 px: bosiladigan yozuvlar (→ Sozlamalar), oflayn qizil "oflayn rejimda ishlayapti", printer sozlanmagan sariq, smena vaqti, kassir
+- [x] 5. l10n (uz, uz-Cyrl, ru), testlar, golden'lar
+- [ ] 6. Skrinshotlar docs/screenshots/T-108a/, PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-- T-100…T-107 (audit, tuzatishlar, yakuniy hisobot) — `main`da. Hisobot: `PROJECT_AUDIT.md` → "Yakuniy hisobot".
+- T-108a kodi, testlar va golden'lar tayyor; skrinshotlar `docs/screenshots/T-108a/`.
 
 ## Keyingi aniq harakat
-- `docs/ROADMAP.md` dan keyingi bajarilmagan vazifa; ochiq savollar `docs/QUESTIONS.md` (javob kelsa — tegishli vazifa).
+- PR ochish (`gh pr create`), CI yashil bo'lsa squash merge; keyin T-108b (tovar kartasi komponenti scratchpad'da tayyor edi — `packages/ui/lib/src/components/pos_product_tile.dart` qayta yoziladi).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

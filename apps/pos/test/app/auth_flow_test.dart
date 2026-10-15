@@ -280,8 +280,8 @@ void main() {
       expect(find.text('PIN kodni kiriting'), findsOneWidget);
       await typePin(tester, '1234');
       expect(find.text(emptyCart), findsOneWidget);
-      // Yon panelda kirgan xodim.
-      expect(find.text('Aziza'), findsOneWidget);
+      // Holat panelida kirgan xodim.
+      expect(find.text('Aziza · Kassir'), findsOneWidget);
     });
 
     testWidgets('physical keyboard: digits + Enter, Esc goes back', (

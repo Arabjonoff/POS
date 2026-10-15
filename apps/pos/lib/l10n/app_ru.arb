@@ -626,5 +626,10 @@
   "settingsUpdateAvailable": "Доступна новая версия: {version}",
   "settingsUpdateDownload": "Скачать: {url}",
   "settingsUpdateAskAdmin": "Для установки свяжитесь с администратором",
-  "settingsUpToDate": "Установлена последняя версия"
+  "settingsUpToDate": "Установлена последняя версия",
+  "statusOfflineWorking": "Нет интернета — работаем офлайн",
+  "statusShiftOpenSince": "Смена открыта с {time}",
+  "actionCloseBanner": "Закрыть сообщение",
+  "navExpand": "Развернуть меню · Ctrl+B",
+  "navCollapse": "Свернуть меню · Ctrl+B"
 }

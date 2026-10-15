@@ -12,6 +12,7 @@ class PosStatusItem {
     required this.label,
     this.tone = PosTone.neutral,
     this.short,
+    this.onTap,
   });
 
   final IconData icon;
@@ -23,10 +24,15 @@ class PosStatusItem {
   /// Tor ekranda neytral yozuv o'rniga (masalan, navbat soni `12`);
   /// `null` — faqat ikon (to'liq matn — tooltip va ekran o'quvchida).
   final String? short;
+
+  /// Bosilsa (masalan, tegishli sozlamaga o'tish). Planshet/desktopda
+  /// yozuv 48 dp balandlikdagi tugma bo'ladi.
+  final VoidCallback? onTap;
 }
 
-/// Holat qatori — doim ko'rinadi. Telefonda ekran tepasida, planshet va
-/// desktopda pastda. Joy yetmasa gorizontal suriladi.
+/// Holat qatori — doim ko'rinadi. Telefonda ekran tepasida (40 dp), planshet
+/// va desktopda pastda (48 dp, muammoli yozuv yumshoq fonda). Joy yetmasa
+/// gorizontal suriladi.
 class PosStatusBar extends StatelessWidget {
   const PosStatusBar({
     required this.items,
@@ -62,12 +68,17 @@ class PosStatusBar extends StatelessWidget {
     final borderSide = BorderSide(color: p.border);
 
     return Container(
-      height: PosSizes.statusBarHeight,
+      // Katta panelda: 48 dp yozuvlar + 1 dp chegara.
+      height: compact
+          ? PosSizes.statusBarHeight
+          : PosSizes.statusBarHeightLarge + 1,
       decoration: BoxDecoration(
         color: p.surface,
         border: atTop ? Border(bottom: borderSide) : Border(top: borderSide),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: PosSpacing.l),
+      padding: EdgeInsets.symmetric(
+        horizontal: compact ? PosSpacing.l : PosSpacing.s,
+      ),
       child: Row(
         children: [
           Expanded(
@@ -78,7 +89,7 @@ class PosStatusBar extends StatelessWidget {
                   for (final (i, item) in _ordered.indexed) ...[
                     if (i > 0)
                       SizedBox(
-                        width: compact ? PosSpacing.m : PosSpacing.xl,
+                        width: compact ? PosSpacing.m : PosSpacing.xs,
                       ),
                     _StatusItem(item: item, compact: compact),
                   ],
@@ -87,7 +98,7 @@ class PosStatusBar extends StatelessWidget {
             ),
           ),
           if (trailing != null) ...[
-            const SizedBox(width: PosSpacing.l),
+            SizedBox(width: compact ? PosSpacing.l : PosSpacing.m),
             DefaultTextStyle.merge(
               style: PosTypography.small.copyWith(color: p.textSecondary),
               child: trailing!,
@@ -109,29 +120,64 @@ class _StatusItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final p = PosPalette.of(context);
     final neutral = item.tone == PosTone.neutral;
-    final color = neutral ? p.textSecondary : p.tone(item.tone).text;
+    final tone = p.tone(item.tone);
+    // Katta panelda muammo yumshoq fonda — matn rangi fon ustida AA.
+    final soft = !compact && !neutral;
+    final color = neutral ? p.textSecondary : (soft ? tone.onSoft : tone.text);
     final text = compact && neutral ? item.short : item.label;
-    return Tooltip(
-      message: item.label,
-      child: Semantics(
-        label: item.label,
-        excludeSemantics: true,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(item.icon, size: PosSizes.iconS, color: color),
-            if (text != null) ...[
-              const SizedBox(width: PosSpacing.xs + 2),
-              Text(
-                text,
-                style: PosTypography.small.copyWith(
+    final content = Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(
+          item.icon,
+          size: compact ? PosSizes.iconS : PosSizes.iconM,
+          color: color,
+        ),
+        if (text != null) ...[
+          SizedBox(width: compact ? PosSpacing.xs + 2 : PosSpacing.s),
+          Text(
+            text,
+            style: (compact ? PosTypography.small : PosTypography.body)
+                .copyWith(
                   color: color,
                   fontWeight: neutral ? FontWeight.w400 : FontWeight.w600,
                 ),
-              ),
-            ],
-          ],
+          ),
+        ],
+      ],
+    );
+    if (compact) {
+      return Tooltip(
+        message: item.label,
+        child: Semantics(
+          label: item.label,
+          excludeSemantics: true,
+          child: content,
         ),
+      );
+    }
+    final box = Container(
+      height: PosSizes.touchMin,
+      padding: const EdgeInsets.symmetric(horizontal: PosSpacing.m),
+      alignment: Alignment.center,
+      child: content,
+    );
+    return Semantics(
+      label: item.label,
+      button: item.onTap != null,
+      excludeSemantics: true,
+      child: Material(
+        color: soft ? tone.soft : Colors.transparent,
+        borderRadius: const BorderRadius.all(Radius.circular(PosRadius.input)),
+        clipBehavior: Clip.antiAlias,
+        child: item.onTap == null
+            ? box
+            : InkWell(
+                onTap: item.onTap,
+                hoverColor: p.text.withValues(alpha: 0.04),
+                focusColor: p.primary.withValues(alpha: 0.12),
+                child: box,
+              ),
       ),
     );
   }

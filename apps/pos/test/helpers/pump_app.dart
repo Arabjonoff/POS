@@ -108,3 +108,13 @@ Directory? _images;
 /// Testlar uchun rasm papkasi (bir marta yaratiladi, jarayon oxirida o'chadi).
 Directory testImageDirectory() =>
     _images ??= Directory.systemTemp.createTempSync('pos_images_');
+
+/// Menyu bo'limini bosadi (desktopda yig'ilgan menyu — ikon, nomi tooltip'da
+/// `Kassa · Ctrl+1`; telefonda — pastki panel).
+Future<void> tapNav(WidgetTester tester, String label) async {
+  final item = find.byWidgetPredicate(
+    (w) => w is Tooltip && (w.message ?? '').split(' · ').first == label,
+  );
+  await tester.tap(item.first);
+  await tester.pumpAndSettle();
+}

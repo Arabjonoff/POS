@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart' show Value;
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -32,27 +33,58 @@ void main() {
       expect(find.text(emptyCart), findsOneWidget);
     });
 
-    testWidgets('desktop: side panel with all sections and shortcuts', (
+    testWidgets('desktop: collapsed 64 dp menu, Ctrl+B and hover open it', (
       tester,
     ) async {
-      await pumpPosApp(tester);
-      for (final label in [
+      const sections = [
         'Kassa',
         'Tovarlar',
         'Kirim',
         'Mijozlar',
         'Hisobotlar',
         'Sozlamalar',
-      ]) {
-        expect(find.text(label), findsWidgets, reason: label);
+      ];
+      await pumpPosApp(tester);
+      // Yig'ilgan: faqat ikonlar, nomi va tezkor tugmasi — tooltip'da.
+      for (final (i, label) in sections.indexed) {
+        expect(find.byTooltip('$label · Ctrl+${i + 1}'), findsOneWidget);
       }
+      expect(find.text('Ctrl+1'), findsNothing);
+      final body = tester.getRect(find.byType(PosSearchField));
+      expect(body.left, greaterThan(PosSizes.navCollapsedWidth));
+      expect(body.left, lessThan(PosSizes.navCollapsedWidth + 32));
+      expect(
+        tester.getRect(find.byKey(const ValueKey('nav-toggle'))).right,
+        lessThanOrEqualTo(PosSizes.navCollapsedWidth),
+      );
+
+      // Ctrl+B — doim ochiq: yozuvlar va tezkor tugmalar, kontent suriladi.
+      await ctrl(tester, LogicalKeyboardKey.keyB);
       for (var i = 1; i <= 6; i++) {
         expect(find.text('Ctrl+$i'), findsOneWidget);
       }
       expect(tester.getRect(find.text('Mijozlar')).top, lessThan(400));
+      expect(
+        tester.getRect(find.byType(PosSearchField)).left,
+        greaterThan(PosSizes.sideNavWidth),
+      );
+      await ctrl(tester, LogicalKeyboardKey.keyB);
+      expect(find.text('Ctrl+1'), findsNothing);
 
-      await tester.tap(find.text('Sozlamalar'));
+      // Sichqoncha olib borilsa — kontent ustida ochiladi, ketsa — yopiladi.
+      final mouse = await tester.createGesture(kind: PointerDeviceKind.mouse);
+      addTearDown(mouse.removePointer);
+      await mouse.addPointer(location: const Offset(800, 400));
+      await mouse.moveTo(const Offset(32, 300));
+      await tester.pump(const Duration(milliseconds: 400));
       await tester.pumpAndSettle();
+      expect(find.text('Ctrl+6'), findsOneWidget);
+      expect(tester.getRect(find.byType(PosSearchField)).left, body.left);
+      await mouse.moveTo(const Offset(800, 400));
+      await tester.pumpAndSettle();
+      expect(find.text('Ctrl+6'), findsNothing);
+
+      await tapNav(tester, 'Sozlamalar');
       expect(find.text('Til'), findsOneWidget);
       expect(find.text('Русский'), findsOneWidget);
     });
@@ -138,24 +170,29 @@ void main() {
       expect(status.top, lessThan(100));
     });
 
-    testWidgets('tablet: side panel, status bar at the bottom', (
+    testWidgets('tablet: collapsed menu, status bar at the bottom', (
       tester,
     ) async {
       await pumpPosApp(tester, size: tablet);
-      expect(tester.getRect(find.text('Mijozlar')).top, lessThan(400));
-      expect(tester.getRect(find.byType(PosStatusBar)).bottom, tablet.height);
+      expect(
+        tester.getRect(find.byTooltip('Mijozlar · Ctrl+4')).top,
+        lessThan(400),
+      );
+      final status = tester.getRect(find.byType(PosStatusBar));
+      expect(status.bottom, tablet.height);
+      // 48 dp yozuvlar + yuqori chegara.
+      expect(status.height, PosSizes.statusBarHeightLarge + 1);
     });
 
     testWidgets('language switch from settings updates navigation', (
       tester,
     ) async {
       final (_, db) = await pumpPosApp(tester);
-      await tester.tap(find.text('Sozlamalar'));
-      await tester.pumpAndSettle();
+      await tapNav(tester, 'Sozlamalar');
       await tester.tap(find.text('Русский'));
       await tester.pumpAndSettle();
       expect(find.text('Настройки'), findsWidgets);
-      expect(find.text('Товары'), findsOneWidget);
+      expect(find.byTooltip('Товары · Ctrl+2'), findsOneWidget);
       expect(await tester.runAsync(() => db.readSetting('locale')), 'ru');
     });
   });
@@ -183,13 +220,35 @@ void main() {
           ),
         ],
       );
+      // Oflayn — qizil, lekin xotirjam: savdo davom etadi.
       expect(
-        find.text("Internet yo'q — savdolar saqlanyapti (12)"),
+        find.text("Internet yo'q — oflayn rejimda ishlayapti"),
         findsOneWidget,
       );
       expect(find.text('12 ta yozuv navbatda'), findsOneWidget);
       expect(find.text('Printer ulanmagan'), findsOneWidget);
       expect(find.text('20:15'), findsOneWidget);
+      // Kim ishlayapti.
+      expect(find.text('Aziza · Kassir'), findsOneWidget);
+
+      // Muammo bosilsa — sozlamalarga.
+      await tester.tap(find.text('Printer ulanmagan'));
+      await tester.pumpAndSettle();
+      expect(find.text('Til'), findsOneWidget);
+    });
+
+    testWidgets('shift item shows since when; tapping opens the shift', (
+      tester,
+    ) async {
+      await pumpPosApp(tester);
+      final shift = find.textContaining('Smena ochiq · ');
+      expect(shift, findsOneWidget);
+      // Bosiladigan joy — kamida 48 dp.
+      final target = find.ancestor(of: shift, matching: find.byType(InkWell));
+      expect(tester.getSize(target.first).height, PosSizes.touchMin);
+      await tester.tap(shift);
+      await tester.pumpAndSettle();
+      expect(find.text('Smenani yopish'), findsWidgets);
     });
 
     testWidgets('shift and queue come from the local database', (
@@ -222,7 +281,7 @@ void main() {
             );
       }
       await tester.pumpAndSettle();
-      expect(find.text('Smena ochiq'), findsOneWidget);
+      expect(find.text('Smena ochiq · 05:00 dan'), findsOneWidget);
       expect(find.text('1 ta yozuv navbatda'), findsOneWidget);
 
       await tester.runAsync(

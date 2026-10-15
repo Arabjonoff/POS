@@ -74,9 +74,10 @@ void main() {
     await tester.pump(const Duration(milliseconds: 1100));
     await tester.pumpAndSettle();
     expect(
-      find.text("Internet yo'q — savdolar saqlanyapti (1)"),
+      find.text("Internet yo'q — oflayn rejimda ishlayapti"),
       findsOneWidget,
     );
+    expect(find.text('1 ta yozuv navbatda'), findsOneWidget);
     expect(server.applied, isEmpty);
 
     server.offline = false;

@@ -304,6 +304,99 @@ void main() {
       expect(selected, [1]);
     });
 
+    testWidgets('desktop: collapsible 64 dp nav, toggle pins it open', (
+      tester,
+    ) async {
+      tester.view.physicalSize = const Size(1366, 768);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      final selected = <int>[];
+      var expanded = false;
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: PosTheme.light(),
+          home: StatefulBuilder(
+            builder: (context, setState) => PosResponsiveScaffold(
+              destinations: _destinations,
+              selectedIndex: 0,
+              onDestinationSelected: selected.add,
+              navExpanded: expanded,
+              onNavExpandedChanged: (v) => setState(() => expanded = v),
+              expandNavTooltip: 'Open',
+              collapseNavTooltip: 'Close',
+              railFooter: const Text('A'),
+              body: const Center(child: Text('Body')),
+            ),
+          ),
+        ),
+      );
+      // Yig'ilgan: ikonlar, nom va tezkor tugma — tooltip.
+      expect(find.byTooltip('Kassa · F3'), findsOneWidget);
+      expect(find.text('Tovarlar'), findsNothing);
+      expect(find.byTooltip('Tovarlar'), findsOneWidget);
+      expect(find.text('A'), findsOneWidget);
+      final item = tester.getSize(find.byTooltip('Tovarlar'));
+      expect(item.width, greaterThanOrEqualTo(PosSizes.touchMin));
+      expect(item.height, greaterThanOrEqualTo(PosSizes.touchMin));
+      await tester.tap(find.byTooltip('Tovarlar'));
+      expect(selected, [1]);
+      // Badge yig'ilgan menyuda ham ko'rinadi.
+      expect(find.text('3'), findsOneWidget);
+
+      await tester.tap(find.byTooltip('Open'));
+      await tester.pumpAndSettle();
+      expect(expanded, isTrue);
+      expect(find.text('Tovarlar'), findsOneWidget);
+      expect(
+        tester.getRect(find.text('Body')).center.dx,
+        greaterThan(PosSizes.sideNavWidth),
+      );
+      await tester.tap(find.byTooltip('Close'));
+      await tester.pumpAndSettle();
+      expect(expanded, isFalse);
+      expect(find.text('Tovarlar'), findsNothing);
+    });
+
+    testWidgets('desktop status bar: 48 dp tappable items', (tester) async {
+      tester.view.physicalSize = const Size(1366, 768);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      var taps = 0;
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: PosTheme.light(),
+          home: Scaffold(
+            body: Align(
+              alignment: Alignment.bottomCenter,
+              child: PosStatusBar(
+                items: [
+                  PosStatusItem(
+                    icon: Icons.wifi_off,
+                    label: 'Offline',
+                    tone: PosTone.danger,
+                    onTap: () => taps++,
+                  ),
+                  const PosStatusItem(icon: Icons.print, label: 'Printer'),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+      final target = find.ancestor(
+        of: find.text('Offline'),
+        matching: find.byType(InkWell),
+      );
+      expect(tester.getSize(target).height, PosSizes.touchMin);
+      await tester.tap(find.text('Offline'));
+      expect(taps, 1);
+      // Bosilmaydigan yozuvda InkWell yo'q.
+      expect(
+        find.ancestor(of: find.text('Printer'), matching: find.byType(InkWell)),
+        findsNothing,
+      );
+    });
+
     testWidgets('toast works inside scaffold', (tester) async {
       tester.view.physicalSize = const Size(1440, 900);
       tester.view.devicePixelRatio = 1;

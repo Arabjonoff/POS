@@ -6,8 +6,22 @@ import 'package:pos_app/app/sync/subscription_notice.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
 import 'package:pos_ui/pos_ui.dart';
 
+/// Sinov banneri yopildi (ilova qayta ochilguncha; T-108a).
+class TrialBannerClosed extends Notifier<bool> {
+  @override
+  bool build() => false;
+
+  void close() => state = true;
+}
+
+final trialBannerClosedProvider = NotifierProvider<TrialBannerClosed, bool>(
+  TrialBannerClosed.new,
+);
+
 /// Obuna ogohlantirishi — barcha bo'limlar tepasida (`subscription-billing.md`):
 /// sinov — ko'k, tugashiga ≤ 3 kun — sariq, muddati o'tgan (grace) — qizil.
+/// Bir qator, 28 dp (kassa ekraniga joy qolsin); sinov xabarini yopsa bo'ladi,
+/// muddat tugayotgani/o'tgani — yo'q.
 /// Savdo to'xtagan holatlar kassa ekranidagi bannerda (sababi bilan).
 class SubscriptionBanner extends ConsumerWidget {
   const SubscriptionBanner({super.key});
@@ -16,6 +30,10 @@ class SubscriptionBanner extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final notice = ref.watch(subscriptionNoticeProvider);
     if (notice == null) return const SizedBox.shrink();
+    final trial = notice.kind == SubscriptionNoticeKind.trial;
+    if (trial && ref.watch(trialBannerClosedProvider)) {
+      return const SizedBox.shrink();
+    }
     final l10n = AppLocalizations.of(context);
     final phone = ref.watch(supportPhoneProvider);
     final days = notice.daysLeft;
@@ -41,9 +59,12 @@ class SubscriptionBanner extends ConsumerWidget {
       tone: tone,
       icon: icon,
       text: text,
-      detail: notice.kind == SubscriptionNoticeKind.trial
-          ? null
-          : contactLine(l10n, phone),
+      detail: contactLine(l10n, phone),
+      compact: true,
+      closeTooltip: l10n.actionCloseBanner,
+      onClose: trial
+          ? () => ref.read(trialBannerClosedProvider.notifier).close()
+          : null,
     );
   }
 }
@@ -70,6 +91,9 @@ class NoticeBar extends StatelessWidget {
     this.detail,
     this.extra,
     this.rounded = false,
+    this.compact = false,
+    this.onClose,
+    this.closeTooltip = '',
     super.key,
   });
 
@@ -84,9 +108,17 @@ class NoticeBar extends StatelessWidget {
   /// Karta ichida (kassa ekrani) — yumaloq burchak; qobiq tepasida — to'liq kenglik.
   final bool rounded;
 
+  /// Bir qator, 28 dp (qobiq tepasi): matn va izoh bir qatorda, sig'masa — `…`.
+  final bool compact;
+
+  /// Berilsa — o'ngda yopish tugmasi (48 × 28: banner balandligi 28).
+  final VoidCallback? onClose;
+  final String closeTooltip;
+
   @override
   Widget build(BuildContext context) {
     final c = PosPalette.of(context).tone(tone);
+    if (compact) return _compact(context, c);
     return Semantics(
       container: true,
       liveRegion: true,
@@ -124,6 +156,73 @@ class NoticeBar extends StatelessWidget {
                 ],
               ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+extension on NoticeBar {
+  Widget _compact(BuildContext context, PosToneColors c) {
+    final style = PosTypography.small.copyWith(
+      color: c.onSoft,
+      fontWeight: FontWeight.w500,
+    );
+    Widget part(String value, {int flex = 10}) => Flexible(
+      flex: flex,
+      child: Text(
+        value,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: style,
+      ),
+    );
+    final parts = [text, ?detail, ?extra];
+    return Semantics(
+      container: true,
+      liveRegion: true,
+      child: Container(
+        height: PosSizes.noticeBarHeight,
+        color: c.soft,
+        padding: EdgeInsets.only(
+          left: PosSpacing.l,
+          right: onClose == null ? PosSpacing.l : 0,
+        ),
+        child: Row(
+          children: [
+            const Spacer(),
+            Icon(icon, color: c.onSoft, size: PosSizes.iconS),
+            const SizedBox(width: PosSpacing.s),
+            for (final (i, value) in parts.indexed) ...[
+              if (i > 0) Text(' · ', style: style),
+              // Asosiy matn birinchi qisqarmasin.
+              part(value, flex: i == 0 ? 20 : 10),
+            ],
+            const Spacer(),
+            if (onClose != null)
+              Tooltip(
+                message: closeTooltip,
+                excludeFromSemantics: true,
+                child: Semantics(
+                  button: true,
+                  label: closeTooltip,
+                  excludeSemantics: true,
+                  child: InkWell(
+                    key: const ValueKey('notice-close'),
+                    onTap: onClose,
+                    child: SizedBox(
+                      width: PosSizes.touchMin,
+                      height: PosSizes.noticeBarHeight,
+                      child: Icon(
+                        Icons.close,
+                        color: c.onSoft,
+                        size: PosSizes.iconS,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),

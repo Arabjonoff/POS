@@ -58,7 +58,7 @@ void main() {
       expect(shift.openedBy, testCashier.id);
       expect(find.text('Smenani oching'), findsNothing);
       expect(find.text('Tovarni skanerlang yoki qidiring'), findsOneWidget);
-      expect(find.text('Smena ochiq'), findsOneWidget);
+      expect(find.textContaining('Smena ochiq · '), findsOneWidget);
     });
 
     testWidgets('suggests the cash counted at the last close', (tester) async {

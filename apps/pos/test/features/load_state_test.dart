@@ -20,8 +20,7 @@ void main() {
           }),
         ],
       );
-      await tester.tap(find.text('Mijozlar'));
-      await tester.pumpAndSettle();
+      await tapNav(tester, 'Mijozlar');
       expect(find.text("Ma'lumotni o'qib bo'lmadi"), findsOneWidget);
       expect(find.byType(CircularProgressIndicator), findsNothing);
 

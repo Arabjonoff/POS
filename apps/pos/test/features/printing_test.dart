@@ -134,8 +134,7 @@ void main() {
 
   group('settings', () {
     Future<void> openSettings(WidgetTester tester) async {
-      await tester.tap(find.text('Sozlamalar'));
-      await tester.pumpAndSettle();
+      await tapNav(tester, 'Sozlamalar');
       await tester.scrollUntilVisible(
         find.text('Ulanish'),
         300,

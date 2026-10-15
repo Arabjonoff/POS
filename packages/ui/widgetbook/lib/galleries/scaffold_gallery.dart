@@ -47,6 +47,7 @@ class ScaffoldGallery extends StatefulWidget {
 
 class _ScaffoldGalleryState extends State<ScaffoldGallery> {
   int _selected = 0;
+  bool _navExpanded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +57,22 @@ class _ScaffoldGalleryState extends State<ScaffoldGallery> {
       destinations: sampleDestinations,
       selectedIndex: _selected,
       onDestinationSelected: (i) => setState(() => _selected = i),
+      navExpanded: _navExpanded,
+      onNavExpandedChanged: (v) => setState(() => _navExpanded = v),
+      expandNavTooltip: 'Menyuni ochish · Ctrl+B',
+      collapseNavTooltip: 'Menyuni yig‘ish · Ctrl+B',
+      railFooter: const Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CircleAvatar(radius: 18, child: Text('A')),
+          SizedBox(height: PosSpacing.xs),
+          PosIconButton(
+            icon: Icons.lock_outline,
+            tooltip: 'Qulflash',
+            onPressed: noop,
+          ),
+        ],
+      ),
       header: Row(
         children: [
           Icon(Icons.storefront, color: p.primaryText),
@@ -77,21 +94,33 @@ class _ScaffoldGalleryState extends State<ScaffoldGallery> {
       ),
       statusBar: PosStatusBar(
         atTop: compact,
+        compact: compact,
         items: const [
           PosStatusItem(
             icon: Icons.wifi_off,
-            label: 'Internet yo‘q',
-            tone: PosTone.warning,
+            label: 'Internet yo‘q — oflayn rejimda ishlayapti',
+            tone: PosTone.danger,
+            onTap: noop,
           ),
-          PosStatusItem(icon: Icons.sync, label: '12 ta navbatda'),
-          PosStatusItem(icon: Icons.print_outlined, label: 'Printer'),
           PosStatusItem(
-            icon: Icons.schedule,
-            label: 'Smena ochiq',
-            tone: PosTone.success,
+            icon: Icons.sync,
+            label: '12 ta yozuv navbatda',
+            tone: PosTone.warning,
+            onTap: noop,
+          ),
+          PosStatusItem(
+            icon: Icons.print_outlined,
+            label: 'Printer sozlanmagan',
+            tone: PosTone.warning,
+            onTap: noop,
+          ),
+          PosStatusItem(
+            icon: Icons.work_history_outlined,
+            label: 'Smena ochiq · 08:02 dan',
+            onTap: noop,
           ),
         ],
-        trailing: compact ? null : const Text('14:05'),
+        trailing: compact ? null : const Text('Aziza · Kassir   14:05'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(PosSpacing.l),
