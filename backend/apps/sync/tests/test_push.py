@@ -5,7 +5,7 @@ from django.utils import timezone
 from rest_framework.test import APIClient
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from apps.catalog.models import Product
+from apps.catalog.models import Category, Product, ProductBarcode
 from apps.core.ids import new_id
 from apps.customers.models import Customer
 from apps.customers.services import customer_balance, record_sale_debt
@@ -391,6 +391,99 @@ def test_receipt_and_inventory_posted(kassa, manager, product, tenant):
     )
     assert statuses(push(client, count)) == ["applied"]
     assert current_stock(product, store) == 18_000
+
+
+def test_product_with_taken_barcode_is_kept_and_its_sale_applied(
+    kassa, manager, cashier, product, tenant
+):
+    """Audit PR-P0-1: ikki kassa bir shtrix-kodni berdi — ikkinchi tovar rad etilsa,
+    uning savdolari ham yo'qolardi. Endi tovar qo'llanadi, band kod tushiriladi."""
+    _, client = kassa
+    ProductBarcode.objects.create(tenant=tenant, product=product, barcode="4780000000007")
+    category = Category.objects.create(tenant=tenant, name="Eski")
+    category.deleted_at = timezone.now()
+    category.save()
+    other = Product.objects.create(
+        tenant=tenant,
+        name="PLU egasi",
+        unit=tenant.units.get(code="kg"),
+        sell_price_tiyin=1,
+        is_weighted=True,
+        plu_code="12",
+    )
+    new_product_id = str(new_id())
+    upsert = event(
+        "product.upserted",
+        {
+            "id": new_product_id,
+            "name": "Sut 1 l",
+            "unit": str(tenant.units.get(code="kg").id),
+            "is_weighted": True,
+            "plu_code": "12",
+            "category": str(category.id),
+            "sell_price_tiyin": 1_200_000,
+            "barcodes": ["4780000000007", "4780000000014"],
+            "by": str(manager.id),
+        },
+    )
+    shift_id = new_id()
+    new_product = Product(id=new_product_id, name="Sut 1 l", cost_price_tiyin=0)
+    sale = sale_completed(shift_id, cashier, new_product, price=1_200_000)
+    results = push(client, upsert, shift_opened(cashier, shift_id), sale)
+    assert statuses(results) == ["applied", "applied", "applied"]
+    created = Product.objects.get(pk=new_product_id)
+    assert [b.barcode for b in created.barcodes.all()] == ["4780000000014"]
+    assert created.plu_code is None
+    assert created.category is None
+    assert other.plu_code == "12"
+    assert Sale.objects.filter(pk=sale["payload"]["id"]).exists()
+
+
+def test_document_waits_for_product_and_accepts_deleted_ones(kassa, manager, product, tenant):
+    """Audit RC-B1: oflayn kirim o'chirilgan tovar/yetkazib beruvchiga — qabul;
+    hali kelmagan tovar — kutadi."""
+    _, client = kassa
+    store = tenant.stores.get()
+    supplier = Supplier.objects.create(tenant=tenant, name="Eski ta'minotchi")
+    supplier.deleted_at = timezone.now()
+    supplier.save()
+    product.deleted_at = timezone.now()
+    product.save()
+    receipt = event(
+        "receipt.posted",
+        {
+            "id": str(new_id()),
+            "supplier": str(supplier.id),
+            "items": [{"product": str(product.id), "qty_milli": 5_000, "cost_price_tiyin": 1}],
+            "by": str(manager.id),
+        },
+    )
+    assert statuses(push(client, receipt)) == ["applied"]
+    assert current_stock(product, store) == 5_000
+
+    later_id = str(new_id())
+    waiting = event(
+        "receipt.posted",
+        {
+            "id": str(new_id()),
+            "items": [{"product": later_id, "qty_milli": 1_000, "cost_price_tiyin": 1}],
+            "by": str(manager.id),
+        },
+    )
+    result = push(client, waiting)[0]
+    assert (result["status"], result["error"]["code"]) == ("pending", "missing_dependency")
+    upsert = event(
+        "product.upserted",
+        {
+            "id": later_id,
+            "name": "Keyin",
+            "unit": str(tenant.units.get(code="pcs").id),
+            "sell_price_tiyin": 1,
+            "by": str(manager.id),
+        },
+    )
+    assert statuses(push(client, upsert)) == ["applied"]
+    assert SyncEvent.objects.get(pk=waiting["id"]).status == "applied"
 
 
 def test_cashier_cannot_post_receipt(kassa, cashier, product):

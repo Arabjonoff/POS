@@ -31,9 +31,13 @@ def _items(tenant_id, raw_items) -> list[dict]:
     products = Product.objects.filter(tenant_id=tenant_id, pk__in=product_ids).in_bulk()
     items = []
     for index, raw in enumerate(raw_items):
-        product = products.get(as_uuid(raw, "product", code=CODE))
+        product_id = as_uuid(raw, "product", code=CODE)
+        product = products.get(product_id)
         if product is None:
-            raise invalid(CODE, "Unknown product.", item=index, field="product")
+            if Product.objects.filter(pk=product_id).exists():  # boshqa tenant tovari
+                raise invalid(CODE, "Unknown product.", item=index, field="product")
+            # Tovar kassada yaratilgan, hodisasi hali qo'llanmagan — savdo kutadi (audit PR-P0-1).
+            raise MissingDependency("product", product_id)
         item = {
             "id": as_uuid(raw, "id", code=CODE),
             "product": product,
@@ -95,6 +99,8 @@ def record_sale(device, payload: dict) -> Sale:
     if (customer_id := as_uuid(payload, "customer", code=CODE, required=False)) is not None:
         customer = Customer.objects.filter(tenant_id=tenant_id, pk=customer_id).first()
         if customer is None:
+            if Customer.objects.filter(pk=customer_id).exists():  # boshqa tenant mijozi
+                raise invalid(CODE, "Unknown customer.", field="customer")
             # Mijoz kassada oflayn yaratilgan va uning hodisasi hali qo'llanmagan
             # bo'lishi mumkin — rad etmaymiz, keyinroq qayta urinamiz (pending).
             raise MissingDependency("customer", customer_id)

@@ -1,9 +1,13 @@
 """Hodisa turi → uni qo'llovchi servis (sync-api.md "Hodisa → servis")."""
 
+import logging
 from types import SimpleNamespace
 
+from django.core.exceptions import ValidationError as DjangoValidationError
+
 from apps.accounts.models import Role
-from apps.catalog.models import Product
+from apps.catalog.barcodes import BarcodeError, normalize_barcode
+from apps.catalog.models import Category, Product, ProductBarcode
 from apps.catalog.serializers import ProductSerializer
 from apps.customers.models import Customer, PaymentMethod
 from apps.customers.serializers import CustomerSerializer
@@ -26,6 +30,8 @@ from apps.sales.services.common import (
     invalid,
     tenant_user,
 )
+
+logger = logging.getLogger(__name__)
 
 MANAGERS = (Role.OWNER, Role.MANAGER)
 
@@ -94,13 +100,94 @@ def supplier_upserted(device, payload):
     return _upsert(device, payload, Supplier, SupplierSerializer, managers_only=True)
 
 
+def _clean_product(tenant_id, payload) -> dict:
+    """Sinxronda tovar butunlay rad etilmasin (audit PR-P0-1): rad etilsa, u bilan bo'lgan
+    savdo va kirimlar ham serverga yetmay qolardi. Boshqa tovarga tegishli shtrix-kod va PLU,
+    o'chirilgan kategoriya tushirib qoldiriladi; server holati keyingi pull'da kassaga qaytadi."""
+    payload = dict(payload)
+    object_id = payload.get("id")
+    category = payload.get("category")
+    if (
+        category
+        and not Category.objects.filter(
+            tenant_id=tenant_id, pk=category, deleted_at__isnull=True
+        ).exists()
+    ):
+        logger.warning("product %s: deleted category %s dropped", object_id, category)
+        payload["category"] = None
+    codes = payload.get("barcodes")
+    if isinstance(codes, list) and codes:
+        normalized = {}
+        for raw in codes:
+            try:
+                normalized[raw] = normalize_barcode(raw)
+            except (BarcodeError, TypeError):
+                normalized[raw] = None
+        taken = set(
+            ProductBarcode.objects.filter(
+                tenant_id=tenant_id,
+                barcode__in=[code for code in normalized.values() if code],
+                deleted_at__isnull=True,
+            )
+            .exclude(product_id=object_id)
+            .values_list("barcode", flat=True)
+        )
+        if taken:
+            logger.warning("product %s: barcodes %s belong to other products", object_id, taken)
+            payload["barcodes"] = [raw for raw in codes if normalized[raw] not in taken]
+    plu = payload.get("plu_code")
+    if (
+        plu
+        and payload.get("is_active", True)
+        and Product.objects.filter(
+            tenant_id=tenant_id, plu_code=plu, is_active=True, deleted_at__isnull=True
+        )
+        .exclude(pk=object_id)
+        .exists()
+    ):
+        logger.warning("product %s: PLU %s belongs to another product", object_id, plu)
+        payload["plu_code"] = None
+    return payload
+
+
 def product_upserted(device, payload):
+    payload = _clean_product(device.tenant_id, payload)
     return _upsert(device, payload, Product, ProductSerializer, managers_only=True)
+
+
+def _require_products(tenant_id, payload) -> None:
+    """Hujjatdagi tovar hali serverda yo'q bo'lsa — kutamiz (rad etmaymiz)."""
+    items = payload.get("items")
+    if not isinstance(items, list):
+        return
+    ids = {item.get("product") for item in items if isinstance(item, dict) and item.get("product")}
+    if not ids:
+        return
+    try:
+        known = {
+            str(pk)
+            for pk in Product.objects.filter(tenant_id=tenant_id, pk__in=ids).values_list(
+                "pk", flat=True
+            )
+        }
+    except (ValueError, DjangoValidationError):
+        return  # noto'g'ri id — serializer tushunarli xato beradi
+    missing = sorted(str(i) for i in ids if str(i) not in known)
+    # Boshqa tenant tovari — kutmaymiz, serializer "topilmadi" deb rad etadi.
+    foreign = {
+        str(pk) for pk in Product.objects.filter(pk__in=missing).values_list("pk", flat=True)
+    }
+    missing = [i for i in missing if i not in foreign]
+    if missing:
+        raise MissingDependency("product", missing[0])
 
 
 def _post_document(device, payload, serializer_class, post):
     user = _actor(device, payload, managers_only=True)
-    context = {"request": SimpleNamespace(user=user)}
+    _require_products(device.tenant_id, payload)
+    # Oflayn hujjat o'shanda mavjud bo'lgan (endi o'chirilgan) tovar/yetkazib beruvchiga
+    # tayanishi mumkin — rad etilsa, kassa qoldig'i server bilan abadiy farq qiladi (RC-B1).
+    context = {"request": SimpleNamespace(user=user), "allow_deleted": True}
     serializer = serializer_class(data=_data(payload), context=context)
     serializer.is_valid(raise_exception=True)
     return post(serializer.save(), user=user)
