@@ -52,6 +52,7 @@ class SettingsScreen extends ConsumerWidget {
           _SettingsCard(
             title: l10n.storeSettingsTitle,
             subtitle: l10n.storeSettingsHint,
+            wide: true,
             child: const ReceiptSettingsSection(),
           ),
           const SizedBox(height: PosSpacing.l),
@@ -77,11 +78,15 @@ class _SettingsCard extends StatelessWidget {
     required this.title,
     required this.child,
     this.subtitle,
+    this.wide = false,
   });
 
   final String title;
   final String? subtitle;
   final Widget child;
+
+  /// Keng karta (forma + chek ko'rinishi yonma-yon).
+  final bool wide;
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +94,7 @@ class _SettingsCard extends StatelessWidget {
     return Align(
       alignment: Alignment.topLeft,
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 560),
+        constraints: BoxConstraints(maxWidth: wide ? 1080 : 560),
         child: PosCard(
           padding: const EdgeInsets.all(PosSpacing.s),
           child: Column(

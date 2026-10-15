@@ -120,7 +120,7 @@ void main() {
 
   test('the logo is printed as raster, within the paper width', () {
     final wide = GrayImage(1000, 100, Uint8List(1000 * 100));
-    final rows = ReceiptBuilder(l10n, width: PaperWidth.mm58).build(
+    final rows = ReceiptBuilder(l10n).build(
       sampleReceipt(l10n, at: DateTime.utc(2026)).withStore(
         storeName: 'X',
         storeAddress: '',

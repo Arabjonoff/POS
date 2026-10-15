@@ -21,7 +21,7 @@ barcha modullar regressiyasi, testlar, yakuniy hisobot.
 | 3 | Kirimni tahrirlash (teskari yozuv + yangi kirim, atomar) | ✅ T-102 |
 | 4 | Mijoz boshlang'ich balansi | ✅ T-103 |
 | 5 | Mahsulot rasmi (server + sinx + kassa) | — |
-| 6 | Chek sozlamalari (preview, logo, 58/80 mm, test cheki) | 104a ✅ (PR), 104b — |
+| 6 | Chek sozlamalari (preview, logo, 58/80 mm, test cheki) | ✅ T-104a, T-104b |
 | 7 | Vizual uslub va UX sayqali | — |
 | 8 | Regressiya, yakuniy hisobot | — |
 
@@ -43,5 +43,7 @@ barcha modullar regressiyasi, testlar, yakuniy hisobot.
 
 - T-104a: chek yasovchi xatolari (to'lovlar = JAMI, Berildi/Qaytim, Summa, birlik, bo'sh qatorlar, telefon, belgilar, Ў/ў), ESC/POS profil (`FS .`, kod sahifasi, kesish/surish, baland JAMI), preview (printer bilan bir manba, Roboto Mono), test cheki = namuna chek, 42 belgi, qayta urinish NUSXA emas, pul qutisi avto-cheksiz ham. Golden'da topilgan: preview oxirgi belgini kesardi (mavzu `letterSpacing`) — token 0, regressiya testi. pos 704.
 
+- T-104b: `Store` rekvizitlari (yuridik nom, STIR/JShShIR, logotip, ko'rsat/yashir), `store.upserted`, drift v5, o'z PNG/1-bit/`GS v 0`, muharrir + jonli chek. Golden'da topildi: logotip kengligi yaxlitlanish bilan 380 (384 o'rniga) — tuzatildi; desktop'da forma va chek yonma-yon emas edi — keng karta. pos 728, backend to'liq.
+
 ## Keyingi qadam
-- T-104b: do'kon rekvizitlari (yuridik nom, STIR/JShShIR, sarlavha/pastki matn), ko'rsat/yashir, logotip — server `Store` maydonlari + `store.upserted` + kassa muharriri (`docs/audit/audit_printing.md` 3.1, 3.3).
+- T-105 Mahsulot rasmi — reja: `docs/audit/audit_products.md` "Product images: implementation plan".

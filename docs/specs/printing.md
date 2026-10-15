@@ -61,3 +61,15 @@ Qaytim                  15 000
   qutisi ochiladi (sozlamada yoqilgan bo'lsa); manzil har harfda emas, yozish to'xtagach saqlanadi.
 - **Jismoniy printerda sinalmagan** (agent muhitida printer yo'q): baytlar unit testlarda, ko'rinish golden testlarda tekshirilgan.
   Birinchi o'rnatishda tekshirish: test cheki (Ў ў Қ Ғ Ҳ, oʻ gʻ, 48 belgili chizg'ich, kesish) — Xprinter 58/80, Epson, Windows, LAN.
+
+## Chek rekvizitlari, ko'rsat/yashir, logotip (T-104b, qaror 0012)
+- **Do'kon darajasi** (hamma kassada bir xil, serverda `Store`, pull orqali): nomi, **yuridik nomi**, **STIR (9) / JShShIR (14)**, manzil,
+  telefon, chek sarlavhasi va pastki matni, **logotip** (kulrang PNG, ≤ 576×240, ≤ 96 KB), **ko'rsat/yashir** (`receipt_options`:
+  logotip, yuridik nom, manzil, telefon, STIR, sarlavha, kassir, shtrix-kod, pastki matn; yo'q kalit — ko'rsatiladi).
+- **Soliq raqami faqat kiritilsa** chiqadi, hech qachon taxmin qilinmaydi; yorlig'i uzunlikka qarab: 9 → "STIR", 14 → "JShShIR" (Q-011).
+- **Muharrir:** Sozlamalar → "Chek rekvizitlari va ko'rinishi": chapda forma, o'ngda (telefonda pastda) **jonli** chek — saqlanmagan
+  o'zgarishlar ham darhol ko'rinadi. Saqlash — ega/menejer (kassir — menejer PIN); lokal `stores` va `store.upserted` bitta tranzaksiyada;
+  boshqa kassalar keyingi sinxronda oladi. Server `features` da `store_settings` bo'lmasa — forma o'chiq, izoh.
+- **Logotip:** fayl (PNG/JPG) → kulrang, kichraytirilgan → PNG (server tekshiradi: PNG imzosi, hajm) → chop etishda printer kengligiga
+  (58 mm — 384, 80 mm — 576 nuqta) 1 bitli rasm, `GS v 0`, 128 qatorli bo'laklar. Ko'rinishda — aynan o'sha nuqtalar.
+- **Qurilma darajasi** (har kassada, `local_settings`): ulanish, kenglik, kodlash, kod sahifasi, `FS .`, kesish, surish, nusxalar, pul qutisi.

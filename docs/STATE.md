@@ -14,14 +14,15 @@
 - [x] 1. Server: `Store.legal_name/tin/receipt_logo/receipt_options` (migratsiya tenants 0002), `StoreSettingsSerializer`, `store.upserted` (ega/menejer, tenant), pull, `features: store_settings`; testlar 11
 - [x] 2. Kassa: drift v5 (stores ustunlari), pull; `mono_bitmap.dart` (kulrang PNG, 1 bit, `GS v 0`); `ReceiptOptions`, `ReceiptRow.image`, rekvizitlar chekda; `StoreSettingsStore`; `ReceiptSettingsSection` (forma + jonli preview)
 - [x] 3. Testlar: mono_bitmap 8, store_settings 2
-- [ ] 4. Widget testlari (`test/features/receipt_settings_test.dart` — 2 tasi yiqilmoqda, tuzatilmoqda), golden'lar
-- [ ] 5. Hujjatlar, PR, merge
+- [x] 4. Widget testlari, golden'lar
+- [x] 5. Hujjatlar
+- [ ] 6. PR, merge
 
 ## Oxirgi bajarilgan ish
-- T-104b kodi yozildi.
+- T-104b tayyor, PR ochilmoqda.
 
 ## Keyingi aniq harakat
-- `flutter test test/features/receipt_settings_test.dart` — "live preview" va "cashier PIN" testlarini tuzatish.
+- T-104b PR CI yashil bo'lsa merge; keyin T-105 mahsulot rasmi (`docs/audit/audit_products.md` reja).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

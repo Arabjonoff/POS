@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,6 +13,7 @@ import 'package:pos_app/data/sync/server_features.dart';
 import 'package:pos_app/features/printing/mono_bitmap.dart';
 import 'package:pos_app/features/printing/receipt_preview.dart';
 import 'package:pos_app/features/settings/settings_screen.dart';
+import 'package:pos_ui/pos_ui.dart';
 
 import '../helpers/keyboard.dart';
 import '../helpers/pump_app.dart';
@@ -23,7 +23,7 @@ late AppDatabase _db;
 
 const StaffUser owner = StaffUser(
   id: 'owner-1',
-  fullName: 'Ega',
+  fullName: 'Shavkat',
   role: 'owner',
   isActive: true,
   pinHash: 'hash',
@@ -124,7 +124,7 @@ void main() {
     expect(previewText(tester), contains('"Baraka" MChJ'));
 
     // STIR ni yashirish — chekdan yo'qoladi.
-    await tap(tester, find.widgetWithText(ListTile, 'STIR yoki JShShIR'));
+    await tap(tester, find.widgetWithText(PosListTile, 'STIR yoki JShShIR'));
     expect(previewText(tester), isNot(contains('STIR')));
 
     await tap(tester, find.byKey(const ValueKey('store-logo-pick')));
@@ -161,7 +161,7 @@ void main() {
     await type(tester, 'store-tin', '123456789');
     await tap(tester, find.byKey(const ValueKey('store-save')));
     expect(find.text('Tasdiqlash kerak'), findsOneWidget);
-    await tester.tap(find.text('Ega'));
+    await tester.tap(find.text('Shavkat'));
     await tester.pumpAndSettle();
     await typeSlowly(tester, '1234');
     await press(tester, LogicalKeyboardKey.enter);

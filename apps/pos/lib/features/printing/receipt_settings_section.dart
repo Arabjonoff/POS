@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pos_app/app/session/session.dart';
+import 'package:pos_app/core/text/phone.dart';
 import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/data/store/store_settings.dart';
 import 'package:pos_app/data/sync/server_features.dart';
@@ -76,7 +77,7 @@ class _ReceiptSettingsSectionState
     _legalName.text = row.legalName;
     _tin.text = row.tin;
     _address.text = row.address;
-    _phone.text = row.phone;
+    _phone.text = displayPhone(row.phone);
     _header.text = row.receiptHeader;
     _footer.text = row.receiptFooter;
     _logo = decodeStoreLogo(row.receiptLogo);
