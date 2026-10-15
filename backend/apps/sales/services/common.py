@@ -63,7 +63,13 @@ def tenant_user(tenant_id, user_id, *, code: str, managers_only: bool = False) -
     return user
 
 
-def device_shift(device, shift_id, *, lock: bool = False, must_be_open: bool = True) -> Shift:
+def device_shift(
+    device, shift_id, *, lock: bool = False, must_be_open: bool = True, at=None
+) -> Shift:
+    """Qurilma smenasi. Yopiq smena faqat [at] smena yopilishidan oldin bo'lsa qabul qilinadi:
+    kassada smena ochiq paytda bo'lgan, lekin kechikib kelgan (pending, qayta yuborilgan)
+    hodisa rad etilmasin. Bunday holda smenaning kutilgan naqdi qayta hisoblanadi
+    (`refresh_closed_shift`)."""
     queryset = Shift.objects.filter(tenant_id=device.tenant_id)
     if lock:
         queryset = queryset.select_for_update()
@@ -72,6 +78,7 @@ def device_shift(device, shift_id, *, lock: bool = False, must_be_open: bool = T
         raise MissingDependency("shift", shift_id)
     if shift.device_id != device.pk:
         raise invalid("foreign_shift", "Shift belongs to another device.", shift=str(shift_id))
-    if must_be_open and not shift.is_open:
+    late_but_inside = at is not None and shift.closed_at is not None and at <= shift.closed_at
+    if must_be_open and not shift.is_open and not late_but_inside:
         raise invalid("shift_closed", "Shift is already closed.", shift=str(shift_id))
     return shift

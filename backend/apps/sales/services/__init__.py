@@ -3,7 +3,14 @@
 from .common import MissingDependency
 from .refunds import record_refund
 from .sales import record_sale
-from .shifts import close_shift, expected_cash, open_shift, record_cash_movement, shift_report
+from .shifts import (
+    close_shift,
+    expected_cash,
+    open_shift,
+    record_cash_movement,
+    refresh_closed_shift,
+    shift_report,
+)
 
 __all__ = [
     "MissingDependency",
@@ -13,5 +20,6 @@ __all__ = [
     "record_cash_movement",
     "record_refund",
     "record_sale",
+    "refresh_closed_shift",
     "shift_report",
 ]

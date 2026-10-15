@@ -16,6 +16,7 @@ from apps.inventory.serializers import (
 )
 from apps.inventory.services import post_inventory, post_receipt
 from apps.sales import services as sales
+from apps.sales.services import refresh_closed_shift
 from apps.sales.services.common import (
     MissingDependency,
     as_datetime,
@@ -66,18 +67,23 @@ def debt_paid(device, payload):
     if method not in PaymentMethod.values:
         raise invalid(code, "method must be cash or card.", field="method")
     shift_id = as_uuid(payload, "shift", code=code, required=False)
-    return pay_debt(
+    at = as_datetime(payload, "at", code=code)
+    shift = device_shift(device, shift_id, at=at) if shift_id else None
+    entry = pay_debt(
         customer,
         amount_tiyin=as_int(payload, "amount_tiyin", code=code, min_value=1),
         method=method,
         user=tenant_user(device.tenant_id, as_uuid(payload, "by", code=code), code=code),
         note=str(payload.get("note") or ""),
-        at=as_datetime(payload, "at", code=code),
+        at=at,
         id=as_uuid(payload, "id", code=code),
-        shift=device_shift(device, shift_id) if shift_id else None,
+        shift=shift,
         # Oflaynda bo'lgan to'lov rad etilmaydi (customers-api.md).
         enforce_balance=False,
     )
+    if shift is not None:
+        refresh_closed_shift(shift)
+    return entry
 
 
 def customer_upserted(device, payload):

@@ -19,6 +19,7 @@ from .common import (
     invalid,
     tenant_user,
 )
+from .shifts import refresh_closed_shift
 
 CODE = "invalid_sale"
 
@@ -83,7 +84,8 @@ def _payments(raw_payments, total: int) -> list[dict]:
 @transaction.atomic
 def record_sale(device, payload: dict) -> Sale:
     tenant_id = device.tenant_id
-    shift = device_shift(device, as_uuid(payload, "shift", code=CODE), lock=True)
+    sold_at = as_datetime(payload, "sold_at", code=CODE)
+    shift = device_shift(device, as_uuid(payload, "shift", code=CODE), lock=True, at=sold_at)
     cashier = tenant_user(tenant_id, as_uuid(payload, "cashier", code=CODE), code=CODE)
     approved_id = as_uuid(payload, "approved_by", code=CODE, required=False)
     approved_by = (
@@ -113,7 +115,6 @@ def record_sale(device, payload: dict) -> Sale:
     number = str(payload.get("number") or "").strip()
     if not number:
         raise invalid(CODE, "number is required.", field="number")
-    sold_at = as_datetime(payload, "sold_at", code=CODE)
     sale_id = as_uuid(payload, "id", code=CODE)
     if Sale.objects.filter(pk=sale_id).exists():
         raise invalid("duplicate_sale", "Sale with this id already exists.", sale=str(sale_id))
@@ -162,4 +163,5 @@ def record_sale(device, payload: dict) -> Sale:
             id=as_uuid(payload, "debt_entry_id", code=CODE, required=False),
             shift=shift,
         )
+    refresh_closed_shift(shift)
     return sale

@@ -25,6 +25,7 @@ from .common import (
     invalid,
     tenant_user,
 )
+from .shifts import refresh_closed_shift
 
 CODE = "invalid_refund"
 
@@ -98,7 +99,8 @@ def record_refund(device, payload: dict) -> Refund:
     sale = Sale.objects.select_for_update().filter(tenant_id=tenant_id, pk=sale_id).first()
     if sale is None:
         raise MissingDependency("sale", sale_id)
-    shift = device_shift(device, as_uuid(payload, "shift", code=CODE), lock=True)
+    at = as_datetime(payload, "at", code=CODE)
+    shift = device_shift(device, as_uuid(payload, "shift", code=CODE), lock=True, at=at)
     cashier = tenant_user(tenant_id, as_uuid(payload, "cashier", code=CODE), code=CODE)
     approved_id = as_uuid(payload, "approved_by", code=CODE, required=False)
     approved_by = (
@@ -119,7 +121,6 @@ def record_refund(device, payload: dict) -> Refund:
     refund_id = as_uuid(payload, "id", code=CODE)
     if Refund.objects.filter(pk=refund_id).exists():
         raise invalid("duplicate_refund", "Refund with this id already exists.")
-    at = as_datetime(payload, "at", code=CODE)
     refund = Refund.objects.create(
         id=refund_id,
         tenant_id=tenant_id,
@@ -167,4 +168,5 @@ def record_refund(device, payload: dict) -> Refund:
         )
     sale.status = SaleStatus.REFUNDED if closes_sale else SaleStatus.PARTIALLY_REFUNDED
     sale.save(update_fields=["status", "updated_at"])
+    refresh_closed_shift(shift)
     return refund
