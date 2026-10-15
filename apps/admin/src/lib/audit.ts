@@ -1,3 +1,24 @@
+/** Serverdagi audit amallari (`apps/platform_admin/services.py`) va obyekt turlari (model nomi). */
+export const AUDIT_ACTIONS = [
+  "tenant.create",
+  "tenant.update",
+  "tenant.block",
+  "tenant.unblock",
+  "subscription.create",
+  "subscription.update",
+  "payment.create",
+  "payment.reverse",
+  "plan.create",
+  "plan.update",
+  "plan.deactivate",
+  "user.create",
+  "user.reset_password",
+  "device.block",
+  "device.unblock",
+] as const;
+
+export const AUDIT_TARGETS = ["tenant", "subscription", "subscriptionpayment", "plan", "user", "device"] as const;
+
 /** Audit yozuvidagi o'zgarish: `before`/`after` JSON'lari orasidagi farq. */
 export type FieldChange = { field: string; before: string; after: string };
 

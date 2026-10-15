@@ -5,26 +5,7 @@ import { useTranslations } from "next-intl";
 import { useTransition } from "react";
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
-export const AUDIT_ACTIONS = [
-  "tenant.create",
-  "tenant.update",
-  "tenant.block",
-  "tenant.unblock",
-  "subscription.create",
-  "subscription.update",
-  "payment.create",
-  "payment.reverse",
-  "plan.create",
-  "plan.update",
-  "plan.deactivate",
-  "user.create",
-  "user.reset_password",
-  "device.block",
-  "device.unblock",
-] as const;
-
-export const AUDIT_TARGETS = ["tenant", "subscription", "subscriptionpayment", "plan", "user", "device"] as const;
+import { AUDIT_ACTIONS, AUDIT_TARGETS } from "@/lib/audit";
 
 const ALL = "all";
 

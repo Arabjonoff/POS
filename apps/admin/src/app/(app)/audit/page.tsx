@@ -2,11 +2,11 @@ import { ScrollText } from "lucide-react";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
-import { AUDIT_ACTIONS, AUDIT_TARGETS, AuditFilters } from "@/components/audit/audit-filters";
+import { AuditFilters } from "@/components/audit/audit-filters";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { auditChanges } from "@/lib/audit";
+import { AUDIT_ACTIONS, AUDIT_TARGETS, auditChanges } from "@/lib/audit";
 import { formatDateTime } from "@/lib/format";
 import { PAGE_SIZE, listAuditLog } from "@/lib/platform";
 

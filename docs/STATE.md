@@ -15,14 +15,14 @@
 - [x] 1. `platform.ts`: `listDevices` (stale_days, blocked, sahifa), `listAuditLog` (action, target_type, tenant, sahifa); actions `blockDevice`, `unblockDevice`; `src/lib/audit.ts` (o'zgargan maydonlar: before → after) + Vitest
 - [x] 2. `/devices`: filtr (hammasi / 3 kundan beri sinxronlanmagan / bloklangan — URL), jadval (qurilma, mijoz havolasi, platforma, versiya, oxirgi sinxron — eskisi ajratilgan, holat), bloklash (sabab) / blokdan chiqarish
 - [x] 3. `/audit`: amal va obyekt turi filtri (URL), jadval (vaqt, kim, amal, obyekt, mijoz, sabab), o'zgarishlar ochiladigan qatorda, sahifalash
-- [ ] 4. Soxta API (qurilmalar filtri/bloklash, audit — har o'zgarish yozadi) + Playwright
+- [x] 4. Soxta API (qurilmalar filtri/bloklash, audit — har o'zgarish yozadi) + Playwright
 - [ ] 5. Spec, skrinshotlar, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- 1–3: `listDevices`, `listAuditLog`, `devices/actions.ts`, `src/lib/audit.ts` (+3 test); `BlockDialog` umumlashtirildi (`kind: tenant|device`, `targetId`, `compact`); `/devices` (filtr havolalari, eski sinxron qizil, bloklash), `/audit` (`AuditFilters` — amal/obyekt Select, o'zgarishlar `<details>` da, `?tenant=`), tarjimalar.
+- 4: soxta API — qurilmalar filtri/bloklash, audit jurnali (har mutatsiya `audit()`), e2e `devices-audit.spec.ts` (2) — jami 23, 5 marta barqaror. Topildi: `use client` modulidagi massiv server sahifada ishlamaydi (konstantalar `lib/audit.ts` da); mijozlar filtrida yuklama ostidagi poyga — kutilayotgan URL `ref` da.
 
 ## Keyingi aniq harakat
-- 4-qadam: soxta API — `GET platform/devices/` (`stale_days`, `blocked`), `POST devices/{id}/block|unblock/`, `GET platform/audit-log/` (har o'zgarish `audit()` bilan yoziladi); `e2e/devices-audit.spec.ts`.
+- 5-qadam: skrinshotlar `docs/screenshots/T-084/` (qurilmalar, audit), spec, PROGRESS, ROADMAP, PR.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

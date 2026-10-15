@@ -126,12 +126,51 @@ addTenant({ name: "Oila market", phone: "998935550011", ownerName: "Olim Karimov
 addTenant({ name: "Yulduz", phone: "998977770022", ownerName: "Zarina", status: "blocked", paidUntil: "2026-08-31", trialEndsAt: "2026-08-01", blocked: true, reason: "To'lov qilinmadi" });
 
 users.push({ id: randomUUID(), phone: null, full_name: "Aziza", role: "cashier", is_active: true, last_login: null, created_at: "2026-09-02T09:00:00Z", tenant: baraka });
-devices.push({ id: randomUUID(), tenant: baraka, tenant_name: "Baraka do'koni", code: "D1", name: "Kassa 1", platform: "windows", app_version: "1.0.0", last_sync_at: "2026-10-14T08:00:00Z", last_seen_at: "2026-10-14T08:00:00Z", is_blocked: false, created_at: "2026-09-02T09:00:00Z" });
+devices.push({ id: randomUUID(), tenant: baraka, tenant_name: "Baraka do'koni", code: "D1", name: "Kassa 1", platform: "windows", app_version: "1.0.0", last_sync_at: new Date().toISOString(), last_seen_at: new Date().toISOString(), is_blocked: false, created_at: "2026-09-02T09:00:00Z" });
+const oila = tenants.find((t) => t.name === "Oila market").id;
+devices.push(
+  // 3 kundan ortiq sinxronlanmagan (bosh sahifa va "Qurilmalar" filtri uchun).
+  { id: randomUUID(), tenant: oila, tenant_name: "Oila market", code: "D1", name: "Oila kassa", platform: "android", app_version: "0.9.8", last_sync_at: "2026-10-01T08:00:00Z", last_seen_at: "2026-10-01T08:00:00Z", is_blocked: false, created_at: "2026-09-20T09:00:00Z" },
+  { id: randomUUID(), tenant: oila, tenant_name: "Oila market", code: "D2", name: "Eski planshet", platform: "android", app_version: "0.9.0", last_sync_at: null, last_seen_at: null, is_blocked: true, created_at: "2026-09-21T09:00:00Z" },
+);
 payments.push(
   { id: randomUUID(), tenant: baraka, tenant_name: "Baraka do'koni", amount_tiyin: 9900000, months: 1, paid_at: "2026-09-15T10:00:00Z", period_from: "2026-09-16", period_to: "2026-10-15", method: "cash", note: "", recorded_by: null, reverses: null },
   { id: randomUUID(), tenant: baraka, tenant_name: "Baraka do'koni", amount_tiyin: 9900000, months: 1, paid_at: "2026-10-10T10:00:00Z", period_from: "2026-10-16", period_to: "2026-11-30", method: "transfer", note: "Click", recorded_by: null, reverses: null },
 );
 events.push({ id: randomUUID(), tenant: baraka, device: devices[0].id, type: "sale.created", status: "applied", error: null, attempts: 1, client_created_at: "2026-10-14T07:59:00Z", received_at: "2026-10-14T08:00:00Z", applied_at: "2026-10-14T08:00:00Z" });
+
+// --- Audit jurnali (platform-api.md: har o'zgarish yoziladi, yangisi birinchi) ---
+const auditLog = [];
+
+function audit(actor, action, targetType, targetId, { tenant = null, before = null, after = null, reason = "" } = {}) {
+  auditLog.push({
+    id: randomUUID(),
+    actor: actor.user.id,
+    actor_name: actor.user.full_name,
+    action,
+    target_type: targetType,
+    target_id: String(targetId),
+    tenant,
+    before,
+    after,
+    reason,
+    at: new Date().toISOString(),
+  });
+}
+
+auditLog.push({
+  id: randomUUID(),
+  actor: accounts["998901234567"].user.id,
+  actor_name: "Platforma Admin",
+  action: "tenant.block",
+  target_type: "tenant",
+  target_id: tenants[2].id,
+  tenant: tenants[2].id,
+  before: { name: "Yulduz", is_blocked: false, blocked_reason: "" },
+  after: { name: "Yulduz", is_blocked: true, blocked_reason: "To'lov qilinmadi" },
+  reason: "To'lov qilinmadi",
+  at: "2026-09-05T06:00:00Z",
+});
 
 // --- Statistika (bosh sahifa) ---
 const stats = {
@@ -333,6 +372,7 @@ createServer(async (req, res) => {
         subscribers_count: 0,
       };
       plans.push(plan);
+      audit(account, "plan.create", "plan", plan.id, { after: { ...plan } });
       return send(res, 201, plan);
     }
   }
@@ -343,13 +383,17 @@ createServer(async (req, res) => {
     if (!plan) return fail(res, 404, "not_found");
     if (req.method === "PATCH") {
       const body = await readJson(req);
+      const before = { ...plan };
       for (const key of ["name", "price_tiyin_per_month", "max_devices", "max_users", "is_active"]) {
         if (key in body) plan[key] = body[key];
       }
+      audit(account, "plan.update", "plan", plan.id, { before, after: { ...plan } });
       return send(res, 200, plan);
     }
     if (req.method === "DELETE") {
+      const before = { ...plan };
       plan.is_active = false;
+      audit(account, "plan.deactivate", "plan", plan.id, { before, after: { ...plan } });
       res.writeHead(204);
       return res.end();
     }
@@ -398,6 +442,7 @@ createServer(async (req, res) => {
       const password = body.owner.password || tempPassword();
       accounts[phone].password = password;
       const owner = users.find((u) => u.tenant === id && u.role === "owner");
+      audit(account, "tenant.create", "tenant", id, { tenant: id, after: { name: tenant.name, plan: plan.name } });
       return send(res, 201, {
         tenant: tenantDetail(tenant),
         owner: brief(owner),
@@ -415,11 +460,26 @@ createServer(async (req, res) => {
     if (req.method === "POST" && sub === "block") {
       const { reason } = await readJson(req);
       if (!reason?.trim()) return fail(res, 400, "validation_error", { reason: ["required"] });
+      const before = { is_blocked: tenant.is_blocked, blocked_reason: tenant.blocked_reason };
       Object.assign(tenant, { is_blocked: true, blocked_reason: reason.trim(), status: "blocked" });
+      audit(account, "tenant.block", "tenant", id, {
+        tenant: id,
+        before,
+        after: { is_blocked: true, blocked_reason: tenant.blocked_reason },
+        reason: reason.trim(),
+      });
       return send(res, 200, tenantDetail(tenant));
     }
     if (req.method === "POST" && sub === "unblock") {
+      const { reason } = await readJson(req);
+      const before = { is_blocked: tenant.is_blocked, blocked_reason: tenant.blocked_reason };
       Object.assign(tenant, { is_blocked: false, blocked_reason: "", status: tenant.paid_until ? "active" : "trial" });
+      audit(account, "tenant.unblock", "tenant", id, {
+        tenant: id,
+        before,
+        after: { is_blocked: false, blocked_reason: "" },
+        reason: reason?.trim() ?? "",
+      });
       return send(res, 200, tenantDetail(tenant));
     }
     if (req.method === "POST" && sub === "payments") {
@@ -450,6 +510,7 @@ createServer(async (req, res) => {
       payments.push(payment);
       tenant.paid_until = payment.period_to;
       if (!tenant.is_blocked) tenant.status = "active";
+      audit(account, "payment.create", "subscriptionpayment", payment.id, { tenant: id, after: paymentRow(payment) });
       return send(res, 201, paymentRow(payment));
     }
     if (req.method === "GET" && sub === "users") {
@@ -462,7 +523,45 @@ createServer(async (req, res) => {
 
   if (req.method === "GET" && pathname === "/api/v1/platform/devices/") {
     const tenant = url.searchParams.get("tenant");
-    return send(res, 200, page(url, devices.filter((d) => !tenant || d.tenant === tenant)));
+    const blocked = url.searchParams.get("blocked");
+    const staleDays = Number(url.searchParams.get("stale_days")) || 0;
+    const staleBefore = Date.now() - staleDays * 24 * 60 * 60 * 1000;
+    const rows = devices
+      .filter((d) => !tenant || d.tenant === tenant)
+      .filter((d) => blocked !== "true" || d.is_blocked)
+      // platform-api.md: oxirgi sinxron N kundan oldin yoki umuman yo'q.
+      .filter((d) => !staleDays || !d.last_sync_at || new Date(d.last_sync_at).getTime() < staleBefore);
+    return send(res, 200, page(url, rows));
+  }
+
+  const deviceMatch = pathname.match(/^\/api\/v1\/platform\/devices\/([^/]+)\/(block|unblock)\/$/);
+  if (req.method === "POST" && deviceMatch) {
+    const device = devices.find((d) => d.id === deviceMatch[1]);
+    if (!device) return fail(res, 404, "not_found");
+    const { reason } = await readJson(req);
+    const block = deviceMatch[2] === "block";
+    if (block && !reason?.trim()) return fail(res, 400, "validation_error", { reason: ["required"] });
+    const before = { is_blocked: device.is_blocked };
+    device.is_blocked = block;
+    audit(account, block ? "device.block" : "device.unblock", "device", device.id, {
+      tenant: device.tenant,
+      before,
+      after: { is_blocked: block },
+      reason: reason?.trim() ?? "",
+    });
+    return send(res, 200, device);
+  }
+
+  if (req.method === "GET" && pathname === "/api/v1/platform/audit-log/") {
+    const action = url.searchParams.get("action");
+    const targetType = url.searchParams.get("target_type");
+    const tenant = url.searchParams.get("tenant");
+    const rows = auditLog
+      .filter((e) => !action || e.action === action)
+      .filter((e) => !targetType || e.target_type === targetType)
+      .filter((e) => !tenant || e.tenant === tenant)
+      .sort((a, b) => b.at.localeCompare(a.at));
+    return send(res, 200, page(url, rows));
   }
 
   if (req.method === "GET" && pathname === "/api/v1/platform/payments/") {
@@ -501,6 +600,12 @@ createServer(async (req, res) => {
     };
     payments.push(reversal);
     tenant.paid_until = original.previous_paid_until ?? null;
+    audit(account, "payment.reverse", "subscriptionpayment", reversal.id, {
+      tenant: tenant.id,
+      before: paymentRow(original),
+      after: paymentRow(reversal),
+      reason: note.trim(),
+    });
     return send(res, 201, paymentRow(reversal));
   }
 
@@ -511,6 +616,7 @@ createServer(async (req, res) => {
     const password = tempPassword();
     const key = normalize(user.phone);
     if (accounts[key]) accounts[key].password = password;
+    audit(account, "user.reset_password", "user", user.id, { tenant: user.tenant });
     return send(res, 200, { temporary_password: password });
   }
 
