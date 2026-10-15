@@ -13,8 +13,8 @@
 ## Qadamlar (vazifa ichida)
 - [x] 1. Q-006 javobi, ROADMAP T-110, spec (`receipt-history.md`, `sales-api.md`)
 - [x] 2. Backend: `GET /api/v1/sync/sales/?number=` (qurilma tokeni; qatorlar, to'lovlar, qaytarilgan, qaytarishlar, kassir/mijoz nomi) + testlar (tenant izolyatsiyasi), `make schema`, `make api-clients`
-- [ ] 3. Kassa: `lib/data/sales/remote_sale.dart` (Dio fetch, model → RefundableSale / ReceiptData; lokal yuborilmagan qaytarishlar qo'shiladi)
-- [ ] 4. `ReceiptLoader` umumiy manba (`ReceiptSource`), `PrinterService.printReceipt(data, copy)`
+- [x] 3. Kassa: `lib/data/sales/remote_sale.dart` (Dio fetch, model → RefundableSale / ReceiptData; lokal yuborilmagan qaytarishlar qo'shiladi)
+- [x] 4. `ReceiptLoader` umumiy manba (`ReceiptSource`), `PrinterService.printReceipt(data, copy)`
 - [ ] 5. Cheklar: lokalda yo'q raqam (skaner / Enter) → server; "Boshqa kassa" belgisi; qayta chop etish, qaytarish; oflayn xabari
 - [ ] 6. Qaytarish oynasi (F8): lokalda yo'q → server
 - [ ] 7. Testlar (backend, unit, widget, golden), hujjatlar, PR, merge

@@ -8,8 +8,52 @@ import 'package:pos_app/data/db/app_database.dart';
 import 'package:pos_app/features/printing/mono_bitmap.dart';
 import 'package:pos_app/features/printing/receipt.dart';
 
+/// Chek uchun savdo ma'lumoti — lokal bazadan yoki serverdan (boshqa kassa
+/// cheki, T-110). Do'kon rekvizitlari, birliklar va qarz — lokal bazadan.
+class ReceiptSource {
+  const ReceiptSource({
+    required this.storeId,
+    required this.number,
+    required this.soldAt,
+    required this.cashierName,
+    required this.discountTiyin,
+    required this.totalTiyin,
+    required this.items,
+    required this.payments,
+    this.customerId,
+  });
+
+  final String? storeId;
+  final String number;
+  final DateTime soldAt;
+  final String cashierName;
+  final String? customerId;
+  final int discountTiyin;
+  final int totalTiyin;
+  final List<ReceiptSourceItem> items;
+  final List<ReceiptPayment> payments;
+}
+
+class ReceiptSourceItem {
+  const ReceiptSourceItem({
+    required this.productId,
+    required this.name,
+    required this.qtyMilli,
+    required this.priceTiyin,
+    required this.discountTiyin,
+    required this.totalTiyin,
+  });
+
+  final String productId;
+  final String name;
+  final int qtyMilli;
+  final int priceTiyin;
+  final int discountTiyin;
+  final int totalTiyin;
+}
+
 /// Yozilgan savdodan chek ma'lumotini yig'adi (do'kon, kassir, qatorlar,
-/// to'lovlar, nasiya mijozi va uning hozirgi qarzi).
+/// to'lovlar, nasiya mijozi va uning savdodan keyingi qarzi).
 class ReceiptLoader {
   const ReceiptLoader(this._db);
 
@@ -32,16 +76,52 @@ class ReceiptLoader {
     final shift = await (_db.select(
       _db.shifts,
     )..where((s) => s.id.equals(sale.shiftId))).getSingleOrNull();
-    final store = shift == null
-        ? null
-        : await (_db.select(
-            _db.stores,
-          )..where((s) => s.id.equals(shift.storeId))).getSingleOrNull();
     final cashier = await (_db.select(
       _db.staffUsers,
     )..where((u) => u.id.equals(sale.cashierId))).getSingleOrNull();
 
-    final productIds = {for (final i in items) i.productId};
+    return fromSource(
+      ReceiptSource(
+        storeId: shift?.storeId,
+        number: sale.number,
+        soldAt: sale.soldAt,
+        cashierName: cashier?.fullName ?? '',
+        customerId: sale.customerId,
+        discountTiyin: sale.discountTiyin,
+        totalTiyin: sale.totalTiyin,
+        items: [
+          for (final i in items)
+            ReceiptSourceItem(
+              productId: i.productId,
+              name: i.nameSnapshot,
+              qtyMilli: i.qtyMilli,
+              priceTiyin: i.priceTiyin,
+              discountTiyin: i.discountTiyin,
+              totalTiyin: i.totalTiyin,
+            ),
+        ],
+        payments: [
+          for (final p in payments)
+            ReceiptPayment(
+              method: p.method,
+              amountTiyin: p.amountTiyin,
+              receivedTiyin: p.receivedTiyin,
+              changeTiyin: p.changeTiyin,
+            ),
+        ],
+      ),
+    );
+  }
+
+  Future<ReceiptData> fromSource(ReceiptSource sale) async {
+    final storeId = sale.storeId;
+    final store = storeId == null
+        ? null
+        : await (_db.select(
+            _db.stores,
+          )..where((s) => s.id.equals(storeId))).getSingleOrNull();
+
+    final productIds = {for (final i in sale.items) i.productId};
     final products = await (_db.select(
       _db.products,
     )..where((p) => p.id.isIn(productIds))).get();
@@ -52,7 +132,7 @@ class ReceiptLoader {
       for (final p in products) p.id: UnitCode.fromCode(unitCodes[p.unitId]),
     };
 
-    final hasDebt = payments.any((p) => p.method == 'debt');
+    final hasDebt = sale.payments.any((p) => p.method == 'debt');
     final customerId = sale.customerId;
     final customer = hasDebt && customerId != null
         ? await CustomerDirectory(_db).byId(customerId)
@@ -75,9 +155,10 @@ class ReceiptLoader {
               .read<int>('s');
 
     const order = {'cash': 0, 'card': 1, 'debt': 2};
-    payments.sort(
-      (a, b) => (order[a.method] ?? 3).compareTo(order[b.method] ?? 3),
-    );
+    final payments = [...sale.payments]
+      ..sort(
+        (a, b) => (order[a.method] ?? 3).compareTo(order[b.method] ?? 3),
+      );
 
     return ReceiptData(
       storeName: store?.name ?? '',
@@ -91,11 +172,11 @@ class ReceiptLoader {
       options: decodeReceiptOptions(store?.receiptOptions),
       number: sale.number,
       soldAt: sale.soldAt,
-      cashierName: cashier?.fullName ?? '',
+      cashierName: sale.cashierName,
       lines: [
-        for (final i in items)
+        for (final i in sale.items)
           ReceiptLine(
-            name: i.nameSnapshot,
+            name: i.name,
             qtyMilli: i.qtyMilli,
             unit: units[i.productId] ?? UnitCode.pcs,
             priceTiyin: i.priceTiyin,
@@ -105,15 +186,7 @@ class ReceiptLoader {
       ],
       discountTiyin: sale.discountTiyin,
       totalTiyin: sale.totalTiyin,
-      payments: [
-        for (final p in payments)
-          ReceiptPayment(
-            method: p.method,
-            amountTiyin: p.amountTiyin,
-            receivedTiyin: p.receivedTiyin,
-            changeTiyin: p.changeTiyin,
-          ),
-      ],
+      payments: payments,
       customerName: customer?.name,
       customerDebtTiyin: debtAfter,
     );

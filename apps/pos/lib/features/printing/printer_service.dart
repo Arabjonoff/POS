@@ -48,6 +48,11 @@ class PrinterService {
   Future<PrintOutcome> printSale(String saleId, {bool copy = false}) async {
     final data = await loader.load(saleId);
     if (data == null) return PrintOutcome.failed;
+    return printReceipt(data, copy: copy);
+  }
+
+  /// Tayyor chek (masalan, boshqa kassa cheki serverdan, T-110).
+  Future<PrintOutcome> printReceipt(ReceiptData data, {bool copy = false}) {
     final drawer =
         !copy &&
         settings.openDrawer &&
