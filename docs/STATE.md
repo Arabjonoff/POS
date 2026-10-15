@@ -5,19 +5,24 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-108a Qobiq: yig'iladigan menyu, banner, holat paneli (11-bosqich, qaror 0014)
+- Branch: feat/T-108a-kassa-shell
+- Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
-- (yo'q)
+- [x] 1. ROADMAP T-108a/b/c, qaror 0014, STATE
+- [ ] 2. packages/ui: PosResponsiveScaffold — desktopda 64 px ikon menyu (hover/Ctrl+B ochiladi, ustiga chiqadi), pastda kassir + qulf
+- [ ] 3. Sinov banneri 28 px + yopish (sessiya davomida)
+- [ ] 4. Holat paneli 48 px: bosiladigan yozuvlar (→ Sozlamalar), oflayn qizil "oflayn rejimda ishlayapti", printer sozlanmagan sariq, smena vaqti, kassir
+- [ ] 5. l10n (uz, uz-Cyrl, ru), testlar, golden'lar
+- [ ] 6. Skrinshotlar docs/screenshots/T-108a/, PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-- T-100…T-107 (audit, tuzatishlar, yakuniy hisobot) — `main`da. Hisobot: `PROJECT_AUDIT.md` → "Yakuniy hisobot".
+- T-107 `main`da. Eskiz tasdiqlandi: https://claude.ai/artifact/321zbc39k53LuPjnmgrjhT
 
 ## Keyingi aniq harakat
-- `docs/ROADMAP.md` dan keyingi bajarilmagan vazifa; ochiq savollar `docs/QUESTIONS.md` (javob kelsa — tegishli vazifa).
+- 2-qadam: `packages/ui/lib/src/components/pos_responsive_scaffold.dart` — `_SideNav` o'rniga `_CollapsibleNav`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
