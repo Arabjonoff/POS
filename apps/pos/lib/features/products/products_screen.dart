@@ -8,6 +8,7 @@ import 'package:pos_app/core/format/app_format.dart';
 import 'package:pos_app/data/catalog/order_list.dart';
 import 'package:pos_app/data/catalog/product_editor.dart';
 import 'package:pos_app/data/catalog/product_import.dart';
+import 'package:pos_app/features/common/load_state.dart';
 import 'package:pos_app/features/common/section_page.dart';
 import 'package:pos_app/features/products/import_dialog.dart';
 import 'package:pos_app/features/products/product_card.dart';
@@ -201,7 +202,10 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
 
     final Widget body;
     if (rows == null) {
-      body = const Center(child: CircularProgressIndicator());
+      body = LoadState(
+        failed: ref.watch(productRowsFailedProvider),
+        onRetry: () => reloadProductRows(ref),
+      );
     } else if (all!.isEmpty) {
       body = PosEmptyState(
         icon: Icons.inventory_2_outlined,

@@ -176,3 +176,10 @@ final productRowsProvider = Provider<List<ProductRow>?>((ref) {
   final stock = ref.watch(stockByProductProvider).value ?? const {};
   return [for (final r in base) r.withStock(stock[r.id] ?? 0)];
 });
+
+/// Tovarlarni bazadan o'qishda xato (ro'yxat "yuklanmoqda"da qotmasin).
+final productRowsFailedProvider = Provider<bool>(
+  (ref) => ref.watch(_productBaseProvider).hasError,
+);
+
+void reloadProductRows(WidgetRef ref) => ref.invalidate(_productBaseProvider);

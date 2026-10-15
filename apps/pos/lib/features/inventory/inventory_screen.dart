@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pos_app/core/format/app_format.dart';
 import 'package:pos_app/data/inventory/count_store.dart';
+import 'package:pos_app/features/common/load_state.dart';
 import 'package:pos_app/features/common/section_page.dart';
 import 'package:pos_app/features/inventory/count_editor.dart';
 import 'package:pos_app/features/products/product_list.dart';
@@ -96,7 +97,8 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen> {
     final p = PosPalette.of(context);
     final compact = PosWindowSize.of(context).isCompact;
     final padding = compact ? PosSpacing.l : PosSpacing.xl;
-    final counts = ref.watch(countsProvider).value;
+    final countsAsync = ref.watch(countsProvider);
+    final counts = countsAsync.value;
     final newButton = PosButton(
       key: const ValueKey('inventory-new'),
       label: l10n.inventoryNew,
@@ -106,7 +108,10 @@ class _InventoryScreenState extends ConsumerState<InventoryScreen> {
 
     final Widget body;
     if (counts == null) {
-      body = const Center(child: CircularProgressIndicator());
+      body = LoadState(
+        failed: countsAsync.hasError,
+        onRetry: () => ref.invalidate(countsProvider),
+      );
     } else if (counts.isEmpty) {
       body = PosEmptyState(
         icon: Icons.fact_check_outlined,

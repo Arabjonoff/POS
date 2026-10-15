@@ -22,6 +22,8 @@
   "actionUndo": "Бекор қилиш",
   "actionClose": "Ёпиш",
   "actionDelete": "Ўчириш",
+  "loadFailedTitle": "Маълумотни ўқиб бўлмади",
+  "loadFailedMessage": "Қайта уриниб кўринг. Такрорланса, иловани қайта очинг.",
   "actionRetry": "Қайта уриниш",
   "actionYes": "Ҳа",
   "actionNo": "Йўқ",

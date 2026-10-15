@@ -7,6 +7,7 @@ import 'package:pos_app/app/session/session.dart';
 import 'package:pos_app/core/barcode/scanner_service.dart';
 import 'package:pos_app/core/format/app_format.dart';
 import 'package:pos_app/core/format/unit_code.dart';
+import 'package:pos_app/core/money/grouped_money_formatter.dart';
 import 'package:pos_app/data/catalog/price_history.dart';
 import 'package:pos_app/data/catalog/product_editor.dart';
 import 'package:pos_app/data/catalog/product_images.dart';
@@ -42,12 +43,12 @@ int? parseMoneyTiyin(String text) {
   return som * 100 + int.parse(frac);
 }
 
+/// Tiyin → maydon matni, mingliklar guruhlangan (`DecimalMoneyFormatter`).
 String formatMoneyInput(int tiyin) {
   if (tiyin == 0) return '';
+  final whole = GroupedMoneyFormatter.format('${tiyin ~/ 100}');
   final rest = tiyin % 100;
-  return rest == 0
-      ? '${tiyin ~/ 100}'
-      : '${tiyin ~/ 100},${rest.toString().padLeft(2, '0')}';
+  return rest == 0 ? whole : '$whole,${rest.toString().padLeft(2, '0')}';
 }
 
 /// Miqdor matnidan `qty_milli`: dona — butun, kasrli birlik — 3 xonagacha.
@@ -462,6 +463,7 @@ class _ProductCardState extends ConsumerState<ProductCard> {
     );
 
     final digits = [FilteringTextInputFormatter.allow(RegExp(r'[\d\s,.]'))];
+    const money = [DecimalMoneyFormatter()];
 
     return ScanListener(
       enabled: !_subDialog,
@@ -488,6 +490,7 @@ class _ProductCardState extends ConsumerState<ProductCard> {
               key: const ValueKey('product-name'),
               controller: _name,
               label: l10n.productName,
+              required: true,
               autofocus: draft.isNew,
               errorText: _error(l10n, ProductField.name),
               textInputAction: TextInputAction.next,
@@ -535,10 +538,11 @@ class _ProductCardState extends ConsumerState<ProductCard> {
                     key: const ValueKey('product-sell'),
                     controller: _sell,
                     label: l10n.productSellPrice,
+                    required: true,
                     keyboardType: const TextInputType.numberWithOptions(
                       decimal: true,
                     ),
-                    inputFormatters: digits,
+                    inputFormatters: money,
                     errorText: _error(l10n, ProductField.price),
                     onChanged: (_) => setState(() {}),
                   ),
@@ -552,7 +556,7 @@ class _ProductCardState extends ConsumerState<ProductCard> {
                     keyboardType: const TextInputType.numberWithOptions(
                       decimal: true,
                     ),
-                    inputFormatters: digits,
+                    inputFormatters: money,
                     onChanged: (_) => setState(() {}),
                   ),
                 ),

@@ -75,6 +75,13 @@ class AppLocalizationsUz extends AppLocalizations {
   String get actionDelete => 'O\'chirish';
 
   @override
+  String get loadFailedTitle => 'Ma\'lumotni o\'qib bo\'lmadi';
+
+  @override
+  String get loadFailedMessage =>
+      'Qayta urinib ko\'ring. Takrorlansa, ilovani qayta oching.';
+
+  @override
   String get actionRetry => 'Qayta urinish';
 
   @override
@@ -2243,6 +2250,13 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get actionDelete => 'Ўчириш';
+
+  @override
+  String get loadFailedTitle => 'Маълумотни ўқиб бўлмади';
+
+  @override
+  String get loadFailedMessage =>
+      'Қайта уриниб кўринг. Такрорланса, иловани қайта очинг.';
 
   @override
   String get actionRetry => 'Қайта уриниш';

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pos_app/core/format/app_format.dart';
 import 'package:pos_app/data/receipts/receipt_store.dart';
+import 'package:pos_app/features/common/load_state.dart';
 import 'package:pos_app/features/common/section_page.dart';
 import 'package:pos_app/features/receiving/receipt_badges.dart';
 import 'package:pos_app/features/receiving/receipt_editor.dart';
@@ -55,7 +56,8 @@ class _ReceivingScreenState extends ConsumerState<ReceivingScreen> {
     final p = PosPalette.of(context);
     final compact = PosWindowSize.of(context).isCompact;
     final padding = compact ? PosSpacing.l : PosSpacing.xl;
-    final receipts = ref.watch(receiptsProvider).value;
+    final receiptsAsync = ref.watch(receiptsProvider);
+    final receipts = receiptsAsync.value;
     final newButton = PosButton(
       key: const ValueKey('receiving-new'),
       label: l10n.receivingNew,
@@ -66,7 +68,10 @@ class _ReceivingScreenState extends ConsumerState<ReceivingScreen> {
 
     final Widget body;
     if (receipts == null) {
-      body = const Center(child: CircularProgressIndicator());
+      body = LoadState(
+        failed: receiptsAsync.hasError,
+        onRetry: () => ref.invalidate(receiptsProvider),
+      );
     } else if (receipts.isEmpty) {
       body = PosEmptyState(
         icon: Icons.move_to_inbox_outlined,

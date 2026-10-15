@@ -231,6 +231,18 @@ abstract class AppLocalizations {
   /// **'O\'chirish'**
   String get actionDelete;
 
+  /// Ro'yxat xato holati
+  ///
+  /// In uz, this message translates to:
+  /// **'Ma\'lumotni o\'qib bo\'lmadi'**
+  String get loadFailedTitle;
+
+  /// Ro'yxat xato holati izohi
+  ///
+  /// In uz, this message translates to:
+  /// **'Qayta urinib ko\'ring. Takrorlansa, ilovani qayta oching.'**
+  String get loadFailedMessage;
+
   /// Tugma: qayta urinish
   ///
   /// In uz, this message translates to:

@@ -94,10 +94,13 @@ class AppStatusBar extends ConsumerWidget {
           tone: PosTone.warning,
         ),
       if (shiftOpen)
-        PosStatusItem(icon: Icons.schedule, label: l10n.statusShiftOpen)
+        PosStatusItem(
+          icon: Icons.work_history_outlined,
+          label: l10n.statusShiftOpen,
+        )
       else
         PosStatusItem(
-          icon: Icons.schedule,
+          icon: Icons.work_history_outlined,
           label: l10n.statusShiftClosed,
           tone: PosTone.warning,
         ),

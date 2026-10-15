@@ -394,8 +394,8 @@ void main() {
       expect(parseMoneyTiyin('12500,5'), 1250050);
       expect(parseMoneyTiyin(''), 0);
       expect(parseMoneyTiyin('12,345'), isNull);
-      expect(formatMoneyInput(1250050), '12500,50');
-      expect(formatMoneyInput(1250000), '12500');
+      expect(formatMoneyInput(1250050), '12 500,50');
+      expect(formatMoneyInput(1250000), '12 500');
     });
 
     test('qty', () {

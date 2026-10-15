@@ -75,6 +75,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get actionDelete => 'Удалить';
 
   @override
+  String get loadFailedTitle => 'Не удалось загрузить данные';
+
+  @override
+  String get loadFailedMessage =>
+      'Попробуйте ещё раз. Если повторится, перезапустите приложение.';
+
+  @override
   String get actionRetry => 'Повторить';
 
   @override

@@ -96,6 +96,7 @@ class _SupplierPickerState extends ConsumerState<_SupplierPicker> {
                   key: const ValueKey('supplier-name'),
                   controller: _name,
                   label: l10n.payCustomerName,
+                  required: true,
                   autofocus: true,
                   errorText: _nameError,
                   onChanged: (_) => setState(() => _nameError = null),

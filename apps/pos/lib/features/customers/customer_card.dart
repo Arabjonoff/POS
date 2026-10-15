@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show StreamProviderFamily;
 import 'package:pos_app/app/session/session.dart';
 import 'package:pos_app/core/format/app_format.dart';
+import 'package:pos_app/core/money/grouped_money_formatter.dart';
 import 'package:pos_app/core/text/phone.dart';
 import 'package:pos_app/data/customers/customer_directory.dart';
 import 'package:pos_app/features/common/manager_approval.dart';
@@ -521,6 +521,7 @@ class _CustomerEditDialogState extends ConsumerState<_CustomerEditDialog> {
                   key: const ValueKey('customer-name'),
                   controller: _name,
                   label: l10n.payCustomerName,
+                  required: true,
                   errorText: _nameError,
                   onChanged: (_) => setState(() => _nameError = null),
                 ),
@@ -545,9 +546,7 @@ class _CustomerEditDialogState extends ConsumerState<_CustomerEditDialog> {
                   controller: _limit,
                   label: l10n.customerLimitField,
                   keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(r'[\d\s,.]')),
-                  ],
+                  inputFormatters: const [DecimalMoneyFormatter()],
                   errorText: _badLimit ? l10n.productErrPrice : null,
                   onChanged: (_) => setState(() => _badLimit = false),
                 ),

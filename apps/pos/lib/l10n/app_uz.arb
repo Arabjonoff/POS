@@ -88,6 +88,14 @@
   "@actionDelete": {
     "description": "Tugma: o'chirish"
   },
+  "loadFailedTitle": "Ma'lumotni o'qib bo'lmadi",
+  "@loadFailedTitle": {
+    "description": "Ro'yxat xato holati"
+  },
+  "loadFailedMessage": "Qayta urinib ko'ring. Takrorlansa, ilovani qayta oching.",
+  "@loadFailedMessage": {
+    "description": "Ro'yxat xato holati izohi"
+  },
   "actionRetry": "Qayta urinish",
   "@actionRetry": {
     "description": "Tugma: qayta urinish"
