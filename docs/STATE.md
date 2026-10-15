@@ -20,10 +20,10 @@
 - [ ] 7. Tekshiruvlar, PR, merge, ROADMAP/PROGRESS
 
 ## Oxirgi bajarilgan ish
-- Kod, testlar, golden, hujjatlar tayyor. Ishlab turgan: to'liq `flutter analyze` + `flutter test` (apps/pos).
+- Hammasi tayyor: analyze toza, 814 test yashil, debug va release APK yig'iladi. PR ochildi.
 
 ## Keyingi aniq harakat
-- Testlar yashil bo'lsa: commit, PR `feat(pos): T-047 ...`, CI, merge; ROADMAP [x], PROGRESS yozuvi, STATE shablon.
+- CI yashil bo'lsa: merge (squash); keyin `feat(pos): T-047 ...`, CI, merge; ROADMAP [x], PROGRESS yozuvi, STATE shablon.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
