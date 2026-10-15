@@ -5,25 +5,19 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-110 Boshqa kassa cheklari (Q-006 javobi: A — internet bo'lsa serverdan chek raqami bo'yicha)
-- Branch: feat/T-110-remote-receipts
-- Boshlangan: 2026-10-15
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
-- [x] 1. Q-006 javobi, ROADMAP T-110, spec (`receipt-history.md`, `sales-api.md`)
-- [x] 2. Backend: `GET /api/v1/sync/sales/?number=` (qurilma tokeni; qatorlar, to'lovlar, qaytarilgan, qaytarishlar, kassir/mijoz nomi) + testlar (tenant izolyatsiyasi), `make schema`, `make api-clients`
-- [x] 3. Kassa: `lib/data/sales/remote_sale.dart` (Dio fetch, model → RefundableSale / ReceiptData; lokal yuborilmagan qaytarishlar qo'shiladi)
-- [x] 4. `ReceiptLoader` umumiy manba (`ReceiptSource`), `PrinterService.printReceipt(data, copy)`
-- [x] 5. Cheklar: lokalda yo'q raqam (skaner / Enter) → server; "Boshqa kassa" belgisi; qayta chop etish, qaytarish; oflayn xabari
-- [x] 6. Qaytarish oynasi (F8): lokalda yo'q → server
-- [ ] 7. Testlar (backend, unit, widget, golden), hujjatlar, PR, merge
+- (yo'q)
 
 ## Oxirgi bajarilgan ish
-- Reja yozildi.
+- T-110 Boshqa kassa cheklari (Q-006 → A).
 
 ## Keyingi aniq harakat
-- 1-qadam: `docs/QUESTIONS.md` Q-006 "Javob: A", ROADMAP 12-bosqich T-110.
+- ROADMAP'da bajarilmagan vazifa yo'q; ochiq savollar `docs/QUESTIONS.md` (Q-003, Q-004, Q-005, Q-007, Q-009, Q-010, Q-011). Loyiha egasidan yangi talab kutiladi.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

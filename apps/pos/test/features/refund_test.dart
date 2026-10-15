@@ -6,6 +6,7 @@ import 'package:pos_app/app/session/pin_gate.dart';
 import 'package:pos_app/app/session/session.dart';
 import 'package:pos_app/data/customers/customer_directory.dart';
 import 'package:pos_app/data/db/app_database.dart';
+import 'package:pos_app/data/sales/remote_sale.dart';
 import 'package:pos_app/features/refunds/refund_dialog.dart';
 import 'package:pos_ui/pos_ui.dart';
 
@@ -44,7 +45,11 @@ Future<void> open(WidgetTester tester, {Session? session}) async {
   await pumpPosApp(
     tester,
     db: _db,
-    overrides: [fakePin],
+    overrides: [
+      fakePin,
+      // Server: boshqa kassalarda ham bunday chek yo'q (T-110).
+      remoteSaleFetcherProvider.overrideWithValue((_) async => null),
+    ],
     session: session ?? unlockedSession,
   );
 }

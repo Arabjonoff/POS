@@ -503,3 +503,8 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - Qilindi (`receipt-history.md`): bo'lim "Cheklar" (kassadan keyin, Ctrl+7, kassada F7): shu kassaning cheklari — Bugun/Kecha/sana, to'lov turi, qidiruv (raqam, mijoz, tovar nomi/shtrix-kodi), jami va qaytarilgan; skaner — chek kodi ochadi, tovar kodi qidiradi; tafsilot — printerdagi chek ko'rinishi, qaytarishlar, "Qayta chop etish" (NUSXA, Ctrl+P), "Qaytarish" (F8 oynasi shu chek bilan). Kassa: yashirin bo'lim fokusi F-tugmalarni to'smaydi.
 - Sinov: sale_history (6), sales_history widget (11), golden `sales/*`; menyuga ikon qo'shilgani uchun golden'lar yangilandi; apps/pos 843 — yashil.
 - Qoldi: boshqa kassalarning cheklari ko'rinmaydi (Q-006 bilan bir xil cheklov).
+
+## 2026-10-15 — T-110 Boshqa kassa cheklari (Q-006 → A)
+- Qilindi: server `GET /api/v1/sync/sales/?number=` (qurilma tokeni, tenant bo'yicha; qatorlarda qaytarilgan miqdor/summa, qaytarishlar, kassir/mijoz nomi); kassada `RemoteSales` (lokal yuborilmagan qaytarishlar qo'shiladi), `ReceiptLoader.fromSource`, `PrinterService.printReceipt`. "Cheklar": lokalda yo'q chek raqami — skaner, Enter yoki "Boshqa kassalardan qidirish" → serverdan, "N-kassa cheki" belgisi, qayta chop etish (NUSXA), qaytarish (outbox `refund.created`); F8 oynasida ham. Oflayn/yo'q/xato — aniq xabarlar.
+- Sinov: backend test_sale_lookup (5, tenant izolyatsiyasi); kassa remote_sale (4), remote_receipts widget (5), golden `sales/detail_remote`; eski 2 test endi "server: chek yo'q" bilan; apps/pos va backend to'liq — yashil.
+- Qoldi: ikki kassa bir chekni bir vaqtda oflaynda qaytarsa — server ikkinchisini rad etadi (outbox xatosi). Boshqa kassa cheklari ro'yxatda ko'rinmaydi (faqat raqam bilan).

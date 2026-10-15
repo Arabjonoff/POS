@@ -99,7 +99,8 @@ def test_not_refunded_item_has_zero(kassa, make_device, tenant, cashier, product
     _, client = kassa
     data = client.get(URL, {"number": sale.number}).json()
     assert (data["items"][0]["refunded_qty_milli"], data["refunds"]) == (0, [])
-    assert data["customer"] is None and data["customer_name"] is None
+    assert data["customer"] is None
+    assert data["customer_name"] is None
 
 
 def test_other_tenant_cannot_see_the_receipt(make_device, other_tenant, other_kassa_sale):
