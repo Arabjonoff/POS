@@ -40,7 +40,7 @@ Umumiy tamoyillar: `sync.md`. Hodisa payloadlari va qo'llash qoidalari: `sales-a
 | `debt.paid` | `pay_debt(enforce_balance=False)` | `{id, customer, amount_tiyin > 0, method: cash\|card, shift?, by, at, note?}` |
 | `customer.upserted` | `CustomerSerializer` | `{id, full_name, phone, note, debt_limit_tiyin?, opening_balance?, by}` — `opening_balance` faqat yaratishda (`customers-api.md`) |
 | `supplier.upserted` | `SupplierSerializer` | `{id, name, phone, note, by}` (ega/menejer) |
-| `product.upserted` | `ProductSerializer` | `catalog-api.md` mahsulot maydonlari + `by` (ega/menejer) |
+| `product.upserted` | `ProductSerializer` | `catalog-api.md` mahsulot maydonlari + `by` (ega/menejer). Mavjud tovar uchun qisman (faqat o'zgargan maydonlar, T-106); bo'sh `plu_code` — `null` |
 | `receipt.posted` | `StockReceiptSerializer` + `post_receipt` | `inventory-api.md` kirim + `by` (ega/menejer), ixtiyoriy `at` |
 | `receipt.corrected` | `correct_receipt` | `{id, corrects, reversal_id, supplier?, note, items, by, at}` — `stock-receipt.md` "Tahrirlash" |
 | `receipt.reversed` | `cancel_receipt` | `{id, reverses, note, by, at}` — allaqachon bekor qilingan bo'lsa o'zgarishsiz |

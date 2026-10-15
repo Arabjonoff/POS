@@ -42,6 +42,7 @@ class _SupplierPickerState extends ConsumerState<_SupplierPicker> {
   final _name = TextEditingController();
   final _phone = TextEditingController();
   bool _creating = false;
+  bool _saving = false;
   String? _nameError;
 
   @override
@@ -52,6 +53,8 @@ class _SupplierPickerState extends ConsumerState<_SupplierPicker> {
   }
 
   Future<void> _create() async {
+    // Ikki marta bosish ikki yetkazib beruvchi yaratmasin (UI-P1-4).
+    if (_saving) return;
     final l10n = AppLocalizations.of(context);
     if (_name.text.trim().isEmpty) {
       setState(() => _nameError = l10n.fieldRequired);
@@ -65,10 +68,15 @@ class _SupplierPickerState extends ConsumerState<_SupplierPicker> {
       reason: l10n.receivingNeedsApproval,
     );
     if (by == null || !mounted) return;
-    final id = await ref
-        .read(receiptStoreProvider)
-        .createSupplier(name: _name.text, phone: _phone.text, by: by);
-    if (mounted) Navigator.of(context).pop(SupplierChoice(id));
+    setState(() => _saving = true);
+    try {
+      final id = await ref
+          .read(receiptStoreProvider)
+          .createSupplier(name: _name.text, phone: _phone.text, by: by);
+      if (mounted) Navigator.of(context).pop(SupplierChoice(id));
+    } finally {
+      if (mounted) setState(() => _saving = false);
+    }
   }
 
   @override
@@ -88,6 +96,7 @@ class _SupplierPickerState extends ConsumerState<_SupplierPicker> {
                   key: const ValueKey('supplier-name'),
                   controller: _name,
                   label: l10n.payCustomerName,
+                  required: true,
                   autofocus: true,
                   errorText: _nameError,
                   onChanged: (_) => setState(() => _nameError = null),
@@ -136,7 +145,8 @@ class _SupplierPickerState extends ConsumerState<_SupplierPicker> {
           PosButton(
             key: const ValueKey('supplier-save'),
             label: l10n.actionSave,
-            onPressed: () => unawaited(_create()),
+            loading: _saving,
+            onPressed: _saving ? null : () => unawaited(_create()),
           )
         else
           PosButton(

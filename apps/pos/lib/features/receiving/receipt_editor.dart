@@ -12,6 +12,7 @@ import 'package:pos_app/core/barcode/barcode.dart';
 import 'package:pos_app/core/barcode/scanner_service.dart';
 import 'package:pos_app/core/format/app_format.dart';
 import 'package:pos_app/core/format/unit_code.dart';
+import 'package:pos_app/core/money/grouped_money_formatter.dart';
 import 'package:pos_app/data/catalog/product_catalog.dart';
 import 'package:pos_app/data/catalog/product_editor.dart';
 import 'package:pos_app/data/db/app_database.dart';
@@ -467,7 +468,7 @@ class _ReceiptEditorState extends ConsumerState<ReceiptEditor> {
             label: doc.isCorrection
                 ? l10n.receivingDiscardCorrection
                 : l10n.receivingDelete,
-            variant: PosButtonVariant.ghost,
+            variant: PosButtonVariant.dangerGhost,
             onPressed: _busy ? null : () => unawaited(_deleteDraft(doc)),
           ),
           const SizedBox(width: PosSpacing.s),
@@ -758,12 +759,13 @@ class _LineRowState extends ConsumerState<_LineRow> {
       String label,
       ValueChanged<String> onChanged, {
       String? error,
+      bool money = true,
     }) => PosTextField(
       key: ValueKey('$key-${line.id}'),
       controller: controller,
       label: label,
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
-      inputFormatters: digits,
+      inputFormatters: money ? const [DecimalMoneyFormatter()] : digits,
       textAlign: TextAlign.right,
       errorText: error,
       onChanged: onChanged,
@@ -802,6 +804,7 @@ class _LineRowState extends ConsumerState<_LineRow> {
           l10n.receivingQtyUnit(line.unit.label(l10n)),
           _onQty,
           error: _badQty ? l10n.productErrQty : null,
+          money: false,
         ),
         field('cost', _cost, l10n.receivingCost, _onCost),
         field('sell', _sell, l10n.receivingSell, _onSell),

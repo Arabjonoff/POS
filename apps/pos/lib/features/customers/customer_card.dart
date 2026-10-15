@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show StreamProviderFamily;
 import 'package:pos_app/app/session/session.dart';
 import 'package:pos_app/core/format/app_format.dart';
+import 'package:pos_app/core/money/grouped_money_formatter.dart';
 import 'package:pos_app/core/text/phone.dart';
 import 'package:pos_app/data/customers/customer_directory.dart';
 import 'package:pos_app/features/common/manager_approval.dart';
@@ -255,6 +255,16 @@ class _DebtPaymentDialogState extends ConsumerState<_DebtPaymentDialog> {
     }
     final user = ref.read(sessionProvider).user;
     if (user == null) return;
+    // Bazadan to'g'ridan-to'g'ri: tinglovchisiz StreamProvider eskirgan
+    // smenani qaytarishi mumkin (yopilgan smenaga naqd yozilmasin).
+    final shiftId = (await openShiftNow(ref))?.id;
+    if (!mounted) return;
+    // Naqd smenasiz qabul qilinsa, hech bir Z-hisobotga tushmaydi (audit
+    // CU-B4) — kassa puli hisobi buzilmasin.
+    if (_method == 'cash' && shiftId == null) {
+      setState(() => _error = l10n.payDebtNeedsShift);
+      return;
+    }
     setState(() => _busy = true);
     try {
       await ref
@@ -264,7 +274,7 @@ class _DebtPaymentDialogState extends ConsumerState<_DebtPaymentDialog> {
             amountTiyin: _amount,
             method: _method,
             by: user.id,
-            shiftId: ref.read(currentShiftProvider).value?.id,
+            shiftId: shiftId,
           );
       if (!mounted) return;
       showPosToast(
@@ -281,6 +291,14 @@ class _DebtPaymentDialogState extends ConsumerState<_DebtPaymentDialog> {
         setState(() {
           _busy = false;
           _error = l10n.payDebtTooMuch(fmt.money(e.balanceTiyin));
+        });
+      }
+    } on Object {
+      // Kutilmagan xato — tugma qotmasin, foydalanuvchi bilsin (UI-P1-3).
+      if (mounted) {
+        setState(() {
+          _busy = false;
+          _error = l10n.actionFailed;
         });
       }
     }
@@ -463,17 +481,25 @@ class _CustomerEditDialogState extends ConsumerState<_CustomerEditDialog> {
       by = approver;
     }
     setState(() => _busy = true);
-    await ref
-        .read(customerDirectoryProvider)
-        .update(
-          id: details.id,
-          name: _name.text,
-          phone: _phone.text,
-          note: _note.text,
-          by: by,
-          changeLimit: changeLimit,
-          limitTiyin: limit,
-        );
+    try {
+      await ref
+          .read(customerDirectoryProvider)
+          .update(
+            id: details.id,
+            name: _name.text,
+            phone: _phone.text,
+            note: _note.text,
+            by: by,
+            changeLimit: changeLimit,
+            limitTiyin: limit,
+          );
+    } on Object {
+      if (mounted) {
+        setState(() => _busy = false);
+        showPosToast(context, message: l10n.actionFailed, tone: PosTone.danger);
+      }
+      return;
+    }
     if (!mounted) return;
     showPosToast(context, message: l10n.customerSaved, tone: PosTone.success);
     Navigator.of(context).pop();
@@ -495,6 +521,7 @@ class _CustomerEditDialogState extends ConsumerState<_CustomerEditDialog> {
                   key: const ValueKey('customer-name'),
                   controller: _name,
                   label: l10n.payCustomerName,
+                  required: true,
                   errorText: _nameError,
                   onChanged: (_) => setState(() => _nameError = null),
                 ),
@@ -519,9 +546,7 @@ class _CustomerEditDialogState extends ConsumerState<_CustomerEditDialog> {
                   controller: _limit,
                   label: l10n.customerLimitField,
                   keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(r'[\d\s,.]')),
-                  ],
+                  inputFormatters: const [DecimalMoneyFormatter()],
                   errorText: _badLimit ? l10n.productErrPrice : null,
                   onChanged: (_) => setState(() => _badLimit = false),
                 ),

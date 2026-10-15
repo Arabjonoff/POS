@@ -75,6 +75,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get actionDelete => 'Удалить';
 
   @override
+  String get loadFailedTitle => 'Не удалось загрузить данные';
+
+  @override
+  String get loadFailedMessage =>
+      'Попробуйте ещё раз. Если повторится, перезапустите приложение.';
+
+  @override
   String get actionRetry => 'Повторить';
 
   @override
@@ -878,7 +885,25 @@ class AppLocalizationsRu extends AppLocalizations {
   String get productImageTooLarge => 'Фото слишком большое (больше 20 МБ).';
 
   @override
+  String productSameName(String name) {
+    return 'Товар «$name» уже есть. Это он?';
+  }
+
+  @override
+  String get productGone => 'Товар не найден — возможно, он удалён';
+
+  @override
   String get productSaveFailed => 'Не удалось сохранить. Попробуйте ещё раз.';
+
+  @override
+  String get actionFailed => 'Не удалось выполнить. Попробуйте ещё раз.';
+
+  @override
+  String get payDebtNeedsShift =>
+      'Чтобы принять наличные, откройте смену (для верного учёта кассы)';
+
+  @override
+  String get inventoryDeleteTitle => 'Удалить пересчёт?';
 
   @override
   String get receiptDebtNow => 'Текущий долг';

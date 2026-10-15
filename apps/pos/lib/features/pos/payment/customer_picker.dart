@@ -80,6 +80,7 @@ class _CustomerPickerState extends ConsumerState<CustomerPicker> {
           PosTextField(
             controller: _name,
             label: l10n.payCustomerName,
+            required: true,
             errorText: _nameError,
             autofocus: true,
             textInputAction: TextInputAction.next,

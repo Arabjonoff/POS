@@ -72,7 +72,7 @@ Future<(String, String)> _open(
   await tester.sendKeyEvent(LogicalKeyboardKey.digit3);
   await tester.sendKeyUpEvent(LogicalKeyboardKey.controlLeft);
   await tester.pumpAndSettle();
-  final nav = find.text('Kirim');
+  final nav = find.byTooltip('Kirim');
   if (size.width < 600 && nav.evaluate().isNotEmpty) {
     await tester.tap(nav.last);
     await tester.pumpAndSettle();

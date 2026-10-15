@@ -74,8 +74,8 @@ Future<void> _open(
   await tester.sendKeyEvent(LogicalKeyboardKey.digit2);
   await tester.sendKeyUpEvent(LogicalKeyboardKey.controlLeft);
   await tester.pumpAndSettle();
-  // Telefonda pastki menyu: "Tovarlar".
-  final nav = find.text('Tovarlar');
+  // Telefonda pastki menyu (yozuvsiz ikon — tooltip bo'yicha).
+  final nav = find.byTooltip('Tovarlar');
   if (size.width < 600 && nav.evaluate().isNotEmpty) {
     await tester.tap(nav.last);
     await tester.pumpAndSettle();
@@ -87,6 +87,10 @@ void main() {
 
   goldenAcrossDevices('products', 'card', (tester, size) async {
     await _open(tester, size);
+    // Telefonda tovar ro'yxat pastida — aks holda bosish pastki menyuga
+    // tushib, golden "Kirim" ekranini olardi.
+    await tester.ensureVisible(find.text('Olma qizil'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Olma qizil'));
     await tester.pumpAndSettle();
   });

@@ -165,6 +165,15 @@ def test_plu_unique_among_active(client_as, manager, product_payload, unit_kg):
     assert client.post(PRODUCTS, payload, format="json").status_code == 201
 
 
+def test_blank_plu_is_no_plu(client_as, manager, product_payload):
+    """Audit P2-13: REST/import'dan `plu_code: ""` ikki marta — ikkinchisi 409 olmasin."""
+    client = client_as(manager)
+    for name in ("Non", "Sut"):
+        response = client.post(PRODUCTS, product_payload(name=name, plu_code=""), format="json")
+        assert response.status_code == 201
+        assert response.json()["plu_code"] is None
+
+
 def test_foreign_unit_and_category_rejected(client_as, manager, product_payload, other_tenant):
     foreign_unit = other_tenant.units.get(code="pcs")
     foreign_cat = Category.objects.create(tenant=other_tenant, name="Begona")

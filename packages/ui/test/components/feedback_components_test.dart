@@ -34,6 +34,24 @@ Future<String?> _openDialog(BuildContext context) => showPosDialog<String>(
 
 void main() {
   group('showPosDialog', () {
+    testWidgets('long title: at most 2 lines (audit P2-15)', (tester) async {
+      final title = 'Juda uzun tovar nomi ' * 10;
+      await pumpPos(
+        tester,
+        _opener(
+          (c) => showPosDialog<void>(
+            context: c,
+            builder: (_) => PosDialog(title: title, message: 'X'),
+          ),
+        ),
+        size: const Size(390, 844),
+      );
+      await tester.tap(find.text('Open'));
+      await tester.pumpAndSettle();
+      final height = tester.getSize(find.text(title)).height;
+      expect(height, lessThanOrEqualTo(PosTypography.h2.fontSize! * 3));
+    });
+
     testWidgets('desktop opens centered dialog, Esc closes', (tester) async {
       Future<String?>? result;
       await pumpPos(

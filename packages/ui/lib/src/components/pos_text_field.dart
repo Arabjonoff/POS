@@ -29,6 +29,7 @@ class PosTextField extends StatelessWidget {
     this.maxLines = 1,
     this.textAlign = TextAlign.start,
     this.large = false,
+    this.required = false,
     super.key,
   });
 
@@ -59,6 +60,9 @@ class PosTextField extends StatelessWidget {
 
   /// Kassa uchun katta maydon (56 dp, 18 pt matn).
   final bool large;
+
+  /// Majburiy maydon: yorliq yonida qizil `*` (saqlashdan oldin ko'rinsin).
+  final bool required;
 
   @override
   Widget build(BuildContext context) {
@@ -107,8 +111,17 @@ class PosTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          label!,
+        Text.rich(
+          TextSpan(
+            text: label,
+            children: [
+              if (required)
+                TextSpan(
+                  text: ' *',
+                  style: TextStyle(color: enabled ? p.dangerText : p.disabled),
+                ),
+            ],
+          ),
           style: PosTypography.smallStrong.copyWith(
             color: enabled ? p.text : p.disabled,
           ),

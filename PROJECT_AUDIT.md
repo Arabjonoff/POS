@@ -51,22 +51,26 @@ Holat: ✅ tuzatildi · 🔧 ishlanmoqda · ⏳ rejada · ❓ biznes savoli (`do
 | PRN-B14 | Avto-chop o'chiq bo'lsa naqd savdoda pul qutisi ochilmaydi | ✅ T-104a |
 | IMG-0 | Mahsulot rasmi umuman yo'q | ✅ T-105 (qaror 0013) |
 | PR-P1-3 | Kassada nom ≤ 200 va ≤ 20 shtrix-kod cheklovi yo'q → server rad etadi (P0-1 ga olib keladi) | ✅ T-101 |
-| PR-P1-4 | Oflayn eski tahrir serverdagi yangi narxni qaytarib yozadi (to'liq snapshot) | ⏳ T-106 (o\'zgargan maydonlar — kassa formati o\'zgaradi) |
-| PR-P1-6, UI-P1-3 | Saqlashda kutilmagan xato — tugma "yuklanmoqda"da qotadi, xabar yo'q (tovar kartasi, mijoz kartasi, smena yopish) | tovar kartasi ✅ T-105; mijoz kartasi, smena ⏳ T-106 |
-| UI-P1-2, UI-P1-4 | Ikki marta bosish: tovar kartasi ikki tovar, kirim ikki qoralama, yetkazib beruvchi ikki marta yaratadi | tovar kartasi ✅ T-105, kirim ✅ T-102; yetkazib beruvchi ⏳ T-106 |
-| UI-P1-1 | Kirim/inventarizatsiya qoralamasi tasdiqsiz va qaytarishsiz o'chadi (tugma "Tasdiqlash" yonida) | kirim ✅ T-102 (`showPosConfirm`); inventarizatsiya ⏳ T-106 |
-| UI-P1-5 | Telefonda holat qatori kesiladi ("Prin…"), smena va xato ko'rinmaydi | ⏳ T-106 |
+| PR-P1-4 | Oflayn eski tahrir serverdagi yangi narxni qaytarib yozadi (to'liq snapshot) | ✅ T-106 (tahrirda faqat o'zgargan maydonlar yuboriladi; server qisman yangilaydi — eski kassalar bilan mos) |
+| PR-P1-6, UI-P1-3 | Saqlashda kutilmagan xato — tugma "yuklanmoqda"da qotadi, xabar yo'q (tovar kartasi, mijoz kartasi, smena yopish) | ✅ tovar kartasi T-105; mijoz kartasi, smena yopish, yetkazib beruvchi, inventarizatsiya T-106 |
+| UI-P1-2, UI-P1-4 | Ikki marta bosish: tovar kartasi ikki tovar, kirim ikki qoralama, yetkazib beruvchi ikki marta yaratadi | ✅ tovar kartasi T-105, kirim T-102, yetkazib beruvchi va inventarizatsiya yaratish T-106 |
+| UI-P1-1 | Kirim/inventarizatsiya qoralamasi tasdiqsiz va qaytarishsiz o'chadi (tugma "Tasdiqlash" yonida) | ✅ kirim T-102 (`showPosConfirm`), inventarizatsiya T-106 |
+| UI-P1-5 | Telefonda holat qatori kesiladi ("Prin…"), smena va xato ko'rinmaydi | ✅ T-106 (telefonda ixcham: ikon + tooltip, muammo birinchi va matn bilan; pastki menyuda >5 bo'limda faqat tanlangan yozuv) |
 | CU-B3 | Qayta yuborilgan qarz to'lovi smena yopilgach rad etiladi | ✅ T-101 |
-| CU-B4 | Smena ochilmasdan qarz to'lovi qabul qilinadi — naqd hech bir Z-hisobotga tushmaydi | ⏳ T-103 |
+| CU-B4 | Smena ochilmasdan qarz to'lovi qabul qilinadi — naqd hech bir Z-hisobotga tushmaydi | ✅ T-106 (naqd — faqat ochiq smenada; karta — smenasiz) |
 | RC-B5/B6 | Javob yo'qolib qayta yuborish kutilayotganda pull qoldiqni ikki marta hisoblaydi va kirim narxini eskisi bilan almashtiradi (≤ 5 daqiqa) | ✅ T-101 |
 
 ### P2 — sifat, izchillik
 
 - **UI:** holat qatorida doimiy yorqin yashil (internet/printer/smena) — normal holat neytral bo'lishi kerak; pul maydonlari "11000"
   (bo'shliqsiz); majburiy/ixtiyoriy belgisi yo'q; ro'yxatda xato bo'lsa cheksiz spinner; skeleton o'rniga spinner; telefonda 6 ta pastki tab;
-  yuklanayotgan tugma klaviatura fokusini yo'qotadi. → T-106
+  yuklanayotgan tugma klaviatura fokusini yo'qotadi. → ✅ T-106: neytral holat qatori, pul maydonlari `1 500 000,50`, majburiy `*`,
+  ro'yxat xatosida xabar + "Qayta urinish", telefon pastki menyusi, "Qoralamani o'chirish" qizil, smena ikonkasi soatdan farqli.
+  Qoldi: skeleton, fokus, qator o'chirishda "qaytarish" (undo), savat tanlangan qatori rangi, filtr yorliqlari (`audit_ui.md` P2-2/8/12/13/14).
 - **Mahsulot:** qidiruvda `´` apostrof emas; nomlarda `\n`/`\t` server qabul qiladi; REST `plu_code=""` ikkinchi marta 409; dublikat nom
-  ogohlantirishi yo'q; o'chirilgan tovar kartasi "yangi" bo'lib ochiladi. → T-101/T-106
+  ogohlantirishi yo'q; o'chirilgan tovar kartasi "yangi" bo'lib ochiladi. → ✅ T-101 (apostrof, nom tozalash), T-106 (bo'sh PLU → `null`
+  + migratsiya, "shu nomli tovar bor" ogohlantirishi, o'chirilgan tovar kartasi ochilmaydi, uzun nom sarlavhada ≤ 2 qator).
+  Qoldi: import'da shtrix-kodsiz qatorni nom bo'yicha moslash; rad etilgan harakatlar lokal qoldiqda (P2-17 — qaror kerak).
 - **Chek:** "·", « », “ ”, … qog'ozda `?`; Ў/ў CP866 da bor, lekin У ga aylantiriladi; bo'sh do'kon nomi bo'sh qator; gramm/qadoq
   birligi ko'rinmaydi; telefon formatlanmagan. → ✅ T-104a
 - **Kirim:** narxlar hodisa vaqti emas, kelish tartibida qo'llanadi (eski oflayn kirim yangi narxni bosadi); kirim vaqti server vaqti;

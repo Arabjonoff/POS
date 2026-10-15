@@ -170,6 +170,27 @@ void main() {
     expect(payment.method, 'card');
   });
 
+  testWidgets('cash payment needs an open shift; card works (CU-B4)', (
+    tester,
+  ) async {
+    await open(tester);
+    await _db.delete(_db.shifts).go();
+    await tester.pumpAndSettle();
+    await tap(tester, find.byKey(const ValueKey('customer-c1')));
+    await tap(tester, find.byKey(const ValueKey('customer-pay')));
+    await tap(tester, find.byKey(const ValueKey('debt-full')));
+    await tap(tester, find.byKey(const ValueKey('debt-confirm')));
+    expect(
+      find.textContaining('smenani oching'),
+      findsOneWidget,
+    );
+    expect(await ledger('c1'), 20000000);
+    await tap(tester, find.byKey(const ValueKey('debt-method-card')));
+    await tap(tester, find.byKey(const ValueKey('debt-full')));
+    await tap(tester, find.byKey(const ValueKey('debt-confirm')));
+    expect(await ledger('c1'), 0);
+  });
+
   testWidgets('partial payment by keypad', (tester) async {
     await open(tester);
     await tap(tester, find.byKey(const ValueKey('customer-c3')));

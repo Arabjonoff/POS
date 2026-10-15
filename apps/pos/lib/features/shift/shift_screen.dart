@@ -28,21 +28,48 @@ class _ShiftScreenState extends ConsumerState<ShiftScreen> {
   /// Yopilgandan keyin — Z hisobot.
   ShiftReport? _closed;
 
+  /// Yopish jarayoni: tugma ikkinchi marta bosilmasin (audit UI-P1-4).
+  bool _closing = false;
+
+  /// Haqiqiy yozish (spinner) — pul sanash oynasi ochiq paytda emas.
+  bool _writing = false;
+
   Future<void> _close(ShiftReport x) async {
-    final counted = await showPosDialog<int>(
-      context: context,
-      builder: (context) => _CloseShiftDialog(expectedCash: x.expectedCash),
-    );
-    if (counted == null || !mounted) return;
-    final user = ref.read(sessionProvider).user;
-    final z = await ref
-        .read(shiftServiceProvider)
-        .close(
-          shiftId: x.shift.id,
-          closedBy: user?.id ?? x.shift.openedBy,
-          countedCashTiyin: counted,
+    if (_closing) return;
+    setState(() => _closing = true);
+    try {
+      final counted = await showPosDialog<int>(
+        context: context,
+        builder: (context) => _CloseShiftDialog(expectedCash: x.expectedCash),
+      );
+      if (counted == null || !mounted) return;
+      setState(() => _writing = true);
+      final user = ref.read(sessionProvider).user;
+      final z = await ref
+          .read(shiftServiceProvider)
+          .close(
+            shiftId: x.shift.id,
+            closedBy: user?.id ?? x.shift.openedBy,
+            countedCashTiyin: counted,
+          );
+      if (mounted) setState(() => _closed = z);
+    } on Object {
+      // Kutilmagan xato — smena ochiq qoladi, foydalanuvchi biladi.
+      if (mounted) {
+        showPosToast(
+          context,
+          message: AppLocalizations.of(context).actionFailed,
+          tone: PosTone.danger,
         );
-    if (mounted) setState(() => _closed = z);
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _closing = false;
+          _writing = false;
+        });
+      }
+    }
   }
 
   /// X yoki Z hisobot cheki.
@@ -139,7 +166,8 @@ class _ShiftScreenState extends ConsumerState<ShiftScreen> {
           label: l10n.shiftCloseAction,
           icon: Icons.lock_outline,
           variant: PosButtonVariant.danger,
-          onPressed: () => unawaited(_close(report)),
+          loading: _writing,
+          onPressed: _closing ? null : () => unawaited(_close(report)),
         ),
       ],
     );

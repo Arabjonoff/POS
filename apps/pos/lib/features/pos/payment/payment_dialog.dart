@@ -238,7 +238,8 @@ class _PaymentDialogState extends ConsumerState<PaymentDialog> {
       }
     }
 
-    final shift = ref.read(currentShiftProvider).value;
+    final shift = await openShiftNow(ref);
+    if (!mounted) return;
     final user = ref.read(sessionProvider).user;
     if (shift == null || user == null) {
       _showNotice(l10n.payFailed, PosTone.danger);

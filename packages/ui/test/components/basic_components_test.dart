@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pos_ui/pos_ui.dart';
@@ -36,6 +37,23 @@ void main() {
       await tester.tap(find.text('Pay'), warnIfMissed: false);
       expect(taps, 0);
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    });
+
+    testWidgets('dangerGhost: red text, no fill (audit P2-10)', (
+      tester,
+    ) async {
+      await pumpPos(
+        tester,
+        PosButton(
+          label: "O'chirish",
+          variant: PosButtonVariant.dangerGhost,
+          onPressed: () {},
+        ),
+      );
+      final paragraph = tester.renderObject<RenderParagraph>(
+        find.text("O'chirish"),
+      );
+      expect(paragraph.text.style!.color, PosPalette.light.dangerText);
     });
 
     testWidgets('disabled when onPressed is null', (tester) async {
@@ -124,6 +142,27 @@ void main() {
       );
       expect(find.text('Hint'), findsNothing);
       expect(find.text('Bad'), findsOneWidget);
+    });
+
+    testWidgets('required: red star next to the label (audit P2-7)', (
+      tester,
+    ) async {
+      await pumpPos(
+        tester,
+        const Column(
+          children: [
+            PosTextField(label: 'Nomi', required: true),
+            PosTextField(label: 'Izoh'),
+          ],
+        ),
+      );
+      expect(find.text('Nomi *'), findsOneWidget);
+      expect(find.text('Izoh'), findsOneWidget);
+      final rich = tester.widget<Text>(find.text('Nomi *'));
+      final star = rich.textSpan!.toPlainText();
+      expect(star, 'Nomi *');
+      final span = (rich.textSpan! as TextSpan).children!.single as TextSpan;
+      expect(span.style!.color, PosPalette.light.dangerText);
     });
   });
 

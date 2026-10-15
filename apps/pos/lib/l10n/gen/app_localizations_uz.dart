@@ -75,6 +75,13 @@ class AppLocalizationsUz extends AppLocalizations {
   String get actionDelete => 'O\'chirish';
 
   @override
+  String get loadFailedTitle => 'Ma\'lumotni o\'qib bo\'lmadi';
+
+  @override
+  String get loadFailedMessage =>
+      'Qayta urinib ko\'ring. Takrorlansa, ilovani qayta oching.';
+
+  @override
   String get actionRetry => 'Qayta urinish';
 
   @override
@@ -860,7 +867,25 @@ class AppLocalizationsUz extends AppLocalizations {
   String get productImageTooLarge => 'Rasm juda katta (20 MB dan ortiq).';
 
   @override
+  String productSameName(String name) {
+    return '«$name» nomli tovar allaqachon bor. Shu tovarmi?';
+  }
+
+  @override
+  String get productGone => 'Tovar topilmadi — u o\'chirilgan bo\'lishi mumkin';
+
+  @override
   String get productSaveFailed => 'Saqlab bo\'lmadi. Qayta urinib ko\'ring.';
+
+  @override
+  String get actionFailed => 'Bajarib bo\'lmadi. Qayta urinib ko\'ring.';
+
+  @override
+  String get payDebtNeedsShift =>
+      'Naqd to\'lovni qabul qilish uchun smenani oching (kassa puli hisobi to\'g\'ri bo\'lsin)';
+
+  @override
+  String get inventoryDeleteTitle => 'Sanoqni o\'chirasizmi?';
 
   @override
   String get receiptDebtNow => 'Joriy qarz';
@@ -2235,6 +2260,13 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
   String get actionDelete => 'Ўчириш';
 
   @override
+  String get loadFailedTitle => 'Маълумотни ўқиб бўлмади';
+
+  @override
+  String get loadFailedMessage =>
+      'Қайта уриниб кўринг. Такрорланса, иловани қайта очинг.';
+
+  @override
   String get actionRetry => 'Қайта уриниш';
 
   @override
@@ -3016,7 +3048,25 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
   String get productImageTooLarge => 'Расм жуда катта (20 МБ дан ортиқ).';
 
   @override
+  String productSameName(String name) {
+    return '«$name» номли товар аллақачон бор. Шу товарми?';
+  }
+
+  @override
+  String get productGone => 'Товар топилмади — у ўчирилган бўлиши мумкин';
+
+  @override
   String get productSaveFailed => 'Сақлаб бўлмади. Қайта уриниб кўринг.';
+
+  @override
+  String get actionFailed => 'Бажариб бўлмади. Қайта уриниб кўринг.';
+
+  @override
+  String get payDebtNeedsShift =>
+      'Нақд тўловни қабул қилиш учун сменани очинг (касса пули ҳисоби тўғри бўлсин)';
+
+  @override
+  String get inventoryDeleteTitle => 'Саноқни ўчирасизми?';
 
   @override
   String get receiptDebtNow => 'Жорий қарз';

@@ -52,7 +52,7 @@ void main() {
     await tester.sendKeyEvent(LogicalKeyboardKey.digit2);
     await tester.sendKeyUpEvent(LogicalKeyboardKey.controlLeft);
     await tester.pumpAndSettle();
-    final nav = find.text('Tovarlar');
+    final nav = find.byTooltip('Tovarlar');
     if (size.width < 600 && nav.evaluate().isNotEmpty) {
       await tester.tap(nav.last);
       await tester.pumpAndSettle();

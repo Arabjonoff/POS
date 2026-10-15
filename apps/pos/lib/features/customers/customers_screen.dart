@@ -8,6 +8,7 @@ import 'package:pos_app/core/format/app_format.dart';
 import 'package:pos_app/core/money/grouped_money_formatter.dart';
 import 'package:pos_app/core/text/phone.dart';
 import 'package:pos_app/data/customers/customer_directory.dart';
+import 'package:pos_app/features/common/load_state.dart';
 import 'package:pos_app/features/common/manager_approval.dart';
 import 'package:pos_app/features/common/section_page.dart';
 import 'package:pos_app/features/customers/customer_card.dart';
@@ -95,7 +96,8 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
     final p = PosPalette.of(context);
     final compact = PosWindowSize.of(context).isCompact;
     final padding = compact ? PosSpacing.l : PosSpacing.xl;
-    final all = ref.watch(customersProvider).value;
+    final customers = ref.watch(customersProvider);
+    final all = customers.value;
     final totalDebt = (all ?? const <CustomerEntry>[]).fold(
       0,
       (s, c) => s + (c.balanceTiyin > 0 ? c.balanceTiyin : 0),
@@ -109,7 +111,10 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
 
     final Widget body;
     if (found == null) {
-      body = const Center(child: CircularProgressIndicator());
+      body = LoadState(
+        failed: customers.hasError,
+        onRetry: () => ref.invalidate(customersProvider),
+      );
     } else if (all!.isEmpty) {
       body = PosEmptyState(
         icon: Icons.people_outline,
@@ -371,6 +376,7 @@ class _NewCustomerDialogState extends State<_NewCustomerDialog> {
             key: const ValueKey('new-customer-name'),
             controller: _name,
             label: l10n.payCustomerName,
+            required: true,
             autofocus: true,
             errorText: _error,
             textInputAction: TextInputAction.next,

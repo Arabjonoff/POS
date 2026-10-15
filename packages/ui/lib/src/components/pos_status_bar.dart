@@ -11,11 +11,18 @@ class PosStatusItem {
     required this.icon,
     required this.label,
     this.tone = PosTone.neutral,
+    this.short,
   });
 
   final IconData icon;
   final String label;
+
+  /// Neytral — hammasi joyida (rangsiz). Rang faqat muammoda.
   final PosTone tone;
+
+  /// Tor ekranda neytral yozuv o'rniga (masalan, navbat soni `12`);
+  /// `null` — faqat ikon (to'liq matn — tooltip va ekran o'quvchida).
+  final String? short;
 }
 
 /// Holat qatori — doim ko'rinadi. Telefonda ekran tepasida, planshet va
@@ -25,6 +32,7 @@ class PosStatusBar extends StatelessWidget {
     required this.items,
     this.trailing,
     this.atTop = false,
+    this.compact = false,
     super.key,
   });
 
@@ -35,6 +43,18 @@ class PosStatusBar extends StatelessWidget {
 
   /// Tepada joylashgan (chegara pastda).
   final bool atTop;
+
+  /// Telefon: neytral yozuvlar ikon (+ qisqa matn), muammolar — to'liq va
+  /// birinchi; hammasi bir qatorga sig'adi.
+  final bool compact;
+
+  /// Telefonda muammolar birinchi (ko'rinmay qolmasin).
+  List<PosStatusItem> get _ordered => compact
+      ? [
+          ...items.where((i) => i.tone != PosTone.neutral),
+          ...items.where((i) => i.tone == PosTone.neutral),
+        ]
+      : items;
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +75,12 @@ class PosStatusBar extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  for (final (i, item) in items.indexed) ...[
-                    if (i > 0) const SizedBox(width: PosSpacing.xl),
-                    _StatusItem(item: item),
+                  for (final (i, item) in _ordered.indexed) ...[
+                    if (i > 0)
+                      SizedBox(
+                        width: compact ? PosSpacing.m : PosSpacing.xl,
+                      ),
+                    _StatusItem(item: item, compact: compact),
                   ],
                 ],
               ),
@@ -77,31 +100,39 @@ class PosStatusBar extends StatelessWidget {
 }
 
 class _StatusItem extends StatelessWidget {
-  const _StatusItem({required this.item});
+  const _StatusItem({required this.item, required this.compact});
 
   final PosStatusItem item;
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
     final p = PosPalette.of(context);
-    final color = item.tone == PosTone.neutral
-        ? p.textSecondary
-        : p.tone(item.tone).text;
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(item.icon, size: PosSizes.iconS, color: color),
-        const SizedBox(width: PosSpacing.xs + 2),
-        Text(
-          item.label,
-          style: PosTypography.small.copyWith(
-            color: color,
-            fontWeight: item.tone == PosTone.neutral
-                ? FontWeight.w400
-                : FontWeight.w600,
-          ),
+    final neutral = item.tone == PosTone.neutral;
+    final color = neutral ? p.textSecondary : p.tone(item.tone).text;
+    final text = compact && neutral ? item.short : item.label;
+    return Tooltip(
+      message: item.label,
+      child: Semantics(
+        label: item.label,
+        excludeSemantics: true,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(item.icon, size: PosSizes.iconS, color: color),
+            if (text != null) ...[
+              const SizedBox(width: PosSpacing.xs + 2),
+              Text(
+                text,
+                style: PosTypography.small.copyWith(
+                  color: color,
+                  fontWeight: neutral ? FontWeight.w400 : FontWeight.w600,
+                ),
+              ),
+            ],
+          ],
         ),
-      ],
+      ),
     );
   }
 }

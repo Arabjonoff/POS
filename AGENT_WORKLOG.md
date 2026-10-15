@@ -22,7 +22,7 @@ barcha modullar regressiyasi, testlar, yakuniy hisobot.
 | 4 | Mijoz boshlang'ich balansi | ✅ T-103 |
 | 5 | Mahsulot rasmi (server + sinx + kassa) | ✅ T-105 |
 | 6 | Chek sozlamalari (preview, logo, 58/80 mm, test cheki) | ✅ T-104a, T-104b |
-| 7 | Vizual uslub va UX sayqali | — |
+| 7 | Vizual uslub va UX sayqali | ✅ T-106 |
 | 8 | Regressiya, yakuniy hisobot | — |
 
 ## Jurnal
@@ -47,5 +47,7 @@ barcha modullar regressiyasi, testlar, yakuniy hisobot.
 
 - T-105: server `ProductImage` (Pillow, JPEG 800/200, tenant view, media volume, zaxira), kassa drift v6, `product_images` navbati/kesh, `ProductImageSync` (outbox'dan alohida), tovar kartasi/ro'yxat/kassa qidiruvida rasm, `PosThumbnail`. Topilgan: tarmoq xatosida multipart fayl oqimi Windows'da faylni band qilardi — xotiradagi baytlarga o'tildi; saqlash tugmasi PIN kutilayotganda spinner ko'rsatardi — ajratildi. Backend to'liq, pos 743.
 
+- T-106: holat qatori va telefon menyusi, ikki marta bosish/qotish, inventarizatsiya o'chirish tasdig'i, naqd qarz to'lovi faqat smenada, smena bazadan (eskirgan provider qiymati — haqiqiy xato), qisman tovar tahriri, pul maydoni formati, majburiy `*`, ro'yxat xato holati, dublikat nom, o'chirilgan tovar kartasi, bo'sh PLU. Sinab ko'rilgan va voz kechilgan: serverda "qisman tahrir yaratishdan oldin kelsa — kutish" qoidasi (kassa hodisalarni tartib bilan yuboradi; mavjud validatsiya testini buzardi). pos 754, ui 141, backend to'liq.
+
 ## Keyingi qadam
-- T-106 UI/UX sayqal (`PROJECT_AUDIT.md` P1/P2 qolganlari).
+- T-107 regressiya va yakuniy hisobot.

@@ -92,7 +92,8 @@ class _CashMovementDialogState extends ConsumerState<CashMovementDialog> {
       setState(() => _error = l10n.cashChooseReason);
       return;
     }
-    final shift = ref.read(currentShiftProvider).value;
+    final shift = await openShiftNow(ref);
+    if (!mounted) return;
     final user = ref.read(sessionProvider).user;
     if (shift == null || user == null) {
       setState(() => _error = l10n.cashFailed);

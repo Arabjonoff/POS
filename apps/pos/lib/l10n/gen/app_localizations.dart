@@ -231,6 +231,18 @@ abstract class AppLocalizations {
   /// **'O\'chirish'**
   String get actionDelete;
 
+  /// Ro'yxat xato holati
+  ///
+  /// In uz, this message translates to:
+  /// **'Ma\'lumotni o\'qib bo\'lmadi'**
+  String get loadFailedTitle;
+
+  /// Ro'yxat xato holati izohi
+  ///
+  /// In uz, this message translates to:
+  /// **'Qayta urinib ko\'ring. Takrorlansa, ilovani qayta oching.'**
+  String get loadFailedMessage;
+
   /// Tugma: qayta urinish
   ///
   /// In uz, this message translates to:
@@ -1599,11 +1611,41 @@ abstract class AppLocalizations {
   /// **'Rasm juda katta (20 MB dan ortiq).'**
   String get productImageTooLarge;
 
+  /// Ogohlantirish: shu nomli tovar bor (saqlashni to'xtatmaydi)
+  ///
+  /// In uz, this message translates to:
+  /// **'«{name}» nomli tovar allaqachon bor. Shu tovarmi?'**
+  String productSameName(String name);
+
+  /// Tovar kartasi: tovar bazada yo'q
+  ///
+  /// In uz, this message translates to:
+  /// **'Tovar topilmadi — u o\'chirilgan bo\'lishi mumkin'**
+  String get productGone;
+
   /// Kutilmagan xato
   ///
   /// In uz, this message translates to:
   /// **'Saqlab bo\'lmadi. Qayta urinib ko\'ring.'**
   String get productSaveFailed;
+
+  /// Kutilmagan xato
+  ///
+  /// In uz, this message translates to:
+  /// **'Bajarib bo\'lmadi. Qayta urinib ko\'ring.'**
+  String get actionFailed;
+
+  /// Xato: smenasiz naqd qarz to'lovi
+  ///
+  /// In uz, this message translates to:
+  /// **'Naqd to\'lovni qabul qilish uchun smenani oching (kassa puli hisobi to\'g\'ri bo\'lsin)'**
+  String get payDebtNeedsShift;
+
+  /// Oyna sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Sanoqni o\'chirasizmi?'**
+  String get inventoryDeleteTitle;
 
   /// Chekda: mijozning savdodan keyingi qarzi
   ///

@@ -5,24 +5,24 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-105 Mahsulot rasmi (reja — `docs/audit/audit_products.md` "Product images"); T-104 merge (#54, #55)
-- Branch: feat/T-105-product-images
+- Vazifa: T-106 UI/UX sayqal — PR va merge
+- Branch: feat/T-106-ux-polish
 - Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
-- [x] 1. Server: Pillow, `ProductImage` + `Product.image` (catalog 0004), `apps/catalog/images.py` (tekshirish, JPEG 800 + 200), `PUT/GET/DELETE /sync/product-images/{id}/` (qurilma, tenant), `ProductSerializer.image` (faqat o'qish), MEDIA sozlamalari, prod `media` volume, zaxira/tiklash, Caddy 8 MB; testlar 11
-- [x] 2. Kassa: `image` paketi, drift v6 (`products.image_id`, `product_images`), `product_images.dart` (tayyorlash isolate, saqlash, olib tashlash), `image_sync.dart` (yuklash/o'chirish/yuklab olish), SyncEngine va pull ulanishi
-- [x] 3. UI: `PosThumbnail` (packages/ui), tovar kartasida rasm (qo'shish/almashtirish/olib tashlash, "yuklanmagan"), ro'yxatda, kassa qidiruvida
-- [x] 4. Testlar (data, sync, widget), golden'lar, OpenAPI/klientlar
-- [x] 5. Hujjatlar
-- [ ] 6. PR, merge
+- [x] 1. Holat qatori, telefon pastki menyusi
+- [x] 2. Ikki marta bosish / qotish, inventarizatsiya o'chirish tasdig'i
+- [x] 3. Naqd qarz to'lovi faqat smenada; smena bazadan (`openShiftNow`)
+- [x] 4. Qisman tovar tahriri; golden'lar
+- [x] 5. Pul formati, majburiy `*`, ro'yxat xato holati, dublikat nom, o'chirilgan tovar, bo'sh PLU
+- [ ] 6. PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-- T-105 tayyor, PR ochilmoqda.
+- Hammasi yashil: backend to'liq, apps/pos 754, packages/ui 141, widgetbook 62; hujjatlar yangilandi.
 
 ## Keyingi aniq harakat
-- T-105 PR CI yashil bo'lsa merge; keyin T-106 UI/UX sayqal (`PROJECT_AUDIT.md` ⏳ T-106 qatorlari).
+- `gh pr create` (T-106), CI yashil bo'lsa squash merge; keyin T-107 regressiya va yakuniy hisobot (foydalanuvchi so'ragan 8 savolga javob).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

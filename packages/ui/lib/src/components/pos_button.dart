@@ -3,7 +3,9 @@ import 'package:pos_ui/src/tokens/pos_dimens.dart';
 import 'package:pos_ui/src/tokens/pos_palette.dart';
 import 'package:pos_ui/src/tokens/pos_typography.dart';
 
-enum PosButtonVariant { primary, secondary, danger, ghost }
+/// `dangerGhost` — matnli xavfli amal (masalan, "Qoralamani o'chirish"):
+/// asosiy tugma yonida qizil, lekin fonsiz — e'tiborni tortib olmaydi.
+enum PosButtonVariant { primary, secondary, danger, ghost, dangerGhost }
 
 /// Balandlik: s 48, m 56 (kassa asosiy), l 64, xl 80 (To'lash).
 enum PosButtonSize {
@@ -176,6 +178,13 @@ class PosButton extends StatelessWidget {
       bg: Colors.transparent,
       hoverBg: p.primarySoft,
       fg: p.primaryText,
+      disabledBg: Colors.transparent,
+      disabledFg: p.disabled,
+    ),
+    PosButtonVariant.dangerGhost => _ButtonColors(
+      bg: Colors.transparent,
+      hoverBg: p.dangerSoft,
+      fg: p.dangerText,
       disabledBg: Colors.transparent,
       disabledFg: p.disabled,
     ),
