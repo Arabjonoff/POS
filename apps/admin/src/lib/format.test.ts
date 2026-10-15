@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { formatDate, formatDateTime, formatMoney, formatMoneyAmount } from "./format";
+import { formatDate, formatDateTime, formatMoney, formatMoneyAmount, formatSomPlain } from "./format";
 
 describe("formatMoneyAmount", () => {
   it("groups so'm and keeps tiyin only when present", () => {
@@ -33,5 +33,13 @@ describe("formatDateTime", () => {
   it("shows Tashkent wall time", () => {
     expect(formatDateTime("2026-09-01T09:00:00Z")).toBe("01.09.2026 14:00");
     expect(formatDateTime("2026-10-14T19:30:00Z")).toBe("15.10.2026 00:30");
+  });
+});
+
+describe("formatSomPlain", () => {
+  it("is plain so'm for spreadsheets", () => {
+    expect(formatSomPlain(9_900_000)).toBe("99000");
+    expect(formatSomPlain(-125_050)).toBe("-1250,50");
+    expect(formatSomPlain(5)).toBe("0,05");
   });
 });

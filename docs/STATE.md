@@ -14,10 +14,10 @@
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 
 ## Oxirgi bajarilgan ish
-- T-082 tugadi (PR, merge).
+- T-083 tugadi (PR, merge).
 
 ## Keyingi aniq harakat
-- ROADMAP'dan keyingi vazifa: T-083 Admin: tariflar, obunalar, to'lovlar.
+- ROADMAP'dan keyingi vazifa: T-084 Admin: qurilmalar va audit jurnali.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

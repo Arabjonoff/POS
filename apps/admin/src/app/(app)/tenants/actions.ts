@@ -3,32 +3,10 @@
 import { revalidatePath } from "next/cache";
 import { unstable_rethrow } from "next/navigation";
 
+import { failure, type ActionResult } from "@/lib/action-result";
 import { platformApi } from "@/lib/platform";
 
-/** Django xatosi: `{"error": {"code", "message", "details"}}`. */
-type DjangoError = { error?: { code?: string; details?: Record<string, unknown> } };
-
-export type ActionError = "phone_taken" | "invalid" | "not_found" | "unavailable";
-
-export type ActionResult<T> =
-  | { ok: true; data: T }
-  | { ok: false; error: ActionError; fields?: string[] };
-
-function failure(status: number, body: unknown): { ok: false; error: ActionError; fields?: string[] } {
-  const error = (body as DjangoError | undefined)?.error;
-  if (error?.code === "phone_taken" || status === 409) return { ok: false, error: "phone_taken" };
-  if (status === 404) return { ok: false, error: "not_found" };
-  if (status === 400) {
-    const details = error?.details ?? {};
-    const fields = Object.keys(details).flatMap((key) =>
-      key === "owner" && details.owner && typeof details.owner === "object"
-        ? Object.keys(details.owner).map((sub) => `owner.${sub}`)
-        : [key],
-    );
-    return { ok: false, error: "invalid", fields };
-  }
-  return { ok: false, error: "unavailable" };
-}
+export type { ActionError, ActionResult } from "@/lib/action-result";
 
 export type OnboardInput = {
   name: string;
@@ -135,6 +113,55 @@ export async function resetUserPassword(userId: string): Promise<ActionResult<st
     return { ok: true, data: data.temporary_password };
   } catch (e) {
     // `redirect()` (sessiya tugagan) yutilmasin.
+    unstable_rethrow(e);
+    return { ok: false, error: "unavailable" };
+  }
+}
+
+export type PaymentMethod = "cash" | "transfer" | "card" | "other";
+
+/** To'lov kiritish → server muddatni uzaytiradi (`record_payment`). */
+export async function recordPayment(
+  tenantId: string,
+  input: { amountTiyin: number; months: number; method: PaymentMethod; note: string },
+): Promise<ActionResult<{ periodFrom: string; periodTo: string }>> {
+  const api = await platformApi();
+  try {
+    const { data, error, response } = await api.POST("/api/v1/platform/tenants/{id}/payments/", {
+      params: { path: { id: tenantId } },
+      body: {
+        amount_tiyin: input.amountTiyin,
+        months: input.months,
+        method: input.method,
+        note: input.note.trim(),
+      },
+    });
+    if (!data) return failure(response.status, error);
+    revalidatePath(`/tenants/${tenantId}`);
+    revalidatePath("/tenants");
+    revalidatePath("/payments");
+    revalidatePath("/");
+    return { ok: true, data: { periodFrom: data.period_from, periodTo: data.period_to } };
+  } catch (e) {
+    unstable_rethrow(e);
+    return { ok: false, error: "unavailable" };
+  }
+}
+
+/** Oxirgi to'lovni bekor qilish (teskari yozuv; izoh majburiy). */
+export async function reversePayment(paymentId: string, note: string): Promise<ActionResult<null>> {
+  const api = await platformApi();
+  try {
+    const { data, error, response } = await api.POST("/api/v1/platform/payments/{id}/reverse/", {
+      params: { path: { id: paymentId } },
+      body: { note: note.trim() },
+    });
+    if (!data) return failure(response.status, error);
+    revalidatePath(`/tenants/${data.tenant}`);
+    revalidatePath("/payments");
+    revalidatePath("/");
+    return { ok: true, data: null };
+  } catch (e) {
     unstable_rethrow(e);
     return { ok: false, error: "unavailable" };
   }

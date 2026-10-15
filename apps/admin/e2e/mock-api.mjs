@@ -39,6 +39,39 @@ function normalize(phone) {
 
 const pretty = (digits) => `+${digits}`;
 
+// --- Sanalar (apps/billing bilan bir xil; `YYYY-MM-DD`) ---
+function addMonths(value, months) {
+  const [y, m, d] = value.split("-").map(Number);
+  const index = m - 1 + months;
+  const year = y + Math.floor(index / 12);
+  const month = (((index % 12) + 12) % 12) + 1;
+  const last = new Date(Date.UTC(year, month, 0)).getUTCDate();
+  return `${year}-${String(month).padStart(2, "0")}-${String(Math.min(d, last)).padStart(2, "0")}`;
+}
+
+/** Toshkent (UTC+5) bo'yicha sana. */
+function tashkentToday(now = new Date()) {
+  return new Date(now.getTime() + 5 * 60 * 60 * 1000).toISOString().slice(0, 10);
+}
+
+/** To'lov javobi (ichki `previous_paid_until` siz). */
+function paymentRow(p) {
+  return {
+    id: p.id,
+    tenant: p.tenant,
+    tenant_name: p.tenant_name,
+    amount_tiyin: p.amount_tiyin,
+    months: p.months,
+    paid_at: p.paid_at,
+    period_from: p.period_from,
+    period_to: p.period_to,
+    method: p.method,
+    note: p.note,
+    recorded_by: p.recorded_by,
+    reverses: p.reverses,
+  };
+}
+
 // --- Ma'lumotnoma ---
 const plans = [
   { id: "00000000-0000-7000-8000-0000000000p1", name: "Start", price_tiyin_per_month: 9900000, max_devices: 1, max_users: 3, features: {}, is_active: true, sort: 1, subscribers_count: 4 },
@@ -261,7 +294,7 @@ createServer(async (req, res) => {
     const { refresh } = await readJson(req);
     const phone = sessions.get(refresh);
     if (!phone || !String(refresh).startsWith("refresh-")) return fail(res, 401, "token_not_valid");
-    sessions.delete(refresh);
+    // Django (SIMPLE_JWT) blacklist'siz: eski refresh muddati tugaguncha ishlaydi — parallel so'rovlar uchun muhim.
     return send(res, 200, issue(phone));
   }
 
@@ -281,7 +314,46 @@ createServer(async (req, res) => {
     return send(res, 200, stats);
   }
 
-  if (req.method === "GET" && pathname === "/api/v1/platform/plans/") return send(res, 200, page(url, plans));
+  if (pathname === "/api/v1/platform/plans/") {
+    if (req.method === "GET") return send(res, 200, page(url, plans));
+    if (req.method === "POST") {
+      const body = await readJson(req);
+      if (!body.name?.trim() || !Number.isInteger(body.price_tiyin_per_month)) {
+        return fail(res, 400, "validation_error", { name: ["required"] });
+      }
+      const plan = {
+        id: randomUUID(),
+        name: body.name.trim(),
+        price_tiyin_per_month: body.price_tiyin_per_month,
+        max_devices: body.max_devices ?? 1,
+        max_users: body.max_users ?? 3,
+        features: {},
+        is_active: body.is_active ?? true,
+        sort: plans.length + 1,
+        subscribers_count: 0,
+      };
+      plans.push(plan);
+      return send(res, 201, plan);
+    }
+  }
+
+  const planMatch = pathname.match(/^\/api\/v1\/platform\/plans\/([^/]+)\/$/);
+  if (planMatch) {
+    const plan = plans.find((p) => p.id === planMatch[1]);
+    if (!plan) return fail(res, 404, "not_found");
+    if (req.method === "PATCH") {
+      const body = await readJson(req);
+      for (const key of ["name", "price_tiyin_per_month", "max_devices", "max_users", "is_active"]) {
+        if (key in body) plan[key] = body[key];
+      }
+      return send(res, 200, plan);
+    }
+    if (req.method === "DELETE") {
+      plan.is_active = false;
+      res.writeHead(204);
+      return res.end();
+    }
+  }
 
   if (pathname === "/api/v1/platform/tenants/") {
     if (req.method === "GET") {
@@ -350,6 +422,36 @@ createServer(async (req, res) => {
       Object.assign(tenant, { is_blocked: false, blocked_reason: "", status: tenant.paid_until ? "active" : "trial" });
       return send(res, 200, tenantDetail(tenant));
     }
+    if (req.method === "POST" && sub === "payments") {
+      const body = await readJson(req);
+      const methods = ["cash", "transfer", "card", "other"];
+      if (!Number.isInteger(body.amount_tiyin) || body.amount_tiyin < 0) return fail(res, 400, "invalid_amount");
+      if (!Number.isInteger(body.months) || body.months < 1) return fail(res, 400, "invalid_months");
+      if (!methods.includes(body.method)) return fail(res, 400, "invalid_method");
+      // subscription-billing.md: period_from = max(paid_until, trial_ends_at, bugun).
+      const from = [tashkentToday(), tenant.paid_until, tenant.trial_ends_at]
+        .filter(Boolean)
+        .reduce((a, b) => (b > a ? b : a));
+      const payment = {
+        id: randomUUID(),
+        tenant: id,
+        tenant_name: tenant.name,
+        amount_tiyin: body.amount_tiyin,
+        months: body.months,
+        paid_at: new Date().toISOString(),
+        period_from: from,
+        period_to: addMonths(from, body.months),
+        method: body.method,
+        note: body.note ?? "",
+        recorded_by: account.user.id,
+        reverses: null,
+        previous_paid_until: tenant.paid_until,
+      };
+      payments.push(payment);
+      tenant.paid_until = payment.period_to;
+      if (!tenant.is_blocked) tenant.status = "active";
+      return send(res, 201, paymentRow(payment));
+    }
     if (req.method === "GET" && sub === "users") {
       return send(res, 200, page(url, users.filter((u) => u.tenant === id).map(brief)));
     }
@@ -365,8 +467,41 @@ createServer(async (req, res) => {
 
   if (req.method === "GET" && pathname === "/api/v1/platform/payments/") {
     const tenant = url.searchParams.get("tenant");
-    const rows = payments.filter((p) => !tenant || p.tenant === tenant).sort((a, b) => b.paid_at.localeCompare(a.paid_at));
+    const from = url.searchParams.get("date_from");
+    const to = url.searchParams.get("date_to");
+    const rows = payments
+      .filter((p) => !tenant || p.tenant === tenant)
+      .filter((p) => !from || tashkentToday(new Date(p.paid_at)) >= from)
+      .filter((p) => !to || tashkentToday(new Date(p.paid_at)) <= to)
+      .sort((a, b) => b.paid_at.localeCompare(a.paid_at))
+      .map(paymentRow);
     return send(res, 200, page(url, rows, { total_tiyin: rows.reduce((s, p) => s + p.amount_tiyin, 0) }));
+  }
+
+  const reverseMatch = pathname.match(/^\/api\/v1\/platform\/payments\/([^/]+)\/reverse\/$/);
+  if (req.method === "POST" && reverseMatch) {
+    const original = payments.find((p) => p.id === reverseMatch[1]);
+    if (!original) return fail(res, 404, "not_found");
+    const { note } = await readJson(req);
+    if (!note?.trim()) return fail(res, 400, "validation_error", { note: ["required"] });
+    const reversed = new Set(payments.map((p) => p.reverses).filter(Boolean));
+    const latest = payments
+      .filter((p) => p.tenant === original.tenant && !p.reverses && !reversed.has(p.id))
+      .sort((a, b) => b.paid_at.localeCompare(a.paid_at))[0];
+    if (latest?.id !== original.id) return fail(res, 400, "only_latest_payment");
+    const tenant = tenants.find((t) => t.id === original.tenant);
+    const reversal = {
+      ...original,
+      id: randomUUID(),
+      amount_tiyin: -original.amount_tiyin,
+      months: -original.months,
+      paid_at: new Date().toISOString(),
+      note: note.trim(),
+      reverses: original.id,
+    };
+    payments.push(reversal);
+    tenant.paid_until = original.previous_paid_until ?? null;
+    return send(res, 201, paymentRow(reversal));
   }
 
   const resetMatch = pathname.match(/^\/api\/v1\/platform\/users\/([^/]+)\/reset-password\/$/);

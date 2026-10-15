@@ -133,3 +133,30 @@ export async function tenantSyncEvents(id: string): Promise<SyncEvent[]> {
   });
   return ensure(data, response).results;
 }
+
+/** Barcha tariflar (nofaollari ham) — "Tariflar" sahifasi uchun. */
+export async function listAllPlans(): Promise<Plan[]> {
+  const api = await platformApi();
+  const { data, response } = await api.GET("/api/v1/platform/plans/", {
+    params: { query: { page_size: 100 } },
+    cache: "no-store",
+  });
+  return ensure(data, response).results;
+}
+
+/** `GET /platform/payments/` — sana oralig'i (Toshkent, `paid_at`), sahifa; javobda `total_tiyin`. */
+export async function listPayments(query: { dateFrom?: string; dateTo?: string; page?: number }) {
+  const api = await platformApi();
+  const { data, response } = await api.GET("/api/v1/platform/payments/", {
+    params: {
+      query: {
+        date_from: query.dateFrom || undefined,
+        date_to: query.dateTo || undefined,
+        page: query.page && query.page > 1 ? query.page : undefined,
+        page_size: PAGE_SIZE,
+      },
+    },
+    cache: "no-store",
+  });
+  return ensure(data, response);
+}
