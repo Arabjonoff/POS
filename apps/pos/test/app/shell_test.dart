@@ -4,9 +4,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pos_app/app/status/app_status.dart';
 import 'package:pos_app/data/db/app_database.dart';
+import 'package:pos_app/features/pos/payment/payment_dialog.dart';
 import 'package:pos_ui/pos_ui.dart';
 
+import '../helpers/catalog_seed.dart';
+import '../helpers/keyboard.dart';
 import '../helpers/pump_app.dart';
+import '../helpers/sqlite.dart';
 
 const Size phone = Size(390, 844);
 const Size tablet = Size(1024, 768);
@@ -51,6 +55,32 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('Til'), findsOneWidget);
       expect(find.text('Русский'), findsOneWidget);
+    });
+
+    testWidgets('keyboard: back to Kassa from any section, F12 still works', (
+      tester,
+    ) async {
+      // UI tekshiruvi (T-091): bo'lim almashganda fokus yo'qolib, kassaga
+      // qaytganda F12 va Ctrl+raqam ishlamay qolardi.
+      final db = openTestDatabase();
+      addTearDown(db.close);
+      await seedCatalog(db);
+      await pumpPosApp(tester, db: db);
+      await scanCode(tester, '4780000000014');
+      for (final key in [
+        LogicalKeyboardKey.digit2,
+        LogicalKeyboardKey.digit3,
+        LogicalKeyboardKey.digit4,
+        LogicalKeyboardKey.digit5,
+        LogicalKeyboardKey.digit6,
+      ]) {
+        await ctrl(tester, key);
+        await ctrl(tester, LogicalKeyboardKey.digit1);
+        await press(tester, LogicalKeyboardKey.f12);
+        expect(find.byType(PaymentDialog), findsOneWidget, reason: '$key');
+        await press(tester, LogicalKeyboardKey.escape);
+        expect(find.byType(PaymentDialog), findsNothing);
+      }
     });
 
     testWidgets('keyboard: Ctrl+1..6 switch sections', (tester) async {

@@ -272,7 +272,7 @@ Spec'lar: `admin-dashboard.md`, `subscription-billing.md`.
 - **Qabul:** hammasi yashil; natijalar `docs/PROGRESS.md` da.
 - **Bog'liq:** T-043, T-035
 
-### [ ] T-091 UI/UX sayqal
+### [x] T-091 UI/UX sayqal
 - **Bajarish:** `prompts/03-ui-review.md` bo'yicha barcha ekranlarni ko'rib chiqish; bo'sh holatlar, yuklanish, xato holatlari; klaviatura tezkor tugmalari; kontrast; matnlarni soddalashtirish.
 - **Qabul:** tekshiruv ro'yxati `docs/ui-review.md` da to'liq bajarilgan.
 - **Bog'liq:** 3–7 bosqichlar

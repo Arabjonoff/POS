@@ -105,6 +105,20 @@ class _CashierViewState extends ConsumerState<CashierView> {
     super.dispose();
   }
 
+  bool _wasActive = true;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Boshqa bo'limdan qaytildi (Ctrl+1 yoki menyu): bo'lim almashganda fokus
+    // yo'qoladi — tezkor tugmalar (F12 …) yana ishlashi uchun qaytarib olamiz.
+    final active = TickerMode.valuesOf(context).enabled;
+    if (active && !_wasActive) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _focusScreen());
+    }
+    _wasActive = active;
+  }
+
   /// Fokus kassa ekraniga (tezkor tugmalar va "fokus yana skanerga").
   /// Boshqa sahifa yoki oynadagi aniq maydon fokusini tortib olmaymiz.
   void _focusScreen() {
