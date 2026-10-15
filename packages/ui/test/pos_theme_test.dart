@@ -75,6 +75,24 @@ void main() {
         });
       }
 
+      test('$name category accents: initial on tint, stripe visible', () {
+        for (var i = 0; i < 8; i++) {
+          final accent = p.categoryAccent(i);
+          final dark = p.brightness == Brightness.dark;
+          final tint = Color.alphaBlend(
+            accent.withValues(alpha: dark ? 0.2 : 0.1),
+            p.surface,
+          );
+          expect(
+            contrast(accent, tint),
+            greaterThanOrEqualTo(4.5),
+            reason: '$i',
+          );
+          expect(contrast(accent, p.surface), greaterThanOrEqualTo(3));
+        }
+        expect(p.categoryAccent(8), p.categoryAccent(0));
+      });
+
       test('$name focus ring is visible (>= 3:1)', () {
         expect(contrast(p.focus, p.background), greaterThanOrEqualTo(3));
         expect(contrast(p.focus, p.surface), greaterThanOrEqualTo(3));

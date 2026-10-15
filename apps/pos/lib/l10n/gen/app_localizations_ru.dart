@@ -2225,4 +2225,41 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get navCollapse => 'Свернуть меню · Ctrl+B';
+
+  @override
+  String get posFavorites => 'Избранное';
+
+  @override
+  String posCodeNotFoundCode(String code) {
+    return 'Товар не найден: $code';
+  }
+
+  @override
+  String get posAddNewProduct => 'Добавить товар';
+
+  @override
+  String get posStockLow => 'Мало';
+
+  @override
+  String get posOutOfStock => 'Нет в наличии';
+
+  @override
+  String posOutOfStockAdded(String name) {
+    return '«$name» нет в наличии — добавлено в чек. Проверьте остаток';
+  }
+
+  @override
+  String posProductTileLabel(String name, String price) {
+    return '$name, $price';
+  }
+
+  @override
+  String posPricePerUnit(String price, String unit) {
+    return '$price/$unit';
+  }
+
+  @override
+  String labelWithShortcut(String label, String key) {
+    return '$label · $key';
+  }
 }

@@ -207,6 +207,15 @@ class PosPalette extends ThemeExtension<PosPalette> {
   final List<BoxShadow> cardShadow;
   final List<BoxShadow> overlayShadow;
 
+  /// Kategoriya rangi [index] bo'yicha (8 ta, aylanma). Ma'no tashimaydi —
+  /// faqat ko'z bilan guruhlash uchun (nom doim yozilgan).
+  Color categoryAccent(int index) {
+    final colors = brightness == Brightness.dark
+        ? PosColors.categoryDark
+        : PosColors.categoryLight;
+    return colors[index % colors.length];
+  }
+
   /// Ohang bo'yicha ranglar to'plami.
   PosToneColors tone(PosTone tone) => switch (tone) {
     PosTone.neutral => PosToneColors(

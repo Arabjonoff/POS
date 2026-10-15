@@ -3890,6 +3890,60 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Menyuni yig\'ish · Ctrl+B'**
   String get navCollapse;
+
+  /// Kassa: tez tugmalar va ko'p sotilganlar tabi
+  ///
+  /// In uz, this message translates to:
+  /// **'Sevimlilar'**
+  String get posFavorites;
+
+  /// Skanerlangan kod bazada yo'q
+  ///
+  /// In uz, this message translates to:
+  /// **'Tovar topilmadi: {code}'**
+  String posCodeNotFoundCode(String code);
+
+  /// Topilmagan kod bilan tovar kartasini ochish
+  ///
+  /// In uz, this message translates to:
+  /// **'Yangi tovar qo\'shish'**
+  String get posAddNewProduct;
+
+  /// Kartada: qoldiq kam
+  ///
+  /// In uz, this message translates to:
+  /// **'Kam'**
+  String get posStockLow;
+
+  /// Kartada: qoldiq 0 yoki manfiy
+  ///
+  /// In uz, this message translates to:
+  /// **'Qoldiq yo\'q'**
+  String get posOutOfStock;
+
+  /// Qoldiqsiz tovar bosildi
+  ///
+  /// In uz, this message translates to:
+  /// **'«{name}» qoldiqda yo\'q — chekka qo\'shildi. Qoldiqni tekshiring'**
+  String posOutOfStockAdded(String name);
+
+  /// Ekran o'quvchi: tovar kartasi
+  ///
+  /// In uz, this message translates to:
+  /// **'{name}, {price}'**
+  String posProductTileLabel(String name, String price);
+
+  /// Narx birlik uchun: so'm/dona, 4 000 so'm/kg
+  ///
+  /// In uz, this message translates to:
+  /// **'{price}/{unit}'**
+  String posPricePerUnit(String price, String unit);
+
+  /// Tooltip: amal nomi va tezkor tugma
+  ///
+  /// In uz, this message translates to:
+  /// **'{label} · {key}'**
+  String labelWithShortcut(String label, String key);
 }
 
 class _AppLocalizationsDelegate

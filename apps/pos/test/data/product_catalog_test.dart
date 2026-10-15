@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart' hide isNull;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pos_app/data/catalog/product_catalog.dart';
+import 'package:pos_app/data/catalog/top_sellers.dart';
 import 'package:pos_app/data/db/app_database.dart';
 
 import '../helpers/sqlite.dart';
@@ -119,6 +120,88 @@ void main() {
       ['p1', 'p7'],
     );
     expect([for (final c in catalog.quickCategories) c.id], ['c1', 'c2']);
+  });
+
+  test('all active products by category; colour index is stable', () {
+    expect(
+      [for (final p in catalog.active()) p.id],
+      ['p2', 'p4', 'p1', 'p3', 'p5', 'p7'],
+    );
+    expect(
+      [for (final p in catalog.active(categoryId: 'c1')) p.id],
+      [
+        'p1',
+        'p7',
+      ],
+    );
+    // Bo'sh kategoriya tabda yo'q, lekin rang tartibi sozlangan tartib.
+    expect([for (final c in catalog.categories) c.id], ['c1', 'c2']);
+    expect(catalog.accentIndex('c1'), 0);
+    expect(catalog.accentIndex('c2'), 1);
+    expect(catalog.accentIndex(null), isNull);
+  });
+
+  test('top sellers: last 30 days, most lines first', () async {
+    final db = openTestDatabase();
+    addTearDown(db.close);
+    final now = DateTime.utc(2026, 10, 15);
+    await db
+        .into(db.shifts)
+        .insert(
+          ShiftsCompanion.insert(
+            id: 's1',
+            storeId: 'st',
+            deviceId: 'd',
+            openedBy: 'u',
+            openedAt: now,
+            openingCashTiyin: 0,
+          ),
+        );
+    var n = 0;
+    Future<void> sale(DateTime at, List<String> products) async {
+      final id = 'sale-${n++}';
+      await db
+          .into(db.sales)
+          .insert(
+            SalesCompanion.insert(
+              id: id,
+              shiftId: 's1',
+              cashierId: 'u',
+              number: 'D1-$n',
+              subtotalTiyin: 0,
+              discountTiyin: 0,
+              totalTiyin: 0,
+              soldAt: at,
+            ),
+          );
+      for (final (i, p) in products.indexed) {
+        await db
+            .into(db.saleItems)
+            .insert(
+              SaleItemsCompanion.insert(
+                id: '$id-$i',
+                saleId: id,
+                position: i,
+                productId: p,
+                nameSnapshot: p,
+                qtyMilli: 1000,
+                priceTiyin: 0,
+                costTiyin: 0,
+                discountTiyin: 0,
+                totalTiyin: 0,
+              ),
+            );
+      }
+    }
+
+    await sale(now, ['a', 'b']);
+    await sale(now, ['b']);
+    await sale(now.subtract(const Duration(days: 40)), ['c', 'c', 'c']);
+    final top = await topSellersQuery(
+      db,
+      since: now.subtract(const Duration(days: 30)),
+    ).get();
+    expect(top, ['b', 'a']);
   });
 
   test('search over 10 000 products stays under 50 ms per keystroke', () {

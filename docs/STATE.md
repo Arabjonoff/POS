@@ -5,24 +5,25 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-108a Qobiq: yig'iladigan menyu, banner, holat paneli (11-bosqich, qaror 0014)
-- Branch: feat/T-108a-kassa-shell
+- Vazifa: T-108b Tovarlar paneli: kartalar, kategoriyalar, topilmadi (qaror 0014)
+- Branch: feat/T-108b-product-grid (T-108a ustiga; T-108a PR #59 merge bo'lgach `git rebase --onto main feat/T-108a-kassa-shell`)
 - Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
-- [x] 1. ROADMAP T-108a/b/c, qaror 0014, STATE
-- [x] 2. packages/ui: PosResponsiveScaffold — desktopda 64 px ikon menyu (hover/Ctrl+B ochiladi, ustiga chiqadi), pastda kassir + qulf
-- [x] 3. Sinov banneri 28 px + yopish (sessiya davomida)
-- [x] 4. Holat paneli 48 px: bosiladigan yozuvlar (→ Sozlamalar), oflayn qizil "oflayn rejimda ishlayapti", printer sozlanmagan sariq, smena vaqti, kassir
-- [x] 5. l10n (uz, uz-Cyrl, ru), testlar, golden'lar
-- [ ] 6. Skrinshotlar docs/screenshots/T-108a/, PR, CI, merge
+- [x] 1. packages/ui: PosProductTile + kategoriya ranglari (AA test), widgetbook display galereyasi
+- [x] 2. Katalog: active/categories/accentIndex, minStock; topSellersProvider (30 kun)
+- [x] 3. ProductGrid (Sevimlilar/Hammasi/kategoriya, qidiruv natijasi, ↑/↓), StockView (kam/yo'q)
+- [x] 4. Topilmadi: qizil xabar + "Yangi tovar qo'shish" (tovar kartasi, saqlansa chekka)
+- [x] 5. Testlar (pos_screen, product_catalog)
+- [x] 6. To'liq testlar, golden'lar, skrinshotlar, hujjat
+- [ ] 7. main ga rebase, PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-- T-108a kodi, testlar va golden'lar tayyor; skrinshotlar `docs/screenshots/T-108a/`.
+- T-108b kodi va testlari; to'liq test to'plami ishlab turibdi.
 
 ## Keyingi aniq harakat
-- PR ochish (`gh pr create`), CI yashil bo'lsa squash merge; keyin T-108b (tovar kartasi komponenti scratchpad'da tayyor edi — `packages/ui/lib/src/components/pos_product_tile.dart` qayta yoziladi).
+- `git rebase --onto origin/main feat/T-108a-kassa-shell` (T-108a #59 merge bo'ldi), push --force-with-lease, PR, CI, merge; keyin T-108c.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

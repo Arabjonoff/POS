@@ -2976,5 +2976,75 @@
   "navCollapse": "Menyuni yig'ish · Ctrl+B",
   "@navCollapse": {
     "description": "Menyuni yig'ish"
+  },
+  "posFavorites": "Sevimlilar",
+  "@posFavorites": {
+    "description": "Kassa: tez tugmalar va ko'p sotilganlar tabi"
+  },
+  "posCodeNotFoundCode": "Tovar topilmadi: {code}",
+  "@posCodeNotFoundCode": {
+    "description": "Skanerlangan kod bazada yo'q",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "posAddNewProduct": "Yangi tovar qo'shish",
+  "@posAddNewProduct": {
+    "description": "Topilmagan kod bilan tovar kartasini ochish"
+  },
+  "posStockLow": "Kam",
+  "@posStockLow": {
+    "description": "Kartada: qoldiq kam"
+  },
+  "posOutOfStock": "Qoldiq yo'q",
+  "@posOutOfStock": {
+    "description": "Kartada: qoldiq 0 yoki manfiy"
+  },
+  "posOutOfStockAdded": "«{name}» qoldiqda yo'q — chekka qo'shildi. Qoldiqni tekshiring",
+  "@posOutOfStockAdded": {
+    "description": "Qoldiqsiz tovar bosildi",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "posProductTileLabel": "{name}, {price}",
+  "@posProductTileLabel": {
+    "description": "Ekran o'quvchi: tovar kartasi",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "posPricePerUnit": "{price}/{unit}",
+  "@posPricePerUnit": {
+    "description": "Narx birlik uchun: so'm/dona, 4 000 so'm/kg",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "labelWithShortcut": "{label} · {key}",
+  "@labelWithShortcut": {
+    "description": "Tooltip: amal nomi va tezkor tugma",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "key": {
+        "type": "String"
+      }
+    }
   }
 }

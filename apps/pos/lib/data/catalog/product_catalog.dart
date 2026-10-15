@@ -19,6 +19,7 @@ class CatalogProduct {
     this.pluCode,
     this.barcodes = const [],
     this.imageId,
+    this.minStockMilli = 0,
   });
 
   final String id;
@@ -39,6 +40,9 @@ class CatalogProduct {
 
   /// Birinchisi — asosiy.
   final List<String> barcodes;
+
+  /// Kam qolgan chegarasi (0 — kuzatilmaydi): kassa kartasida sariq belgi.
+  final int minStockMilli;
 
   String? get primaryBarcode => barcodes.isEmpty ? null : barcodes.first;
 
@@ -84,6 +88,7 @@ class ProductCatalog {
     this.weighted = const WeightedBarcodeFormat(),
   }) {
     final quickIds = <String?>{};
+    final activeIds = <String?>{};
     for (final p in products) {
       final entry = _Entry(p, SearchKey.of(p.name));
       _byId[p.id] = p;
@@ -93,6 +98,7 @@ class ProductCatalog {
       if (p.pluCode != null) _byPlu[p.pluCode!] = p;
       if (p.isActive) {
         _entries.add(entry);
+        activeIds.add(p.categoryId);
         if (p.quickButton) {
           _quick.add(p);
           quickIds.add(p.categoryId);
@@ -105,12 +111,26 @@ class ProductCatalog {
       for (final c in categories)
         if (quickIds.contains(c.id)) c,
     ];
+    this.categories = [
+      for (final c in categories)
+        if (activeIds.contains(c.id)) c,
+    ];
+    for (final (i, c) in categories.indexed) {
+      _categoryOrder[c.id] = i;
+    }
   }
 
   final WeightedBarcodeFormat weighted;
 
   /// Tez tugmasi bor tovarlar kategoriyalari (sozlangan tartibda).
   late final List<QuickCategory> quickCategories;
+
+  /// Faol tovari bor kategoriyalar (sozlangan tartibda) — kassa tablari.
+  late final List<QuickCategory> categories;
+
+  /// Kategoriyaning barcha kategoriyalar ichidagi o'rni — rang shundan
+  /// (bo'sh kategoriya qo'shilsa ham boshqalarning rangi o'zgarmaydi).
+  final Map<String, int> _categoryOrder = {};
 
   final List<_Entry> _entries = [];
   final Map<String, CatalogProduct> _byId = {};
@@ -175,6 +195,17 @@ class ProductCatalog {
     return 4;
   }
 
+  /// Kategoriya rangi indeksi (`PosPalette.categoryAccent`); `null` —
+  /// kategoriyasiz.
+  int? accentIndex(String? categoryId) =>
+      categoryId == null ? null : _categoryOrder[categoryId];
+
+  /// Faol tovarlar alifbo tartibida, kategoriya bo'yicha (`null` — hammasi).
+  List<CatalogProduct> active({String? categoryId}) => [
+    for (final e in _entries)
+      if (categoryId == null || e.product.categoryId == categoryId) e.product,
+  ];
+
   /// Tez tugmalar paneli: kategoriya bo'yicha (`null` — hammasi).
   List<CatalogProduct> quick({String? categoryId}) => categoryId == null
       ? _quick
@@ -228,6 +259,7 @@ class ProductCatalog {
             pluCode: r.pluCode,
             barcodes: barcodes[r.id] ?? const [],
             imageId: r.imageId,
+            minStockMilli: r.minStockMilli,
           ),
       ],
       categories: [

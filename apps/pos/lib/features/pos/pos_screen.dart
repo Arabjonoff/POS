@@ -14,6 +14,9 @@ import 'package:pos_app/core/barcode/scanner_service.dart';
 import 'package:pos_app/core/format/app_format.dart';
 import 'package:pos_app/core/format/unit_code.dart';
 import 'package:pos_app/data/catalog/product_catalog.dart';
+import 'package:pos_app/data/catalog/product_editor.dart'
+    show stockByProductProvider;
+import 'package:pos_app/data/catalog/top_sellers.dart';
 import 'package:pos_app/data/customers/customer_directory.dart';
 import 'package:pos_app/data/refunds/refund_writer.dart';
 import 'package:pos_app/features/common/manager_approval.dart';
@@ -28,6 +31,7 @@ import 'package:pos_app/features/pos/widgets/product_panel.dart';
 import 'package:pos_app/features/pos/widgets/qty_dialog.dart';
 import 'package:pos_app/features/printing/printer_service.dart';
 import 'package:pos_app/features/printing/printer_settings.dart';
+import 'package:pos_app/features/products/product_card.dart';
 import 'package:pos_app/features/refunds/refund_dialog.dart';
 import 'package:pos_app/features/scanner/camera_scan_page.dart';
 import 'package:pos_app/features/shift/cash_movement_dialog.dart';
@@ -74,7 +78,12 @@ class _CashierViewState extends ConsumerState<CashierView> {
 
   List<CatalogProduct> _results = const [];
   int _highlighted = 0;
-  String? _category;
+
+  /// `null` — standart: "Sevimlilar" (bo'lsa), aks holda "Hammasi".
+  ProductTab? _tab;
+
+  /// Oxirgi skanerlangan, bazada yo'q kod (qizil xabar).
+  String? _notFound;
 
   /// Oyna ochiq — tezkor tugmalar va ikkinchi oyna kutadi.
   bool _dialogOpen = false;
@@ -153,6 +162,30 @@ class _CashierViewState extends ConsumerState<CashierView> {
     setState(() => _results = const []);
   }
 
+  /// Tab bosildi: qidiruv tozalanadi (natija hamma tovardan edi).
+  void _selectTab(ProductTab tab) {
+    _search.clear();
+    setState(() {
+      _results = const [];
+      _tab = tab;
+    });
+    _focusScreen();
+  }
+
+  /// "Sevimlilar": tez tugmalar, keyin so'nggi 30 kunda ko'p sotilganlar.
+  List<CatalogProduct> _favorites(ProductCatalog catalog) {
+    final seen = <String>{};
+    final top = ref.watch(topSellersProvider).value ?? const <String>[];
+    return [
+      for (final p in catalog.quick())
+        if (seen.add(p.id)) p,
+      ...top
+          .map(catalog.byId)
+          .nonNulls
+          .where((p) => p.isActive && seen.add(p.id)),
+    ];
+  }
+
   /// Matn maydoni fokusda bo'lmaganda yozilgan matn (skaner xizmati orqali).
   void _onTyping(String text) {
     if (_dialogOpen) return;
@@ -181,6 +214,10 @@ class _CashierViewState extends ConsumerState<CashierView> {
       _warn(l10n.posNotSellable);
       return;
     }
+    // Qoldiq yo'q — savdo to'xtamaydi (qoldiq eskirgan bo'lishi mumkin),
+    // lekin kassir bilsin.
+    final stock = StockView.of(ref.read(stockByProductProvider).value);
+    final out = stock.isOut(product);
     if (product.isWeighted) {
       final qty = await _dialog(
         () => showQtyDialog(
@@ -196,6 +233,13 @@ class _CashierViewState extends ConsumerState<CashierView> {
       _cart.add(product, barcode: barcode);
     }
     _added(scanned: barcode != null);
+    if (out && mounted) {
+      showPosToast(
+        context,
+        message: l10n.posOutOfStockAdded(product.name),
+        tone: PosTone.warning,
+      );
+    }
   }
 
   /// Tovar savatga tushdi. Chaqnash va signal — faqat skaner uchun: oddiy
@@ -205,8 +249,37 @@ class _CashierViewState extends ConsumerState<CashierView> {
       _feedback.flash(PosScanResult.success);
       unawaited(ref.read(scanSignalProvider).success());
     }
+    if (_notFound != null) setState(() => _notFound = null);
     if (_hasQuery) _clearSearch();
     _focusScreen();
+  }
+
+  /// Kod bazada yo'q: qizil xabar kod bilan (keyingi skangacha yoki
+  /// yopilguncha) + xato ovozi; "Yangi tovar qo'shish" shu kod bilan.
+  void _showNotFound(String code) {
+    _feedback.flash(PosScanResult.error);
+    unawaited(ref.read(scanSignalProvider).notFound());
+    setState(() => _notFound = code);
+  }
+
+  /// Topilmagan kod bilan tovar kartasi; saqlansa — darhol chekka.
+  Future<void> _addNewProduct(String code) async {
+    final id = await _dialog(() => showProductCard(context, barcode: code));
+    if (!mounted) return;
+    setState(() => _notFound = null);
+    if (id == null) return _focusScreen();
+    // Katalog bazadan qayta quriladi — yangi tovar paydo bo'lishini kutamiz.
+    var product = _catalog.byId(id);
+    for (var i = 0; product == null && i < 20; i++) {
+      await Future<void>.delayed(const Duration(milliseconds: 50));
+      if (!mounted) return;
+      product = _catalog.byId(id);
+    }
+    if (product != null) {
+      await _pick(product, barcode: code);
+    } else {
+      _focusScreen();
+    }
   }
 
   void _warn(String message, {PosScanResult result = PosScanResult.warning}) {
@@ -217,6 +290,8 @@ class _CashierViewState extends ConsumerState<CashierView> {
 
   void _onScan(ScanEvent event) {
     if (_dialogOpen) return;
+    // Yangi skan — eski "topilmadi" xabari endi tegishli emas.
+    if (_notFound != null) setState(() => _notFound = null);
     final l10n = AppLocalizations.of(context);
     if (Barcodes.check(event.code) == BarcodeCheck.invalidCheckDigit) {
       _warn(l10n.scanInvalidCode, result: PosScanResult.error);
@@ -224,7 +299,7 @@ class _CashierViewState extends ConsumerState<CashierView> {
     }
     final match = _catalog.byCode(event.code);
     if (match == null) {
-      _warn(l10n.posCodeNotFound);
+      _showNotFound(event.code);
       return;
     }
     if (!match.product.sellable) {
@@ -441,12 +516,19 @@ class _CashierViewState extends ConsumerState<CashierView> {
   }
 
   Future<void> _openQuickSheet() async {
+    final catalog = _catalog;
+    final favorites = _favorites(catalog);
+    final stock = StockView.of(ref.read(stockByProductProvider).value);
     final picked = await _dialog(
       () => showModalBottomSheet<CatalogProduct>(
         context: context,
         isScrollControlled: true,
         useSafeArea: true,
-        builder: (context) => _QuickSheet(catalog: _catalog),
+        builder: (context) => _QuickSheet(
+          catalog: catalog,
+          favorites: favorites,
+          stock: stock,
+        ),
       ),
     );
     if (picked != null && mounted) await _pick(picked);
@@ -502,7 +584,9 @@ class _CashierViewState extends ConsumerState<CashierView> {
       return true;
     }
     if (key == LogicalKeyboardKey.escape) {
-      if (_hasQuery) {
+      if (_notFound != null) {
+        setState(() => _notFound = null);
+      } else if (_hasQuery) {
         _clearSearch();
       } else if (searching) {
         _focusScreen();
@@ -583,7 +667,9 @@ class _CashierViewState extends ConsumerState<CashierView> {
     );
   }
 
-  Widget _searchRow({required bool compact}) {
+  /// [compact] — telefon; [narrow] — tor chap panel (planshet): Qaytarish va
+  /// Smena faqat ikon (qidiruvga joy qolsin).
+  Widget _searchRow({required bool compact, bool narrow = false}) {
     final l10n = AppLocalizations.of(context);
     final printer = ref.watch(printerSettingsProvider).value;
     final canPrint = printer != null && printer.configured;
@@ -597,7 +683,10 @@ class _CashierViewState extends ConsumerState<CashierView> {
             clearTooltip: l10n.actionClear,
             shortcut: compact ? null : 'F1',
             large: !compact,
-            onChanged: _onQuery,
+            onChanged: (q) {
+              if (_notFound != null) setState(() => _notFound = null);
+              _onQuery(q);
+            },
             onSubmitted: (_) => _pickHighlighted(),
           ),
         ),
@@ -629,13 +718,30 @@ class _CashierViewState extends ConsumerState<CashierView> {
             onPressed: () => unawaited(_reprintLast()),
           ),
         ],
-        if (!compact) ...[
+        if (!compact && narrow) ...[
           const SizedBox(width: PosSpacing.s),
           PosIconButton(
             key: const ValueKey('pos-refund'),
             icon: Icons.assignment_return_outlined,
-            tooltip: l10n.refundTitle,
+            tooltip: l10n.labelWithShortcut(l10n.refundTitle, 'F8'),
             variant: PosIconButtonVariant.outlined,
+            onPressed: () => unawaited(_openRefund()),
+          ),
+          const SizedBox(width: PosSpacing.s),
+          PosIconButton(
+            icon: Icons.receipt_long_outlined,
+            tooltip: l10n.shiftTitle,
+            variant: PosIconButtonVariant.outlined,
+            onPressed: () => context.go('/pos/shift'),
+          ),
+        ] else if (!compact) ...[
+          const SizedBox(width: PosSpacing.s),
+          PosButton(
+            key: const ValueKey('pos-refund'),
+            label: l10n.refundTitle,
+            icon: Icons.assignment_return_outlined,
+            variant: PosButtonVariant.secondary,
+            shortcut: 'F8',
             onPressed: () => unawaited(_openRefund()),
           ),
           const SizedBox(width: PosSpacing.s),
@@ -647,6 +753,63 @@ class _CashierViewState extends ConsumerState<CashierView> {
           ),
         ],
       ],
+    );
+  }
+
+  /// Skanerlangan kod bazada yo'q: kod, "Yangi tovar qo'shish", yopish.
+  Widget? _notFoundBar() {
+    final code = _notFound;
+    if (code == null) return null;
+    final l10n = AppLocalizations.of(context);
+    final c = PosPalette.of(context).tone(PosTone.danger);
+    return Semantics(
+      key: const ValueKey('pos-not-found'),
+      container: true,
+      liveRegion: true,
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(
+          PosSpacing.l,
+          PosSpacing.s,
+          PosSpacing.s,
+          PosSpacing.s,
+        ),
+        decoration: BoxDecoration(
+          color: c.soft,
+          borderRadius: PosRadius.controlAll,
+          border: Border.all(color: c.text.withValues(alpha: 0.4)),
+        ),
+        child: Row(
+          children: [
+            Icon(Icons.error_outline, color: c.onSoft),
+            const SizedBox(width: PosSpacing.m),
+            Expanded(
+              child: Text(
+                l10n.posCodeNotFoundCode(code),
+                style: PosTypography.bodyStrong.copyWith(
+                  color: c.onSoft,
+                  fontFeatures: PosTypography.tabular,
+                ),
+              ),
+            ),
+            const SizedBox(width: PosSpacing.s),
+            PosButton(
+              key: const ValueKey('pos-add-product'),
+              label: l10n.posAddNewProduct,
+              icon: Icons.add,
+              size: PosButtonSize.s,
+              onPressed: () => unawaited(_addNewProduct(code)),
+            ),
+            PosIconButton(
+              icon: Icons.close,
+              tooltip: l10n.actionClose,
+              onPressed: () {
+                setState(() => _notFound = null);
+                _focusScreen();
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -690,9 +853,16 @@ class _CashierViewState extends ConsumerState<CashierView> {
     );
   }
 
+  /// Chap panel shundan tor bo'lsa — qidiruv qatoridagi tugmalar ikon.
+  static const double _wideSearchRow = 640;
+
   Widget _twoPane(CartState state, ProductCatalog catalog, SalesBlock block) {
     final p = PosPalette.of(context);
     final banner = _banner(block);
+    final notFound = _notFoundBar();
+    final favorites = _favorites(catalog);
+    final tab =
+        _tab ?? (favorites.isEmpty ? const AllTab() : const FavoritesTab());
     return Row(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -703,21 +873,33 @@ class _CashierViewState extends ConsumerState<CashierView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                _searchRow(compact: false),
+                LayoutBuilder(
+                  builder: (context, constraints) => _searchRow(
+                    compact: false,
+                    narrow: constraints.maxWidth < _wideSearchRow,
+                  ),
+                ),
+                if (notFound != null) ...[
+                  const SizedBox(height: PosSpacing.m),
+                  notFound,
+                ],
                 const SizedBox(height: PosSpacing.m),
                 Expanded(
-                  child: _hasQuery
-                      ? SearchResults(
-                          results: _results,
-                          highlighted: _highlighted,
-                          onPick: (p) => unawaited(_pick(p)),
-                        )
-                      : QuickPanel(
-                          catalog: catalog,
-                          category: _category,
-                          onCategory: (c) => setState(() => _category = c),
-                          onPick: (p) => unawaited(_pick(p)),
-                        ),
+                  child: ProductGrid(
+                    catalog: catalog,
+                    // "Sevimlilar" bo'shab qolsa — "Hammasi".
+                    tab: tab is FavoritesTab && favorites.isEmpty
+                        ? const AllTab()
+                        : tab,
+                    onTab: _selectTab,
+                    onPick: (p) => unawaited(_pick(p)),
+                    favorites: favorites,
+                    stock: StockView.of(
+                      ref.watch(stockByProductProvider).value,
+                    ),
+                    results: _hasQuery ? _results : null,
+                    highlighted: _highlighted,
+                  ),
                 ),
               ],
             ),
@@ -814,16 +996,17 @@ class _CashierViewState extends ConsumerState<CashierView> {
             ),
           ),
         ),
-        if (banner != null)
-          Padding(
-            padding: const EdgeInsets.fromLTRB(
-              PosSpacing.l,
-              PosSpacing.s,
-              PosSpacing.l,
-              0,
+        for (final bar in [banner, _notFoundBar()])
+          if (bar != null)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                PosSpacing.l,
+                PosSpacing.s,
+                PosSpacing.l,
+                0,
+              ),
+              child: bar,
             ),
-            child: banner,
-          ),
         Expanded(
           child: PosScanFeedback(
             controller: _feedback,
@@ -861,18 +1044,26 @@ class _CashierViewState extends ConsumerState<CashierView> {
   }
 }
 
-/// Telefon: tez tugmalar alohida varaqda.
+/// Telefon: tovar kartalari alohida varaqda.
 class _QuickSheet extends StatefulWidget {
-  const _QuickSheet({required this.catalog});
+  const _QuickSheet({
+    required this.catalog,
+    required this.favorites,
+    required this.stock,
+  });
 
   final ProductCatalog catalog;
+  final List<CatalogProduct> favorites;
+  final StockView stock;
 
   @override
   State<_QuickSheet> createState() => _QuickSheetState();
 }
 
 class _QuickSheetState extends State<_QuickSheet> {
-  String? _category;
+  late ProductTab _tab = widget.favorites.isEmpty
+      ? const AllTab()
+      : const FavoritesTab();
 
   @override
   Widget build(BuildContext context) {
@@ -891,11 +1082,13 @@ class _QuickSheetState extends State<_QuickSheet> {
             ),
             const SizedBox(height: PosSpacing.m),
             Expanded(
-              child: QuickPanel(
+              child: ProductGrid(
                 catalog: widget.catalog,
-                category: _category,
-                onCategory: (c) => setState(() => _category = c),
+                tab: _tab,
+                onTab: (t) => setState(() => _tab = t),
                 onPick: (product) => Navigator.of(context).pop(product),
+                favorites: widget.favorites,
+                stock: widget.stock,
               ),
             ),
           ],

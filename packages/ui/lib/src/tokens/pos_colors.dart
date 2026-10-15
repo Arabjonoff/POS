@@ -61,6 +61,29 @@ abstract final class PosColors {
   static const Color red700 = Color(0xFFB91C1C);
   static const Color red950 = Color(0xFF450A0A);
 
+  // Kategoriya rangi (kassa kartasi chizig'i va bosh harfi). Yorug'da 700/800,
+  // qorong'ida 400 — sirt ustida matn sifatida AA.
+  static const List<Color> categoryLight = [
+    Color(0xFF92400E), // amber 800
+    Color(0xFF0369A1), // sky 700
+    Color(0xFF6D28D9), // violet 700
+    Color(0xFF0F766E), // teal 700
+    Color(0xFFBE185D), // pink 700
+    Color(0xFF9A3412), // orange 800
+    Color(0xFF3F6212), // lime 800
+    Color(0xFF0E7490), // cyan 700
+  ];
+  static const List<Color> categoryDark = [
+    Color(0xFFF59E0B),
+    Color(0xFF38BDF8),
+    Color(0xFFA78BFA),
+    Color(0xFF2DD4BF),
+    Color(0xFFF472B6),
+    Color(0xFFFB923C),
+    Color(0xFFA3E635),
+    Color(0xFF22D3EE),
+  ];
+
   // Soya asosi
   static const Color shadow = Color(0xFF0F172A);
   static const Color shadowDark = Color(0xFF000000);
