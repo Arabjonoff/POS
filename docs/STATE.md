@@ -5,19 +5,25 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-083 Admin: tariflar, obunalar, to'lovlar
+- Branch: feat/T-083-admin-billing
+- Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
+- [ ] 1. `src/lib/billing.ts` (addMonths — oy oxiri qisqartiriladi, `previewPeriod` = max(paid_until, trial_ends_at, bugun)), `parseSom` (matn → tiyin, butun son) + Vitest; `platform.ts` (barcha tariflar, barcha to'lovlar), actions (tarif yaratish/tahrirlash/nofaol, to'lov kiritish, bekor qilish)
+- [ ] 2. `/plans`: jadval, yaratish/tahrirlash oynasi, nofaol qilish (tasdiqlash)
+- [ ] 3. Mijoz sahifasida "To'lov kiritish" oynasi (tarif narxi × oy taklif, yangi muddat oldindan ko'rinadi; `?payment=1` ochadi), to'lovlar tabida oxirgi to'lovni bekor qilish (izoh majburiy)
+- [ ] 4. `/payments`: barcha to'lovlar, sana oralig'i filtri, jami, sahifalash, CSV
+- [ ] 5. Soxta API (tariflar CRUD, to'lov — muddat hisobi, bekor qilish, ro'yxat filtrlari) + Playwright
+- [ ] 6. Spec, skrinshotlar, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- T-082 tugadi (PR, merge).
+- Reja yozildi.
 
 ## Keyingi aniq harakat
-- ROADMAP'dan keyingi vazifa: T-083 Admin: tariflar, obunalar, to'lovlar.
+- 1-qadam: `apps/admin/src/lib/billing.ts` + test.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
