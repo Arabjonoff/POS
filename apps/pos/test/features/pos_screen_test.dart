@@ -154,6 +154,21 @@ void main() {
       await tester.pumpAndSettle();
       expect(lines, [('p-kartoshka', 750), ('p-tuxum', 2000)]);
     });
+
+    testWidgets('a tap adds without a flash; only a scan flashes the edge', (
+      tester,
+    ) async {
+      await open(tester);
+      await tester.tap(find.text('Tuxum'));
+      await tester.pump();
+      expect(lines, [('p-tuxum', 1000)]);
+      // Oddiy bosish — chaqnash umuman yo'q (avval savat paneli yashil bo'lardi).
+      expect(find.byType(PosScanFeedbackOverlay), findsNothing);
+      await tester.pumpAndSettle();
+
+      await scanCode(tester, '4780000000014');
+      expect(find.byType(PosScanFeedbackOverlay), findsOneWidget);
+    });
   });
 
   group('cart keys', () {

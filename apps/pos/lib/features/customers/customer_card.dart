@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show StreamProviderFamily;
 import 'package:pos_app/app/session/session.dart';
 import 'package:pos_app/core/format/app_format.dart';
+import 'package:pos_app/core/text/phone.dart';
 import 'package:pos_app/data/customers/customer_directory.dart';
 import 'package:pos_app/features/common/manager_approval.dart';
 import 'package:pos_app/features/common/money_input.dart';
@@ -384,6 +385,7 @@ class _CustomerEditDialogState extends ConsumerState<_CustomerEditDialog> {
   final _limit = TextEditingController();
   CustomerDetails? _details;
   String? _nameError;
+  String? _phoneError;
   bool _badLimit = false;
   bool _busy = false;
 
@@ -423,6 +425,10 @@ class _CustomerEditDialogState extends ConsumerState<_CustomerEditDialog> {
     final l10n = AppLocalizations.of(context);
     if (_name.text.trim().isEmpty) {
       setState(() => _nameError = l10n.fieldRequired);
+      return;
+    }
+    if (normalizePhone(_phone.text) == null) {
+      setState(() => _phoneError = l10n.phoneInvalid);
       return;
     }
     final text = _limit.text.trim();
@@ -485,6 +491,8 @@ class _CustomerEditDialogState extends ConsumerState<_CustomerEditDialog> {
                   controller: _phone,
                   label: l10n.payCustomerPhone,
                   keyboardType: TextInputType.phone,
+                  errorText: _phoneError,
+                  onChanged: (_) => setState(() => _phoneError = null),
                 ),
                 const SizedBox(height: PosSpacing.s),
                 PosTextField(

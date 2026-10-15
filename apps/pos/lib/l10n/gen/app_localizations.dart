@@ -489,6 +489,12 @@ abstract class AppLocalizations {
   /// **'Nimadir xato ketdi. Qayta urinib ko\'ring.'**
   String get setupErrorUnknown;
 
+  /// Telefon raqami noto'g'ri
+  ///
+  /// In uz, this message translates to:
+  /// **'Raqam noto\'g\'ri. Masalan: 90 123 45 67'**
+  String get phoneInvalid;
+
   /// Bo'sh majburiy maydon
   ///
   /// In uz, this message translates to:

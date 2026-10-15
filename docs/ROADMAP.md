@@ -291,6 +291,35 @@ Spec'lar: `admin-dashboard.md`, `subscription-billing.md`.
 - **Bajarish:** `docs/user-guide/` — kassir uchun 1 sahifa, ega uchun 3–5 sahifa, skrinshotlar bilan (o'zbekcha).
 - **Bog'liq:** T-091
 
+## 10-bosqich. Audit va professional daraja (loyiha egasi talabi, 2026-10-15)
+Audit: `PROJECT_AUDIT.md`, batafsil — `docs/audit/`. Jurnal: `AGENT_WORKLOG.md`.
+
+### [x] T-100 Audit va P0 tuzatishlar
+- **Bajarish:** 5 yo'nalishda audit; yashil chaqnash (faqat skaner, faqat chegara, ≤ 200 ms); tez tugma overflow; mijoz telefoni normallashtirish (server + kassa); noma'lum mijozli savdo → pending.
+- **Qabul:** `PROJECT_AUDIT.md`; regressiya testlari; barcha tekshiruvlar yashil.
+
+### [ ] T-101 Sinxron yaxlitligi
+- **Bajarish:** rad etilgan tovar savdolarni yo'qotmasin (noma'lum tovar → pending; ziddiyatli shtrix-kod/PLU tushirib, tovar qo'llanadi); NUL belgisi 500 bermasin; o'chirilgan tovar/yetkazib beruvchiga kirim qabul qilinsin; qayta yuborilgan qarz to'lovi yopiq smenada ham qabul qilinsin; kassada nom ≤ 200, ≤ 20 shtrix-kod; boshqaruv belgilarini tozalash.
+- **Bog'liq:** T-100
+
+### [ ] T-102 Kirimni tahrirlash va bekor qilish
+- **Bajarish:** tasdiqlangan kirim → "Tahrirlash" (teskari yozuv + yangi versiya bitta tranzaksiyada) va "Bekor qilish"; server `receipt.corrected`/`receipt.reversed` hodisalari (idempotent); ro'yxatda holat belgilari; qoldiq va tannarx to'g'ri qayta hisoblanadi.
+- **Qabul:** 10 → 7 o'zgartirilganda qoldiq aniq −3; ikki marta qo'llanmaydi; eski kassa sinxroni buzilmaydi.
+
+### [ ] T-103 Mijoz boshlang'ich balansi
+- **Bajarish:** mijoz yaratishda "Boshlang'ich balans" (yo'q / mijoz qarzi / mijoz haqi), summa, sana; `opening` qarz yozuvi (bitta mijozga bitta); tarix va profilda; tahrirda qayta qo'shilmaydi.
+
+### [ ] T-104 Chek sozlamalari
+- **Bajarish:** do'kon rekvizitlari (nom, manzil, telefon, STIR — faqat kiritilsa), sarlavha, pastki matn, logotip, ko'rsat/yashir; 58/80 mm; jonli preview (printer bilan bir model); test cheki; chek xatolari (kodlash, aralash to'lov, NUSXA, pul qutisi).
+
+### [ ] T-105 Mahsulot rasmi
+- **Bajarish:** rasm qo'shish/almashtirish/olib tashlash; serverda saqlash (tenant tekshiruvi bilan); kassada kesh (oflayn); ro'yxatda kichik rasm, kartada katta; placeholder.
+
+### [ ] T-106 UI/UX sayqal (audit P1/P2)
+- **Bajarish:** ikki marta bosishdan himoya, kutilmagan xatoda xabar, o'chirishni tasdiqlash, holat qatori (neytral ranglar, telefon), majburiy maydon belgisi, pul maydoni formati, xato holatlari.
+
+### [ ] T-107 Regressiya va yakuniy hisobot
+
 ---
 
 ## Keyinroq (hozir QILINMAYDI)

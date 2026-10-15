@@ -70,8 +70,14 @@ class _ReceiptEditorState extends ConsumerState<ReceiptEditor> {
     }
   }
 
-  Future<void> _add(String productId, {int qtyMilli = 1000}) async {
+  /// Chaqnash va signal — faqat skaner uchun (oddiy bosishda ekran chaqnamaydi).
+  Future<void> _add(
+    String productId, {
+    int qtyMilli = 1000,
+    bool scanned = false,
+  }) async {
     await _store.addProduct(widget.receiptId, productId, qtyMilli: qtyMilli);
+    if (!scanned) return;
     _feedback.flash(PosScanResult.success);
     unawaited(ref.read(scanSignalProvider).success());
   }
@@ -93,7 +99,11 @@ class _ReceiptEditorState extends ConsumerState<ReceiptEditor> {
         ref.read(productCatalogProvider).value ?? ProductCatalog(const []);
     final match = catalog.byCode(event.code);
     if (match != null) {
-      await _add(match.product.id, qtyMilli: match.qtyMilli ?? 1000);
+      await _add(
+        match.product.id,
+        qtyMilli: match.qtyMilli ?? 1000,
+        scanned: true,
+      );
       return;
     }
     // Noma'lum kod — yangi tovar kartasi, saqlangach kirimga qo'shiladi.

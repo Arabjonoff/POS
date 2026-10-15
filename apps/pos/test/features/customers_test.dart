@@ -221,4 +221,29 @@ void main() {
     expect(find.text('Yangi Xaridor'), findsOneWidget);
     expect(find.byKey(const ValueKey('customer-balance')), findsOneWidget);
   });
+
+  testWidgets('new customer: phone is checked and saved as +998…', (
+    tester,
+  ) async {
+    await open(tester);
+    await tap(tester, find.byKey(const ValueKey('customers-add')));
+    await tester.enterText(
+      find.byKey(const ValueKey('new-customer-name')),
+      'Telefonli',
+    );
+    final phone = find.descendant(
+      of: find.byType(PosDialog),
+      matching: find.byType(TextField),
+    );
+    await tester.enterText(phone.at(1), '12345');
+    await tap(tester, find.byKey(const ValueKey('new-customer-save')));
+    expect(find.text("Raqam noto'g'ri. Masalan: 90 123 45 67"), findsOneWidget);
+
+    await tester.enterText(phone.at(1), '90 123 45 67');
+    await tap(tester, find.byKey(const ValueKey('new-customer-save')));
+    final saved = await (_db.select(
+      _db.customers,
+    )..where((c) => c.fullName.equals('Telefonli'))).getSingle();
+    expect(saved.phone, '+998901234567');
+  });
 }

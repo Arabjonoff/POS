@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pos_app/app/session/session.dart';
 import 'package:pos_app/core/format/app_format.dart';
+import 'package:pos_app/core/text/phone.dart';
 import 'package:pos_app/data/customers/customer_directory.dart';
 import 'package:pos_app/features/common/section_page.dart';
 import 'package:pos_app/features/customers/customer_card.dart';
@@ -241,6 +242,7 @@ class _NewCustomerDialogState extends State<_NewCustomerDialog> {
   final _name = TextEditingController();
   final _phone = TextEditingController();
   String? _error;
+  String? _phoneError;
 
   @override
   void dispose() {
@@ -254,7 +256,12 @@ class _NewCustomerDialogState extends State<_NewCustomerDialog> {
       setState(() => _error = AppLocalizations.of(context).fieldRequired);
       return;
     }
-    Navigator.of(context).pop((_name.text, _phone.text));
+    final phone = normalizePhone(_phone.text);
+    if (phone == null) {
+      setState(() => _phoneError = AppLocalizations.of(context).phoneInvalid);
+      return;
+    }
+    Navigator.of(context).pop((_name.text, phone));
   }
 
   @override
@@ -280,6 +287,8 @@ class _NewCustomerDialogState extends State<_NewCustomerDialog> {
             controller: _phone,
             label: l10n.payCustomerPhone,
             keyboardType: TextInputType.phone,
+            errorText: _phoneError,
+            onChanged: (_) => setState(() => _phoneError = null),
             onSubmitted: (_) => _save(),
           ),
         ],

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pos_app/app/session/session.dart';
 import 'package:pos_app/core/format/app_format.dart';
+import 'package:pos_app/core/text/phone.dart';
 import 'package:pos_app/data/customers/customer_directory.dart';
 import 'package:pos_app/l10n/gen/app_localizations.dart';
 import 'package:pos_ui/pos_ui.dart';
@@ -33,6 +34,7 @@ class _CustomerPickerState extends ConsumerState<CustomerPicker> {
   bool _creating = false;
   bool _saving = false;
   String? _nameError;
+  String? _phoneError;
 
   @override
   void dispose() {
@@ -46,6 +48,10 @@ class _CustomerPickerState extends ConsumerState<CustomerPicker> {
     final l10n = AppLocalizations.of(context);
     if (_name.text.trim().isEmpty) {
       setState(() => _nameError = l10n.fieldRequired);
+      return;
+    }
+    if (normalizePhone(_phone.text) == null) {
+      setState(() => _phoneError = l10n.phoneInvalid);
       return;
     }
     final user = ref.read(sessionProvider).user;
@@ -84,6 +90,8 @@ class _CustomerPickerState extends ConsumerState<CustomerPicker> {
             controller: _phone,
             label: l10n.payCustomerPhone,
             keyboardType: TextInputType.phone,
+            errorText: _phoneError,
+            onChanged: (_) => setState(() => _phoneError = null),
             onSubmitted: (_) => unawaited(_create()),
           ),
           const SizedBox(height: PosSpacing.m),

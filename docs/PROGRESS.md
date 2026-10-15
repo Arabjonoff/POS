@@ -414,3 +414,12 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - Qilindi: loyiha egasi javobi — aloqa raqami +998 91 498 01 68. Kassada standart qiymat (`defaultSupportPhone`, `supportPhoneProvider`); build paytida `SUPPORT_PHONE` bilan almashtirish mumkin, bo'sh berilsa ham standart raqam. Spec, RELEASE/DEPLOY, release workflow izohi va foydalanuvchi qo'llanmasi yangilandi.
 - Sinov: apps/pos +1 test (standart raqam), barcha 624 test yashil.
 - Qoldi: ochiq savollar Q-001…Q-007, Q-009; T-047 (Q-007).
+
+## 2026-10-15 — T-100 Audit va P0 tuzatishlar
+- Qilindi: 5 yo'nalishda audit (UI/UX, mahsulotlar, kirim, mijozlar, chek) → `PROJECT_AUDIT.md`, `docs/audit/`; ROADMAP'ga T-101…T-107.
+  - Yashil chaqnash: asl sabab — skaner chaqnashi oddiy bosishda ham ishlardi va butun panelni 10% yashil bo'yardi (350 ms). Endi faqat skanerda, faqat 2 px chegara, 200 ms.
+  - Kassa tez tugmasi overflow (ilova logida topildi): 88 → 96 px.
+  - Mijoz telefoni: server (`CustomerSerializer.validate_phone`) va kassa (`normalizePhone`) bir xil `+998…` ga keltiradi; oynalarda xato xabari. Ilgari formatsiz raqamli mijoz va uning nasiya savdolari serverda rad etilardi.
+  - Server hali olmagan mijozli savdo → `MissingDependency` (pending), rad etilmaydi.
+- Sinov: backend 205 (customers/sales/sync) + to'liq; apps/pos 627; packages/ui 134; golden'lar yangilandi.
+- Qoldi: T-101…T-107.

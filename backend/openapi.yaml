@@ -3343,7 +3343,7 @@ components:
         phone:
           type: string
           title: Telefon
-          maxLength: 13
+          maxLength: 32
         note:
           type: string
           title: Izoh
@@ -3382,7 +3382,7 @@ components:
         phone:
           type: string
           title: Telefon
-          maxLength: 13
+          maxLength: 32
         note:
           type: string
           title: Izoh
@@ -4692,7 +4692,7 @@ components:
         phone:
           type: string
           title: Telefon
-          maxLength: 13
+          maxLength: 32
         note:
           type: string
           title: Izoh

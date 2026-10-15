@@ -99,13 +99,13 @@ void main() {
     final row = await (db.select(
       db.customers,
     )..where((c) => c.id.equals(created.id))).getSingle();
-    expect(row.phone, '901112233');
+    expect(row.phone, '+998901112233');
     final event = await db.select(db.outboxEvents).getSingle();
     expect(event.type, 'customer.upserted');
     expect(jsonDecode(event.payload), {
       'id': created.id,
       'full_name': 'Dilnoza',
-      'phone': '901112233',
+      'phone': '+998901112233',
       'note': '',
       'by': 'cashier-1',
     });

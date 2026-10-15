@@ -4,7 +4,7 @@ from django.utils import timezone
 from apps.core.exceptions import DomainError
 from apps.core.ids import new_id
 from apps.core.models import ImmutableRecordError
-from apps.customers.models import DebtEntry
+from apps.customers.models import Customer, DebtEntry
 from apps.customers.services import customer_balance
 from apps.inventory.models import StockMovement
 from apps.inventory.services import current_stock
@@ -175,6 +175,39 @@ def test_unknown_shift_is_missing_dependency(device, cashier, product, sale_payl
     with pytest.raises(MissingDependency) as exc:
         record_sale(device, payload)
     assert exc.value.entity == "shift"
+
+
+def test_unknown_customer_is_missing_dependency(device, shift, cashier, product, sale_payload):
+    # Mijoz kassada oflayn yaratilgan, hodisasi hali qo'llanmagan — savdo kutadi (audit B2).
+    payload = sale_payload(
+        shift,
+        cashier,
+        [(product, 1_000, 400_000)],
+        payments=[("debt", 400_000)],
+        debt_entry_id=str(new_id()),
+    )
+    payload["customer"] = str(new_id())
+    with pytest.raises(MissingDependency) as exc:
+        record_sale(device, payload)
+    assert exc.value.entity == "customer"
+    assert not Sale.objects.exists()
+
+
+def test_foreign_customer_never_applied(
+    device, shift, cashier, product, sale_payload, other_tenant
+):
+    foreign = Customer.objects.create(tenant=other_tenant, full_name="Begona")
+    payload = sale_payload(
+        shift,
+        cashier,
+        [(product, 1_000, 400_000)],
+        payments=[("debt", 400_000)],
+        debt_entry_id=str(new_id()),
+    )
+    payload["customer"] = str(foreign.id)
+    with pytest.raises(MissingDependency):
+        record_sale(device, payload)
+    assert not Sale.objects.exists()
 
 
 def test_other_device_or_tenant_shift_rejected(

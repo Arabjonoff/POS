@@ -233,6 +233,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get setupErrorUnknown => 'Что-то пошло не так. Попробуйте ещё раз.';
 
   @override
+  String get phoneInvalid => 'Неверный номер. Например: 90 123 45 67';
+
+  @override
   String get fieldRequired => 'Заполните поле';
 
   @override

@@ -10,7 +10,15 @@ from apps.inventory.models import MovementType
 from apps.inventory.services import record_movement
 
 from ..models import PaymentMethod, Sale, SaleItem, SalePayment
-from .common import as_datetime, as_int, as_uuid, device_shift, invalid, tenant_user
+from .common import (
+    MissingDependency,
+    as_datetime,
+    as_int,
+    as_uuid,
+    device_shift,
+    invalid,
+    tenant_user,
+)
 
 CODE = "invalid_sale"
 
@@ -85,7 +93,9 @@ def record_sale(device, payload: dict) -> Sale:
     if (customer_id := as_uuid(payload, "customer", code=CODE, required=False)) is not None:
         customer = Customer.objects.filter(tenant_id=tenant_id, pk=customer_id).first()
         if customer is None:
-            raise invalid(CODE, "Unknown customer.", field="customer")
+            # Mijoz kassada oflayn yaratilgan va uning hodisasi hali qo'llanmagan
+            # bo'lishi mumkin — rad etmaymiz, keyinroq qayta urinamiz (pending).
+            raise MissingDependency("customer", customer_id)
 
     items = _items(tenant_id, payload.get("items"))
     subtotal = as_int(payload, "subtotal_tiyin", code=CODE, min_value=0)
