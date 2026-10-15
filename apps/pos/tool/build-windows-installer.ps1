@@ -1,5 +1,6 @@
 # Kassa ilovasi: Windows release va o'rnatuvchi (T-093, docs/RELEASE.md).
-#   pwsh apps/pos/tool/build-windows-installer.ps1 -ApiUrl https://api.example.uz -SupportPhone "+998 71 200 00 00"
+#   pwsh apps/pos/tool/build-windows-installer.ps1 -ApiUrl https://api.example.uz [-SupportPhone "+998 .."]
+# -SupportPhone berilmasa ilovadagi standart raqam (+998 91 498 01 68, Q-008).
 # Natija: dist/kassa-setup-<versiya>.exe (versiya — apps/pos/pubspec.yaml dan).
 param(
   [string]$ApiUrl = $env:POS_API_URL,

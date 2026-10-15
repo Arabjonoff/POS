@@ -26,7 +26,7 @@ Shundan keyin dastur har safar **xodim tanlash va PIN** bilan ochiladi — inter
 | **Kassir** | Savdo, nasiyaga sotish (limit ichida), qarz to'lovini qabul qilish, o'z smenasi |
 
 Katta chegirma, qaytarish, qarz limitidan oshish kabi amallarda dastur **menejer yoki ega PIN**ini so'raydi — kim tasdiqlagani yozib qo'yiladi.
-Yangi xodim qo'shish yoki PIN o'zgartirish uchun hozircha administrator bilan bog'laning.
+Yangi xodim qo'shish yoki PIN o'zgartirish uchun hozircha administrator bilan bog'laning: **+998 91 498 01 68**.
 
 ## Sozlamalar (Ctrl+6)
 - **Til:** O'zbekcha (lotin), Ўзбекча (кирилл), Русский.

@@ -2,7 +2,7 @@
 # Natija — GitHub Release'da Windows o'rnatuvchi va Android APK.
 # Sirlar (Settings → Secrets → Actions):
 #   POS_API_URL           — https://api.<domen> (majburiy)
-#   SUPPORT_PHONE         — aloqa raqami (Q-008, ixtiyoriy)
+#   SUPPORT_PHONE         — aloqa raqami (ixtiyoriy; bo'lmasa +998 91 498 01 68, Q-008)
 #   ANDROID_KEYSTORE_B64  — upload-keystore.jks (base64), ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS,
 #                           ANDROID_KEY_PASSWORD (bo'lmasa APK debug kalit bilan — tarqatilmaydi)
 name: Release

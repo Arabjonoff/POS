@@ -20,7 +20,7 @@
    ```
    `pos up -d backend` — kassalar keyingi sinxronda (≤ 60 s) holat qatorida **"Yangi versiya 1.2.3"** ko'rsatadi; Sozlamalar → "Ilova haqida" da havola (nusxa olinadi). Majburiy yangilash yo'q — savdo to'xtamaydi.
 
-Kerakli GitHub sirlari: `POS_API_URL` (https://api.<domen>), `SUPPORT_PHONE` (Q-008), Android uchun `ANDROID_KEYSTORE_B64`, `ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KEY_ALIAS`, `ANDROID_KEY_PASSWORD`.
+Kerakli GitHub sirlari: `POS_API_URL` (https://api.<domen>), `SUPPORT_PHONE` (ixtiyoriy; bo'lmasa +998 91 498 01 68, Q-008), Android uchun `ANDROID_KEYSTORE_B64`, `ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KEY_ALIAS`, `ANDROID_KEY_PASSWORD`.
 
 ## Windows
 - Lokal yig'ish (Windows, Flutter, Inno Setup 6):
