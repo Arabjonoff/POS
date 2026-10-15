@@ -25,12 +25,6 @@
 ## Keyingi aniq harakat
 - 6-qadam: main'ni merge qilish (STATE/ROADMAP/PROGRESS konflikti), skrinshotlar `docs/screenshots/T-080/` (login, bosh sahifa yorug'/qorong'i), spec, PROGRESS, ROADMAP, PR.
 
-## Oxirgi bajarilgan ish
-- T-070 tugadi (PR, merge).
-
-## Keyingi aniq harakat
-- ROADMAP'dan keyingi vazifa: T-080 Admin: kirish va layout.
-
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
 - Bu kompyuterda 5432, 6379, 8000, 3000 portlari boshqa loyihalar (workers-*, mebel-*, twf-local-*) tomonidan band. Ularni to'xtatma! POS lokal portlari (.env): postgres 55432, redis 56379, backend 8100, admin 3100.
