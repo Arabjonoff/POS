@@ -187,7 +187,10 @@ class CustomerTile extends StatelessWidget {
     final limit = customer.limitTiyin;
     final details = [
       if (customer.phone.isNotEmpty) customer.phone,
-      l10n.payCustomerDebt(fmt.money(customer.balanceTiyin)),
+      if (customer.balanceTiyin < 0)
+        l10n.customerCreditShort(fmt.money(-customer.balanceTiyin))
+      else
+        l10n.payCustomerDebt(fmt.money(customer.balanceTiyin)),
       if (limit != null) l10n.payCustomerLimit(fmt.money(limit)),
     ];
     return PosListTile(

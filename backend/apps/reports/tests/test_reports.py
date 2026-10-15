@@ -8,14 +8,22 @@ Davr D = 2026-10-10:
 Oldingi kun D−1: 400 000 tushum, foyda 100 000, 1 chek.
 """
 
+from datetime import UTC, datetime
+
 import pytest
 
 from apps.core.money import line_total
+from apps.customers.models import Customer
+from apps.customers.services import record_opening_balance
 
 pytestmark = pytest.mark.django_db
 
 BASE = "/api/v1/reports/"
 DAY = {"date_from": "2026-10-10", "date_to": "2026-10-10"}
+
+
+def world_day_noon():
+    return datetime(2026, 10, 10, 7, tzinfo=UTC)  # 12:00 Toshkent
 
 
 def _get(client, path, **params):
@@ -157,3 +165,22 @@ def test_other_tenant_sees_nothing(client_as, make_user, other_tenant, world):
     assert _get(stranger, "debts")["debtors_count"] == 0
     stock = _get(stranger, "stock")
     assert (stock["stock_value_tiyin"], stock["low"], stock["negative"]) == (0, [], [])
+
+
+def test_opening_balance_is_not_revenue_but_counts_in_debts(client_as, manager, world, tenant):
+    """T-103: boshlang'ich qarz — real debitorlik (qarzlarda), lekin tushum ham, naqd ham emas;
+    avans qarzdorlarga aralashmaydi, alohida ko'rsatiladi."""
+    before = _get(client_as(manager), "summary", **DAY)
+    debts_before = _get(client_as(manager), "debts")
+    debtor = Customer.objects.create(tenant=tenant, full_name="Eski qarzdor")
+    creditor = Customer.objects.create(tenant=tenant, full_name="Avansli")
+    record_opening_balance(debtor, direction="debt", amount_tiyin=2_000_000, at=world_day_noon())
+    record_opening_balance(creditor, direction="credit", amount_tiyin=700_000, at=world_day_noon())
+
+    assert _get(client_as(manager), "summary", **DAY) == before
+    data = _get(client_as(manager), "debts")
+    assert data["total_debt_tiyin"] == debts_before["total_debt_tiyin"] + 2_000_000
+    assert data["debtors_count"] == debts_before["debtors_count"] + 1
+    assert data["total_credit_tiyin"] == debts_before["total_credit_tiyin"] + 700_000
+    assert data["creditors_count"] == debts_before["creditors_count"] + 1
+    assert "Avansli" not in [r["full_name"] for r in data["top"]]

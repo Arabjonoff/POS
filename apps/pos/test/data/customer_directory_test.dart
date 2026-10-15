@@ -111,6 +111,91 @@ void main() {
     });
   });
 
+  group('opening balance (T-103)', () {
+    Future<int> balanceOf(String id) async => (await customers.watchAll().first)
+        .singleWhere((c) => c.id == id)
+        .balanceTiyin;
+
+    test(
+      'debt: one opening entry + opening_balance in the same event',
+      () async {
+        final at = DateTime.utc(2026, 9, 1, 7);
+        final created = await customers.create(
+          name: 'Eski qarzdor',
+          createdBy: 'cashier-1',
+          opening: OpeningBalanceInput(amountTiyin: 15000000, at: at),
+        );
+        expect(created.balanceTiyin, 15000000);
+        expect(await balanceOf(created.id), 15000000);
+        final entry = await (db.select(
+          db.debtEntries,
+        )..where((e) => e.customerId.equals(created.id))).getSingle();
+        expect(
+          (entry.type, entry.amountTiyin, entry.at, entry.shiftId),
+          ('opening', 15000000, at, null),
+        );
+        final event = await db.select(db.outboxEvents).getSingle();
+        final payload = jsonDecode(event.payload) as Map<String, Object?>;
+        expect(payload['by'], 'cashier-1');
+        expect(payload['opening_balance'], {
+          'id': entry.id,
+          'direction': 'debt',
+          'amount_tiyin': 15000000,
+          'at': '2026-09-01T07:00:00.000Z',
+        });
+      },
+    );
+
+    test('credit: negative balance, approver is the author', () async {
+      final created = await customers.create(
+        name: 'Avansli',
+        createdBy: 'cashier-1',
+        opening: OpeningBalanceInput(
+          amountTiyin: 5000000,
+          at: DateTime.utc(2026, 10),
+          credit: true,
+          approvedBy: 'manager-1',
+        ),
+      );
+      expect(await balanceOf(created.id), -5000000);
+      final payload =
+          jsonDecode((await db.select(db.outboxEvents).getSingle()).payload)
+              as Map<String, Object?>;
+      expect(payload['by'], 'manager-1');
+      expect((payload['opening_balance']! as Map)['direction'], 'credit');
+    });
+
+    test('editing never adds the opening balance again', () async {
+      final created = await customers.create(
+        name: 'Eski qarzdor',
+        createdBy: 'cashier-1',
+        opening: OpeningBalanceInput(
+          amountTiyin: 100000,
+          at: DateTime.utc(2026, 10),
+        ),
+      );
+      await customers.update(id: created.id, name: 'Yangi ism', by: 'm');
+      expect(await balanceOf(created.id), 100000);
+      final events = await db.select(db.outboxEvents).get();
+      expect(
+        jsonDecode(events.last.payload) as Map,
+        isNot(contains('opening_balance')),
+      );
+    });
+
+    test('zero or negative opening amount is refused', () async {
+      expect(
+        () => customers.create(
+          name: 'X',
+          createdBy: 'c',
+          opening: OpeningBalanceInput(amountTiyin: 0, at: DateTime.utc(2026)),
+        ),
+        throwsArgumentError,
+      );
+      expect(await db.select(db.outboxEvents).get(), isEmpty);
+    });
+  });
+
   group('customer card (T-060)', () {
     test('pay debt: ledger entry, outbox, balance = sum of entries', () async {
       // c1: 300 000 − 100 000 = 200 000.

@@ -306,7 +306,7 @@ Audit: `PROJECT_AUDIT.md`, batafsil — `docs/audit/`. Jurnal: `AGENT_WORKLOG.md
 - **Bajarish:** tasdiqlangan kirim → "Tahrirlash" (teskari yozuv + yangi versiya bitta tranzaksiyada) va "Bekor qilish"; server `receipt.corrected`/`receipt.reversed` hodisalari (idempotent); ro'yxatda holat belgilari; qoldiq va tannarx to'g'ri qayta hisoblanadi.
 - **Qabul:** 10 → 7 o'zgartirilganda qoldiq aniq −3; ikki marta qo'llanmaydi; eski kassa sinxroni buzilmaydi.
 
-### [ ] T-103 Mijoz boshlang'ich balansi
+### [x] T-103 Mijoz boshlang'ich balansi
 - **Bajarish:** mijoz yaratishda "Boshlang'ich balans" (yo'q / mijoz qarzi / mijoz haqi), summa, sana; `opening` qarz yozuvi (bitta mijozga bitta); tarix va profilda; tahrirda qayta qo'shilmaydi.
 
 ### [ ] T-104 Chek sozlamalari

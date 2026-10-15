@@ -2583,6 +2583,102 @@ abstract class AppLocalizations {
   /// **'Qaytish'**
   String get actionKeep;
 
+  /// Yangi mijoz formasi bo'limi
+  ///
+  /// In uz, this message translates to:
+  /// **'Boshlang\'ich balans'**
+  String get customerOpeningSection;
+
+  /// Variant
+  ///
+  /// In uz, this message translates to:
+  /// **'Yo\'q'**
+  String get customerOpeningNone;
+
+  /// Variant
+  ///
+  /// In uz, this message translates to:
+  /// **'Mijoz qarzi'**
+  String get customerOpeningDebt;
+
+  /// Variant
+  ///
+  /// In uz, this message translates to:
+  /// **'Mijoz haqi (avans)'**
+  String get customerOpeningCredit;
+
+  /// Izoh
+  ///
+  /// In uz, this message translates to:
+  /// **'Yangi mijoz — qarzi ham, avansi ham yo\'q.'**
+  String get customerOpeningNoneHint;
+
+  /// Izoh
+  ///
+  /// In uz, this message translates to:
+  /// **'Mijoz do\'konga shu summani qarzdor (masalan, eski daftardan).'**
+  String get customerOpeningDebtHint;
+
+  /// Izoh
+  ///
+  /// In uz, this message translates to:
+  /// **'Do\'kon mijozga shu summani qarzdor: mijoz oldindan to\'lagan. Keyingi nasiya savdolar shundan ayriladi.'**
+  String get customerOpeningCreditHint;
+
+  /// Maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'Summa, {currency}'**
+  String customerOpeningAmount(String currency);
+
+  /// Maydon
+  ///
+  /// In uz, this message translates to:
+  /// **'Qaysi sanadagi holat'**
+  String get customerOpeningDate;
+
+  /// Xato
+  ///
+  /// In uz, this message translates to:
+  /// **'Summani kiriting (0 dan katta)'**
+  String get customerOpeningAmountRequired;
+
+  /// Huquq
+  ///
+  /// In uz, this message translates to:
+  /// **'Mijoz avansini menejer yoki ega kiritadi'**
+  String get customerOpeningNeedsApproval;
+
+  /// Qarz tarixi yozuvi
+  ///
+  /// In uz, this message translates to:
+  /// **'Boshlang\'ich qarz'**
+  String get debtOpeningDebt;
+
+  /// Qarz tarixi yozuvi
+  ///
+  /// In uz, this message translates to:
+  /// **'Boshlang\'ich avans'**
+  String get debtOpeningCredit;
+
+  /// Manfiy balans sarlavhasi
+  ///
+  /// In uz, this message translates to:
+  /// **'Mijoz haqi (avans)'**
+  String get customerCredit;
+
+  /// Ro'yxatda manfiy balans
+  ///
+  /// In uz, this message translates to:
+  /// **'Avans: {amount}'**
+  String customerCreditShort(String amount);
+
+  /// Ixtiyoriy maydon yorlig'i
+  ///
+  /// In uz, this message translates to:
+  /// **'{label} (ixtiyoriy)'**
+  String fieldOptional(String label);
+
   /// Tugma
   ///
   /// In uz, this message translates to:

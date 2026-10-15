@@ -12,10 +12,14 @@ Debts _$DebtsFromJson(Map<String, dynamic> json) => Debts(
   top: (json['top'] as List<dynamic>)
       .map((e) => Debtor.fromJson(e as Map<String, dynamic>))
       .toList(),
+  totalCreditTiyin: (json['total_credit_tiyin'] as num?)?.toInt(),
+  creditorsCount: (json['creditors_count'] as num?)?.toInt(),
 );
 
 Map<String, dynamic> _$DebtsToJson(Debts instance) => <String, dynamic>{
   'total_debt_tiyin': instance.totalDebtTiyin,
   'debtors_count': instance.debtorsCount,
+  'total_credit_tiyin': ?instance.totalCreditTiyin,
+  'creditors_count': ?instance.creditorsCount,
   'top': instance.top.map((e) => e.toJson()).toList(),
 };

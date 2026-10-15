@@ -34,6 +34,7 @@ Format:
 - Variantlar: A) ruxsat yo'q — `409 payment_exceeds_debt`, kassir summani to'g'rilaydi. B) avans sifatida qabul qilinadi (manfiy balans), keyingi nasiya savdodan ayriladi.
 - Agentning tavsiyasi: A — oddiyroq, kassada xato kiritilgan summa (ortiqcha nol) qarzni buzmaydi. Avans kerak bo'lsa keyin qo'shiladi.
 - Hozircha tanlangan: A (vaqtincha; `services.pay_debt` da bitta joyda). Oflayn kassadan kelgan to'lov (sinxron) baribir qabul qilinadi.
+- Yangilanish (2026-10-15, T-103, qaror 0011): loyiha egasi talabi bilan **boshlang'ich avans** qo'shildi (mijoz yaratishda, faqat ega/menejer) — manfiy balans endi rasman bor. Ortiqcha to'lov esa hali ham A. Savol: avansni naqd qaytarish va ortiqcha to'lovni avansga aylantirish kerakmi?
 - Javob:
 
 ### Q-004 (T-019) Foyda qanday hisoblanadi — chek chegirmasi va qaytarishlar bilanmi?

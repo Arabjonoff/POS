@@ -38,7 +38,7 @@ Umumiy tamoyillar: `sync.md`. Hodisa payloadlari va qo'llash qoidalari: `sales-a
 | `sale.completed` | `record_sale` | `sales-api.md` |
 | `refund.created` | `record_refund` | `sales-api.md` |
 | `debt.paid` | `pay_debt(enforce_balance=False)` | `{id, customer, amount_tiyin > 0, method: cash\|card, shift?, by, at, note?}` |
-| `customer.upserted` | `CustomerSerializer` | `{id, full_name, phone, note, debt_limit_tiyin?, by}` |
+| `customer.upserted` | `CustomerSerializer` | `{id, full_name, phone, note, debt_limit_tiyin?, opening_balance?, by}` — `opening_balance` faqat yaratishda (`customers-api.md`) |
 | `supplier.upserted` | `SupplierSerializer` | `{id, name, phone, note, by}` (ega/menejer) |
 | `product.upserted` | `ProductSerializer` | `catalog-api.md` mahsulot maydonlari + `by` (ega/menejer) |
 | `receipt.posted` | `StockReceiptSerializer` + `post_receipt` | `inventory-api.md` kirim + `by` (ega/menejer), ixtiyoriy `at` |

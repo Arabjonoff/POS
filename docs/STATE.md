@@ -5,20 +5,26 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-102 Kirimni tahrirlash va bekor qilish (dizayn — `docs/audit/audit_receipts.md` 2-bo'lim)
-- Branch: feat/T-102-receipt-corrections
+- Vazifa: T-103 Mijoz boshlang'ich balansi (dizayn — `docs/audit/audit_customers.md` 2-bo'lim)
+- Branch: feat/T-103-opening-balance
 - Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
-- [x] 1–7. Server, testlar, kassa data, UI, testlar/golden, hujjatlar
+- [x] 1. Server: `DebtType.OPENING`, cheklovlar (bitta mijozga bitta, smena/savdosiz) — migratsiya 0003; `record_opening_balance`; `CustomerSerializer.opening_balance` (faqat yaratishda; avans — ega/menejer); qarzlar hisobotida `total_credit_tiyin`, `creditors_count`
+- [x] 2. Server testlari (`test_opening.py` 17, sinxron, hisobot)
+- [x] 3. Dizayn tizimi: `PosSegmentedControl`, `PosDateField`, `PosTextField.onTap` (+ testlar)
+- [x] 4. Kassa: `OpeningBalanceInput`, `CustomerDirectory.create(opening:)`; yangi mijoz formasi (balans bo'limi, `GroupedMoneyFormatter`); kartada/ro'yxatda avans
+- [x] 5. Kassa data testlari
+- [x] 6. Widget testlari, golden/skrinshot, OpenAPI + klientlar
+- [x] 7. Spec (`customers-api.md`, `debts.md`, `sync-api.md`), qaror 0011
 - [ ] 8. PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-- T-102 tayyor (`docs/PROGRESS.md`).
+- T-102 merge (#52). T-103 1–5 qadamlar tayyor (commit qilinmagan edi — endi branch'da).
 
 ## Keyingi aniq harakat
-- T-102 PR CI yashil bo'lsa merge; keyin T-103 (`docs/audit/audit_customers.md` 2-bo'lim).
+- T-103 PR CI yashil bo'lsa merge; keyin T-104 (`docs/audit/audit_printing.md` 3-bo'lim).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

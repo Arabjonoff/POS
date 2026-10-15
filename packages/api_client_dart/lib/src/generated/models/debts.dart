@@ -14,6 +14,8 @@ class Debts {
     required this.totalDebtTiyin,
     required this.debtorsCount,
     required this.top,
+    this.totalCreditTiyin,
+    this.creditorsCount,
   });
   
   factory Debts.fromJson(Map<String, Object?> json) => _$DebtsFromJson(json);
@@ -22,6 +24,10 @@ class Debts {
   final int totalDebtTiyin;
   @JsonKey(name: 'debtors_count')
   final int debtorsCount;
+  @JsonKey(name: 'total_credit_tiyin')
+  final int? totalCreditTiyin;
+  @JsonKey(name: 'creditors_count')
+  final int? creditorsCount;
   final List<Debtor> top;
 
   Map<String, Object?> toJson() => _$DebtsToJson(this);

@@ -1911,6 +1911,85 @@
   "@actionKeep": {
     "description": "Tasdiqlash oynasida rad etish tugmasi"
   },
+  "customerOpeningSection": "Boshlang'ich balans",
+  "@customerOpeningSection": {
+    "description": "Yangi mijoz formasi bo'limi"
+  },
+  "customerOpeningNone": "Yo'q",
+  "@customerOpeningNone": {
+    "description": "Variant"
+  },
+  "customerOpeningDebt": "Mijoz qarzi",
+  "@customerOpeningDebt": {
+    "description": "Variant"
+  },
+  "customerOpeningCredit": "Mijoz haqi (avans)",
+  "@customerOpeningCredit": {
+    "description": "Variant"
+  },
+  "customerOpeningNoneHint": "Yangi mijoz — qarzi ham, avansi ham yo'q.",
+  "@customerOpeningNoneHint": {
+    "description": "Izoh"
+  },
+  "customerOpeningDebtHint": "Mijoz do'konga shu summani qarzdor (masalan, eski daftardan).",
+  "@customerOpeningDebtHint": {
+    "description": "Izoh"
+  },
+  "customerOpeningCreditHint": "Do'kon mijozga shu summani qarzdor: mijoz oldindan to'lagan. Keyingi nasiya savdolar shundan ayriladi.",
+  "@customerOpeningCreditHint": {
+    "description": "Izoh"
+  },
+  "customerOpeningAmount": "Summa, {currency}",
+  "@customerOpeningAmount": {
+    "description": "Maydon",
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "customerOpeningDate": "Qaysi sanadagi holat",
+  "@customerOpeningDate": {
+    "description": "Maydon"
+  },
+  "customerOpeningAmountRequired": "Summani kiriting (0 dan katta)",
+  "@customerOpeningAmountRequired": {
+    "description": "Xato"
+  },
+  "customerOpeningNeedsApproval": "Mijoz avansini menejer yoki ega kiritadi",
+  "@customerOpeningNeedsApproval": {
+    "description": "Huquq"
+  },
+  "debtOpeningDebt": "Boshlang'ich qarz",
+  "@debtOpeningDebt": {
+    "description": "Qarz tarixi yozuvi"
+  },
+  "debtOpeningCredit": "Boshlang'ich avans",
+  "@debtOpeningCredit": {
+    "description": "Qarz tarixi yozuvi"
+  },
+  "customerCredit": "Mijoz haqi (avans)",
+  "@customerCredit": {
+    "description": "Manfiy balans sarlavhasi"
+  },
+  "customerCreditShort": "Avans: {amount}",
+  "@customerCreditShort": {
+    "description": "Ro'yxatda manfiy balans",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldOptional": "{label} (ixtiyoriy)",
+  "@fieldOptional": {
+    "description": "Ixtiyoriy maydon yorlig'i",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
   "receivingDelete": "Qoralamani o'chirish",
   "@receivingDelete": {
     "description": "Tugma"

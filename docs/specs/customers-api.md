@@ -19,7 +19,17 @@ Foydalanuvchi JWT'si bilan. Boshqa tenant obyekti — `404`. Pul — `*_tiyin`, 
   - `refund` (−) — qarzga sotilgan savdo qaytarildi (T-017). `sale_id` majburiy.
   - `payment` (−) — mijoz to'ladi. `method`: `cash` / `card`.
   - `adjustment` (±) — qo'lda tuzatish, faqat ega, `note` (sabab) majburiy.
+  - `opening` (±) — **boshlang'ich balans** (T-103, qaror 0011): mijoz tizimga qo'shilgandagi mavjud qarz (+) yoki avans (−, do'kon mijozga
+    qarzdor). Faqat mijoz yaratilganda, **bitta mijozga bitta** (DB indeks), savdo va smenaga bog'lanmaydi — tushum, foyda va Z-hisobotdagi
+    naqdga kirmaydi; qarzlar hisobotida qarz (+) hisoblanadi, avans alohida (`total_credit_tiyin`, `creditors_count`).
 - `GET /customers/{id}/debt-entries/` — mijoz tarixi, yangisi birinchi.
+
+## Boshlang'ich balans (T-103)
+- `POST /customers/` (va sinxronda `customer.upserted`) — ixtiyoriy `opening_balance: {id?, direction: debt|credit, amount_tiyin > 0, at?, note?}`.
+  Mijoz va `opening` yozuvi **bitta tranzaksiyada**. `at` — qaysi sanadagi holat (kelajak emas, 2000-yildan keyin; berilmasa — hozir).
+- Tahrirda (`PATCH`, keyingi `customer.upserted`) `opening_balance` **rad etiladi** (`opening_create_only`) — balans ikki marta qo'shilmaydi.
+- **Avans** (`credit`) — faqat ega/menejer (kassada — menejer PIN): soxta avans bilan nasiyaga tovar olib ketish mumkin. Qarz (`debt`) — istalgan xodim.
+- Avansli mijoz: nasiya savdo avansdan ayriladi; to'lov qabul qilinmaydi (balans ≤ 0, Q-003).
 
 ## Limit (qarzga sotish)
 - `check_debt_limit(customer, amount)`: `debt_limit_tiyin` `null` bo'lsa — ruxsat; aks holda `balans + amount ≤ limit` bo'lsa ruxsat.
@@ -43,6 +53,8 @@ Foydalanuvchi JWT'si bilan. Boshqa tenant obyekti — `404`. Pul — `*_tiyin`, 
 | Mijozni o'chirish | ✓ | ✓ | — |
 | To'lov qabul qilish | ✓ | ✓ | ✓ |
 | Tuzatish (`adjustment`) | ✓ | — | — |
+| Boshlang'ich qarz (`opening`, `debt`) | ✓ | ✓ | ✓ |
+| Boshlang'ich avans (`opening`, `credit`) | ✓ | ✓ | — (`403`; kassada menejer PIN) |
 
 ## Sinxron (T-018)
 - `customer.upserted`, `debt.paid` hodisalari shu servislarni chaqiradi (`pay_debt(..., enforce_balance=False)` — oflaynda bo'lgan to'lov rad etilmaydi).

@@ -246,4 +246,93 @@ void main() {
     )..where((c) => c.fullName.equals('Telefonli'))).getSingle();
     expect(saved.phone, '+998901234567');
   });
+
+  group('opening balance (T-103)', openingTests);
+}
+
+void openingTests() {
+  Future<void> fillNew(WidgetTester tester, String name) async {
+    await tap(tester, find.byKey(const ValueKey('customers-add')));
+    await tester.enterText(
+      find.byKey(const ValueKey('new-customer-name')),
+      name,
+    );
+  }
+
+  testWidgets('debt opening: amount required, card shows debt and history', (
+    tester,
+  ) async {
+    await open(tester);
+    await fillNew(tester, 'Eski qarzdor');
+    await tap(tester, find.byKey(const ValueKey('opening-debt')));
+    expect(
+      find.text(
+        "Mijoz do'konga shu summani qarzdor (masalan, eski daftardan).",
+      ),
+      findsOneWidget,
+    );
+    // Summasiz saqlab bo'lmaydi.
+    await tap(tester, find.byKey(const ValueKey('new-customer-save')));
+    expect(find.text('Summani kiriting (0 dan katta)'), findsOneWidget);
+
+    await tester.enterText(
+      find.descendant(
+        of: find.byKey(const ValueKey('new-customer-opening-amount')),
+        matching: find.byType(TextField),
+      ),
+      '1500000',
+    );
+    await tester.pumpAndSettle();
+    // Mingliklar ajratiladi — katta summani tekshirish oson.
+    expect(find.text('1 500 000'), findsOneWidget);
+    await tap(tester, find.byKey(const ValueKey('new-customer-save')));
+
+    expect(find.text('Eski qarzdor'), findsWidgets);
+    expect(find.textContaining("Boshlang'ich qarz"), findsOneWidget);
+    final created = await (_db.select(
+      _db.customers,
+    )..where((c) => c.fullName.equals('Eski qarzdor'))).getSingle();
+    expect(await ledger(created.id), 150000000);
+  });
+
+  testWidgets('credit opening by a cashier needs a manager PIN', (
+    tester,
+  ) async {
+    await open(tester);
+    await fillNew(tester, 'Avansli');
+    await tap(tester, find.byKey(const ValueKey('opening-credit')));
+    await tester.enterText(
+      find.descendant(
+        of: find.byKey(const ValueKey('new-customer-opening-amount')),
+        matching: find.byType(TextField),
+      ),
+      '50000',
+    );
+    await tap(tester, find.byKey(const ValueKey('new-customer-save')));
+    expect(find.text('Tasdiqlash kerak'), findsOneWidget);
+    await tester.tap(find.text('Bobur'));
+    await tester.pumpAndSettle();
+    await typeSlowly(tester, '1234');
+    await press(tester, LogicalKeyboardKey.enter);
+
+    // Kartada: "Mijoz haqi (avans)" va musbat summa; to'lov tugmasi yo'q.
+    expect(find.text('Mijoz haqi (avans)'), findsOneWidget);
+    expect(find.text(som(50000)), findsWidgets);
+    expect(find.byKey(const ValueKey('customer-pay')), findsNothing);
+    final created = await (_db.select(
+      _db.customers,
+    )..where((c) => c.fullName.equals('Avansli'))).getSingle();
+    expect(await ledger(created.id), -5000000);
+  });
+
+  testWidgets('no opening: works exactly as before', (tester) async {
+    await open(tester);
+    await fillNew(tester, 'Oddiy');
+    await tap(tester, find.byKey(const ValueKey('new-customer-save')));
+    final created = await (_db.select(
+      _db.customers,
+    )..where((c) => c.fullName.equals('Oddiy'))).getSingle();
+    expect(await ledger(created.id), 0);
+    expect(find.text('Tasdiqlash kerak'), findsNothing);
+  });
 }

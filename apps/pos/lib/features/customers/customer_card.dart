@@ -39,12 +39,14 @@ class CustomerCard extends ConsumerWidget {
   final String customerId;
   final VoidCallback onClose;
 
-  static String _type(AppLocalizations l10n, String type) => switch (type) {
-    'sale' => l10n.debtSale,
-    'payment' => l10n.debtPayment,
-    'refund' => l10n.debtRefund,
-    _ => l10n.debtAdjustment,
-  };
+  static String _type(AppLocalizations l10n, String type, int amount) =>
+      switch (type) {
+        'sale' => l10n.debtSale,
+        'payment' => l10n.debtPayment,
+        'refund' => l10n.debtRefund,
+        'opening' => amount > 0 ? l10n.debtOpeningDebt : l10n.debtOpeningCredit,
+        _ => l10n.debtAdjustment,
+      };
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -109,13 +111,24 @@ class CustomerCard extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(l10n.customerDebt, style: style),
+              // Manfiy balans — do'kon mijozga qarzdor (avans): "Qarz: −50 000"
+              // emas, "Mijoz haqi (avans): 50 000".
+              Text(
+                customer.balanceTiyin < 0
+                    ? l10n.customerCredit
+                    : l10n.customerDebt,
+                style: style,
+              ),
               PosMoneyText(
                 key: const ValueKey('customer-balance'),
-                amount: customer.balanceTiyin,
+                amount: customer.balanceTiyin.abs(),
                 currency: fmt.currency,
                 size: PosMoneySize.total,
-                tone: customer.balanceTiyin > 0 ? PosTone.danger : null,
+                tone: customer.balanceTiyin > 0
+                    ? PosTone.danger
+                    : customer.balanceTiyin < 0
+                    ? PosTone.success
+                    : null,
               ),
               const SizedBox(height: PosSpacing.xs),
               Text(
@@ -165,7 +178,7 @@ class CustomerCard extends ConsumerWidget {
                     child: Text(
                       [
                         fmt.dateTime(h.at),
-                        _type(l10n, h.type),
+                        _type(l10n, h.type, h.amountTiyin),
                         ?h.saleNumber,
                         if (h.method == 'cash') l10n.payDebtCash,
                         if (h.method == 'card') l10n.payDebtCard,

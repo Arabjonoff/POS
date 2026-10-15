@@ -43,7 +43,7 @@ Holat: ✅ tuzatildi · 🔧 ishlanmoqda · ⏳ rejada · ❓ biznes savoli (`do
 | # | Muammo | Holat |
 |---|---|---|
 | RC-0 | Tasdiqlangan **kirimni tahrirlash va bekor qilish imkoni yo'q** (serverda bekor qilish endpoint'i bor, lekin kassa ishlatmaydi) | ✅ T-102 (teskari yozuv + yangi versiya, atomar; qaror 0010) |
-| CU-0 | Mijoz yaratishda **boshlang'ich balans** yo'q | ⏳ T-103 |
+| CU-0 | Mijoz yaratishda **boshlang'ich balans** yo'q | ✅ T-103 (qaror 0011) |
 | PRN-0 | Chek sozlamalari bo'limi yo'q: preview, logotip, STIR, ko'rsat/yashir; do'kon ma'lumotini faqat Django admin o'zgartiradi | ⏳ T-104 |
 | PRN-B4 | Xprinter turidagi printerlarda kirillcha xitoycha belgilar bo'lib chiqishi mumkin (`FS .` yuborilmaydi) | ⏳ T-104 |
 | PRN-B12 | Aralash to'lovda chekda naqd *berilgan* summa to'lov sifatida chiqadi (to'lovlar yig'indisi JAMI dan katta) | ⏳ T-104 |
@@ -71,7 +71,7 @@ Holat: ✅ tuzatildi · 🔧 ishlanmoqda · ⏳ rejada · ❓ biznes savoli (`do
   birligi ko'rinmaydi; telefon formatlanmagan. → T-104
 - **Kirim:** narxlar hodisa vaqti emas, kelish tartibida qo'llanadi (eski oflayn kirim yangi narxni bosadi); kirim vaqti server vaqti;
   boshqa kassadagi kirimlar ko'rinmaydi. → T-102
-- **Mijoz:** manfiy balans "Qarz: −X" ko'rinadi (avans sifatida emas); yangi mijoz oynasida Enter + bosish ekranni ikki marta yopadi. → T-103
+- **Mijoz:** manfiy balans "Qarz: −X" ko'rinadi (avans sifatida emas); yangi mijoz oynasida Enter + bosish ekranni ikki marta yopadi. → ✅ T-103
 
 ### Yaxshi ishlayotganlar (tekshirildi)
 - Pul faqat butun tiyin; kirim/savdo/qarz yozuvlari o'zgarmas; serverda qoldiq — harakatlar jurnali (+ kesh, `rebuild_stock`).
