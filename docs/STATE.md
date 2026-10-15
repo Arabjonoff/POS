@@ -5,19 +5,24 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: —
-- Branch: —
-- Boshlangan: —
+- Vazifa: T-093 Ilovani chiqarish
+- Branch: feat/T-093-release
+- Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
+- [ ] 1. Backend: pull javobida `app {latest_version, download_url}` (platforma bo'yicha, env) + test, OpenAPI, Dart klient
+- [ ] 2. Kassa: pull'dan saqlash, versiya solishtirish, holat qatori va Sozlamalar → "Ilova haqida" (versiya, yangi versiya, havola)
+- [ ] 3. Windows o'rnatuvchi: `apps/pos/windows/installer/pos.iss` (Inno Setup, VC++ runtime DLL'lar, ma'lumot o'chirilmaydi), `apps/pos/tool/build-windows-installer.ps1`; lokal yig'ish, jim o'rnatish → ishga tushirish → o'chirish
+- [ ] 4. Android APK: imzo (key.properties, repoga tushmaydi), lokal build
+- [ ] 5. CI `release.yml` (tag v* → o'rnatuvchi va APK artefakt), versiya 1.0.0, `docs/RELEASE.md`, PR, merge
 
 ## Oxirgi bajarilgan ish
-- T-092 tugadi (PR, merge).
+- Reja yozildi.
 
 ## Keyingi aniq harakat
-- ROADMAP'dan keyingi vazifa: T-093 Ilovani chiqarish.
+- 1-qadam: `backend/apps/sync` pull javobiga `app`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
