@@ -267,7 +267,7 @@ Spec'lar: `admin-dashboard.md`, `subscription-billing.md`.
 
 ## 8-bosqich. Sifat, chidamlilik, chiqarish
 
-### [ ] T-090 Chidamlilik testlari
+### [x] T-090 Chidamlilik testlari
 - **Bajarish:** integration testlar: 500 savdo oflayn → sinxron; push o'rtasida uzilish; savdo tranzaksiyasi o'rtasida jarayonni o'ldirish; 2 qurilma bir tovar; 10 000 tovar bilan qidiruv va ishga tushish vaqti.
 - **Qabul:** hammasi yashil; natijalar `docs/PROGRESS.md` da.
 - **Bog'liq:** T-043, T-035

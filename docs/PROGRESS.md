@@ -366,3 +366,14 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-085 (squash merge)
 - Qoldi / keyingi qadam: T-090 Chidamlilik testlari. Aloqa raqami — Q-008.
 - Muammo yoki qaror: 7-bosqich (admin dashboard va obuna nazorati) yopildi.
+
+## 2026-10-15 — T-090 Chidamlilik testlari
+- Qilindi: `apps/pos/test/resilience/`:
+  - `crash_test.dart` + `crash_child.dart` — savdo tranzaksiyasi o'rtasida **haqiqiy jarayon o'limi** (alohida `dart` jarayoni, `exit`): COMMIT'gacha — hech narsa yozilmaydi, baza butun; COMMIT'dan keyin — saqlanadi.
+  - `two_devices_test.dart` — 2 kassa bir tovarni oflayn sotadi → ikkalasi server qoldig'iga yaqinlashadi; javob yo'qolsa ham bir marta (`FakeSyncServer.stock`).
+  - `offline_sales_test.dart` — 500 savdo oflayn (fayl baza), internet qaytganda birinchi paket javobi yo'qoladi → aniq 500.
+  - `large_catalog_test.dart` — 10 000 tovar: yuklash, qidiruv, kassa ekrani ochilishi.
+- Natijalar (`docs/resilience.md`): savdo yozish 3,7 ms (WAL + FULL), 500 savdo sinxroni 136 ms; 10 000 tovar — yuklash 75 ms, qidiruv 1,5 ms/harf, kassa ochilishi ~0,85 s.
+- PR: T-090 (squash merge)
+- Qoldi / keyingi qadam: T-091 UI/UX sayqal. Haqiqiy arzon Android qurilmada o'lchash — T-093.
+- Muammo yoki qaror: yo'q — barcha ssenariylar birinchi urinishda yashil (faqat testdagi backoff vaqtini surish kerak bo'ldi).
