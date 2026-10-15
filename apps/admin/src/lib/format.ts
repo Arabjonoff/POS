@@ -35,3 +35,11 @@ export function formatDateTime(iso: string): string {
   const two = (n: number) => String(n).padStart(2, "0");
   return `${two(t.getUTCDate())}.${two(t.getUTCMonth() + 1)}.${t.getUTCFullYear()} ${two(t.getUTCHours())}:${two(t.getUTCMinutes())}`;
 }
+
+/** CSV uchun so'm: guruhlarsiz, `-1250,50` (Excel raqam sifatida o'qiydi). */
+export function formatSomPlain(tiyin: number): string {
+  const abs = Math.abs(Math.trunc(tiyin));
+  const cents = abs % 100;
+  const text = `${Math.floor(abs / 100)}${cents ? `,${String(cents).padStart(2, "0")}` : ""}`;
+  return tiyin < 0 ? `-${text}` : text;
+}
