@@ -12,17 +12,17 @@
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [ ] 1. Backend: `create_platform_admin` buyrug'i (+test), Sentry (`SENTRY_DSN` bo'lsa), prod sozlamalari tekshiruvi
-- [ ] 2. Admin prod Dockerfile (Next standalone), `next.config` `output: standalone`
+- [x] 1. Backend: (`createsuperuser` = platform_admin — yangi buyruq kerak emas), Sentry (`SENTRY_DSN` bo'lsa), prod sozlamalari tekshiruvi
+- [x] 2. Admin prod Dockerfile (Next standalone), `next.config` `output: standalone`
 - [ ] 3. `docker-compose.prod.yml`: postgres, redis, backend (gunicorn, migrate, collectstatic), admin, caddy (HTTPS, 2 domen), scheduler (`update_subscriptions` kunlik), backup (kunlik `pg_dump`, 14 kun saqlash); `deploy/Caddyfile`, `deploy/backup.sh`, `deploy/restore.sh`, `.env.prod.example`
 - [ ] 4. Lokal sinov: prod compose (localhost, ichki TLS), health, admin kirish, backup → yangi bazaga tiklash
 - [ ] 5. `docs/DEPLOY.md`, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- Reja yozildi.
+- 1–2: `sentry-sdk[django]` + `prod.py` (SENTRY_DSN bo'lsa), admin `Dockerfile` (standalone, `NEXT_OUTPUT=standalone` faqat build'da), `.dockerignore`; image lokal yig'ildi.
 
 ## Keyingi aniq harakat
-- 1-qadam: `backend/apps/accounts/management/commands/create_platform_admin.py`.
+- 3-qadam: `docker-compose.prod.yml`, `deploy/Caddyfile`, `deploy/backup.sh`, `deploy/restore.sh`, `.env.prod.example`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
