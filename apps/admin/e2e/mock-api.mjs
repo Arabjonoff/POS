@@ -222,6 +222,11 @@ function send(res, status, body) {
 const fail = (res, status, code, details = {}) => send(res, status, { error: { code, message: code, details } });
 
 async function readJson(req) {
+  // Django (WSGI) kabi: Content-Length'siz (chunked) tana o'qilmaydi — bo'sh.
+  if (!req.headers["content-length"]) {
+    for await (const chunk of req) void chunk;
+    return {};
+  }
   let raw = "";
   for await (const chunk of req) raw += chunk;
   try {

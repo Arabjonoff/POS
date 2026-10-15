@@ -8,9 +8,11 @@ name: pos-prod
 x-backend-env: &backend-env
   DJANGO_SETTINGS_MODULE: config.settings.prod
   DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:?DJANGO_SECRET_KEY kerak}
-  DJANGO_ALLOWED_HOSTS: ${API_DOMAIN:?API_DOMAIN kerak},backend
+  # backend — admin (Next) ichki so'rovlari, 127.0.0.1 — Docker healthcheck.
+  DJANGO_ALLOWED_HOSTS: ${API_DOMAIN:?API_DOMAIN kerak},backend,127.0.0.1,localhost
   DJANGO_CSRF_TRUSTED_ORIGINS: https://${API_DOMAIN}
-  DJANGO_SECURE_SSL_REDIRECT: ${DJANGO_SECURE_SSL_REDIRECT:-1}
+  # HTTP→HTTPS ni Caddy qiladi; Django ichki (http://backend:8000) so'rovlarni yo'naltirmasin.
+  DJANGO_SECURE_SSL_REDIRECT: ${DJANGO_SECURE_SSL_REDIRECT:-0}
   DJANGO_HSTS_SECONDS: ${DJANGO_HSTS_SECONDS:-0}
   DATABASE_URL: postgres://${POSTGRES_USER:-pos}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD kerak}@postgres:5432/${POSTGRES_DB:-pos}
   REDIS_URL: redis://redis:6379/0
@@ -49,6 +51,7 @@ services:
 
   backend:
     build: ./backend
+    image: pos-backend:prod
     restart: unless-stopped
     environment: *backend-env
     # Migratsiyalar orqaga mos (CLAUDE.md, 10-qoida) — har ishga tushishda.
@@ -67,6 +70,7 @@ services:
 
   admin:
     build: ./apps/admin
+    image: pos-admin:prod
     restart: unless-stopped
     environment:
       API_URL_INTERNAL: http://backend:8000
@@ -97,7 +101,7 @@ services:
 
   # Kunlik: obuna holati keshi (`subscription-billing.md`).
   scheduler:
-    build: ./backend
+    image: pos-backend:prod
     restart: unless-stopped
     environment: *backend-env
     command: >

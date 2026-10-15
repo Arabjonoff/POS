@@ -377,3 +377,10 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-090 (squash merge)
 - Qoldi / keyingi qadam: T-091 UI/UX sayqal. Haqiqiy arzon Android qurilmada o'lchash — T-093.
 - Muammo yoki qaror: yo'q — barcha ssenariylar birinchi urinishda yashil (faqat testdagi backoff vaqtini surish kerak bo'ldi).
+
+## 2026-10-15 — T-092 Production deploy
+- Qilindi: `docker-compose.prod.yml` (Caddy HTTPS 2 domen, backend gunicorn + migrate + collectstatic, admin Next standalone, postgres, redis, kunlik `update_subscriptions`, kunlik `pg_dump` 14 kun), `deploy/{Caddyfile,backup.sh,restore.sh}`, `.env.prod.example`, admin prod `Dockerfile`, Sentry (backend, `SENTRY_DSN`), `docs/DEPLOY.md`.
+- Sinov: butun stack lokal Docker'da (ichki TLS) — health, HTTPS yo'naltirish, static, `createsuperuser`, admin oqimi haqiqiy Django bilan (tarif → mijoz → ega kirishi → to'lov → bloklash → audit), zaxira → yangi bazaga va joyida tiklash mashqi — hammasi ✅.
+- **Topilgan og'ir xato:** admin server tomoni Django'ga `chunked` tana yuborardi → prod'da kirish va barcha o'zgartirishlar ishlamas edi. `fetchWithLength` bilan tuzatildi; soxta API endi Content-Length'siz tanani qabul qilmaydi (regressiyani e2e ushlaydi).
+- PR: T-092 (squash merge)
+- Qoldi / keyingi qadam: haqiqiy toza serverda (DNS, Let's Encrypt) sinov — birinchi chiqarishda. Keyingi: T-093 ilovani chiqarish.

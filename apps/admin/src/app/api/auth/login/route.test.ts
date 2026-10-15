@@ -35,9 +35,11 @@ describe("POST /api/auth/login", () => {
     expect(cookies[0]).toMatch(/^pos_access=acc;.*HttpOnly/i);
     expect(cookies[1]).toMatch(/^pos_refresh=ref;.*HttpOnly/i);
     expect(cookies.join()).toMatch(/SameSite=lax/i);
-    const [sent] = fetch.mock.calls[0] as unknown as [Request];
-    expect(sent.url).toMatch(/\/api\/v1\/auth\/login\/$/);
-    expect(await sent.json()).toEqual({ phone: "90 123 45 67", password: "secret" });
+    const [url, init] = fetch.mock.calls[0] as unknown as [string, RequestInit];
+    expect(url).toMatch(/\/api\/v1\/auth\/login\/$/);
+    // Tana — matn (Content-Length bilan), oqim emas: Django chunked'ni o'qimaydi.
+    expect(typeof init.body).toBe("string");
+    expect(JSON.parse(String(init.body))).toEqual({ phone: "90 123 45 67", password: "secret" });
   });
 
   it("rejects wrong credentials without cookies", async () => {

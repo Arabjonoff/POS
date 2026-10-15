@@ -5,25 +5,19 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-092 Production deploy
-- Branch: feat/T-092-prod-deploy
-- Boshlangan: 2026-10-15
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [x] 1. Backend: (`createsuperuser` = platform_admin — yangi buyruq kerak emas), Sentry (`SENTRY_DSN` bo'lsa), prod sozlamalari tekshiruvi
-- [x] 2. Admin prod Dockerfile (Next standalone), `next.config` `output: standalone`
-- [x] 3. `docker-compose.prod.yml`: postgres, redis, backend (gunicorn, migrate, collectstatic), admin, caddy (HTTPS, 2 domen), scheduler (`update_subscriptions` kunlik), backup (kunlik `pg_dump`, 14 kun saqlash); `deploy/Caddyfile`, `deploy/backup.sh`, `deploy/restore.sh`, `.env.prod.example`
-- [ ] 4. Lokal sinov: prod compose (localhost, ichki TLS), health, admin kirish, backup → yangi bazaga tiklash
-- [ ] 5. `docs/DEPLOY.md`, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- 3: `docker-compose.prod.yml`, `deploy/{Caddyfile,backup.sh,restore.sh}`, `.env.prod.example`, .gitignore (backups/).
-- Ishlab turgan: `docker compose -f docker-compose.prod.yml --env-file .env.prod.local -p pos-prodtest up -d --build` (lokal sinov, 18080/18443).
+- T-092 tugadi (PR, merge).
 
 ## Keyingi aniq harakat
-- 3-qadam: `docker-compose.prod.yml`, `deploy/Caddyfile`, `deploy/backup.sh`, `deploy/restore.sh`, `.env.prod.example`.
+- ROADMAP'dan keyingi vazifa: T-093 Ilovani chiqarish.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
@@ -48,3 +42,4 @@
 - Admin'ga npm paket qo'shilsa: Windows'dagi npm lock'dan `@emnapi/core|runtime` (optional, wasm) yozuvlarini o'chiradi va CI `npm ci` yiqiladi. Yechim: yozuvlarni main'dagi lock'dan qaytarish, `npm ci --dry-run` bilan tekshirish.
 - Admin skrinshotlari: scratchpad'dagi `shots8x.cjs` naqshi — `node e2e/mock-api.mjs` + `API_URL_INTERNAL=http://127.0.0.1:3199 npx next start -p 3150`, keyin Playwright skript (`require(<apps/admin>/node_modules/playwright)`). Bash'da murakkab `node -e` / heredoc'ga `${...}` va qo'shtirnoq aralashsa buziladi — Write vositasi bilan fayl yoz.
 - Next (admin): `"use client"` fayldan eksport qilingan qiymat (massiv, obyekt) server komponentda client reference bo'ladi — umumiy konstantalarni oddiy modulga qo'y.
+- Prod stack lokal sinovi: `.env.prod.local` (CADDY_TLS=tls internal, 18080\/18443) + `docker compose -f docker-compose.prod.yml --env-file .env.prod.local -p pos-prodtest up -d --build`; curl `--resolve api.localhost:18443:127.0.0.1`. Git Bash'da `docker ... /deploy/x.sh` uchun `MSYS_NO_PATHCONV=1`. Admin→Django so'rovlari Content-Length bilan bo'lishi shart (WSGI chunked'ni o'qimaydi).
