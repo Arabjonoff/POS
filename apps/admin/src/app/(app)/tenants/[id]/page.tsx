@@ -4,13 +4,16 @@ import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
 import { BlockDialog } from "@/components/tenants/block-dialog";
+import { PaymentDialog } from "@/components/tenants/payment-dialog";
 import { ResetPassword } from "@/components/tenants/reset-password";
+import { ReversePayment } from "@/components/tenants/reverse-payment";
 import { StatusBadge } from "@/components/tenants/status-badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { formatDate, formatDateTime, formatMoney } from "@/lib/format";
 import {
   getTenant,
+  listAllPlans,
   tenantDevices,
   tenantPayments,
   tenantSyncEvents,
@@ -42,7 +45,9 @@ export default async function TenantPage({ params, searchParams }: PageProps<"/t
   const t = await getTranslations("tenants.detail");
   const common = await getTranslations("tenants");
   const currency = (await getTranslations("format"))("currency");
-  const tenant = await getTenant(id);
+  const payment = await getTranslations("tenants.payment");
+  const [tenant, plans] = await Promise.all([getTenant(id), listAllPlans()]);
+  const planPrice = plans.find((p) => p.id === tenant.subscription?.plan)?.price_tiyin_per_month ?? null;
   const dateTime = (value: string | null | undefined) => (value ? formatDateTime(value) : common("never"));
   const sub = tenant.subscription;
 
@@ -96,6 +101,9 @@ export default async function TenantPage({ params, searchParams }: PageProps<"/t
     );
   } else if (tab === "payments") {
     const payments = await tenantPayments(id);
+    const reversedIds = new Set(payments.results.map((p) => p.reverses).filter(Boolean));
+    // Bekor qilsa bo'ladigani — oxirgi (yangisi birinchi) bekor qilinmagan oddiy to'lov.
+    const reversible = payments.results.find((p) => !p.reverses && !reversedIds.has(p.id));
     body =
       payments.results.length === 0 ? (
         <Empty>{t("noPayments")}</Empty>
@@ -109,12 +117,17 @@ export default async function TenantPage({ params, searchParams }: PageProps<"/t
                 <TableHead>{t("months")}</TableHead>
                 <TableHead>{t("period")}</TableHead>
                 <TableHead>{t("method")}</TableHead>
-                <TableHead className="pr-4">{t("note")}</TableHead>
+                <TableHead>{t("note")}</TableHead>
+                <TableHead className="pr-4" />
               </TableRow>
             </TableHeader>
             <TableBody>
               {payments.results.map((p) => (
-                <TableRow key={p.id} data-testid="payment-row">
+                <TableRow
+                  key={p.id}
+                  data-testid="payment-row"
+                  className={cn(p.id && reversedIds.has(p.id) && "text-muted-foreground line-through")}
+                >
                   <TableCell className="pl-4 tabular-nums">{dateTime(p.paid_at)}</TableCell>
                   <TableCell className={cn("text-right tabular-nums", p.amount_tiyin < 0 && "text-destructive")}>
                     {formatMoney(p.amount_tiyin, currency)}
@@ -124,7 +137,17 @@ export default async function TenantPage({ params, searchParams }: PageProps<"/t
                     {formatDate(p.period_from)} – {formatDate(p.period_to)}
                   </TableCell>
                   <TableCell>{t(`methods.${p.method}`)}</TableCell>
-                  <TableCell className="text-muted-foreground pr-4">{p.note}</TableCell>
+                  <TableCell className="text-muted-foreground">
+                    {p.reverses ? (
+                      <span className="text-destructive mr-2 text-xs font-medium no-underline">{payment("reversal")}</span>
+                    ) : p.id && reversedIds.has(p.id) ? (
+                      <span className="mr-2 text-xs font-medium">{payment("reversed")}</span>
+                    ) : null}
+                    {p.note}
+                  </TableCell>
+                  <TableCell className="pr-4 text-right">
+                    {p.id && p.id === reversible?.id ? <ReversePayment paymentId={p.id} /> : null}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -259,7 +282,19 @@ export default async function TenantPage({ params, searchParams }: PageProps<"/t
             {tenant.owner_name} · {tenant.owner_phone}
           </p>
         </div>
-        {tenant.id && <BlockDialog tenantId={tenant.id} blocked={Boolean(tenant.is_blocked)} />}
+        {tenant.id && (
+          <div className="flex flex-wrap gap-2">
+            <PaymentDialog
+              tenantId={tenant.id}
+              tenantName={tenant.name}
+              planPriceTiyin={planPrice}
+              paidUntil={tenant.paid_until}
+              trialEndsAt={tenant.trial_ends_at}
+              defaultOpen={query.payment === "1"}
+            />
+            <BlockDialog tenantId={tenant.id} blocked={Boolean(tenant.is_blocked)} />
+          </div>
+        )}
       </div>
 
       {tenant.is_blocked && (

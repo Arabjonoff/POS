@@ -14,16 +14,16 @@
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
 - [x] 1. `src/lib/billing.ts` (addMonths — oy oxiri qisqartiriladi, `previewPeriod` = max(paid_until, trial_ends_at, bugun)), `parseSom` (matn → tiyin, butun son) + Vitest; `platform.ts` (barcha tariflar, barcha to'lovlar), actions (tarif yaratish/tahrirlash/nofaol, to'lov kiritish, bekor qilish)
 - [x] 2. `/plans`: jadval, yaratish/tahrirlash oynasi, nofaol qilish (tasdiqlash)
-- [ ] 3. Mijoz sahifasida "To'lov kiritish" oynasi (tarif narxi × oy taklif, yangi muddat oldindan ko'rinadi; `?payment=1` ochadi), to'lovlar tabida oxirgi to'lovni bekor qilish (izoh majburiy)
+- [x] 3. Mijoz sahifasida "To'lov kiritish" oynasi (tarif narxi × oy taklif, yangi muddat oldindan ko'rinadi; `?payment=1` ochadi), to'lovlar tabida oxirgi to'lovni bekor qilish (izoh majburiy)
 - [ ] 4. `/payments`: barcha to'lovlar, sana oralig'i filtri, jami, sahifalash, CSV
 - [ ] 5. Soxta API (tariflar CRUD, to'lov — muddat hisobi, bekor qilish, ro'yxat filtrlari) + Playwright
 - [ ] 6. Spec, skrinshotlar, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- 2: `/plans` (jadval, `PlanDialog` yaratish/tahrirlash, `DeactivatePlan`), tarjimalar `plans.*`, `tenants.payment.*`, `payments.*` (keyingi qadamlar uchun ham).
+- 3: `PaymentDialog` (1/3/6/12 yoki qo'lda oy, summa = tarif × oy — qo'lda o'zgartirilmaguncha, usul, izoh, yangi davr oldindan; `?payment=1`), `ReversePayment` (oxirgi bekor qilinmagan to'lovda), mijoz sahifasiga ulandi.
 
 ## Keyingi aniq harakat
-- 3-qadam: `components/tenants/payment-dialog.tsx` (tarif narxi × oy, `previewPeriod`, `?payment=1` ochadi) + `reverse-payment.tsx`; `tenants/[id]/page.tsx` ga ulash.
+- 4-qadam: `src/app/(app)/payments/page.tsx` (sana filtri — `components/payments/payment-filters.tsx`, jadval, jami, sahifalash, CSV).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->
