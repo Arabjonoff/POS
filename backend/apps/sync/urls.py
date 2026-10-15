@@ -4,12 +4,19 @@ from apps.reports.views import DeviceReportView
 
 from .images import ProductImageView
 from .imports import ImportApplyView, ImportCheckView, ImportTemplateView, ImportUploadView
-from .views import SyncPriceHistoryView, SyncPullView, SyncPushView, SyncStockMovementsView
+from .views import (
+    SyncPriceHistoryView,
+    SyncPullView,
+    SyncPushView,
+    SyncSaleView,
+    SyncStockMovementsView,
+)
 
 urlpatterns = [
     path("sync/push/", SyncPushView.as_view(), name="sync-push"),
     path("sync/pull/", SyncPullView.as_view(), name="sync-pull"),
     path("sync/reports/", DeviceReportView.as_view(), name="sync-reports"),
+    path("sync/sales/", SyncSaleView.as_view(), name="sync-sale"),
     path("sync/price-history/", SyncPriceHistoryView.as_view(), name="sync-price-history"),
     path("sync/stock-movements/", SyncStockMovementsView.as_view(), name="sync-stock-movements"),
     path(

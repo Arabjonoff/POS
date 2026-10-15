@@ -4196,6 +4196,36 @@ abstract class AppLocalizations {
   /// In uz, this message translates to:
   /// **'Sozlash'**
   String get salesSetUpPrinter;
+
+  /// Badge: receipt from another register (server)
+  ///
+  /// In uz, this message translates to:
+  /// **'{number}-kassa cheki'**
+  String salesOtherKassa(int number);
+
+  /// Look up a receipt number on the server
+  ///
+  /// In uz, this message translates to:
+  /// **'Boshqa kassalardan qidirish'**
+  String get salesSearchServer;
+
+  /// Hint under the server search button
+  ///
+  /// In uz, this message translates to:
+  /// **'Chek boshqa kassada sotilgan bo\'lsa, serverdan topiladi (internet kerak)'**
+  String get salesSearchServerHint;
+
+  /// Remote receipt lookup offline
+  ///
+  /// In uz, this message translates to:
+  /// **'Bu chek shu kassada yo\'q. Boshqa kassa chekini ko\'rish uchun internet kerak'**
+  String get salesRemoteOffline;
+
+  /// Remote receipt lookup failed
+  ///
+  /// In uz, this message translates to:
+  /// **'Serverdan chekni olib bo\'lmadi. Keyinroq urinib ko\'ring'**
+  String get salesRemoteFailed;
 }
 
 class _AppLocalizationsDelegate

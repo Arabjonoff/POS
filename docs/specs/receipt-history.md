@@ -39,3 +39,18 @@ Loyiha egasi talabi (2026-10-15): yakunlangan cheklarni ko'rish va qayta chop et
   qaytarilgan summa, kassir va mijoz nomlari; `sales`/`refunds`/`sale_payments` o'zgarsa qayta o'qiladi), `SaleHistoryFilter`, `saleHistoryProvider`.
 - `apps/pos/lib/features/sales/sales_screen.dart` — bo'lim; `sale_detail.dart` — tafsilot.
 - Testlar: `test/data/sale_history_test.dart`, `test/features/sales_history_test.dart`; golden `sales/*`.
+
+## Boshqa kassa cheklari (T-110, Q-006 → A)
+- Shu kassada yo'q **chek raqami** (`D2-000007` ko'rinishi) skanerlansa, qidiruvda Enter bosilsa yoki "Boshqa kassalardan qidirish"
+  tugmasi bosilsa — internet bo'lsa serverdan olinadi (`GET /api/v1/sync/sales/?number=`, `sync-api.md`). Ro'yxatga qo'shilmaydi
+  (lokal hisobot va smena buzilmasin) — faqat tafsilot ochiladi, "N-kassa cheki" belgisi bilan.
+- Chek ko'rinishi — o'sha `ReceiptLoader.fromSource` (do'kon rekvizitlari, birliklar, qarz — lokal bazadan; kassir nomi — serverdan).
+- **Qayta chop etish** — `PrinterService.printReceipt(copy: true)` (NUSXA, pul qutisi ochilmaydi).
+- **Qaytarish** — qaytarish oynasi shu chek bilan; yoziladi odatdagidek (lokal tranzaksiya + outbox `refund.created`, `sale` — server
+  savdosi id). Qaytarilgan miqdor = serverdagi + shu kassada qilingan, hali serverga yetmagan qaytarishlar (ikki marta qaytarilmasin).
+  Qaytarishdan keyin chek serverdan qayta o'qiladi.
+- Qaytarish oynasida (F8) ham: lokalda yo'q raqam → server.
+- Oflayn: "Bu chek shu kassada yo'q. Boshqa kassa chekini ko'rish uchun internet kerak"; serverda yo'q — "Chek topilmadi: …";
+  server xatosi — "Serverdan chekni olib bo'lmadi".
+- Cheklov: ikki kassa bir vaqtda oflaynda bitta chekni qaytarsa — server ikkinchisini rad etadi (miqdor oshadi), outbox xatosi ko'rinadi.
+- Lokal hisobotda boshqa kassa chekining qaytarilgan tannarxi 0 (savdo qatori lokalda yo'q); server hisoboti to'g'ri.

@@ -4,18 +4,24 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pos_app/app/status/app_status.dart';
 import 'package:pos_app/data/db/app_database.dart';
+import 'package:pos_app/data/remote/api.dart';
 import 'package:pos_app/features/printing/printer_service.dart';
 import 'package:pos_app/features/printing/printer_settings.dart';
 import 'package:pos_app/features/printing/receipt.dart';
 
 import '../helpers/catalog_seed.dart';
 import '../helpers/fake_printer.dart';
+import '../helpers/fake_server.dart';
+import '../helpers/keyboard.dart';
 import '../helpers/pump_app.dart';
+import '../helpers/remote_sale_fixture.dart';
 import '../helpers/sale_history_seed.dart';
 import '../helpers/sqlite.dart';
 import 'golden_helpers.dart';
 
 Future<void> _open(WidgetTester tester, Size size) async {
+  final server = FakeServer()
+    ..on('GET /api/v1/sync/sales/', (_) => (200, remoteSaleJson()));
   final db = openTestDatabase();
   addTearDown(db.close);
   await seedCatalog(db);
@@ -45,7 +51,9 @@ Future<void> _open(WidgetTester tester, Size size) async {
       printerTransportFactoryProvider.overrideWithValue(
         (_) => FakeTransport(),
       ),
+      dioFactoryProvider.overrideWithValue(server.dio),
     ],
+    tokens: MemoryDeviceTokenStore('dev_token'),
   );
   await tapNav(tester, 'Cheklar');
 }
@@ -61,5 +69,11 @@ void main() {
     await _open(tester, size);
     await tester.tap(find.byKey(const ValueKey('sale-D3-000002')));
     await tester.pumpAndSettle();
+  });
+
+  /// T-110: boshqa kassa cheki (serverdan, skaner bilan).
+  goldenAcrossDevices('sales', 'detail_remote', (tester, size) async {
+    await _open(tester, size);
+    await scanCode(tester, 'd2-000007');
   });
 }

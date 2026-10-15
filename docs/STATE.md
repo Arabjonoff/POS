@@ -14,10 +14,10 @@
 - (yo'q)
 
 ## Oxirgi bajarilgan ish
-- T-109 Cheklar tarixi va qayta chop etish (loyiha egasi talabi).
+- T-110 Boshqa kassa cheklari (Q-006 → A).
 
 ## Keyingi aniq harakat
-- ROADMAP'da bajarilmagan vazifa yo'q; ochiq savollar `docs/QUESTIONS.md`. Loyiha egasidan yangi talab kutiladi.
+- ROADMAP'da bajarilmagan vazifa yo'q; ochiq savollar `docs/QUESTIONS.md` (Q-003, Q-004, Q-005, Q-007, Q-009, Q-010, Q-011). Loyiha egasidan yangi talab kutiladi.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

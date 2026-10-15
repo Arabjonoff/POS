@@ -14,6 +14,7 @@ import '../models/apply_response.dart';
 import '../models/check_request_request.dart';
 import '../models/check_response.dart';
 import '../models/device_report.dart';
+import '../models/device_sale.dart';
 import '../models/price_history.dart';
 import '../models/product_image.dart';
 import '../models/pull_response.dart';
@@ -103,6 +104,14 @@ abstract class SyncClient {
   Future<DeviceReport> syncReportsRetrieve({
     @Query('date_from') DateTime? dateFrom,
     @Query('date_to') DateTime? dateTo,
+  });
+
+  /// Boshqa kassa cheki chek raqami bo'yicha (onlayn, T-110, Q-006 → A):.
+  /// ko'rish, qayta chop etish, qaytarish uchun. Qurilma tokeni, faqat o'z.
+  /// tenanti; qatorlarda — oldin qaytarilgan miqdor va summa.
+  @GET('/api/v1/sync/sales/')
+  Future<DeviceSale> syncSaleByNumber({
+    @Query('number') required String number,
   });
 
   /// Kassa uchun tovar qoldiq harakatlari (onlayn, T-054): barcha kassalar,.

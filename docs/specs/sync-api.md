@@ -77,3 +77,11 @@ Umumiy tamoyillar: `sync.md`. Hodisa payloadlari va qo'llash qoidalari: `sales-a
 ## Qoldiq harakatlari — `GET /api/v1/sync/stock-movements/?product=<uuid>` (T-054)
 - Faqat qurilma tokeni bilan; tovar qurilma tenantida bo'lishi shart (aks holda `404`, noto'g'ri UUID — `400`).
 - Javob: oxirgi 100 ta harakat (barcha kassalar, eng yangisi birinchi): `[{id, type, qty_milli, ref_type, at, created_by_name}]`.
+
+## Boshqa kassa cheki — `GET /api/v1/sync/sales/?number=<D2-000007>` (T-110, Q-006 → A)
+- Qurilma tokeni; faqat o'z tenanti (boshqa tenant — 404). Raqam katta-kichik harf va bo'shliqdan qat'i nazar; yo'q — 404, bo'sh — 400.
+- Javob (`DeviceSale`): `id`, `number`, `store`, `device_number`, `cashier`, `cashier_name`, `customer`, `customer_name`, summalar,
+  `status`, `sold_at`, `items[]` (`id`, `product`, `name_snapshot`, `barcode_snapshot`, `qty_milli`, `price_tiyin`, `discount_tiyin`,
+  `total_tiyin`, `refunded_qty_milli`, `refunded_tiyin`), `payments[]` (`method`, `amount_tiyin`, `received_tiyin`, `change_tiyin`),
+  `refunds[]` (`id`, `at`, `method`, `total_tiyin`, `reason`).
+- Qaytarish — odatdagi `refund.created` hodisasi (outbox); server savdoni tenant bo'yicha topadi, qaytarilgan miqdorni tekshiradi.

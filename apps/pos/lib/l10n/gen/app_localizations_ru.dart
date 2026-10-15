@@ -2411,4 +2411,24 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get salesSetUpPrinter => 'Настроить';
+
+  @override
+  String salesOtherKassa(int number) {
+    return 'Чек кассы $number';
+  }
+
+  @override
+  String get salesSearchServer => 'Искать на других кассах';
+
+  @override
+  String get salesSearchServerHint =>
+      'Если чек пробит на другой кассе, он найдётся на сервере (нужен интернет)';
+
+  @override
+  String get salesRemoteOffline =>
+      'Этого чека нет на этой кассе. Чтобы открыть чек другой кассы, нужен интернет';
+
+  @override
+  String get salesRemoteFailed =>
+      'Не удалось получить чек с сервера. Попробуйте позже';
 }

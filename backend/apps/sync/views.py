@@ -1,3 +1,5 @@
+from django.db.models import OuterRef, Prefetch, Subquery, Sum
+from django.db.models.functions import Coalesce
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from drf_spectacular.types import OpenApiTypes
@@ -13,6 +15,7 @@ from apps.devices.authentication import DeviceTokenAuthentication
 from apps.devices.permissions import IsDevice
 from apps.devices.releases import app_release
 from apps.inventory.models import StockMovement
+from apps.sales.models import Refund, RefundItem, Sale, SaleItem, SalePayment
 
 from . import services
 from .pull import pull
@@ -130,3 +133,111 @@ class SyncStockMovementsView(APIView):
             .order_by("-at", "-id")[: self.LIMIT]
         )
         return Response(StockMovementEntrySerializer(movements, many=True).data)
+
+
+class DeviceSaleItemSerializer(serializers.ModelSerializer):
+    refunded_qty_milli = serializers.IntegerField(read_only=True)
+    refunded_tiyin = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = SaleItem
+        fields = [
+            "id",
+            "product",
+            "name_snapshot",
+            "barcode_snapshot",
+            "qty_milli",
+            "price_tiyin",
+            "discount_tiyin",
+            "total_tiyin",
+            "refunded_qty_milli",
+            "refunded_tiyin",
+        ]
+        read_only_fields = fields
+
+
+class DeviceSalePaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SalePayment
+        fields = ["method", "amount_tiyin", "received_tiyin", "change_tiyin"]
+        read_only_fields = fields
+
+
+class DeviceSaleRefundSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Refund
+        fields = ["id", "at", "method", "total_tiyin", "reason"]
+        read_only_fields = fields
+
+
+class DeviceSaleSerializer(serializers.ModelSerializer):
+    device_number = serializers.IntegerField(source="device.number", read_only=True)
+    cashier_name = serializers.CharField(source="cashier.full_name", read_only=True)
+    customer_name = serializers.CharField(
+        source="customer.full_name", default=None, read_only=True, allow_null=True
+    )
+    items = DeviceSaleItemSerializer(many=True, read_only=True)
+    payments = DeviceSalePaymentSerializer(many=True, read_only=True)
+    refunds = DeviceSaleRefundSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Sale
+        fields = [
+            "id",
+            "number",
+            "store",
+            "device_number",
+            "cashier",
+            "cashier_name",
+            "customer",
+            "customer_name",
+            "subtotal_tiyin",
+            "discount_tiyin",
+            "total_tiyin",
+            "status",
+            "sold_at",
+            "items",
+            "payments",
+            "refunds",
+        ]
+        read_only_fields = fields
+
+
+class SyncSaleView(APIView):
+    """Boshqa kassa cheki chek raqami bo'yicha (onlayn, T-110, Q-006 → A):
+    ko'rish, qayta chop etish, qaytarish uchun. Qurilma tokeni, faqat o'z
+    tenanti; qatorlarda — oldin qaytarilgan miqdor va summa."""
+
+    authentication_classes = [DeviceTokenAuthentication]
+    permission_classes = [IsDevice]
+
+    @extend_schema(
+        operation_id="sync_sale_by_number",
+        parameters=[OpenApiParameter("number", OpenApiTypes.STR, required=True)],
+        responses=DeviceSaleSerializer,
+        tags=["sync"],
+    )
+    def get(self, request):
+        number = (request.query_params.get("number") or "").strip().upper()
+        if not number:
+            raise serializers.ValidationError({"number": "Required."})
+        refunded = RefundItem.objects.filter(sale_item=OuterRef("pk")).values("sale_item")
+        items = SaleItem.objects.annotate(
+            refunded_qty_milli=Coalesce(
+                Subquery(refunded.annotate(s=Sum("qty_milli")).values("s")), 0
+            ),
+            refunded_tiyin=Coalesce(
+                Subquery(refunded.annotate(s=Sum("total_tiyin")).values("s")), 0
+            ),
+        )
+        sale = get_object_or_404(
+            Sale.objects.filter(tenant_id=request.auth.tenant_id)
+            .select_related("device", "cashier", "customer")
+            .prefetch_related(
+                Prefetch("items", queryset=items),
+                "payments",
+                Prefetch("refunds", queryset=Refund.objects.order_by("at", "id")),
+            ),
+            number=number,
+        )
+        return Response(DeviceSaleSerializer(sale).data)

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pos_app/app/status/app_status.dart';
 import 'package:pos_app/data/db/app_database.dart';
+import 'package:pos_app/data/sales/remote_sale.dart';
 import 'package:pos_app/features/printing/escpos.dart';
 import 'package:pos_app/features/printing/printer_service.dart';
 import 'package:pos_app/features/printing/printer_settings.dart';
@@ -55,6 +56,8 @@ Future<void> open(
       printerTransportFactoryProvider.overrideWithValue(
         (s) => s.configured ? printer : null,
       ),
+      // Server: boshqa kassalarda ham bunday chek yo'q (T-110).
+      remoteSaleFetcherProvider.overrideWithValue((_) async => null),
     ],
   );
   await tapNav(tester, 'Cheklar');

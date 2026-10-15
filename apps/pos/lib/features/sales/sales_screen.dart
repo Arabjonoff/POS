@@ -7,6 +7,7 @@ import 'package:pos_app/app/status/app_status.dart';
 import 'package:pos_app/core/barcode/scanner_service.dart';
 import 'package:pos_app/core/format/app_format.dart';
 import 'package:pos_app/core/time/store_time_zone.dart';
+import 'package:pos_app/data/sales/remote_sale.dart';
 import 'package:pos_app/data/sales/sale_history.dart';
 import 'package:pos_app/features/common/load_state.dart';
 import 'package:pos_app/features/common/section_page.dart';
@@ -36,6 +37,10 @@ class _SalesScreenState extends ConsumerState<SalesScreen> {
   DateTime? _picked;
   SalePaymentFilter _payment = SalePaymentFilter.all;
   String? _openId;
+
+  /// Boshqa kassa cheki (serverdan, T-110).
+  RemoteSale? _remote;
+  bool _fetching = false;
 
   /// Oyna (qaytarish) ochiq — skaner unga tegishli.
   bool _dialogOpen = false;
@@ -77,8 +82,48 @@ class _SalesScreenState extends ConsumerState<SalesScreen> {
   }
 
   void _open(String? id) {
-    setState(() => _openId = id);
+    setState(() {
+      _openId = id;
+      _remote = null;
+    });
     if (id == null) _focusScreen();
+  }
+
+  /// Shu kassada yo'q chek raqami — serverdan (boshqa kassa, Q-006 → A).
+  Future<void> _findRemote(String number) async {
+    if (_fetching) return;
+    setState(() => _fetching = true);
+    final result = await ref.read(remoteSalesProvider).find(number);
+    if (!mounted) return;
+    setState(() => _fetching = false);
+    final l10n = AppLocalizations.of(context);
+    void warn(String message) =>
+        showPosToast(context, message: message, tone: PosTone.warning);
+    switch (result) {
+      case RemoteSaleFound(:final sale):
+        setState(() {
+          _openId = null;
+          _remote = sale;
+        });
+      case RemoteSaleNotFound():
+        warn(l10n.salesReceiptNotFound(number.trim().toUpperCase()));
+      case RemoteSaleOffline():
+        warn(l10n.salesRemoteOffline);
+      case RemoteSaleFailed():
+        warn(l10n.salesRemoteFailed);
+    }
+  }
+
+  /// Enter: to'liq chek raqami shu kassada bo'lmasa — serverdan.
+  Future<void> _submitSearch(String text) async {
+    if (!looksLikeReceiptNumber(text)) return;
+    final id = await ref.read(saleHistoryRepositoryProvider).idByNumber(text);
+    if (!mounted) return;
+    if (id != null) {
+      _open(id);
+    } else {
+      await _findRemote(text);
+    }
   }
 
   DateTime get _today =>
@@ -106,14 +151,8 @@ class _SalesScreenState extends ConsumerState<SalesScreen> {
       _open(id);
       return;
     }
-    if (event.code.toUpperCase().contains('-')) {
-      showPosToast(
-        context,
-        message: AppLocalizations.of(
-          context,
-        ).salesReceiptNotFound(event.code.toUpperCase()),
-        tone: PosTone.warning,
-      );
+    if (looksLikeReceiptNumber(event.code)) {
+      await _findRemote(event.code);
       return;
     }
     setState(() => _search.text = event.code);
@@ -129,7 +168,7 @@ class _SalesScreenState extends ConsumerState<SalesScreen> {
   }
 
   void _escape() {
-    if (_openId != null) {
+    if (_openId != null || _remote != null) {
       _open(null);
     } else if (_search.text.isNotEmpty) {
       setState(_search.clear);
@@ -162,11 +201,15 @@ class _SalesScreenState extends ConsumerState<SalesScreen> {
                     constraints.maxWidth >=
                     SalesScreen.detailWidth * 2 + PosSpacing.xl;
                 final openId = _openId;
-                final detail = openId == null
+                final remote = _remote;
+                final detail = openId == null && remote == null
                     ? null
                     : SaleDetail(
-                        key: ValueKey('sale-detail-$openId'),
+                        key: ValueKey(
+                          'sale-detail-${openId ?? remote!.sale.number}',
+                        ),
                         saleId: openId,
+                        remote: remote,
                         onClose: wide ? null : () => _open(null),
                         onDialog: (open) => setState(() => _dialogOpen = open),
                       );
@@ -244,6 +287,7 @@ class _SalesScreenState extends ConsumerState<SalesScreen> {
           hint: l10n.salesSearchHint,
           clearTooltip: l10n.actionClear,
           onChanged: (_) => setState(() {}),
+          onSubmitted: (v) => unawaited(_submitSearch(v)),
         ),
         const SizedBox(height: PosSpacing.s),
         Wrap(
@@ -331,6 +375,22 @@ class _SalesScreenState extends ConsumerState<SalesScreen> {
     final p = PosPalette.of(context);
     final searching = _search.text.trim().isNotEmpty;
     if (page.entries.isEmpty) {
+      final number = _search.text.trim();
+      if (looksLikeReceiptNumber(number)) {
+        return PosEmptyState(
+          icon: Icons.cloud_outlined,
+          title: l10n.salesNotFound,
+          message: l10n.salesSearchServerHint,
+          action: PosButton(
+            key: const ValueKey('sales-search-server'),
+            label: l10n.salesSearchServer,
+            icon: Icons.cloud_download_outlined,
+            shortcut: 'Enter',
+            loading: _fetching,
+            onPressed: () => unawaited(_findRemote(number)),
+          ),
+        );
+      }
       return PosEmptyState(
         icon: searching ? Icons.search_off : Icons.receipt_outlined,
         title: searching ? l10n.salesNotFound : l10n.salesEmptyTitle,
