@@ -114,6 +114,21 @@ void main() {
     });
   });
 
+  test('sameNameAs: normalised name of another active product', () async {
+    expect(await editor.sameNameAs('  non   ISSIQ '), 'Non issiq');
+    expect(await editor.sameNameAs('Non issiq', exceptId: 'p-non'), isNull);
+    expect(await editor.sameNameAs('Non qora'), isNull);
+    expect(await editor.sameNameAs(''), isNull);
+  });
+
+  test('load: a product deleted on the server is gone', () async {
+    await (db.update(db.products)..where((p) => p.id.equals('p-non'))).write(
+      ProductsCompanion(deletedAt: Value(DateTime.utc(2026))),
+    );
+    expect(await editor.load('p-non'), isNull);
+    expect(await editor.sameNameAs('Non issiq'), isNull);
+  });
+
   test('validation: required, price, barcode rules, PLU, IKPU', () async {
     expect(await codes(const ProductDraft()), [
       ProductProblemCode.required,

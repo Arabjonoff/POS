@@ -147,6 +147,11 @@ class ProductSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("This field may not be blank.", code="blank")
         return value
 
+    def validate_plu_code(self, value):
+        # Bo'sh PLU — "PLU yo'q" (NULL): aks holda ikkinchi bo'sh PLU noyoblik
+        # cheklovida `plu_taken` oladi (audit P2-13).
+        return value or None
+
     def validate_barcodes(self, codes):
         normalized = []
         for raw in codes:

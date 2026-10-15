@@ -5,24 +5,24 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-106 UI/UX sayqal (audit P1/P2 — `PROJECT_AUDIT.md` ⏳ T-106 qatorlari)
+- Vazifa: T-106 UI/UX sayqal — PR va merge
 - Branch: feat/T-106-ux-polish
 - Boshlangan: 2026-10-15
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
-- [x] 1. Holat qatori: neytral ranglar (yashil yo'q), telefonda ixcham (ikon + tooltip, muammo birinchi); pastki menyu >5 bo'limda faqat tanlangan yozuv
-- [x] 2. Ikki marta bosish / qotish: yetkazib beruvchi, inventarizatsiya yaratish, smena yopish, mijoz kartasi; inventarizatsiya o'chirishni tasdiqlash
-- [x] 3. Qarz to'lovi naqd — faqat ochiq smenada (CU-B4); ochiq smena bazadan o'qiladi (`openShiftNow`) — sotuv, qaytarish, kassa harakati ham
-- [x] 4. Tovar tahriri faqat o'zgargan maydonlarni yuboradi (PR-P1-4) + testlar; golden'lar yangilandi
-- [ ] 5. Pul maydoni formati (guruhlash), majburiy maydon belgisi, ro'yxat xato holatlari
-- [ ] 6. To'liq testlar, hujjatlar (audit, ROADMAP, PROGRESS, worklog, skrinshotlar), PR, merge
+- [x] 1. Holat qatori, telefon pastki menyusi
+- [x] 2. Ikki marta bosish / qotish, inventarizatsiya o'chirish tasdig'i
+- [x] 3. Naqd qarz to'lovi faqat smenada; smena bazadan (`openShiftNow`)
+- [x] 4. Qisman tovar tahriri; golden'lar
+- [x] 5. Pul formati, majburiy `*`, ro'yxat xato holati, dublikat nom, o'chirilgan tovar, bo'sh PLU
+- [ ] 6. PR, CI, merge
 
 ## Oxirgi bajarilgan ish
-- 1–4 qadamlar; backend to'liq yashil, apps/pos to'liq (shell testi yangilandi), packages/ui 138, widgetbook 62.
+- Hammasi yashil: backend to'liq, apps/pos 754, packages/ui 141, widgetbook 62; hujjatlar yangilandi.
 
 ## Keyingi aniq harakat
-- 5-qadam: kirim/tovar kartasidagi pul maydonlari (`PosMoneyField`?) — guruhlash formatlovchisi; ro'yxatlarda `AsyncValue.error` holati (cheksiz spinner o'rniga xabar).
+- `gh pr create` (T-106), CI yashil bo'lsa squash merge; keyin T-107 regressiya va yakuniy hisobot (foydalanuvchi so'ragan 8 savolga javob).
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

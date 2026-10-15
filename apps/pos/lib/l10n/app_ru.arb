@@ -252,6 +252,8 @@
   "productImageNotUploaded": "Ещё не загружено",
   "productImageUnsupported": "Не удалось прочитать фото. Выберите JPG или PNG.",
   "productImageTooLarge": "Фото слишком большое (больше 20 МБ).",
+  "productSameName": "Товар «{name}» уже есть. Это он?",
+  "productGone": "Товар не найден — возможно, он удалён",
   "productSaveFailed": "Не удалось сохранить. Попробуйте ещё раз.",
   "actionFailed": "Не удалось выполнить. Попробуйте ещё раз.",
   "payDebtNeedsShift": "Чтобы принять наличные, откройте смену (для верного учёта кассы)",

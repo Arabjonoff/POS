@@ -63,9 +63,13 @@ class PosDialog extends StatelessWidget {
           ],
           Semantics(
             header: true,
+            // Uzun nom (tovar nomi ≤ 200 belgi) sarlavhani 8 qatorga
+            // cho'zib, tugmalarni siqmasin (audit P2-15).
             child: Text(
               title,
               textAlign: compact ? TextAlign.center : TextAlign.start,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               style: PosTypography.h2.copyWith(color: p.text),
             ),
           ),

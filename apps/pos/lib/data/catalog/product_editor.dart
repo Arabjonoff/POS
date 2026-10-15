@@ -176,12 +176,33 @@ class ProductEditor {
     );
   }
 
-  /// Tahrirlash uchun mavjud tovar.
+  /// Shu nomli boshqa faol tovar nomi — ogohlantirish uchun, saqlashni
+  /// to'xtatmaydi (audit P2-14). Qidiruv kaliti bo'yicha: katta-kichik harf,
+  /// apostrof va lotin/kirill farqi hisobga olinmaydi.
+  Future<String?> sameNameAs(String name, {String? exceptId}) async {
+    final key = SearchKey.of(cleanLine(name));
+    if (key.isEmpty) return null;
+    // Bo'sh kalit — eski qator (kalit ustunidan oldingi): nomdan hisoblanadi.
+    final query = _db.select(_db.products)
+      ..where(
+        (p) =>
+            (p.searchKey.equals(key) | p.searchKey.equals('')) &
+            p.deletedAt.isNull() &
+            p.isActive.equals(true),
+      );
+    if (exceptId != null) query.where((p) => p.id.equals(exceptId).not());
+    for (final p in await query.get()) {
+      if (p.searchKey == key || SearchKey.of(p.name) == key) return p.name;
+    }
+    return null;
+  }
+
+  /// Tahrirlash uchun mavjud tovar (`null` — yo'q yoki serverda o'chirilgan).
   Future<ProductDraft?> load(String id) async {
     final p = await (_db.select(
       _db.products,
     )..where((t) => t.id.equals(id))).getSingleOrNull();
-    if (p == null) return null;
+    if (p == null || p.deletedAt != null) return null;
     final codes =
         await (_db.select(_db.productBarcodes)
               ..where((b) => b.productId.equals(id))

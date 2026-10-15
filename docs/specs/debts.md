@@ -5,6 +5,7 @@
 - Mijoz kartasi: joriy qarz (katta), tarix (savdo — qarz oshdi; to'lov — kamaydi), xaridlar.
 - Qarzga sotish: kassada F4 yoki to'lov oynasida "Nasiya" → mijoz tanlash/tez yaratish → limit tekshiruvi (oshsa — menejer PIN bilan ruxsat).
 - To'lov qabul qilish: summa (tez tugma "To'liq"), naqd/karta, chek (ixtiyoriy). DebtEntry(−).
+  **Naqd — faqat ochiq smenada** (pul kassaga tushadi va Z-hisobotda ko'rinishi shart; smena yopiq bo'lsa "Naqd to'lovni qabul qilish uchun smenani oching"); karta — smenasiz ham. Smena bazadan, yozishdan oldin o'qiladi (T-106, audit CU-B4).
 - Qarzga sotilgan savdo qaytarilsa — qarz kamayadi.
 - Balans = DebtEntry yig'indisi. Hech qachon qo'lda tahrirlanmaydi; tuzatish — "adjustment" yozuvi sabab bilan (faqat ega).
 - Keyinroq: SMS/Telegram eslatma.

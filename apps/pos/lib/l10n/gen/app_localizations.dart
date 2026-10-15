@@ -1611,6 +1611,18 @@ abstract class AppLocalizations {
   /// **'Rasm juda katta (20 MB dan ortiq).'**
   String get productImageTooLarge;
 
+  /// Ogohlantirish: shu nomli tovar bor (saqlashni to'xtatmaydi)
+  ///
+  /// In uz, this message translates to:
+  /// **'«{name}» nomli tovar allaqachon bor. Shu tovarmi?'**
+  String productSameName(String name);
+
+  /// Tovar kartasi: tovar bazada yo'q
+  ///
+  /// In uz, this message translates to:
+  /// **'Tovar topilmadi — u o\'chirilgan bo\'lishi mumkin'**
+  String get productGone;
+
   /// Kutilmagan xato
   ///
   /// In uz, this message translates to:

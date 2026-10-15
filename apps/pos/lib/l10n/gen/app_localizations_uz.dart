@@ -867,6 +867,14 @@ class AppLocalizationsUz extends AppLocalizations {
   String get productImageTooLarge => 'Rasm juda katta (20 MB dan ortiq).';
 
   @override
+  String productSameName(String name) {
+    return '«$name» nomli tovar allaqachon bor. Shu tovarmi?';
+  }
+
+  @override
+  String get productGone => 'Tovar topilmadi — u o\'chirilgan bo\'lishi mumkin';
+
+  @override
   String get productSaveFailed => 'Saqlab bo\'lmadi. Qayta urinib ko\'ring.';
 
   @override
@@ -3038,6 +3046,14 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
 
   @override
   String get productImageTooLarge => 'Расм жуда катта (20 МБ дан ортиқ).';
+
+  @override
+  String productSameName(String name) {
+    return '«$name» номли товар аллақачон бор. Шу товарми?';
+  }
+
+  @override
+  String get productGone => 'Товар топилмади — у ўчирилган бўлиши мумкин';
 
   @override
   String get productSaveFailed => 'Сақлаб бўлмади. Қайта уриниб кўринг.';

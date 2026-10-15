@@ -1091,6 +1091,19 @@
   "@productImageTooLarge": {
     "description": "Xato"
   },
+  "productSameName": "«{name}» nomli tovar allaqachon bor. Shu tovarmi?",
+  "@productSameName": {
+    "description": "Ogohlantirish: shu nomli tovar bor (saqlashni to'xtatmaydi)",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "productGone": "Tovar topilmadi — u o'chirilgan bo'lishi mumkin",
+  "@productGone": {
+    "description": "Tovar kartasi: tovar bazada yo'q"
+  },
   "productSaveFailed": "Saqlab bo'lmadi. Qayta urinib ko'ring.",
   "@productSaveFailed": {
     "description": "Kutilmagan xato"

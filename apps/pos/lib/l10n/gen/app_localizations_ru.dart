@@ -885,6 +885,14 @@ class AppLocalizationsRu extends AppLocalizations {
   String get productImageTooLarge => 'Фото слишком большое (больше 20 МБ).';
 
   @override
+  String productSameName(String name) {
+    return 'Товар «$name» уже есть. Это он?';
+  }
+
+  @override
+  String get productGone => 'Товар не найден — возможно, он удалён';
+
+  @override
   String get productSaveFailed => 'Не удалось сохранить. Попробуйте ещё раз.';
 
   @override

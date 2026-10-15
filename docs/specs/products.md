@@ -25,7 +25,11 @@
 - **Tovar kartasi** (`product_card.dart`):
   - maydonlar: nom, birlik, kategoriya, sotish narxi va tannarx (so'm, ustama % darhol), shtrix-kodlar (birinchisi — asosiy), vaznli + PLU, minimal qoldiq, IKPU, tez tugma; "Nofaol qilish / Faollashtirish".
   - tekshiruv (`ProductEditor.validate`, server qoidalari bilan bir xil): nom va birlik majburiy; narx > 0; shtrix-kod formati, EAN nazorat raqami, takrori va boshqa tovarda bandligi; PLU 5 raqam va faol tovarlar orasida yagona; vaznli tovar — faqat kasrli birlik; IKPU 17 raqam.
+  - majburiy maydonlar (nom, sotish narxi) yorlig'ida qizil `*`; pul maydonlari guruhlanadi (`1 500 000,50`).
+  - shu nomli boshqa faol tovar bo'lsa (qidiruv kaliti bo'yicha) — maydon ostida "«X» nomli tovar allaqachon bor. Shu tovarmi?" — **saqlashni to'xtatmaydi**.
+  - ochilayotgan tovar bazada yo'q yoki serverda o'chirilgan bo'lsa — karta ochilmaydi, "Tovar topilmadi" (bo'sh "yangi" karta yangi tovar yaratib qo'ymasin).
 - **Saqlash** — lokal baza (kassa katalogi darhol yangilanadi) + outbox `product.upserted` bitta tranzaksiyada. Server `by` ni faqat ega/menejerdan qabul qiladi: kassir saqlasa menejer/ega PIN so'raladi, menejer/ega o'zi bo'lsa PIN so'ralmaydi.
+  Tahrirda hodisada **faqat o'zgargan maydonlar** (+ `id`, `by`) yuboriladi: oflayn eski tahrir serverdagi yangiroq narx/shtrix-kodni bosmaydi. Yangi tovar — to'liq.
 - **Narx tarixi** (faqat menejer/ega, mavjud tovar): onlayn `GET /api/v1/sync/price-history/?product=` (qurilma tokeni). Oflaynda — "Narx tarixini ko'rish uchun internet kerak".
 
 ## Qoldiq tarixi va buyurtma ro'yxati (T-054)

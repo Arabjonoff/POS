@@ -125,6 +125,11 @@ class _ProductCardState extends ConsumerState<ProductCard> {
   bool _showHistory = false;
   bool _showMoves = false;
 
+  /// Shu nomli boshqa tovar (ogohlantirish, audit P2-14) va so'rov tartibi —
+  /// tez yozishda eski javob yangisini bosmasin.
+  String? _sameName;
+  int _nameCheck = 0;
+
   @override
   void initState() {
     super.initState();
@@ -144,9 +149,20 @@ class _ProductCardState extends ConsumerState<ProductCard> {
     final db = ref.read(appDatabaseProvider);
     ProductDraft draft;
     if (id != null) {
-      draft =
-          await ref.read(productEditorProvider).load(id) ??
-          const ProductDraft();
+      final loaded = await ref.read(productEditorProvider).load(id);
+      if (loaded == null) {
+        // Ro'yxat ochiq turganda pull tovarni o'chirgan: bo'sh "yangi" karta
+        // saqlansa yangi tovar yaratilardi (audit P2-16).
+        if (!mounted) return;
+        showPosToast(
+          context,
+          message: AppLocalizations.of(context).productGone,
+          tone: PosTone.warning,
+        );
+        Navigator.of(context).pop();
+        return;
+      }
+      draft = loaded;
     } else {
       final pcs =
           await (db.select(db.units)
@@ -290,6 +306,15 @@ class _ProductCardState extends ConsumerState<ProductCard> {
     } else if (_removeImage) {
       await images.removeImage(productId, by: by);
     }
+  }
+
+  Future<void> _checkName(String name) async {
+    final seq = ++_nameCheck;
+    final same = await ref
+        .read(productEditorProvider)
+        .sameNameAs(name, exceptId: _draft?.id);
+    if (!mounted || seq != _nameCheck || same == _sameName) return;
+    setState(() => _sameName = same);
   }
 
   Future<void> _save({bool? active}) async {
@@ -493,7 +518,11 @@ class _ProductCardState extends ConsumerState<ProductCard> {
               required: true,
               autofocus: draft.isNew,
               errorText: _error(l10n, ProductField.name),
+              helper: _sameName == null
+                  ? null
+                  : l10n.productSameName(_sameName!),
               textInputAction: TextInputAction.next,
+              onChanged: (name) => unawaited(_checkName(name)),
             ),
             label(l10n.productUnit),
             chips(

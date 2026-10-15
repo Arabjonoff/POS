@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:drift/drift.dart' show Value;
@@ -330,6 +331,53 @@ void main() {
       await tap(tester, find.byKey(const ValueKey('product-save')));
       expect(inCard("Narx 0 dan katta bo'lishi kerak"), findsOneWidget);
       expect(card, findsOneWidget);
+    });
+
+    testWidgets('same name: a hint, saving is not blocked (audit P2-14)', (
+      tester,
+    ) async {
+      await open(tester, asManager: true);
+      await tap(tester, find.byKey(const ValueKey('products-add')));
+      const hint = '«Non issiq» nomli tovar allaqachon bor. Shu tovarmi?';
+      await tester.enterText(
+        find.byKey(const ValueKey('product-name')),
+        'NON  issiq',
+      );
+      await tester.pumpAndSettle();
+      expect(inCard(hint), findsOneWidget);
+      await tester.enterText(
+        find.byKey(const ValueKey('product-name')),
+        'Non qora',
+      );
+      await tester.pumpAndSettle();
+      expect(inCard(hint), findsNothing);
+    });
+
+    testWidgets('own name is not a duplicate', (tester) async {
+      await open(tester, asManager: true);
+      await tap(tester, find.text('Non issiq'));
+      await tester.enterText(
+        find.byKey(const ValueKey('product-name')),
+        'Non issiq ',
+      );
+      await tester.pumpAndSettle();
+      expect(find.textContaining('allaqachon bor'), findsNothing);
+    });
+
+    testWidgets('card of a deleted product closes (audit P2-16)', (
+      tester,
+    ) async {
+      await open(tester, asManager: true);
+      await (_db.update(_db.products)..where((p) => p.id.equals('p-non')))
+          .write(ProductsCompanion(deletedAt: Value(DateTime.utc(2026))));
+      final context = tester.element(find.byType(Scaffold).first);
+      unawaited(showProductCard(context, productId: 'p-non'));
+      await tester.pumpAndSettle();
+      expect(card, findsNothing);
+      expect(
+        find.text("Tovar topilmadi — u o'chirilgan bo'lishi mumkin"),
+        findsOneWidget,
+      );
     });
 
     testWidgets('deactivate hides it from the list', (tester) async {
