@@ -15,6 +15,17 @@ const accounts = {
       tenant: null,
     },
   },
+  // Statistika so'rovi 500 qaytaradigan admin (xato holatini sinash uchun).
+  "998911111111": {
+    password: "admin-parol",
+    user: {
+      id: "00000000-0000-7000-8000-000000000003",
+      phone: "+998911111111",
+      full_name: "Xato Admin",
+      role: "platform_admin",
+      tenant: null,
+    },
+  },
   "998907654321": {
     password: "ega-parol",
     user: {
@@ -60,6 +71,33 @@ async function readJson(req) {
   }
 }
 
+const stats = {
+  tenants: { total: 12, trial: 3, active: 7, grace: 1, readonly: 1, blocked: 0 },
+  mrr_tiyin: 135000000,
+  revenue_this_month_tiyin: 45000000,
+  expiring_soon: [
+    { tenant: "00000000-0000-7000-8000-0000000000b1", name: "Baraka do'koni", paid_until: "2026-10-16", days_left: 1 },
+    { tenant: "00000000-0000-7000-8000-0000000000b2", name: "Oila market", paid_until: "2026-10-20", days_left: 5 },
+  ],
+  stale_devices: 2,
+  // 2025-11 … 2026-10.
+  monthly_revenue: Array.from({ length: 12 }, (_, i) => {
+    const month = ((10 + i) % 12) + 1;
+    const year = i < 2 ? 2025 : 2026;
+    return {
+      month: `${year}-${String(month).padStart(2, "0")}`,
+      revenue_tiyin: (10 + i * 3) * 1000000,
+    };
+  }),
+};
+
+/** `Authorization: Bearer access-N` → hisob (yoki `undefined`). */
+function accountOf(req) {
+  const token = (req.headers.authorization ?? "").replace(/^Bearer /, "");
+  const phone = token.startsWith("access-") ? sessions.get(token) : undefined;
+  return phone ? { phone, ...accounts[phone] } : undefined;
+}
+
 const invalid = { error: { code: "invalid_credentials", message: "Telefon yoki parol noto'g'ri" } };
 
 createServer(async (req, res) => {
@@ -85,10 +123,17 @@ createServer(async (req, res) => {
   }
 
   if (req.method === "GET" && url.pathname === "/api/v1/auth/me/") {
-    const token = (req.headers.authorization ?? "").replace(/^Bearer /, "");
-    const phone = token.startsWith("access-") ? sessions.get(token) : undefined;
-    if (!phone) return send(res, 401, { error: { code: "not_authenticated" } });
-    return send(res, 200, accounts[phone].user);
+    const account = accountOf(req);
+    if (!account) return send(res, 401, { error: { code: "not_authenticated" } });
+    return send(res, 200, account.user);
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/v1/platform/stats/") {
+    const account = accountOf(req);
+    if (!account) return send(res, 401, { error: { code: "not_authenticated" } });
+    if (account.user.role !== "platform_admin") return send(res, 403, { error: { code: "permission_denied" } });
+    if (account.phone === "998911111111") return send(res, 500, { error: { code: "server_error" } });
+    return send(res, 200, stats);
   }
 
   send(res, 404, { error: { code: "not_found" } });

@@ -25,8 +25,23 @@
   "home": {
     "title": "Bosh sahifa",
     "subtitle": "Bugungi holat bir qarashda",
-    "emptyTitle": "Ko'rsatkichlar tez orada paydo bo'ladi",
-    "emptyText": "Faol mijozlar, tushum va muddati tugayotgan obunalar shu yerda ko'rinadi."
+    "activeTenants": "Faol mijozlar",
+    "tenantStatuses": "Jami {total} · muddati o'tgan {grace} · faqat o'qish {readonly} · bloklangan {blocked}",
+    "trialTenants": "Sinovdagilar",
+    "mrr": "Oylik tushum (MRR)",
+    "mrrHint": "Faol obunalar tariflari bo'yicha",
+    "revenueThisMonth": "Shu oy to'lovlar",
+    "revenueChart": "Oylik tushum",
+    "revenueChartHint": "Oxirgi 12 oy, to'lovlar bo'yicha",
+    "expiringTitle": "Muddati 7 kunda tugaydi",
+    "expiringEmpty": "7 kun ichida muddati tugaydigan mijoz yo'q",
+    "paidUntil": "{date} gacha to'langan",
+    "daysLeft": "{days, plural, =0 {bugun} other {# kun}}",
+    "addPayment": "To'lov kiritish",
+    "staleTitle": "{count, plural, =0 {Barcha qurilmalar sinxronlangan} other {# ta qurilma sinxronlanmagan}}",
+    "staleText": "3 kundan beri ma'lumot yubormagan qurilmalar",
+    "staleView": "Ko'rish",
+    "revenueSeries": "Tushum"
   },
   "notFound": {
     "title": "Sahifa topilmadi",
@@ -52,5 +67,13 @@
   "section": {
     "soonTitle": "Bo'lim tayyorlanmoqda",
     "soonText": "Bu bo'lim keyingi yangilanishlarda qo'shiladi."
+  },
+  "format": {
+    "currency": "so'm"
+  },
+  "errors": {
+    "loadTitle": "Ma'lumotni yuklab bo'lmadi",
+    "loadText": "Server javob bermadi. Internetni tekshirib, qayta urining.",
+    "retry": "Qayta urinish"
   }
 }

@@ -316,3 +316,12 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-080 (squash merge)
 - Qoldi / keyingi qadam: T-081 Admin bosh sahifa (KPI). 2FA — keyinroq (spec).
 - Muammo yoki qaror: Next 16 proxy `matcher`ida `\.` saqlanmaydi (kompilyatsiyada `.` bo'lib, hamma yo'lni chiqarib tashlardi) — `favicon.ico` aniq nom bilan. E2E uchun soxta Django API (`e2e/mock-api.mjs`) — CI'da backend ishga tushirilmaydi.
+
+## 2026-10-15 — T-081 Admin: bosh sahifa (KPI)
+- Qilindi:
+  - `src/lib/platform.ts` — server tomonida Django platforma API (admin tokeni, `401` → login), `getStats()`; `src/lib/format.ts` — pul (tiyin → so'm, NBSP guruhlash) va sana.
+  - Bosh sahifa: 4 KPI, oylik tushum grafigi (Recharts), muddati 7 kunda tugaydiganlar ("To'lov kiritish"), sinxronlanmagan qurilmalar; `loading.tsx` skelet, `error.tsx` qayta urinish.
+- Testlar: Vitest 32 (+11: dashboard 4, platform 3, format 4), Playwright 11 (+3: KPI/ro'yxat/grafik, ruscha, server xatosi). Soxta API'ga `/platform/stats/` qo'shildi. Skrinshotlar: `docs/screenshots/T-081/`.
+- PR: T-081 (squash merge)
+- Qoldi / keyingi qadam: T-082 Admin: mijozlar (tenantlar).
+- Muammo yoki qaror: `recharts` qo'shildi (spec'dagi grafik kutubxonasi). npm (Windows) lock fayldan `@emnapi/*` optional yozuvlarini olib tashlagan edi — CI `npm ci` yiqildi; yozuvlar main'dagi lock'dan qaytarildi. Planshetda o'ng ustun tor bo'lgani uchun 3 ustunli joylashuv faqat ≥ 1280 px'da.
