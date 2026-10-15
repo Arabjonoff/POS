@@ -22,16 +22,23 @@ export function TenantFilters({ csvRows }: { csvRows: (string | number | null)[]
   const [search, setSearch] = useState(params.get("search") ?? "");
   const [pending, startTransition] = useTransition();
   const first = useRef(true);
+  // Kutilayotgan URL: navigatsiya tugamasdan (debounce paytida) holat filtri o'zgarsa ham
+  // bir-birini bekor qilmasin. Tashqi o'zgarish (orqaga tugmasi) — quyidagi effekt bilan.
+  const desired = useRef(params.toString());
+  const current = params.toString();
+  useEffect(() => {
+    desired.current = current;
+  }, [current]);
 
   function navigate(changes: Record<string, string | null>) {
-    // Joriy URL'dan (debounce paytida holat filtri o'zgargan bo'lishi mumkin).
-    const next = new URLSearchParams(window.location.search);
+    const next = new URLSearchParams(desired.current);
     for (const [key, value] of Object.entries(changes)) {
       if (value) next.set(key, value);
       else next.delete(key);
     }
     next.delete("page");
     const query = next.toString();
+    desired.current = query;
     startTransition(() => router.replace(query ? `${pathname}?${query}` : pathname));
   }
 
