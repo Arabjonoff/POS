@@ -160,3 +160,45 @@ export async function listPayments(query: { dateFrom?: string; dateTo?: string; 
   });
   return ensure(data, response);
 }
+
+export type AuditEntry = components["schemas"]["AuditLog"];
+
+/** `GET /platform/devices/` — `stale_days` (oxirgi sinxron N kundan oldin yoki umuman yo'q), `blocked`. */
+export async function listDevices(query: { staleDays?: number; blocked?: boolean; page?: number }) {
+  const api = await platformApi();
+  const { data, response } = await api.GET("/api/v1/platform/devices/", {
+    params: {
+      query: {
+        stale_days: query.staleDays,
+        blocked: query.blocked,
+        page: query.page && query.page > 1 ? query.page : undefined,
+        page_size: PAGE_SIZE,
+      },
+    },
+    cache: "no-store",
+  });
+  return ensure(data, response);
+}
+
+/** `GET /platform/audit-log/` — yangisi birinchi. */
+export async function listAuditLog(query: {
+  action?: string;
+  targetType?: string;
+  tenant?: string;
+  page?: number;
+}) {
+  const api = await platformApi();
+  const { data, response } = await api.GET("/api/v1/platform/audit-log/", {
+    params: {
+      query: {
+        action: query.action || undefined,
+        target_type: query.targetType || undefined,
+        tenant: query.tenant || undefined,
+        page: query.page && query.page > 1 ? query.page : undefined,
+        page_size: PAGE_SIZE,
+      },
+    },
+    cache: "no-store",
+  });
+  return ensure(data, response);
+}

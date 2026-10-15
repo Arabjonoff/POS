@@ -12,17 +12,17 @@
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [ ] 1. `platform.ts`: `listDevices` (stale_days, blocked, sahifa), `listAuditLog` (action, target_type, tenant, sahifa); actions `blockDevice`, `unblockDevice`; `src/lib/audit.ts` (o'zgargan maydonlar: before → after) + Vitest
-- [ ] 2. `/devices`: filtr (hammasi / 3 kundan beri sinxronlanmagan / bloklangan — URL), jadval (qurilma, mijoz havolasi, platforma, versiya, oxirgi sinxron — eskisi ajratilgan, holat), bloklash (sabab) / blokdan chiqarish
-- [ ] 3. `/audit`: amal va obyekt turi filtri (URL), jadval (vaqt, kim, amal, obyekt, mijoz, sabab), o'zgarishlar ochiladigan qatorda, sahifalash
+- [x] 1. `platform.ts`: `listDevices` (stale_days, blocked, sahifa), `listAuditLog` (action, target_type, tenant, sahifa); actions `blockDevice`, `unblockDevice`; `src/lib/audit.ts` (o'zgargan maydonlar: before → after) + Vitest
+- [x] 2. `/devices`: filtr (hammasi / 3 kundan beri sinxronlanmagan / bloklangan — URL), jadval (qurilma, mijoz havolasi, platforma, versiya, oxirgi sinxron — eskisi ajratilgan, holat), bloklash (sabab) / blokdan chiqarish
+- [x] 3. `/audit`: amal va obyekt turi filtri (URL), jadval (vaqt, kim, amal, obyekt, mijoz, sabab), o'zgarishlar ochiladigan qatorda, sahifalash
 - [ ] 4. Soxta API (qurilmalar filtri/bloklash, audit — har o'zgarish yozadi) + Playwright
 - [ ] 5. Spec, skrinshotlar, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- Reja yozildi.
+- 1–3: `listDevices`, `listAuditLog`, `devices/actions.ts`, `src/lib/audit.ts` (+3 test); `BlockDialog` umumlashtirildi (`kind: tenant|device`, `targetId`, `compact`); `/devices` (filtr havolalari, eski sinxron qizil, bloklash), `/audit` (`AuditFilters` — amal/obyekt Select, o'zgarishlar `<details>` da, `?tenant=`), tarjimalar.
 
 ## Keyingi aniq harakat
-- 1-qadam: `apps/admin/src/lib/platform.ts` ga `listDevices`, `listAuditLog`.
+- 4-qadam: soxta API — `GET platform/devices/` (`stale_days`, `blocked`), `POST devices/{id}/block|unblock/`, `GET platform/audit-log/` (har o'zgarish `audit()` bilan yoziladi); `e2e/devices-audit.spec.ts`.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

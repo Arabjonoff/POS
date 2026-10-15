@@ -292,7 +292,7 @@ export default async function TenantPage({ params, searchParams }: PageProps<"/t
               trialEndsAt={tenant.trial_ends_at}
               defaultOpen={query.payment === "1"}
             />
-            <BlockDialog tenantId={tenant.id} blocked={Boolean(tenant.is_blocked)} />
+            <BlockDialog targetId={tenant.id} blocked={Boolean(tenant.is_blocked)} />
           </div>
         )}
       </div>

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
+import { blockDevice, unblockDevice } from "@/app/(app)/devices/actions";
 import { blockTenant, unblockTenant, type ActionError } from "@/app/(app)/tenants/actions";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,9 +19,26 @@ import {
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-/** Bloklash (sabab majburiy) yoki blokdan chiqarish — tasdiqlash oynasi bilan. */
-export function BlockDialog({ tenantId, blocked }: { tenantId: string; blocked: boolean }) {
-  const t = useTranslations("tenants.block");
+const ACTIONS = {
+  tenant: { block: blockTenant, unblock: unblockTenant, ns: "tenants.block" },
+  device: { block: blockDevice, unblock: unblockDevice, ns: "devices.block" },
+} as const;
+
+/** Mijoz yoki qurilmani bloklash (sabab majburiy) yoki blokdan chiqarish — tasdiqlash oynasi bilan. */
+export function BlockDialog({
+  targetId,
+  blocked,
+  kind = "tenant",
+  compact = false,
+}: {
+  targetId: string;
+  blocked: boolean;
+  kind?: keyof typeof ACTIONS;
+  /** Jadval qatori uchun kichik tugma. */
+  compact?: boolean;
+}) {
+  const actions = ACTIONS[kind];
+  const t = useTranslations(actions.ns);
   const close = useTranslations("common")("close");
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -35,7 +53,7 @@ export function BlockDialog({ tenantId, blocked }: { tenantId: string; blocked: 
       return;
     }
     setPending(true);
-    const result = blocked ? await unblockTenant(tenantId, reason) : await blockTenant(tenantId, reason);
+    const result = blocked ? await actions.unblock(targetId, reason) : await actions.block(targetId, reason);
     setPending(false);
     if (!result.ok) {
       setFailure(result.error);
@@ -49,8 +67,8 @@ export function BlockDialog({ tenantId, blocked }: { tenantId: string; blocked: 
   return (
     <>
       <Button
-        variant={blocked ? "outline" : "destructive"}
-        size="lg"
+        variant={blocked ? "outline" : compact ? "ghost" : "destructive"}
+        size={compact ? "sm" : "lg"}
         onClick={() => {
           setOpen(true);
           setFailure(null);
