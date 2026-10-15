@@ -514,9 +514,14 @@ class _CartLineTileState extends State<CartLineTile> {
                         children: [
                           Text(
                             l10n.posUnitPriceTimes(
-                              fmt.money(line.priceTiyin),
+                              // Tor savatda valyutasiz — bir qatorga sig'sin.
+                              layout.showNumber
+                                  ? fmt.money(line.priceTiyin)
+                                  : fmt.moneyAmount(line.priceTiyin),
                               unit.label(l10n),
                             ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: PosTypography.small.copyWith(
                               color: p.textSecondary,
                               fontFeatures: PosTypography.tabular,
@@ -725,13 +730,12 @@ class CartSummary extends StatelessWidget {
 
     final discounts = cart.allDiscountsTiyin;
     final discount = cart.discount;
-    final discountLabel = discount == null
-        ? l10n.posDiscount
-        : l10n.posDiscountActive(
-            discount.isPercent
-                ? fmt.percent(discount.percentBp ~/ 100)
-                : fmt.money(-discount.amountTiyin),
-          );
+    // Chek chegirmasi tugmada ikkinchi qatorda: "5%" yoki "−500 so'm".
+    final discountDetail = discount == null
+        ? null
+        : (discount.isPercent
+              ? fmt.percent(discount.percentBp ~/ 100)
+              : fmt.money(-discount.amountTiyin));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -750,7 +754,8 @@ class CartSummary extends StatelessWidget {
               child: _SummaryButton(
                 key: const ValueKey('cart-discount'),
                 icon: Icons.percent,
-                label: discountLabel,
+                label: l10n.posDiscount,
+                detail: discountDetail,
                 shortcut: 'F3',
                 active: discount != null,
                 onTap: cart.isEmpty ? null : onDiscount,

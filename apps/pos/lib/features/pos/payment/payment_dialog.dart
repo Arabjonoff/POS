@@ -25,7 +25,11 @@ Future<CheckoutResult?> showPaymentDialog(
   PayMode mode = PayMode.cash,
 }) => showPosDialog<CheckoutResult>(
   context: context,
-  maxWidth: PaymentDialog.maxWidth,
+  // Keng ekranda raqamlar paneli o'ngda — qaytim 768 balandlikda ham
+  // aylantirmasdan ko'rinadi (eskiz).
+  maxWidth: PaymentDialog.isWide(context)
+      ? PaymentDialog.wideMaxWidth
+      : PaymentDialog.maxWidth,
   builder: (context) => PaymentDialog(cart: cart, initialMode: mode),
 );
 
@@ -40,6 +44,15 @@ class PaymentDialog extends ConsumerStatefulWidget {
   });
 
   static const double maxWidth = 560;
+  static const double wideMaxWidth = 820;
+
+  /// Raqamlar paneli o'ngda (desktop, kenglik ≥ 1000 dp).
+  static bool isWide(BuildContext context) =>
+      !PosWindowSize.of(context).isCompact &&
+      MediaQuery.sizeOf(context).width >= 1000;
+
+  /// O'ngdagi raqamlar paneli kengligi.
+  static const double sideKeypadWidth = 276;
 
   final Cart cart;
 
@@ -385,19 +398,26 @@ class _PaymentDialogState extends ConsumerState<PaymentDialog> {
       _keypadOpen ??
       (_draft.mode != PayMode.cash || !PosWindowSize.of(context).isCompact);
 
-  MoneyInput _moneyInput({required Key key, bool pristine = false}) =>
-      MoneyInput(
-        key: key,
-        valueTiyin: pristine ? _draft.cashDue : (_editedValue ?? 0),
-        pristine: pristine,
-        // Raqamlar skaner xizmati orqali (`_onTyping`), Backspace/Enter —
-        // oynaning o'zida.
-        hardwareDigits: false,
-        autofocus: false,
-        showKeypad: _keypad,
-        onDisplayTap: () => setState(() => _keypadOpen = !_keypad),
-        onChanged: _setEdited,
-      );
+  MoneyInput _moneyInput({
+    required Key key,
+    bool pristine = false,
+    List<Widget> below = const [],
+  }) => MoneyInput(
+    key: key,
+    valueTiyin: pristine ? _draft.cashDue : (_editedValue ?? 0),
+    pristine: pristine,
+    // Raqamlar skaner xizmati orqali (`_onTyping`), Backspace/Enter —
+    // oynaning o'zida.
+    hardwareDigits: false,
+    autofocus: false,
+    showKeypad: _keypad,
+    keypadSide: PaymentDialog.isWide(context)
+        ? PaymentDialog.sideKeypadWidth
+        : null,
+    below: below,
+    onDisplayTap: () => setState(() => _keypadOpen = !_keypad),
+    onChanged: _setEdited,
+  );
 
   List<Widget> _cash(AppLocalizations l10n) {
     final fmt = context.fmt;
@@ -432,11 +452,25 @@ class _PaymentDialogState extends ConsumerState<PaymentDialog> {
       const SizedBox(height: PosSpacing.m),
       _Label(l10n.payReceived),
       const SizedBox(height: PosSpacing.xs),
-      _moneyInput(key: const ValueKey('pay-received'), pristine: exact),
-      const SizedBox(height: PosSpacing.m),
-      _cashResult(l10n),
+      ..._withResult(
+        (below) => _moneyInput(
+          key: const ValueKey('pay-received'),
+          pristine: exact,
+          below: below,
+        ),
+        [const SizedBox(height: PosSpacing.m), _cashResult(l10n)],
+      ),
     ];
   }
+
+  /// Keng oynada [extra] raqamlar paneli yonida (displey ostida), aks holda
+  /// summa maydonidan keyin.
+  List<Widget> _withResult(
+    MoneyInput Function(List<Widget> below) input,
+    List<Widget> extra,
+  ) => PaymentDialog.isWide(context)
+      ? [input(extra)]
+      : [input(const []), ...extra];
 
   /// Qaytim — katta yashil; yetmasa — qizil farq.
   Widget _cashResult(AppLocalizations l10n) {
@@ -444,17 +478,36 @@ class _PaymentDialogState extends ConsumerState<PaymentDialog> {
     final (label, amount, tone) = short > 0
         ? (l10n.payShort, short, PosTone.danger)
         : (l10n.changeLabel, _draft.changeTiyin, PosTone.success);
-    return Row(
+    final row = Row(
       key: const ValueKey('pay-change'),
       children: [
         Expanded(child: _Label(label, strong: true)),
-        PosMoneyText(
-          amount: amount,
-          currency: context.fmt.currency,
-          size: PosMoneySize.total,
-          tone: amount > 0 ? tone : null,
+        Flexible(
+          flex: 3,
+          child: PosMoneyText(
+            amount: amount,
+            currency: context.fmt.currency,
+            size: PosMoneySize.total,
+            tone: amount > 0 ? tone : null,
+            textAlign: TextAlign.right,
+          ),
         ),
       ],
+    );
+    if (amount <= 0) return row;
+    // Qaytim/yetmaydi — yumshoq fonda, ko'zga birinchi tashlansin.
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: PosPalette.of(context).tone(tone).soft,
+        borderRadius: PosRadius.controlAll,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: PosSpacing.l,
+          vertical: PosSpacing.s,
+        ),
+        child: row,
+      ),
     );
   }
 
@@ -549,11 +602,18 @@ class _PaymentDialogState extends ConsumerState<PaymentDialog> {
         ],
       ),
       const SizedBox(height: PosSpacing.m),
-      _moneyInput(key: ValueKey('pay-mixed-${_part.name}')),
-      if (_draft.debtTiyin > 0) ...[
-        const SizedBox(height: PosSpacing.m),
-        _customerSection(l10n, customers),
-      ],
+      ..._withResult(
+        (below) => _moneyInput(
+          key: ValueKey('pay-mixed-${_part.name}'),
+          below: below,
+        ),
+        [
+          if (_draft.debtTiyin > 0) ...[
+            const SizedBox(height: PosSpacing.m),
+            _customerSection(l10n, customers),
+          ],
+        ],
+      ),
     ];
   }
 }

@@ -2311,11 +2311,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String posDiscountActive(String value) {
-    return 'Скидка $value';
-  }
-
-  @override
   String posCartTabItems(String label, int count) {
     return '$label, позиций: $count';
   }

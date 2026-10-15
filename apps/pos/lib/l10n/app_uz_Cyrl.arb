@@ -654,7 +654,6 @@
   "actionPayCaps": "ТЎЛАШ",
   "posCustomerDebt": "Қарз: {amount}",
   "posCustomerAdvance": "Аванс: {amount}",
-  "posDiscountActive": "Чегирма {value}",
   "posCartTabItems": "{label}, {count} та позиция",
   "storeVatPayer": "Дўкон ҚҚС тўловчи (кассада ҚҚС 12% кўрсатилади)"
 }

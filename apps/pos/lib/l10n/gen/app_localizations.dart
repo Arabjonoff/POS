@@ -4023,12 +4023,6 @@ abstract class AppLocalizations {
   /// **'Avans: {amount}'**
   String posCustomerAdvance(String amount);
 
-  /// Chegirma tugmasi: qo'llangan chegirma
-  ///
-  /// In uz, this message translates to:
-  /// **'Chegirma {value}'**
-  String posDiscountActive(String value);
-
   /// Ekran o'quvchi: chek tabi
   ///
   /// In uz, this message translates to:

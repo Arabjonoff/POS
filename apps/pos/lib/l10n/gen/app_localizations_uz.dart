@@ -2291,11 +2291,6 @@ class AppLocalizationsUz extends AppLocalizations {
   }
 
   @override
-  String posDiscountActive(String value) {
-    return 'Chegirma $value';
-  }
-
-  @override
   String posCartTabItems(String label, int count) {
     return '$label, $count ta pozitsiya';
   }
@@ -4578,11 +4573,6 @@ class AppLocalizationsUzCyrl extends AppLocalizationsUz {
   @override
   String posCustomerAdvance(String amount) {
     return 'Аванс: $amount';
-  }
-
-  @override
-  String posDiscountActive(String value) {
-    return 'Чегирма $value';
   }
 
   @override

@@ -486,7 +486,7 @@ void main() {
             customerId: 'c1',
             amountTiyin: 12000000,
             type: 'adjustment',
-            at: DateTime.utc(2026, 10, 1),
+            at: DateTime.utc(2026, 10, 2),
           ),
         );
     await _db

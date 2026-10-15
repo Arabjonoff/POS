@@ -654,7 +654,6 @@
   "actionPayCaps": "ОПЛАТА",
   "posCustomerDebt": "Долг: {amount}",
   "posCustomerAdvance": "Аванс: {amount}",
-  "posDiscountActive": "Скидка {value}",
   "posCartTabItems": "{label}, позиций: {count}",
   "storeVatPayer": "Магазин — плательщик НДС (на кассе показывается НДС 12%)"
 }

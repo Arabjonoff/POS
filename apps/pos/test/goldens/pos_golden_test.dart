@@ -62,7 +62,44 @@ void main() {
   goldenAcrossDevices('pos', 'cart', (tester, size) async {
     final (c, _) = await _open(tester, size);
     await _fillCart(tester, c);
-  });
+  }, devices: kassaDevices);
+
+  /// Eskizdagi 4-holat: mijoz (qarzi bilan), chek chegirmasi, QQS to'lovchi.
+  goldenAcrossDevices('pos', 'cart_customer_vat', (tester, size) async {
+    final (c, db) = await _open(tester, size);
+    await db
+        .into(db.customers)
+        .insert(
+          CustomersCompanion.insert(
+            id: 'c1',
+            fullName: 'Karimova Dilnoza',
+            phone: const Value('+998 90 123 45 67'),
+          ),
+        );
+    await db
+        .into(db.debtEntries)
+        .insert(
+          DebtEntriesCompanion.insert(
+            id: 'd1',
+            customerId: 'c1',
+            amountTiyin: 12000000,
+            type: 'adjustment',
+            at: DateTime.utc(2026, 10, 2),
+          ),
+        );
+    await db
+        .into(db.stores)
+        .insert(
+          StoresCompanion.insert(
+            id: 'store-1',
+            name: 'Baraka',
+            receiptOptions: const Value('{"vat_payer": true}'),
+          ),
+        );
+    await _fillCart(tester, c);
+    c.read(cartControllerProvider.notifier).setCustomer('c1');
+    await tester.pumpAndSettle();
+  }, devices: kassaDevices);
 
   goldenAcrossDevices('pos', 'search', (tester, size) async {
     final (c, _) = await _open(tester, size);
@@ -91,7 +128,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text(PosFormat.moneyAmount(10000000)));
     await tester.pumpAndSettle();
-  });
+  }, devices: kassaDevices);
 
   /// Nasiya: mijoz tanlangan, limitdan oshadi — ogohlantirish.
   goldenAcrossDevices('pos', 'pay_debt', (tester, size) async {

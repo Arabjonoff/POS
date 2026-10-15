@@ -3122,15 +3122,6 @@
       }
     }
   },
-  "posDiscountActive": "Chegirma {value}",
-  "@posDiscountActive": {
-    "description": "Chegirma tugmasi: qo'llangan chegirma",
-    "placeholders": {
-      "value": {
-        "type": "String"
-      }
-    }
-  },
   "posCartTabItems": "{label}, {count} ta pozitsiya",
   "@posCartTabItems": {
     "description": "Ekran o'quvchi: chek tabi",
