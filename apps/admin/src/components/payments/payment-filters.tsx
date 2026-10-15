@@ -49,11 +49,11 @@ export function PaymentFilters({
     >
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="date-from">{t("from")}</Label>
-        <Input id="date-from" type="date" value={from} onChange={(e) => setFrom(e.target.value)} className="h-9" />
+        <Input id="date-from" type="date" value={from} onChange={(e) => setFrom(e.target.value)} className="h-9 dark:[color-scheme:dark]" />
       </div>
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="date-to">{t("to")}</Label>
-        <Input id="date-to" type="date" value={to} onChange={(e) => setTo(e.target.value)} className="h-9" />
+        <Input id="date-to" type="date" value={to} onChange={(e) => setTo(e.target.value)} className="h-9 dark:[color-scheme:dark]" />
       </div>
       <Button type="submit" size="lg">
         {t("apply")}

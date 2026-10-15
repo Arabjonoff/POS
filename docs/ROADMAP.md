@@ -248,7 +248,7 @@ Spec'lar: `admin-dashboard.md`, `subscription-billing.md`.
 - **Qabul:** Playwright: yangi mijoz yaratish → ro'yxatda ko'rinadi → ega kassa ilovasiga kira oladi (API darajasida tekshiruv).
 - **Bog'liq:** T-080
 
-### [ ] T-083 Admin: tariflar, obunalar, to'lovlar
+### [x] T-083 Admin: tariflar, obunalar, to'lovlar
 - **Bajarish:** tariflar CRUD, obunani uzaytirish (to'lovni qo'lda kiritish → muddat avtomatik uzayadi), to'lovlar ro'yxati va eksport (CSV).
 - **Qabul:** to'lov kiritilganda muddat to'g'ri hisoblanadi (testlar).
 - **Bog'liq:** T-082

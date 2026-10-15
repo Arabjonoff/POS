@@ -42,13 +42,15 @@ export function DeactivatePlan({ id, name, subscribers }: { id: string; name: st
       <Button
         variant="ghost"
         size="sm"
+        aria-label={t("deactivate")}
+        title={t("deactivate")}
         onClick={() => {
           setFailed(false);
           setOpen(true);
         }}
       >
         <PowerOff aria-hidden />
-        {t("deactivate")}
+        <span className="hidden xl:inline">{t("deactivate")}</span>
       </Button>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent closeLabel={close}>

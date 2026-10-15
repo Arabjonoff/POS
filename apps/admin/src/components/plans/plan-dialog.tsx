@@ -94,9 +94,9 @@ export function PlanDialog({ plan }: { plan?: PlanValues }) {
   return (
     <>
       {plan ? (
-        <Button variant="ghost" size="sm" onClick={start}>
+        <Button variant="ghost" size="sm" onClick={start} aria-label={t("edit")} title={t("edit")}>
           <Pencil aria-hidden />
-          {t("edit")}
+          <span className="hidden xl:inline">{t("edit")}</span>
         </Button>
       ) : (
         <Button size="lg" onClick={start}>

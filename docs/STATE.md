@@ -5,25 +5,19 @@
 > Format qat'iy: bo'limlar nomini o'zgartirma.
 
 ## Joriy vazifa
-- Vazifa: T-083 Admin: tariflar, obunalar, to'lovlar
-- Branch: feat/T-083-admin-billing
-- Boshlangan: 2026-10-15
+- Vazifa: —
+- Branch: —
+- Boshlangan: —
 - Oxirgi yangilanish: 2026-10-15
 
 ## Qadamlar (vazifa ichida)
 <!-- Agent vazifani boshlaganda shu ro'yxatni yozadi va har qadamda belgilaydi -->
-- [x] 1. `src/lib/billing.ts` (addMonths — oy oxiri qisqartiriladi, `previewPeriod` = max(paid_until, trial_ends_at, bugun)), `parseSom` (matn → tiyin, butun son) + Vitest; `platform.ts` (barcha tariflar, barcha to'lovlar), actions (tarif yaratish/tahrirlash/nofaol, to'lov kiritish, bekor qilish)
-- [x] 2. `/plans`: jadval, yaratish/tahrirlash oynasi, nofaol qilish (tasdiqlash)
-- [x] 3. Mijoz sahifasida "To'lov kiritish" oynasi (tarif narxi × oy taklif, yangi muddat oldindan ko'rinadi; `?payment=1` ochadi), to'lovlar tabida oxirgi to'lovni bekor qilish (izoh majburiy)
-- [x] 4. `/payments`: barcha to'lovlar, sana oralig'i filtri, jami, sahifalash, CSV
-- [x] 5. Soxta API (tariflar CRUD, to'lov — muddat hisobi, bekor qilish, ro'yxat filtrlari) + Playwright
-- [ ] 6. Spec, skrinshotlar, PROGRESS, ROADMAP, PR, merge
 
 ## Oxirgi bajarilgan ish
-- 5: soxta API (tariflar CRUD, to'lov — addMonths/max, bekor qilish faqat oxirgisi, sana filtri; refresh eski tokenni o'chirmaydi — Django kabi), e2e `billing.spec.ts` (4) — jami 21, 3 marta barqaror; Vitest 55 (+PaymentDialog 3).
+- T-083 tugadi (PR, merge).
 
 ## Keyingi aniq harakat
-- 6-qadam: skrinshotlar `docs/screenshots/T-083/` (tariflar, to'lov oynasi, to'lovlar), spec, PROGRESS, ROADMAP, PR.
+- ROADMAP'dan keyingi vazifa: T-084 Admin: qurilmalar va audit jurnali.
 
 ## Eslatmalar
 <!-- Keyingi sessiya bilishi kerak bo'lgan narsa: topilgan muammo, vaqtinchalik yechim, nima sinab ko'rildi va ishlamadi -->

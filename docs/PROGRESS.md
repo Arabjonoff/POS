@@ -335,3 +335,14 @@ Har vazifa yoki sessiya oxirida agent shu faylning oxiriga yozadi:
 - PR: T-082 (squash merge)
 - Qoldi / keyingi qadam: T-083 tariflar, obunani uzaytirish (to'lov kiritish), to'lovlar ro'yxati. Ro'yxatda ustun bo'yicha saralash — API'da `ordering` qo'shilganda.
 - Muammo yoki qaror: e2e topgan xato — qidiruv debounce eski URL parametrlari bilan holat filtrini bekor qilardi; endi navigatsiya joriy `window.location.search` dan.
+
+## 2026-10-15 — T-083 Admin: tariflar, obunalar, to'lovlar
+- Qilindi:
+  - `/plans`: tariflar jadvali, yaratish/tahrirlash, nofaol qilish.
+  - Mijoz sahifasida "To'lov kiritish" (tarif × oy taklifi, yangi davr oldindan ko'rinadi, `?payment=1`), oxirgi to'lovni bekor qilish (sabab bilan).
+  - `/payments`: sana oralig'i, jami netto, sahifalash, CSV.
+  - `src/lib/billing.ts` — serverdagi davr formulasi nusxasi (`addMonths`, `previewPeriod`, `tashkentToday`) va `parseSom` (so'm matni → tiyin).
+- Testlar: Vitest 55 (+17: billing 13, to'lov oynasi 3, formatSomPlain), Playwright 21 (+4: tarif CRUD, to'lov oldindan ko'rilgan muddatni beradi, faqat oxirgisini bekor qilish va muddat qaytishi, to'lovlar filtri). Backend'da to'lov hisobi testlari (T-013/T-020) — qabul mezoni. Skrinshotlar: `docs/screenshots/T-083/`.
+- PR: T-083 (squash merge)
+- Qoldi / keyingi qadam: T-084 qurilmalar va audit jurnali.
+- Muammo yoki qaror: e2e refresh testi parallel so'rovlarda yiqildi — soxta API refresh'ni bir martalik qilgan edi, Django esa blacklist'siz; mock Django'ga moslandi (spec'ga eslatma).
